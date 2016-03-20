@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+gem 'bundler', '>= 1.8.4'
 gem 'rails', '4.2.5.2'
 gem 'pg', '~> 0.15'
 gem 'sass-rails', '~> 5.0'
@@ -10,8 +11,11 @@ gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'dotenv-rails', require: 'dotenv/rails-now'
-
 gem 'rails_12factor', group: :production
+
+source 'https://rails-assets.org' do
+  gem 'rails-assets-bootstrap-material-design'
+end
 
 group :development, :test, :local do
   gem 'pry-rails'
