@@ -1,3 +1,9 @@
 Rails.application.routes.draw do
-  root 'home_pages#index'
+  root 'companies#index'
+
+  resources :companies, only: [:show]
+  resources :categories, only: [:show] do
+    resources :items
+  end
+
 end
