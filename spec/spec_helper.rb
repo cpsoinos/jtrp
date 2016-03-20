@@ -1,7 +1,7 @@
 require 'capybara/rspec'
 require 'factory_girl_rails'
 require 'rails_helper'
-# require 'helpers/user_helper_spec.rb'
+require 'helpers/user_helper_spec.rb'
 # require 'coveralls'
 require 'email_spec'
 require 'capybara/poltergeist'

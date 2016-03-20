@@ -1,1 +1,5 @@
 <%= @category.name %>
+
+<% if current_user && current_user.internal? %>
+  <%= link_to "Add an item", new_category_item_path(@category) %>
+<% end %>
