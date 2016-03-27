@@ -5,6 +5,11 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   def internal?
-    role == 'internal' || role == 'admin'
+    role == "internal" || role == "admin"
   end
+
+  def consignor?
+    role == "consignor"
+  end
+
 end

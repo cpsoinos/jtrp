@@ -12,7 +12,10 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'dotenv-rails', require: 'dotenv/rails-now'
 gem 'devise'
-gem 'rails_12factor', group: :production
+
+group :production, :local do
+  gem 'rails_12factor', group: :production
+end
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-bootstrap-material-design'

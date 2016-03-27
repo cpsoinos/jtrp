@@ -1,3 +1,38 @@
 <%= @category.name %>
 
 Add an item
+
+<%= form_for [@category, @item] do |f| %>
+  <div class="error_messages">
+    <% @item.errors.full_messages.each do |msg| %>
+      <p><%= msg %></p>
+    <% end %>
+    <div class="notice alert alert-danger collapse" role="alert"></div>
+  </div>
+
+  <div class="row">
+    <div class="text-center">
+      <div class="col-xs-12 col-md-4">
+        <%= f.label :name %>
+      </div>
+      <div class="col-xs-12 col-md-8">
+        <%= f.text_field :name %>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="text-center">
+      <div class="col-xs-12 col-md-4">
+        <%= f.label :description %>
+      </div>
+      <div class="col-xs-12 col-md-8">
+        <%= f.text_field :description %>
+      </div>
+    </div>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

@@ -8,4 +8,25 @@ class ItemsController < ApplicationController
     @item = @category.items.new
   end
 
+  def create
+    @item = @category.items.new(item_params)
+    if @item.save
+      flash[:notice] = "Item created"
+      redirect_to category_item_path(@category, @item)
+    else
+      flash[:error] = "Item could not be saved"
+      redirect_to :back
+    end
+  end
+
+  def show
+    @item = Item.find(params[:id])
+  end
+
+  protected
+
+  def item_params
+    params.require(:item).permit([:name, :description])
+  end
+
 end

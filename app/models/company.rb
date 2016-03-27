@@ -5,4 +5,8 @@ class Company < ActiveRecord::Base
 
   validates :name, presence: true, uniqueness: true
 
+  def consignor?
+    role == 'consignment'
+  end
+
 end
