@@ -1,4 +1,5 @@
 class Item < ActiveRecord::Base
+  mount_uploaders :photos, PhotoUploader
 
   belongs_to :category
 

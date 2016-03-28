@@ -1,3 +1,19 @@
-<%= @item.name %>
+<h1 class="text-center"><%= @item.category.name %></h1>
+</br>
 
-<%= @item.description %>
+<div class="col-md-6 col-md-offset-3">
+  <div class="well bs-component">
+    <p><i>Click on a field to edit.</i></p>
+
+    <h3><%= best_in_place [@category, @item], :name %></h4></br>
+
+    <%= best_in_place [@category, @item], :description %></br></br>
+
+    <% @item.photos.each do |photo| %>
+      <div class="row text-center">
+        <%= image_tag photo.url, class: "img-rounded" %></br></br>
+      </div>
+    <% end %>
+
+  </div>
+</div>

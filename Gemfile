@@ -12,6 +12,9 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'dotenv-rails', require: 'dotenv/rails-now'
 gem 'devise'
+gem 'carrierwave', github: 'carrierwaveuploader/carrierwave'
+gem 'mini_magick'
+gem 'best_in_place', '~> 3.0.1'
 
 group :production, :local do
   gem 'rails_12factor', group: :production

@@ -1,0 +1,52 @@
+<%= form_for [@category, @item], class: "form-horizontal" do |f| %>
+
+  <legend><%= legend %></legend>
+
+  <div class="error_messages">
+    <% @item.errors.full_messages.each do |msg| %>
+      <p><%= msg %></p>
+    <% end %>
+    <div class="notice alert alert-danger collapse" role="alert"></div>
+  </div>
+
+  <div class="row form-row">
+    <div class="text-center">
+      <div class="col-xs-12 col-md-3 text-right">
+        <%= f.label :name, class: "control-label" %>
+      </div>
+      <div class="col-xs-12 col-md-9 text-left">
+        <%= f.text_field :name, class: "form-control", placeholder: "Item name" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="row form-row">
+    <div class="text-center">
+      <div class="col-xs-12 col-md-3 text-right">
+        <%= f.label :description, class: "control-label" %>
+      </div>
+      <div class="col-xs-12 col-md-9 text-left">
+        <%= f.text_area :description, class: "form-control", placeholder: "Item description" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="row form-row">
+    <div class="text-center">
+      <div class="col-xs-12 col-md-3 text-right">
+        <%= f.label :photos, class: "control-label" %>
+      </div>
+      <div class="col-xs-12 col-md-9 text-left">
+        <%= f.file_field :photos, multiple: true, class: "form-control" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="row form-row">
+    <div class="actions">
+      <div class="col-xs-12 text-center">
+        <%= f.submit class: "btn btn-raised btn-primary"%>
+      </div>
+    </div>
+  </div>
+<% end %>
