@@ -1,8 +1,8 @@
 language: ruby
 rvm:
- - "2.1.0"
+  - "2.1.0"
+postgresql: "9.4"
 before_install: gem install bundler --pre
 before_script:
   - psql -c 'create database travis_ci_test;' -U postgres
   - cp config/database.yml.travis config/database.yml
-postgresql: "9.4"
