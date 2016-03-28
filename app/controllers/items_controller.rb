@@ -14,7 +14,7 @@ class ItemsController < ApplicationController
       flash[:notice] = "Item created"
       redirect_to category_item_path(@category, @item)
     else
-      flash[:error] = "Item could not be saved"
+      flash[:alert] = "Item could not be saved"
       redirect_to :back
     end
   end
@@ -23,10 +23,24 @@ class ItemsController < ApplicationController
     @item = Item.find(params[:id])
   end
 
+  def update
+    @item = Item.find(params[:id])
+
+    respond_to do |format|
+      if @item.update(item_params)
+        format.html { redirect_to(@item, :notice => 'Item was successfully updated.') }
+        format.json { respond_with_bip(@item) }
+      else
+        format.html { render :action => "edit" }
+        format.json { respond_with_bip(@item) }
+      end
+    end
+  end
+
   protected
 
   def item_params
-    params.require(:item).permit([:name, :description])
+    params.require(:item).permit([:name, :description, {photos: []}])
   end
 
 end

@@ -18,7 +18,7 @@ feature "add an item" do
     end
   end
 
-  context "admin" do
+  context "owner" do
     scenario "visits category page" do
       sign_in admin
       visit category_path(category)
@@ -38,6 +38,8 @@ feature "add an item" do
     scenario "successfully adds an item" do
       sign_in admin
       visit new_category_item_path(category)
+
+      attach_file('item_photos', File.join(Rails.root, '/spec/fixtures/test.png'))
       fill_in "Name", with: "Chair"
       fill_in "Description", with: "People sit in it."
       click_on("Create Item")
@@ -45,6 +47,17 @@ feature "add an item" do
       expect(page).to have_content("Item created")
       expect(page).to have_content("Chair")
       expect(page).to have_content("People sit in it.")
+      expect(page).to have_selector("img[src$='test.png']")
+    end
+
+    scenario "unsuccessfully adds an item" do
+      sign_in admin
+      visit new_category_item_path(category)
+
+      fill_in "Description", with: "People sit in it."
+      click_on("Create Item")
+
+      expect(page).to have_content("Item could not be saved")
     end
   end
 
