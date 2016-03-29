@@ -1,6 +1,5 @@
 feature "add a category" do
 
-  let(:company) { create(:company) }
   let(:user) { create(:user, :internal) }
   let(:consignor) { create(:user, :consignor) }
 

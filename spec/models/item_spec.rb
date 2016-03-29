@@ -6,8 +6,4 @@ describe Item do
 
   let(:item) { create(:item) }
 
-  it 'has a company' do
-    expect(item.company).not_to be(nil)
-  end
-
 end
