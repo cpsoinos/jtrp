@@ -4,7 +4,6 @@ FactoryGirl.define do
 
   factory :category do
     name
-    company
   end
 
   sequence :name do |n|
