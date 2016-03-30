@@ -2,11 +2,14 @@
 
   <legend><%= legend %></legend>
 
-  <div class="error_messages">
-    <% @item.errors.full_messages.each do |msg| %>
-      <p><%= msg %></p>
-    <% end %>
-    <div class="notice alert alert-danger collapse" role="alert"></div>
+  <div class="row">
+    <div class="col-md-4 col-md-offset-4">
+      <div class="error_messages notice alert alert-danger text-center">
+        <% @item.errors.full_messages.each do |msg| %>
+          <p><%= msg %></p>
+        <% end %>
+      </div>
+    </div>
   </div>
 
   <div class="row form-row">

@@ -5,13 +5,16 @@
   </div>
 </div>
 
-<div class="row">
-  <div class="col-sm-6 col-md-4 col-md-offset-8">
-    <div class="pull-right">
-      <%= link_to "Add a category <i class='fa fa-plus'></i>".html_safe, new_category_path %>
+
+<% if current_user.try(:internal?) %>
+  <div class="row">
+    <div class="col-sm-6 col-md-4 col-md-offset-8">
+      <div class="pull-right">
+        <%= link_to "Add a category <i class='fa fa-plus'></i>".html_safe, new_category_path %>
+      </div>
     </div>
   </div>
-</div>
+<% end %>
 
 <div class="row">
   <% @categories.each do |category| %>

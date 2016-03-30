@@ -1,5 +1,5 @@
 class CategoriesController < ApplicationController
-  # before_filter :find_company
+  before_filter :require_internal, except: [:index, :show]
 
   def index
     @categories = Category.all
@@ -11,6 +11,22 @@ class CategoriesController < ApplicationController
 
   def new
     @category = Category.new
+  end
+
+  def create
+    @category = Category.new(category_params)
+    if @category.save
+      flash[:notice] = "Category created!"
+      redirect_to categories_path
+    else
+      render :new
+    end
+  end
+
+  protected
+
+  def category_params
+    params.require(:category).permit([:name, :photo])
   end
 
 end
