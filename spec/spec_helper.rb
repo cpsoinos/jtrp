@@ -17,10 +17,10 @@ RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
   config.include EmailSpec::Helpers
   config.include EmailSpec::Matchers
-  # config.include OmniauthMacros
 
   config.before(:all) do
     FactoryGirl.reload
+    FactoryGirl.create(:company, name: "Just the Right Piece")
   end
 
   config.expect_with :rspec do |expectations|

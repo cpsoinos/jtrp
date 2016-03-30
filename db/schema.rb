@@ -11,26 +11,31 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160328023850) do
+ActiveRecord::Schema.define(version: 20160329121832) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "categories", force: :cascade do |t|
     t.string   "name",       null: false
-    t.integer  "company_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "photo"
   end
 
-  add_index "categories", ["company_id"], name: "index_categories_on_company_id", using: :btree
-
   create_table "companies", force: :cascade do |t|
-    t.string   "name",        null: false
-    t.string   "description"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "role"
+    t.string "name",        null: false
+    t.string "slogan"
+    t.string "description"
+    t.string "address_1"
+    t.string "address_2"
+    t.string "city"
+    t.string "state"
+    t.string "zip"
+    t.string "phone"
+    t.string "phone_ext"
+    t.string "website"
+    t.string "logo"
   end
 
   create_table "items", force: :cascade do |t|
@@ -65,6 +70,5 @@ ActiveRecord::Schema.define(version: 20160328023850) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
-  add_foreign_key "categories", "companies"
   add_foreign_key "items", "categories"
 end

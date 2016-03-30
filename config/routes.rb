@@ -1,9 +1,8 @@
 Rails.application.routes.draw do
   devise_for :users
-  root 'companies#index'
+  root 'categories#index'
 
-  resources :companies, only: [:show]
-  resources :categories, only: [:show] do
+  resources :categories do
     resources :items
   end
 

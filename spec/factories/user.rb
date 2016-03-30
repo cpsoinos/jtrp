@@ -17,6 +17,10 @@ FactoryGirl.define do
     trait :internal do
       role "internal"
     end
+
+    trait :consignor do
+      role "consignor"
+    end
   end
 
   sequence :email do |n|

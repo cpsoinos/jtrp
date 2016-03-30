@@ -2,16 +2,11 @@ class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
+  before_filter :find_company
 
 
   def find_company
-    @company ||= begin
-      if params[:company_id]
-        Company.find(params[:company_id])
-      else
-        @category.company
-      end
-    end
+    @company ||= Company.find_by(name: "Just the Right Piece")
   end
 
   def find_category

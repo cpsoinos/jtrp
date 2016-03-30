@@ -3,7 +3,7 @@ feature "add an item" do
   let(:category) { create(:category) }
   let(:admin) { create(:user, :admin) }
 
-  context "visitor" do
+  context "guest" do
     scenario "visits category page" do
       visit category_path(category)
 
