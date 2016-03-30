@@ -1,0 +1,12 @@
+Wed, 30 Mar 2016 09:52:47 -0400
+README.rdoc	Sun, 20 Mar 2016 12:45:40 -0400
+app/controllers/application_controller.rb	Wed, 30 Mar 2016 09:25:51 -0400
+app/controllers/categories_controller.rb	Wed, 30 Mar 2016 09:25:51 -0400
+app/controllers/items_controller.rb	Mon, 28 Mar 2016 08:47:35 -0400
+app/helpers/application_helper.rb	Sun, 20 Mar 2016 12:45:40 -0400
+app/models/category.rb	Wed, 30 Mar 2016 09:25:51 -0400
+app/models/company.rb	Wed, 30 Mar 2016 09:25:51 -0400
+app/models/item.rb	Wed, 30 Mar 2016 09:25:51 -0400
+app/models/user.rb	Sun, 27 Mar 2016 19:23:18 -0400
+app/uploaders/logo_uploader.rb	Wed, 30 Mar 2016 09:25:51 -0400
+app/uploaders/photo_uploader.rb	Mon, 28 Mar 2016 08:47:35 -0400
