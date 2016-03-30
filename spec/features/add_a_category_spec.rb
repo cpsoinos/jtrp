@@ -22,6 +22,8 @@ feature "add a category" do
       expect(page).to have_field("Name")
       expect(page).to have_field("Photo")
       expect(page).to have_content("optional")
+      expect(page).to have_button("Create Category")
+      expect(page).to have_link("Cancel")
     end
 
     scenario "successfully adds a category without a photo" do
@@ -56,14 +58,49 @@ feature "add a category" do
       expect(page).to have_field("Name")
       expect(page).to have_field("Photo")
     end
+
+    scenario "cancels adding a category" do
+      visit new_category_path
+      click_link("Cancel")
+
+      expect(page).to have_link("Add a category")
+    end
   end
 
   context "guest" do
+
     scenario "visits categories page" do
       visit categories_path
 
       expect(page).not_to have_link("Add a category")
     end
+
+    scenario "visits new category page" do
+      visit new_category_path
+
+      expect(page).to have_content("Forbidden")
+    end
+
+  end
+
+  context "consignor" do
+
+    before do
+      sign_in consignor
+    end
+
+    scenario "visits categories page" do
+      visit categories_path
+
+      expect(page).not_to have_link("Add a category")
+    end
+
+    scenario "visits new category page" do
+      visit new_category_path
+
+      expect(page).to have_content("Forbidden")
+    end
+
   end
 
 end

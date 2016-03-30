@@ -18,7 +18,7 @@ FactoryGirl.define do
       role "internal"
     end
 
-    trait :internal do
+    trait :consignor do
       role "consignor"
     end
   end
