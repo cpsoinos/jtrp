@@ -48,6 +48,28 @@
   </div>
 
   <div class="row form-row">
+    <div class="text-center">
+      <div class="col-xs-12 col-md-3 text-right">
+        <%= f.label :purchase_price, class: "control-label" %>
+      </div>
+      <div class="col-xs-12 col-md-3 text-left">
+        <%= f.text_field :purchase_price, class: "form-control", placeholder: "$" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="row form-row">
+    <div class="text-center">
+      <div class="col-xs-12 col-md-3 text-right">
+        <%= f.label :listing_price, class: "control-label" %>
+      </div>
+      <div class="col-xs-12 col-md-3 text-left">
+        <%= f.text_field :listing_price, class: "form-control", placeholder: "$" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="row form-row">
     <div class="actions">
       <div class="col-xs-12 text-center">
         <%= f.submit class: "btn btn-raised btn-primary"%>

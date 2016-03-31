@@ -6,6 +6,7 @@ require 'coveralls'
 Coveralls.wear!
 require 'email_spec'
 require 'capybara/poltergeist'
+require 'money-rails/test_helpers'
 
 Shoulda::Matchers.configure do |config|
   config.integrate do |with|

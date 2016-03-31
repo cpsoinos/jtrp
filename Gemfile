@@ -16,6 +16,10 @@ gem 'devise'
 gem 'carrierwave', github: 'carrierwaveuploader/carrierwave'
 gem 'mini_magick'
 gem 'best_in_place', '~> 3.0.1'
+gem 'money-rails'
+gem 'barby'
+gem 'chunky_png'
+gem 'has_secure_token'
 
 group :production, :local do
   gem 'rails_12factor', group: :production

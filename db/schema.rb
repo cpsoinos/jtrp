@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160329121832) do
+ActiveRecord::Schema.define(version: 20160331184632) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,12 +39,23 @@ ActiveRecord::Schema.define(version: 20160329121832) do
   end
 
   create_table "items", force: :cascade do |t|
-    t.string   "name",        null: false
+    t.string   "name",                                    null: false
     t.text     "description"
     t.integer  "category_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.json     "photos"
+    t.string   "condition"
+    t.float    "height"
+    t.float    "width"
+    t.float    "depth"
+    t.integer  "purchase_price_cents"
+    t.string   "purchase_price_currency", default: "USD", null: false
+    t.integer  "listing_price_cents"
+    t.string   "listing_price_currency",  default: "USD", null: false
+    t.integer  "sale_price_cents"
+    t.string   "sale_price_currency",     default: "USD", null: false
+    t.string   "token"
   end
 
   add_index "items", ["category_id"], name: "index_items_on_category_id", using: :btree
@@ -65,6 +76,13 @@ ActiveRecord::Schema.define(version: 20160329121832) do
     t.string   "role",                   default: "guest"
     t.string   "first_name"
     t.string   "last_name"
+    t.string   "address_1"
+    t.string   "address_2"
+    t.string   "city"
+    t.string   "state"
+    t.string   "zip"
+    t.string   "phone"
+    t.string   "phone_ext"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
