@@ -33,6 +33,10 @@ feature "add an item" do
 
       expect(page).to have_content(category.name)
       expect(page).to have_content("Add an item")
+      expect(page).to have_field("Name")
+      expect(page).to have_field("Description")
+      expect(page).to have_field("Purchase price")
+      expect(page).to have_field("Listing price")
     end
 
     scenario "successfully adds an item" do
