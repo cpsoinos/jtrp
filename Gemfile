@@ -37,6 +37,8 @@ group :development, :test, :local do
   gem 'faker'
   gem 'factory_girl_rails'
   gem 'web-console', '~> 2.0'
+  gem 'guard-rspec', require: false
+  gem 'terminal-notifier-guard'
 end
 
 group :development, :local do
