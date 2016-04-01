@@ -9,6 +9,7 @@ FactoryGirl.define do
     password "supersecret"
     password_confirmation "supersecret"
     role "guest"
+    status "active"
 
     trait :admin do
       role "admin"
@@ -18,8 +19,16 @@ FactoryGirl.define do
       role "internal"
     end
 
-    trait :consignor do
-      role "consignor"
+    trait :client do
+      role "client"
+    end
+
+    trait :agent do
+      role "agent"
+    end
+
+    trait :inactive do
+      status "inactive"
     end
   end
 
