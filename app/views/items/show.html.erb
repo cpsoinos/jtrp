@@ -9,7 +9,7 @@
 
     <%= best_in_place [@category, @item], :description %></br></br>
 
-    <% @item.photos.each do |photo| %>
+    <% @item.initial_photos.each do |photo| %>
       <div class="row text-center">
         <%= image_tag photo.url, class: "img-rounded" %></br></br>
       </div>

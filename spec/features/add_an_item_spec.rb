@@ -43,7 +43,7 @@ feature "add an item" do
       sign_in admin
       visit new_category_item_path(category)
 
-      attach_file('item_photos', File.join(Rails.root, '/spec/fixtures/test.png'))
+      attach_file('item_initial_photos', File.join(Rails.root, '/spec/fixtures/test.png'))
       fill_in "Name", with: "Chair"
       fill_in "Description", with: "People sit in it."
       click_on("Create Item")
