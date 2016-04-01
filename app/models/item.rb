@@ -23,6 +23,10 @@ class Item < ActiveRecord::Base
   validates :category, presence: true
   validates :name, presence: true
 
+  scope :potential, -> { where(status: "potential") }
+  scope :active, -> { where(status: "active") }
+  scope :sold, -> { where(status: "sold") }
+
   def barcode
     require 'barby'
     require 'barby/barcode/code_128'
@@ -31,6 +35,18 @@ class Item < ActiveRecord::Base
 
     barcode = Barby::Code128B.new(token)
     Barby::HtmlOutputter.new(barcode).to_html
+  end
+
+  def active?
+    status == "active"
+  end
+
+  def potential?
+    status == "potential"
+  end
+
+  def sold?
+    status == "sold"
   end
 
 end
