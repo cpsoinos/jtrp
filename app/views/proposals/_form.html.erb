@@ -14,13 +14,15 @@
 
   <legend>Step 1: Select a Client</legend>
 
+  <%= f.hidden_field :created_by_id, value: current_user.id %>
+
   <div class="row form-row">
     <div class="text-center">
       <div class="col-xs-12 col-md-3 text-right">
         <%= f.label :client, class: "control-label" %>
       </div>
       <div class="col-xs-12 col-md-9 text-left">
-        <%= f.select :client, options_for_select(@clients), {prompt: "Select Client"}, {class: "form-control"} %>
+        <%= f.select :client_id, options_for_select(@clients), {prompt: "Select Client"}, {class: "form-control"} %>
       </div>
     </div>
   </div>
@@ -29,12 +31,14 @@
     <div class="actions">
       <div class="col-xs-12 text-center">
         <!-- JAVASCRIPT TO MOVE ON TO ADD ITEMS -->
-        <%= link_to "Next <i class='fa fa-caret-right'></i>".html_safe, "#", class: "btn btn-raised btn-primary"%>
+        <%= f.submit "Next", class: "btn btn-raised btn-primary"%>
       </div>
     </div>
   </div>
 
 <% end %>
+
+<%  %>
 
   <div class="row form-row">
     <div class="text-center">

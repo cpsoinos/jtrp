@@ -7,6 +7,24 @@ class ProposalsController < ApplicationController
     @items = items
   end
 
+  def create
+    @proposal = Proposal.new(proposal_params)
+    if @proposal.save
+      redirect_to edit_proposal_path(@proposal)
+    else
+      render :new
+    end
+  end
+
+  def edit
+    @proposal = Proposal.find(params[:id])
+  end
+
+  def consignment_agreement
+    @proposal = Proposal.find(params[:proposal_id])
+    @client = @proposal.client
+  end
+
   private
 
   def clients
@@ -19,6 +37,12 @@ class ProposalsController < ApplicationController
     @items = Item.potential.map do |item|
       [item.name, item.id]
     end
+  end
+
+  protected
+
+  def proposal_params
+    params.require(:proposal).permit([:client_id, :created_by_id])
   end
 
 end

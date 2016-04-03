@@ -1,18 +1,21 @@
-<%= form_for [@category, @item], class: "form-horizontal" do |f| %>
+<%= form_for [category, item], class: "form-horizontal", remote: remote do |f| %>
 
   <legend><%= legend %></legend>
 
-  <% if @item.errors.present? %>
+  <% if item.errors.present? %>
     <div class="row">
       <div class="col-md-4 col-md-offset-4">
         <div class="error_messages notice alert alert-danger text-center">
-          <% @item.errors.full_messages.each do |msg| %>
+          <% item.errors.full_messages.each do |msg| %>
             <p><%= msg %></p>
           <% end %>
         </div>
       </div>
     </div>
   <% end %>
+
+  <%= f.hidden_field :redirect_url, value: redirect_url %>
+  <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
 
   <div class="row form-row">
     <div class="text-center">
@@ -81,9 +84,31 @@
   </div>
 
   <div class="row form-row">
+    <div class="text-center">
+      <div class="col-xs-12 col-md-3 text-right">
+        <%= f.label :minimum_sale_price, class: "control-label" %>
+      </div>
+      <div class="col-xs-12 col-md-3 text-left">
+        <%= f.text_field :minimum_sale_price, class: "form-control", placeholder: "$" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="row form-row">
+    <div class="text-center">
+      <div class="col-xs-12 col-md-3 text-right">
+        <%= f.label :condition, class: "control-label" %>
+      </div>
+      <div class="col-xs-12 col-md-3 text-left">
+        <%= f.text_field :condition, class: "form-control" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="row form-row">
     <div class="actions">
       <div class="col-xs-12 text-center">
-        <%= f.submit class: "btn btn-raised btn-primary"%>
+        <%= f.submit "Add Item", class: "btn btn-raised btn-primary"%>
       </div>
     </div>
   </div>

@@ -12,6 +12,10 @@ class Item < ActiveRecord::Base
     greater_than_or_equal_to: 0,
     less_than_or_equal_to: 100000
   }
+  monetize :minimum_sale_price_cents, allow_nil: true, numericality: {
+    greater_than_or_equal_to: 0,
+    less_than_or_equal_to: 100000
+  }
   monetize :sale_price_cents, allow_nil: true, numericality: {
     greater_than_or_equal_to: 0,
     less_than_or_equal_to: 100000
@@ -20,7 +24,6 @@ class Item < ActiveRecord::Base
   belongs_to :category
   belongs_to :proposal
 
-  validates :category, presence: true
   validates :name, presence: true
 
   scope :potential, -> { where(status: "potential") }

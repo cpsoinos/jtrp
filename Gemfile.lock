@@ -111,6 +111,8 @@ GEM
     dotenv-rails (2.1.0)
       dotenv (= 2.1.0)
       railties (>= 4.0, < 5.1)
+    dropzonejs-rails (0.7.3)
+      rails (> 3.1)
     email_spec (2.0.0)
       htmlentities (~> 4.3.3)
       launchy (~> 2.1)
@@ -268,6 +270,7 @@ GEM
     rdoc (4.2.2)
       json (~> 1.4)
     redis (3.2.2)
+    remotipart (1.2.1)
     responders (2.1.1)
       railties (>= 4.2.0, < 5.1)
     rest-client (1.8.0)
@@ -392,6 +395,7 @@ DEPENDENCIES
   database_cleaner
   devise
   dotenv-rails
+  dropzonejs-rails
   email_spec
   factory_girl_rails
   faker
@@ -410,6 +414,7 @@ DEPENDENCIES
   rails (= 4.2.5.2)
   rails-assets-bootstrap-material-design!
   rails_12factor
+  remotipart (~> 1.2)
   rspec-rails (~> 3.0)
   rspec-sidekiq
   sass-rails (~> 5.0)
