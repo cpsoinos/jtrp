@@ -41,6 +41,12 @@ describe User do
     expect(user.active?).to be(false)
   end
 
+  it "full_name" do
+    user = create(:user, first_name: "Fred", last_name: "LeChat")
+
+    expect(user.full_name).to eq("Fred LeChat")
+  end
+
   describe "scopes" do
 
     before do

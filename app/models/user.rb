@@ -33,4 +33,12 @@ class User < ActiveRecord::Base
     status == "inactive"
   end
 
+  def full_name
+    "#{first_name} #{last_name}"
+  end
+
+  def full_address
+    "#{address_1}#{address_2.present? ? (', ' + address_2) : ''}, #{city}, #{state} #{zip}"
+  end
+
 end

@@ -1,12 +1,18 @@
 class Item < ActiveRecord::Base
   has_secure_token
 
-  mount_uploaders :photos, PhotoUploader
+  mount_uploaders :initial_photos, PhotoUploader
+  mount_uploaders :listing_photos, PhotoUploader
+
   monetize :purchase_price_cents, allow_nil: true, numericality: {
     greater_than_or_equal_to: 0,
     less_than_or_equal_to: 100000
   }
   monetize :listing_price_cents, allow_nil: true, numericality: {
+    greater_than_or_equal_to: 0,
+    less_than_or_equal_to: 100000
+  }
+  monetize :minimum_sale_price_cents, allow_nil: true, numericality: {
     greater_than_or_equal_to: 0,
     less_than_or_equal_to: 100000
   }
@@ -16,9 +22,13 @@ class Item < ActiveRecord::Base
   }
 
   belongs_to :category
+  belongs_to :proposal
 
-  validates :category, presence: true
   validates :name, presence: true
+
+  scope :potential, -> { where(status: "potential") }
+  scope :active, -> { where(status: "active") }
+  scope :sold, -> { where(status: "sold") }
 
   def barcode
     require 'barby'
@@ -28,6 +38,18 @@ class Item < ActiveRecord::Base
 
     barcode = Barby::Code128B.new(token)
     Barby::HtmlOutputter.new(barcode).to_html
+  end
+
+  def active?
+    status == "active"
+  end
+
+  def potential?
+    status == "potential"
+  end
+
+  def sold?
+    status == "sold"
   end
 
 end

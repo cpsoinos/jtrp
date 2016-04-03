@@ -20,6 +20,8 @@ gem 'money-rails'
 gem 'barby'
 gem 'chunky_png'
 gem 'has_secure_token'
+gem 'remotipart', '~> 1.2'
+gem 'dropzonejs-rails'
 
 group :production, :local do
   gem 'rails_12factor', group: :production
@@ -54,7 +56,6 @@ group :test do
   gem 'launchy'
   gem 'email_spec'
   gem 'rspec-sidekiq'
-  gem 'selenium-webdriver'
   gem 'database_cleaner'
   gem 'vcr'
   gem 'webmock'

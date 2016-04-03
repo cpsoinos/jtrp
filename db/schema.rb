@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160401004830) do
+ActiveRecord::Schema.define(version: 20160403144427) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,26 +39,39 @@ ActiveRecord::Schema.define(version: 20160401004830) do
   end
 
   create_table "items", force: :cascade do |t|
-    t.string   "name",                                    null: false
+    t.string   "name",                                              null: false
     t.text     "description"
     t.integer  "category_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.json     "photos"
+    t.json     "initial_photos"
     t.string   "condition"
     t.float    "height"
     t.float    "width"
     t.float    "depth"
     t.integer  "purchase_price_cents"
-    t.string   "purchase_price_currency", default: "USD", null: false
+    t.string   "purchase_price_currency",     default: "USD",       null: false
     t.integer  "listing_price_cents"
-    t.string   "listing_price_currency",  default: "USD", null: false
+    t.string   "listing_price_currency",      default: "USD",       null: false
     t.integer  "sale_price_cents"
-    t.string   "sale_price_currency",     default: "USD", null: false
+    t.string   "sale_price_currency",         default: "USD",       null: false
     t.string   "token"
+    t.integer  "proposal_id"
+    t.json     "listing_photos"
+    t.string   "status",                      default: "potential", null: false
+    t.integer  "minimum_sale_price_cents"
+    t.string   "minimum_sale_price_currency", default: "USD",       null: false
   end
 
   add_index "items", ["category_id"], name: "index_items_on_category_id", using: :btree
+  add_index "items", ["proposal_id"], name: "index_items_on_proposal_id", using: :btree
+
+  create_table "proposals", force: :cascade do |t|
+    t.integer  "client_id",     null: false
+    t.integer  "created_by_id", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "",       null: false
