@@ -56,7 +56,6 @@ group :test do
   gem 'launchy'
   gem 'email_spec'
   gem 'rspec-sidekiq'
-  # gem 'selenium-webdriver'
   gem 'database_cleaner'
   gem 'vcr'
   gem 'webmock'
