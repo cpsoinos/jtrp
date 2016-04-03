@@ -14,7 +14,6 @@
     </div>
   <% end %>
 
-  <%= f.hidden_field :redirect_url, value: redirect_url %>
   <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
 
   <div class="row form-row">
@@ -50,18 +49,18 @@
     </div>
   </div>
 
-  <div class="row form-row">
-    <div class="text-center">
-      <div class="col-xs-12 col-md-3 text-right">
-        <%= f.label :listing_photos, class: "control-label" %>
-      </div>
-      <div class="col-xs-12 col-md-9 text-left">
-        <%= f.file_field :listing_photos, multiple: true, class: "form-control" %>
+  <% unless controller_name == "proposals" %>
+    <div class="row form-row">
+      <div class="text-center">
+        <div class="col-xs-12 col-md-3 text-right">
+          <%= f.label :listing_photos, class: "control-label" %>
+        </div>
+        <div class="col-xs-12 col-md-9 text-left">
+          <%= f.file_field :listing_photos, multiple: true, class: "form-control" %>
+        </div>
       </div>
     </div>
-  </div>
 
-  <% unless controller_name == "proposals" %>
     <div class="row form-row">
       <div class="text-center">
         <div class="col-xs-12 col-md-3 text-right">

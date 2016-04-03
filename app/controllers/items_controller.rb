@@ -13,7 +13,6 @@ class ItemsController < ApplicationController
     if @item.save
       respond_to do |format|
         format.html do
-          binding.pry
           flash[:notice] = "Item created"
           redirect_to category_item_path(@category, @item)
         end

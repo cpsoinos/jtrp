@@ -46,7 +46,7 @@ feature "add an item" do
       attach_file('item_initial_photos', File.join(Rails.root, '/spec/fixtures/test.png'))
       fill_in "Name", with: "Chair"
       fill_in "Description", with: "People sit in it."
-      click_on("Create Item")
+      click_on("Add Item")
 
       expect(page).to have_content("Item created")
       expect(page).to have_content("Chair")
@@ -59,7 +59,7 @@ feature "add an item" do
       visit new_category_item_path(category)
 
       fill_in "Description", with: "People sit in it."
-      click_on("Create Item")
+      click_on("Add Item")
 
       expect(page).to have_content("Item could not be saved")
     end
