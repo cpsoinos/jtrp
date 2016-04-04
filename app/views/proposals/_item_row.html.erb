@@ -1,0 +1,20 @@
+<tr>
+  <td>
+    <%= image_tag(item.initial_photos.first.try(:thumb).try(:url)) %>
+  </td>
+  <td class="text-center">
+    <%= item.id %>
+  </td>
+  <td>
+    <%= best_in_place [@proposal, item], :description %>
+  </td>
+  <td class="text-center">
+    <%= best_in_place [@proposal, item], :listing_price, display_with: lambda { |v| humanized_money_with_symbol(v).html_safe } %>
+  </td>
+  <td class="text-center">
+    <%= best_in_place [@proposal, item], :minimum_sale_price, display_with: lambda { |v| humanized_money_with_symbol(v).html_safe } %>
+  </td>
+  <td class="text-center">
+    <%= best_in_place [@proposal, item], :condition %>
+  </td>
+</tr>

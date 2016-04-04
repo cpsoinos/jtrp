@@ -1,0 +1,17 @@
+<table class="table table-striped table-hover">
+  <thead>
+    <tr>
+      <th class="text-center">Photo</th>
+      <th class="text-center">Item Number</th>
+      <th class="text-center">Description</th>
+      <th class="text-center">Original Asking Price</th>
+      <th class="text-center">Minimum Sale Price</th>
+      <th class="text-center">Condition / Notes</th>
+    </tr>
+  </thead>
+  <tbody id="proposal-item-list">
+    <% @proposal.items.reverse.each do |item| %>
+      <%= render 'item_row', item: item %>
+    <% end %>
+  </tbody>
+</table>
