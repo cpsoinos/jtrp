@@ -78,13 +78,37 @@ feature "new proposal" do
 
     end
 
-    context "new client", :pending do
+    context "new client" do
 
-      scenario "creates a new client" do
+      scenario "successfully creates a new client", js: true do
         visit new_proposal_path
         click_on("New Client")
 
-        # js for form
+        fill_in("user_email", with: "sally@salamander.com")
+        fill_in("user_first_name", with: "Sally")
+        fill_in("user_last_name", with: "Salamander")
+        fill_in("user_address_1", with: "3 Tropic Schooner")
+        fill_in("user_address_2", with: "Pool 1")
+        fill_in("user_state", with: "FL")
+        fill_in("user_zip", with: "12345")
+        click_on("Create Client")
+
+        expect(page).to have_content("Add an Item")
+      end
+
+      scenario "unsuccessfully creates a new client", js: true do
+        visit new_proposal_path
+        click_on("New Client")
+
+        fill_in("user_first_name", with: "Sally")
+        fill_in("user_last_name", with: "Salamander")
+        fill_in("user_address_1", with: "3 Tropic Schooner")
+        fill_in("user_address_2", with: "Pool 1")
+        fill_in("user_state", with: "FL")
+        fill_in("user_zip", with: "12345")
+        click_on("Create Client")
+
+        expect(page).to have_content("Email can't be blank")
       end
 
     end

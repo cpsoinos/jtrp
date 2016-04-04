@@ -4,7 +4,7 @@ class ProposalsController < ApplicationController
   def new
     @proposal = Proposal.new
     @clients = clients
-    @items = items
+    @client = User.new
   end
 
   def create
@@ -25,6 +25,23 @@ class ProposalsController < ApplicationController
     @client = @proposal.client
   end
 
+  def create_client
+    @client = User.new(user_params)
+    @client.skip_password_validation = true
+    @client.role = "client"
+    if @client.save
+      @proposal = Proposal.new(client: @client, created_by: current_user)
+      if @proposal.save
+        redirect_to edit_proposal_path(@proposal)
+      else
+        redirect_to :back
+      end
+    else
+      flash[:alert] = @client.errors.full_messages.uniq.join
+      redirect_to new_proposal_path
+    end
+  end
+
   private
 
   def clients
@@ -43,6 +60,10 @@ class ProposalsController < ApplicationController
 
   def proposal_params
     params.require(:proposal).permit([:client_id, :created_by_id])
+  end
+
+  def user_params
+    params.require(:user).permit([:email, :first_name, :last_name, :address_1, :address_2, :city, :state, :zip, :phone, :phone_ext])
   end
 
 end
