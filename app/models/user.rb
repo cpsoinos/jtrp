@@ -4,6 +4,10 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
+  attr_accessor :skip_password_validation  # virtual attribute to skip password validation while saving
+
+  has_many :proposals
+
   validates :email, presence: true, uniqueness: true
   validates :status, presence: true
 
@@ -39,6 +43,13 @@ class User < ActiveRecord::Base
 
   def full_address
     "#{address_1}#{address_2.present? ? (', ' + address_2) : ''}, #{city}, #{state} #{zip}"
+  end
+
+  protected
+
+  def password_required?
+    return false if skip_password_validation
+    super
   end
 
 end
