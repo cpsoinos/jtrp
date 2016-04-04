@@ -1,0 +1,52 @@
+<div class="modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title">Consignment Policies</h4>
+      </div>
+      <div class="modal-body">
+        <ul>
+          <li>
+            <b>consignors:</b>  You must be at least 18 years old to consign with us and you must own the items you consign. 
+          </li>
+          <li>
+            <b>consignable items:</b>  We consign only furniture and accessories that are in suitable condition for resale and have a probable resale value of at least $40. If an item has scratches, dents, or stains, or just looks old and worn, then it’s probably not in suitable condition for resale. We do not consign mattresses, appliances, clothing, toys, books, electronics, bedding, or window treatments. 
+          </li>
+          <li>
+            <b>control of consigned items:</b>  If you consign an item with us, we need to have the item in our possession and under our control. You would still own the item, but you’d be giving us the exclusive right to sell the item for you. 
+          </li>
+          <li>
+            <b>consignment fee:</b>  We’ll sell your consigned items for a 50/50 split of the sale proceeds. This is a pretty standard consignment rate in Massachusetts. 
+          </li>
+          <li>
+            <b>consignment period:</b>  Your items would be consigned for 90 days. Near the end of the consignment period, we will send you an email stating that your contract is about to expire. Upon expiration, you’ll have 10 days to retrieve it at no charge, or you could simply leave it with us, at which point it would become our property. 
+          </li>
+          <li>
+            <b>how we sell:</b>  Unlike traditional consignment shops that just place consigned items in their shop and passively wait for a buyer to come in, we aggressively pursue buyers by advertising each item from our cellphones with photos, descriptions, and attractive prices on craigslist and numerous apps that target local consumers, such as OfferUp, Close5, Letgo, Wallapop, etc. These apps enable customers to respond to individual items with the tap of a button on their phone. Buyer responses can occur within minutes of listing an item for sale. We keep our phones on us at all times and immediately respond to each buyer response as it comes in. A buyer response could be an offer to purchase at the listed price, an offer to purchase at a lower price, a question, or a request to see the item in person. Our phones are constantly dinging and ka-chinging from customer responses! A ka-ching on our phones can mean a ka-ching in your pocket! 
+          </li>
+          <li>
+            <b>item price:</b>  Our goal is to sell items within a couple weeks of advertising them. We set prices to sell quickly and we negotiate with buyers! Before we consign an item, we’ll examine it, do some research on it, and get back to you with a recommendation of what prices we would like to set for the original asking price and the minimum price we should accept for it. The minimum price must be at least 20% lower than the original asking price (preferably closer to 50%). If you don’t like our recommended prices, you can tell us what you think they should be and why. We won’t consign the item until we can agree on these prices. 
+          </li>
+          <li>
+            <b>automatic markdowns:</b>  If an item isn’t selling, it’s price is probably too high. So if an item hasn't sold after 30 days, we’ll start advertising it at 90% of the original asking price, and if it hasn’t sold after 60 days, we’ll start advertising it at 80% of the original asking price. 
+          </li>
+          <li>
+            how we pay you:</b>  We will mail you a check for your portion of total sales each month (after deducting our consignment fee), on or before the 10th of the following month. We’ll include with the check a summary of each item sold with its description, sale price, and consignment fee.
+          </li>
+          <li>
+            <b>removal from consignment:</b>  You may remove any or all of your items from consignment at any time during the consignment period subject to an early termination fee of 25% of the original asking price of the item. Since we put significant time and effort into advertising your items and deal with numerous customer responses on our phones, we unfortunately need to charge you for this expended time and effort. If you terminate early, you’ll have 5 days to retrieve your items. 
+          </li>
+          <li>
+            <b>item loss:</b>  Unlike many consignment stores that state that items left in their possession is done so at your own risk, we will take that risk! If an Item is damaged, destroyed, or lost due to fire, water, theft, damage caused during moving, or any other cause while it is in our possession, we will reimburse you for the loss, up to a maximum of 25% of the original asking price of the item.
+          </li>
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <%= f.label :consignment_policy_accepted, "I agree" %>
+        <%= f.check_box :consignment_policy_accepted, value: true, id: "consignment-policy-accepted-box" %>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close<div class="ripple-container"></div></button>
+      </div>
+    </div>
+  </div>
+</div>
