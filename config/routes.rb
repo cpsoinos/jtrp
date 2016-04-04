@@ -1,12 +1,12 @@
 Rails.application.routes.draw do
-  devise_for :users
+  devise_for :users, controllers: { registrations: 'registrations' }
   root 'categories#index'
 
   resources :categories do
     resources :items
   end
 
-  resources :users
+  resources :users_admin, controller: "users"
 
   resources :proposals do
     resources :items
