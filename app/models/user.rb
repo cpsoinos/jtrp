@@ -6,6 +6,8 @@ class User < ActiveRecord::Base
 
   attr_accessor :skip_password_validation  # virtual attribute to skip password validation while saving
 
+  mount_uploader :avatar, AvatarUploader
+
   has_many :proposals
 
   validates :email, presence: true, uniqueness: true

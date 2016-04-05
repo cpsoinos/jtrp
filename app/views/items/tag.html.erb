@@ -1,0 +1,22 @@
+<div class="col-md-6 col-md-offset-3">
+  <div class="well bs-component">
+    <div class="row">
+      <h3 class="text-center company-title">Just the Right Piece</h3>
+    </div>
+    <div class="row text-center">
+      <% if @item.listing_photos.present? %>
+        <%= image_tag @item.listing_photos.first.thumb.url, class: "img-rounded" %></br></br>
+      <% end %>
+      <div class="row">
+        <div class="col-md-6">
+          <b><%= @item.name %></b></br>
+          <%= @item.description %>
+        </div>
+        <div class="col-md-6 text-right">
+          <%= humanized_money_with_symbol(@item.listing_price) %></br>
+          <%= @item.barcode.html_safe %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
