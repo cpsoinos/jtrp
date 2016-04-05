@@ -22,7 +22,6 @@ gem 'chunky_png'
 gem 'has_secure_token'
 gem 'remotipart', '~> 1.2'
 gem 'dropzonejs-rails'
-gem 'fog'
 gem 'fog-aws'
 
 group :production, :local do
