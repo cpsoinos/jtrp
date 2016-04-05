@@ -25,6 +25,10 @@ gem 'dropzonejs-rails'
 gem 'fog-aws'
 gem 'gon'
 
+group :staging, :production do
+  gem 'rollbar', '~> 2.8.3'
+end
+
 group :production, :local do
   gem 'rails_12factor', group: :production
 end
