@@ -24,10 +24,7 @@ gem 'remotipart', '~> 1.2'
 gem 'dropzonejs-rails'
 gem 'fog-aws'
 gem 'gon'
-
-group :staging, :production do
-  gem 'rollbar', '~> 2.8.3'
-end
+gem 'rollbar', '~> 2.8.3'
 
 group :production, :local do
   gem 'rails_12factor', group: :production
