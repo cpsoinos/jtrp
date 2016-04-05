@@ -1,20 +1,20 @@
 class ItemsController < ApplicationController
-  before_filter :find_category
+  before_filter :find_resource
   before_filter :find_company
   before_filter :require_internal, only: [:new, :create, :update, :destroy]
 
   def new
-    @category = Category.find(params[:category_id])
+    @category = @resource
     @item = @category.items.new
   end
 
   def create
-    @item = @category.items.new(item_params)
+    @item = @resource.items.new(item_params)
     if @item.save
       respond_to do |format|
         format.html do
           flash[:notice] = "Item created"
-          redirect_to category_item_path(@category, @item)
+          redirect_to category_item_path(@resource, @item)
         end
         format.js do
           @proposal = Proposal.find(params[:proposal_id])

@@ -1,7 +1,7 @@
 feature "add an item" do
 
   let(:category) { create(:category) }
-  let(:admin) { create(:user, :admin) }
+  let(:user) { create(:user, :internal) }
 
   context "guest" do
     scenario "visits category page" do
@@ -18,16 +18,25 @@ feature "add an item" do
     end
   end
 
-  context "owner" do
+  context "internal user" do
+
+    before do
+      sign_in user
+    end
+
+    scenario "visits home page" do
+      visit root_path
+
+      expect(page).to have_link("Add an item")
+    end
+
     scenario "visits category page" do
-      sign_in admin
       visit category_path(category)
 
       expect(page).to have_link("Add an item")
     end
 
     scenario "clicks on add item link" do
-      sign_in admin
       visit category_path(category)
       click_on "Add an item"
 
@@ -40,7 +49,6 @@ feature "add an item" do
     end
 
     scenario "successfully adds an item" do
-      sign_in admin
       visit new_category_item_path(category)
 
       attach_file('item_initial_photos', File.join(Rails.root, '/spec/fixtures/test.png'))
@@ -55,7 +63,6 @@ feature "add an item" do
     end
 
     scenario "unsuccessfully adds an item" do
-      sign_in admin
       visit new_category_item_path(category)
 
       fill_in "Description", with: "People sit in it."

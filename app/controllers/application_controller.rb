@@ -9,12 +9,12 @@ class ApplicationController < ActionController::Base
     @company ||= Company.find_by(name: "Just the Right Piece")
   end
 
-  def find_category # change to resource
-    @category ||= begin
-      if params[:category_id]
-        Category.find(params[:category_id])
-      elsif params[:proposal_id]
+  def find_resource # change to resource
+    @resource ||= begin
+      if params[:proposal_id]
         Proposal.find(params[:proposal_id])
+      elsif params[:category_id]
+        Category.find(params[:category_id])
       end
     end
   end

@@ -6,6 +6,8 @@ Rails.application.routes.draw do
     resources :items
   end
 
+  resources :items
+
   resources :users_admin, controller: "users"
 
   resources :proposals do
