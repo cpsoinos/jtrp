@@ -76,6 +76,14 @@ feature "new proposal" do
         expect(page).to have_content("like new")
       end
 
+      scenario "deletes an item" do
+        create(:item, proposal: proposal)
+        visit edit_proposal_path(proposal)
+        click_on("Delete")
+
+        expect(page).to have_content("Item removed")
+      end
+
     end
 
     context "new client" do

@@ -1,4 +1,4 @@
-<div class="col-md-6 col-md-offset-3">
+<div class="col-md-8 col-md-offset-2">
   <div class="well bs-component">
     <h1 class="text-center company-title">Just the Right Piece</h1>
     <h3 class="text-center">Consignment Agreement</h2><br>
@@ -66,7 +66,20 @@
         <b>Risk of Loss:</b>  If an Item is damaged, destroyed, or lost due to fire, water, theft, damage caused during moving, or any other cause, the risk of loss shall be on the Party in possession of the Item at the time of loss. Consignee shall be deemed to be in possession after the Item has been delivered to Consignee, or, if Consignee has been contracted to pick up and deliver the item to its location, when the Consignee begins to remove the Item from Consignor’s location. The maximum value of loss for which Consignee shall be liable to Consignor shall be 25% of the agreed upon original asking price for the Item. If an Item is damaged while in Consignee’s possession, Consignee shall be liable to Consignor for the loss in value of the Item, up to a maximum of 25% of the agreed upon original asking price for the Item. Consignee shall have the right to repair, at its own expense, the damage to any Items caused while in its possession. 
       </li>
       <li>
-        <b>Notices:</b>  Any notice required by this agreement may be given by a signed written correspondence to the following addresses or by email to the following email addresses:</b>  Consignee address:</b> 	Just the Right Piece, LLC 	26 Greybirch Rd. 	Andover, MA 01810  Consignee email:</b>  cpsoinos@mac.com  Consignor address:</b> 	name 	street 	townAndZip  Consignor email:</b>  email  Unofficial correspondence may be made by phone or text to:</b>  Consignee phone:</b>  (978) 835-8015   (Carole Psoinos)  Consignor phone:</b>  phoneNumber   (name) 
+        <b>Notices:</b>  Any notice required by this agreement may be given by a signed written correspondence to the following addresses or by email to the following email addresses:
+        <p><b>Consignee Address:</b></p>
+        <p class="indent-address"><%= @company.name %>, LLC </p>
+        <p class="indent-address"><%= @company.address_1 %></p>
+        <% if @company.address_2.present? %>
+          <p class="indent-address"><%= @company.address_2 %></p>
+        <% end %>
+        <p class="indent-address"><%= @company.city %>, <%= @company.state %> <%= @company.zip %></p>
+        <p><b>Consignee email:</b></p>
+        <p class="indent-address">cpsoinos@mac.com</p>
+        <p>Unofficial correspondence may be made by phone or text to:</p>
+        <p class="indent-address">(978) 835-8015   (Carole Psoinos)</p>
+        <p><b>Consignor phone:</b></p>
+        <p class="indent-address"><%= @client.phone %></p>
       </li>
       <li>
         <b>Entire Agreement:</b>  This Agreement represents the entire consignment agreement between the Parties, and shall supersede all prior agreements, understandings, and representations by either Party regarding consignment. 
