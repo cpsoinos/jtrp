@@ -6,6 +6,10 @@ Rails.application.routes.draw do
     resources :items
   end
 
+  resources :items do
+    get '/tag', to: 'items#tag', as: 'tag'
+  end
+
   resources :users_admin, controller: "users"
 
   resources :proposals do
@@ -13,5 +17,6 @@ Rails.application.routes.draw do
     get '/consignment_agreement', to: 'proposals#consignment_agreement'
   end
   post '/create_client', to: 'proposals#create_client'
+  put '/proposals/:proposal_id/add_existing_item', to: 'proposals#add_existing_item'
 
 end

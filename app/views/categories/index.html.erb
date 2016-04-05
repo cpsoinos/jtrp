@@ -5,12 +5,15 @@
   </div>
 </div>
 
+<div class="row text-center">
+  <h2>Categories</h2>
+</div>
 
 <% if current_user.try(:internal?) %>
   <div class="row">
     <div class="col-sm-6 col-md-4">
       <div class="pull-left">
-        <%= link_to "New Proposal <i class='fa fa-plus'></i>".html_safe, new_proposal_path %>
+        <%= link_to "Add an item <i class='fa fa-plus'></i>".html_safe, new_item_path %>
       </div>
     </div>
     <div class="col-sm-6 col-md-4 col-md-offset-4">
@@ -40,3 +43,37 @@
     </div>
   <% end %>
 </div>
+
+<% if current_user.try(:internal?) %>
+  <div class="row text-center">
+    <h2>Proposals</h2>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-6 col-md-4">
+      <div class="pull-left">
+        <%= link_to "New Proposal <i class='fa fa-plus'></i>".html_safe, new_proposal_path %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <% @proposals.each do |proposal| %>
+      <div class="col-sm-6 col-md-4">
+        <div class="thumbnail">
+          <div class="pull-left"><%= proposal.id %></div>
+          <div class="pull-right"><%= link_to "edit", edit_proposal_path(proposal) %></div>
+          <div class="text-center">
+            <% if proposal.client.avatar.present? %>
+              <%= image_tag(proposal.client.avatar.thumb.url) %>
+            <% else %>
+              <%= image_tag "thumb_default_avatar.png", class: "thumb" %>
+            <% end %>
+          </div>
+          <div class="caption text-center">
+            <h3><%= link_to proposal.client.full_name, proposal_path(proposal) %></h3>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% end %>

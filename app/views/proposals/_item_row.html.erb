@@ -17,7 +17,9 @@
   <td class="text-center">
     <%= best_in_place [@proposal, item], :condition %>
   </td>
-  <td class="text-center">
-    <%= link_to "Delete", proposal_item_path(@proposal, item), method: "DELETE", data: { confirm: "Are you sure?" }, class: "btn btn-raised btn-warning" %>
-  </td>
+  <% unless action_name == "consignment_agreement" %>
+    <td class="text-center">
+      <%= link_to "Delete", proposal_item_path(@proposal, item), method: "DELETE", data: { confirm: "Are you sure?" }, class: "btn btn-raised btn-warning" %>
+    </td>
+  <% end %>
 </tr>
