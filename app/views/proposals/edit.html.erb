@@ -2,17 +2,17 @@
 </br>
 
 <div class="row">
-  <div class="col-md-6 col-md-offset-3">
+  <div class="col-md-8 col-md-offset-2">
     <%= render 'item_list' %>
   </div>
 </div>
 
-<div class="col-md-6 col-md-offset-3">
+<div class="col-md-8 col-md-offset-2">
   <div class="well bs-component">
     <%= render 'items/form', category: @proposal, item: Item.new, legend: "Add an Item", redirect_url: edit_proposal_path(@proposal), remote: true %>
     <br>
     <div class="text-center">
-      <%= link_to "View Proposal <i class='fa fa-caret-right'></i>".html_safe, proposal_consignment_agreement_path(@proposal), class: "btn btn-raised btn-success" %>
+      <%= link_to "View Items <i class='fa fa-caret-right'></i>".html_safe, proposal_path(@proposal), class: "btn btn-raised btn-primary" %>
     </div>
   </div>
 </div>

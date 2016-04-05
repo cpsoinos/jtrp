@@ -44,6 +44,17 @@ class ItemsController < ApplicationController
     end
   end
 
+  def destroy
+    @item = Item.find(params[:id])
+    @proposal = Proposal.find(params[:proposal_id])
+    if @item.destroy
+      flash[:notice] = "Item removed"
+      redirect_to proposal_path(@proposal)
+    else
+      redirect_to :back
+    end
+  end
+
   protected
 
   def item_params
