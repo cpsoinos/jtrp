@@ -12,9 +12,12 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery.remotipart
 //= require bootstrap
 //= require bootstrap-material-design
 //= require best_in_place
+//= require dropzone
+//= require jquery-ddslick
 //= require_tree .
 
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160329121832) do
+ActiveRecord::Schema.define(version: 20160405154932) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,32 +39,66 @@ ActiveRecord::Schema.define(version: 20160329121832) do
   end
 
   create_table "items", force: :cascade do |t|
-    t.string   "name",        null: false
+    t.string   "name",                                              null: false
     t.text     "description"
     t.integer  "category_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.json     "photos"
+    t.json     "initial_photos"
+    t.string   "condition"
+    t.float    "height"
+    t.float    "width"
+    t.float    "depth"
+    t.integer  "purchase_price_cents"
+    t.string   "purchase_price_currency",     default: "USD",       null: false
+    t.integer  "listing_price_cents"
+    t.string   "listing_price_currency",      default: "USD",       null: false
+    t.integer  "sale_price_cents"
+    t.string   "sale_price_currency",         default: "USD",       null: false
+    t.string   "token"
+    t.integer  "proposal_id"
+    t.json     "listing_photos"
+    t.string   "status",                      default: "potential", null: false
+    t.integer  "minimum_sale_price_cents"
+    t.string   "minimum_sale_price_currency", default: "USD",       null: false
   end
 
   add_index "items", ["category_id"], name: "index_items_on_category_id", using: :btree
+  add_index "items", ["proposal_id"], name: "index_items_on_proposal_id", using: :btree
+
+  create_table "proposals", force: :cascade do |t|
+    t.integer  "client_id",     null: false
+    t.integer  "created_by_id", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "users", force: :cascade do |t|
-    t.string   "email",                  default: "",      null: false
-    t.string   "encrypted_password",     default: "",      null: false
+    t.string   "email",                       default: "",       null: false
+    t.string   "encrypted_password",          default: "",       null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,       null: false
+    t.integer  "sign_in_count",               default: 0,        null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.inet     "current_sign_in_ip"
     t.inet     "last_sign_in_ip"
-    t.datetime "created_at",                               null: false
-    t.datetime "updated_at",                               null: false
-    t.string   "role",                   default: "guest"
+    t.datetime "created_at",                                     null: false
+    t.datetime "updated_at",                                     null: false
+    t.string   "role",                        default: "guest"
     t.string   "first_name"
     t.string   "last_name"
+    t.string   "address_1"
+    t.string   "address_2"
+    t.string   "city"
+    t.string   "state"
+    t.string   "zip"
+    t.string   "phone"
+    t.string   "phone_ext"
+    t.string   "status",                      default: "active", null: false
+    t.boolean  "consignment_policy_accepted", default: false
+    t.string   "avatar"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

@@ -1,8 +1,8 @@
 <h1 class="text-center"><%= @category.name %></h1>
 </br>
 
-<div class="col-md-6 col-md-offset-3">
+<div class="col-md-8 col-md-offset-2">
   <div class="well bs-component">
-    <%= render 'form', legend: "Add an item" %>
+    <%= render 'form', category: @category, item: @item, legend: "Add an item", remote: false %>
   </div>
 </div>

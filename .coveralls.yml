@@ -1,2 +1,2 @@
-service_name: travis-pro
+service_name: circle-ci
 repo_token: ENV['COVERALLS_REPO_TOKEN']

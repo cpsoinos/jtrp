@@ -1,7 +1,7 @@
 feature "edit a category" do
 
   let(:user) { create(:user, :internal) }
-  let(:consignor) { create(:user, :consignor) }
+  let(:client) { create(:user, :client) }
   let!(:category) { create(:category) }
 
   context "internal user" do
@@ -85,10 +85,10 @@ feature "edit a category" do
 
   end
 
-  context "consignor" do
+  context "client" do
 
     before do
-      sign_in consignor
+      sign_in client
     end
 
     scenario "visits categories page" do

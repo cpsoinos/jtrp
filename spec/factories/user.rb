@@ -9,6 +9,14 @@ FactoryGirl.define do
     password "supersecret"
     password_confirmation "supersecret"
     role "guest"
+    status "active"
+    address_1 Faker::Address.street_address
+    address_2 Faker::Address.secondary_address
+    city Faker::Address.city
+    state Faker::Address.state
+    zip Faker::Address.zip
+    phone Faker::PhoneNumber.phone_number
+    phone_ext Faker::PhoneNumber.extension
 
     trait :admin do
       role "admin"
@@ -18,8 +26,16 @@ FactoryGirl.define do
       role "internal"
     end
 
-    trait :consignor do
-      role "consignor"
+    trait :client do
+      role "client"
+    end
+
+    trait :agent do
+      role "agent"
+    end
+
+    trait :inactive do
+      status "inactive"
     end
   end
 

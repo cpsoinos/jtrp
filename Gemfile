@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+ruby "2.3.0"
 gem 'bundler', '>= 1.8.4'
 gem 'rails', '4.2.5.2'
 gem 'pg', '~> 0.15'
@@ -15,6 +16,15 @@ gem 'devise'
 gem 'carrierwave', github: 'carrierwaveuploader/carrierwave'
 gem 'mini_magick'
 gem 'best_in_place', '~> 3.0.1'
+gem 'money-rails'
+gem 'barby'
+gem 'chunky_png'
+gem 'has_secure_token'
+gem 'remotipart', '~> 1.2'
+gem 'dropzonejs-rails'
+gem 'fog-aws'
+gem 'gon'
+gem 'rollbar', '~> 2.8.3'
 
 group :production, :local do
   gem 'rails_12factor', group: :production
@@ -32,6 +42,8 @@ group :development, :test, :local do
   gem 'faker'
   gem 'factory_girl_rails'
   gem 'web-console', '~> 2.0'
+  gem 'guard-rspec', require: false
+  gem 'terminal-notifier-guard'
 end
 
 group :development, :local do
@@ -47,7 +59,6 @@ group :test do
   gem 'launchy'
   gem 'email_spec'
   gem 'rspec-sidekiq'
-  gem 'selenium-webdriver'
   gem 'database_cleaner'
   gem 'vcr'
   gem 'webmock'

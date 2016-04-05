@@ -3,4 +3,8 @@ class Company < ActiveRecord::Base
 
   validates :name, presence: true
 
+  def full_address
+    "#{address_1}#{address_2.present? ? (', ' + address_2) : ''}, #{city}, #{state} #{zip}" 
+  end
+
 end
