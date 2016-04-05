@@ -20,3 +20,8 @@ ol > li:before {
   text-align: right;
   content: counter(item) ".";
 }
+
+.indent-address {
+  margin-top: 0;
+  margin-left: 1em;
+}
