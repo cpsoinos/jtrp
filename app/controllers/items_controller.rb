@@ -55,6 +55,10 @@ class ItemsController < ApplicationController
     end
   end
 
+  def tag
+    @item = Item.find(params[:item_id])
+  end
+
   protected
 
   def item_params

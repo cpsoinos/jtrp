@@ -50,7 +50,6 @@ class ProposalsController < ApplicationController
   end
 
   def add_existing_item
-    binding.pry
     @item = Item.find(params[:item][:id])
     if @item.update(item_params)
       respond_to do |format|
