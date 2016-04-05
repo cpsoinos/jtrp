@@ -11,7 +11,7 @@
 
     <% @item.initial_photos.each do |photo| %>
       <div class="row text-center">
-        <%= image_tag photo.url, class: "img-rounded" %></br></br>
+        <%= image_tag photo.thumb.url, class: "img-rounded" %></br></br>
       </div>
     <% end %>
 

@@ -7,11 +7,13 @@
       <th class="text-center">Original Asking Price</th>
       <th class="text-center">Minimum Sale Price</th>
       <th class="text-center">Condition / Notes</th>
-      <th class="text-center">Actions</th>
+      <% unless action_name == "consignment_agreement" %>
+        <th class="text-center">Actions</th>
+      <% end %>
     </tr>
   </thead>
   <tbody id="proposal-item-list">
-    <% @proposal.items.reverse.each do |item| %>
+    <% @proposal.items.each do |item| %>
       <%= render 'item_row', item: item %>
     <% end %>
   </tbody>

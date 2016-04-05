@@ -23,6 +23,8 @@ class ProposalsController < ApplicationController
 
   def edit
     @proposal = Proposal.find(params[:id])
+    gon.items = build_json_for_items
+    gon.proposalId = @proposal.id
   end
 
   def consignment_agreement
@@ -44,6 +46,19 @@ class ProposalsController < ApplicationController
     else
       flash[:alert] = @client.errors.full_messages.uniq.join
       redirect_to new_proposal_path
+    end
+  end
+
+  def add_existing_item
+    binding.pry
+    @item = Item.find(params[:item][:id])
+    if @item.update(item_params)
+      respond_to do |format|
+        format.js do
+          @proposal = @item.proposal
+          render :'proposals/add_item'
+        end
+      end
     end
   end
 
@@ -69,6 +84,22 @@ class ProposalsController < ApplicationController
 
   def user_params
     params.require(:user).permit([:email, :first_name, :last_name, :address_1, :address_2, :city, :state, :zip, :phone, :phone_ext])
+  end
+
+  def item_params
+    params.require(:item).permit([:proposal_id])
+  end
+
+  def build_json_for_items
+    Item.potential.map do |item|
+      {
+        text: item.name,
+        value: item.id,
+        selected: false,
+        description: item.description,
+        imageSrc: item.initial_photos.first.try(:thumb).try(:url)
+      }
+    end.to_json
   end
 
 end

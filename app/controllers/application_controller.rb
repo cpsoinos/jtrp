@@ -15,6 +15,8 @@ class ApplicationController < ActionController::Base
         Proposal.find(params[:proposal_id])
       elsif params[:category_id]
         Category.find(params[:category_id])
+      else
+        Category.find_or_create_by(name: "Uncategorized")
       end
     end
   end

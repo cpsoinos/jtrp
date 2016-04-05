@@ -30,6 +30,32 @@ feature "add an item" do
       expect(page).to have_link("Add an item")
     end
 
+    scenario "clicks on 'Add an item' from home page" do
+      visit root_path
+      click_link("Add an item")
+
+      expect(page).to have_content("Uncategorized")
+      expect(page).to have_content("Add an item")
+      expect(page).to have_field("Name")
+      expect(page).to have_field("Description")
+      expect(page).to have_field("Purchase price")
+      expect(page).to have_field("Listing price")
+    end
+
+    scenario "successfully adds an uncategorized item" do
+      visit new_item_path
+
+      attach_file('item_initial_photos', File.join(Rails.root, '/spec/fixtures/test.png'))
+      fill_in "Name", with: "Chair"
+      fill_in "Description", with: "People sit in it."
+      click_on("Add Item")
+
+      expect(page).to have_content("Item created")
+      expect(page).to have_content("Chair")
+      expect(page).to have_content("People sit in it.")
+      expect(page).to have_selector("img[src$='test.png']")
+    end
+
     scenario "visits category page" do
       visit category_path(category)
 

@@ -17,6 +17,7 @@
 //= require bootstrap-material-design
 //= require best_in_place
 //= require dropzone
+//= require jquery-ddslick
 //= require_tree .
 
 

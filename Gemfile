@@ -23,6 +23,7 @@ gem 'has_secure_token'
 gem 'remotipart', '~> 1.2'
 gem 'dropzonejs-rails'
 gem 'fog-aws'
+gem 'gon'
 
 group :production, :local do
   gem 'rails_12factor', group: :production
