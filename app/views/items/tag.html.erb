@@ -12,9 +12,9 @@
           <b><%= @item.name %></b></br>
           <%= @item.description %>
         </div>
-        <div class="col-md-6 text-right">
+        <div class="col-md-4 text-right">
           <%= humanized_money_with_symbol(@item.listing_price) %></br>
-          <%= @item.barcode.html_safe %>
+          <%= @item.barcode_data.html_safe %>
         </div>
       </div>
     </div>
