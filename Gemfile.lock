@@ -168,11 +168,6 @@ GEM
       guard (~> 2.1)
       guard-compat (~> 1.1)
       rspec (>= 2.99.0, < 4.0)
-    has_barcode (0.2.3)
-      activesupport (>= 3)
-      barby
-      i18n
-      rake
     has_secure_token (1.0.0)
       activerecord (>= 3.0)
     hashdiff (0.3.0)
@@ -429,7 +424,6 @@ DEPENDENCIES
   fuubar
   gon
   guard-rspec
-  has_barcode
   has_secure_token
   jbuilder (~> 2.0)
   jquery-rails

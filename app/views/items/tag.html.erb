@@ -7,16 +7,15 @@
       <% if @item.listing_photos.present? %>
         <%= image_tag @item.listing_photos.first.thumb.url, class: "img-rounded" %></br></br>
       <% end %>
-      <div class="row">
-        <div class="col-md-6">
-          <b><%= @item.name %></b></br>
-          <%= @item.description %>
-        </div>
-        <div class="col-md-4 text-right">
-          <%= humanized_money_with_symbol(@item.listing_price) %></br>
-          <%= @item.barcode_data.html_safe %>
-        </div>
+      <div class="row text-center">
+        <b><%= @item.name %></b></br>
+        <%= @item.description %>
       </div>
+      <%= humanized_money_with_symbol(@item.listing_price) %></br>
+    </div>
+    <div class="row text-center">
+      <%= @item.barcode.html_safe %><br />
+      <%= @item.token %>
     </div>
   </div>
 </div>
