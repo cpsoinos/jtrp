@@ -49,7 +49,7 @@
     </div>
   </div>
 
-  <% unless controller_name == "proposals" %>
+  <% if %w(categories items).include?(controller_name) %>
     <div class="row form-row">
       <div class="text-center">
         <div class="col-xs-12 col-md-3 text-right">
@@ -60,7 +60,22 @@
         </div>
       </div>
     </div>
+  <% end %>
 
+  <% if %w(items proposals).include?(controller_name) %>
+    <div class="row form-row">
+      <div class="text-center">
+        <div class="col-xs-12 col-md-3 text-right">
+          <%= f.label :listing_price, class: "control-label" %>
+        </div>
+        <div class="col-xs-12 col-md-3 text-left">
+          <%= f.text_field :listing_price, class: "form-control", placeholder: "$" %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <% if %w(items purchase_orders).include?(controller_name) %>
     <div class="row form-row">
       <div class="text-center">
         <div class="col-xs-12 col-md-3 text-right">
@@ -73,27 +88,18 @@
     </div>
   <% end %>
 
-  <div class="row form-row">
-    <div class="text-center">
-      <div class="col-xs-12 col-md-3 text-right">
-        <%= f.label :listing_price, class: "control-label" %>
-      </div>
-      <div class="col-xs-12 col-md-3 text-left">
-        <%= f.text_field :listing_price, class: "form-control", placeholder: "$" %>
-      </div>
-    </div>
-  </div>
-
-  <div class="row form-row">
-    <div class="text-center">
-      <div class="col-xs-12 col-md-3 text-right">
-        <%= f.label :minimum_sale_price, class: "control-label" %>
-      </div>
-      <div class="col-xs-12 col-md-3 text-left">
-        <%= f.text_field :minimum_sale_price, class: "form-control", placeholder: "$" %>
+  <% if controller_name == "proposals" %>
+    <div class="row form-row">
+      <div class="text-center">
+        <div class="col-xs-12 col-md-3 text-right">
+          <%= f.label :minimum_sale_price, class: "control-label" %>
+        </div>
+        <div class="col-xs-12 col-md-3 text-left">
+          <%= f.text_field :minimum_sale_price, class: "form-control", placeholder: "$" %>
+        </div>
       </div>
     </div>
-  </div>
+  <% end %>
 
   <div class="row form-row">
     <div class="text-center">

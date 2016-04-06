@@ -23,6 +23,7 @@ class Item < ActiveRecord::Base
 
   belongs_to :category
   belongs_to :proposal
+  belongs_to :purchase_order
 
   validates :name, presence: true
 
