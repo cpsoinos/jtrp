@@ -23,6 +23,7 @@ class Item < ActiveRecord::Base
 
   belongs_to :category
   belongs_to :proposal
+  belongs_to :purchase_order
 
   validates :name, presence: true
 
@@ -35,9 +36,10 @@ class Item < ActiveRecord::Base
     require 'barby/barcode/code_128'
     require 'barby/outputter/png_outputter'
     require 'barby/outputter/html_outputter'
+    require 'barby/outputter/cairo_outputter'
 
     barcode = Barby::Code128B.new(token)
-    Barby::HtmlOutputter.new(barcode).to_html
+    Barby::CairoOutputter.new(barcode).to_svg
   end
 
   def active?

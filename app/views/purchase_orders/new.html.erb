@@ -1,0 +1,29 @@
+<h1 class="text-center">New Purchase Order</h1>
+</br>
+
+<div class="col-md-8 col-md-offset-2">
+  <div class="well bs-component">
+
+    <%= render 'form', legend: "New Purchase Order" %>
+
+    <div class="row">
+      <div class="text-center">
+        - or -</br>
+        <%= link_to "New Vendor", "javascript:void(0)", class: "btn btn-raised btn-primary", id: "new-vendor-button" %>
+      </div>
+    </div>
+
+    <div class="row hidden" id="new-vendor-form">
+
+      <%= form_for @vendor, url: create_vendor_path do |f| %>
+
+        <%= render 'users/form', resource: @vendor, f: f %>
+        <div class="text-center">
+          <%= f.submit "Create Vendor", class: "btn btn-raised btn-success" %>
+        </div>
+
+      <% end %>
+    </div>
+
+  </div>
+</div>

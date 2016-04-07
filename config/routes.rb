@@ -19,4 +19,10 @@ Rails.application.routes.draw do
   post '/create_client', to: 'proposals#create_client'
   put '/proposals/:proposal_id/add_existing_item', to: 'proposals#add_existing_item'
 
+  resources :purchase_orders do
+    resources :items
+  end
+  post '/create_vendor', to: 'purchase_orders#create_vendor'
+  put '/purchase_orders/:purchase_order_id/add_existing_item', to: 'purchase_orders#add_existing_item'
+
 end
