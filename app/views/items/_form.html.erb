@@ -1,122 +1,119 @@
-<%= form_for [category, item], class: "form-horizontal", remote: remote do |f| %>
+<legend><%= legend %></legend>
 
-  <legend><%= legend %></legend>
-
-  <% if item.errors.present? %>
-    <div class="row">
-      <div class="col-md-4 col-md-offset-4">
-        <div class="error_messages notice alert alert-danger text-center">
-          <% item.errors.full_messages.each do |msg| %>
-            <p><%= msg %></p>
-          <% end %>
-        </div>
-      </div>
-    </div>
-  <% end %>
-
-  <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
-
-  <div class="row form-row">
-    <div class="text-center">
-      <div class="col-xs-12 col-md-3 text-right">
-        <%= f.label :name, class: "control-label" %>
-      </div>
-      <div class="col-xs-12 col-md-9 text-left">
-        <%= f.text_field :name, class: "form-control", placeholder: "Item name" %>
-      </div>
-    </div>
-  </div>
-
-  <div class="row form-row">
-    <div class="text-center">
-      <div class="col-xs-12 col-md-3 text-right">
-        <%= f.label :description, class: "control-label" %>
-      </div>
-      <div class="col-xs-12 col-md-9 text-left">
-        <%= f.text_area :description, class: "form-control", placeholder: "Item description" %>
-      </div>
-    </div>
-  </div>
-
-  <div class="row form-row">
-    <div class="text-center">
-      <div class="col-xs-12 col-md-3 text-right">
-        <%= f.label :initial_photos, class: "control-label" %>
-      </div>
-      <div class="col-xs-12 col-md-9 text-left">
-        <%= f.file_field :initial_photos, multiple: true, class: "form-control" %>
-      </div>
-    </div>
-  </div>
-
-  <% if %w(categories items).include?(controller_name) %>
-    <div class="row form-row">
-      <div class="text-center">
-        <div class="col-xs-12 col-md-3 text-right">
-          <%= f.label :listing_photos, class: "control-label" %>
-        </div>
-        <div class="col-xs-12 col-md-9 text-left">
-          <%= f.file_field :listing_photos, multiple: true, class: "form-control" %>
-        </div>
-      </div>
-    </div>
-  <% end %>
-
-  <% if %w(items proposals).include?(controller_name) %>
-    <div class="row form-row">
-      <div class="text-center">
-        <div class="col-xs-12 col-md-3 text-right">
-          <%= f.label :listing_price, class: "control-label" %>
-        </div>
-        <div class="col-xs-12 col-md-3 text-left">
-          <%= f.text_field :listing_price, class: "form-control", placeholder: "$" %>
-        </div>
-      </div>
-    </div>
-  <% end %>
-
-  <% if %w(items purchase_orders).include?(controller_name) %>
-    <div class="row form-row">
-      <div class="text-center">
-        <div class="col-xs-12 col-md-3 text-right">
-          <%= f.label :purchase_price, class: "control-label" %>
-        </div>
-        <div class="col-xs-12 col-md-3 text-left">
-          <%= f.text_field :purchase_price, class: "form-control", placeholder: "$" %>
-        </div>
-      </div>
-    </div>
-  <% end %>
-
-  <% if controller_name == "proposals" %>
-    <div class="row form-row">
-      <div class="text-center">
-        <div class="col-xs-12 col-md-3 text-right">
-          <%= f.label :minimum_sale_price, class: "control-label" %>
-        </div>
-        <div class="col-xs-12 col-md-3 text-left">
-          <%= f.text_field :minimum_sale_price, class: "form-control", placeholder: "$" %>
-        </div>
-      </div>
-    </div>
-  <% end %>
-
-  <div class="row form-row">
-    <div class="text-center">
-      <div class="col-xs-12 col-md-3 text-right">
-        <%= f.label :condition, class: "control-label" %>
-      </div>
-      <div class="col-xs-12 col-md-3 text-left">
-        <%= f.text_field :condition, class: "form-control" %>
-      </div>
-    </div>
-  </div>
-
-  <div class="row form-row">
-    <div class="actions">
-      <div class="col-xs-12 text-center">
-        <%= f.submit "Add Item", class: "btn btn-raised btn-primary"%>
+<% if item.errors.present? %>
+  <div class="row">
+    <div class="col-md-4 col-md-offset-4">
+      <div class="error_messages notice alert alert-danger text-center">
+        <% item.errors.full_messages.each do |msg| %>
+          <p><%= msg %></p>
+        <% end %>
       </div>
     </div>
   </div>
 <% end %>
+
+<%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+
+<div class="row form-row">
+  <div class="text-center">
+    <div class="col-xs-12 col-md-3 text-right">
+      <%= f.label :name, class: "control-label" %>
+    </div>
+    <div class="col-xs-12 col-md-9 text-left">
+      <%= f.text_field :name, class: "form-control", placeholder: "Item name" %>
+    </div>
+  </div>
+</div>
+
+<div class="row form-row">
+  <div class="text-center">
+    <div class="col-xs-12 col-md-3 text-right">
+      <%= f.label :description, class: "control-label" %>
+    </div>
+    <div class="col-xs-12 col-md-9 text-left">
+      <%= f.text_area :description, class: "form-control", placeholder: "Item description" %>
+    </div>
+  </div>
+</div>
+
+<div class="row form-row">
+  <div class="text-center">
+    <div class="col-xs-12 col-md-3 text-right">
+      <%= f.label :initial_photos, class: "control-label" %>
+    </div>
+    <div class="col-xs-12 col-md-9 text-left">
+      <%= f.file_field :initial_photos, multiple: true, class: "form-control" %>
+    </div>
+  </div>
+</div>
+
+<% if %w(categories items).include?(controller_name) %>
+  <div class="row form-row">
+    <div class="text-center">
+      <div class="col-xs-12 col-md-3 text-right">
+        <%= f.label :listing_photos, class: "control-label" %>
+      </div>
+      <div class="col-xs-12 col-md-9 text-left">
+        <%= f.file_field :listing_photos, multiple: true, class: "form-control" %>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<% if %w(items proposals).include?(controller_name) %>
+  <div class="row form-row">
+    <div class="text-center">
+      <div class="col-xs-12 col-md-3 text-right">
+        <%= f.label :listing_price, class: "control-label" %>
+      </div>
+      <div class="col-xs-12 col-md-3 text-left">
+        <%= f.text_field :listing_price, class: "form-control", placeholder: "$" %>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<% if %w(items purchase_orders).include?(controller_name) %>
+  <div class="row form-row">
+    <div class="text-center">
+      <div class="col-xs-12 col-md-3 text-right">
+        <%= f.label :purchase_price, class: "control-label" %>
+      </div>
+      <div class="col-xs-12 col-md-3 text-left">
+        <%= f.text_field :purchase_price, class: "form-control", placeholder: "$" %>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<% if controller_name == "proposals" %>
+  <div class="row form-row">
+    <div class="text-center">
+      <div class="col-xs-12 col-md-3 text-right">
+        <%= f.label :minimum_sale_price, class: "control-label" %>
+      </div>
+      <div class="col-xs-12 col-md-3 text-left">
+        <%= f.text_field :minimum_sale_price, class: "form-control", placeholder: "$" %>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<div class="row form-row">
+  <div class="text-center">
+    <div class="col-xs-12 col-md-3 text-right">
+      <%= f.label :condition, class: "control-label" %>
+    </div>
+    <div class="col-xs-12 col-md-3 text-left">
+      <%= f.text_field :condition, class: "form-control" %>
+    </div>
+  </div>
+</div>
+
+<div class="row form-row">
+  <div class="actions">
+    <div class="col-xs-12 text-center">
+      <%= f.submit "Add Item", class: "btn btn-raised btn-primary"%>
+    </div>
+  </div>
+</div>

@@ -22,6 +22,7 @@ class PurchaseOrdersController < ApplicationController
 
   def edit
     @purchase_order = PurchaseOrder.find(params[:id])
+    @item = @purchase_order.items.new
     gon.items = build_json_for_items
     gon.purchaseOrderId = @purchase_order.id
   end

@@ -3,6 +3,8 @@
 
 <div class="col-md-8 col-md-offset-2">
   <div class="well bs-component">
-    <%= render 'form', category: @category, item: @item, legend: "Add an item", remote: false %>
+      <%= form_for [@category, @item], class: "form-horizontal" do |f| %>
+      <%= render 'form', item: @item, f: f, legend: "Add an item" %>
+    <% end %>
   </div>
 </div>

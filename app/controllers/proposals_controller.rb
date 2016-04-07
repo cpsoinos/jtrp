@@ -23,6 +23,7 @@ class ProposalsController < ApplicationController
 
   def edit
     @proposal = Proposal.find(params[:id])
+    @item = @proposal.items.new
     gon.items = build_json_for_items
     gon.proposalId = @proposal.id
   end

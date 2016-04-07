@@ -20,7 +20,10 @@
       </div>
     </div>
 
-    <%= render 'items/form', category: @purchase_order, item: Item.new, legend: "Or, Add an Item:", remote: true %>
+    <%= form_for [@purchase_order, @item], class: "form-horizontal", remote: true do |f| %>
+      <%= render 'items/form', item: @item, f: f, legend: "Or, Add an Item:", remote: true %>
+    <% end %>
+
     <br>
     <div class="text-center">
       <%= link_to "View Items <i class='fa fa-caret-right'></i>".html_safe, purchase_order_path(@purchase_order), class: "btn btn-raised btn-primary" %>
