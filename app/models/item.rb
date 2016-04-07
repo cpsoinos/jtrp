@@ -26,6 +26,7 @@ class Item < ActiveRecord::Base
   belongs_to :purchase_order
 
   validates :name, presence: true
+  validates :description, presence: true
 
   scope :potential, -> { where(status: "potential") }
   scope :active, -> { where(status: "active") }
