@@ -6,6 +6,7 @@ describe User do
   it "internal?" do
     user = create(:user, :internal)
 
+    expect(user.vendor?).to be(false)
     expect(user.internal?).to be(true)
     expect(user.client?).to be(false)
     expect(user.agent?).to be(false)
@@ -14,7 +15,17 @@ describe User do
   it "client?" do
     user = create(:user, :client)
 
+    expect(user.vendor?).to be(false)
     expect(user.client?).to be(true)
+    expect(user.internal?).to be(false)
+    expect(user.agent?).to be(false)
+  end
+
+  it "vendor?" do
+    user = create(:user, :vendor)
+
+    expect(user.vendor?).to be(true)
+    expect(user.client?).to be(false)
     expect(user.internal?).to be(false)
     expect(user.agent?).to be(false)
   end
@@ -22,6 +33,7 @@ describe User do
   it "agent?" do
     user = create(:user, :agent)
 
+    expect(user.vendor?).to be(false)
     expect(user.agent?).to be(true)
     expect(user.internal?).to be(false)
     expect(user.client?).to be(false)
@@ -51,6 +63,7 @@ describe User do
 
     before do
       create_list(:user, 3, :client)
+      create_list(:user, 4, :vendor)
       create_list(:user, 3, :agent)
       create_list(:user, 3, :internal)
       create_list(:user, 2, :inactive)
@@ -60,6 +73,13 @@ describe User do
       expect(User.client.count).to eq(3)
       User.client.each do |user|
         expect(user.client?).to be(true)
+      end
+    end
+
+    it "vendor" do
+      expect(User.vendor.count).to eq(4)
+      User.vendor.each do |user|
+        expect(user.vendor?).to be(true)
       end
     end
 
@@ -78,7 +98,7 @@ describe User do
     end
 
     it "active" do
-      expect(User.active.count).to eq(9)
+      expect(User.active.count).to eq(13)
       User.active.each do |user|
         expect(user.active?).to be(true)
       end

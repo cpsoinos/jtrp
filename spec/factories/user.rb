@@ -30,6 +30,10 @@ FactoryGirl.define do
       role "client"
     end
 
+    trait :vendor do
+      role "vendor"
+    end
+
     trait :agent do
       role "agent"
     end

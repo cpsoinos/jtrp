@@ -14,6 +14,7 @@ class User < ActiveRecord::Base
   validates :status, presence: true
 
   scope :client, -> { where(role: "client") }
+  scope :vendor, -> { where(role: "vendor") }
   scope :agent, -> { where(role: "agent") }
   scope :internal, -> { where(role: "internal") }
   scope :active, -> { where(status: "active") }
@@ -25,6 +26,10 @@ class User < ActiveRecord::Base
 
   def client?
     role == "client"
+  end
+
+  def vendor?
+    role == "vendor"
   end
 
   def agent?
