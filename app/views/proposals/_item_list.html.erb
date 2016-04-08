@@ -14,6 +14,7 @@
   </thead>
   <tbody id="proposal-item-list">
     <% @proposal.items.each do |item| %>
+      <% next unless item.persisted? %>
       <%= render 'item_row', item: item %>
     <% end %>
   </tbody>

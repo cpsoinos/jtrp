@@ -1,9 +1,10 @@
 class PurchaseOrdersController < ApplicationController
+  before_filter :find_categories, only: :edit
+  before_filter :find_clients, only: [:new, :edit]
 
   def new
     @purchase_order = PurchaseOrder.new
-    @vendors = vendors
-    @vendor = User.new
+    @client = User.new
   end
 
   def create
@@ -22,23 +23,25 @@ class PurchaseOrdersController < ApplicationController
 
   def edit
     @purchase_order = PurchaseOrder.find(params[:id])
+    @client = @purchase_order.client
+    @item = @purchase_order.items.new
     gon.items = build_json_for_items
     gon.purchaseOrderId = @purchase_order.id
   end
 
-  def create_vendor
-    @vendor = User.new(user_params)
-    @vendor.skip_password_validation = true
-    @vendor.role = "vendor"
-    if @vendor.save
-      @purchase_order = PurchaseOrder.new(vendor: @vendor, created_by: current_user)
+  def create_client
+    @client = User.new(user_params)
+    @client.skip_password_validation = true
+    @client.role = "client"
+    if @client.save
+      @purchase_order = PurchaseOrder.new(client: @client, created_by: current_user)
       if @purchase_order.save
         redirect_to edit_purchase_order_path(@purchase_order)
       else
         redirect_to :back
       end
     else
-      flash[:alert] = @vendor.errors.full_messages.uniq.join
+      flash[:alert] = @client.errors.full_messages.uniq.join
       redirect_to new_purchase_order_path
     end
   end
@@ -55,24 +58,10 @@ class PurchaseOrdersController < ApplicationController
     end
   end
 
-  private
-
-  def vendors
-    @vendors = User.vendor.map do |vendor|
-      [vendor.full_name, vendor.id]
-    end
-  end
-
-  def items
-    @items = Item.potential.map do |item|
-      [item.name, item.id]
-    end
-  end
-
   protected
 
   def purchase_order_params
-    params.require(:purchase_order).permit([:vendor_id, :created_by_id])
+    params.require(:purchase_order).permit([:client_id, :created_by_id])
   end
 
   def user_params
@@ -84,7 +73,7 @@ class PurchaseOrdersController < ApplicationController
   end
 
   def build_json_for_items
-    Item.potential.map do |item|
+    @client.items.potential.map do |item|
       {
         text: item.name,
         value: item.id,

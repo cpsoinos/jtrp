@@ -24,8 +24,10 @@ class Item < ActiveRecord::Base
   belongs_to :category
   belongs_to :proposal
   belongs_to :purchase_order
+  belongs_to :client, class_name: "User", foreign_key: "client_id"
 
   validates :name, presence: true
+  validates :description, presence: true
 
   scope :potential, -> { where(status: "potential") }
   scope :active, -> { where(status: "active") }

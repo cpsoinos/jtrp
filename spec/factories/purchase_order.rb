@@ -3,7 +3,7 @@ require 'factory_girl'
 FactoryGirl.define do
 
   factory :purchase_order do
-    association :vendor, factory: :user
+    association :client, factory: :user
     association :created_by, factory: :user
   end
 

@@ -1,20 +1,29 @@
 class ItemsController < ApplicationController
-  before_filter :find_resource
-  before_filter :find_company
+  before_filter :find_clients, only: [:new, :edit]
+  before_filter :find_categories, only: [:new, :edit]
+  before_filter :find_proposal, only: :create
+  before_filter :find_purchase_order, only: :create
   before_filter :require_internal, only: [:new, :create, :update, :destroy]
 
   def new
-    @category = @resource
-    @item = @category.items.new
+    @item = Item.new
   end
 
   def create
-    @item = @resource.items.new(item_params)
+    @item = begin
+      if find_proposal
+        @proposal.items.new(item_params)
+      elsif find_purchase_order
+        @purchase_order.items.new(item_params)
+      else
+        Item.new(item_params)
+      end
+    end
     if @item.save
       respond_to do |format|
         format.html do
           flash[:notice] = "Item created"
-          redirect_to category_item_path(@resource, @item)
+          redirect_to item_path(@item)
         end
         format.js do
           if params[:proposal_id]
@@ -67,7 +76,7 @@ class ItemsController < ApplicationController
   protected
 
   def item_params
-    params.require(:item).permit([:name, :description, {initial_photos: []}, {listing_photos: []}, :purchase_price, :asking_price, :listing_price, :sale_price, :minimum_sale_price, :condition])
+    params.require(:item).permit([:name, :description, {initial_photos: []}, {listing_photos: []}, :purchase_price, :asking_price, :listing_price, :sale_price, :minimum_sale_price, :condition, :client_id, :category_id])
   end
 
 end

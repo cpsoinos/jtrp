@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160406164544) do
+ActiveRecord::Schema.define(version: 20160407113021) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,8 +39,7 @@ ActiveRecord::Schema.define(version: 20160406164544) do
   end
 
   create_table "items", force: :cascade do |t|
-    t.string   "name",                                              null: false
-    t.text     "description"
+    t.text     "description",                                       null: false
     t.integer  "category_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -62,9 +61,12 @@ ActiveRecord::Schema.define(version: 20160406164544) do
     t.integer  "minimum_sale_price_cents"
     t.string   "minimum_sale_price_currency", default: "USD",       null: false
     t.integer  "purchase_order_id"
+    t.string   "name",                                              null: false
+    t.integer  "client_id"
   end
 
   add_index "items", ["category_id"], name: "index_items_on_category_id", using: :btree
+  add_index "items", ["client_id"], name: "index_items_on_client_id", using: :btree
   add_index "items", ["proposal_id"], name: "index_items_on_proposal_id", using: :btree
   add_index "items", ["purchase_order_id"], name: "index_items_on_purchase_order_id", using: :btree
 
@@ -76,7 +78,7 @@ ActiveRecord::Schema.define(version: 20160406164544) do
   end
 
   create_table "purchase_orders", force: :cascade do |t|
-    t.integer  "vendor_id",     null: false
+    t.integer  "client_id",     null: false
     t.integer  "created_by_id", null: false
     t.datetime "created_at"
     t.datetime "updated_at"

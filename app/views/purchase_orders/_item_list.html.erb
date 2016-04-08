@@ -12,6 +12,7 @@
   </thead>
   <tbody id="purchase_order-item-list">
     <% @purchase_order.items.each do |item| %>
+      <% next unless item.persisted? %>
       <%= render 'item_row', item: item %>
     <% end %>
   </tbody>

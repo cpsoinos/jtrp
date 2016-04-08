@@ -1,7 +1,5 @@
 feature "new purchase order" do
 
-  # let(:company) { Company.find_by(name: "Just the Right Piece") }
-
   context "visitor" do
     scenario "visit root path" do
       visit root_path
@@ -12,7 +10,7 @@ feature "new purchase order" do
 
   context "internal user" do
     let(:user) { create(:user, :internal) }
-    let!(:vendor) { create(:user, :vendor) }
+    let!(:client) { create(:user, :client) }
 
     before do
       sign_in user
@@ -28,20 +26,20 @@ feature "new purchase order" do
       visit root_path
       click_link("New Purchase Order")
 
-      expect(page).to have_content("Step 1: Select a Vendor")
+      expect(page).to have_content("Step 1: Select a Client")
     end
 
-    context "existing vendor" do
+    context "existing client" do
 
-      scenario "an existing vendor" do
+      scenario "an existing client" do
         visit new_purchase_order_path
 
-        expect(page).to have_select("purchase_order_vendor_id", with_options: [vendor.full_name])
+        expect(page).to have_select("purchase_order_client_id", with_options: [client.full_name])
       end
 
-      scenario "selects an existing vendor" do
+      scenario "selects an existing client" do
         visit new_purchase_order_path
-        select(vendor.full_name, from: "purchase_order_vendor_id")
+        select(client.full_name, from: "purchase_order_client_id")
         click_button("Next")
 
         expect(page).to have_content("Add an Item")
@@ -53,7 +51,7 @@ feature "new purchase order" do
         expect(page).to have_button("Add Item")
       end
 
-      let(:purchase_order) { create(:purchase_order, vendor: vendor)}
+      let(:purchase_order) { create(:purchase_order, client: client)}
 
       scenario "successfully fills in purchase_order information", js: true do
         visit edit_purchase_order_path(purchase_order)
@@ -79,11 +77,11 @@ feature "new purchase order" do
 
     end
 
-    context "new vendor" do
+    context "new client" do
 
-      scenario "successfully creates a new vendor", js: true do
+      scenario "successfully creates a new client", js: true do
         visit new_purchase_order_path
-        click_on("New Vendor")
+        click_on("New Client")
 
         fill_in("user_email", with: "sally@salamander.com")
         fill_in("user_first_name", with: "Sally")
@@ -93,14 +91,14 @@ feature "new purchase order" do
         fill_in("user_city", with: "Naples")
         fill_in("user_state", with: "FL")
         fill_in("user_zip", with: "12345")
-        click_on("Create Vendor")
+        click_on("Create Client")
 
         expect(page).to have_content("Add an Item")
       end
 
-      scenario "unsuccessfully creates a new vendor", js: true do
+      scenario "unsuccessfully creates a new client", js: true do
         visit new_purchase_order_path
-        click_on("New Vendor")
+        click_on("New Client")
 
         fill_in("user_first_name", with: "Sally")
         fill_in("user_last_name", with: "Salamander")
@@ -109,7 +107,7 @@ feature "new purchase order" do
         fill_in("user_city", with: "Naples")
         fill_in("user_state", with: "FL")
         fill_in("user_zip", with: "12345")
-        click_on("Create Vendor")
+        click_on("Create Client")
 
         expect(page).to have_content("Email can't be blank")
       end

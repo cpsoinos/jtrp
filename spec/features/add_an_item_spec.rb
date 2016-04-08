@@ -34,7 +34,6 @@ feature "add an item" do
       visit root_path
       click_link("Add an item")
 
-      expect(page).to have_content("Uncategorized")
       expect(page).to have_content("Add an item")
       expect(page).to have_field("Name")
       expect(page).to have_field("Description")
