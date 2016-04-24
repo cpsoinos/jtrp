@@ -76,7 +76,6 @@ class ItemsController < ApplicationController
       format.html
       format.pdf do
         render pdf: "tag"
-               #layout: "pdf.html.erb"   # Excluding ".pdf" extension.
       end
     end
   end
