@@ -40,7 +40,7 @@ class Item < ActiveRecord::Base
     require 'barby/outputter/cairo_outputter'
 
     barcode = Barby::Code128B.new(token)
-    Barby::CairoOutputter.new(barcode).to_svg
+    Barby::HtmlOutputter.new(barcode).to_html
   end
 
   def active?

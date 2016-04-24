@@ -72,6 +72,13 @@ class ItemsController < ApplicationController
 
   def tag
     @item = Item.find(params[:item_id])
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render pdf: "tag"
+               #layout: "pdf.html.erb"   # Excluding ".pdf" extension.
+      end
+    end
   end
 
   protected
