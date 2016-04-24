@@ -84,6 +84,23 @@ feature "new proposal" do
         expect(page).to have_content("Item removed")
       end
 
+      scenario "chooses a client intention", js: true do
+        item = create(:item, proposal: proposal)
+        visit edit_proposal_path(proposal)
+
+        expect(page).to have_checked_field("item_client_intention_undecided")
+        expect(page).to have_unchecked_field("item_client_intention_consign")
+        expect(item.client_intention).to eq("undecided")
+
+        choose("item_client_intention_consign")
+        wait_for_ajax
+        item.reload
+
+        expect(page).to have_unchecked_field("item_client_intention_undecided")
+        expect(page).to have_checked_field("item_client_intention_consign")
+        expect(item.client_intention).to eq("consign")
+      end
+
     end
 
     context "new client" do

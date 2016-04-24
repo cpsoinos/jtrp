@@ -1,12 +1,23 @@
 table.barby-barcode {
   border-spacing: 0;
 }
+
 tr.barby-row {
   height: 3em;
 }
+
 td.barby-cell {
   width: 3px; height: 3px;
 }
+
 td.barby-cell.on {
   background: #000;
+}
+
+tr.item-row-descriptor {
+  height: 4em;
+}
+
+td.item-row-description {
+  padding-left: 1em;
 }

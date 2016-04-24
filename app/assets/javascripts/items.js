@@ -14,6 +14,17 @@ $(document).ready(function() {
     });
   });
 
+  $(":radio").change(function() {
+    debugger;
+    $.ajax({
+      url: $(this).parents('form')[0].action,
+      type: "PUT",
+      data: { item: {
+        client_intention: $(this).val()
+      }}
+    })
+  })
+
 });
 
 function slickifyDropdown(selector) {

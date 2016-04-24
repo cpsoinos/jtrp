@@ -49,6 +49,7 @@ class ItemsController < ApplicationController
     @item = Item.find(params[:id])
     respond_to do |format|
       if @item.update(item_params)
+        format.js { render nothing: true }
         format.html { redirect_to(@item, :notice => 'Item was successfully updated.') }
         format.json { respond_with_bip(@item) }
       else
@@ -76,7 +77,7 @@ class ItemsController < ApplicationController
   protected
 
   def item_params
-    params.require(:item).permit([:name, :description, {initial_photos: []}, {listing_photos: []}, :purchase_price, :asking_price, :listing_price, :sale_price, :minimum_sale_price, :condition, :client_id, :category_id])
+    params.require(:item).permit([:name, :description, {initial_photos: []}, {listing_photos: []}, :purchase_price, :asking_price, :listing_price, :sale_price, :minimum_sale_price, :condition, :client_id, :category_id, :client_intention])
   end
 
 end
