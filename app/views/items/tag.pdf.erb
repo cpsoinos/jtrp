@@ -1,25 +1,27 @@
-<%= wicked_pdf_stylesheet_link_tag "application" %>
-
 <div class="col-xs-8">
   <div class="row">
-    <h3 class="text-center company-title">Just the Right Piece</h3>
+    <h3 class="text-center company-title"><%= @company.name %></h3>
   </div>
   <div class="row">
     <% if @item.listing_photos.present? %>
       <div class="col-xs-6">
-        <%= wicked_pdf_image_tag @item.listing_photos.first.thumb.url, class: "img-rounded" %></br></br>
+        <%= wicked_pdf_image_tag(@item.listing_photos.first.thumb.url, class: "img-rounded") %>
+      </div>
+    <% elsif @item.initial_photos.present? %>
+      <div class="col-xs-6">
+        <%= wicked_pdf_image_tag(@item.initial_photos.first.thumb.url, class: "img-rounded") %>
       </div>
     <% end %>
-    <div class="col-xs-6 vcenter">
+    <div class="col-xs-6">
       <span><b>Item No.</b> <%= @item.id %></span>
-      <p class="tag tag-description"><%= @item.try(:description) %></p>
-      <p class="tag tag-price"><%= humanized_money_with_symbol(@item.listing_price) %></p>
-    </div>
-  </div>
-  <div class="row text-center">
-    <div class="col-xs-10 col-xs-offset-1">
-      <%= @item.barcode.html_safe %><br />
-      <%= @item.token %>
+      <p><%= @item.try(:description) %></p>
+      <p class="tag-price"><%= humanized_money_with_symbol(@item.listing_price) %></p>
+      <div class="row">
+        <div class="text-center">
+          <%= image_tag(@item.barcode(true)) %>
+          <%= @item.token %>
+        </div>
+      </div>
     </div>
   </div>
 </div>

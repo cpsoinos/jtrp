@@ -18,6 +18,9 @@ WickedPdf.config = {
   # Layout file to be used for all PDFs
   # (but can be overridden in `render :pdf` calls)
   # layout: 'pdf.html',
+
+  page_size: 'Letter',
+  layout: 'pdf.html'
 }
 
 def wicked_pdf_stylesheet_link_tag(*sources)

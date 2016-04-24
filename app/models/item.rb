@@ -32,15 +32,17 @@ class Item < ActiveRecord::Base
   scope :active, -> { where(status: "active") }
   scope :sold, -> { where(status: "sold") }
 
-  def barcode
+  def barcode(pdf=false)
     require 'barby'
     require 'barby/barcode/code_128'
-    require 'barby/outputter/png_outputter'
-    require 'barby/outputter/html_outputter'
     require 'barby/outputter/cairo_outputter'
 
     barcode = Barby::Code128B.new(token)
-    Barby::HtmlOutputter.new(barcode).to_html
+    barcode = Barby::CairoOutputter.new(barcode).to_svg
+    if pdf
+      barcode = "data:image/svg+xml;base64,#{Base64.encode64(barcode)}"
+    end
+    barcode
   end
 
   def active?

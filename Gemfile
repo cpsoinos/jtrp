@@ -67,4 +67,5 @@ group :test do
   gem 'webmock'
   gem 'capybara-mechanize'
   gem 'coveralls', require: false
+  gem 'pdf-reader'
 end

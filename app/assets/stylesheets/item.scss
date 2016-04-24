@@ -22,6 +22,10 @@ td.item-row-description {
   padding-left: 1em;
 }
 
+.barcode {
+  margin-top: 1em;
+}
+
 .tag {
   margin-top: 1em;
   margin-bottom: 1em;
@@ -29,5 +33,9 @@ td.item-row-description {
 
 .tag-price {
   text-align: center;
-  font-size: 34px;
+  font-size: 28px;
+}
+
+.pdf-tag {
+  background-color: #FFFFFF;
 }
