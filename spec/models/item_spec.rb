@@ -2,7 +2,6 @@ describe Item do
 
   it { should belong_to(:category) }
   it { should belong_to(:proposal) }
-  it { should belong_to(:purchase_order) }
 
   it { should validate_presence_of(:name) }
   it { should validate_presence_of(:description) }
