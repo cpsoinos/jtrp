@@ -26,13 +26,8 @@ class ItemsController < ApplicationController
           redirect_to item_path(@item)
         end
         format.js do
-          if params[:proposal_id]
-            @proposal = Proposal.find(params[:proposal_id])
-            render :'proposals/add_item'
-          elsif params[:purchase_order_id]
-            @purchase_order = PurchaseOrder.find(params[:purchase_order_id])
-            render :'purchase_orders/add_item'
-          end
+          @proposal = Proposal.find(params[:proposal_id])
+          render :'proposals/add_item'
         end
       end
     else
@@ -72,6 +67,12 @@ class ItemsController < ApplicationController
 
   def tag
     @item = Item.find(params[:item_id])
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render pdf: "tag"
+      end
+    end
   end
 
   protected
