@@ -23,7 +23,9 @@ $(document).ready(function() {
         client_intention: $(this).val()
       }}
     })
-  })
+  });
+
+  handleSignatures();
 
 });
 
@@ -37,4 +39,26 @@ function slickifyDropdown(selector) {
     width: 300,
     selectText: "Choose an Item"
   });
+}
+
+function handleSignatures() {
+  var options = {
+    drawOnly: true
+  }
+
+  if(gon.signatures.manager === undefined) {
+    $('#manager-signed').signaturePad(options)
+  } else {
+    fillSignatures("manager", gon.signatures.manager)
+  };
+
+  if(gon.signatures.client === undefined) {
+    $('#client-signed').signaturePad(options)
+  } else {
+    fillSignatures("client", gon.signatures.client)
+  };
+}
+
+function fillSignatures(selector, sig) {
+  $(('#' + selector + '-signed') ).signaturePad({displayOnly:true}).regenerate(sig);
 }

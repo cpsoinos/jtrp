@@ -3,7 +3,6 @@
     <h1 class="text-center company-title">Just the Right Piece</h1>
     <h3 class="text-center">Consignment Agreement</h2><br>
 
-
     <p>
       This consignment agreement (the “<b>Agreement</b>”) is entered into as of <%= DateTime.now.strftime("%B %d, %Y") %>, by and between <b><%= @company.name %>, LLC</b> (the <b>“Consignee”</b>) of <b><%= @company.full_address %></b> and <b><%= @client.full_name %></b> (the <b>“Consignor”</b>) of <b><%= @client.full_address %></b>, (collectively, the <b>“Parties”</b>).
     </p>
@@ -103,21 +102,21 @@
 
     <br />
     <br />
-    <p>AGREED AND EXECUTED BY, effective on the date first written above:</b></p>
+    <div class="row">
+      <p>AGREED AND EXECUTED BY, effective on the date first written above:</b></p>
 
+      <div class="col-md-6">
+        <p>Consignee:  <%= @company.name %>, LLC</p>
+        <%= render "signature_pad", user: current_user, role: "manager" %>
+        <p><%= current_user.full_name %>, Managing Member</p>
+      </div>
 
-    <p>Consignee:  <%= @company.name %>, LLC</p>
-    </br>
-
-    <p>_____________________________________</p>
-    <p>Carole A. Psoinos, Managing Member</p>
-    </br>
-
-
-    <p>Consignor:  <%= @client.full_name %></p>
-    </br>
-
-    _____________________________________
+      <div class="col-md-6">
+        <p>Consignor:</p>
+        <%= render "signature_pad", user: @client, role: "client" %>
+        <p><%= @client.full_name %></p>
+      </div>
+    </div>
 
   </div>
 </div>
