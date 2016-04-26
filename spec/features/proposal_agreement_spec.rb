@@ -1,6 +1,4 @@
 feature "proposal agreement" do
-
-  let!(:company) { create(:company) }
   let(:client) { create(:user, :client) }
   let(:user) { create(:user, :internal) }
   let(:proposal) { create(:proposal, created_by: user, client: client) }

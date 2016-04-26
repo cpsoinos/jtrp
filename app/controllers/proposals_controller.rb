@@ -90,16 +90,16 @@ class ProposalsController < ApplicationController
 
   def build_json_for_signatures
     signatures = {
-      manager: @proposal.try(:manager_signature),
-      client: @proposal.try(:client_signature)
+      manager: @proposal.manager_signature,
+      client: @proposal.client_signature
     }
-
-    if !@proposal.manager_signature
-      signatures.delete(:manager)
-    end
-    if !@proposal.client_signature
-      signatures.delete(:client)
-    end
+    #
+    # if !@proposal.manager_signature
+    #   signatures.delete(:manager)
+    # end
+    # if !@proposal.client_signature
+    #   signatures.delete(:client)
+    # end
 
     signatures
   end

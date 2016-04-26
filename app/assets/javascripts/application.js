@@ -21,6 +21,7 @@
 //= require flashcanvas
 //= require jquery.signaturepad.min
 //= require json2.min
+//= require jquery-readyselector
 //= require_tree .
 
 $(document).ready(function() {
