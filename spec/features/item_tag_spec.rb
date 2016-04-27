@@ -2,7 +2,6 @@ feature "item tag" do
 
   let(:user) { create(:user, :internal) }
   let(:item) { create(:item, :with_listing_photo, listing_price: 55) }
-  let!(:company) { create(:company, name: "Just the Right Piece") }
 
   before do
     sign_in user
@@ -21,7 +20,7 @@ feature "item tag" do
 
     expect(page).to have_content("$55.00")
     expect(page).to have_content(item.description)
-    expect(page).to have_content(item.token)
+    expect(page).not_to have_content(item.token)
   end
 
 end
