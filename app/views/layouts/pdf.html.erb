@@ -3,14 +3,10 @@
 <head>
   <title>Jtrp</title>
   <%= wicked_pdf_stylesheet_link_tag "application" %>
-  <%#= stylesheet_link_tag    'application', media: 'all' %>
-  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"> -->
-  <%#= javascript_include_tag 'application' %>
-  <%#= Gon::Base.render_data %>
-  <%#= csrf_meta_tags %>
 </head>
 <body class="pdf-tag">
 
 <div class="row">
   <%= yield %>
 </div>
+</body>
