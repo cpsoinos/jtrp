@@ -1,16 +1,15 @@
 feature "proposal agreement" do
+
   let(:client) { create(:user, :client) }
   let(:user) { create(:user, :internal) }
   let(:proposal) { create(:proposal, created_by: user, client: client) }
 
   context "guest" do
-
     scenario "visits consignment agreement path" do
       visit proposal_consignment_agreement_path(proposal)
 
       expect(page).to have_content("Forbidden")
     end
-
   end
 
   context "internal user" do

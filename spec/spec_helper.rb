@@ -23,6 +23,9 @@ RSpec.configure do |config|
 
   config.before(:all) do
     FactoryGirl.reload
+  end
+
+  config.before(:each) do
     FactoryGirl.create(:company, name: "Just the Right Piece")
   end
 
@@ -40,7 +43,7 @@ RSpec.configure do |config|
 
   config.profile_examples = 10
 
-  # config.order = :random
+  config.order = :random
 
   Kernel.srand config.seed
 end
