@@ -33,6 +33,19 @@ class ProposalsController < ApplicationController
   def consignment_agreement
     @proposal = Proposal.find(params[:proposal_id])
     @client = @proposal.client
+    gon.signatures = build_json_for_signatures
+  end
+
+  def update
+    @proposal = Proposal.find(params[:id])
+    if @proposal.update(signature_params)
+      respond_to do |format|
+        format.html
+        format.js do
+          @role = params[:role]
+        end
+      end
+    end
   end
 
   def create_client
@@ -68,6 +81,20 @@ class ProposalsController < ApplicationController
 
   def proposal_params
     params.require(:proposal).permit([:client_id, :created_by_id])
+  end
+
+  def signature_params
+    key = "#{params[:role]}_signature".to_sym
+    { key => params[:signature] }
+  end
+
+  def build_json_for_signatures
+    signatures = {
+      manager: @proposal.manager_signature,
+      client: @proposal.client_signature
+    }
+
+    signatures
   end
 
   def user_params

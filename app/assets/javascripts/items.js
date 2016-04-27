@@ -15,7 +15,6 @@ $(document).ready(function() {
   });
 
   $(":radio").change(function() {
-    debugger;
     $.ajax({
       url: $(this).parents('form')[0].action,
       type: "PUT",
@@ -23,11 +22,11 @@ $(document).ready(function() {
         client_intention: $(this).val()
       }}
     })
-  })
+  });
 
 });
 
-function slickifyDropdown(selector) {
+var slickifyDropdown = function(selector) {
   if (gon.items !== undefined) {
     var itemData = JSON.parse(gon.items)
   };
