@@ -93,13 +93,6 @@ class ProposalsController < ApplicationController
       manager: @proposal.manager_signature,
       client: @proposal.client_signature
     }
-    #
-    # if !@proposal.manager_signature
-    #   signatures.delete(:manager)
-    # end
-    # if !@proposal.client_signature
-    #   signatures.delete(:client)
-    # end
 
     signatures
   end
