@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   devise_for :users, controllers: { registrations: 'registrations' }
-  root 'categories#index'
+  root 'passthrough#index'
+
+  resources :companies
 
   resources :categories do
     resources :items
@@ -9,6 +11,8 @@ Rails.application.routes.draw do
   resources :items do
     get '/tag', to: 'items#tag', as: 'tag'
   end
+
+  resources :clients
 
   resources :users_admin, controller: "users"
 
