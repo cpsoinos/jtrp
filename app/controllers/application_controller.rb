@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_filter :find_company
   before_filter :find_categories
+  helper :all
 
   def find_company
     @company ||= Company.find_by(name: "Just the Right Piece")
