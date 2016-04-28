@@ -29,8 +29,8 @@ gem 'rollbar', '~> 2.8.3'
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
 
-group :production, :local do
-  gem 'rails_12factor', group: :production
+group :production, :staging, :local do
+  gem 'rails_12factor'
 end
 
 source 'https://rails-assets.org' do
