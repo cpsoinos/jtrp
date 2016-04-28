@@ -1,29 +1,33 @@
 class ItemsController < ApplicationController
-  before_filter :find_resource
-  before_filter :find_company
+  before_filter :find_clients, only: [:new, :edit]
+  before_filter :find_categories, only: [:new, :edit]
+  before_filter :find_proposal, only: :create
+  before_filter :find_purchase_order, only: :create
   before_filter :require_internal, only: [:new, :create, :update, :destroy]
 
   def new
-    @category = @resource
-    @item = @category.items.new
+    @item = Item.new
   end
 
   def create
-    @item = @resource.items.new(item_params)
+    @item = begin
+      if find_proposal
+        @proposal.items.new(item_params)
+      elsif find_purchase_order
+        @purchase_order.items.new(item_params)
+      else
+        Item.new(item_params)
+      end
+    end
     if @item.save
       respond_to do |format|
         format.html do
           flash[:notice] = "Item created"
-          redirect_to category_item_path(@resource, @item)
+          redirect_to item_path(@item)
         end
         format.js do
-          if params[:proposal_id]
-            @proposal = Proposal.find(params[:proposal_id])
-            render :'proposals/add_item'
-          elsif params[:purchase_order_id]
-            @purchase_order = PurchaseOrder.find(params[:purchase_order_id])
-            render :'purchase_orders/add_item'
-          end
+          @proposal = Proposal.find(params[:proposal_id])
+          render :'proposals/add_item'
         end
       end
     else
@@ -40,6 +44,7 @@ class ItemsController < ApplicationController
     @item = Item.find(params[:id])
     respond_to do |format|
       if @item.update(item_params)
+        format.js { render nothing: true }
         format.html { redirect_to(@item, :notice => 'Item was successfully updated.') }
         format.json { respond_with_bip(@item) }
       else
@@ -62,12 +67,18 @@ class ItemsController < ApplicationController
 
   def tag
     @item = Item.find(params[:item_id])
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render pdf: "tag"
+      end
+    end
   end
 
   protected
 
   def item_params
-    params.require(:item).permit([:name, :description, {initial_photos: []}, {listing_photos: []}, :purchase_price, :asking_price, :listing_price, :sale_price, :minimum_sale_price, :condition])
+    params.require(:item).permit([:name, :description, {initial_photos: []}, {listing_photos: []}, :purchase_price, :asking_price, :listing_price, :sale_price, :minimum_sale_price, :condition, :client_id, :category_id, :client_intention])
   end
 
 end

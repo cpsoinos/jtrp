@@ -2,7 +2,6 @@ class CategoriesController < ApplicationController
   before_filter :require_internal, except: [:index, :show]
 
   def index
-    @categories = Category.all
     @proposals = Proposal.all
   end
 

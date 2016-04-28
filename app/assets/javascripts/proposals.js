@@ -1,32 +1,25 @@
-$(document).ready(function() {
+$(".proposals.consignment_agreement").ready(function() {
+  handleSignatures();
+})
 
-  $("#new-client-button").click(function() {
-    $("#new-client-form").toggleClass('hidden');
-  });
+var handleSignatures = function() {
+  var options = {
+    drawOnly: true
+  }
 
-  slickifyDropdown($(".items-dropdown"));
-
-  $("#add-existing-item-button").click(function() {
-    var itemId = $(".dd-selected-value")[0].value
-    var proposalId = gon.proposalId
-    $.ajax({
-	    url: '/proposals/' + proposalId + '/add_existing_item',
-	    type: "PUT",
-	    data: { item: {
-        id: itemId, proposal_id: proposalId }
-      }
-	  });
-  })
-});
-
-function slickifyDropdown(selector) {
-  if (gon.items !== undefined) {
-    var itemData = JSON.parse(gon.items)
+  if(gon.signatures.manager === undefined) {
+    $('#manager-signed').signaturePad(options)
+  } else {
+    fillSignatures("manager", gon.signatures.manager)
   };
-  selector.ddslick({
-    data: itemData,
-    imagePosition: "left",
-    width: 300,
-    selectText: "Choose an Item"
-  });
+
+  if(gon.signatures.client === undefined) {
+    $('#client-signed').signaturePad(options)
+  } else {
+    fillSignatures("client", gon.signatures.client)
+  };
+}
+
+var fillSignatures = function(selector, sig) {
+  $(('#' + selector + '-signed') ).signaturePad({displayOnly:true}).regenerate(sig);
 }

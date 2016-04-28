@@ -2,24 +2,80 @@
   <td>
     <%= image_tag(item.initial_photos.first.try(:thumb).try(:url)) %>
   </td>
-  <td class="text-center">
-    <%= item.id %>
+  <td>
+    <table>
+      <tr class="item-row-descriptor">
+        <th class="text-right">Item No.:</th>
+        <td class="item-row-description item-id-number">
+          <%= item.id %>
+        </td>
+      </tr>
+      <tr class="item-row-descriptor">
+        <th class="text-right">Asking Price:</th>
+        <td class="item-row-description">
+          <%= best_in_place [@proposal, item], :listing_price, display_with: lambda { |v| humanized_money_with_symbol(v).html_safe } %>
+        </td>
+      </tr>
+      <tr class="item-row-descriptor">
+        <th class="text-right">Min. Sale Price:</th>
+        <td class="item-row-description">
+          <%= best_in_place [@proposal, item], :minimum_sale_price, display_with: lambda { |v| humanized_money_with_symbol(v).html_safe } %>
+        </td>
+      </tr>
+      <tr class="item-row-descriptor">
+        <th class="text-right">Condition:</th>
+        <td class="item-row-description">
+          <%= best_in_place [@proposal, item], :condition %>
+        </td>
+      </tr>
+    </table>
   </td>
   <td>
-    <%= best_in_place [@proposal, item], :description %>
-  </td>
-  <td class="text-center">
-    <%= best_in_place [@proposal, item], :listing_price, display_with: lambda { |v| humanized_money_with_symbol(v).html_safe } %>
-  </td>
-  <td class="text-center">
-    <%= best_in_place [@proposal, item], :minimum_sale_price, display_with: lambda { |v| humanized_money_with_symbol(v).html_safe } %>
-  </td>
-  <td class="text-center">
-    <%= best_in_place [@proposal, item], :condition %>
+    <table>
+      <tr class="item-row-descriptor">
+        <th class="text-center">Description</th>
+      </tr>
+      <tr>
+        <td class="text-center" width="300px">
+          <%= best_in_place [@proposal, item], :description %>
+        </td>
+      </tr>
+    </table>
   </td>
   <% unless action_name == "consignment_agreement" %>
-    <td class="text-center">
-      <%= link_to "Delete", proposal_item_path(@proposal, item), method: "DELETE", data: { confirm: "Are you sure?" }, class: "btn btn-raised btn-warning" %>
+    <td>
+      <table>
+        <tr>
+          <td class="text-center">
+            <%= link_to "Delete", proposal_item_path(@proposal, item), method: "DELETE", data: { confirm: "Are you sure?" }, class: "btn btn-raised btn-warning" %>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <%= form_for item, remote: true do |f| %>
+              <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+
+              <%= f.radio_button :client_intention, "sell", class: "selector" %>
+              <%= f.label :client_intention, "Sell" %><br />
+
+              <%= f.radio_button :client_intention, "consign", class: "selector" %>
+              <%= f.label :client_intention, "Consign" %><br />
+
+              <%= f.radio_button :client_intention, "charitable_donation", class: "selector" %>
+              <%= f.label :client_intention, "Charitable Donation" %><br />
+
+              <%= f.radio_button :client_intention, "junk", class: "selector" %>
+              <%= f.label :client_intention, "Junk/Dispose" %><br />
+
+              <%= f.radio_button :client_intention, "keep", class: "selector" %>
+              <%= f.label :client_intention, "Keep (don't sell)" %><br />
+
+              <%= f.radio_button :client_intention, "undecided", class: "selector" %>
+              <%= f.label :client_intention, "Undecided" %>
+            <% end %>
+          </td>
+        </tr>
+      </table>
     </td>
   <% end %>
 </tr>

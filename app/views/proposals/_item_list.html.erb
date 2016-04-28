@@ -1,19 +1,7 @@
 <table class="table table-striped table-hover">
-  <thead>
-    <tr>
-      <th class="text-center">Photo</th>
-      <th class="text-center">Item Number</th>
-      <th class="text-center">Description</th>
-      <th class="text-center">Original Asking Price</th>
-      <th class="text-center">Minimum Sale Price</th>
-      <th class="text-center">Condition / Notes</th>
-      <% unless action_name == "consignment_agreement" %>
-        <th class="text-center">Actions</th>
-      <% end %>
-    </tr>
-  </thead>
   <tbody id="proposal-item-list">
-    <% @proposal.items.each do |item| %>
+    <% @proposal.items.order(:id).each do |item| %>
+      <% next unless item.persisted? %>
       <%= render 'item_row', item: item %>
     <% end %>
   </tbody>

@@ -26,6 +26,8 @@ gem 'dropzonejs-rails'
 gem 'fog-aws'
 gem 'gon'
 gem 'rollbar', '~> 2.8.3'
+gem 'wicked_pdf'
+gem 'wkhtmltopdf-binary'
 
 group :production, :local do
   gem 'rails_12factor', group: :production
@@ -38,6 +40,7 @@ end
 group :development, :test, :local do
   gem 'pry-rails'
   gem 'pry-coolline'
+  gem 'pry-byebug'
   gem 'sextant'
   gem 'better_errors'
   gem 'faker'
@@ -65,4 +68,5 @@ group :test do
   gem 'webmock'
   gem 'capybara-mechanize'
   gem 'coveralls', require: false
+  gem 'pdf-reader'
 end

@@ -9,13 +9,13 @@ class User < ActiveRecord::Base
   mount_uploader :avatar, AvatarUploader
 
   has_many :proposals
+  has_many :purchase_orders
+  has_many :items, foreign_key: "client_id", class_name: "Item"
 
   validates :email, presence: true, uniqueness: true
   validates :status, presence: true
 
   scope :client, -> { where(role: "client") }
-  scope :vendor, -> { where(role: "vendor") }
-  scope :agent, -> { where(role: "agent") }
   scope :internal, -> { where(role: "internal") }
   scope :active, -> { where(status: "active") }
   scope :inactive, -> { where(status: "inactive") }
@@ -26,14 +26,6 @@ class User < ActiveRecord::Base
 
   def client?
     role == "client"
-  end
-
-  def vendor?
-    role == "vendor"
-  end
-
-  def agent?
-    role == "agent"
   end
 
   def active?

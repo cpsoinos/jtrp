@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160406164544) do
+ActiveRecord::Schema.define(version: 20160425214741) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,8 +39,7 @@ ActiveRecord::Schema.define(version: 20160406164544) do
   end
 
   create_table "items", force: :cascade do |t|
-    t.string   "name",                                              null: false
-    t.text     "description"
+    t.text     "description",                                       null: false
     t.integer  "category_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -61,25 +60,22 @@ ActiveRecord::Schema.define(version: 20160406164544) do
     t.string   "status",                      default: "potential", null: false
     t.integer  "minimum_sale_price_cents"
     t.string   "minimum_sale_price_currency", default: "USD",       null: false
-    t.integer  "purchase_order_id"
+    t.string   "name",                                              null: false
+    t.integer  "client_id"
+    t.string   "client_intention",            default: "undecided"
   end
 
   add_index "items", ["category_id"], name: "index_items_on_category_id", using: :btree
+  add_index "items", ["client_id"], name: "index_items_on_client_id", using: :btree
   add_index "items", ["proposal_id"], name: "index_items_on_proposal_id", using: :btree
-  add_index "items", ["purchase_order_id"], name: "index_items_on_purchase_order_id", using: :btree
 
   create_table "proposals", force: :cascade do |t|
-    t.integer  "client_id",     null: false
-    t.integer  "created_by_id", null: false
+    t.integer  "client_id",         null: false
+    t.integer  "created_by_id",     null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-  end
-
-  create_table "purchase_orders", force: :cascade do |t|
-    t.integer  "vendor_id",     null: false
-    t.integer  "created_by_id", null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.json     "client_signature"
+    t.json     "manager_signature"
   end
 
   create_table "users", force: :cascade do |t|

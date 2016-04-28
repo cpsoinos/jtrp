@@ -18,8 +18,11 @@
 //= require best_in_place
 //= require dropzone
 //= require jquery-ddslick
+//= require flashcanvas
+//= require jquery.signaturepad.min
+//= require json2.min
+//= require jquery-readyselector
 //= require_tree .
-
 
 $(document).ready(function() {
   /* Activating Best In Place */

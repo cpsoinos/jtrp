@@ -23,23 +23,26 @@ class Item < ActiveRecord::Base
 
   belongs_to :category
   belongs_to :proposal
-  belongs_to :purchase_order
+  belongs_to :client, class_name: "User", foreign_key: "client_id"
 
   validates :name, presence: true
+  validates :description, presence: true
 
   scope :potential, -> { where(status: "potential") }
   scope :active, -> { where(status: "active") }
   scope :sold, -> { where(status: "sold") }
 
-  def barcode
+  def barcode(pdf=false)
     require 'barby'
     require 'barby/barcode/code_128'
-    require 'barby/outputter/png_outputter'
-    require 'barby/outputter/html_outputter'
     require 'barby/outputter/cairo_outputter'
 
     barcode = Barby::Code128B.new(token)
-    Barby::CairoOutputter.new(barcode).to_svg
+    barcode = Barby::CairoOutputter.new(barcode).to_svg
+    if pdf
+      barcode = "data:image/svg+xml;base64,#{Base64.encode64(barcode)}"
+    end
+    barcode
   end
 
   def active?

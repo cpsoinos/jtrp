@@ -1,9 +1,10 @@
 class ProposalsController < ApplicationController
+  before_filter :find_clients, only: [:new, :edit]
+  before_filter :find_categories, only: [:new, :edit]
   before_filter :require_internal, except: [:show]
 
   def new
     @proposal = Proposal.new
-    @clients = clients
     @client = User.new
   end
 
@@ -23,6 +24,8 @@ class ProposalsController < ApplicationController
 
   def edit
     @proposal = Proposal.find(params[:id])
+    @client = @proposal.client
+    @item = @proposal.items.new
     gon.items = build_json_for_items
     gon.proposalId = @proposal.id
   end
@@ -30,6 +33,19 @@ class ProposalsController < ApplicationController
   def consignment_agreement
     @proposal = Proposal.find(params[:proposal_id])
     @client = @proposal.client
+    gon.signatures = build_json_for_signatures
+  end
+
+  def update
+    @proposal = Proposal.find(params[:id])
+    if @proposal.update(signature_params)
+      respond_to do |format|
+        format.html
+        format.js do
+          @role = params[:role]
+        end
+      end
+    end
   end
 
   def create_client
@@ -61,24 +77,24 @@ class ProposalsController < ApplicationController
     end
   end
 
-  private
-
-  def clients
-    @clients = User.client.map do |client|
-      [client.full_name, client.id]
-    end
-  end
-
-  def items
-    @items = Item.potential.map do |item|
-      [item.name, item.id]
-    end
-  end
-
   protected
 
   def proposal_params
     params.require(:proposal).permit([:client_id, :created_by_id])
+  end
+
+  def signature_params
+    key = "#{params[:role]}_signature".to_sym
+    { key => params[:signature] }
+  end
+
+  def build_json_for_signatures
+    signatures = {
+      manager: @proposal.manager_signature,
+      client: @proposal.client_signature
+    }
+
+    signatures
   end
 
   def user_params
@@ -90,7 +106,7 @@ class ProposalsController < ApplicationController
   end
 
   def build_json_for_items
-    Item.potential.map do |item|
+    @client.items.potential.map do |item|
       {
         text: item.name,
         value: item.id,
