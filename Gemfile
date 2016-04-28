@@ -40,6 +40,7 @@ end
 group :development, :test, :local do
   gem 'pry-rails'
   gem 'pry-coolline'
+  gem 'pry-byebug'
   gem 'sextant'
   gem 'better_errors'
   gem 'faker'

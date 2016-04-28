@@ -17,7 +17,7 @@
 <% unless @client.present? %>
   <div class="row form-row">
     <div class="text-center">
-      <div class="col-xs-12 col-md-3 text-right">
+      <div class="col-xs-12 col-md-3 form-label">
         <%= f.label :client, class: "control-label" %>
       </div>
       <div class="col-xs-12 col-md-9 text-left">
@@ -29,7 +29,7 @@
 
 <div class="row form-row">
   <div class="text-center">
-    <div class="col-xs-12 col-md-3 text-right">
+    <div class="col-xs-12 col-md-3 form-label">
       <%= f.label :category, class: "control-label" %>
     </div>
     <div class="col-xs-12 col-md-9 text-left">
@@ -40,7 +40,7 @@
 
 <div class="row form-row">
   <div class="text-center">
-    <div class="col-xs-12 col-md-3 text-right">
+    <div class="col-xs-12 col-md-3 form-label">
       <%= f.label :name, class: "control-label" %>
     </div>
     <div class="col-xs-12 col-md-9 text-left">
@@ -51,7 +51,7 @@
 
 <div class="row form-row">
   <div class="text-center">
-    <div class="col-xs-12 col-md-3 text-right">
+    <div class="col-xs-12 col-md-3 form-label">
       <%= f.label :description, class: "control-label" %>
     </div>
     <div class="col-xs-12 col-md-9 text-left">
@@ -62,7 +62,7 @@
 
 <div class="row form-row">
   <div class="text-center">
-    <div class="col-xs-12 col-md-3 text-right">
+    <div class="col-xs-12 col-md-3 form-label">
       <%= f.label :initial_photos, class: "control-label" %>
     </div>
     <div class="col-xs-12 col-md-9 text-left">
@@ -74,7 +74,7 @@
 <% if %w(categories items).include?(controller_name) %>
   <div class="row form-row">
     <div class="text-center">
-      <div class="col-xs-12 col-md-3 text-right">
+      <div class="col-xs-12 col-md-3 form-label">
         <%= f.label :listing_photos, class: "control-label" %>
       </div>
       <div class="col-xs-12 col-md-9 text-left">
@@ -87,7 +87,7 @@
 <% if %w(items proposals).include?(controller_name) %>
   <div class="row form-row">
     <div class="text-center">
-      <div class="col-xs-12 col-md-3 text-right">
+      <div class="col-xs-12 col-md-3 form-label">
         <%= f.label :listing_price, class: "control-label" %>
       </div>
       <div class="col-xs-12 col-md-3 text-left">
@@ -100,7 +100,7 @@
 <% if %w(items purchase_orders).include?(controller_name) %>
   <div class="row form-row">
     <div class="text-center">
-      <div class="col-xs-12 col-md-3 text-right">
+      <div class="col-xs-12 col-md-3 form-label">
         <%= f.label :purchase_price, class: "control-label" %>
       </div>
       <div class="col-xs-12 col-md-3 text-left">
@@ -113,7 +113,7 @@
 <% if controller_name == "proposals" %>
   <div class="row form-row">
     <div class="text-center">
-      <div class="col-xs-12 col-md-3 text-right">
+      <div class="col-xs-12 col-md-3 form-label">
         <%= f.label :minimum_sale_price, class: "control-label" %>
       </div>
       <div class="col-xs-12 col-md-3 text-left">
@@ -125,7 +125,7 @@
 
 <div class="row form-row">
   <div class="text-center">
-    <div class="col-xs-12 col-md-3 text-right">
+    <div class="col-xs-12 col-md-3 form-label">
       <%= f.label :condition, class: "control-label" %>
     </div>
     <div class="col-xs-12 col-md-3 text-left">

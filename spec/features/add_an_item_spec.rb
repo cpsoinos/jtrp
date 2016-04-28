@@ -7,7 +7,7 @@ feature "add an item" do
     scenario "visits category page" do
       visit category_path(category)
 
-      expect(page).not_to have_link("Add an item")
+      expect(page).not_to have_link("Quick-Add Item")
     end
 
     scenario "visits add an item page" do
@@ -27,12 +27,12 @@ feature "add an item" do
     scenario "visits home page" do
       visit root_path
 
-      expect(page).to have_link("Add an item")
+      expect(page).to have_link("Quick-Add Item")
     end
 
     scenario "clicks on 'Add an item' from home page" do
       visit root_path
-      click_link("Add an item")
+      click_link("Quick-Add Item")
 
       expect(page).to have_content("Add an item")
       expect(page).to have_field("Name")
