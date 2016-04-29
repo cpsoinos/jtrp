@@ -22,7 +22,7 @@
         <%= f.label :client, class: "control-label" %>
       </div>
       <div class="col-xs-12 col-md-9 text-left">
-        <%= f.select :client_id, options_for_select(@clients), {prompt: "Select Client"}, {class: "form-control"} %>
+        <%= f.collection_select :client_id, @clients, :id, :full_name, {include_blank: "Select Client"}, {class: "form-control"} %>
       </div>
     </div>
   </div>
