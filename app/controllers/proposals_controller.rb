@@ -49,9 +49,8 @@ class ProposalsController < ApplicationController
   end
 
   def create_client
-    @client = User.new(user_params)
+    @client = Client.new(user_params)
     @client.skip_password_validation = true
-    @client.role = "client"
     if @client.save
       @proposal = Proposal.new(client: @client, created_by: current_user)
       if @proposal.save

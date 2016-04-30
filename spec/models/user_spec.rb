@@ -4,14 +4,14 @@ describe User do
   it { should validate_presence_of(:status) }
 
   it "internal?" do
-    user = create(:user, :internal)
+    user = create(:internal_user)
 
     expect(user.internal?).to be(true)
     expect(user.client?).to be(false)
   end
 
   it "client?" do
-    user = create(:user, :client)
+    user = create(:client)
 
     expect(user.client?).to be(true)
     expect(user.internal?).to be(false)
@@ -40,8 +40,8 @@ describe User do
   describe "scopes" do
 
     before do
-      create_list(:user, 3, :client)
-      create_list(:user, 3, :internal)
+      create_list(:client, 3)
+      create_list(:internal_user, 3)
       create_list(:user, 2, :inactive)
     end
 

@@ -2,13 +2,12 @@ require 'factory_girl'
 
 FactoryGirl.define do
 
-  factory :user do
+  factory :user, class: User do
     first_name Faker::Name.first_name
     last_name Faker::Name.last_name
     email
     password "supersecret"
     password_confirmation "supersecret"
-    role "guest"
     status "active"
     address_1 Faker::Address.street_address
     address_2 Faker::Address.secondary_address
@@ -18,17 +17,21 @@ FactoryGirl.define do
     phone Faker::PhoneNumber.phone_number
     phone_ext Faker::PhoneNumber.extension
 
-    trait :admin do
-      role "admin"
-    end
+    factory :client, class: Client
+    factory :admin, class: Admin
+    factory :internal_user, class: InternalUser
 
-    trait :internal do
-      role "internal"
-    end
-
-    trait :client do
-      role "client"
-    end
+    # trait :admin do
+    #   role "Admin"
+    # end
+    #
+    # trait :internal do
+    #   role "Internal"
+    # end
+    #
+    # trait :client do
+    #   role "Client"
+    # end
 
     trait :inactive do
       status "inactive"

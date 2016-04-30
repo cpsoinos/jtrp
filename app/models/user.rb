@@ -6,6 +6,11 @@ class User < ActiveRecord::Base
 
   attr_accessor :skip_password_validation  # virtual attribute to skip password validation while saving
 
+  self.inheritance_column = :role
+  def self.roles
+    %w(Admin InternalUser Client Guest)
+  end
+
   mount_uploader :avatar, AvatarUploader
 
   has_many :proposals
@@ -15,17 +20,17 @@ class User < ActiveRecord::Base
   validates :email, presence: true, uniqueness: true
   validates :status, presence: true
 
-  scope :client, -> { where(role: "client") }
-  scope :internal, -> { where(role: "internal") }
+  scope :client, -> { where(role: "Client") }
+  scope :internal, -> { where(role: "InternalUser") }
   scope :active, -> { where(status: "active") }
   scope :inactive, -> { where(status: "inactive") }
 
   def internal?
-    role == "internal" || role == "admin"
+    role == "InternalUser" || role == "Admin"
   end
 
   def client?
-    role == "client"
+    role == "Client"
   end
 
   def active?
@@ -52,3 +57,8 @@ class User < ActiveRecord::Base
   end
 
 end
+
+class Admin < User; end
+class InternalUser < User; end
+class Client < User; end
+class Guest < User; end

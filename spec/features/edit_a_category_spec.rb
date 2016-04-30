@@ -1,7 +1,7 @@
 feature "edit a category" do
 
-  let(:user) { create(:user, :internal) }
-  let(:client) { create(:user, :client) }
+  let(:user) { create(:internal_user) }
+  let(:client) { create(:client) }
   let!(:category) { create(:category) }
 
   context "internal user" do

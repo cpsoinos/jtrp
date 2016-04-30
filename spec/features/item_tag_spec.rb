@@ -1,6 +1,6 @@
 feature "item tag" do
 
-  let(:user) { create(:user, :internal) }
+  let(:user) { create(:internal_user) }
   let(:item) { create(:item, :with_listing_photo, listing_price: 55) }
 
   before do
