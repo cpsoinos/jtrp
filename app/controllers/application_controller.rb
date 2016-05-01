@@ -19,12 +19,6 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def find_purchase_order
-    if params[:purchase_order_id]
-      @purchase_order ||= PurchaseOrder.find(params[:purchase_order_id])
-    end
-  end
-
   def find_clients
     @clients ||= User.client
   end
