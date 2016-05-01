@@ -2,7 +2,6 @@ class ItemsController < ApplicationController
   before_filter :find_clients, only: [:new, :edit]
   before_filter :find_categories, only: [:new, :edit]
   before_filter :find_proposal, only: :create
-  before_filter :find_purchase_order, only: :create
   before_filter :require_internal, only: [:new, :create, :update, :destroy]
 
   def index
@@ -15,15 +14,8 @@ class ItemsController < ApplicationController
   end
 
   def create
-    @item = begin
-      if find_proposal
-        @proposal.items.new(item_params)
-      elsif find_purchase_order
-        @purchase_order.items.new(item_params)
-      else
-        Item.new(item_params)
-      end
-    end
+    @item = item_creator
+
     if @item.save
       respond_to do |format|
         format.html do
@@ -31,7 +23,6 @@ class ItemsController < ApplicationController
           redirect_to item_path(@item)
         end
         format.js do
-          @proposal = Proposal.find(params[:proposal_id])
           render :'proposals/add_item'
         end
       end
@@ -84,6 +75,14 @@ class ItemsController < ApplicationController
 
   def item_params
     params.require(:item).permit([:name, :description, {initial_photos: []}, {listing_photos: []}, :purchase_price, :asking_price, :listing_price, :sale_price, :minimum_sale_price, :condition, :client_id, :category_id, :client_intention])
+  end
+
+  def item_creator
+    if @proposal
+      @proposal.items.new(item_params)
+    else
+      Item.new(item_params)
+    end
   end
 
 end
