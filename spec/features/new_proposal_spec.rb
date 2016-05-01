@@ -14,8 +14,8 @@ feature "new proposal" do
   end
 
   context "internal user" do
-    let(:user) { create(:user, :internal) }
-    let!(:client) { create(:user, :client) }
+    let(:user) { create(:internal_user) }
+    let!(:client) { create(:client) }
 
     before do
       sign_in user

@@ -1,0 +1,48 @@
+<div class="row">
+  <div class="col-sm-12 text-center">
+    <h1 class="company-title"><%= @filter.present? ? @filter : "All" %> Items</h1>
+    <% if @filter.present? %>
+      <% case @filter %>
+      <% when "Potential" %>
+        <h4><%= @filter %> items have not yet been listed for sale.</h4>
+      <% when "Active" %>
+        <h4><%= @filter %> items have a signed proposal and are  actively for sale.</h4>
+      <% when "Sold" %>
+        <h4><%= @filter %> items have been sold.</h4>
+      <% end %>
+    <% end %>
+  </div>
+</div>
+
+<div class="row">
+  <% @items.each do |item| %>
+    <div class="col-xs-6 col-md-3">
+      <div class="thumbnail">
+        <div class="text-center">
+          <h4><%= link_to item.name, item_path(item) %></h4>
+          <% if item.listing_photos.present? %>
+            <%= image_tag(item.listing_photos.first.thumb.url) %>
+          <% elsif item.initial_photos.present? %>
+            <%= image_tag(item.initial_photos.first.thumb.url) %>
+          <% else %>
+            <%= image_tag("thumb_No_Image_Available.png", class: "thumb") %>
+          <% end %>
+          <div class="row">
+            <% if item.proposal.present? %>
+              <div class="col-xs-7 text-right">Client: </div>
+              <div class="col-xs-5 text-left"><%= link_to item.proposal.client.full_name, client_path(item.proposal.client) %></div>
+            <% end %>
+            <div class="col-xs-7 text-right">Purchase price: </div>
+            <div class="col-xs-5 text-left"><%= humanized_money_with_symbol(item.purchase_price).html_safe %></div>
+            <div class="col-xs-7 text-right">Minimum sale price: </div>
+            <div class="col-xs-5 text-left"><%= humanized_money_with_symbol(item.minimum_sale_price).html_safe %></div>
+            <% if item.sold? %>
+              <div class="col-xs-7 text-right">Sale price: </div>
+              <div class="col-xs-5 text-left"><%= humanized_money_with_symbol(item.sale_price).html_safe %></div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

@@ -1,7 +1,7 @@
 feature "add an item" do
 
   let(:category) { create(:category) }
-  let(:user) { create(:user, :internal) }
+  let(:user) { create(:internal_user) }
 
   context "guest" do
     scenario "visits category page" do

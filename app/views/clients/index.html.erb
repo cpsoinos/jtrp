@@ -1,1 +1,38 @@
-hi i'm a client index
+<div class="row">
+  <div class="col-sm-12 text-center">
+    <h1 class="company-title"><%= @filter.present? ? @filter : "All" %> Clients</h1>
+    <% if @filter.present? %>
+      <% case @filter %>
+      <% when "Potential" %>
+        <h4><%= @filter %> clients have not yet signed a proposal agreement.</h4>
+      <% when "Active" %>
+        <h4><%= @filter %> clients have a signed proposal and items actively for sale.</h4>
+      <% when "Inactive" %>
+        <h4><%= @filter %> clients at one point had active items for sale, but not currently. They may be sold, or may be inactive.</h4>
+      <% end %>
+    <% end %>
+  </div>
+</div>
+
+<div class="row">
+  <% @clients.each do |client| %>
+    <div class="col-xs-6 col-md-3">
+      <div class="thumbnail">
+        <div class="text-center">
+          <h4><%= link_to client.full_name, client_path(client) %></h4>
+          <% if client.avatar.present? %>
+            <%= image_tag(proposal.client.avatar.thumb.url) %>
+          <% else %>
+            <%= image_tag "thumb_default_avatar.png", class: "thumb" %>
+          <% end %>
+          <div class="row">
+            <div class="col-xs-7 text-right">Total proposals: </div>
+            <div class="col-xs-5 text-left"><%= client.proposals.count %></div>
+            <div class="col-xs-7 text-right">Total items: </div>
+            <div class="col-xs-5 text-left"><%= client.items.count %></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

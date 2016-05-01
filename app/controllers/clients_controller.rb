@@ -3,6 +3,7 @@ class ClientsController < ApplicationController
 
   def index
     @clients = ClientsPresenter.new(params).filter
+    @filter = params[:status].try(:capitalize)
   end
 
   def show

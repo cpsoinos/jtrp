@@ -1,4 +1,4 @@
-class ClientsPresenter
+class ItemsPresenter
 
   attr_reader :params
 
@@ -7,10 +7,10 @@ class ClientsPresenter
   end
 
   def filter
-    if params[:status]
-      Client.send(params[:status])
+    if params[:state]
+      Item.send(params[:state])
     else
-      Client.all
+      Item.all
     end
   end
 

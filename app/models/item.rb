@@ -28,9 +28,27 @@ class Item < ActiveRecord::Base
   validates :name, presence: true
   validates :description, presence: true
 
-  scope :potential, -> { where(status: "potential") }
-  scope :active, -> { where(status: "active") }
-  scope :sold, -> { where(status: "sold") }
+  scope :potential, -> { where(state: "potential") }
+  scope :active, -> { where(state: "active") }
+  scope :sold, -> { where(state: "sold") }
+  scope :unsold, -> { where.not(state: "sold") }
+
+  state_machine :state, initial: :potential do
+    state :potential
+    state :active
+    state :sold
+
+    after_transition active: :sold, do: :check_proposal_state
+
+    event :mark_active do
+      transition potential: :active, if: lambda { |item| item.meets_requirements_active? }
+    end
+
+    event :mark_sold do
+      transition active: :sold, if: lambda { |item| item.meets_requirements_sold? }
+    end
+
+  end
 
   def barcode(pdf=false)
     require 'barby'
@@ -46,15 +64,29 @@ class Item < ActiveRecord::Base
   end
 
   def active?
-    status == "active"
+    state == "active"
   end
 
   def potential?
-    status == "potential"
+    state == "potential"
   end
 
   def sold?
-    status == "sold"
+    state == "sold"
+  end
+
+  def check_proposal_state
+    if proposal.items.active.empty?
+      proposal.mark_inactive
+    end
+  end
+
+  def meets_requirements_active?
+    proposal.present? && proposal.active?
+  end
+
+  def meets_requirements_sold?
+    meets_requirements_active?
   end
 
 end

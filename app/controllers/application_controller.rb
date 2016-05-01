@@ -26,9 +26,7 @@ class ApplicationController < ActionController::Base
   end
 
   def find_clients
-    @clients ||= User.client.map do |client|
-      [client.full_name, client.id]
-    end
+    @clients ||= User.client
   end
 
   def find_categories
