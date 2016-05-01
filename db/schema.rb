@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160425214741) do
+ActiveRecord::Schema.define(version: 20160501012244) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -57,7 +57,7 @@ ActiveRecord::Schema.define(version: 20160425214741) do
     t.string   "token"
     t.integer  "proposal_id"
     t.json     "listing_photos"
-    t.string   "status",                      default: "potential", null: false
+    t.string   "state",                       default: "potential", null: false
     t.integer  "minimum_sale_price_cents"
     t.string   "minimum_sale_price_currency", default: "USD",       null: false
     t.string   "name",                                              null: false
@@ -74,8 +74,9 @@ ActiveRecord::Schema.define(version: 20160425214741) do
     t.integer  "created_by_id",     null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.json     "client_signature"
-    t.json     "manager_signature"
+    t.jsonb    "client_signature"
+    t.jsonb    "manager_signature"
+    t.string   "state"
   end
 
   create_table "users", force: :cascade do |t|
@@ -91,7 +92,7 @@ ActiveRecord::Schema.define(version: 20160425214741) do
     t.inet     "last_sign_in_ip"
     t.datetime "created_at",                                     null: false
     t.datetime "updated_at",                                     null: false
-    t.string   "role",                        default: "guest"
+    t.string   "role"
     t.string   "first_name"
     t.string   "last_name"
     t.string   "address_1"

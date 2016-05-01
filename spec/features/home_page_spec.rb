@@ -39,7 +39,7 @@ feature "home page" do
 
   context "internal user" do
 
-    let(:user) { create(:user, :internal) }
+    let(:user) { create(:internal_user) }
 
     before do
       sign_in user

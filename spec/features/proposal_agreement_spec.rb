@@ -1,7 +1,7 @@
 feature "proposal agreement" do
 
-  let(:client) { create(:user, :client) }
-  let(:user) { create(:user, :internal) }
+  let(:client) { create(:client) }
+  let(:user) { create(:internal_user) }
   let(:proposal) { create(:proposal, created_by: user, client: client) }
 
   context "guest" do
