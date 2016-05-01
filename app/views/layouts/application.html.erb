@@ -27,6 +27,19 @@
         <% if current_user.try(:internal?) %>
           <ul class="nav navbar-nav">
             <li class="dropdown">
+              <a href="<%= categories_path %>" data-target="#" class="dropdown-toggle" data-toggle="dropdown">Categories
+                <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <% if @categories %>
+                  <% @categories.each do |category| %>
+                  <li><%= link_to category.name, category_path(category) %></li>
+                  <% end %>
+                  <% end %>
+                  <li class="divider"></li>
+                  <li><%= link_to "All Categories", categories_path %></li>
+                </ul>
+              </li>
+            <li class="dropdown">
               <a href="<%= items_path %>" data-target="#" class="dropdown-toggle" data-toggle="dropdown">Items
                 <b class="caret"></b></a>
               <ul class="dropdown-menu">
@@ -35,19 +48,6 @@
                 <li><%= link_to "Sold", items_path(state: 'sold') %></li>
                 <li class="divider"></li>
                 <li><%= link_to "All Items", items_path %></li>
-              </ul>
-            </li>
-            <li class="dropdown">
-              <a href="<%= categories_path %>" data-target="#" class="dropdown-toggle" data-toggle="dropdown">Categories
-                <b class="caret"></b></a>
-              <ul class="dropdown-menu">
-                <% if @categories %>
-                  <% @categories.each do |category| %>
-                    <li><%= link_to category.name, category_path(category) %></li>
-                  <% end %>
-                <% end %>
-                <li class="divider"></li>
-                <li><%= link_to "All Categories", categories_path %></li>
               </ul>
             </li>
             <li class="dropdown">

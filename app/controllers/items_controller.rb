@@ -5,6 +5,11 @@ class ItemsController < ApplicationController
   before_filter :find_purchase_order, only: :create
   before_filter :require_internal, only: [:new, :create, :update, :destroy]
 
+  def index
+    @items = ItemsPresenter.new(params).filter
+    @filter = params[:state].try(:capitalize)
+  end
+
   def new
     @item = Item.new
   end
