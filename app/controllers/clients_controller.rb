@@ -2,8 +2,7 @@ class ClientsController < ApplicationController
   before_filter :require_internal
 
   def index
-    # @clients = ClientsPresenter.new(params).filter
-    @clients = User.client
+    @clients = ClientsPresenter.new(params).filter
     @filter = params[:status].try(:capitalize)
   end
 

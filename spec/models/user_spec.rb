@@ -60,7 +60,7 @@ describe User do
     end
 
     it "active" do
-      expect(User.active.count).to eq(6)
+      expect(User.active.count).to eq(3)
       User.active.each do |user|
         expect(user.active?).to be(true)
       end

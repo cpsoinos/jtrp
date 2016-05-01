@@ -6,14 +6,17 @@ FactoryGirl.define do
     name Faker::Lorem.word
     description Faker::Lorem.paragraph
     category
-    status "active"
+    proposal
+    state "potential"
 
-    trait :potential do
-      status "potential"
+    trait :active do
+      association :proposal, :active
+      state "active"
     end
 
     trait :sold do
-      status "sold"
+      association :proposal, :inactive
+      state "sold"
     end
 
     trait :with_initial_photo do
@@ -37,6 +40,7 @@ FactoryGirl.define do
         Rack::Test::UploadedFile.new(File.open(File.join(Rails.root, '/spec/fixtures/test_2.png')))
       ]
     end
+
   end
 
 end

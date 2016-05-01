@@ -39,6 +39,7 @@ class ProposalsController < ApplicationController
   def update
     @proposal = Proposal.find(params[:id])
     if @proposal.update(signature_params)
+      @proposal.mark_active
       respond_to do |format|
         format.html
         format.js do

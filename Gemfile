@@ -28,6 +28,8 @@ gem 'gon'
 gem 'rollbar', '~> 2.8.3'
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
+gem 'state_machines'
+gem 'state_machines-activerecord'
 
 group :production, :staging, :local do
   gem 'rails_12factor'

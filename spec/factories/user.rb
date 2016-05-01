@@ -5,7 +5,7 @@ FactoryGirl.define do
   factory :user, class: User do
     first_name Faker::Name.first_name
     last_name Faker::Name.last_name
-    email
+    sequence(:email) { |n| "person#{n}@example.com" }
     password "supersecret"
     password_confirmation "supersecret"
     status "active"
@@ -17,29 +17,39 @@ FactoryGirl.define do
     phone Faker::PhoneNumber.phone_number
     phone_ext Faker::PhoneNumber.extension
 
-    factory :client, class: Client
-    factory :admin, class: Admin
-    factory :internal_user, class: InternalUser
-
-    # trait :admin do
-    #   role "Admin"
-    # end
-    #
-    # trait :internal do
-    #   role "Internal"
-    # end
-    #
-    # trait :client do
-    #   role "Client"
-    # end
-
     trait :inactive do
       status "inactive"
     end
-  end
 
-  sequence :email do |n|
-    "person#{n}@example.com"
+    factory :client, class: Client do
+
+      status "potential"
+
+      trait :potential do
+        after(:create) do |instance|
+          create(:proposal, client: instance)
+        end
+      end
+
+      trait :active do
+        status "active"
+        after(:create) do |instance|
+          create(:item, :active, proposal: create(:proposal, :active, client: instance))
+        end
+      end
+
+      trait :inactive do
+        status "inactive"
+        after(:create) do |instance|
+          create(:item, :sold, proposal: create(:proposal, :active, client: instance))
+        end
+      end
+
+    end
+
+    factory :admin, class: Admin
+    factory :internal_user, class: InternalUser
+
   end
 
 end

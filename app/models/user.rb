@@ -60,5 +60,4 @@ end
 
 class Admin < User; end
 class InternalUser < User; end
-class Client < User; end
 class Guest < User; end
