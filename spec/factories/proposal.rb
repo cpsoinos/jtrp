@@ -3,7 +3,6 @@ require 'factory_girl'
 FactoryGirl.define do
 
   factory :proposal do
-    # association :client, factory: :client
     client
     association :created_by, factory: :user
 
