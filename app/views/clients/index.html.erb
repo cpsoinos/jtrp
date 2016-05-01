@@ -3,8 +3,12 @@
     <h1 class="company-title"><%= @filter.present? ? @filter : "All" %> Clients</h1>
     <% if @filter.present? %>
       <% case @filter %>
+      <% when "Potential" %>
+        <h4><%= @filter %> clients have not yet signed a proposal agreement.</h4>
       <% when "Active" %>
         <h4><%= @filter %> clients have a signed proposal and items actively for sale.</h4>
+      <% when "Inactive" %>
+        <h4><%= @filter %> clients at one point had active items for sale, but not currently. They may be sold, or may be inactive.</h4>
       <% end %>
     <% end %>
   </div>
