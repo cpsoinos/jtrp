@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-xs-12 col-md-8 col-md-offset-2">
-    <div class="thumbnail">
+    <div class="well">
       <div class="row text-center">
         <div class="col-md-4 hidden-xs">
           <% if @client.avatar.present? %>
@@ -30,32 +30,38 @@
 
 <div class="row">
   <div class="col-xs-12 col-md-4">
-    <div class="thumbnail">
+    <div class="well">
       <h3>Potential Items</h3>
       <% if @client.items.potential.empty? %>
         <i>No potential items.</i>
       <% else %>
-        <%= render "items_preview", items: @client.items.potential, type: "potential" %>
+        <div class="row">
+          <%= render "items_preview", items: @client.items.potential, type: "potential" %>
+        </div>
       <% end %>
     </div>
   </div>
   <div class="col-xs-12 col-md-4">
-    <div class="thumbnail">
+    <div class="well">
       <h3>Active Items</h3>
       <% if @client.items.active.empty? %>
         <i>No active items.</i>
       <% else %>
-        <%= render "items_preview", items: @client.items.active, type: "active" %>
+        <div class="row">
+          <%= render "items_preview", items: @client.items.active, type: "active" %>
+        </div>
       <% end %>
     </div>
   </div>
   <div class="col-xs-12 col-md-4">
-    <div class="thumbnail">
+    <div class="well">
       <h3>Sold Items</h3>
       <% if @client.items.sold.empty? %>
         <i>No sold items.</i>
       <% else %>
-        <%= render "items_preview", items: @client.items.sold, type: "sold" %>
+        <div class="row">
+          <%= render "items_preview", items: @client.items.sold, type: "sold" %>
+        </div>
       <% end %>
     </div>
   </div>
@@ -63,7 +69,7 @@
 
 <div class="row">
   <div class="col-xs-12 col-md-4">
-    <div class="thumbnail">
+    <div class="well">
       <h3>Potential Proposals</h3>
       <% if @client.proposals.potential.empty? %>
         <i>No potential proposals.</i>
@@ -75,7 +81,7 @@
     </div>
   </div>
   <div class="col-xs-12 col-md-4">
-    <div class="thumbnail">
+    <div class="well">
       <h3>Active Proposals</h3>
       <% if @client.proposals.active.empty? %>
         <i>No active proposals.</i>
@@ -87,7 +93,7 @@
     </div>
   </div>
   <div class="col-xs-12 col-md-4">
-    <div class="thumbnail">
+    <div class="well">
       <h3>Inactive Proposals</h3>
       <% if @client.proposals.inactive.empty? %>
         <i>No inactive proposals.</i>

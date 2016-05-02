@@ -2,11 +2,11 @@ class PhotoUploader < CarrierWave::Uploader::Base
   include CarrierWave::MiniMagick
 
   version :thumb do
-    process resize_to_fill: [200,200]
+    process resize_to_fit: [200,200]
   end
 
   version :tiny_thumb do
-    process resize_to_fill: [50,50]
+    process resize_to_fit: [50,50]
   end
 
   def store_dir

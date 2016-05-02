@@ -17,7 +17,7 @@
 <div class="row">
   <% @clients.each do |client| %>
     <div class="col-xs-6 col-md-3">
-      <div class="thumbnail">
+      <div class="well">
         <div class="text-center">
           <h4><%= link_to client.full_name, client_path(client) %></h4>
           <% if client.avatar.present? %>
