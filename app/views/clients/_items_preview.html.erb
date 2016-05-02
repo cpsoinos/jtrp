@@ -1,18 +1,22 @@
 <% items.each do |item| %>
-  <% if item.listing_photos.present? %>
-    <%= image_tag(item.listing_photos.first.thumb.url) %>
-  <% elsif item.initial_photos.present? %>
-    <%= image_tag(item.initial_photos.first.thumb.url) %>
+  <% url = begin %>
+    <% if item.listing_photos.present? %>
+      <% image_tag(item.listing_photos.first.tiny_thumb.url) %>
+    <% elsif item.initial_photos.present? %>
+      <% image_tag(item.initial_photos.first.tiny_thumb.url) %>
+    <% else %>
+      <% item.name %>
+    <% end %>
   <% end %>
 
-  <% case type %>
+  <%= link_to url, item_path(item) %>
 
+  <% case type %>
   <% when "potential" %>
     <div class="row">
       <div class="col-xs-6">Intention: </div>
       <div class="col-xs-6"><%= item.client_intention %></div>
     </div>
-
   <% when "active" %>
     <div class="row">
       <div class="col-xs-6">Intention: </div>
@@ -26,7 +30,6 @@
       <div class="col-xs-6">Minimum sale price: </div>
       <div class="col-xs-6"><%= humanized_money_with_symbol(item.minimum_sale_price).html_safe %></div>
     </div>
-
   <% when "sold" %>
     <div class="row">
       <div class="col-xs-6">Purchase price: </div>
@@ -36,6 +39,6 @@
       <div class="col-xs-6">Sale price: </div>
       <div class="col-xs-6"><%= humanized_money_with_symbol(item.sale_price).html_safe %></div>
     </div>
-    
+
   <% end %>
 <% end %>
