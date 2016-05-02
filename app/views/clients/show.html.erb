@@ -35,17 +35,7 @@
       <% if @client.items.potential.empty? %>
         <i>No potential items.</i>
       <% else %>
-        <% @client.items.potential.each do |item| %>
-          <% if item.listing_photos.present? %>
-            <%= image_tag(item.listing_photos.first.thumb.url) %>
-          <% elsif item.initial_photos.present? %>
-            <%= image_tag(item.initial_photos.first.thumb.url) %>
-          <% end %>
-          <div class="row">
-            <div class="col-xs-6">Intention: </div>
-            <div class="col-xs-6"><%= item.client_intention %></div>
-          </div>
-        <% end %>
+        <%= render "items_preview", items: @client.items.potential, type: "potential" %>
       <% end %>
     </div>
   </div>
@@ -55,25 +45,7 @@
       <% if @client.items.active.empty? %>
         <i>No active items.</i>
       <% else %>
-        <% @client.items.active.each do |item| %>
-          <% if item.listing_photos.present? %>
-            <%= image_tag(item.listing_photos.first.thumb.url) %>
-          <% elsif item.initial_photos.present? %>
-            <%= image_tag(item.initial_photos.first.thumb.url) %>
-          <% end %>
-          <div class="row">
-            <div class="col-xs-6">Intention: </div>
-            <div class="col-xs-6"><%= item.client_intention %></div>
-          </div>
-          <div class="row">
-            <div class="col-xs-6">Purchase price: </div>
-            <div class="col-xs-6"><%= humanized_money_with_symbol(item.purchase_price).html_safe %></div>
-          </div>
-          <div class="row">
-            <div class="col-xs-6">Minimum sale price: </div>
-            <div class="col-xs-6"><%= humanized_money_with_symbol(item.minimum_sale_price).html_safe %></div>
-          </div>
-        <% end %>
+        <%= render "items_preview", items: @client.items.active, type: "active" %>
       <% end %>
     </div>
   </div>
@@ -83,21 +55,7 @@
       <% if @client.items.sold.empty? %>
         <i>No sold items.</i>
       <% else %>
-        <% @client.items.sold.each do |item| %>
-          <% if item.listing_photos.present? %>
-            <%= image_tag(item.listing_photos.first.thumb.url) %>
-          <% elsif item.initial_photos.present? %>
-            <%= image_tag(item.initial_photos.first.thumb.url) %>
-          <% end %>
-          <div class="row">
-            <div class="col-xs-6">Purchase price: </div>
-            <div class="col-xs-6"><%= humanized_money_with_symbol(item.purchase_price).html_safe %></div>
-          </div>
-          <div class="row">
-            <div class="col-xs-6">Sale price: </div>
-            <div class="col-xs-6"><%= humanized_money_with_symbol(item.sale_price).html_safe %></div>
-          </div>
-        <% end %>
+        <%= render "items_preview", items: @client.items.sold, type: "sold" %>
       <% end %>
     </div>
   </div>
