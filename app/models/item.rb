@@ -82,7 +82,6 @@ class Item < ActiveRecord::Base
   end
 
   def meets_requirements_active?
-    binding.pry
     proposal.present? && proposal.active?
   end
 
