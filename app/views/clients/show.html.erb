@@ -38,7 +38,7 @@
         <% @client.items.potential.each do |item| %>
           <% if item.listing_photos.present? %>
             <%= image_tag(item.listing_photos.first.thumb.url) %>
-          <% else %>
+          <% elsif item.initial_photos.present? %>
             <%= image_tag(item.initial_photos.first.thumb.url) %>
           <% end %>
           <div class="row">
@@ -56,7 +56,11 @@
         <i>No active items.</i>
       <% else %>
         <% @client.items.active.each do |item| %>
-          <%= image_tag(item.listing_photos.first.thumb.url) %>
+          <% if item.listing_photos.present? %>
+            <%= image_tag(item.listing_photos.first.thumb.url) %>
+          <% elsif item.initial_photos.present? %>
+            <%= image_tag(item.initial_photos.first.thumb.url) %>
+          <% end %>
           <div class="row">
             <div class="col-xs-6">Intention: </div>
             <div class="col-xs-6"><%= item.client_intention %></div>
@@ -80,7 +84,11 @@
         <i>No sold items.</i>
       <% else %>
         <% @client.items.sold.each do |item| %>
-          <%= image_tag(item.listing_photos.first.thumb.url) %>
+          <% if item.listing_photos.present? %>
+            <%= image_tag(item.listing_photos.first.thumb.url) %>
+          <% elsif item.initial_photos.present? %>
+            <%= image_tag(item.initial_photos.first.thumb.url) %>
+          <% end %>
           <div class="row">
             <div class="col-xs-6">Purchase price: </div>
             <div class="col-xs-6"><%= humanized_money_with_symbol(item.purchase_price).html_safe %></div>

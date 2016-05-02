@@ -41,7 +41,7 @@ FactoryGirl.define do
       trait :inactive do
         status "inactive"
         after(:create) do |instance|
-          create(:item, :sold, proposal: create(:proposal, :active, client: instance))
+          create(:item, :sold, proposal: create(:proposal, :inactive, client: instance))
         end
       end
 

@@ -115,8 +115,59 @@ feature "client show" do
       end
 
       scenario "client has a sold item" do
+        create(:item, :active, proposal: proposal)
         item.mark_sold
         item.update_attribute("sale_price_cents", 8500)
+        visit client_path(client)
+
+        expect(page).not_to have_content("No active items.")
+        expect(page).to have_content("Purchase price:")
+        expect(page).to have_content("$55.00")
+        expect(page).to have_content("Sale price:")
+        expect(page).to have_content("$85.00")
+        expect(page).not_to have_content("No sold items.")
+
+        expect(page).not_to have_content("No active proposals.")
+        expect(page).to have_link("Proposal No. #{proposal.id}")
+        expect(page).to have_content("No inactive proposals.")
+      end
+
+    end
+
+    context "inactive client" do
+
+      let!(:client) { create(:client, :inactive) }
+      let(:proposal) { client.proposals.first }
+      let(:item) { proposal.items.first }
+
+      before do
+        item.update_attributes(client_intention: "sell", purchase_price_cents: 5500, minimum_sale_price_cents: 7500, sale_price_cents: 8500)
+      end
+
+      scenario "clicks through from client index" do
+        visit clients_path(status: 'inactive')
+        click_link(client.full_name)
+
+        expect(page).to have_content(client.full_name)
+        expect(page).to have_content("Client")
+      end
+
+      scenario "visits show page" do
+        visit client_path(client)
+
+        expect(page).to have_content(client.full_name)
+        expect(page).to have_content("Client")
+        expect(page).to have_content(client.address_1)
+        expect(page).to have_content(client.address_2)
+        expect(page).to have_content(client.city)
+        expect(page).to have_content(client.state)
+        expect(page).to have_content(client.zip)
+
+        expect(page).to have_selector("img[alt$='Client Avatar']")
+        expect(page).to have_selector("img[alt$='Client Address']")
+      end
+
+      scenario "client has a sold item" do
         visit client_path(client)
 
         expect(page).to have_content("No active items.")
@@ -131,8 +182,25 @@ feature "client show" do
         expect(page).not_to have_content("No inactive proposals.")
       end
 
-    end
+      # scenario "client has a sold item" do
+      #   create(:item, :active, proposal: proposal)
+      #   item.mark_sold
+      #   item.update_attribute("sale_price_cents", 8500)
+      #   visit client_path(client)
+      #
+      #   expect(page).not_to have_content("No active items.")
+      #   expect(page).to have_content("Purchase price:")
+      #   expect(page).to have_content("$55.00")
+      #   expect(page).to have_content("Sale price:")
+      #   expect(page).to have_content("$85.00")
+      #   expect(page).not_to have_content("No sold items.")
+      #
+      #   expect(page).not_to have_content("No active proposals.")
+      #   expect(page).to have_link("Proposal No. #{proposal.id}")
+      #   expect(page).to have_content("No inactive proposals.")
+      # end
 
+    end
 
   end
 
