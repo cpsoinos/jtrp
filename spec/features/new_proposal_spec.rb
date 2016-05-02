@@ -55,6 +55,7 @@ feature "new proposal" do
         expect(page).to have_field("item_minimum_sale_price")
         expect(page).to have_field("item_condition")
         expect(page).to have_button("Add Item")
+        expect(Proposal.count).to eq(1)
       end
 
       let(:proposal) { create(:proposal, client: client)}

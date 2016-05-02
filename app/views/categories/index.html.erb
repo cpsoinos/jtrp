@@ -27,7 +27,7 @@
 <div class="row">
   <% @categories.each do |category| %>
     <div class="col-sm-6 col-md-4">
-      <div class="thumbnail">
+      <div class="well">
         <% if category.photo.present? %>
           <%= image_tag(category.photo.thumb.url) %>
         <% end %>
@@ -59,7 +59,7 @@
   <div class="row">
     <% @proposals.each do |proposal| %>
       <div class="col-sm-6 col-md-4">
-        <div class="thumbnail">
+        <div class="well">
           <div class="pull-left"><%= proposal.id %></div>
           <div class="pull-right"><%= link_to "edit", edit_proposal_path(proposal) %></div>
           <div class="text-center">

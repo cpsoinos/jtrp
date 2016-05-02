@@ -1,4 +1,4 @@
-feature "client pages" do
+feature "client index" do
 
   let(:user) { create(:internal_user) }
   let!(:potential_clients) { create_list(:client, 3, :potential) }

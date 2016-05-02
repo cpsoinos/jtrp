@@ -4,11 +4,15 @@
 <div class="col-md-8 col-md-offset-2">
   <div class="well bs-component">
 
-    <%= render 'form', legend: "New Proposal" %>
+    <% if @clients.present? %>
+      <%= render 'form', legend: "New Proposal" %>
+    <% end %>
 
     <div class="row">
       <div class="text-center">
-        - or -</br>
+        <% if @clients.present? %>
+          - or -</br>
+        <% end %>
         <%= link_to "New Client", "javascript:void(0)", class: "btn btn-raised btn-primary", id: "new-client-button" %>
       </div>
     </div>

@@ -1,4 +1,4 @@
-<div class="col-md-8 col-md-offset-2">
+<div class="col-xs-12 col-md-8 col-md-offset-2">
   <div class="well bs-component">
     <h1 class="text-center company-title">Just the Right Piece</h1>
     <h3 class="text-center">Consignment Agreement</h2><br>
@@ -105,16 +105,16 @@
     <div class="row">
       <p>AGREED AND EXECUTED BY, effective on the date first written above:</b></p>
 
-      <div class="col-md-6">
+      <div class="col-xs-12 col-md-6">
         <p>Consignee:  <%= @company.name %>, LLC</p>
         <%= render "signature_pad", user: current_user, role: "manager" %>
-        <p><%= current_user.full_name %>, Managing Member</p>
+        <p class="agreement-name-printed"><%= @proposal.created_by.full_name %>, <i>Managing Member</i></p>
       </div>
 
-      <div class="col-md-6">
+      <div class="col-xs-12 col-md-6">
         <p>Consignor:</p>
         <%= render "signature_pad", user: @client, role: "client" %>
-        <p><%= @client.full_name %></p>
+        <p class="agreement-name-printed"><%= @client.full_name %></p>
       </div>
     </div>
 
