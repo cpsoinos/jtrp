@@ -24,7 +24,7 @@ FactoryGirl.define do
     end
 
     trait :with_listing_photo do
-      initial_photos [Rack::Test::UploadedFile.new(File.open(File.join(Rails.root, '/spec/fixtures/test_2.png')))]
+      listing_photos [Rack::Test::UploadedFile.new(File.open(File.join(Rails.root, '/spec/fixtures/test_2.png')))]
     end
 
     trait :with_multiple_initial_photos do

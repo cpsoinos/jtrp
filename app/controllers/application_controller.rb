@@ -20,7 +20,7 @@ class ApplicationController < ActionController::Base
   end
 
   def find_clients
-    @clients ||= User.client
+    @clients ||= Client.all
   end
 
   def find_categories
