@@ -24,6 +24,16 @@ $(document).ready(function() {
     })
   });
 
+  $('#item_initial_photos').change(function() {
+    debugger;
+    var filename = $(this).val();
+    var lastIndex = filename.lastIndexOf("\\");
+    if (lastIndex >= 0) {
+        filename = filename.substring(lastIndex + 1);
+    }
+    $('#filename').val(filename);
+  });
+
 });
 
 var slickifyDropdown = function(selector) {
