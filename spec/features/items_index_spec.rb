@@ -1,4 +1,4 @@
-feature "item pages" do
+feature "item index" do
 
   let(:user) { create(:internal_user) }
   let!(:potential_items) { create_list(:item, 3) }

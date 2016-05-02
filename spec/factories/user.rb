@@ -34,14 +34,14 @@ FactoryGirl.define do
       trait :active do
         status "active"
         after(:create) do |instance|
-          create(:item, :active, proposal: create(:proposal, :active, client: instance))
+          create(:item, :active, :with_listing_photo, proposal: create(:proposal, :active, client: instance))
         end
       end
 
       trait :inactive do
         status "inactive"
         after(:create) do |instance|
-          create(:item, :sold, proposal: create(:proposal, :active, client: instance))
+          create(:item, :sold, proposal: create(:proposal, :inactive, client: instance))
         end
       end
 

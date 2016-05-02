@@ -17,7 +17,7 @@
 <div class="row">
   <% @items.each do |item| %>
     <div class="col-xs-6 col-md-3">
-      <div class="thumbnail">
+      <div class="well">
         <div class="text-center">
           <h4><%= link_to item.name, item_path(item) %></h4>
           <% if item.listing_photos.present? %>
