@@ -14,16 +14,11 @@ class PhotoUploader < CarrierWave::Uploader::Base
   end
 
   def filename
-    @filename = "#{secure_token}_#{original_filename}" if original_filename.present?
+    "#{cache_id}#{original_filename}.#{file.extension}" if original_filename
   end
 
   process resize_to_fit: [800, 800]
 
   protected
-
-  def secure_token
-    var = :"@#{mounted_as}_secure_token"
-    model.instance_variable_get(var) or model.instance_variable_set(var, SecureRandom.uuid)
-  end
 
 end

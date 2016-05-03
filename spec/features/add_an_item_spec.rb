@@ -52,7 +52,7 @@ feature "add an item" do
       expect(page).to have_content("Item created")
       expect(page).to have_content("Chair")
       expect(page).to have_content("People sit in it.")
-      expect(page).to have_selector("img[src$='test.png']")
+      expect(page).to have_css("img[src*='test.png']")
     end
 
     scenario "visits category page" do
@@ -84,7 +84,7 @@ feature "add an item" do
       expect(page).to have_content("Item created")
       expect(page).to have_content("Chair")
       expect(page).to have_content("People sit in it.")
-      expect(page).to have_selector("img[src$='test.png']")
+      expect(page).to have_css("img[src*='test.png']")
     end
 
     scenario "unsuccessfully adds an item" do

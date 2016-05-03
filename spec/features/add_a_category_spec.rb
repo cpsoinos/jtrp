@@ -44,7 +44,7 @@ feature "add a category" do
 
       expect(page).to have_content("Category created!")
       expect(page).to have_content("Great Room")
-      expect(page).to have_selector("img[src$='test.png']")
+      expect(page).to have_css("img[src*='test.png']")
       expect(page).to have_link("edit")
     end
 
