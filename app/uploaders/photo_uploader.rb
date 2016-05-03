@@ -1,6 +1,8 @@
 class PhotoUploader < CarrierWave::Uploader::Base
   include CarrierWave::MiniMagick
 
+  storage :fog
+
   version :thumb do
     process resize_to_fit: [200,200]
   end
@@ -14,7 +16,7 @@ class PhotoUploader < CarrierWave::Uploader::Base
   end
 
   def filename
-    "#{cache_id}#{original_filename}.#{file.extension}" if original_filename
+    "#{cache_id}_#{original_filename}" if original_filename
   end
 
   process resize_to_fit: [800, 800]
