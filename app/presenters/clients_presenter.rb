@@ -8,7 +8,7 @@ class ClientsPresenter
 
   def filter
     if params[:status]
-      Client.send(params[:status])
+      Client.send(params[:status]).order(:id)
     else
       Client.all
     end
