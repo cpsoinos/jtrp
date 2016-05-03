@@ -44,7 +44,7 @@ feature "edit a category" do
 
       expect(page).to have_content("Category updated!")
       expect(page).to have_content(category.name)
-      expect(page).to have_selector("img[src$='test.png']")
+      expect(page).to have_css("img[src*='test.png']")
       expect(page).to have_link("edit")
     end
 
