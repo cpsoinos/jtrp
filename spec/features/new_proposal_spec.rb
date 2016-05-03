@@ -71,7 +71,7 @@ feature "new proposal" do
         click_on("Add Item")
 
         expect(page).to have_content("sit in it")
-        expect(page).to have_selector("img[src$='test.png']")
+        expect(page).to have_css("img[src*='test.png']")
         expect(page).to have_content("$55")
         expect(page).to have_content("$45")
         expect(page).to have_content("like new")
