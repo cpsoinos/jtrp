@@ -11,7 +11,7 @@ feature "home page" do
       visit root_path
 
       expect(page).to have_content(company.name)
-      expect(page).to have_content(company.description)
+      expect(page).to have_content(company.slogan)
     end
 
     scenario "sees category links" do
@@ -49,7 +49,7 @@ feature "home page" do
       visit root_path
 
       expect(page).to have_content(company.name)
-      expect(page).not_to have_content(company.description)
+      expect(page).not_to have_content(company.slogan)
 
       expect(page).to have_link("Items")
       expect(page).to have_link("Categories")
