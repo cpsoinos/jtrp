@@ -1,4 +1,4 @@
-[![Circle CI](https://circleci.com/gh/cpsoinos/jtrp.svg?style=svg&circle-token=77c5572f7d1f0b24dc3687c04392be9a5f945fea)](https://circleci.com/gh/cpsoinos/jtrp) [![Circle CI](https://circleci.com/gh/cpsoinos/jtrp.svg?style=svg&circle-token=77c5572f7d1f0b24dc3687c04392be9a5f945fea)](https://circleci.com/gh/cpsoinos/jtrp)
+{<img src="https://circleci.com/gh/cpsoinos/jtrp.svg?style=svg&circle-token=77c5572f7d1f0b24dc3687c04392be9a5f945fea" alt="Circle CI" />}[https://circleci.com/gh/cpsoinos/jtrp] {<img src="https://coveralls.io/repos/github/cpsoinos/jtrp/badge.svg?branch=dev&t=Bo82r7" alt="Coverage Status" />}[https://coveralls.io/github/cpsoinos/jtrp?branch=dev]
 
 == README
 
