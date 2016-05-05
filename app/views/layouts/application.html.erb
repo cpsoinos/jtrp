@@ -64,6 +64,7 @@
           </ul>
         <% end %>
         <ul class="nav navbar-nav navbar-right">
+          <li><%= link_to 'About Us', company_about_us_path(@company) %></li>
           <% if current_user %>
             <li><%= link_to 'Sign Out', destroy_user_session_path, method: 'delete' %></li>
           <% else %>

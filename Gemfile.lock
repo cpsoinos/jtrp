@@ -61,6 +61,10 @@ GEM
       rack (>= 0.9.0)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
+    bootsy (2.1.0)
+      carrierwave (~> 0.10)
+      mini_magick (~> 4.0)
+      remotipart (~> 1.2)
     builder (3.2.2)
     byebug (8.2.5)
     cairo (1.15.2)
@@ -429,6 +433,7 @@ DEPENDENCIES
   barby
   best_in_place (~> 3.0.1)
   better_errors
+  bootsy
   bundler (>= 1.8.4)
   cairo
   capybara
