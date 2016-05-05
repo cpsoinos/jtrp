@@ -1,3 +1,5 @@
+[![Circle CI](https://circleci.com/gh/cpsoinos/jtrp.svg?style=svg&circle-token=77c5572f7d1f0b24dc3687c04392be9a5f945fea)](https://circleci.com/gh/cpsoinos/jtrp) [![Circle CI](https://circleci.com/gh/cpsoinos/jtrp.svg?style=svg&circle-token=77c5572f7d1f0b24dc3687c04392be9a5f945fea)](https://circleci.com/gh/cpsoinos/jtrp)
+
 == README
 
 This README would normally document whatever steps are necessary to get the
