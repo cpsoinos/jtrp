@@ -30,6 +30,7 @@ gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
 gem 'state_machines'
 gem 'state_machines-activerecord'
+gem 'bootsy'
 
 group :production, :staging, :local do
   gem 'rails_12factor'
