@@ -1,8 +1,11 @@
 Rails.application.routes.draw do
+  mount Bootsy::Engine => '/bootsy', as: 'bootsy'
   devise_for :users, controllers: { registrations: 'registrations' }
   root 'passthrough#index'
 
-  resources :companies
+  resources :companies do
+    get '/about_us', to: 'companies#about_us', as: 'about_us'
+  end
 
   resources :categories do
     resources :items
