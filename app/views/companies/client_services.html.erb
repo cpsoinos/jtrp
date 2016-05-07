@@ -9,9 +9,11 @@
   <div class="col-xs-12 col-md-8 col-md-offset-2">
     <div class="well">
       <% if current_user.try(:internal?) %>
-        <%= link_to "<i>Edit</i>".html_safe, edit_company_path(@company), class: "pull-right" %>
+        <div class="row">
+          <%= link_to "<i>Edit</i>".html_safe, edit_company_path(@company), class: "pull-right" %>
+        </div>
       <% end %>
-      <%= @company.description.html_safe %>
+      <%= @company.description.try(:html_safe) %>
     </div>
   </div>
 </div>
