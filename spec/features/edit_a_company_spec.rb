@@ -10,7 +10,7 @@ feature "edit a company" do
     end
 
     scenario "clicks through from 'about us' page" do
-      visit company_about_us_path(company)
+      visit company_client_services_path(company)
       click_link("Edit")
 
       expect(page).not_to have_field("Name")
