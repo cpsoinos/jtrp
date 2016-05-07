@@ -5,6 +5,9 @@ Rails.application.routes.draw do
 
   resources :companies do
     get '/about_us', to: 'companies#about_us', as: 'about_us'
+    get '/consignment_policies', to: 'companies#consignment_policies', as: 'consignment_policies'
+    get '/service_rate_schedule', to: 'companies#service_rate_schedule', as: 'service_rate_schedule'
+    get '/agent_service_rate_schedule', to: 'companies#agent_service_rate_schedule', as: 'agent_service_rate_schedule'
   end
 
   resources :categories do

@@ -13,7 +13,7 @@
           <%= link_to "<i>Edit</i>".html_safe, edit_company_path(@company), class: "pull-right" %>
         </div>
       <% end %>
-      <%= @company.description.try(:html_safe) %>
+      <%= @company.agent_service_rate_schedule.try(:html_safe) %>
     </div>
   </div>
 </div>
