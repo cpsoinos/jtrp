@@ -57,7 +57,7 @@ class ProposalsController < ApplicationController
       if @proposal.save
         redirect_to edit_proposal_path(@proposal)
       else
-        redirect_to :back
+        render :new
       end
     else
       flash[:alert] = @client.errors.full_messages.uniq.join

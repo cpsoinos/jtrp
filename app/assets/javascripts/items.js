@@ -33,7 +33,7 @@ var slickifyDropdown = function(selector) {
   selector.ddslick({
     data: itemData,
     imagePosition: "left",
-    width: 300,
+    width: 280,
     selectText: "Choose an Item"
   });
 }
