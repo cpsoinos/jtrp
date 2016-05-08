@@ -38,7 +38,6 @@ end
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-bootstrap-material-design'
-  gem 'rails-assets-jquery-validation'
 end
 
 group :development, :test, :local do
