@@ -106,7 +106,7 @@ feature "new proposal" do
 
     context "new client" do
 
-      scenario "successfully creates a new client", js: true do
+      scenario "successfully creates a new client" do
         visit new_proposal_path
         click_on("New Client")
 
@@ -122,7 +122,7 @@ feature "new proposal" do
         expect(page).to have_content("Add an Item")
       end
 
-      scenario "unsuccessfully creates a new client", js: true do
+      scenario "unsuccessfully creates a new client" do
         visit new_proposal_path
         click_on("New Client")
 

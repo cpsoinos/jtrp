@@ -28,7 +28,6 @@ gem 'gon'
 gem 'rollbar', '~> 2.8.3'
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary-edge', '~> 0.12.3.0'
-# gem 'wkhtmltopdf-heroku'
 gem 'state_machines'
 gem 'state_machines-activerecord'
 gem 'bootsy'
@@ -39,6 +38,7 @@ end
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-bootstrap-material-design'
+  gem 'rails-assets-jquery-validation'
 end
 
 group :development, :test, :local do

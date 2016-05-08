@@ -11,10 +11,10 @@
 <div class="row form-row">
   <div class="text-center">
     <div class="col-xs-12 col-md-3 form-label">
-      <%= f.label :email, class: "control-label" %>
+      <%= f.label :email, class: "control-label required" %>
     </div>
     <div class="col-xs-12 col-md-9 text-left">
-      <%= f.text_field :email, class: "form-control", placeholder: "Email" %>
+      <%= f.email_field :email, class: "form-control", placeholder: "Email", required: true %>
     </div>
   </div>
 </div>
@@ -23,10 +23,10 @@
   <div class="row form-row">
     <div class="text-center">
       <div class="col-xs-12 col-md-3 form-label">
-        <%= f.label :password, class: "control-label" %>
+        <%= f.label :password, class: "control-label required" %>
       </div>
       <div class="col-xs-12 col-md-9 text-left">
-        <%= f.password_field :password, autocomplete: "off", class: "form-control" %>
+        <%= f.password_field :password, autocomplete: "off", class: "form-control", required: true %>
       </div>
     </div>
   </div>
@@ -34,22 +34,23 @@
   <div class="row form-row">
     <div class="text-center">
       <div class="col-xs-12 col-md-3 form-label">
-        <%= f.label :password_confirmation, class: "control-label" %>
+        <%= f.label :password_confirmation, class: "control-label required" %>
       </div>
       <div class="col-xs-12 col-md-9 text-left">
-        <%= f.password_field :password_confirmation, autocomplete: "off", class: "form-control" %>
+        <%= f.password_field :password_confirmation, autocomplete: "off", class: "form-control", required: true %>
       </div>
     </div>
   </div>
+
 <% end %>
 
 <div class="row form-row">
   <div class="text-center">
     <div class="col-xs-12 col-md-3 form-label">
-      <%= f.label :first_name, class: "control-label" %>
+      <%= f.label :first_name, class: "control-label required" %>
     </div>
     <div class="col-xs-12 col-md-9 text-left">
-      <%= f.text_field :first_name, class: "form-control", placeholder: "First Name" %>
+      <%= f.text_field :first_name, class: "form-control", placeholder: "First Name", required: true %>
     </div>
   </div>
 </div>
@@ -57,10 +58,10 @@
 <div class="row form-row">
   <div class="text-center">
     <div class="col-xs-12 col-md-3 form-label">
-      <%= f.label :last_name, class: "control-label" %>
+      <%= f.label :last_name, class: "control-label required" %>
     </div>
     <div class="col-xs-12 col-md-9 text-left">
-      <%= f.text_field :last_name, class: "form-control", placeholder: "Last Name" %>
+      <%= f.text_field :last_name, class: "form-control", placeholder: "Last Name", required: true %>
     </div>
   </div>
 </div>
@@ -68,10 +69,10 @@
 <div class="row form-row">
   <div class="text-center">
     <div class="col-xs-12 col-md-3 form-label">
-      <%= f.label :address_1, class: "control-label" %>
+      <%= f.label :address_1, class: "control-label required" %>
     </div>
     <div class="col-xs-12 col-md-9 text-left">
-      <%= f.text_field :address_1, class: "form-control", placeholder: "Address" %>
+      <%= f.text_field :address_1, class: "form-control", placeholder: "Address", required: true %>
     </div>
   </div>
 </div>
@@ -90,10 +91,10 @@
 <div class="row form-row">
   <div class="text-center">
     <div class="col-xs-12 col-md-3 form-label">
-      <%= f.label :city, class: "control-label" %>
+      <%= f.label :city, class: "control-label required" %>
     </div>
     <div class="col-xs-12 col-md-9 text-left">
-      <%= f.text_field :city, class: "form-control", placeholder: "City" %>
+      <%= f.text_field :city, class: "form-control", placeholder: "City", required: true %>
     </div>
   </div>
 </div>
@@ -101,10 +102,10 @@
 <div class="row form-row">
   <div class="text-center">
     <div class="col-xs-12 col-md-3 form-label">
-      <%= f.label :state, class: "control-label" %>
+      <%= f.label :state, class: "control-label required" %>
     </div>
     <div class="col-xs-12 col-md-9 text-left">
-      <%= f.text_field :state, class: "form-control", placeholder: "State" %>
+      <%= f.text_field :state, class: "form-control", placeholder: "State", required: true %>
     </div>
   </div>
 </div>
@@ -115,7 +116,7 @@
       <%= f.label :zip, class: "control-label" %>
     </div>
     <div class="col-xs-12 col-md-9 text-left">
-      <%= f.text_field :zip, class: "form-control", placeholder: "Zip" %>
+      <%= f.number_field :zip, class: "form-control", placeholder: "Zip" %>
     </div>
   </div>
 </div>
@@ -126,8 +127,8 @@
       <%= f.label :phone, class: "control-label" %>
     </div>
     <div class="col-xs-12 col-md-9 text-left">
-      <%= f.text_field :phone, class: "form-control", placeholder: "(123) 456-7890" %>
-      <%= f.text_field :phone_ext, class: "form-control", placeholder: "ext. 123" %>
+      <%= f.phone_field :phone, class: "form-control", placeholder: "(123) 456-7890" %>
+      <%= f.phone_field :phone_ext, class: "form-control", placeholder: "ext. 123" %>
     </div>
   </div>
 </div>
