@@ -17,20 +17,6 @@ describe User do
     expect(user.internal?).to be(false)
   end
 
-  it "active?" do
-    user = create(:user)
-
-    expect(user.active?).to be(true)
-    expect(user.inactive?).to be(false)
-  end
-
-  it "inactive?" do
-    user = create(:user, :inactive)
-
-    expect(user.inactive?).to be(true)
-    expect(user.active?).to be(false)
-  end
-
   it "full_name" do
     user = create(:user, first_name: "Fred", last_name: "LeChat")
 
@@ -56,20 +42,6 @@ describe User do
       expect(User.internal.count).to eq(3)
       User.internal.each do |user|
         expect(user.internal?).to be(true)
-      end
-    end
-
-    it "active" do
-      expect(User.active.count).to eq(3)
-      User.active.each do |user|
-        expect(user.active?).to be(true)
-      end
-    end
-
-    it "inactive" do
-      expect(User.inactive.count).to eq(2)
-      User.inactive.each do |user|
-        expect(user.inactive?).to be(true)
       end
     end
 
