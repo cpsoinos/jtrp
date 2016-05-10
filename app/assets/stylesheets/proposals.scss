@@ -1,3 +1,5 @@
+$light-blue: #50b3e2;
+
 .dd-container, #add-existing-item-button {
   margin-top: 1em;
 }
@@ -22,4 +24,41 @@
 
 .agreement-name-printed {
   margin-bottom: 3em;
+}
+
+.form-header-table td {
+  padding-left: 3px;
+  padding-right: 3px;
+}
+
+.top-margin {
+  margin-top: 1em;
+}
+
+.client-header {
+  background: $light-blue;
+}
+
+#proposal-table-info {
+  width: 50%;
+}
+
+.client-header-text {
+  color: white;
+  padding: 3px;
+}
+
+.panel-disclaimer {
+  margin-top: 3em;
+  margin-bottom: 3em;
+  border: 2px solid $light-blue;
+}
+
+.panel-item-row {
+  padding: 1em;
+}
+
+.vertical-align {
+  display: flex;
+  align-items: center;
 }

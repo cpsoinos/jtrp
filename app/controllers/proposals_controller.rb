@@ -19,6 +19,7 @@ class ProposalsController < ApplicationController
 
   def show
     @proposal = Proposal.find(params[:id])
+    @client = @proposal.client
     @items = @proposal.items
   end
 

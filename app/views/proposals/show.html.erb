@@ -3,6 +3,8 @@
 
 <div class="col-md-8 col-md-offset-2">
   <div class="well bs-component">
+    <%= render 'header' %>
+    <%= render 'disclaimer' %>
     <%= render 'item_list' %>
     <div class="text-center">
       <%= link_to "<i class='fa fa-caret-left'></i> Add More Items".html_safe, edit_proposal_path(@proposal), class: "btn btn-raised btn-success" %>

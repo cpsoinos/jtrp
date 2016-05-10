@@ -55,7 +55,11 @@ class ItemsController < ApplicationController
     @proposal = Proposal.find(params[:proposal_id])
     if @item.destroy
       flash[:notice] = "Item removed"
-      redirect_to proposal_path(@proposal)
+      if params[:redirect_url]
+        redirect_to(params[:redirect_url])
+      else
+        redirect_to proposal_path(@proposal)
+      end
     else
       redirect_to :back
     end

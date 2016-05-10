@@ -1,0 +1,71 @@
+<div class="row">
+
+  <div class="col-xs-12 col-md-6">
+    <h1 class="company-title"><%= @company.name %></h1>
+    <p><%= @company.full_address %></p>
+    <table class="form-header-table">
+      <tr>
+        <td>phone:</td>
+        <td><%= @company.phone %></td>
+      </tr>
+      <tr>
+        <td>email:</td>
+        <td><%= @company.email %></td>
+      </tr>
+      <tr>
+        <td>website:</td>
+        <td><%= @company.website %></td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="col-xs-12 col-md-6 text-right form-header-table">
+    <h1>Proposal</h1>
+    <table class="pull-right" id="proposal-table-info">
+      <tr>
+        <td class="text-left">Date</td>
+        <td><%= @proposal.updated_at.strftime("%B %d, %Y") %></td>
+      </tr>
+      <tr>
+        <td class="text-left">Proposal #</td>
+        <td><%= @proposal.id %></td>
+      </tr>
+      <tr>
+        <td class="text-left">Account #</td>
+        <td><%= @client.id %></td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<div class="row top-margin">
+
+  <div class="col-md-6">
+    <table class="form-header-table">
+      <tr class="client-header">
+        <td colspan="2" class="client-header-text">Client:</th>
+      </tr>
+      <tr>
+        <td>name:</td>
+        <td><%= @client.full_name %></td>
+      </tr>
+      <tr>
+        <td>service address:</td>
+        <td><%= @client.full_address %></td>
+      </tr>
+      <tr>
+        <td>mailing address:</td>
+        <td><%= @client.full_address %></td>
+      </tr>
+      <tr>
+        <td>phone:</td>
+        <td><%= @client.phone %></td>
+      </tr>
+      <tr>
+        <td>email:</td>
+        <td><%= @client.email %></td>
+      </tr>
+    </table>
+  </div>
+
+</div>

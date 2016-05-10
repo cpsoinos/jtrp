@@ -1,81 +1,110 @@
-<tr>
-  <td>
-    <%= image_tag(item.initial_photos.first.try(:thumb).try(:url)) %>
-  </td>
-  <td>
-    <table>
-      <tr class="item-row-descriptor">
-        <th class="text-right">Item No.:</th>
-        <td class="item-row-description item-id-number">
-          <%= item.id %>
-        </td>
-      </tr>
-      <tr class="item-row-descriptor">
-        <th class="text-right">Asking Price:</th>
-        <td class="item-row-description">
-          <%= best_in_place [@proposal, item], :listing_price, display_with: lambda { |v| humanized_money_with_symbol(v).html_safe } %>
-        </td>
-      </tr>
-      <tr class="item-row-descriptor">
-        <th class="text-right">Min. Sale Price:</th>
-        <td class="item-row-description">
-          <%= best_in_place [@proposal, item], :minimum_sale_price, display_with: lambda { |v| humanized_money_with_symbol(v).html_safe } %>
-        </td>
-      </tr>
-      <tr class="item-row-descriptor">
-        <th class="text-right">Condition:</th>
-        <td class="item-row-description">
-          <%= best_in_place [@proposal, item], :condition %>
-        </td>
-      </tr>
-    </table>
-  </td>
-  <td>
-    <table>
-      <tr class="item-row-descriptor">
-        <th class="text-center">Description</th>
-      </tr>
-      <tr>
-        <td class="text-center" width="300px">
-          <%= best_in_place [@proposal, item], :description %>
-        </td>
-      </tr>
-    </table>
-  </td>
-  <% unless action_name == "consignment_agreement" %>
-    <td>
-      <table>
-        <tr>
-          <td class="text-center">
-            <%= link_to "Delete", proposal_item_path(@proposal, item), method: "DELETE", data: { confirm: "Are you sure?" }, class: "btn btn-raised btn-warning" %>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <%= form_for item, remote: true do |f| %>
-              <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+<div class="row">
+  <div class="panel panel-default panel-item-row">
+    <div class="row vertical-align">
+      <div class="col-xs-12 col-md-3 text-center">
+        <% if item.initial_photos.present? %>
+          <%= image_tag(item.initial_photos.first.thumb.url) %>
+        <% else %>
+          <%= image_tag("thumb_No_Image_Available.png") %>
+        <% end %>
+      </div>
 
-              <%= f.radio_button :client_intention, "sell", class: "selector" %>
-              <%= f.label :client_intention, "Sell" %><br />
+      <div class="col-xs-12 col-md-9">
 
-              <%= f.radio_button :client_intention, "consign", class: "selector" %>
-              <%= f.label :client_intention, "Consign" %><br />
+        <div class="row text-center vertical-align">
+          <div class="col-xs-10">
+            <b>Item #<%= item.id %>: <%= item.name %></b> - <i><%= item.description %></i>
+          </div>
+          <div class="col-xs-2">
+            <%= link_to "Delete", item_path(item, proposal_id: @proposal.id, redirect_url: request.env['PATH_INFO']), method: :delete, class: "btn btn-raised btn-xs btn-danger" %>
+          </div>
+        </div>
 
-              <%= f.radio_button :client_intention, "charitable_donation", class: "selector" %>
-              <%= f.label :client_intention, "Charitable Donation" %><br />
+        <div class="row">
+          <div class="col-xs-12 col-md-6">
+            <div class="row">
+              <div class="client-header text-center">
+                <p class="client-header-text">Purchase Offer</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-8 col-md-6 text-right">
+                will purchase:
+              </div>
+              <div class="col-xs-4 col-md-6">
+                yes
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-8 col-md-6 text-right">
+                purchase price:
+              </div>
+              <div class="col-xs-4 col-md-6">
+                <%= humanized_money_with_symbol(item.purchase_price) if item.purchase_price %>
+              </div>
+            </div>
+          </div>
+          <div class="hidden-xs col-md-6">
+            <div class="client-header text-center">
+              <p class="client-header-text">Condition/Notes</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="hidden-xs col-md-6">
+              <%= item.condition %>
+            </div>
+          </div>
+        </div>
 
-              <%= f.radio_button :client_intention, "junk", class: "selector" %>
-              <%= f.label :client_intention, "Junk/Dispose" %><br />
 
-              <%= f.radio_button :client_intention, "keep", class: "selector" %>
-              <%= f.label :client_intention, "Keep (don't sell)" %><br />
+        <div class="row">
+          <div class="col-xs-12 col-md-6">
+            <div class="row">
+              <div class="client-header text-center">
+                <p class="client-header-text">Consignment Offer</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-8 col-md-6 text-right">
+                will consign:
+              </div>
+              <div class="col-xs-4 col-md-6">
+                no
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-8 col-md-6 text-right">
+                original asking price:
+              </div>
+              <div class="col-xs-4 col-md-6">
+                <%= humanized_money_with_symbol(item.listing_price) if item.listing_price %>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-8 col-md-6 text-right">
+                minimum sale price:
+              </div>
+              <div class="col-xs-4 col-md-6">
+                <%= humanized_money_with_symbol(item.minimum_sale_price) if item.minimum_sale_price %>
+              </div>
+            </div>
+          </div>
 
-              <%= f.radio_button :client_intention, "undecided", class: "selector" %>
-              <%= f.label :client_intention, "Undecided" %>
-            <% end %>
-          </td>
-        </tr>
-      </table>
-    </td>
-  <% end %>
-</tr>
+          <div class="hidden-xs col-md-6">
+            <div class="row vertical-align">
+              <% if item.initial_photos.present? %>
+                <% item.initial_photos[1..3].each do |photo| %>
+                  <div class="col-md-12">
+                    <%= image_tag(photo.thumb.url, class: "half-thumb") %>
+                  </div>
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
