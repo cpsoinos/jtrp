@@ -20,7 +20,7 @@
   </div>
 
   <div class="col-xs-12 col-md-6 text-right form-header-table">
-    <h1>Proposal</h1>
+    <h1><%= form_name %></h1>
     <table class="pull-right" id="proposal-table-info">
       <tr>
         <td class="text-left">Date</td>
@@ -67,5 +67,11 @@
       </tr>
     </table>
   </div>
+
+  <% if action_name == "response_form" %>
+    <div class="col-md-6">
+      For each item, please select only one option for what it is you would like to do with it:  sell to us at our purchase offer price, consign with us at our consignment offer prices, request our services to donate the item to a local charity, bring it to the dump, or move it to another location, or do nothing with the item. Please provide additional information where appropriate.
+    </div>
+  <% end %>
 
 </div>

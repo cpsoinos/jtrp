@@ -94,6 +94,19 @@ feature "new proposal" do
         expect(page).to have_content(item.name)
         expect(page).to have_content("Purchase Offer")
         expect(page).to have_content("Consignment Offer")
+        expect(page).to have_link("Response Form")
+      end
+
+      scenario "generates a proposal response form for the client" do
+        item = create(:item, proposal: proposal)
+        visit proposal_response_form_path(proposal)
+
+        expect(page).to have_content("Proposal Response")
+        expect(page).to have_content(item.id)
+        expect(page).to have_content(item.name)
+        %w(sell consign donate dump move nothing).each do |intention|
+          expect(page).to have_content(intention)
+        end
       end
 
       # scenario "chooses a client intention", js: true do

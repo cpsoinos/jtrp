@@ -6,7 +6,7 @@ feature "proposal agreement" do
 
   context "guest" do
     scenario "visits consignment agreement path" do
-      visit proposal_consignment_agreement_path(proposal)
+      visit proposal_agreement_path(proposal)
 
       expect(page).to have_content("Forbidden")
     end
@@ -18,23 +18,23 @@ feature "proposal agreement" do
       sign_in(user)
     end
 
-    context "sell" do
-
-      let(:item) { create(:item, proposal: proposal, client_intention: "sell") }
-
-      scenario "client intends to sell an item", js: true do
-        visit proposal_path(proposal)
-        click_link("View Proposal")
-
-        expect(page).to have_content("")
-      end
-
-    end
+    # context "sell" do
+    #
+    #   let(:item) { create(:item, proposal: proposal, client_intention: "sell") }
+    #
+    #   scenario "client intends to sell an item", js: true do
+    #     visit proposal_path(proposal)
+    #     click_link("Proposal Response Form")
+    #
+    #     expect(page).to have_content("")
+    #   end
+    #
+    # end
 
     context "consign" do
 
       before do
-        visit proposal_consignment_agreement_path(proposal)
+        visit proposal_agreement_path(proposal)
       end
 
       scenario "visits consignment agreement path" do
