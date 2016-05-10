@@ -24,7 +24,8 @@ Rails.application.routes.draw do
 
   resources :proposals do
     resources :items
-    get '/consignment_agreement', to: 'proposals#consignment_agreement'
+    get '/response_form', to: 'proposals#response_form'
+    get '/agreement', to: 'proposals#agreement'
   end
   post '/create_client', to: 'proposals#create_client'
   put '/proposals/:proposal_id/add_existing_item', to: 'proposals#add_existing_item'

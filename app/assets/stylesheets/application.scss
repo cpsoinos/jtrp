@@ -10,14 +10,16 @@
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
  *
- *= require jquery.signaturepad.css
  *= require_tree .
  *= require_self
- *= require bootstrap
- *= require bootstrap-material-design
- *= require dropzone/dropzone
- *= require bootsy
  */
+
+ @import 'variables';
+ @import 'jquery.signaturepad.css';
+ @import 'bootstrap';
+ @import 'bootstrap-material-design';
+ @import 'dropzone/dropzone';
+ @import 'bootsy';
 
 .actions {
   margin-top: 1em;
@@ -25,4 +27,8 @@
 
 .form-row {
   margin-top: 1em;
+}
+
+div.navbar.navbar-default {
+  background-color: $light-blue;
 }

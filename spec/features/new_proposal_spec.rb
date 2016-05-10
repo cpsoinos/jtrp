@@ -85,22 +85,46 @@ feature "new proposal" do
         expect(page).to have_content("Item removed")
       end
 
-      scenario "chooses a client intention", js: true do
+      scenario "generates a proposal for the client" do
         item = create(:item, proposal: proposal)
-        visit edit_proposal_path(proposal)
+        visit proposal_path(proposal)
 
-        expect(page).to have_checked_field("item_client_intention_undecided")
-        expect(page).to have_unchecked_field("item_client_intention_consign")
-        expect(item.client_intention).to eq("undecided")
-
-        choose("item_client_intention_consign")
-        wait_for_ajax
-        item.reload
-
-        expect(page).to have_unchecked_field("item_client_intention_undecided")
-        expect(page).to have_checked_field("item_client_intention_consign")
-        expect(item.client_intention).to eq("consign")
+        expect(page).to have_content("This proposal is not binding and shall not be deemed an enforceable contract. It is for information purposes only.")
+        expect(page).to have_content("Item ##{item.id}")
+        expect(page).to have_content(item.name)
+        expect(page).to have_content("Purchase Offer")
+        expect(page).to have_content("Consignment Offer")
+        expect(page).to have_link("Response Form")
       end
+
+      scenario "generates a proposal response form for the client" do
+        item = create(:item, proposal: proposal)
+        visit proposal_response_form_path(proposal)
+
+        expect(page).to have_content("Proposal Response")
+        expect(page).to have_content(item.id)
+        expect(page).to have_content(item.name)
+        %w(sell consign donate dump move nothing).each do |intention|
+          expect(page).to have_content(intention)
+        end
+      end
+
+      # scenario "chooses a client intention", js: true do
+      #   item = create(:item, proposal: proposal)
+      #   visit edit_proposal_path(proposal)
+      #
+      #   expect(page).to have_checked_field("item_client_intention_undecided")
+      #   expect(page).to have_unchecked_field("item_client_intention_consign")
+      #   expect(item.client_intention).to eq("undecided")
+      #
+      #   choose("item_client_intention_consign")
+      #   wait_for_ajax
+      #   item.reload
+      #
+      #   expect(page).to have_unchecked_field("item_client_intention_undecided")
+      #   expect(page).to have_checked_field("item_client_intention_consign")
+      #   expect(item.client_intention).to eq("consign")
+      # end
 
     end
 

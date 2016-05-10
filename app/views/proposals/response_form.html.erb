@@ -1,0 +1,63 @@
+<div class="col-md-8 col-md-offset-2">
+  <div class="well bs-component">
+    <%= render 'header', form_name: "Proposal Response" %>
+
+    <div class="row large-top-margin">
+      <% @items.each do |item| %>
+        <div class="col-xs-12 col-md-6">
+          <div class="row">
+            <div class="col-xs-12">
+              Item #<%= item.id %>: <%= item.name %>
+            </div>
+          </div>
+          <div class="row vertical-align">
+            <div class="col-xs-3">
+              <% if item.initial_photos.present? %>
+                <%= image_tag(item.initial_photos.first.small_thumb.url) %>
+              <% else %>
+                <%= image_tag("thumb_No_Image_Available.png") %>
+              <% end %>
+            </div>
+            <div class="col-xs-9">
+              <%= form_for item, remote: true do |f| %>
+                <div class="row">
+                  <% %w(sell consign donate).each do |intention| %>
+                    <div class="col-xs-4 text-right">
+                      <%= f.label :client_intention, intention %>
+                      <%= f.radio_button :client_intention, intention, class: "selector" %>
+                    </div>
+                  <% end %>
+                </div>
+                <div class="row">
+                  <% %w(dump move nothing).each do |intention| %>
+                    <div class="col-xs-4 text-right">
+                      <%= f.label :client_intention, intention %>
+                      <%= f.radio_button :client_intention, intention, class: "selector" %>
+                    </div>
+                  <% end %>
+                </div>
+              <% end %>
+              <div class="row">
+                <div class="col-xs-4 text-right">
+                  notes:
+                </div>
+                <div class="col-xs-8">
+                  <%= best_in_place item, :notes, place_holder: "<i>click or tap here to edit</i>".html_safe %>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      <% end %>
+    </div>
+
+    <% if current_user.internal? %>
+      <div class="text-center">
+        <%= link_to "Generate Forms", proposal_agreement_path(@proposal), class: "btn btn-raised btn-success" %>
+        <%#= link_to "View Proposal <i class='fa fa-caret-right'></i>".html_safe, proposal_agreement_path(@proposal), class: "btn btn-raised btn-success" %>
+      </div>
+    <% end %>
+  </div>
+</div>
