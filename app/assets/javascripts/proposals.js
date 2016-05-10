@@ -1,4 +1,4 @@
-$(".proposals.consignment_agreement").ready(function() {
+$(".proposals.agreement").ready(function() {
   handleSignatures();
 })
 

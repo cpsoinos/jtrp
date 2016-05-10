@@ -6,7 +6,7 @@ feature "proposal agreement" do
 
   context "guest" do
     scenario "visits consignment agreement path" do
-      visit proposal_consignment_agreement_path(proposal)
+      visit proposal_agreement_path(proposal)
 
       expect(page).to have_content("Forbidden")
     end
@@ -16,46 +16,66 @@ feature "proposal agreement" do
 
     before do
       sign_in(user)
-      visit proposal_consignment_agreement_path(proposal)
     end
 
-    scenario "visits consignment agreement path" do
-      expect(page).to have_content("Consignment Agreement")
-    end
+    # context "sell" do
+    #
+    #   let(:item) { create(:item, proposal: proposal, client_intention: "sell") }
+    #
+    #   scenario "client intends to sell an item", js: true do
+    #     visit proposal_path(proposal)
+    #     click_link("Proposal Response Form")
+    #
+    #     expect(page).to have_content("")
+    #   end
+    #
+    # end
 
-    scenario "it has signature blocks" do
-      expect(page).to have_css('#client-signed')
-      expect(page).to have_css('#manager-signed')
-    end
+    context "consign" do
 
-    scenario "manager signs", js: true do
-      find(".manager-signed").click
-      click_button("manager-submit")
-      wait_for_ajax
-      proposal.reload
+      before do
+        visit proposal_agreement_path(proposal)
+      end
 
-      expect(proposal.manager_signature).not_to be(nil)
-    end
+      scenario "visits consignment agreement path" do
+        expect(page).to have_content("Consignment Agreement")
+      end
 
-    scenario "client signs", js: true do
-      find(".client-signed").click
-      click_button("client-submit")
-      wait_for_ajax
-      proposal.reload
+      scenario "it has signature blocks" do
+        expect(page).to have_css('#client-signed')
+        expect(page).to have_css('#manager-signed')
+      end
 
-      expect(proposal.client_signature).not_to be(nil)
-    end
+      scenario "manager signs", js: true do
+        find(".manager-signed").click
+        click_button("manager-submit")
+        wait_for_ajax
+        proposal.reload
 
-    scenario "both client and manager sign", js: true do
-      find(".manager-signed").click
-      click_button("manager-submit")
-      find(".client-signed").click
-      click_button("client-submit")
-      wait_for_ajax
-      proposal.reload
+        expect(proposal.manager_signature).not_to be(nil)
+      end
 
-      expect(proposal.client_signature).not_to be(nil)
-      expect(proposal.manager_signature).not_to be(nil)
+      scenario "client signs", js: true do
+        find(".client-signed").click
+        click_button("client-submit")
+        wait_for_ajax
+        proposal.reload
+
+        expect(proposal.client_signature).not_to be(nil)
+      end
+
+      scenario "both client and manager sign", js: true do
+        find(".manager-signed").click
+        click_button("manager-submit")
+        find(".client-signed").click
+        click_button("client-submit")
+        wait_for_ajax
+        proposal.reload
+
+        expect(proposal.client_signature).not_to be(nil)
+        expect(proposal.manager_signature).not_to be(nil)
+      end
+
     end
 
   end

@@ -19,6 +19,7 @@ class ProposalsController < ApplicationController
 
   def show
     @proposal = Proposal.find(params[:id])
+    @client = @proposal.client
     @items = @proposal.items
   end
 
@@ -30,7 +31,13 @@ class ProposalsController < ApplicationController
     gon.proposalId = @proposal.id
   end
 
-  def consignment_agreement
+  def response_form
+    @proposal = Proposal.find(params[:proposal_id])
+    @client = @proposal.client
+    @items = @proposal.items.order(:id)
+  end
+
+  def agreement
     @proposal = Proposal.find(params[:proposal_id])
     @client = @proposal.client
     gon.signatures = build_json_for_signatures

@@ -3,10 +3,12 @@
 
 <div class="col-md-8 col-md-offset-2">
   <div class="well bs-component">
+    <%= render 'header', form_name: "Proposal" %>
+    <%= render 'disclaimer' %>
     <%= render 'item_list' %>
     <div class="text-center">
       <%= link_to "<i class='fa fa-caret-left'></i> Add More Items".html_safe, edit_proposal_path(@proposal), class: "btn btn-raised btn-success" %>
-      <%= link_to "View Proposal <i class='fa fa-caret-right'></i>".html_safe, proposal_consignment_agreement_path(@proposal), class: "btn btn-raised btn-success" %>
+      <%= link_to "Proposal Response Form <i class='fa fa-caret-right'></i>".html_safe, proposal_response_form_path(@proposal), class: "btn btn-raised btn-success" %>
     </div>
   </div>
 </div>
