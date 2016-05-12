@@ -38,7 +38,7 @@ class Item < ActiveRecord::Base
     state :active
     state :sold
 
-    after_transition active: :sold, do: :check_proposal_state
+    after_transition active: :sold, do: :check_agreement_state
 
     event :mark_active do
       transition potential: :active, if: lambda { |item| item.meets_requirements_active? }
@@ -48,6 +48,10 @@ class Item < ActiveRecord::Base
       transition active: :sold, if: lambda { |item| item.meets_requirements_sold? }
     end
 
+  end
+
+  def agreement
+    proposal.agreements.find_by(agreement_type: client_intention)
   end
 
   def barcode(pdf=false)
@@ -75,9 +79,9 @@ class Item < ActiveRecord::Base
     state == "sold"
   end
 
-  def check_proposal_state
-    if proposal.items.active.empty?
-      proposal.mark_inactive
+  def check_agreement_state
+    if agreement.items.active.empty?
+      agreement.mark_inactive
     end
   end
 

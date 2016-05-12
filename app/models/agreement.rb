@@ -26,6 +26,10 @@ class Agreement < ActiveRecord::Base
 
   end
 
+  def items
+    proposal.items.where(client_intention: agreement_type)
+  end
+
   def mark_proposal_active
     proposal.mark_active!
   end
@@ -35,7 +39,11 @@ class Agreement < ActiveRecord::Base
   end
 
   def meets_requirements_active?
-    client_signature.present? && manager_signature.present?
+    if agreement_type == "consign"
+      client_signature.present? && manager_signature.present?
+    else
+      client_signature.present?
+    end
   end
 
 end

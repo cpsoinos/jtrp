@@ -31,7 +31,6 @@ class Proposal < ActiveRecord::Base
 
   def meets_requirements_active?
     agreements.active.present?
-    # client_signature.present? && manager_signature.present?
   end
 
   def meets_requirements_inactive?
