@@ -115,9 +115,7 @@ feature "client show" do
       end
 
       scenario "client has a sold item" do
-        create(:item, :active, proposal: proposal)
-        item.mark_sold
-        item.update_attribute("sale_price_cents", 8500)
+        create(:item, :sold, proposal: proposal, sale_price_cents: 8500)
         visit client_path(client)
 
         expect(page).not_to have_content("No active items.")

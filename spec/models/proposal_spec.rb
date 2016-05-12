@@ -49,9 +49,8 @@ describe Proposal do
 
     it "transitions 'active' to 'inactive'" do
       proposal = create(:proposal, :active)
-      create(:agreement, :active, :sell, proposal: proposal)
       item = create(:item, :active, proposal: proposal, client_intention: "sell")
-      item.mark_sold
+      item.mark_sold!
       proposal.reload
 
       expect(proposal.state).to eq("inactive")

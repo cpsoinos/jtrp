@@ -81,12 +81,15 @@ class Item < ActiveRecord::Base
 
   def check_agreement_state
     if agreement.items.active.empty?
-      agreement.mark_inactive
+      agreement.mark_inactive!
     end
   end
 
   def meets_requirements_active?
-    proposal.present? && proposal.active?
+    agreement.present? &&
+    agreement.active? &&
+    proposal.present? &&
+    proposal.active?
   end
 
   def meets_requirements_sold?

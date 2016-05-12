@@ -63,10 +63,8 @@ describe Agreement do
     end
 
     it "transitions 'active' to 'inactive'" do
-      agreement = create(:agreement, :active)
-      proposal = agreement.proposal
-      item = create(:item, :active, client_intention: "sell", proposal: proposal)
-      # proposal.mark_active!
+      item = create(:item, :active, client_intention: "sell")
+      agreement = item.agreement
       item.mark_sold!
       agreement.reload
 

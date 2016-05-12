@@ -13,7 +13,7 @@ class AgreementsController < ApplicationController
     @proposal = Proposal.find(params[:proposal_id])
     @client = @proposal.client
     # @items = @proposal.items
-    @intentions = ["consign", "dump"]
+    @intentions = ["consign", "dump", "donate", "sell"]
     AgreementCreator.new(@proposal).create(@intentions)
 
     # @intentions = @proposal.items.where.not(client_intention: "nothing").pluck(:client_intention).uniq

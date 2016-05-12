@@ -21,7 +21,7 @@ class Agreement < ActiveRecord::Base
     end
 
     event :mark_inactive do
-      transition active: :inactive, if: lambda { |agreement| agreement.meets_requirements_active? }
+      transition active: :inactive, if: lambda { |agreement| agreement.meets_requirements_inactive? }
     end
 
   end
@@ -44,6 +44,10 @@ class Agreement < ActiveRecord::Base
     else
       client_signature.present?
     end
+  end
+
+  def meets_requirements_inactive?
+    items.active.empty?
   end
 
 end
