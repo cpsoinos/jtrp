@@ -1,0 +1,44 @@
+$(".agreements.index").ready(function() {
+  handleSignatures();
+})
+
+var handleSignatures = function() {
+  var options = {
+    drawOnly: true
+  }
+  var signatures = gon.signatures
+
+  for (i in signatures) {
+    agreement = signatures[parseInt(i)]
+    var managerSelector = '#' + agreement.agreement_type + '-manager-signed'
+    var clientSelector = '#' + agreement.agreement_type + '-client-signed'
+
+    if(agreement.manager_signature === null) {
+      $(managerSelector).signaturePad(options)
+    } else {
+      fillSignatures(managerSelector, agreement.manager_signature)
+    };
+
+    if(agreement.client_signature === null) {
+      $(clientSelector).signaturePad(options)
+    } else {
+      fillSignatures(clientSelector, agreement.client_signature)
+    };
+  }
+
+  // if(gon.signatures.manager === null) {
+  //   $('#manager-signed').signaturePad(options)
+  // } else {
+  //   fillSignatures("manager", gon.signatures.manager)
+  // };
+  //
+  // if(gon.signatures.client === null) {
+  //   $('#client-signed').signaturePad(options)
+  // } else {
+  //   fillSignatures("client", gon.signatures.client)
+  // };
+}
+
+var fillSignatures = function(selector, sig) {
+  $(selector).signaturePad({displayOnly:true}).regenerate(sig);
+}

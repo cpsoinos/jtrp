@@ -35,6 +35,10 @@
   margin-top: 1em;
 }
 
+.bottom-margin {
+  margin-bottom: 1em;
+}
+
 .large-top-margin {
   margin-top: 3em;
 }
@@ -65,4 +69,12 @@
 .vertical-align {
   display: flex;
   align-items: center;
+}
+
+.response-thumb {
+  height: 100px;
+}
+
+.proposal-response-item {
+  border: 1px solid $light-blue;
 }

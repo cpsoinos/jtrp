@@ -2,6 +2,7 @@ class Proposal < ActiveRecord::Base
   belongs_to :client
   belongs_to :created_by, class_name: "User"
   has_many :items
+  has_many :agreements
 
   validates :client, presence: true
   validates :created_by, presence: true
@@ -23,17 +24,18 @@ class Proposal < ActiveRecord::Base
     end
 
     event :mark_inactive do
-      transition active: :inactive, if: lambda { |proposal| proposal.meets_requirements_active? }
+      transition active: :inactive, if: lambda { |proposal| proposal.meets_requirements_inactive? }
     end
 
   end
 
   def meets_requirements_active?
-    client_signature.present? && manager_signature.present?
+    agreements.active.present?
+    # client_signature.present? && manager_signature.present?
   end
 
   def meets_requirements_inactive?
-    !items.active.present?
+    !agreements.active.present? && !items.active.present?
   end
 
   def mark_items_active
