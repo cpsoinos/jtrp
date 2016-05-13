@@ -26,17 +26,6 @@ var handleSignatures = function() {
     };
   }
 
-  // if(gon.signatures.manager === null) {
-  //   $('#manager-signed').signaturePad(options)
-  // } else {
-  //   fillSignatures("manager", gon.signatures.manager)
-  // };
-  //
-  // if(gon.signatures.client === null) {
-  //   $('#client-signed').signaturePad(options)
-  // } else {
-  //   fillSignatures("client", gon.signatures.client)
-  // };
 }
 
 var fillSignatures = function(selector, sig) {
