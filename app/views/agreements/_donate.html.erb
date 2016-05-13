@@ -1,0 +1,40 @@
+<%= render 'proposals/header', form_name: "Charitable Donation Service Order" %>
+
+<div class="row top-margin">
+  <div class="col-xs-12">
+    <table class="form-header-table" width="100%">
+      <tr class="client-header">
+        <td class="client-header-text">Donate to: charityName</th>
+        </tr>
+      </table>
+  </div>
+</div>
+
+<div class="row vertical-align large-top-margin">
+  <% items.each do |item| %>
+    <div class="col-xs-6 col-md-3">
+      <% if item.initial_photos.present? %>
+        <%= image_tag(item.initial_photos.first.thumb.url) %>
+      <% else %>
+        <%= image_tag("thumb_No_Image_Available.png") %>
+      <% end %>
+    </div>
+    <div class="col-xs-6 col-md-3">
+      Item #<%= item.id %>: <%= item.name %> - <i><%= item.description %></i>
+    </div>
+  <% end %>
+</div>
+
+<div class="row large-top-margin">
+  <div class="col-xs-12">
+    Client, being the rightful owner of the above-mentioned items, directs Just the Right Piece, LLC to donate and deliver them to the above-mentioned charity.
+  </div>
+</div>
+
+<div class="row large-top-margin">
+  <div class="col-xs-12 col-md-6">
+    <p>Client:</p>
+    <%= render "signature_pad", user: @client, role: "client", agreement: agreement %>
+    <p class="agreement-name-printed"><%= @client.full_name %></p>
+  </div>
+</div>

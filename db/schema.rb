@@ -11,10 +11,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160510175831) do
+ActiveRecord::Schema.define(version: 20160511214512) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "agreements", force: :cascade do |t|
+    t.integer "proposal_id"
+    t.jsonb   "manager_signature"
+    t.jsonb   "client_signature"
+    t.string  "agreement_type",    null: false
+    t.string  "state"
+  end
+
+  add_index "agreements", ["proposal_id"], name: "index_agreements_on_proposal_id", using: :btree
 
   create_table "bootsy_image_galleries", force: :cascade do |t|
     t.integer  "bootsy_resource_id"
@@ -89,12 +99,10 @@ ActiveRecord::Schema.define(version: 20160510175831) do
   add_index "items", ["proposal_id"], name: "index_items_on_proposal_id", using: :btree
 
   create_table "proposals", force: :cascade do |t|
-    t.integer  "client_id",         null: false
-    t.integer  "created_by_id",     null: false
+    t.integer  "client_id",     null: false
+    t.integer  "created_by_id", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.jsonb    "client_signature"
-    t.jsonb    "manager_signature"
     t.string   "state"
   end
 
@@ -124,10 +132,15 @@ ActiveRecord::Schema.define(version: 20160510175831) do
     t.string   "status",                      default: "active", null: false
     t.boolean  "consignment_policy_accepted", default: false
     t.string   "avatar"
+    t.integer  "company_id"
+    t.boolean  "primary_contact",             default: false
   end
 
+  add_index "users", ["company_id"], name: "index_users_on_company_id", using: :btree
   add_index "users", ["email"], name: "index_users_on_email", using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  add_foreign_key "agreements", "proposals"
   add_foreign_key "items", "categories"
+  add_foreign_key "users", "companies"
 end

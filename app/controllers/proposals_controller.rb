@@ -27,6 +27,7 @@ class ProposalsController < ApplicationController
     @proposal = Proposal.find(params[:id])
     @client = @proposal.client
     @item = @proposal.items.new
+    @items = @proposal.items
     gon.items = build_json_for_items
     gon.proposalId = @proposal.id
   end
@@ -36,12 +37,17 @@ class ProposalsController < ApplicationController
     @client = @proposal.client
     @items = @proposal.items.order(:id)
   end
-
-  def agreement
-    @proposal = Proposal.find(params[:proposal_id])
-    @client = @proposal.client
-    gon.signatures = build_json_for_signatures
-  end
+  # 
+  # def generate_agreements
+  #   @proposal = Proposal.find(params[:proposal_id])
+  #   @client = @proposal.client
+  #   @agreements = AgreementCreator.new(proposal).create(@intentions)
+  #
+  #   # @intentions = @proposal.items.where.not(client_intention: "nothing").pluck(:client_intention).uniq
+  #   @intentions = ["consign", "dump"]
+  #   @items = @proposal.items
+  #   gon.signatures = build_json_for_signatures
+  # end
 
   def update
     @proposal = Proposal.find(params[:id])
