@@ -24,7 +24,7 @@
                   <% %w(sell consign donate).each do |intention| %>
                     <div class="col-xs-4 text-right">
                       <%= f.label :client_intention, intention %>
-                      <%= f.radio_button :client_intention, intention, class: "selector" %>
+                      <%= f.radio_button :client_intention, intention, class: "selector", id: "item_#{item.id}_client_intention_#{intention}" %>
                     </div>
                   <% end %>
                 </div>
@@ -32,7 +32,7 @@
                   <% %w(dump move nothing).each do |intention| %>
                     <div class="col-xs-4 text-right">
                       <%= f.label :client_intention, intention %>
-                      <%= f.radio_button :client_intention, intention, class: "selector" %>
+                      <%= f.radio_button :client_intention, intention, class: "selector", id: "item_#{item.id}_client_intention_#{intention}" %>
                     </div>
                   <% end %>
                 </div>

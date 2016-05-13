@@ -1,6 +1,6 @@
 <%= form_for [@proposal, agreement], html: { class: "sigPad", id: "#{agreement.agreement_type}-#{role}-signed" }, remote: true do |f| %>
 
-  <div class="sig sigWrapper <%= role %>-signed">
+  <div class="sig sigWrapper <%= agreement.agreement_type %>-<%= role %>-signed">
     <canvas class="pad" width="277" height="55"></canvas>
     <%= f.hidden_field :"#{role}_signature", name: "signature", class: "output" %>
     <%= hidden_field_tag :role, role %>

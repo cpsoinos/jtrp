@@ -1,9 +1,9 @@
 class AgreementsController < ApplicationController
+  before_filter :require_internal
 
   def index
     @proposal = Proposal.find(params[:proposal_id])
     @client = @proposal.client
-    # @intentions = @proposal.items.where.not(client_intention: "nothing").pluck(:client_intention).uniq
     @agreements = @proposal.agreements
     @items = @proposal.items
     gon.signatures = build_json_for_signatures
@@ -12,13 +12,9 @@ class AgreementsController < ApplicationController
   def create
     @proposal = Proposal.find(params[:proposal_id])
     @client = @proposal.client
-    # @items = @proposal.items
-    @intentions = ["consign", "dump", "donate", "sell"]
+    @intentions = ["consign", "dump", "donate", "sell", "move"]
     AgreementCreator.new(@proposal).create(@intentions)
-
-    # @intentions = @proposal.items.where.not(client_intention: "nothing").pluck(:client_intention).uniq
     redirect_to proposal_agreements_path(@proposal)
-    # gon.signatures = build_json_for_signatures
   end
 
   def update
@@ -50,12 +46,6 @@ class AgreementsController < ApplicationController
         }
       end
     end
-    # @agreements.map do |agreement|
-    # signatures = {
-    #   manager: agreement.manager_signature,
-    #   client: agreement.client_signature
-    # }
-
     signatures
   end
 
