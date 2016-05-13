@@ -41,8 +41,7 @@ describe Proposal do
     it "transitions 'potential' to 'active'" do
       proposal = create(:proposal)
       expect(proposal.state).to eq("potential")
-      proposal.manager_signature = ["signed"]
-      proposal.client_signature = ["signed"]
+      create(:agreement, :active, proposal: proposal)
       proposal.mark_active
 
       expect(proposal.state).to eq("active")
@@ -50,8 +49,8 @@ describe Proposal do
 
     it "transitions 'active' to 'inactive'" do
       proposal = create(:proposal, :active)
-      item = create(:item, :active, proposal: proposal)
-      item.mark_sold
+      item = create(:item, :active, proposal: proposal, client_intention: "sell")
+      item.mark_sold!
       proposal.reload
 
       expect(proposal.state).to eq("inactive")

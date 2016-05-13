@@ -12,6 +12,11 @@ FactoryGirl.define do
     trait :active do
       association :proposal, :active
       state "active"
+
+      after(:create) do |item|
+        create(:agreement, :active, proposal: item.proposal)
+      end
+
     end
 
     trait :sold do

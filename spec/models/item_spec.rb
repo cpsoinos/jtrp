@@ -69,14 +69,16 @@ describe Item do
     end
 
     it "transitions 'potential' to 'active'" do
-      item = create(:item, proposal: create(:proposal, :active))
+      proposal = create(:proposal, :active)
+      item = create(:item, proposal: proposal, client_intention: "sell")
+      create(:agreement, :sell, :active, proposal: proposal)
       item.mark_active!
 
       expect(item.state).to eq("active")
     end
 
     it "transitions 'active' to 'sold'" do
-      item = create(:item, :active)
+      item = create(:item, :active, client_intention: "sell")
       item.mark_sold!
 
       expect(item.state).to eq("sold")
