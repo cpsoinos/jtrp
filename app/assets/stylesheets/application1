@@ -1,0 +1,20 @@
+
+
+ @import 'variables';
+ @import 'jquery.signaturepad.css';
+ @import 'bootstrap';
+ @import 'bootstrap-material-design';
+ @import 'dropzone/dropzone';
+ @import 'bootsy';
+
+.actions {
+  margin-top: 1em;
+}
+
+.form-row {
+  margin-top: 1em;
+}
+
+div.navbar.navbar-default {
+  background-color: $brand-primary;
+}

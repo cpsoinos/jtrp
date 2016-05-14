@@ -1,5 +1,3 @@
-@import 'variables';
-
 .dd-container, #add-existing-item-button {
   margin-top: 1em;
 }
@@ -44,7 +42,7 @@
 }
 
 .client-header {
-  background: $light-blue;
+  background: $brand-primary;
 }
 
 #proposal-table-info {
@@ -59,7 +57,7 @@
 .panel-disclaimer {
   margin-top: 3em;
   margin-bottom: 3em;
-  border: 2px solid $light-blue;
+  border: 2px solid $brand-primary;
 }
 
 .panel-item-row {
@@ -76,5 +74,5 @@
 }
 
 .proposal-response-item {
-  border: 1px solid $light-blue;
+  border: 1px solid $brand-primary;
 }
