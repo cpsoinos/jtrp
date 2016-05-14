@@ -30,7 +30,7 @@ $(document).ready(function() {
   jQuery(".best_in_place").best_in_place();
 
   // $.material.init()
-  $.material.ripples();
-  $.material.checkbox();
-  $.material.radio();
+  // $.material.ripples();
+  // $.material.checkbox();
+  // $.material.radio();
 });
