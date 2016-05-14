@@ -2,10 +2,9 @@
   <div class="well bs-component">
     <div>
 
-      <!-- Nav tabs -->
-      <ul class="nav nav-tabs" role="tablist">
+      <ul class="nav nav-pills nav-justified" role="tablist">
         <% @agreements.each do |agreement| %>
-          <li role="presentation"><a href="#<%= agreement.agreement_type %>" aria-controls="<%= agreement.agreement_type %>" role="tab" data-toggle="tab"><%= agreement.agreement_type %></a></li>
+          <li role="presentation"><a href="#<%= agreement.agreement_type %>" aria-controls="<%= agreement.agreement_type %>" role="tab" data-toggle="tab" class="agreement-tab"><%= agreement.agreement_type %></a></li>
         <% end %>
         <!-- <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Home</a></li>
         <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Profile</a></li>
@@ -16,7 +15,7 @@
       <!-- Tab panes -->
       <div class="tab-content">
         <% @agreements.each do |agreement| %>
-          <div role="tabpanel" class="tab-pane active" id="<%= agreement.agreement_type %>"><%= render "#{agreement.agreement_type}", items: @items.where(client_intention: agreement.agreement_type), agreement: agreement %></div>
+          <div role="tabpanel" class="tab-pane fade" id="<%= agreement.agreement_type %>"><%= render "#{agreement.agreement_type}", items: @items.where(client_intention: agreement.agreement_type), agreement: agreement %></div>
         <% end %>
         <!-- <div role="tabpanel" class="tab-pane active" id="home">...</div>
         <div role="tabpanel" class="tab-pane" id="profile">...</div>

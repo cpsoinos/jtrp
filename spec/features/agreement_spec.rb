@@ -41,6 +41,11 @@ feature "agreement" do
         visit proposal_agreements_path(proposal)
       end
 
+      before :each, js: true do
+        page.execute_script("$($('a[role=tab]')[0]).tab('show');")
+        page.execute_script("handleSignatures();")
+      end
+
       scenario "visits consignment agreement path" do
         click_link("consign")
 
