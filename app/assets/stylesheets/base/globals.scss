@@ -1,0 +1,23 @@
+a, a:hover, a:focus {
+  color: $brand-primary;
+}
+
+.actions {
+  margin-top: 1em;
+}
+
+.form-row {
+  margin-top: 1em;
+}
+
+div.navbar.navbar-default {
+  background-color: $brand-primary;
+}
+
+.btn.btn-raised.btn-primary, .input-group-btn .btn.btn-raised.btn-primary, .btn.btn-fab.btn-primary, .input-group-btn .btn.btn-fab.btn-primary, .btn-group-raised .btn.btn-primary, .btn-group-raised .input-group-btn .btn.btn-primary {
+  background-color: $brand-primary;
+}
+
+.btn.btn-raised.btn-success, .input-group-btn .btn.btn-raised.btn-success, .btn.btn-fab.btn-success, .input-group-btn .btn.btn-fab.btn-success, .btn-group-raised .btn.btn-success, .btn-group-raised .input-group-btn .btn.btn-success {
+  background-color: $brand-primary;
+}

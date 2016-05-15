@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160511214512) do
+ActiveRecord::Schema.define(version: 20160514231322) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -71,7 +71,6 @@ ActiveRecord::Schema.define(version: 20160511214512) do
     t.integer  "category_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.json     "initial_photos"
     t.string   "condition"
     t.float    "height"
     t.float    "width"
@@ -84,7 +83,6 @@ ActiveRecord::Schema.define(version: 20160511214512) do
     t.string   "sale_price_currency",         default: "USD",       null: false
     t.string   "token"
     t.integer  "proposal_id"
-    t.json     "listing_photos"
     t.string   "state",                       default: "potential", null: false
     t.integer  "minimum_sale_price_cents"
     t.string   "minimum_sale_price_currency", default: "USD",       null: false
@@ -97,6 +95,16 @@ ActiveRecord::Schema.define(version: 20160511214512) do
   add_index "items", ["category_id"], name: "index_items_on_category_id", using: :btree
   add_index "items", ["client_id"], name: "index_items_on_client_id", using: :btree
   add_index "items", ["proposal_id"], name: "index_items_on_proposal_id", using: :btree
+
+  create_table "photos", force: :cascade do |t|
+    t.integer  "item_id"
+    t.string   "photo"
+    t.string   "photo_type", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "photos", ["item_id"], name: "index_photos_on_item_id", using: :btree
 
   create_table "proposals", force: :cascade do |t|
     t.integer  "client_id",     null: false
@@ -142,5 +150,6 @@ ActiveRecord::Schema.define(version: 20160511214512) do
 
   add_foreign_key "agreements", "proposals"
   add_foreign_key "items", "categories"
+  add_foreign_key "photos", "items"
   add_foreign_key "users", "companies"
 end

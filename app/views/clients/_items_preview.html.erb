@@ -3,9 +3,9 @@
     <div class="thumbnail">
       <% url = begin %>
         <% if item.listing_photos.present? %>
-          <% image_tag(item.listing_photos.first.tiny_thumb.url) %>
+          <% image_tag(item.listing_photos.first.photo_url(:tiny_thumb)) %>
         <% elsif item.initial_photos.present? %>
-          <% image_tag(item.initial_photos.first.tiny_thumb.url) %>
+          <% image_tag(item.initial_photos.first.photo_url(:tiny_thumb)) %>
         <% else %>
           <% item.name %>
         <% end %>

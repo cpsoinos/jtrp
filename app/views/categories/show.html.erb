@@ -11,9 +11,9 @@
     <div class="col-md-3">
       <div class="well bs-component text-center">
         <% if item.listing_photos.present? %>
-          <%= link_to(image_tag(item.listing_photos.first.thumb.url, class: "img-rounded"), item_path(item)) %>
+          <%= link_to(image_tag(item.listing_photos.first.photo_url(:thumb), class: "img-rounded"), item_path(item)) %>
         <% elsif item.initial_photos.present? %>
-          <%= link_to(image_tag(item.initial_photos.first.thumb.url, class: "img-rounded"), item_path(item)) %>
+          <%= link_to(image_tag(item.initial_photos.first.photo_url(:thumb), class: "img-rounded"), item_path(item)) %>
         <% end %>
         <div class="caption text-center">
           <h3><%= link_to item.name, item_path(item) %></h3>
