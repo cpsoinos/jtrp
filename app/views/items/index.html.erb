@@ -15,34 +15,64 @@
 </div>
 
 <div class="row">
-  <% @items.each do |item| %>
-    <div class="col-xs-12 col-md-3">
-      <div class="well">
-        <div class="text-center">
-          <h4><%= link_to item.name, item_path(item) %></h4>
-          <% if item.listing_photos.present? %>
-            <%= link_to image_tag(item.listing_photos.first.thumb.url, class: "img-rounded"), item_path(item) %>
-          <% elsif item.initial_photos.present? %>
-            <%= link_to image_tag(item.initial_photos.first.thumb.url, class: "img-rounded"), item_path(item) %>
-          <% else %>
-            <%= link_to image_tag("thumb_No_Image_Available.png", class: "img-rounded thumb"), item_path(item) %>
+  <div class="col-md-8 col-md-offset-2">
+    <div class="well bs-component">
+      <div class="row">
+        <div class="list-group">
+          <% @items.each do |item| %>
+            <div class="col-xs-12 col-md-6">
+              <div class="list-group-item">
+                <div class="row-picture">
+                  <% if item.listing_photos.present? %>
+                    <%= link_to image_tag(item.listing_photos.first.photo_url(:thumb), class: "circle", alt: "item.name"), item_path(item) %>
+                  <% elsif item.initial_photos.present? %>
+                    <%= link_to image_tag(item.initial_photos.first.photo_url(:thumb), class: "circle", alt: "item.name"), item_path(item) %>
+                  <% else %>
+                    <%= link_to image_tag("thumb_No_Image_Available.png", class: "circle", alt: "item.name"), item_path(item) %>
+                  <% end %>
+                </div>
+                <div class="row-content">
+                  <h4 class="list-group-item-heading"><%= link_to item.name, item_path(item) %></h4>
+                  <p class="list-group-item-text"><%= item.description %></p>
+                  <table class="table-condensed">
+                    <tr>
+                      <th>Client</th>
+                      <td>
+                        <% if item.proposal %>
+                          <%= link_to(item.proposal.client.full_name, client_path(item.proposal.client)) %>
+                        <% else %>
+                          <i>none</i>
+                        <% end %>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>Proposal No.</th>
+                      <td>
+                        <% if item.proposal %>
+                          <%= link_to(item.proposal.id, proposal_path(item.proposal)) %>
+                        <% else %>
+                          <i>none</i>
+                        <% end %>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>Agreement Type & No.</th>
+                      <td>
+                        <% if item.agreement %>
+                          <%= link_to(item.agreement.id, proposal_agreement_path(item.proposal, item.agreement)) %>
+                        <% else %>
+                          <i>none</i>
+                        <% end %>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+              <div class="list-group-separator"></div>
+            </div>
           <% end %>
-          <div class="row">
-            <% if item.proposal.present? %>
-              <div class="col-xs-7 text-right">Client: </div>
-              <div class="col-xs-5 text-left"><%= link_to item.proposal.client.full_name, client_path(item.proposal.client) %></div>
-            <% end %>
-            <div class="col-xs-7 text-right">Purchase price: </div>
-            <div class="col-xs-5 text-left"><%= humanized_money_with_symbol(item.purchase_price).html_safe %></div>
-            <div class="col-xs-7 text-right">Minimum sale price: </div>
-            <div class="col-xs-5 text-left"><%= humanized_money_with_symbol(item.minimum_sale_price).html_safe %></div>
-            <% if item.sold? %>
-              <div class="col-xs-7 text-right">Sale price: </div>
-              <div class="col-xs-5 text-left"><%= humanized_money_with_symbol(item.sale_price).html_safe %></div>
-            <% end %>
-          </div>
         </div>
       </div>
     </div>
-  <% end %>
+  </div>
 </div>

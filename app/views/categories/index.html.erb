@@ -29,7 +29,7 @@
     <div class="col-sm-6 col-md-4">
       <div class="well">
         <% if category.photo.present? %>
-          <%= image_tag(category.photo.thumb.url) %>
+          <%= image_tag(category.photo.photo_url(:thumb)) %>
         <% end %>
         <% if current_user.try(:internal?) %>
           <div class="pull-right"><%= link_to "edit", edit_category_path(category) %></div>
@@ -64,7 +64,7 @@
           <div class="pull-right"><%= link_to "edit", edit_proposal_path(proposal) %></div>
           <div class="text-center">
             <% if proposal.client.avatar.present? %>
-              <%= image_tag(proposal.client.avatar.thumb.url) %>
+              <%= image_tag(proposal.client.avatar.photo_url(:thumb)) %>
             <% else %>
               <%= image_tag "thumb_default_avatar.png", class: "thumb" %>
             <% end %>

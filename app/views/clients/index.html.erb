@@ -21,7 +21,7 @@
         <div class="text-center">
           <h4><%= link_to client.full_name, client_path(client) %></h4>
           <% if client.avatar.present? %>
-            <%= image_tag(proposal.client.avatar.thumb.url) %>
+            <%= image_tag(proposal.client.avatar.photo_url(:thumb)) %>
           <% else %>
             <%= image_tag "thumb_default_avatar.png", class: "thumb" %>
           <% end %>

@@ -4,7 +4,7 @@
   <% items.each do |item| %>
     <div class="col-xs-4">
       <% if item.initial_photos.present? %>
-        <%= image_tag(item.initial_photos.first.thumb.url) %>
+        <%= image_tag(item.initial_photos.first.photo_url(:thumb)) %>
       <% else %>
         <%= image_tag("thumb_No_Image_Available.png") %>
       <% end %>

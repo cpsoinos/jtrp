@@ -61,26 +61,30 @@
 </div>
 
 <div class="row form-row">
-  <div class="text-center">
-    <div class="col-xs-12 col-md-3 form-label">
-      <%= f.label :initial_photos, class: "control-label" %>
+  <%= f.fields_for :photos, Photo.new do |ff| %>
+    <div class="text-center">
+      <div class="col-xs-12 col-md-3 form-label">
+        <%= ff.label :initial_photos, class: "control-label" %>
+      </div>
+      <div class="col-xs-12 col-md-9 text-left">
+        <%= ff.file_field :photos, multiple: true, class: "dropzone form-control", name: "initial_photos[]" %>
+      </div>
     </div>
-    <div class="col-xs-12 col-md-9 text-left">
-      <%= f.file_field :initial_photos, multiple: true, class: "dropzone form-control" %>
-    </div>
-  </div>
+  <% end %>
 </div>
 
 <% if %w(categories items).include?(controller_name) %>
   <div class="row form-row">
-    <div class="text-center">
-      <div class="col-xs-12 col-md-3 form-label">
-        <%= f.label :listing_photos, class: "control-label" %>
+    <%= f.fields_for :photos, Photo.new do |ff| %>
+      <div class="text-center">
+        <div class="col-xs-12 col-md-3 form-label">
+          <%= ff.label :listing_photos, class: "control-label" %>
+        </div>
+        <div class="col-xs-12 col-md-9 text-left">
+          <%= ff.file_field :photos, multiple: true, class: "dropzone form-control", name: "listing_photos[]" %>
+        </div>
       </div>
-      <div class="col-xs-12 col-md-9 text-left">
-        <%= f.file_field :listing_photos, multiple: true, class: "dropzone form-control" %>
-      </div>
-    </div>
+    <% end %>
   </div>
 <% end %>
 

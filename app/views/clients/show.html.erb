@@ -4,7 +4,7 @@
       <div class="row text-center">
         <div class="col-md-4 hidden-xs">
           <% if @client.avatar.present? %>
-            <%= image_tag(@client.avatar.thumb.url, class: "thumb", alt: "Client Avatar") %>
+            <%= image_tag(@client.avatar.photo_url(:thumb), class: "thumb", alt: "Client Avatar") %>
           <% else %>
             <%= image_tag("thumb_default_avatar.png", class: "thumb", alt: "Client Avatar") %>
           <% end %>
