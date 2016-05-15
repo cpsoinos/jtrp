@@ -25,25 +25,15 @@ FactoryGirl.define do
     end
 
     trait :with_initial_photo do
-      initial_photos [Rack::Test::UploadedFile.new(File.open(File.join(Rails.root, '/spec/fixtures/test.png')))]
+      after(:create) do |item|
+        create(:photo, :initial, item: item)
+      end
     end
 
     trait :with_listing_photo do
-      listing_photos [Rack::Test::UploadedFile.new(File.open(File.join(Rails.root, '/spec/fixtures/test_2.png')))]
-    end
-
-    trait :with_multiple_initial_photos do
-      initial_photos [
-        Rack::Test::UploadedFile.new(File.open(File.join(Rails.root, '/spec/fixtures/test.png'))),
-        Rack::Test::UploadedFile.new(File.open(File.join(Rails.root, '/spec/fixtures/test_2.png')))
-      ]
-    end
-
-    trait :with_multiple_listing_photos do
-      listing_photos [
-        Rack::Test::UploadedFile.new(File.open(File.join(Rails.root, '/spec/fixtures/test.png'))),
-        Rack::Test::UploadedFile.new(File.open(File.join(Rails.root, '/spec/fixtures/test_2.png')))
-      ]
+      after(:create) do |item|
+        create(:photo, :listing, item: item)
+      end
     end
 
   end

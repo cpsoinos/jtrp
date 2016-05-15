@@ -18,6 +18,16 @@ class ItemsController < ApplicationController
 
     if @item.save
       respond_to do |format|
+        if params[:initial_photos]
+          params[:initial_photos].each do |photo|
+            @item.photos.create!(photo: photo, photo_type: "initial")
+          end
+        end
+        if params[:listing_photos]
+          params[:listing_photos].each do |photo|
+            @item.photos.create!(photo: photo, photo_type: "listing")
+          end
+        end
         format.html do
           flash[:notice] = "Item created"
           redirect_to item_path(@item)
@@ -78,7 +88,7 @@ class ItemsController < ApplicationController
   protected
 
   def item_params
-    params.require(:item).permit([:name, :description, {initial_photos: []}, {listing_photos: []}, :purchase_price, :asking_price, :listing_price, :sale_price, :minimum_sale_price, :condition, :client_id, :category_id, :client_intention, :notes])
+    params.require(:item).permit(:name, :description, {initial_photos_attributes: [:id, :initial_photo_id, :initial_photo]}, {listing_photos_attributes: [:id, :listing_photo_id, :listing_photo]}, :purchase_price, :asking_price, :listing_price, :sale_price, :minimum_sale_price, :condition, :client_id, :category_id, :client_intention, :notes)
   end
 
   def item_creator

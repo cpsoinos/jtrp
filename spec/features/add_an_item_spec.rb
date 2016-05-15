@@ -44,7 +44,7 @@ feature "add an item" do
     scenario "successfully adds an uncategorized item" do
       visit new_item_path
 
-      attach_file('item_initial_photos', File.join(Rails.root, '/spec/fixtures/test.png'))
+      attach_file('initial_photos[]', File.join(Rails.root, '/spec/fixtures/test.png'))
       fill_in "Name", with: "Chair"
       fill_in "Description", with: "People sit in it."
       click_on("Add Item")
@@ -76,7 +76,7 @@ feature "add an item" do
     scenario "successfully adds an item" do
       visit new_category_item_path(category)
 
-      attach_file('item_initial_photos', File.join(Rails.root, '/spec/fixtures/test.png'))
+      attach_file('initial_photos[]', File.join(Rails.root, '/spec/fixtures/test.png'))
       fill_in "Name", with: "Chair"
       fill_in "Description", with: "People sit in it."
       click_on("Add Item")
@@ -89,7 +89,6 @@ feature "add an item" do
 
     scenario "unsuccessfully adds an item" do
       visit new_category_item_path(category)
-
       fill_in "Description", with: "People sit in it."
       click_on("Add Item")
 

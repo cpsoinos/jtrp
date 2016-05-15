@@ -5,11 +5,11 @@
   <div class="row">
     <% if @item.listing_photos.present? %>
       <div class="col-xs-6">
-        <%= wicked_pdf_image_tag(@item.listing_photos.first.thumb.url, class: "img-rounded") %>
+        <%= wicked_pdf_image_tag(@item.listing_photos.first.photo_url(:thumb), class: "img-rounded") %>
       </div>
     <% elsif @item.initial_photos.present? %>
       <div class="col-xs-6">
-        <%= wicked_pdf_image_tag(@item.initial_photos.first.thumb.url, class: "img-rounded") %>
+        <%= wicked_pdf_image_tag(@item.initial_photos.first.photo_url(:thumb), class: "img-rounded") %>
       </div>
     <% end %>
     <div class="col-xs-6">

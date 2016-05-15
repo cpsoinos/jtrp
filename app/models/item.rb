@@ -1,8 +1,7 @@
 class Item < ActiveRecord::Base
   has_secure_token
-
-  mount_uploaders :initial_photos, PhotoUploader
-  mount_uploaders :listing_photos, PhotoUploader
+  has_many :photos
+  accepts_nested_attributes_for :photos
 
   monetize :purchase_price_cents, allow_nil: true, numericality: {
     greater_than_or_equal_to: 0,
@@ -50,8 +49,18 @@ class Item < ActiveRecord::Base
 
   end
 
+  def initial_photos
+    photos.initial
+  end
+
+  def listing_photos
+    photos.listing
+  end
+
   def agreement
-    proposal.agreements.find_by(agreement_type: client_intention)
+    if proposal
+      proposal.agreements.find_by(agreement_type: client_intention)
+    end
   end
 
   def barcode(pdf=false)

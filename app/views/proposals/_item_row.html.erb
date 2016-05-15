@@ -3,7 +3,7 @@
     <div class="row vertical-align">
       <div class="col-xs-12 col-md-3 text-center">
         <% if item.initial_photos.present? %>
-          <%= image_tag(item.initial_photos.first.thumb.url) %>
+          <%= image_tag(item.initial_photos.first.photo_url(:thumb)) %>
         <% else %>
           <%= image_tag("thumb_No_Image_Available.png") %>
         <% end %>
@@ -97,7 +97,7 @@
               <% if item.initial_photos.present? %>
                 <% item.initial_photos[1..3].each do |photo| %>
                   <div class="col-md-12">
-                    <%= image_tag(photo.thumb.url, class: "half-thumb") %>
+                    <%= image_tag(photo.photo_url(:thumb), class: "half-thumb") %>
                   </div>
                 <% end %>
               <% end %>
