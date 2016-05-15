@@ -29,7 +29,7 @@
     <div class="col-sm-6 col-md-4">
       <div class="well">
         <% if category.photo.present? %>
-          <%= image_tag(category.photo.photo_url(:thumb)) %>
+          <%= image_tag(category.photo.thumb.url) %>
         <% end %>
         <% if current_user.try(:internal?) %>
           <div class="pull-right"><%= link_to "edit", edit_category_path(category) %></div>

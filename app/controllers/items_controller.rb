@@ -16,8 +16,8 @@ class ItemsController < ApplicationController
   def create
     @item = item_creator
 
-    respond_to do |format|
-      if @item.save
+    if @item.save
+      respond_to do |format|
         if params[:initial_photos]
           params[:initial_photos].each do |photo|
             @item.photos.create!(photo: photo, photo_type: "initial")
@@ -35,10 +35,10 @@ class ItemsController < ApplicationController
         format.js do
           render :'proposals/add_item'
         end
-      else
-        flash[:alert] = "Item could not be saved"
-        redirect_to :back
       end
+    else
+      flash[:alert] = "Item could not be saved"
+      redirect_to :back
     end
   end
 

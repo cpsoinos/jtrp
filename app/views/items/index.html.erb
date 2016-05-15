@@ -65,6 +65,36 @@
                         <% end %>
                       </td>
                     </tr>
+                    <tr>
+                      <th>Purchase Price</th>
+                      <td>
+                        <% if item.purchase_price_cents %>
+                          <%= humanized_money_in_words(item.purchase_purchase_price_cents) %>
+                        <% else %>
+                          <i>none</i>
+                        <% end %>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>Listing Price</th>
+                      <td>
+                        <% if item.listing_price_cents %>
+                          <%= humanized_money_in_words(item.listing_price_cents) %>
+                        <% else %>
+                          <i>none</i>
+                        <% end %>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>Min. Sale Price</th>
+                      <td>
+                        <% if item.minimum_sale_price_cents %>
+                          <%= humanized_money_in_words(item.minimum_sale_price_cents) %>
+                        <% else %>
+                          <i>none</i>
+                        <% end %>
+                      </td>
+                    </tr>
                   </table>
                 </div>
               </div>

@@ -27,9 +27,9 @@ feature "item index" do
       all_items.each do |item|
         expect(page).to have_link(item.name)
       end
-      expect(page).to have_content("Client:")
-      expect(page).to have_content("Purchase price:")
-      expect(page).to have_content("Minimum sale price:")
+      expect(page).to have_content("Client")
+      expect(page).to have_content("Purchase Price")
+      expect(page).to have_content("Min. Sale Price")
     end
 
   end
@@ -52,9 +52,9 @@ feature "item index" do
         expect(page).to have_link(item.name)
         expect(page).to have_link(item.proposal.client.full_name)
       end
-      expect(page).to have_content("Client:")
-      expect(page).to have_content("Purchase price:")
-      expect(page).to have_content("Minimum sale price:")
+      expect(page).to have_content("Client")
+      expect(page).to have_content("Purchase Price")
+      expect(page).to have_content("Min. Sale Price")
     end
 
   end
@@ -76,10 +76,10 @@ feature "item index" do
       sold_items.each do |item|
         expect(page).to have_link(item.name)
       end
-      expect(page).to have_content("Client:")
-      expect(page).to have_content("Purchase price:")
-      expect(page).to have_content("Minimum sale price:")
-      expect(page).to have_content("Sale price:")
+      expect(page).to have_content("Client")
+      expect(page).to have_content("Purchase Price")
+      expect(page).to have_content("Min. Sale Price")
+      expect(page).to have_content("Sale Price")
     end
 
   end
@@ -101,9 +101,9 @@ feature "item index" do
       potential_items.each do |item|
         expect(page).to have_link(item.name)
       end
-      expect(page).to have_content("Client:")
-      expect(page).to have_content("Purchase price:")
-      expect(page).to have_content("Minimum sale price:")
+      expect(page).to have_content("Client")
+      expect(page).to have_content("Purchase Price")
+      expect(page).to have_content("Min. Sale Price")
     end
 
   end
