@@ -69,7 +69,7 @@
                       <th>Purchase Price</th>
                       <td>
                         <% if item.purchase_price_cents %>
-                          <%= humanized_money_with_symbol(item.purchase_purchase_price_cents) %>
+                          <%= humanized_money_with_symbol(item.purchase_price_cents) %>
                         <% else %>
                           <i>none</i>
                         <% end %>
