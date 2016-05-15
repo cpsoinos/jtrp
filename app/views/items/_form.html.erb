@@ -114,18 +114,16 @@
   </div>
 <% end %>
 
-<% if controller_name == "proposals" %>
-  <div class="row form-row">
-    <div class="text-center">
-      <div class="col-xs-12 col-md-3 form-label">
-        <%= f.label :minimum_sale_price, class: "control-label" %>
-      </div>
-      <div class="col-xs-12 col-md-3 text-left">
-        <%= f.text_field :minimum_sale_price, class: "form-control", placeholder: "$" %>
-      </div>
+<div class="row form-row">
+  <div class="text-center">
+    <div class="col-xs-12 col-md-3 form-label">
+      <%= f.label :minimum_sale_price, class: "control-label" %>
+    </div>
+    <div class="col-xs-12 col-md-3 text-left">
+      <%= f.text_field :minimum_sale_price, class: "form-control", placeholder: "$" %>
     </div>
   </div>
-<% end %>
+</div>
 
 <div class="row form-row">
   <div class="text-center">
