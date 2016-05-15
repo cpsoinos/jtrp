@@ -27,6 +27,21 @@ class ClientsController < ApplicationController
     end
   end
 
+  def edit
+    @client = Client.find(params[:id])
+  end
+
+  def update
+    @client = Client.find(params[:id])
+    if @client.update(client_params)
+      flash[:notice] = "Client updated"
+      render :show
+    else
+      flash[:warning] = "Could not be saved"
+      render :back
+    end
+  end
+
   protected
 
   def client_params
