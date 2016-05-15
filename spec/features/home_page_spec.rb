@@ -11,7 +11,7 @@ feature "home page" do
       visit root_path
 
       expect(page).to have_content(company.name)
-      expect(page).to have_content(company.description)
+      expect(page).to have_content(company.slogan)
     end
 
     scenario "sees category links" do
@@ -39,7 +39,7 @@ feature "home page" do
 
   context "internal user" do
 
-    let(:user) { create(:user, :internal) }
+    let(:user) { create(:internal_user) }
 
     before do
       sign_in user
@@ -49,28 +49,48 @@ feature "home page" do
       visit root_path
 
       expect(page).to have_content(company.name)
-      expect(page).to have_content(company.description)
+      expect(page).not_to have_content(company.slogan)
+
+      expect(page).to have_link("Items")
+      expect(page).to have_link("Categories")
+      expect(page).to have_link("Clients")
+
+      expect(page).to have_link("Quick-Add Item")
+      expect(page).to have_link("Quick-Add Client")
+      expect(page).to have_link("Preview Forms")
+      expect(page).to have_link("Create New Proposal")
+      expect(page).to have_link("Open Proposals")
+      expect(page).to have_link("Executed Agreements")
+
+      expect(page).to have_content("Recent Items")
+      expect(page).to have_content("Recent Sales")
     end
 
-    scenario "sees category links" do
+    scenario "clicks 'Items' link", js: true do
       visit root_path
+      click_link("Items")
 
-      expect(page).to have_link(category_1.name)
-      expect(page).to have_link(category_2.name)
-      expect(page).to have_link(category_3.name)
+      expect(page).to have_link("Potential")
+      expect(page).to have_link("Active")
+      expect(page).to have_link("Sold")
     end
 
-    scenario "sees edit category links" do
+    scenario "clicks 'Categories' link", js: true do
+      categories = create_list(:category, 3)
       visit root_path
+      click_link("Categories")
 
-      expect(page).to have_link("edit")
+      categories.each do |category|
+        expect(page).to have_link(category.name)
+      end
     end
 
-    scenario "clicks a category link" do
+    scenario "clicks 'Clients' link", js: true do
       visit root_path
-      click_link(category_1.name)
+      click_link("Clients")
 
-      expect(page).to have_content(category_1.name)
+      expect(page).to have_link("Active")
+      expect(page).to have_link("Inactive")
     end
 
   end

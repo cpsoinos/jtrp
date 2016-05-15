@@ -1,7 +1,7 @@
 <div class="row">
   <% @companies.each do |company| %>
     <div class="col-sm-6 col-md-4">
-      <div class="thumbnail">
+      <div class="well">
         <img src="..." alt="...">
         <div class="caption">
           <h3><%= link_to company.name, company_path(company) %></h3>

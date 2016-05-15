@@ -2,13 +2,12 @@ require 'factory_girl'
 
 FactoryGirl.define do
 
-  factory :user do
+  factory :user, class: User do
     first_name Faker::Name.first_name
     last_name Faker::Name.last_name
-    email
+    sequence(:email) { |n| "person#{n}@example.com" }
     password "supersecret"
     password_confirmation "supersecret"
-    role "guest"
     status "active"
     address_1 Faker::Address.street_address
     address_2 Faker::Address.secondary_address
@@ -18,29 +17,39 @@ FactoryGirl.define do
     phone Faker::PhoneNumber.phone_number
     phone_ext Faker::PhoneNumber.extension
 
-    trait :admin do
-      role "admin"
-    end
-
-    trait :internal do
-      role "internal"
-    end
-
-    trait :client do
-      role "client"
-    end
-
-    trait :agent do
-      role "agent"
-    end
-
     trait :inactive do
       status "inactive"
     end
-  end
 
-  sequence :email do |n|
-    "person#{n}@example.com"
+    factory :client, class: Client do
+
+      status "potential"
+
+      trait :potential do
+        after(:create) do |instance|
+          create(:proposal, client: instance)
+        end
+      end
+
+      trait :active do
+        status "active"
+        after(:create) do |instance|
+          create(:item, :active, :with_listing_photo, client_intention: "sell", proposal: create(:proposal, :active, client: instance))
+        end
+      end
+
+      trait :inactive do
+        status "inactive"
+        after(:create) do |instance|
+          create(:item, :sold, proposal: create(:proposal, :inactive, client: instance))
+        end
+      end
+
+    end
+
+    factory :admin, class: Admin
+    factory :internal_user, class: InternalUser
+
   end
 
 end

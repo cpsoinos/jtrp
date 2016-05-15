@@ -21,4 +21,6 @@ RSpec.configure do |config|
   #   @user = FactoryGirl.create(:user)
   #   login_as(@user, scope: :user)
   # end
+  config.include WaitForAjax, type: :feature
+  
 end

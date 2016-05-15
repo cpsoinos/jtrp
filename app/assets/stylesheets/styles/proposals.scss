@@ -1,0 +1,78 @@
+.dd-container, #add-existing-item-button {
+  margin-top: 1em;
+}
+
+.sigWrapper {
+  border: none;
+}
+
+.sigPad input {
+  border: none;
+}
+
+@media (max-width: 767px) {
+  .thumb {
+    max-width: 145px;
+  }
+}
+
+.btn-responsive {
+    white-space: normal !important;
+}
+
+.agreement-name-printed {
+  margin-bottom: 3em;
+}
+
+.form-header-table td {
+  padding-left: 3px;
+  padding-right: 3px;
+}
+
+.top-margin {
+  margin-top: 1em;
+}
+
+.bottom-margin {
+  margin-bottom: 1em;
+}
+
+.large-top-margin {
+  margin-top: 3em;
+}
+
+.client-header {
+  background: $brand-primary;
+}
+
+#proposal-table-info {
+  width: 50%;
+}
+
+.client-header-text {
+  color: white;
+  padding: 3px;
+}
+
+.panel-disclaimer {
+  margin-top: 3em;
+  margin-bottom: 3em;
+  border: 2px solid $brand-primary;
+}
+
+.panel-item-row {
+  padding: 1em;
+}
+
+.vertical-align {
+  display: flex;
+  align-items: center;
+}
+
+.response-thumb {
+  height: 100px;
+}
+
+.proposal-response-item {
+  border: 1px solid $brand-primary;
+}

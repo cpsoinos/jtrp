@@ -1,0 +1,141 @@
+<div class="col-md-8 col-md-offset-2">
+  <div class="well bs-component">
+
+    <%= form_for @company do |f| %>
+
+      <div class="row form-row">
+        <div class="text-center">
+          <div class="col-xs-12 col-md-3 form-label">
+            <%= f.label :slogan, class: "control-label" %>
+          </div>
+          <div class="col-xs-12 col-md-9 text-left">
+            <%= f.text_field :slogan, class: "form-control" %>
+          </div>
+        </div>
+      </div>
+
+      <div class="row form-row">
+        <div class="text-center">
+          <div class="col-xs-12 col-md-3 form-label">
+            <%= f.label :address_1, class: "control-label" %>
+          </div>
+          <div class="col-xs-12 col-md-9 text-left">
+            <%= f.text_field :address_1, class: "form-control", placeholder: "Address" %>
+          </div>
+        </div>
+      </div>
+
+      <div class="row form-row">
+        <div class="text-center">
+          <div class="col-xs-12 col-md-3 form-label">
+            <%= f.label :address_2, class: "control-label" %>
+          </div>
+          <div class="col-xs-12 col-md-9 text-left">
+            <%= f.text_field :address_2, class: "form-control", placeholder: "Address Line Two" %>
+          </div>
+        </div>
+      </div>
+
+      <div class="row form-row">
+        <div class="text-center">
+          <div class="col-xs-12 col-md-3 form-label">
+            <%= f.label :city, class: "control-label" %>
+          </div>
+          <div class="col-xs-12 col-md-9 text-left">
+            <%= f.text_field :city, class: "form-control", placeholder: "City" %>
+          </div>
+        </div>
+      </div>
+
+      <div class="row form-row">
+        <div class="text-center">
+          <div class="col-xs-12 col-md-3 form-label">
+            <%= f.label :state, class: "control-label" %>
+          </div>
+          <div class="col-xs-12 col-md-9 text-left">
+            <%= f.text_field :state, class: "form-control", placeholder: "State" %>
+          </div>
+        </div>
+      </div>
+
+      <div class="row form-row">
+        <div class="text-center">
+          <div class="col-xs-12 col-md-3 form-label">
+            <%= f.label :zip, class: "control-label" %>
+          </div>
+          <div class="col-xs-12 col-md-9 text-left">
+            <%= f.text_field :zip, class: "form-control", placeholder: "Zip" %>
+          </div>
+        </div>
+      </div>
+
+      <div class="row form-row">
+        <div class="text-center">
+          <div class="col-xs-12 col-md-3 form-label">
+            <%= f.label :phone, class: "control-label" %>
+          </div>
+          <div class="col-xs-12 col-md-9 text-left">
+            <%= f.text_field :phone, class: "form-control", placeholder: "(123) 456-7890" %>
+            <%= f.text_field :phone_ext, class: "form-control", placeholder: "ext. 123" %>
+          </div>
+        </div>
+      </div>
+
+      <!-- Custom Info Fields -->
+
+      <div class="row form-row">
+        <div class="text-center">
+          <div class="col-xs-12 col-md-3 form-label">
+            <%= f.label :description, class: "control-label" %>
+          </div>
+          <div class="col-xs-12 col-md-9 text-left">
+            <%= f.bootsy_area :description, class: "form-control", id: "wysiwyg" %>
+          </div>
+        </div>
+      </div>
+
+      <div class="row form-row">
+        <div class="text-center">
+          <div class="col-xs-12 col-md-3 form-label">
+            <%= f.label :consignment_policies, class: "control-label" %>
+          </div>
+          <div class="col-xs-12 col-md-9 text-left">
+            <%= f.bootsy_area :consignment_policies, class: "form-control", id: "wysiwyg" %>
+          </div>
+        </div>
+      </div>
+
+      <div class="row form-row">
+        <div class="text-center">
+          <div class="col-xs-12 col-md-3 form-label">
+            <%= f.label :service_rate_schedule, class: "control-label" %>
+          </div>
+          <div class="col-xs-12 col-md-9 text-left">
+            <%= f.bootsy_area :service_rate_schedule, class: "form-control", id: "wysiwyg" %>
+          </div>
+        </div>
+      </div>
+
+      <div class="row form-row">
+        <div class="text-center">
+          <div class="col-xs-12 col-md-3 form-label">
+            <%= f.label :agent_service_rate_schedule, class: "control-label" %>
+          </div>
+          <div class="col-xs-12 col-md-9 text-left">
+            <%= f.bootsy_area :agent_service_rate_schedule, class: "form-control", id: "wysiwyg" %>
+          </div>
+        </div>
+      </div>
+
+      <div class="row form-row">
+        <div class="actions">
+          <div class="col-xs-12 text-center">
+            <%= f.submit class: "btn btn-raised btn-primary"%>
+          </div>
+        </div>
+      </div>
+
+    <% end %>
+
+  </div>
+</div>

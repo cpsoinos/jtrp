@@ -1,84 +1,149 @@
-<h1 class="text-center"><%= @item.name %></h1>
-</br>
-
 <div class="col-md-8 col-md-offset-2">
   <div class="well bs-component">
     <p><i>Click on a field to edit.</i></p>
 
-    <h3><%= best_in_place [@category, @item], :name %></h4></br>
-
-    <% if @item.listing_photos.present? %>
-      <% @item.listing_photos.each do |photo| %>
-        <div class="row text-center">
-          <%= image_tag photo.thumb.url, class: "img-rounded" %></br></br>
-        </div>
-      <% end %>
-    <% end %>
-
-    <% if @item.initial_photos.present? %>
-      <% @item.initial_photos.each do |photo| %>
-        <div class="row text-center">
-          <%= image_tag photo.thumb.url, class: "img-rounded" %>
-        </div>
-      <% end %>
-    <% end %>
+    <div class="text-center">
+      <h3><%= best_in_place [@category, @item], :name %></h4></br>
+    </div>
 
     <div class="row">
-      <div class="col-md-3 col-md-offset-3 text-right">
+      <div class="col-xs-6 col-md-3 col-md-offset-3 form-label">
         Description:
       </div>
-      <div class="col-md-3">
+      <div class="col-xs-6 col-md-3">
         <%= best_in_place [@category, @item], :description %>
       </div>
     </div>
+
     <div class="row">
-      <div class="col-md-3 col-md-offset-3 text-right">
+      <div class="col-xs-6 col-md-3 col-md-offset-3 form-label">
         Height:
       </div>
-      <div class="col-md-3">
+      <div class="col-xs-6 col-md-3">
         <%= best_in_place [@category, @item], :height %>
       </div>
     </div>
+
     <div class="row">
-      <div class="col-md-3 col-md-offset-3 text-right">
+      <div class="col-xs-6 col-md-3 col-md-offset-3 form-label">
         Width:
       </div>
-      <div class="col-md-3">
+      <div class="col-xs-6 col-md-3">
         <%= best_in_place [@category, @item], :width %>
       </div>
     </div>
+
     <div class="row">
-      <div class="col-md-3 col-md-offset-3 text-right">
+      <div class="col-xs-6 col-md-3 col-md-offset-3 form-label">
         Depth:
       </div>
-      <div class="col-md-3">
+      <div class="col-xs-6 col-md-3">
         <%= best_in_place [@category, @item], :depth %>
       </div>
     </div>
+
     <div class="row">
-      <div class="col-md-3 col-md-offset-3 text-right">
-        Purchase Price:
+      <div class="col-xs-6 col-md-3 col-md-offset-3 form-label">
+        Client:
       </div>
-      <div class="col-md-3">
-        <%= best_in_place [@category, @item], :purchase_price, display_with: lambda { |v| humanized_money_with_symbol(v).html_safe } %>
+      <div class="col-xs-6 col-md-3">
+        <% if @item.proposal %>
+          <%= link_to @item.proposal.client.full_name, client_path(@item.proposal.client) %>
+        <% else %>
+          <i>none</i>
+        <% end %>
       </div>
     </div>
+
     <div class="row">
-      <div class="col-md-3 col-md-offset-3 text-right">
+      <div class="col-xs-6 col-md-3 col-md-offset-3 form-label">
+        Proposal No.:
+      </div>
+      <div class="col-xs-6 col-md-3">
+        <% if @item.proposal %>
+          <%= link_to @item.proposal.id, proposal_path(@item.proposal) %>
+        <% else %>
+          <i>none</i>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-6 col-md-3 col-md-offset-3 form-label">
+        Agreement No. & Type:
+      </div>
+      <div class="col-xs-6 col-md-3">
+        <% if @item.agreement %>
+          <%= link_to "#{@item.agreement.agreement_type.capitalize} ##{@item.agreement.id}", proposal_agreement_path(@item.proposal, @item.agreement) %>
+        <% else %>
+          <i>none</i>
+        <% end %>
+      </div>
+    </div>
+
+    <% if @item.client_intention == "sell" %>
+      <div class="row">
+        <div class="col-xs-6 col-md-3 col-md-offset-3 form-label">
+          Purchase Price:
+        </div>
+        <div class="col-xs-6 col-md-3">
+          <%= best_in_place [@category, @item], :purchase_price, display_with: lambda { |v| humanized_money_with_symbol(v).html_safe } %>
+        </div>
+      </div>
+    <% end %>
+
+    <div class="row">
+      <div class="col-xs-6 col-md-3 col-md-offset-3 form-label">
         Listing Price:
       </div>
-      <div class="col-md-3">
+      <div class="col-xs-6 col-md-3">
         <%= best_in_place [@category, @item], :listing_price, display_with: lambda { |v| humanized_money_with_symbol(v).html_safe } %>
       </div>
     </div>
+
     <div class="row">
-      <div class="col-md-3 col-md-offset-3 text-right">
+      <div class="col-xs-6 col-md-3 col-md-offset-3 form-label">
         Minimum Sale Price:
       </div>
-      <div class="col-md-3">
+      <div class="col-xs-6 col-md-3">
         <%= best_in_place [@category, @item], :minimum_sale_price, display_with: lambda { |v| humanized_money_with_symbol(v).html_safe } %>
       </div>
     </div>
+
+    <% if @item.listing_photos.present? %>
+      <div class="row text-center large-top-margin">
+        <h4>Listing Photos</h4>
+        <% @item.listing_photos.each do |photo| %>
+        <div class="col-xs-12 col-sm-6 col-md-3">
+          <%= image_tag photo.photo_url(:thumb), class: "img-rounded" %></br></br>
+        </div>
+        <% end %>
+      </div>
+
+      <%= form_for @item, class: "form-horizontal" do |f| %>
+        <%= f.file_field :listing_photos, multiple: true, class: "dropzone form-control" %>
+        <%= f.submit %>
+      <% end %>
+
+
+    <% end %>
+
+    <% if @item.initial_photos.present? %>
+      <div class="row text-center large-top-margin">
+        <h4>Initial Photos</h4>
+        <% @item.initial_photos.each do |photo| %>
+          <div class="col-xs-12 col-sm-6 col-md-3">
+            <%= image_tag photo.photo_url(:thumb), class: "img-rounded" %></br></br>
+          </div>
+        <% end %>
+      </div>
+
+      <%= form_for @item, class: "form-horizontal" do |f| %>
+        <%= f.file_field :initial_photos, multiple: true, class: "dropzone form-control" %>
+        <%= f.submit %>
+      <% end %>
+
+    <% end %>
 
     <br>
     <div class="row">
@@ -90,7 +155,7 @@
     <br>
     <div class="row">
       <div class="text-center">
-        <%= link_to "Print Tag <i class='fa fa-caret-right'></i>".html_safe, item_tag_path(@item), class: "btn btn-raised btn-primary" %>
+        <%= link_to "Print Tag <i class='fa fa-caret-right'></i>".html_safe, item_tag_path(@item, format: :pdf), class: "btn btn-raised btn-primary" %>
       </div>
     </div>
 

@@ -12,16 +12,25 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require bootsy
 //= require jquery.remotipart
 //= require bootstrap
 //= require bootstrap-material-design
 //= require best_in_place
 //= require dropzone
 //= require jquery-ddslick
+//= require flashcanvas
+//= require jquery.signaturepad.min
+//= require json2.min
+//= require jquery-readyselector
 //= require_tree .
-
 
 $(document).ready(function() {
   /* Activating Best In Place */
   jQuery(".best_in_place").best_in_place();
+
+  // $.material.init()
+  // $.material.ripples();
+  // $.material.checkbox();
+  // $.material.radio();
 });

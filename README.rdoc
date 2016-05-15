@@ -1,3 +1,5 @@
+{<img src="https://circleci.com/gh/cpsoinos/jtrp.svg?style=svg&circle-token=77c5572f7d1f0b24dc3687c04392be9a5f945fea" alt="Circle CI" />}[https://circleci.com/gh/cpsoinos/jtrp] {<img src="https://coveralls.io/repos/github/cpsoinos/jtrp/badge.svg?branch=dev&t=Bo82r7" alt="Coverage Status" />}[https://coveralls.io/github/cpsoinos/jtrp?branch=dev] {<img src="https://gemnasium.com/badges/2f9a9ae4a430cf4a6ae80862f6264c83.svg" alt="Dependency Status" />}[https://gemnasium.com/github.com/cpsoinos/jtrp]
+
 == README
 
 This README would normally document whatever steps are necessary to get the

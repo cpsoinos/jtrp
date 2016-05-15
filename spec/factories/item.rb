@@ -6,15 +6,36 @@ FactoryGirl.define do
     name Faker::Lorem.word
     description Faker::Lorem.paragraph
     category
-    status "active"
+    proposal
+    state "potential"
 
-    trait :potential do
-      status "potential"
+    trait :active do
+      association :proposal, :active
+      state "active"
+
+      after(:create) do |item|
+        create(:agreement, :active, proposal: item.proposal)
+      end
+
     end
 
     trait :sold do
-      status "sold"
+      association :proposal, :inactive
+      state "sold"
     end
+
+    trait :with_initial_photo do
+      after(:create) do |item|
+        create(:photo, :initial, item: item)
+      end
+    end
+
+    trait :with_listing_photo do
+      after(:create) do |item|
+        create(:photo, :listing, item: item)
+      end
+    end
+
   end
 
 end

@@ -1,0 +1,15 @@
+<h1 class="text-center company-title">New Client</h1>
+</br>
+
+<div class="col-md-8 col-md-offset-2">
+  <div class="well bs-component">
+
+    <%= form_for @client do |f| %>
+      <%= render 'users/form', resource: @client, f: f %>
+      <div class="text-center">
+        <%= f.submit "Create Client", class: "btn btn-raised btn-success" %>
+      </div>
+    <% end %>
+
+  </div>
+</div>

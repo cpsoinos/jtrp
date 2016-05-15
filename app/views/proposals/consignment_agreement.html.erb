@@ -1,123 +1,0 @@
-<div class="col-md-8 col-md-offset-2">
-  <div class="well bs-component">
-    <h1 class="text-center company-title">Just the Right Piece</h1>
-    <h3 class="text-center">Consignment Agreement</h2><br>
-
-
-    <p>
-      This consignment agreement (the “<b>Agreement</b>”) is entered into as of <%= DateTime.now.strftime("%B %d, %Y") %>, by and between <b><%= @company.name %>, LLC</b> (the <b>“Consignee”</b>) of <b><%= @company.full_address %></b> and <b><%= @client.full_name %></b> (the <b>“Consignor”</b>) of <b><%= @client.full_address %></b>, (collectively, the <b>“Parties”</b>).
-    </p>
-
-    <p>WHEREAS, the Consignee is engaged in the business of selling used furniture and accessories on consignment; and</p>
-
-    <p>WHEREAS, the Consignor owns items of used furniture and accessories specified in this Agreement and wishes to sell the Items; and</p>
-
-    <p>WHEREAS, the Consignor desires that the Items be sold on consignment and the Consignee desires to sell the Items on behalf of the Consignor;</p>
-
-    <p>NOW, THEREFORE, in consideration of the mutual premises and covenants contained in this Agreement, the receipt and sufficiency of which is acknowledged, the Parties hereby agree as follows:</b></p>
-
-    <ol>
-      <li>
-        <b>Consignor:</b>  Consignor represents that he or she is at least 18 years old or older. 
-      </li>
-      <li>
-        <b>Consignment of Items:</b>  Consignor agrees to consign all the Items listed in the provision entitled “Consigned Items” (the “Items”) to Consignee, and Consignee agrees to make reasonable efforts to sell the Items as an agent of Consignor, in accordance with this Agreement. 
-      </li>
-      <li>
-        <b>Ownership of Items:</b>  Consignor warrants, covenants and agrees that all the Items are exclusively owned by Consignor and that there are no liens, judgments, or other encumbrances against the ownership, including all rights of sale or transfer, of the Items. Consignor shall continue to own each Item during the consignment period until the Item is sold or transferred or the consignment of the Item is otherwise terminated in accordance with this Agreement. Consignor shall not voluntarily place any encumbrances against the ownership of any Item. If any encumbrances are placed against the ownership of any Item, Consignor shall immediately notify Consignee of such, and Consignee shall, at its option, deem it to be an early termination by Consignor of the Agreement for that Item. 
-      </li>
-      <li>
-        <b>Exclusive Right to Sell:</b>  Consignee shall have the exclusive right to advertise, market, negotiate the selling price of, and sell each Item during the consignment period, and the exclusive right to determine how it does so for each item. The sale proceeds from the sale of each Item shall be paid directly to Consignee. Consignor shall not advertise, market, negotiate the selling price of, sell, or otherwise transfer ownership of any Item during the consignment period, nor attempt to do so. 
-      </li>
-      <li>
-        <b>Possession and Delivery of Items:</b>  All Items shall be placed in the possession of Consignee during the consignment period. Consignor shall, at its own expense, deliver the Items to Consignee. However, Consignor may contract with Consignee for Consignee to deliver the Items for a delivery fee. 
-      </li>
-      <li>
-        <b>Consignment Fee:</b>  Upon the sale of an Item, Consignor shall incur a consignment fee due to Consignee for its services in the amount of 50% of the price that the item was sold for, which Consignee shall deduct from the sale proceeds that it pays to Consignor. 
-      </li>
-      <li>
-        <b>Consignment Period:</b>  Items shall remain on consignment for a period of 90 days, until it is sold, or until early termination by consignor or consignee in accordance with this Agreement, whichever occurs first. 
-      </li>
-      <li>
-        <b>Item Price:</b>  Each Item in the addendum has a stated “original asking price” and a stated “minimum sale price”. During the first 30 days of the consignment period, Consignee shall advertise each Item at its stated original asking price. After 30 days, Consignee shall advertise each Item at 90% of its stated original asking price. After 60 days, Consignee shall advertise each Item at 80% of its stated original asking price. Consignee shall have the right to advertise an Item as “on sale” for any price at or above the minimum sale price without prior authorization from Consignor. Consignee shall have the right to negotiate with a potential buyer, and shall have the right to sell an Item for any price at or above the minimum sale price without prior authorization from Consignor. 
-      </li>
-      <li>
-        <b>Consigned Items:</b>  All the Items to be consigned in accordance with this Agreement are listed below with a photo, item number, description, original asking price, minimum sale price, and any additional conditions or notes which may apply to the item:</b>   
-      </li>
-
-      <%= render 'item_list' %>
-
-      <li>
-        <b>Payments to Consignor:</b>  The net sale proceeds of Items sold shall consist of the actual sale proceeds received by Consignee for each sold Item minus the consignment fee and any other amounts due to Consignee. Consignee shall mail a check to Consignor for the net sale proceeds from all Items sold during the month on or before the 10th day of the following month, along with a description, sale price, and consignment fee for each item sold. 
-      </li>
-      <li>
-        <b>Early Termination by Consignor:</b>  Consignor shall have the right to terminate consignment of any or all Items at any time before the final day of the consignment period subject to an early termination fee of 25% of the total original asking prices of each of the terminated Items. Early termination by Consignor shall not take effect until Consignee has received the termination request from Consignor in a signed document or by email, and Consignee has received full payment of the early termination fee. If Consignor requests early termination, but has not made the request in a signed document or by email, or has not delivered full payment of the early termination fee, Consignee shall have the option to either continue consignment of the requested terminated Items or discontinue any attempts to sell or show the Items. 
-      </li>
-      <li>
-        <b>Early Termination by Consignee:</b>  Consignee shall have the right to terminate consignment of any or all Items at any time before the final day of the consignment period for any reason and at no additional cost to Consignee. Early termination by Consignee shall take effect at the time Consignee notifies Consignor of the early termination in a signed document or by email. 
-      </li>
-      <li>
-        <b>Retrieval of Items After Termination of Consignment:</b> Consignment of Items shall terminate on the last day of the consignment period for any remaining unsold Items, or on the effective date of early termination by Consignor or Consignee. Consignor shall have 10 days after termination of consignment during which time Consignor must retrieve the Items from Consignee. Consignee shall have no obligation to deliver the Items to Consignor (but may agree to do so for a delivery fee). If Consignor does not retrieve or schedule delivery by Consignee of the Items within this 10-day period, ownership of the Items shall automatically and unconditionally transfer to Consignee. Consignee shall notify Consignor of the effective date of termination, the length of time Consignor has to retrieve the Items, and that ownership of the Items shall automatically transfer to Consignee if Consignor fails to retrieve the Items within that time. If this notification is given after the effective date of termination, the first day of the 10-day Item retrieval period shall be extended to the date of the notification. 
-      </li>
-      <li>
-        <b>Refurbishing of Items:</b>  Consignee shall have the right to refurbish and restore Items to prepare them for sale. If the cost of doing so is minimal (a couple dollars or less), the cost shall be at Consignee’s expense. If the cost is more than minimal, the cost shall be at Consignor’s expense. 
-      </li>
-      <li>
-        <b>Risk of Loss:</b>  If an Item is damaged, destroyed, or lost due to fire, water, theft, damage caused during moving, or any other cause, the risk of loss shall be on the Party in possession of the Item at the time of loss. Consignee shall be deemed to be in possession after the Item has been delivered to Consignee, or, if Consignee has been contracted to pick up and deliver the item to its location, when the Consignee begins to remove the Item from Consignor’s location. The maximum value of loss for which Consignee shall be liable to Consignor shall be 25% of the agreed upon original asking price for the Item. If an Item is damaged while in Consignee’s possession, Consignee shall be liable to Consignor for the loss in value of the Item, up to a maximum of 25% of the agreed upon original asking price for the Item. Consignee shall have the right to repair, at its own expense, the damage to any Items caused while in its possession. 
-      </li>
-      <li>
-        <b>Notices:</b>  Any notice required by this agreement may be given by a signed written correspondence to the following addresses or by email to the following email addresses:
-        <p><b>Consignee Address:</b></p>
-        <p class="indent-address"><%= @company.name %>, LLC </p>
-        <p class="indent-address"><%= @company.address_1 %></p>
-        <% if @company.address_2.present? %>
-          <p class="indent-address"><%= @company.address_2 %></p>
-        <% end %>
-        <p class="indent-address"><%= @company.city %>, <%= @company.state %> <%= @company.zip %></p>
-        <p><b>Consignee email:</b></p>
-        <p class="indent-address">cpsoinos@mac.com</p>
-        <p>Unofficial correspondence may be made by phone or text to:</p>
-        <p class="indent-address">(978) 835-8015   (Carole Psoinos)</p>
-        <p><b>Consignor phone:</b></p>
-        <p class="indent-address"><%= @client.phone %></p>
-      </li>
-      <li>
-        <b>Entire Agreement:</b>  This Agreement represents the entire consignment agreement between the Parties, and shall supersede all prior agreements, understandings, and representations by either Party regarding consignment. 
-      </li>
-      <li>
-        <b>No Implied Waiver:</b>  The waiver of any breach of any obligation, term or condition of this Agreement shall not be deemed to constitute a waiver of any preceding or succeeding breach of the same or any other obligation, term or condition of this Agreement. 
-      </li>
-      <li>
-        <b>Severability:</b>  The invalidity or unenforceability of any provision of this Agreement shall not affect the validity or enforceability of any other provision of this Agreement. 
-      </li>
-      <li>
-        <b>Counterparts and Electronic Signatures:</b>  If this Agreement is executed in separate parts, the separate parts shall together constitute an enforceable contract. Electronic or digital signatures shall constitute valid enforceable signatures. 
-      </li>
-      <li>
-        <b>Headings:</b>  The headings contained in this Agreement are for convenience purposes only and shall not affect, in any way, the meaning or interpretation of this Agreement. 
-      </li>
-      <li>
-        <b>Governing Law:</b>  This Agreement shall be governed by and construed in accordance with the laws of the State of Massachusetts.
-      </li>
-    </ol>
-
-    <br />
-    <br />
-    <p>AGREED AND EXECUTED BY, effective on the date first written above:</b></p>
-
-
-    <p>Consignee:  <%= @company.name %>, LLC</p>
-    </br>
-
-    <p>_____________________________________</p>
-    <p>Carole A. Psoinos, Managing Member</p>
-    </br>
-
-
-    <p>Consignor:  <%= @client.full_name %></p>
-    </br>
-
-    _____________________________________
-
-  </div>
-</div>

@@ -1,0 +1,108 @@
+<div class="row">
+  <div class="col-sm-12 text-center">
+    <h1 class="company-title"><%= @filter.present? ? @filter : "All" %> Items</h1>
+    <% if @filter.present? %>
+      <% case @filter %>
+      <% when "Potential" %>
+        <h4><%= @filter %> items have not yet been listed for sale.</h4>
+      <% when "Active" %>
+        <h4><%= @filter %> items have a signed proposal and are  actively for sale.</h4>
+      <% when "Sold" %>
+        <h4><%= @filter %> items have been sold.</h4>
+      <% end %>
+    <% end %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-8 col-md-offset-2">
+    <div class="well bs-component">
+      <div class="row">
+        <div class="list-group">
+          <% @items.each do |item| %>
+            <div class="col-xs-12 col-md-6">
+              <div class="list-group-item">
+                <div class="row-picture">
+                  <% if item.listing_photos.present? %>
+                    <%= link_to image_tag(item.listing_photos.first.photo_url(:thumb), class: "circle", alt: "item.name"), item_path(item) %>
+                  <% elsif item.initial_photos.present? %>
+                    <%= link_to image_tag(item.initial_photos.first.photo_url(:thumb), class: "circle", alt: "item.name"), item_path(item) %>
+                  <% else %>
+                    <%= link_to image_tag("thumb_No_Image_Available.png", class: "circle", alt: "item.name"), item_path(item) %>
+                  <% end %>
+                </div>
+                <div class="row-content">
+                  <h4 class="list-group-item-heading"><%= link_to item.name, item_path(item) %></h4>
+                  <p class="list-group-item-text"><%= item.description %></p>
+                  <table class="table-condensed">
+                    <tr>
+                      <th>Client</th>
+                      <td>
+                        <% if item.proposal %>
+                          <%= link_to(item.proposal.client.full_name, client_path(item.proposal.client)) %>
+                        <% else %>
+                          <i>none</i>
+                        <% end %>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>Proposal No.</th>
+                      <td>
+                        <% if item.proposal %>
+                          <%= link_to(item.proposal.id, proposal_path(item.proposal)) %>
+                        <% else %>
+                          <i>none</i>
+                        <% end %>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>Agreement Type & No.</th>
+                      <td>
+                        <% if item.agreement %>
+                          <%= link_to(item.agreement.id, proposal_agreement_path(item.proposal, item.agreement)) %>
+                        <% else %>
+                          <i>none</i>
+                        <% end %>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>Purchase Price</th>
+                      <td>
+                        <% if item.purchase_price_cents %>
+                          <%= humanized_money_with_symbol(item.purchase_price) %>
+                        <% else %>
+                          <i>none</i>
+                        <% end %>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>Listing Price</th>
+                      <td>
+                        <% if item.listing_price_cents %>
+                          <%= humanized_money_with_symbol(item.listing_price) %>
+                        <% else %>
+                          <i>none</i>
+                        <% end %>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>Min. Sale Price</th>
+                      <td>
+                        <% if item.minimum_sale_price_cents %>
+                          <%= humanized_money_with_symbol(item.minimum_sale_price) %>
+                        <% else %>
+                          <i>none</i>
+                        <% end %>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+              <div class="list-group-separator"></div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,7 +1,7 @@
 feature "edit a category" do
 
-  let(:user) { create(:user, :internal) }
-  let(:client) { create(:user, :client) }
+  let(:user) { create(:internal_user) }
+  let(:client) { create(:client) }
   let!(:category) { create(:category) }
 
   context "internal user" do
@@ -44,7 +44,7 @@ feature "edit a category" do
 
       expect(page).to have_content("Category updated!")
       expect(page).to have_content(category.name)
-      expect(page).to have_selector("img[src$='test.png']")
+      expect(page).to have_css("img[src*='test.png']")
       expect(page).to have_link("edit")
     end
 

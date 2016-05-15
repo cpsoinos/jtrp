@@ -19,15 +19,21 @@ gem 'best_in_place', '~> 3.0.1'
 gem 'money-rails'
 gem 'barby'
 gem 'chunky_png'
+gem 'cairo'
 gem 'has_secure_token'
 gem 'remotipart', '~> 1.2'
 gem 'dropzonejs-rails'
 gem 'fog-aws'
 gem 'gon'
 gem 'rollbar', '~> 2.8.3'
+gem 'wicked_pdf'
+gem 'wkhtmltopdf-binary-edge', '~> 0.12.3.0'
+gem 'state_machines'
+gem 'state_machines-activerecord'
+gem 'bootsy'
 
-group :production, :local do
-  gem 'rails_12factor', group: :production
+group :production, :staging, :local do
+  gem 'rails_12factor'
 end
 
 source 'https://rails-assets.org' do
@@ -37,6 +43,7 @@ end
 group :development, :test, :local do
   gem 'pry-rails'
   gem 'pry-coolline'
+  gem 'pry-byebug'
   gem 'sextant'
   gem 'better_errors'
   gem 'faker'
@@ -64,4 +71,5 @@ group :test do
   gem 'webmock'
   gem 'capybara-mechanize'
   gem 'coveralls', require: false
+  gem 'pdf-reader'
 end

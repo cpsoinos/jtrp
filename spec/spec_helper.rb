@@ -1,7 +1,8 @@
 require 'capybara/rspec'
 require 'factory_girl_rails'
 require 'rails_helper'
-require 'helpers/user_helper_spec.rb'
+require 'helpers/user_helper.rb'
+require 'helpers/tag_helper.rb'
 require 'coveralls'
 Coveralls.wear!
 require 'email_spec'
@@ -22,6 +23,9 @@ RSpec.configure do |config|
 
   config.before(:all) do
     FactoryGirl.reload
+  end
+
+  config.before(:each) do
     FactoryGirl.create(:company, name: "Just the Right Piece")
   end
 
@@ -39,7 +43,7 @@ RSpec.configure do |config|
 
   config.profile_examples = 10
 
-  # config.order = :random
+  config.order = :random
 
   Kernel.srand config.seed
 end

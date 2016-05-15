@@ -16,18 +16,18 @@
 
   <div class="row form-row">
     <div class="text-center">
-      <div class="col-xs-12 col-md-3 text-right">
-        <%= f.label :name, class: "control-label" %>
+      <div class="col-xs-12 col-md-3 form-label">
+        <%= f.label :name, class: "control-label required" %>
       </div>
       <div class="col-xs-12 col-md-9 text-left">
-        <%= f.text_field :name, class: "form-control", placeholder: "Category name" %>
+        <%= f.text_field :name, class: "form-control", placeholder: "Category name", required: true %>
       </div>
     </div>
   </div>
 
   <div class="row form-row">
     <div class="text-center">
-      <div class="col-xs-12 col-md-3 text-right">
+      <div class="col-xs-12 col-md-3 form-label">
         <%= f.label :photo, class: "control-label" %>
       </div>
       <div class="col-xs-12 col-md-9 text-left">

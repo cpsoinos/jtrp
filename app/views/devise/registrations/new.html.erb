@@ -1,6 +1,6 @@
 <div class="col-md-8 col-md-offset-2">
   <div class="well bs-component">
-    <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: "validate-form" }) do |f| %>
 
       <legend>Sign Up</legend>
 

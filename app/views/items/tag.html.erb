@@ -1,20 +1,25 @@
-<div class="col-md-6 col-md-offset-3">
-  <div class="well bs-component">
-    <div class="row">
-      <h3 class="text-center company-title">Just the Right Piece</h3>
-    </div>
-    <div class="row text-center">
-      <% if @item.listing_photos.present? %>
-        <%= image_tag @item.listing_photos.first.thumb.url, class: "img-rounded" %></br></br>
-      <% end %>
+<div class="col-xs-8 col-xs-offset-2">
+  <div class="row">
+    <h3 class="text-center company-title"><%= @company.name %></h3>
+  </div>
+  <div class="row">
+    <% if @item.listing_photos.present? %>
+      <div class="col-xs-4 col-xs-offset-2">
+        <%= image_tag(@item.listing_photos.first.photo_url(:thumb), class: "img-rounded") %>
+      </div>
+    <% elsif @item.initial_photos.present? %>
+      <div class="col-xs-4 col-xs-offset-2">
+        <%= image_tag(@item.initial_photos.first.photo_url(:thumb), class: "img-rounded") %>
+      </div>
+    <% end %>
+    <div class="col-xs-4">
+      <span><b>Item No.</b> <%= @item.id %></span>
+      <p><%= @item.try(:description) %></p>
+      <p class="tag-price"><%= humanized_money_with_symbol(@item.listing_price) %></p>
       <div class="row">
-        <div class="col-md-6">
-          <b><%= @item.name %></b></br>
-          <%= @item.description %>
-        </div>
-        <div class="col-md-6 text-right">
-          <%= humanized_money_with_symbol(@item.listing_price) %></br>
-          <%= @item.barcode.html_safe %>
+        <div class="text-center">
+          <%= @item.barcode.html_safe %><br />
+          <%= @item.token %>
         </div>
       </div>
     </div>

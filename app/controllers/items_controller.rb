@@ -1,23 +1,38 @@
 class ItemsController < ApplicationController
-  before_filter :find_resource
-  before_filter :find_company
+  before_filter :find_clients, only: [:new, :edit]
+  before_filter :find_categories, only: [:new, :edit]
+  before_filter :find_proposal, only: :create
   before_filter :require_internal, only: [:new, :create, :update, :destroy]
 
+  def index
+    @items = ItemsPresenter.new(params).filter
+    @filter = params[:state].try(:capitalize)
+  end
+
   def new
-    @category = @resource
-    @item = @category.items.new
+    @item = Item.new
   end
 
   def create
-    @item = @resource.items.new(item_params)
+    @item = item_creator
+
     if @item.save
       respond_to do |format|
+        if params[:initial_photos]
+          params[:initial_photos].each do |photo|
+            @item.photos.create!(photo: photo, photo_type: "initial")
+          end
+        end
+        if params[:listing_photos]
+          params[:listing_photos].each do |photo|
+            @item.photos.create!(photo: photo, photo_type: "listing")
+          end
+        end
         format.html do
           flash[:notice] = "Item created"
-          redirect_to category_item_path(@resource, @item)
+          redirect_to item_path(@item)
         end
         format.js do
-          @proposal = Proposal.find(params[:proposal_id])
           render :'proposals/add_item'
         end
       end
@@ -35,6 +50,7 @@ class ItemsController < ApplicationController
     @item = Item.find(params[:id])
     respond_to do |format|
       if @item.update(item_params)
+        format.js { render nothing: true }
         format.html { redirect_to(@item, :notice => 'Item was successfully updated.') }
         format.json { respond_with_bip(@item) }
       else
@@ -49,7 +65,11 @@ class ItemsController < ApplicationController
     @proposal = Proposal.find(params[:proposal_id])
     if @item.destroy
       flash[:notice] = "Item removed"
-      redirect_to proposal_path(@proposal)
+      if params[:redirect_url]
+        redirect_to(params[:redirect_url])
+      else
+        redirect_to proposal_path(@proposal)
+      end
     else
       redirect_to :back
     end
@@ -57,12 +77,26 @@ class ItemsController < ApplicationController
 
   def tag
     @item = Item.find(params[:item_id])
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render pdf: "tag"
+      end
+    end
   end
 
   protected
 
   def item_params
-    params.require(:item).permit([:name, :description, {initial_photos: []}, {listing_photos: []}, :purchase_price, :asking_price, :listing_price, :sale_price, :minimum_sale_price, :condition])
+    params.require(:item).permit(:name, :description, {initial_photos_attributes: [:id, :initial_photo_id, :initial_photo]}, {listing_photos_attributes: [:id, :listing_photo_id, :listing_photo]}, :purchase_price, :asking_price, :listing_price, :sale_price, :minimum_sale_price, :condition, :client_id, :category_id, :client_intention, :notes)
+  end
+
+  def item_creator
+    if @proposal
+      @proposal.items.new(item_params)
+    else
+      Item.new(item_params)
+    end
   end
 
 end

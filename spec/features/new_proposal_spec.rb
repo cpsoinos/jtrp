@@ -14,8 +14,8 @@ feature "new proposal" do
   end
 
   context "internal user" do
-    let(:user) { create(:user, :internal) }
-    let!(:client) { create(:user, :client) }
+    let(:user) { create(:internal_user) }
+    let!(:client) { create(:client) }
 
     before do
       sign_in user
@@ -50,11 +50,12 @@ feature "new proposal" do
         expect(page).to have_content("Add an Item")
         expect(page).to have_field("item_name")
         expect(page).to have_field("item_description")
-        expect(page).to have_field("item_initial_photos")
+        expect(page).to have_field("initial_photos[]")
         expect(page).to have_field("item_listing_price")
         expect(page).to have_field("item_minimum_sale_price")
         expect(page).to have_field("item_condition")
         expect(page).to have_button("Add Item")
+        expect(Proposal.count).to eq(1)
       end
 
       let(:proposal) { create(:proposal, client: client)}
@@ -63,14 +64,14 @@ feature "new proposal" do
         visit edit_proposal_path(proposal)
         fill_in("item_name", with: "Chair")
         fill_in("item_description", with: "sit in it")
-        attach_file('item_initial_photos', File.join(Rails.root, '/spec/fixtures/test.png'))
+        attach_file('initial_photos[]', File.join(Rails.root, '/spec/fixtures/test.png'))
         fill_in("item_listing_price", with: "55")
         fill_in("item_minimum_sale_price", with: "45")
         fill_in("item_condition", with: "like new")
         click_on("Add Item")
 
         expect(page).to have_content("sit in it")
-        expect(page).to have_selector("img[src$='test.png']")
+        expect(page).to have_css("img[src*='test.png']")
         expect(page).to have_content("$55")
         expect(page).to have_content("$45")
         expect(page).to have_content("like new")
@@ -84,11 +85,52 @@ feature "new proposal" do
         expect(page).to have_content("Item removed")
       end
 
+      scenario "generates a proposal for the client" do
+        item = create(:item, proposal: proposal)
+        visit proposal_path(proposal)
+
+        expect(page).to have_content("This proposal is not binding and shall not be deemed an enforceable contract. It is for information purposes only.")
+        expect(page).to have_content("Item ##{item.id}")
+        expect(page).to have_content(item.name)
+        expect(page).to have_content("Purchase Offer")
+        expect(page).to have_content("Consignment Offer")
+        expect(page).to have_link("Response Form")
+      end
+
+      scenario "generates a proposal response form for the client" do
+        item = create(:item, proposal: proposal)
+        visit proposal_response_form_path(proposal)
+
+        expect(page).to have_content("Proposal Response")
+        expect(page).to have_content(item.id)
+        expect(page).to have_content(item.name)
+        %w(sell consign donate dump move nothing).each do |intention|
+          expect(page).to have_content(intention)
+        end
+      end
+
+      # scenario "chooses a client intention", js: true do
+      #   item = create(:item, proposal: proposal)
+      #   visit edit_proposal_path(proposal)
+      #
+      #   expect(page).to have_checked_field("item_client_intention_undecided")
+      #   expect(page).to have_unchecked_field("item_client_intention_consign")
+      #   expect(item.client_intention).to eq("undecided")
+      #
+      #   choose("item_client_intention_consign")
+      #   wait_for_ajax
+      #   item.reload
+      #
+      #   expect(page).to have_unchecked_field("item_client_intention_undecided")
+      #   expect(page).to have_checked_field("item_client_intention_consign")
+      #   expect(item.client_intention).to eq("consign")
+      # end
+
     end
 
     context "new client" do
 
-      scenario "successfully creates a new client", js: true do
+      scenario "successfully creates a new client" do
         visit new_proposal_path
         click_on("New Client")
 
@@ -104,7 +146,7 @@ feature "new proposal" do
         expect(page).to have_content("Add an Item")
       end
 
-      scenario "unsuccessfully creates a new client", js: true do
+      scenario "unsuccessfully creates a new client" do
         visit new_proposal_path
         click_on("New Client")
 
