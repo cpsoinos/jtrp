@@ -3,6 +3,7 @@
     <div class="well">
       <div class="row text-center">
         <div class="col-md-4 hidden-xs">
+          <div class="pull-left"><%= link_to "<i>edit</i>".html_safe, edit_client_path(@client) %></div>
           <% if @client.avatar.present? %>
             <%= image_tag(@client.avatar.photo_url(:thumb), class: "thumb", alt: "Client Avatar") %>
           <% else %>
