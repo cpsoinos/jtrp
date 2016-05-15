@@ -1,0 +1,20 @@
+<div class="col-md-8 col-md-offset-2">
+  <div class="well bs-component">
+    <%= form_for @client do |f| %>
+
+      <legend>Edit a Client</legend>
+
+      <%= render 'users/form', resource: @client, f: f %>
+
+      <div class="row form-row">
+        <div class="actions">
+          <div class="col-xs-12 text-center">
+            <%= f.submit class: "btn btn-raised btn-primary", id: "sign-up-button" %>
+          </div>
+        </div>
+      </div>
+
+    <% end %>
+  </div>
+
+</div>
