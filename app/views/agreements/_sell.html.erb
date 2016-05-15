@@ -26,11 +26,11 @@
     <table>
       <tr>
         <th>Total:</th>
-        <td class="panel-item-row"><%= humanized_money_with_symbol(items.sum(:purchase_price_cents)).html_safe %></td>
+        <td class="panel-item-row"><%= humanized_money_with_symbol(items.sum(:purchase_price_cents) / 100).html_safe %></td>
       </tr>
       <tr>
         <th>Paid, ck. #<%= "number" %>:</th>
-        <td class="panel-item-row"><%= humanized_money_with_symbol(items.sum(:purchase_price_cents) * -1).html_safe %></td>
+        <td class="panel-item-row"><%= humanized_money_with_symbol(items.sum(:purchase_price_cents) / 100 * -1).html_safe %></td>
       </tr>
       <tr>
         <th>Balance due:</th>
