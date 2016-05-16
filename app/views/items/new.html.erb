@@ -1,7 +1,6 @@
 <div class="col-md-8 col-md-offset-2">
   <div class="well bs-component">
-      <%= form_for @item, class: "form-horizontal", html: { multipart: true } do |f| %>
-
+    <%= form_for @item, class: "form-horizontal", html: { multipart: true } do |f| %>
       <%= render 'form', item: @item, f: f, legend: "Add an item" %>
     <% end %>
   </div>
