@@ -73,46 +73,40 @@
   <% end %>
 </div>
 
-<% if %w(categories items).include?(controller_name) %>
-  <div class="row form-row">
-    <%= f.fields_for :photos, Photo.new do |ff| %>
-      <div class="text-center">
-        <div class="col-xs-12 col-md-3 form-label">
-          <%= ff.label :listing_photos, class: "control-label" %>
-        </div>
-        <div class="col-xs-12 col-md-9 text-left">
-          <%= ff.file_field :photos, multiple: true, class: "dropzone form-control", name: "listing_photos[]" %>
-        </div>
-      </div>
-    <% end %>
-  </div>
-<% end %>
-
-<% if %w(items proposals).include?(controller_name) %>
-  <div class="row form-row">
+<div class="row form-row">
+  <%= f.fields_for :photos, Photo.new do |ff| %>
     <div class="text-center">
       <div class="col-xs-12 col-md-3 form-label">
-        <%= f.label :listing_price, class: "control-label" %>
+        <%= ff.label :listing_photos, class: "control-label" %>
       </div>
-      <div class="col-xs-12 col-md-3 text-left">
-        <%= f.text_field :listing_price, class: "form-control", placeholder: "$" %>
+      <div class="col-xs-12 col-md-9 text-left">
+        <%= ff.file_field :photos, multiple: true, class: "dropzone form-control", name: "listing_photos[]" %>
       </div>
     </div>
-  </div>
-<% end %>
+  <% end %>
+</div>
 
-<% if %w(items purchase_orders).include?(controller_name) %>
-  <div class="row form-row">
-    <div class="text-center">
-      <div class="col-xs-12 col-md-3 form-label">
-        <%= f.label :purchase_price, class: "control-label" %>
-      </div>
-      <div class="col-xs-12 col-md-3 text-left">
-        <%= f.text_field :purchase_price, class: "form-control", placeholder: "$" %>
-      </div>
+<div class="row form-row">
+  <div class="text-center">
+    <div class="col-xs-12 col-md-3 form-label">
+      <%= f.label :listing_price, class: "control-label" %>
+    </div>
+    <div class="col-xs-12 col-md-3 text-left">
+      <%= f.text_field :listing_price, class: "form-control", placeholder: "$" %>
     </div>
   </div>
-<% end %>
+</div>
+
+<div class="row form-row">
+  <div class="text-center">
+    <div class="col-xs-12 col-md-3 form-label">
+      <%= f.label :purchase_price, class: "control-label" %>
+    </div>
+    <div class="col-xs-12 col-md-3 text-left">
+      <%= f.text_field :purchase_price, class: "form-control", placeholder: "$" %>
+    </div>
+  </div>
+</div>
 
 <div class="row form-row">
   <div class="text-center">
@@ -139,7 +133,7 @@
 <div class="row form-row">
   <div class="actions">
     <div class="col-xs-12 text-center">
-      <%= f.submit "Add Item", class: "btn btn-raised btn-primary"%>
+      <%= f.submit "Add Item", class: "btn btn-raised btn-primary" %>
     </div>
   </div>
 </div>
