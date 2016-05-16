@@ -119,13 +119,11 @@
         </div>
         <% end %>
       </div>
+    <% end %>
 
-      <%= form_for @item, class: "form-horizontal" do |f| %>
-        <%= f.file_field :listing_photos, multiple: true, class: "dropzone form-control" %>
-        <%= f.submit %>
-      <% end %>
-
-
+    <%= form_for @item, class: "form-horizontal" do |f| %>
+      <%= f.file_field :listing_photos, multiple: true, class: "dropzone form-control" %>
+      <%= f.submit %>
     <% end %>
 
     <% if @item.initial_photos.present? %>
@@ -137,12 +135,11 @@
           </div>
         <% end %>
       </div>
+    <% end %>
 
-      <%= form_for @item, class: "form-horizontal" do |f| %>
-        <%= f.file_field :initial_photos, multiple: true, class: "dropzone form-control" %>
-        <%= f.submit %>
-      <% end %>
-
+    <%= form_for @item, class: "form-horizontal" do |f| %>
+      <%= f.file_field :initial_photos, multiple: true, class: "dropzone form-control" %>
+      <%= f.submit %>
     <% end %>
 
     <br>
