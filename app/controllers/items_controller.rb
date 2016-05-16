@@ -49,6 +49,16 @@ class ItemsController < ApplicationController
   def update
     @item = Item.find(params[:id])
     respond_to do |format|
+      if params[:item][:initial_photos]
+        params[:item][:initial_photos].each do |photo|
+          @item.photos.create!(photo: photo, photo_type: "initial")
+        end
+      end
+      if params[:item][:listing_photos]
+        params[:item][:listing_photos].each do |photo|
+          @item.photos.create!(photo: photo, photo_type: "listing")
+        end
+      end
       if @item.update(item_params)
         format.js { render nothing: true }
         format.html { redirect_to(@item, :notice => 'Item was successfully updated.') }
