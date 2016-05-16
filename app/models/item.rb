@@ -1,6 +1,6 @@
 class Item < ActiveRecord::Base
   has_secure_token
-  has_many :photos
+  has_many :photos, dependent: :destroy
   accepts_nested_attributes_for :photos
 
   monetize :purchase_price_cents, allow_nil: true, numericality: {
