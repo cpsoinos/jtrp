@@ -13,7 +13,7 @@
           <div class="row vertical-align response-thumb">
             <div class="col-xs-3">
               <% if item.initial_photos.present? %>
-                <%= image_tag(item.initial_photos.first.small_thumb.url) %>
+                <%= image_tag(item.initial_photos.first.photo_url(:small_thumb)) %>
               <% else %>
                 <%= image_tag("thumb_No_Image_Available.png") %>
               <% end %>
