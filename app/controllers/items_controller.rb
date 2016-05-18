@@ -72,13 +72,13 @@ class ItemsController < ApplicationController
 
   def destroy
     @item = Item.find(params[:id])
-    @proposal = Proposal.find(params[:proposal_id])
+    filter = @item.state
     if @item.destroy
       flash[:notice] = "Item removed"
       if params[:redirect_url]
         redirect_to(params[:redirect_url])
       else
-        redirect_to proposal_path(@proposal)
+        redirect_to items_path(state: filter)
       end
     else
       redirect_to :back
