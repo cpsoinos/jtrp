@@ -2,6 +2,8 @@ class CompaniesController < ApplicationController
   before_filter :require_internal, except: [:client_services, :consignment_policies, :service_rate_schedule, :agent_service_rate_schedule]
 
   def show
+    @potential_items = Item.potential.order(created_at: :desc).limit(10)
+    @sold_items = Item.sold.order(created_at: :desc).limit(10)
   end
 
   def edit

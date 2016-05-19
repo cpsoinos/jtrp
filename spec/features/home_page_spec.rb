@@ -57,7 +57,6 @@ feature "home page" do
 
       expect(page).to have_link("Quick-Add Item")
       expect(page).to have_link("Quick-Add Client")
-      expect(page).to have_link("Preview Forms")
       expect(page).to have_link("Create New Proposal")
       expect(page).to have_link("Open Proposals")
       expect(page).to have_link("Executed Agreements")

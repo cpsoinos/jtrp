@@ -29,80 +29,139 @@
   </div>
 </div>
 
-<div class="row">
-  <div class="col-xs-12 col-md-4">
-    <div class="well">
-      <h3>Potential Items</h3>
-      <% if @client.items.potential.empty? %>
-        <i>No potential items.</i>
-      <% else %>
-        <div class="row">
-          <%= render "items_preview", items: @client.items.potential, type: "potential" %>
-        </div>
-      <% end %>
+<div class="row grid">
+  <div class="grid-sizer col-xs-12 col-sm-6 col-md-4"></div>
+  <div class="grid-item col-xs-12 col-md-4">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3>Potential Items</h3>
+      </div>
+      <div class="panel-body">
+        <% if @client.items.potential.empty? %>
+          <i>No potential items.</i>
+        <% else %>
+          <div class="row">
+            <%= render "items_preview", items: @client.items.potential, type: "potential" %>
+          </div>
+        <% end %>
+      </div>
     </div>
   </div>
-  <div class="col-xs-12 col-md-4">
-    <div class="well">
-      <h3>Active Items</h3>
-      <% if @client.items.active.empty? %>
-        <i>No active items.</i>
-      <% else %>
-        <div class="row">
-          <%= render "items_preview", items: @client.items.active, type: "active" %>
-        </div>
-      <% end %>
-    </div>
-  </div>
-  <div class="col-xs-12 col-md-4">
-    <div class="well">
-      <h3>Sold Items</h3>
-      <% if @client.items.sold.empty? %>
-        <i>No sold items.</i>
-      <% else %>
-        <div class="row">
-          <%= render "items_preview", items: @client.items.sold, type: "sold" %>
-        </div>
-      <% end %>
-    </div>
-  </div>
-</div>
 
-<div class="row">
-  <div class="col-xs-12 col-md-4">
-    <div class="well">
-      <h3>Potential Proposals</h3>
-      <% if @client.proposals.potential.empty? %>
-        <i>No potential proposals.</i>
-      <% else %>
-        <% @client.proposals.potential.each do |proposal| %>
-          <%= link_to "Proposal No. #{proposal.id}", proposal_path(proposal) %>
+  <div class="grid-item col-xs-12 col-md-4">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3>Active Items</h3>
+      </div>
+      <div class="panel-body">
+        <% if @client.items.active.empty? %>
+          <i>No active items.</i>
+        <% else %>
+          <div class="row">
+            <%= render "items_preview", items: @client.items.active, type: "active" %>
+          </div>
         <% end %>
-      <% end %>
+      </div>
     </div>
   </div>
-  <div class="col-xs-12 col-md-4">
-    <div class="well">
-      <h3>Active Proposals</h3>
-      <% if @client.proposals.active.empty? %>
-        <i>No active proposals.</i>
-      <% else %>
-        <% @client.proposals.active.each do |proposal| %>
-          <%= link_to "Proposal No. #{proposal.id}", proposal_path(proposal) %>
+
+  <div class="grid-item col-xs-12 col-md-4">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3>Sold Items</h3>
+      </div>
+      <div class="panel-body">
+        <% if @client.items.sold.empty? %>
+          <i>No sold items.</i>
+        <% else %>
+          <div class="row">
+            <%= render "items_preview", items: @client.items.sold, type: "sold" %>
+          </div>
         <% end %>
-      <% end %>
+      </div>
     </div>
   </div>
-  <div class="col-xs-12 col-md-4">
-    <div class="well">
-      <h3>Inactive Proposals</h3>
-      <% if @client.proposals.inactive.empty? %>
-        <i>No inactive proposals.</i>
-      <% else %>
-        <% @client.proposals.inactive.each do |proposal| %>
-          <%= link_to "Proposal No. #{proposal.id}", proposal_path(proposal) %>
+
+  <div class="grid-item col-xs-12 col-md-4">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3>Potential Proposals</h3>
+      </div>
+      <div class="panel-body">
+        <% if @client.proposals.potential.empty? %>
+          <i>No potential proposals.</i>
+        <% else %>
+          <div class="list-group">
+            <% @client.proposals.potential.each do |proposal| %>
+              <div class="list-group-item">
+                <div class="row-action-primary">
+                  <i class='material-icons'>assignment_late</i>
+                </div>
+                <div class="row-content">
+                  <h4><%= link_to "Proposal No. #{proposal.id}", proposal_path(proposal) %></h4>
+                </div>
+              </div>
+              <div class="list-group-separator"></div>
+            <% end %>
+          </div>
         <% end %>
-      <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid-item col-xs-12 col-md-4">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3>Active Proposals</h3>
+      </div>
+      <div class="panel-body">
+        <% if @client.proposals.active.empty? %>
+          <i>No active proposals.</i>
+        <% else %>
+          <div class="list-group">
+            <% @client.proposals.active.each do |proposal| %>
+              <div class="list-group-item">
+                <div class="row-action-primary">
+                  <i class='material-icons'>assignment_turned_in</i>
+                </div>
+                <div class="row-content">
+                  <h4><%= link_to " Proposal No. #{proposal.id}".html_safe, proposal_path(proposal) %></h4>
+                  <p><%= link_to "Agreements", proposal_agreements_path(proposal) %></p>
+                </div>
+              </div>
+              <div class="list-group-separator"></div>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid-item col-xs-12 col-md-4">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3>Inactive Proposals</h3>
+      </div>
+      <div class="panel-body">
+        <% if @client.proposals.inactive.empty? %>
+          <i>No inactive proposals.</i>
+        <% else %>
+          <div class="list-group">
+            <% @client.proposals.inactive.each do |proposal| %>
+              <div class="list-group-item">
+                <div class="row-action-primary">
+                  <i class='material-icons'>assignment</i>
+                </div>
+                <div class="row-content">
+                  <h4><%= link_to " Proposal No. #{proposal.id}".html_safe, proposal_path(proposal) %></h4>
+                  <p><%= link_to "Agreements", proposal_agreements_path(proposal) %></p>
+                </div>
+              </div>
+              <div class="list-group-separator"></div>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
     </div>
   </div>
 

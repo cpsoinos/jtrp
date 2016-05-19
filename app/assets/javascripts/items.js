@@ -24,6 +24,19 @@ $(document).ready(function() {
     })
   });
 
+  // init Masonry
+  var $grid = $('.grid').masonry({
+    // options...
+    columnWidth: '.grid-sizer',
+    itemSelector: '.grid-item',
+    percentPosition: true,
+    // gutter: 10
+  });
+  // layout Masonry after each image loads
+  $grid.imagesLoaded().progress( function() {
+    $grid.masonry('layout');
+  });
+
 });
 
 var slickifyDropdown = function(selector) {
