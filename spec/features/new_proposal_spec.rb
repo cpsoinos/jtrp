@@ -58,13 +58,21 @@ feature "new proposal" do
         expect(Proposal.count).to eq(1)
       end
 
+      scenario "does not select a client" do
+        visit new_proposal_path
+        click_button("Next")
+
+        expect(page).to have_content("Client can't be blank")
+        expect(Proposal.count).to eq(0)
+      end
+
       let(:proposal) { create(:proposal, client: client)}
 
       scenario "successfully fills in proposal information", js: true do
         visit edit_proposal_path(proposal)
         fill_in("item_name", with: "Chair")
         fill_in("item_description", with: "sit in it")
-        attach_file('initial_photos[]', File.join(Rails.root, '/spec/fixtures/test.png'))
+        attach_file('initial_photos[]', [File.join(Rails.root, '/spec/fixtures/test.png'), File.join(Rails.root, '/spec/fixtures/test_2.png')])
         fill_in("item_listing_price", with: "55")
         fill_in("item_minimum_sale_price", with: "45")
         fill_in("item_condition", with: "like new")
@@ -72,6 +80,7 @@ feature "new proposal" do
 
         expect(page).to have_content("sit in it")
         expect(page).to have_css("img[src*='test.png']")
+        expect(page).to have_css("img[src*='test_2.png']")
         expect(page).to have_content("$55")
         expect(page).to have_content("$45")
         expect(page).to have_content("like new")
@@ -108,23 +117,6 @@ feature "new proposal" do
           expect(page).to have_content(intention)
         end
       end
-
-      # scenario "chooses a client intention", js: true do
-      #   item = create(:item, proposal: proposal)
-      #   visit edit_proposal_path(proposal)
-      #
-      #   expect(page).to have_checked_field("item_client_intention_undecided")
-      #   expect(page).to have_unchecked_field("item_client_intention_consign")
-      #   expect(item.client_intention).to eq("undecided")
-      #
-      #   choose("item_client_intention_consign")
-      #   wait_for_ajax
-      #   item.reload
-      #
-      #   expect(page).to have_unchecked_field("item_client_intention_undecided")
-      #   expect(page).to have_checked_field("item_client_intention_consign")
-      #   expect(item.client_intention).to eq("consign")
-      # end
 
     end
 

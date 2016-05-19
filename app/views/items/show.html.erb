@@ -1,6 +1,13 @@
 <div class="col-md-8 col-md-offset-2">
   <div class="well bs-component">
-    <p><i>Click on a field to edit.</i></p>
+    <div class="row">
+      <div class="col-xs-6">
+        <p><i>Click on a field to edit.</i></p>
+      </div>
+      <div class="col-xs-6">
+        <%= link_to "Delete", item_path(@item), method: :delete, class: "btn btn-raised btn-xs btn-danger" %>
+      </div>
+    </div>
 
     <div class="text-center">
       <h3><%= best_in_place [@category, @item], :name %></h4></br>
