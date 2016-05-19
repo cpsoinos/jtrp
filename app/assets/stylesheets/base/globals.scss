@@ -21,3 +21,7 @@ div.navbar.navbar-default {
 .btn.btn-raised.btn-success, .input-group-btn .btn.btn-raised.btn-success, .btn.btn-fab.btn-success, .input-group-btn .btn.btn-fab.btn-success, .btn-group-raised .btn.btn-success, .btn-group-raised .input-group-btn .btn.btn-success {
   background-color: $brand-primary;
 }
+
+.panel.panel-primary > .panel-heading {
+  background-color: $brand-primary;
+}

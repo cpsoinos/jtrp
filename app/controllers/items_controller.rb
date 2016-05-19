@@ -72,13 +72,13 @@ class ItemsController < ApplicationController
 
   def destroy
     @item = Item.find(params[:id])
-    @proposal = Proposal.find(params[:proposal_id])
+    filter = @item.state
     if @item.destroy
       flash[:notice] = "Item removed"
       if params[:redirect_url]
         redirect_to(params[:redirect_url])
       else
-        redirect_to proposal_path(@proposal)
+        redirect_to items_path(state: filter)
       end
     else
       redirect_to :back
@@ -98,7 +98,7 @@ class ItemsController < ApplicationController
   protected
 
   def item_params
-    params.require(:item).permit(:name, :description, {initial_photos_attributes: [:id, :initial_photo_id, :initial_photo]}, {listing_photos_attributes: [:id, :listing_photo_id, :listing_photo]}, :purchase_price, :asking_price, :listing_price, :sale_price, :minimum_sale_price, :condition, :client_id, :category_id, :client_intention, :notes)
+    params.require(:item).permit(:name, :description, {initial_photos_attributes: [:id, :initial_photo_id, :initial_photo]}, {listing_photos_attributes: [:id, :listing_photo_id, :listing_photo]}, :purchase_price, :asking_price, :listing_price, :sale_price, :minimum_sale_price, :condition, :client_id, :category_id, :client_intention, :notes, :height, :width, :depth)
   end
 
   def item_creator

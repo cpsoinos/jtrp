@@ -13,7 +13,7 @@
           <div class="row vertical-align response-thumb">
             <div class="col-xs-3">
               <% if item.initial_photos.present? %>
-                <%= image_tag(item.initial_photos.first.small_thumb.url) %>
+                <%= image_tag(item.initial_photos.first.photo_url(:small_thumb)) %>
               <% else %>
                 <%= image_tag("thumb_No_Image_Available.png") %>
               <% end %>
@@ -56,7 +56,6 @@
     <% if current_user.internal? %>
       <div class="text-center">
         <%= link_to "Generate Forms", proposal_agreements_path(@proposal), method: :post, class: "btn btn-raised btn-success" %>
-        <%#= link_to "View Proposal <i class='fa fa-caret-right'></i>".html_safe, proposal_agreement_path(@proposal), class: "btn btn-raised btn-success" %>
       </div>
     <% end %>
   </div>

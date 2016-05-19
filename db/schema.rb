@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160514231322) do
+ActiveRecord::Schema.define(version: 20160517020534) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -72,9 +72,9 @@ ActiveRecord::Schema.define(version: 20160514231322) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "condition"
-    t.float    "height"
-    t.float    "width"
-    t.float    "depth"
+    t.string   "height"
+    t.string   "width"
+    t.string   "depth"
     t.integer  "purchase_price_cents"
     t.string   "purchase_price_currency",     default: "USD",       null: false
     t.integer  "listing_price_cents"

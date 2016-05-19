@@ -23,6 +23,8 @@
 //= require jquery.signaturepad.min
 //= require json2.min
 //= require jquery-readyselector
+//= require masonry.pkgd.min
+//= require imagesloaded.pkgd.min
 //= require_tree .
 
 $(document).ready(function() {

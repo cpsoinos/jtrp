@@ -8,6 +8,7 @@ Coveralls.wear!
 require 'email_spec'
 require 'capybara/poltergeist'
 require 'money-rails/test_helpers'
+require 'best_in_place/test_helpers'
 
 Shoulda::Matchers.configure do |config|
   config.integrate do |with|
@@ -20,6 +21,7 @@ RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
   config.include EmailSpec::Helpers
   config.include EmailSpec::Matchers
+  config.include BestInPlace::TestHelpers
 
   config.before(:all) do
     FactoryGirl.reload

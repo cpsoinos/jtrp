@@ -25,6 +25,12 @@ feature "agreement" do
 
       scenario "client intends to sell an item", js: true do
         visit proposal_agreements_path(proposal)
+
+        expect(page).not_to have_link("consign")
+        expect(page).not_to have_link("dump")
+        expect(page).not_to have_link("donate")
+        expect(page).not_to have_link("move")
+
         click_link("sell")
 
         expect(page).to have_content("Purchase Invoice")
@@ -47,6 +53,11 @@ feature "agreement" do
       end
 
       scenario "visits consignment agreement path" do
+        expect(page).not_to have_link("sell")
+        expect(page).not_to have_link("dump")
+        expect(page).not_to have_link("donate")
+        expect(page).not_to have_link("move")
+
         click_link("consign")
 
         expect(page).to have_content("Consignment Agreement")
