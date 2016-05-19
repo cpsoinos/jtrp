@@ -56,7 +56,6 @@
     <% if current_user.internal? %>
       <div class="text-center">
         <%= link_to "Generate Forms", proposal_agreements_path(@proposal), method: :post, class: "btn btn-raised btn-success" %>
-        <%#= link_to "View Proposal <i class='fa fa-caret-right'></i>".html_safe, proposal_agreement_path(@proposal), class: "btn btn-raised btn-success" %>
       </div>
     <% end %>
   </div>

@@ -16,7 +16,7 @@ class AgreementCreator
   def generate_agreements
     @_agreements ||= begin
       types.map do |type|
-        next if type == "undecided"
+        next if type == "undecided" || type == "nothing"
         Agreement.find_or_create_by!(proposal: proposal, agreement_type: type)
       end
     end

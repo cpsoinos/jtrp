@@ -3,7 +3,7 @@ describe AgreementCreator do
   let(:user) { create(:user) }
   let(:proposal) { create(:proposal) }
   let!(:items) do
-    %w(sell consign donate junk move undecided).each do |intention|
+    %w(sell consign donate dump move undecided).each do |intention|
       create(:item, proposal: proposal, client_intention: intention)
     end
   end

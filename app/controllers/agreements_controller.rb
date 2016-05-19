@@ -12,7 +12,7 @@ class AgreementsController < ApplicationController
 
   def create
     @client = @proposal.client
-    AgreementCreator.new(@proposal).create(@intentions)
+    @agreements = AgreementCreator.new(current_user).create(@proposal)
     redirect_to proposal_agreements_path(@proposal)
   end
 
