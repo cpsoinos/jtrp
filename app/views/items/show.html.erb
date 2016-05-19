@@ -117,10 +117,9 @@
       </div>
     </div>
 
-
     <%= form_for @item, class: "form-horizontal" do |f| %>
       <div class="text-center">
-        <div class="panel large-top-margin">
+        <div class="panel panel-primary large-top-margin">
           <div class="panel-heading"><h4>Initial Photos</h4></div>
           <div class="panel-body">
             <% if @item.initial_photos.present? %>
@@ -139,8 +138,7 @@
           </div>
         </div>
 
-
-        <div class="panel large-top-margin">
+        <div class="panel panel-primary large-top-margin">
           <div class="panel-heading"><h4>Listing Photos</h4></div>
           <div class="panel-body">
             <% if @item.listing_photos.present? %>
