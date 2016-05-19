@@ -60,3 +60,15 @@ td.item-row-description {
 .half-thumb {
   width: 85px;
 }
+
+// .grid-item { width: 200px; }
+// .grid-item--width2 { width: 400px; }
+
+/* fluid 5 columns */
+.grid-sizer,
+.grid-item {
+  // width: 200px;
+  margin-bottom: 10px;
+}
+/* 2 columns wide */
+.grid-item--width2 { width: 400px; }
