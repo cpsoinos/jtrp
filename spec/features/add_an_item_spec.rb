@@ -37,8 +37,15 @@ feature "add an item" do
       expect(page).to have_content("Add an item")
       expect(page).to have_field("Name")
       expect(page).to have_field("Description")
-      expect(page).to have_field("Purchase price")
-      expect(page).to have_field("Listing price")
+      expect(page).to have_field("initial_photos[]")
+
+      expect(page).not_to have_content("Select Client")
+      expect(page).not_to have_content("Select Category")
+      expect(page).not_to have_field("Listing price")
+      expect(page).not_to have_field("Purchase price")
+      expect(page).not_to have_field("Minimum sale price")
+      expect(page).not_to have_field("Condition")
+      expect(page).not_to have_field("listing_photos[]")
     end
 
     scenario "successfully adds an uncategorized item" do
@@ -69,8 +76,14 @@ feature "add an item" do
       expect(page).to have_content("Add an item")
       expect(page).to have_field("Name")
       expect(page).to have_field("Description")
-      expect(page).to have_field("Purchase price")
-      expect(page).to have_field("Listing price")
+
+      expect(page).not_to have_content("Select Client")
+      expect(page).not_to have_content("Select Category")
+      expect(page).not_to have_field("Listing price")
+      expect(page).not_to have_field("Purchase price")
+      expect(page).not_to have_field("Minimum sale price")
+      expect(page).not_to have_field("Condition")
+      expect(page).not_to have_field("listing_photos[]")
     end
 
     scenario "successfully adds an item" do

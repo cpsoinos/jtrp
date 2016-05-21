@@ -6,9 +6,13 @@
     <%= render 'header', form_name: "Proposal" %>
     <%= render 'disclaimer' %>
     <%= render 'item_list', items: @items %>
-    <div class="text-center">
-      <%= link_to "<i class='fa fa-caret-left'></i> Add More Items".html_safe, edit_proposal_path(@proposal), class: "btn btn-raised btn-success" %>
-      <%= link_to "Proposal Response Form <i class='fa fa-caret-right'></i>".html_safe, proposal_response_form_path(@proposal), class: "btn btn-raised btn-success" %>
+    <div class="row">
+      <div class="col-xs-6">
+        <%= link_to "<i class='fa fa-caret-left'></i> Step 2: Details".html_safe, proposal_details_path(@proposal), class: "btn btn-raised btn-success" %>
+      </div>
+      <div class="col-xs-6 text-right">
+        <%= link_to "Step 4: Client Proposal Response Form <i class='fa fa-caret-right'></i>".html_safe, proposal_response_form_path(@proposal), class: "btn btn-raised btn-success" %>
+      </div>
     </div>
   </div>
 </div>

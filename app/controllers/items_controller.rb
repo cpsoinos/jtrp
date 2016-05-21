@@ -46,6 +46,10 @@ class ItemsController < ApplicationController
     @item = Item.find(params[:id])
   end
 
+  def edit
+    @item = Item.find(params[:id])
+  end
+
   def update
     @item = Item.find(params[:id])
     respond_to do |format|
@@ -101,7 +105,7 @@ class ItemsController < ApplicationController
   protected
 
   def item_params
-    params.require(:item).permit(:name, :description, {initial_photos_attributes: [:id, :initial_photo_id, :initial_photo]}, {listing_photos_attributes: [:id, :listing_photo_id, :listing_photo]}, :proposal_id, :purchase_price, :asking_price, :listing_price, :sale_price, :minimum_sale_price, :condition, :client_id, :category_id, :client_intention, :notes, :height, :width, :depth)
+    params.require(:item).permit(:name, :description, {initial_photos_attributes: [:id, :initial_photo_id, :initial_photo]}, {listing_photos_attributes: [:id, :listing_photo_id, :listing_photo]}, :proposal_id, :purchase_price, :asking_price, :listing_price, :sale_price, :minimum_sale_price, :condition, :client_id, :category_id, :client_intention, :notes, :height, :width, :depth, :offer_type)
   end
 
   def item_creator

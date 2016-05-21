@@ -29,14 +29,26 @@ $(document).ready(function() {
     });
   });
 
-  $(":radio").change(function() {
+  $(":radio.intention-selector").change(function() {
+    var intention = $(this).val()
     $.ajax({
       url: $(this).parents('form')[0].action,
       type: "PUT",
       data: { item: {
-        client_intention: $(this).val()
+        client_intention: intention
       }}
     })
+  });
+
+  $(":radio.offer-selector").change(function() {
+    var offer = $(this).val()
+    $.ajax({
+      url: $(this).parents('form')[0].action,
+      type: "PUT",
+      data: { item: {
+        offer_type: offer
+      }}
+    });
   });
 
   // init Masonry

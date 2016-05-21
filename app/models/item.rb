@@ -106,4 +106,12 @@ class Item < ActiveRecord::Base
     meets_requirements_active?
   end
 
+  def will_purchase?
+    offer_type == "purchase"
+  end
+
+  def will_consign?
+    offer_type == "consign"
+  end
+
 end
