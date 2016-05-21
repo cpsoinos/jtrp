@@ -36,4 +36,8 @@ Rails.application.routes.draw do
   end
   put '/purchase_orders/:purchase_order_id/add_existing_item', to: 'purchase_orders#add_existing_item'
 
+  resources :agreements do
+    get '/agreements_list', to: 'agreements#agreements_list', as: 'agreements_list', on: :collection
+  end
+
 end

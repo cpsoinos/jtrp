@@ -15,13 +15,14 @@
 </div>
 
 <div class="row">
-  <div class="col-md-8 col-md-offset-2">
+  <div class="col-xs-12 col-md-8 col-md-offset-2">
     <div class="well bs-component">
-      <div class="row">
+      <div class="row grid">
+        <div class="grid-sizer col-xs-12 col-sm-6 col-md-6"></div>
         <div class="list-group">
           <% @items.each do |item| %>
-            <div class="col-xs-12 col-md-6">
-              <div class="list-group-item">
+            <div class="col-xs-12 col-sm-6 col-md-6 grid-item">
+              <div class="list-group-item well">
                 <div class="row-picture">
                   <% if item.listing_photos.present? %>
                     <%= link_to image_tag(item.listing_photos.first.photo_url(:thumb), class: "circle", alt: "item.name"), item_path(item) %>
@@ -59,7 +60,7 @@
                       <th>Agreement Type & No.</th>
                       <td>
                         <% if item.agreement %>
-                          <%= link_to(item.agreement.id, proposal_agreement_path(item.proposal, item.agreement)) %>
+                          <%= link_to("#{item.agreement.agreement_type.capitalize} ##{item.agreement.id}", proposal_agreement_path(item.proposal, item.agreement)) %>
                         <% else %>
                           <i>none</i>
                         <% end %>

@@ -8,4 +8,8 @@ class Photo < ActiveRecord::Base
   scope :initial, -> { where(photo_type: 'initial') }
   scope :listing, -> { where(photo_type: 'listing') }
 
+  def self.default_url
+    ActionController::Base.helpers.asset_path("thumb_No_Image_Available.png")
+  end
+
 end

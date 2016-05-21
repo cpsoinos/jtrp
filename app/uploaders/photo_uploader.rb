@@ -21,6 +21,11 @@ class PhotoUploader < CarrierWave::Uploader::Base
     "#{cache_id}_#{original_filename}" if original_filename
   end
 
+  def default_url(*args)
+    # ActionController::Base.helpers.asset_path("fallback/" + [version_name, "default.png"].compact.join('_'))
+    "#{version_name}_No_Image_Available.png"
+  end
+
   process resize_to_fit: [800, 800]
 
   protected

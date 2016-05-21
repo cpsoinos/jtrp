@@ -10,6 +10,11 @@ class AgreementsController < ApplicationController
     gon.signatures = build_json_for_signatures
   end
 
+  def agreements_list
+    @agreements = AgreementsPresenter.new(params).filter
+    @intentions = @agreements.pluck(:agreement_type).uniq
+  end
+
   def create
     @client = @proposal.client
     @agreements = AgreementCreator.new(current_user).create(@proposal)

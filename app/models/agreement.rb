@@ -31,7 +31,7 @@ class Agreement < ActiveRecord::Base
   end
 
   def mark_proposal_active
-    proposal.mark_active!
+    proposal.mark_active! if proposal.potential?
   end
 
   def mark_proposal_inactive

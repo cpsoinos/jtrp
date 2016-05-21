@@ -56,7 +56,7 @@ feature "agreement" do
         expect(page).not_to have_link("sell")
         expect(page).not_to have_link("dump")
         expect(page).not_to have_link("donate")
-        expect(page).not_to have_link("move")
+        expect(page).not_to have_link("move", exact: true)
 
         click_link("consign")
 

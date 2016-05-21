@@ -1,12 +1,27 @@
 $(document).ready(function() {
 
-  slickifyDropdown($(".items-dropdown"));
+  if (gon.items !== undefined) {
+    var itemData = JSON.parse(gon.items)
+  };
+  slickifyDropdown($(".items-dropdown"), itemData);
 
   $("#add-existing-item-button").click(function() {
     var itemId = $(".dd-selected-value")[0].value
     var proposalId = gon.proposalId
     $.ajax({
-      url: '/proposals/' + proposalId + '/add_existing_item',
+      url: '/items/' + itemId,
+      type: "PUT",
+      data: { item: {
+        id: itemId, proposal_id: proposalId }
+      }
+    });
+  });
+
+  $(".remove-existing-item-button").click(function() {
+    var itemId = this.dataset.itemId
+    var proposalId = null
+    $.ajax({
+      url: '/items/' + itemId,
       type: "PUT",
       data: { item: {
         id: itemId, proposal_id: proposalId }
@@ -39,12 +54,13 @@ $(document).ready(function() {
 
 });
 
-var slickifyDropdown = function(selector) {
-  if (gon.items !== undefined) {
-    var itemData = JSON.parse(gon.items)
-  };
+var slickifyDropdown = function(selector, items) {
+  // debugger;
+  // if (gon.items !== undefined) {
+  //   var itemData = JSON.parse(gon.items)
+  // };
   selector.ddslick({
-    data: itemData,
+    data: items,
     imagePosition: "left",
     width: 280,
     selectText: "Choose an Item"
