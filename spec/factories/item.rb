@@ -16,7 +16,10 @@ FactoryGirl.define do
       after(:create) do |item|
         create(:agreement, :active, proposal: item.proposal)
       end
+    end
 
+    trait :with_client do
+      client
     end
 
     trait :sold do

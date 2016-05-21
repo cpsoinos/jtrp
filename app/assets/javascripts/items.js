@@ -1,12 +1,27 @@
 $(document).ready(function() {
 
-  slickifyDropdown($(".items-dropdown"));
+  if (gon.items !== undefined) {
+    var itemData = JSON.parse(gon.items)
+  };
+  slickifyDropdown($(".items-dropdown"), itemData);
 
   $("#add-existing-item-button").click(function() {
     var itemId = $(".dd-selected-value")[0].value
     var proposalId = gon.proposalId
     $.ajax({
-      url: '/proposals/' + proposalId + '/add_existing_item',
+      url: '/items/' + itemId,
+      type: "PUT",
+      data: { item: {
+        id: itemId, proposal_id: proposalId }
+      }
+    });
+  });
+
+  $(".remove-existing-item-button").click(function() {
+    var itemId = this.dataset.itemId
+    var proposalId = null
+    $.ajax({
+      url: '/items/' + itemId,
       type: "PUT",
       data: { item: {
         id: itemId, proposal_id: proposalId }
@@ -26,11 +41,9 @@ $(document).ready(function() {
 
   // init Masonry
   var $grid = $('.grid').masonry({
-    // options...
     columnWidth: '.grid-sizer',
     itemSelector: '.grid-item',
     percentPosition: true,
-    // gutter: 10
   });
   // layout Masonry after each image loads
   $grid.imagesLoaded().progress( function() {
@@ -39,12 +52,9 @@ $(document).ready(function() {
 
 });
 
-var slickifyDropdown = function(selector) {
-  if (gon.items !== undefined) {
-    var itemData = JSON.parse(gon.items)
-  };
+var slickifyDropdown = function(selector, items) {
   selector.ddslick({
-    data: itemData,
+    data: items,
     imagePosition: "left",
     width: 280,
     selectText: "Choose an Item"

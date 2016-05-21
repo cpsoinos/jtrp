@@ -67,13 +67,14 @@ class ProposalsController < ApplicationController
   end
 
   def build_json_for_items
-    @client.items.potential.map do |item|
+    items_for_list = @client.items.potential.where(proposal_id: nil) | Item.unclaimed
+    items_for_list.map do |item|
       {
         text: item.name,
         value: item.id,
         selected: false,
         description: item.description,
-        imageSrc: item.initial_photos.first.try(:thumb).try(:url)
+        imageSrc: (item.initial_photos.present? ? item.initial_photos.first.photo_url(:thumb) : Photo.default_url)
       }
     end.to_json
   end

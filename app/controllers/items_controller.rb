@@ -60,7 +60,10 @@ class ItemsController < ApplicationController
         end
       end
       if @item.update(item_params)
-        format.js { render nothing: true }
+        format.js do
+          render 'proposals/add_item' if @item.proposal_id
+          render 'proposals/remove_item' if @item.proposal_id == nil
+        end
         format.html { redirect_to(@item, :notice => 'Item was successfully updated.') }
         format.json { respond_with_bip(@item) }
       else
@@ -98,7 +101,7 @@ class ItemsController < ApplicationController
   protected
 
   def item_params
-    params.require(:item).permit(:name, :description, {initial_photos_attributes: [:id, :initial_photo_id, :initial_photo]}, {listing_photos_attributes: [:id, :listing_photo_id, :listing_photo]}, :purchase_price, :asking_price, :listing_price, :sale_price, :minimum_sale_price, :condition, :client_id, :category_id, :client_intention, :notes, :height, :width, :depth)
+    params.require(:item).permit(:name, :description, {initial_photos_attributes: [:id, :initial_photo_id, :initial_photo]}, {listing_photos_attributes: [:id, :listing_photo_id, :listing_photo]}, :proposal_id, :purchase_price, :asking_price, :listing_price, :sale_price, :minimum_sale_price, :condition, :client_id, :category_id, :client_intention, :notes, :height, :width, :depth)
   end
 
   def item_creator

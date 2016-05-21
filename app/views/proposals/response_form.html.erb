@@ -15,7 +15,7 @@
               <% if item.initial_photos.present? %>
                 <%= image_tag(item.initial_photos.first.photo_url(:small_thumb)) %>
               <% else %>
-                <%= image_tag("thumb_No_Image_Available.png") %>
+                <%= image_tag("thumb_No_Image_Available.png", class: "small-thumb") %>
               <% end %>
             </div>
             <div class="col-xs-9">
