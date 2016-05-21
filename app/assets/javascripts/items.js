@@ -41,11 +41,9 @@ $(document).ready(function() {
 
   // init Masonry
   var $grid = $('.grid').masonry({
-    // options...
     columnWidth: '.grid-sizer',
     itemSelector: '.grid-item',
     percentPosition: true,
-    // gutter: 10
   });
   // layout Masonry after each image loads
   $grid.imagesLoaded().progress( function() {
@@ -55,10 +53,6 @@ $(document).ready(function() {
 });
 
 var slickifyDropdown = function(selector, items) {
-  // debugger;
-  // if (gon.items !== undefined) {
-  //   var itemData = JSON.parse(gon.items)
-  // };
   selector.ddslick({
     data: items,
     imagePosition: "left",
