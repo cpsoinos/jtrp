@@ -34,6 +34,11 @@ class ProposalsController < ApplicationController
     gon.proposalId = @proposal.id
   end
 
+  def details
+    @proposal = Proposal.find(params[:proposal_id])
+    @items = @proposal.items
+  end
+
   def response_form
     @proposal = Proposal.find(params[:proposal_id])
     @client = @proposal.client

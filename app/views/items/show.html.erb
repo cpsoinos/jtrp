@@ -2,7 +2,7 @@
   <div class="well bs-component">
     <div class="row">
       <div class="col-xs-6">
-        <p><i>Click on a field to edit.</i></p>
+        <%= link_to "Edit", edit_item_path(@item), class: "btn btn-raised btn-xs btn-info pull-left" %>
       </div>
       <div class="col-xs-6">
         <%= link_to "Delete", item_path(@item), method: :delete, class: "btn btn-raised btn-xs btn-danger pull-right" %>
@@ -10,7 +10,7 @@
     </div>
 
     <div class="text-center">
-      <h3><%= best_in_place [@category, @item], :name %></h4></br>
+      <h3><%= @item.name %></h3></br>
     </div>
 
     <div class="row">
@@ -18,7 +18,7 @@
         Description:
       </div>
       <div class="col-xs-6 col-md-3">
-        <%= best_in_place [@category, @item], :description %>
+        <%= @item.description %>
       </div>
     </div>
 
@@ -27,7 +27,7 @@
         Height:
       </div>
       <div class="col-xs-6 col-md-3">
-        <%= best_in_place [@category, @item], :height %>
+        <%= @item.height %>
       </div>
     </div>
 
@@ -36,7 +36,7 @@
         Width:
       </div>
       <div class="col-xs-6 col-md-3">
-        <%= best_in_place [@category, @item], :width %>
+        <%= @item.width %>
       </div>
     </div>
 
@@ -45,7 +45,7 @@
         Depth:
       </div>
       <div class="col-xs-6 col-md-3">
-        <%= best_in_place [@category, @item], :depth %>
+        <%= @item.depth %>
       </div>
     </div>
 
@@ -88,23 +88,21 @@
       </div>
     </div>
 
-    <% if @item.client_intention == "sell" %>
-      <div class="row">
-        <div class="col-xs-6 col-md-3 col-md-offset-3 form-label">
-          Purchase Price:
-        </div>
-        <div class="col-xs-6 col-md-3">
-          <%= best_in_place [@category, @item], :purchase_price, display_with: lambda { |v| humanized_money_with_symbol(v).html_safe } %>
-        </div>
+    <div class="row">
+      <div class="col-xs-6 col-md-3 col-md-offset-3 form-label">
+        Purchase Price:
       </div>
-    <% end %>
+      <div class="col-xs-6 col-md-3">
+        <%= humanized_money_with_symbol(@item.purchase_price) %>
+      </div>
+    </div>
 
     <div class="row">
       <div class="col-xs-6 col-md-3 col-md-offset-3 form-label">
         Listing Price:
       </div>
       <div class="col-xs-6 col-md-3">
-        <%= best_in_place [@category, @item], :listing_price, display_with: lambda { |v| humanized_money_with_symbol(v).html_safe } %>
+        <%= humanized_money_with_symbol(@item.listing_price) %>
       </div>
     </div>
 
@@ -113,7 +111,7 @@
         Minimum Sale Price:
       </div>
       <div class="col-xs-6 col-md-3">
-        <%= best_in_place [@category, @item], :minimum_sale_price, display_with: lambda { |v| humanized_money_with_symbol(v).html_safe } %>
+        <%= humanized_money_with_symbol(@item.minimum_sale_price) %>
       </div>
     </div>
 

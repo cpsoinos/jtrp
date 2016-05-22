@@ -29,14 +29,38 @@ $(document).ready(function() {
     });
   });
 
-  $(":radio").change(function() {
+  $(":radio.intention-selector").change(function() {
+    var intention = $(this).val()
     $.ajax({
       url: $(this).parents('form')[0].action,
       type: "PUT",
       data: { item: {
-        client_intention: $(this).val()
+        client_intention: intention
       }}
     })
+  });
+
+  $(":radio.offer-selector").change(function() {
+    var offer = $(this).val()
+    $.ajax({
+      url: $(this).parents('form')[0].action,
+      type: "PUT",
+      data: { item: {
+        offer_type: offer
+      }},
+      complete: function(xhr, textStatus) {
+        if (xhr.status == 200) {
+          var itemId = this.url.split("/").slice(-1).pop()
+          var offer = this.data.split("=").slice(-1).pop()
+          if (offer == "purchase") {
+            $(("#best_in_place_item_" + itemId + "_listing_price")).html("$0.00");
+            $(("#best_in_place_item_" + itemId + "_minimum_sale_price")).html("$0.00");
+          } else {
+            $(("#best_in_place_item_" + itemId + "_purchase_price")).html("$0.00");
+          }
+        }
+      }
+    });
   });
 
   // init Masonry

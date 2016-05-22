@@ -24,7 +24,7 @@
                   <% %w(sell consign donate).each do |intention| %>
                     <div class="col-xs-4 text-right">
                       <%= f.label :client_intention, intention %>
-                      <%= f.radio_button :client_intention, intention, class: "selector", id: "item_#{item.id}_client_intention_#{intention}" %>
+                      <%= f.radio_button :client_intention, intention, class: "selector intention-selector", id: "item_#{item.id}_client_intention_#{intention}" %>
                     </div>
                   <% end %>
                 </div>
@@ -32,7 +32,7 @@
                   <% %w(dump move nothing).each do |intention| %>
                     <div class="col-xs-4 text-right">
                       <%= f.label :client_intention, intention %>
-                      <%= f.radio_button :client_intention, intention, class: "selector", id: "item_#{item.id}_client_intention_#{intention}" %>
+                      <%= f.radio_button :client_intention, intention, class: "selector intention-selector", id: "item_#{item.id}_client_intention_#{intention}" %>
                     </div>
                   <% end %>
                 </div>
@@ -54,9 +54,16 @@
     </div>
 
     <% if current_user.internal? %>
-      <div class="text-center">
-        <%= link_to "Generate Forms", proposal_agreements_path(@proposal), method: :post, class: "btn btn-raised btn-success" %>
+
+      <div class="row large-top-margin">
+        <div class="col-xs-6">
+          <%= link_to "<i class='fa fa-caret-left'></i> Step 4: View Proposal".html_safe, proposal_path(@proposal), class: "btn btn-raised btn-success" %>
+        </div>
+        <div class="col-xs-6 text-right">
+          <%= link_to "Step 6: Generate Agreements <i class='fa fa-caret-right'></i>".html_safe, proposal_agreements_path(@proposal), method: :post, class: "btn btn-raised btn-success" %>
+        </div>
       </div>
+
     <% end %>
   </div>
 </div>
