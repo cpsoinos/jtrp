@@ -1,0 +1,15 @@
+<%= form_for @item, class: "form-horizontal", multipart: true, url: items_batch_create_path do |f| %>
+  <div class="row form-row">
+    <div class="text-center">
+      <div class="col-xs-12 col-md-3 form-label">
+        <%= f.label :archive, class: "control-label" %>
+      </div>
+      <div class="col-xs-12 col-md-9 text-left">
+        <%= f.file_field :archive, class: "dropzone form-control" %>
+      </div>
+      <%= hidden_field_tag :proposal_id, @proposal.id %>
+      <%= hidden_field_tag :client_id, @proposal.client_id %>
+      <%= f.submit "Upload Archive", class: "btn btn-raised btn-primary" %>
+    </div>
+  </div>
+<% end %>

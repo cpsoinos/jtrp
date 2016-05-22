@@ -23,6 +23,7 @@
         <%= link_to "Add Existing Item", "javascript:void()", class: "btn btn-raised btn-primary", id: "add-existing-item-button" %><br />
       </div>
     </div>
+
     <div class="row" id="existing-item">
       <div class="text-center"> - or -</div>
     </div>
@@ -30,6 +31,15 @@
     <%= form_for [@proposal, @item], class: "form-horizontal", remote: true do |f| %>
       <%= render 'items/form', item: @item, f: f, legend: "Add a New Item:", remote: true %>
     <% end %>
+
+    <div class="row" id="existing-item">
+      <div class="text-center"> - or -</div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-12 col-md-4"><h3>Upload a set of items:</h3></div>
+    </div>
+    <%= render 'items/batch_upload_form' %>
 
     <div class="text-right large-top-margin">
       <%= link_to "Step 2: Details <i class='fa fa-caret-right'></i>".html_safe, proposal_details_path(@proposal), class: "btn btn-raised btn-primary" %>
