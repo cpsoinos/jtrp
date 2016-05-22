@@ -31,6 +31,7 @@ gem 'wkhtmltopdf-binary-edge', '~> 0.12.3.0'
 gem 'state_machines'
 gem 'state_machines-activerecord'
 gem 'bootsy'
+gem 'rubyzip'
 
 group :production, :staging, :local do
   gem 'rails_12factor'
