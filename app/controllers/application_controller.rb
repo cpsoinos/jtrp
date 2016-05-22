@@ -23,6 +23,10 @@ class ApplicationController < ActionController::Base
     @clients ||= Client.all
   end
 
+  def find_client
+    @client ||= Client.find(params[:client_id])
+  end
+
   def find_categories
     @categories = Category.all
   end
