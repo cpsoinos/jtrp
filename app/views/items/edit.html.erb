@@ -1,0 +1,17 @@
+<div class="col-md-8 col-md-offset-2">
+  <div class="well bs-component">
+
+    <div class="row">
+      <div class="col-xs-6">
+        <%= link_to "Back", item_path(@item), class: "btn btn-raised btn-xs btn-info pull-left" %>
+      </div>
+      <div class="col-xs-6">
+        <%= link_to "Delete", item_path(@item), method: :delete, class: "btn btn-raised btn-xs btn-danger pull-right" %>
+      </div>
+    </div>
+
+    <%= form_for @item, class: "form-horizontal", html: { multipart: true } do |f| %>
+      <%= render 'form', item: @item, f: f, legend: "Edit item" %>
+    <% end %>
+  </div>
+</div>

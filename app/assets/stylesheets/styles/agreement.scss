@@ -4,3 +4,22 @@
   color: #fff;
   background-color: $brand-primary;
 }
+
+.full-height {
+  height: 100%;
+}
+
+.agreement-card {
+  display: inline-block;
+  position: relative;
+}
+
+.pending {
+  color: red;
+  font-style: italic;
+  text-align: center;
+
+  &:hover {
+    color: red;
+  }
+}

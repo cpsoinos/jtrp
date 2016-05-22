@@ -60,3 +60,18 @@ td.item-row-description {
 .half-thumb {
   width: 85px;
 }
+
+.small-thumb {
+  height: 100px;
+  width: 100px;
+}
+
+.grid-sizer,
+.grid-item {
+  margin-bottom: 10px;
+}
+
+/* 2 columns wide */
+.grid-item--width2 {
+  width: 400px;
+}

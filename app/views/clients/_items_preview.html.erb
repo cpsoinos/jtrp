@@ -1,49 +1,59 @@
-<% items.each do |item| %>
-  <div class="col-xs-6">
-    <div class="thumbnail">
-      <% url = begin %>
-        <% if item.listing_photos.present? %>
-          <% image_tag(item.listing_photos.first.photo_url(:tiny_thumb)) %>
-        <% elsif item.initial_photos.present? %>
-          <% image_tag(item.initial_photos.first.photo_url(:tiny_thumb)) %>
-        <% else %>
-          <% item.name %>
+<div class="row client-grid">
+
+  <% items.each do |item| %>
+    <div class="col-xs-6 client-grid-sizer"></div>
+    <div class="col-xs-6 client-grid-item">
+      <div class="thumbnail text-center">
+        <% url = begin %>
+          <% if item.listing_photos.present? %>
+            <% image_tag(item.listing_photos.first.photo_url(:tiny_thumb)) %>
+          <% elsif item.initial_photos.present? %>
+            <% image_tag(item.initial_photos.first.photo_url(:tiny_thumb)) %>
+          <% else %>
+            <% image_tag("thumb_No_Image_Available.png", width: '50px', height: '50px') %>
+          <% end %>
         <% end %>
-      <% end %>
 
-      <%= link_to url, item_path(item) %>
+        <div class="text-center">
+          <%= link_to url, item_path(item) %>
+        </div>
 
-      <% case type %>
-      <% when "potential" %>
-        <div class="row">
-          <div class="col-xs-6">Intention: </div>
-          <div class="col-xs-6"><%= item.client_intention %></div>
+        <div class="caption">
+          <h4><%= link_to item.name, item_path(item) %></h4>
         </div>
-      <% when "active" %>
-        <div class="row">
-          <div class="col-xs-6">Intention: </div>
-          <div class="col-xs-6"><%= item.client_intention %></div>
-        </div>
-        <div class="row">
-          <div class="col-xs-6">Purchase price: </div>
-          <div class="col-xs-6"><%= humanized_money_with_symbol(item.purchase_price).html_safe %></div>
-        </div>
-        <div class="row">
-          <div class="col-xs-6">Minimum sale price: </div>
-          <div class="col-xs-6"><%= humanized_money_with_symbol(item.minimum_sale_price).html_safe %></div>
-        </div>
-      <% when "sold" %>
-        <div class="row">
-          <div class="col-xs-6">Purchase price: </div>
-          <div class="col-xs-6"><%= humanized_money_with_symbol(item.purchase_price).html_safe %></div>
-        </div>
-        <div class="row">
-          <div class="col-xs-6">Sale price: </div>
-          <div class="col-xs-6"><%= humanized_money_with_symbol(item.sale_price).html_safe %></div>
-        </div>
-      <% end %>
+
+        <% case type %>
+        <% when "potential" %>
+          <div class="row">
+            <% if item.offer_type %>
+              <div class="col-xs-12">Offer: <%= item.offer_type %></div>
+            <% end %>
+          </div>
+        <% when "active" %>
+          <div class="row">
+            <% if item.client_intention == "sell" %>
+              <div class="col-xs-12">Purchased for <%= humanized_money_with_symbol(item.purchase_price) %></div>
+              <div class="col-xs-12">Listed for <%= humanized_money_with_symbol(item.listing_price) %></div>
+            <% elsif item.client_intention == "consign" %>
+              <div class="col-xs-12">Consigned for <%= humanized_money_with_symbol(item.listing_price) %></div>
+              <div class="col-xs-12">Will accept <%= humanized_money_with_symbol(item.minimum_sale_price) %></div>
+            <% else %>
+              <div class="col-xs-12"><%= item.client_intention %>ing</div>
+            <% end %>
+          </div>
+        <% when "sold" %>
+          <div class="row">
+            <div class="col-xs-12">Sold for <%= humanized_money_with_symbol(item.sale_price) %></div>
+            <% if item.client_intention == "sell" %>
+              <div class="col-xs-12"><%= humanized_money_with_symbol(item.sale_price - item.purchase_price).html_safe %> in profit!</div>
+            <% elsif item.client_intention == "consign" %>
+              <div class="col-xs-12"><%= humanized_money_with_symbol(item.sale_price / 2).html_safe %> in profit from consignment!</div>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
     </div>
-  </div>
 
+  <% end %>
 
-<% end %>
+</div>

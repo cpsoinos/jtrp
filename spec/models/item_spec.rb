@@ -61,6 +61,14 @@ describe Item do
       end
     end
 
+    it "unclaimed" do
+      claimed_item = create(:item, :with_client)
+      Item.all.update_all(proposal_id: nil)
+
+      expect(Item.unclaimed.count).to eq(9)
+      expect(Item.unclaimed).not_to include(claimed_item)
+    end
+
   end
 
   describe Item, "state_machine" do

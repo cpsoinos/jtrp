@@ -1,9 +1,16 @@
 <div class="col-md-8 col-md-offset-2">
   <div class="well bs-component">
-    <p><i>Click on a field to edit.</i></p>
+    <div class="row">
+      <div class="col-xs-6">
+        <%= link_to "Edit", edit_item_path(@item), class: "btn btn-raised btn-xs btn-info pull-left" %>
+      </div>
+      <div class="col-xs-6">
+        <%= link_to "Delete", item_path(@item), method: :delete, class: "btn btn-raised btn-xs btn-danger pull-right" %>
+      </div>
+    </div>
 
     <div class="text-center">
-      <h3><%= best_in_place [@category, @item], :name %></h4></br>
+      <h3><%= @item.name %></h3></br>
     </div>
 
     <div class="row">
@@ -11,7 +18,7 @@
         Description:
       </div>
       <div class="col-xs-6 col-md-3">
-        <%= best_in_place [@category, @item], :description %>
+        <%= @item.description %>
       </div>
     </div>
 
@@ -20,7 +27,7 @@
         Height:
       </div>
       <div class="col-xs-6 col-md-3">
-        <%= best_in_place [@category, @item], :height %>
+        <%= @item.height %>
       </div>
     </div>
 
@@ -29,7 +36,7 @@
         Width:
       </div>
       <div class="col-xs-6 col-md-3">
-        <%= best_in_place [@category, @item], :width %>
+        <%= @item.width %>
       </div>
     </div>
 
@@ -38,7 +45,7 @@
         Depth:
       </div>
       <div class="col-xs-6 col-md-3">
-        <%= best_in_place [@category, @item], :depth %>
+        <%= @item.depth %>
       </div>
     </div>
 
@@ -81,23 +88,21 @@
       </div>
     </div>
 
-    <% if @item.client_intention == "sell" %>
-      <div class="row">
-        <div class="col-xs-6 col-md-3 col-md-offset-3 form-label">
-          Purchase Price:
-        </div>
-        <div class="col-xs-6 col-md-3">
-          <%= best_in_place [@category, @item], :purchase_price, display_with: lambda { |v| humanized_money_with_symbol(v).html_safe } %>
-        </div>
+    <div class="row">
+      <div class="col-xs-6 col-md-3 col-md-offset-3 form-label">
+        Purchase Price:
       </div>
-    <% end %>
+      <div class="col-xs-6 col-md-3">
+        <%= humanized_money_with_symbol(@item.purchase_price) %>
+      </div>
+    </div>
 
     <div class="row">
       <div class="col-xs-6 col-md-3 col-md-offset-3 form-label">
         Listing Price:
       </div>
       <div class="col-xs-6 col-md-3">
-        <%= best_in_place [@category, @item], :listing_price, display_with: lambda { |v| humanized_money_with_symbol(v).html_safe } %>
+        <%= humanized_money_with_symbol(@item.listing_price) %>
       </div>
     </div>
 
@@ -106,41 +111,49 @@
         Minimum Sale Price:
       </div>
       <div class="col-xs-6 col-md-3">
-        <%= best_in_place [@category, @item], :minimum_sale_price, display_with: lambda { |v| humanized_money_with_symbol(v).html_safe } %>
+        <%= humanized_money_with_symbol(@item.minimum_sale_price) %>
       </div>
     </div>
 
     <%= form_for @item, class: "form-horizontal" do |f| %>
       <div class="text-center">
-        <div class="large-top-margin">
-          <h4>Initial Photos</h4>
-        </div>
-        <% if @item.initial_photos.present? %>
-        <div class="row text-center large-top-margin">
-          <% @item.initial_photos.each do |photo| %>
-          <div class="col-xs-12 col-sm-6 col-md-3">
-            <%= image_tag photo.photo_url(:thumb), class: "img-rounded" %></br></br>
+        <div class="panel panel-primary large-top-margin">
+          <div class="panel-heading"><h4>Initial Photos</h4></div>
+          <div class="panel-body">
+            <% if @item.initial_photos.present? %>
+              <div class="row text-center large-top-margin grid">
+                <div class="grid-sizer col-xs-12 col-sm-6 col-md-4"></div>
+                <% @item.initial_photos.each do |photo| %>
+                  <div class="grid-item col-xs-12 col-sm-6 col-md-4">
+                    <%= image_tag photo.photo_url(:thumb), class: "img-rounded" %></br></br>
+                  </div>
+                <% end %>
+              </div>
+            <% end %>
+
+            <%= f.file_field :initial_photos, multiple: true, class: "dropzone form-control" %>
+
           </div>
-          <% end %>
         </div>
-        <% end %>
 
-        <%= f.file_field :initial_photos, multiple: true, class: "dropzone form-control" %>
+        <div class="panel panel-primary large-top-margin">
+          <div class="panel-heading"><h4>Listing Photos</h4></div>
+          <div class="panel-body">
+            <% if @item.listing_photos.present? %>
+              <div class="row text-center large-top-margin grid">
+                <div class="grid-sizer col-xs-12 col-sm-6 col-md-4"></div>
+                <% @item.listing_photos.each do |photo| %>
+                  <div class="grid-item col-xs-12 col-sm-6 col-md-4">
+                    <%= image_tag photo.photo_url(:thumb), class: "img-rounded" %></br></br>
+                  </div>
+                <% end %>
+              </div>
+            <% end %>
 
-        <div class="large-top-margin">
-          <h4>Listing Photos</h4>
-        </div>
-        <% if @item.listing_photos.present? %>
-        <div class="row text-center large-top-margin">
-          <% @item.listing_photos.each do |photo| %>
-          <div class="col-xs-12 col-sm-6 col-md-3">
-            <%= image_tag photo.photo_url(:thumb), class: "img-rounded" %></br></br>
+            <%= f.file_field :listing_photos, multiple: true, class: "dropzone form-control" %>
+
           </div>
-          <% end %>
         </div>
-        <% end %>
-
-        <%= f.file_field :listing_photos, multiple: true, class: "dropzone form-control" %>
 
         <%= f.submit class: "btn btn-raised btn-primary" %>
 

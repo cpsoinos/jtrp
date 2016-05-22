@@ -1,19 +1,23 @@
 class AgreementsController < ApplicationController
   before_filter :require_internal
+  before_filter :find_proposal, only: [:index, :create]
+  before_filter :pull_intentions, only: :create
 
   def index
-    @proposal = Proposal.find(params[:proposal_id])
     @client = @proposal.client
     @agreements = @proposal.agreements
     @items = @proposal.items
     gon.signatures = build_json_for_signatures
   end
 
+  def agreements_list
+    @agreements = AgreementsPresenter.new(params).filter
+    @intentions = @agreements.pluck(:agreement_type).uniq
+  end
+
   def create
-    @proposal = Proposal.find(params[:proposal_id])
     @client = @proposal.client
-    @intentions = ["consign", "dump", "donate", "sell", "move"]
-    AgreementCreator.new(@proposal).create(@intentions)
+    @agreements = AgreementCreator.new(current_user).create(@proposal)
     redirect_to proposal_agreements_path(@proposal)
   end
 
@@ -47,6 +51,10 @@ class AgreementsController < ApplicationController
       end
     end
     signatures
+  end
+
+  def pull_intentions
+    @intentions = @proposal.items.pluck(:client_intention).uniq
   end
 
 end

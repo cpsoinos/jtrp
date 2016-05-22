@@ -10,28 +10,29 @@
 <div class="col-xs-12 col-md-8 col-md-offset-2">
   <div class="well bs-component">
 
-    <%# if @proposal.client.items.potential.present? %>
-      <div class="row">
-        <div class="col-xs-12 col-md-4"><h3>Choose an existing item:</h3></div>
-        <div class="col-xs-12 col-md-4">
-          <div class="items-dropdown"></div>
-        </div>
-        <div class="col-xs-12 col-md-4 text-center">
-          <%= link_to "Add Existing Item", "javascript:void()", class: "btn btn-raised btn-primary", id: "add-existing-item-button" %><br />
-        </div>
+    <div class="row text-center">
+      <h2>Step 1</h1>
+    </div>
+
+    <div class="row large-top-margin">
+      <div class="col-xs-12 col-md-4"><h3>Choose an existing item:</h3></div>
+      <div class="col-xs-12 col-md-4">
+        <div class="items-dropdown"></div>
       </div>
-      <div class="row" id="existing-item">
-        <div class="text-center"> - or -</div>
+      <div class="col-xs-12 col-md-4 text-center">
+        <%= link_to "Add Existing Item", "javascript:void()", class: "btn btn-raised btn-primary", id: "add-existing-item-button" %><br />
       </div>
-    <%# end %>
+    </div>
+    <div class="row" id="existing-item">
+      <div class="text-center"> - or -</div>
+    </div>
 
     <%= form_for [@proposal, @item], class: "form-horizontal", remote: true do |f| %>
-      <%= render 'items/form', item: @item, f: f, legend: "Add an Item:", remote: true %>
+      <%= render 'items/form', item: @item, f: f, legend: "Add a New Item:", remote: true %>
     <% end %>
 
-    <br>
-    <div class="text-center">
-      <%= link_to "View Items <i class='fa fa-caret-right'></i>".html_safe, proposal_path(@proposal), class: "btn btn-raised btn-primary" %>
+    <div class="text-right large-top-margin">
+      <%= link_to "Step 2: Details <i class='fa fa-caret-right'></i>".html_safe, proposal_details_path(@proposal), class: "btn btn-raised btn-primary" %>
     </div>
   </div>
 </div>

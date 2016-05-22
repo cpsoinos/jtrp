@@ -37,8 +37,8 @@ class ClientsController < ApplicationController
       flash[:notice] = "Client updated"
       render :show
     else
-      flash[:warning] = "Could not be saved"
-      render :back
+      flash[:alert] = @client.errors.full_messages.uniq.join
+      redirect_to :back
     end
   end
 

@@ -13,6 +13,8 @@ class ProposalsController < ApplicationController
     if @proposal.save
       redirect_to edit_proposal_path(@proposal)
     else
+      flash[:alert] = @proposal.errors.full_messages.uniq.join
+      @client = Client.new
       render :new
     end
   end
@@ -32,34 +34,15 @@ class ProposalsController < ApplicationController
     gon.proposalId = @proposal.id
   end
 
+  def details
+    @proposal = Proposal.find(params[:proposal_id])
+    @items = @proposal.items
+  end
+
   def response_form
     @proposal = Proposal.find(params[:proposal_id])
     @client = @proposal.client
     @items = @proposal.items.order(:id)
-  end
-  # 
-  # def generate_agreements
-  #   @proposal = Proposal.find(params[:proposal_id])
-  #   @client = @proposal.client
-  #   @agreements = AgreementCreator.new(proposal).create(@intentions)
-  #
-  #   # @intentions = @proposal.items.where.not(client_intention: "nothing").pluck(:client_intention).uniq
-  #   @intentions = ["consign", "dump"]
-  #   @items = @proposal.items
-  #   gon.signatures = build_json_for_signatures
-  # end
-
-  def update
-    @proposal = Proposal.find(params[:id])
-    if @proposal.update(signature_params)
-      @proposal.mark_active
-      respond_to do |format|
-        format.html
-        format.js do
-          @role = params[:role]
-        end
-      end
-    end
   end
 
   def create_client
@@ -78,54 +61,25 @@ class ProposalsController < ApplicationController
     end
   end
 
-  def add_existing_item
-    @item = Item.find(params[:item][:id])
-    if @item.update(item_params)
-      respond_to do |format|
-        format.js do
-          @proposal = @item.proposal
-          render :'proposals/add_item'
-        end
-      end
-    end
-  end
-
   protected
 
   def proposal_params
     params.require(:proposal).permit([:client_id, :created_by_id])
   end
 
-  def signature_params
-    key = "#{params[:role]}_signature".to_sym
-    { key => params[:signature] }
-  end
-
-  def build_json_for_signatures
-    signatures = {
-      manager: @proposal.manager_signature,
-      client: @proposal.client_signature
-    }
-
-    signatures
-  end
-
   def user_params
     params.require(:user).permit([:email, :first_name, :last_name, :address_1, :address_2, :city, :state, :zip, :phone, :phone_ext])
   end
 
-  def item_params
-    params.require(:item).permit([:proposal_id])
-  end
-
   def build_json_for_items
-    @client.items.potential.map do |item|
+    items_for_list = @client.items.potential.where(proposal_id: nil) | Item.unclaimed
+    items_for_list.map do |item|
       {
         text: item.name,
         value: item.id,
         selected: false,
         description: item.description,
-        imageSrc: item.initial_photos.first.try(:thumb).try(:url)
+        imageSrc: (item.initial_photos.present? ? item.initial_photos.first.photo_url(:thumb) : Photo.default_url)
       }
     end.to_json
   end

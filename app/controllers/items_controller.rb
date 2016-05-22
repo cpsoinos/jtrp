@@ -14,20 +14,9 @@ class ItemsController < ApplicationController
   end
 
   def create
-    @item = item_creator
-
-    if @item.save
-      respond_to do |format|
-        if params[:initial_photos]
-          params[:initial_photos].each do |photo|
-            @item.photos.create!(photo: photo, photo_type: "initial")
-          end
-        end
-        if params[:listing_photos]
-          params[:listing_photos].each do |photo|
-            @item.photos.create!(photo: photo, photo_type: "listing")
-          end
-        end
+    @item = ItemCreator.new(@proposal).create(item_params)
+    respond_to do |format|
+      if @item.persisted?
         format.html do
           flash[:notice] = "Item created"
           redirect_to item_path(@item)
@@ -35,10 +24,15 @@ class ItemsController < ApplicationController
         format.js do
           render :'proposals/add_item'
         end
+      else
+        format.html do
+          flash[:alert] = "Item could not be saved"
+          render :new
+        end
+        format.js do
+          render nothing: true
+        end
       end
-    else
-      flash[:alert] = "Item could not be saved"
-      redirect_to :back
     end
   end
 
@@ -46,25 +40,25 @@ class ItemsController < ApplicationController
     @item = Item.find(params[:id])
   end
 
+  def edit
+    @item = Item.find(params[:id])
+  end
+
   def update
     @item = Item.find(params[:id])
     respond_to do |format|
-      if params[:item][:initial_photos]
-        params[:item][:initial_photos].each do |photo|
-          @item.photos.create!(photo: photo, photo_type: "initial")
+      if ItemUpdater.new(@item).update(item_params)
+        format.js do
+          render 'proposals/add_item' if @item.proposal_id
+          render 'proposals/remove_item' if @item.proposal_id == nil
         end
-      end
-      if params[:item][:listing_photos]
-        params[:item][:listing_photos].each do |photo|
-          @item.photos.create!(photo: photo, photo_type: "listing")
-        end
-      end
-      if @item.update(item_params)
-        format.js { render nothing: true }
         format.html { redirect_to(@item, :notice => 'Item was successfully updated.') }
         format.json { respond_with_bip(@item) }
       else
-        format.html { render :action => "edit" }
+        format.html do
+          flash[:alert] = 'Could not update item.'
+          render :edit
+        end
         format.json { respond_with_bip(@item) }
       end
     end
@@ -72,14 +66,10 @@ class ItemsController < ApplicationController
 
   def destroy
     @item = Item.find(params[:id])
-    @proposal = Proposal.find(params[:proposal_id])
+    filter = @item.state
     if @item.destroy
       flash[:notice] = "Item removed"
-      if params[:redirect_url]
-        redirect_to(params[:redirect_url])
-      else
-        redirect_to proposal_path(@proposal)
-      end
+      redirect_to items_path(state: filter)
     else
       redirect_to :back
     end
@@ -98,15 +88,7 @@ class ItemsController < ApplicationController
   protected
 
   def item_params
-    params.require(:item).permit(:name, :description, {initial_photos_attributes: [:id, :initial_photo_id, :initial_photo]}, {listing_photos_attributes: [:id, :listing_photo_id, :listing_photo]}, :purchase_price, :asking_price, :listing_price, :sale_price, :minimum_sale_price, :condition, :client_id, :category_id, :client_intention, :notes, :height, :width, :depth)
-  end
-
-  def item_creator
-    if @proposal
-      @proposal.items.new(item_params)
-    else
-      Item.new(item_params)
-    end
+    params.require(:item).permit(:name, :description, {photos: []}, {initial_photos: []}, {listing_photos: []}, :proposal_id, :purchase_price, :asking_price, :listing_price, :sale_price, :minimum_sale_price, :condition, :client_id, :category_id, :client_intention, :notes, :height, :width, :depth, :offer_type)
   end
 
 end

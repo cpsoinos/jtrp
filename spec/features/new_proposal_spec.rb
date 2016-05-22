@@ -36,6 +36,8 @@ feature "new proposal" do
 
     context "existing client" do
 
+      let(:proposal) { create(:proposal, client: client)}
+
       scenario "an existing client" do
         visit new_proposal_path
 
@@ -47,42 +49,148 @@ feature "new proposal" do
         select(client.full_name, from: "proposal_client_id")
         click_button("Next")
 
-        expect(page).to have_content("Add an Item")
+        expect(page).to have_content("Step 1")
+        expect(page).to have_content("Choose an existing item")
+        expect(page).to have_content("Add a New Item")
         expect(page).to have_field("item_name")
         expect(page).to have_field("item_description")
-        expect(page).to have_field("initial_photos[]")
-        expect(page).to have_field("item_listing_price")
-        expect(page).to have_field("item_minimum_sale_price")
-        expect(page).to have_field("item_condition")
-        expect(page).to have_button("Add Item")
+        expect(page).to have_field("item[initial_photos][]")
+        expect(page).not_to have_field("item_listing_price")
+        expect(page).not_to have_field("item_minimum_sale_price")
+        expect(page).not_to have_field("item_condition")
+        expect(page).to have_button("Create Item")
         expect(Proposal.count).to eq(1)
       end
 
-      let(:proposal) { create(:proposal, client: client)}
+      scenario "does not select a client" do
+        visit new_proposal_path
+        click_button("Next")
+
+        expect(page).to have_content("Client can't be blank")
+        expect(Proposal.count).to eq(0)
+      end
 
       scenario "successfully fills in proposal information", js: true do
         visit edit_proposal_path(proposal)
         fill_in("item_name", with: "Chair")
         fill_in("item_description", with: "sit in it")
-        attach_file('initial_photos[]', File.join(Rails.root, '/spec/fixtures/test.png'))
-        fill_in("item_listing_price", with: "55")
-        fill_in("item_minimum_sale_price", with: "45")
-        fill_in("item_condition", with: "like new")
-        click_on("Add Item")
+        attach_file('item[initial_photos][]', [File.join(Rails.root, '/spec/fixtures/test.png'), File.join(Rails.root, '/spec/fixtures/test_2.png')])
+        click_on("Create Item")
 
         expect(page).to have_content("sit in it")
         expect(page).to have_css("img[src*='test.png']")
-        expect(page).to have_content("$55")
-        expect(page).to have_content("$45")
-        expect(page).to have_content("like new")
+        expect(page).to have_css("img[src*='test_2.png']")
       end
 
-      scenario "deletes an item" do
-        create(:item, proposal: proposal)
+      scenario "removes an item", js: true do
+        item = create(:item, proposal: proposal)
         visit edit_proposal_path(proposal)
-        click_on("Delete")
 
-        expect(page).to have_content("Item removed")
+        expect(page).to have_content(item.name)
+
+        click_on("Remove")
+
+        expect(page).not_to have_content(item.name)
+      end
+
+      context "item details" do
+        let!(:item) { create(:item, proposal: proposal, client: client) }
+
+        scenario "chooses offer type", js: true do
+          visit edit_proposal_path(proposal)
+          click_link("Step 2: Details")
+
+          expect(page).to have_content("Proposal Details for #{client.full_name}")
+          expect(page).to have_field("item_#{item.id}_offer_type_purchase")
+          expect(page).to have_field("item_#{item.id}_offer_type_consign")
+
+          choose("item_#{item.id}_offer_type_purchase")
+          wait_for_ajax
+          item.reload
+
+          expect(item.offer_type).to eq("purchase")
+
+          choose("item_#{item.id}_offer_type_consign")
+          wait_for_ajax
+          item.reload
+
+          expect(item.offer_type).to eq("consign")
+        end
+
+        scenario "adds purchase offer price", js: true do
+          visit proposal_details_path(proposal)
+          choose("item_#{item.id}_offer_type_purchase")
+          bip_text(item, :purchase_price, "5")
+
+          expect(page).to have_content("$5.00")
+
+          wait_for_ajax
+          item.reload
+
+          expect(item.purchase_price_cents).to eq(500)
+        end
+
+        scenario "adds consignment offer price", js: true do
+          visit proposal_details_path(proposal)
+          choose("item_#{item.id}_offer_type_consign")
+          bip_text(item, :listing_price, "10")
+          bip_text(item, :minimum_sale_price, "5")
+
+          expect(page).to have_content("$10.00")
+          expect(page).to have_content("$5.00")
+
+          wait_for_ajax
+          item.reload
+
+          expect(item.listing_price_cents).to eq(1000)
+          expect(item.minimum_sale_price_cents).to eq(500)
+        end
+
+        scenario "changes offer type and price", js: true do
+          visit proposal_details_path(proposal)
+          choose("item_#{item.id}_offer_type_consign")
+          bip_text(item, :listing_price, "10")
+          bip_text(item, :minimum_sale_price, "5")
+
+          expect(page).to have_content("$10.00")
+          expect(page).to have_content("$5.00")
+
+          wait_for_ajax
+          item.reload
+
+          expect(item.listing_price_cents).to eq(1000)
+          expect(item.minimum_sale_price_cents).to eq(500)
+
+          choose("item_#{item.id}_offer_type_purchase")
+          wait_for_ajax
+          item.reload
+
+          bip_text(item, :purchase_price, "7")
+
+          expect(page).to have_content("$7.00")
+          expect(page).not_to have_content("$10.00")
+          expect(page).not_to have_content("$5.00")
+
+          wait_for_ajax
+          item.reload
+
+          expect(item.listing_price_cents).to be(nil)
+          expect(item.minimum_sale_price_cents).to be(nil)
+          expect(item.purchase_price_cents).to eq(700)
+        end
+
+        scenario "views completed proposal" do
+          visit proposal_details_path(proposal)
+          click_link("View Proposal")
+
+          expect(page).to have_content("This proposal is not binding and shall not be deemed an enforceable contract. It is for information purposes only.")
+          expect(page).to have_content("Item ##{item.id}")
+          expect(page).to have_content(item.name)
+          expect(page).to have_content("Purchase Offer")
+          expect(page).to have_content("Consignment Offer")
+          expect(page).to have_link("Response Form")
+        end
+
       end
 
       scenario "generates a proposal for the client" do
@@ -109,23 +217,6 @@ feature "new proposal" do
         end
       end
 
-      # scenario "chooses a client intention", js: true do
-      #   item = create(:item, proposal: proposal)
-      #   visit edit_proposal_path(proposal)
-      #
-      #   expect(page).to have_checked_field("item_client_intention_undecided")
-      #   expect(page).to have_unchecked_field("item_client_intention_consign")
-      #   expect(item.client_intention).to eq("undecided")
-      #
-      #   choose("item_client_intention_consign")
-      #   wait_for_ajax
-      #   item.reload
-      #
-      #   expect(page).to have_unchecked_field("item_client_intention_undecided")
-      #   expect(page).to have_checked_field("item_client_intention_consign")
-      #   expect(item.client_intention).to eq("consign")
-      # end
-
     end
 
     context "new client" do
@@ -143,7 +234,7 @@ feature "new proposal" do
         fill_in("user_zip", with: "12345")
         click_on("Create Client")
 
-        expect(page).to have_content("Add an Item")
+        expect(page).to have_content("Step 1")
       end
 
       scenario "unsuccessfully creates a new client" do
