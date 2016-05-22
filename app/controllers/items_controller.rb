@@ -27,7 +27,7 @@ class ItemsController < ApplicationController
       else
         format.html do
           flash[:alert] = "Item could not be saved"
-          render :new 
+          render :new
         end
         format.js do
           render nothing: true
@@ -69,11 +69,7 @@ class ItemsController < ApplicationController
     filter = @item.state
     if @item.destroy
       flash[:notice] = "Item removed"
-      if params[:redirect_url]
-        redirect_to(params[:redirect_url])
-      else
-        redirect_to items_path(state: filter)
-      end
+      redirect_to items_path(state: filter)
     else
       redirect_to :back
     end
@@ -93,14 +89,6 @@ class ItemsController < ApplicationController
 
   def item_params
     params.require(:item).permit(:name, :description, {photos: []}, {initial_photos: []}, {listing_photos: []}, :proposal_id, :purchase_price, :asking_price, :listing_price, :sale_price, :minimum_sale_price, :condition, :client_id, :category_id, :client_intention, :notes, :height, :width, :depth, :offer_type)
-  end
-
-  def item_creator
-    if @proposal
-      @proposal.items.new(item_params)
-    else
-      Item.new(item_params)
-    end
   end
 
 end
