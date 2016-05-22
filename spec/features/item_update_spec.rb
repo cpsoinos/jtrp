@@ -17,17 +17,19 @@ feature "update an item" do
       expect(page).to have_content(item.description)
     end
 
-    scenario "successfully updates an item", js: true do
+    scenario "successfully updates an item" do
       visit item_path(item)
+      click_link("Edit")
 
-      expect(page).to have_content(item.name)
+      fill_in("Name", with: "Chair")
+      fill_in("Description", with: "Sit in it")
+      fill_in("Height", with: "3'")
+      fill_in("Width", with: "1'")
+      fill_in("Depth", with: "1 1/2'")
 
-      bip_text(item, :name, "Chair")
-      bip_text(item, :description, "Sit in it")
-      bip_text(item, :height, "3'")
-      bip_text(item, :width, "1'")
-      bip_text(item, :depth, "1 1/2'")
+      click_button("Update Item")
 
+      expect(page).to have_content("Item was successfully updated.")
       expect(page).to have_content("Chair")
       expect(page).to have_content("Sit in it")
       expect(page).to have_content("3'")
@@ -35,15 +37,15 @@ feature "update an item" do
       expect(page).to have_content("1 1/2'")
     end
 
-    scenario "unsuccessfully updates an item", js: true do
-      visit item_path(item)
+    scenario "unsuccessfully updates an item" do
+      visit edit_item_path(item)
 
-      expect(page).to have_content(item.name)
+      fill_in("Name", with: "")
+      click_button("Update Item")
 
-      bip_text(item, :name, "")
-
+      expect(page).to have_content("Could not update item.")
+      expect(page).to have_content("Name can't be blank")
       expect(page).not_to have_content("Chair")
-      expect(page).to have_content(item.name)
     end
 
     scenario "adds a second initial photo" do

@@ -37,7 +37,7 @@ feature "add an item" do
       expect(page).to have_content("Add an item")
       expect(page).to have_field("Name")
       expect(page).to have_field("Description")
-      expect(page).to have_field("initial_photos[]")
+      expect(page).to have_field("item[initial_photos][]")
 
       expect(page).not_to have_content("Select Client")
       expect(page).not_to have_content("Select Category")
@@ -45,16 +45,16 @@ feature "add an item" do
       expect(page).not_to have_field("Purchase price")
       expect(page).not_to have_field("Minimum sale price")
       expect(page).not_to have_field("Condition")
-      expect(page).not_to have_field("listing_photos[]")
+      expect(page).not_to have_field("item[listing_photos][]")
     end
 
     scenario "successfully adds an uncategorized item" do
       visit new_item_path
 
-      attach_file('initial_photos[]', File.join(Rails.root, '/spec/fixtures/test.png'))
+      attach_file('item[initial_photos][]', File.join(Rails.root, '/spec/fixtures/test.png'))
       fill_in "Name", with: "Chair"
       fill_in "Description", with: "People sit in it."
-      click_on("Add Item")
+      click_on("Create Item")
 
       expect(page).to have_content("Item created")
       expect(page).to have_content("Chair")
@@ -89,10 +89,10 @@ feature "add an item" do
     scenario "successfully adds an item" do
       visit new_category_item_path(category)
 
-      attach_file('initial_photos[]', File.join(Rails.root, '/spec/fixtures/test.png'))
+      attach_file('item[initial_photos][]', File.join(Rails.root, '/spec/fixtures/test.png'))
       fill_in "Name", with: "Chair"
       fill_in "Description", with: "People sit in it."
-      click_on("Add Item")
+      click_on("Create Item")
 
       expect(page).to have_content("Item created")
       expect(page).to have_content("Chair")
@@ -103,9 +103,10 @@ feature "add an item" do
     scenario "unsuccessfully adds an item" do
       visit new_category_item_path(category)
       fill_in "Description", with: "People sit in it."
-      click_on("Add Item")
+      click_on("Create Item")
 
       expect(page).to have_content("Item could not be saved")
+      expect(page).to have_content("Name can't be blank")
     end
   end
 

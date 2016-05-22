@@ -1,54 +1,59 @@
-<% items.each do |item| %>
-  <div class="col-xs-6">
-    <div class="well">
-      <% url = begin %>
-        <% if item.listing_photos.present? %>
-          <% image_tag(item.listing_photos.first.photo_url(:tiny_thumb)) %>
-        <% elsif item.initial_photos.present? %>
-          <% image_tag(item.initial_photos.first.photo_url(:tiny_thumb)) %>
-        <% else %>
-          <% image_tag("thumb_No_Image_Available.png", width: '50px', height: '50px') %>
+<div class="row client-grid">
+
+  <% items.each do |item| %>
+    <div class="col-xs-6 col-sm-4 col-md-3 client-grid-sizer"></div>
+    <div class="col-xs-6 col-sm-4 col-md-3 client-grid-item">
+      <div class="thumbnail">
+        <% url = begin %>
+          <% if item.listing_photos.present? %>
+            <% image_tag(item.listing_photos.first.photo_url(:tiny_thumb)) %>
+          <% elsif item.initial_photos.present? %>
+            <% image_tag(item.initial_photos.first.photo_url(:tiny_thumb)) %>
+          <% else %>
+            <% image_tag("thumb_No_Image_Available.png", width: '50px', height: '50px') %>
+          <% end %>
         <% end %>
-      <% end %>
 
-      <div class="text-center">
-        <%= link_to url, item_path(item) %>
-      </div>
-      
-      <div class="text-center">
-        <%= link_to item.name, item_path(item) %>
-      </div>
+        <div class="text-center">
+          <%= link_to url, item_path(item) %>
+        </div>
 
-      <% case type %>
-      <% when "potential" %>
-        <div class="row">
-          <div class="col-xs-6">Intention: </div>
-          <div class="col-xs-6"><%= item.client_intention %></div>
+        <div class="caption">
+          <h4><%= link_to item.name, item_path(item) %></h4>
         </div>
-      <% when "active" %>
-        <div class="row">
-          <div class="col-xs-6">Intention: </div>
-          <div class="col-xs-6"><%= item.client_intention %></div>
-        </div>
-        <div class="row">
-          <div class="col-xs-6">Purchase price: </div>
-          <div class="col-xs-6"><%= humanized_money_with_symbol(item.purchase_price).html_safe %></div>
-        </div>
-        <div class="row">
-          <div class="col-xs-6">Minimum sale price: </div>
-          <div class="col-xs-6"><%= humanized_money_with_symbol(item.minimum_sale_price).html_safe %></div>
-        </div>
-      <% when "sold" %>
-        <div class="row">
-          <div class="col-xs-6">Purchase price: </div>
-          <div class="col-xs-6"><%= humanized_money_with_symbol(item.purchase_price).html_safe %></div>
-        </div>
-        <div class="row">
-          <div class="col-xs-6">Sale price: </div>
-          <div class="col-xs-6"><%= humanized_money_with_symbol(item.sale_price).html_safe %></div>
-        </div>
-      <% end %>
+
+        <% case type %>
+        <% when "potential" %>
+          <div class="row">
+            <div class="col-xs-6">Intention: </div>
+            <div class="col-xs-6"><%= item.client_intention %></div>
+          </div>
+        <% when "active" %>
+          <div class="row">
+            <div class="col-xs-6">Intention: </div>
+            <div class="col-xs-6"><%= item.client_intention %></div>
+          </div>
+          <div class="row">
+            <div class="col-xs-6">Purchase price: </div>
+            <div class="col-xs-6"><%= humanized_money_with_symbol(item.purchase_price).html_safe %></div>
+          </div>
+          <div class="row">
+            <div class="col-xs-6">Minimum sale price: </div>
+            <div class="col-xs-6"><%= humanized_money_with_symbol(item.minimum_sale_price).html_safe %></div>
+          </div>
+        <% when "sold" %>
+          <div class="row">
+            <div class="col-xs-6">Purchase price: </div>
+            <div class="col-xs-6"><%= humanized_money_with_symbol(item.purchase_price).html_safe %></div>
+          </div>
+          <div class="row">
+            <div class="col-xs-6">Sale price: </div>
+            <div class="col-xs-6"><%= humanized_money_with_symbol(item.sale_price).html_safe %></div>
+          </div>
+        <% end %>
+      </div>
     </div>
-  </div>
 
-<% end %>
+  <% end %>
+
+</div>
