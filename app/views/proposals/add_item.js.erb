@@ -1,2 +1,19 @@
+$("#undefined").replaceWith('<div class="items-dropdown"></div>');
+
+slickifyDropdown($(".items-dropdown"), JSON.parse(gon.items));
+
+$("input[value='<%= @item.id %>']").closest("li").remove();
 $("<%= escape_javascript(render 'proposals/item_row', item: @item) %>").appendTo("#proposal-item-list");
 $(".new_item")[0].reset();
+
+$(".remove-existing-item-button").click(function() {
+  var itemId = this.dataset.itemId
+  var proposalId = null
+  $.ajax({
+    url: '/items/' + itemId,
+    type: "PUT",
+    data: { item: {
+      id: itemId, proposal_id: proposalId }
+    }
+  });
+});

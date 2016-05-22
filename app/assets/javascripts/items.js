@@ -1,12 +1,15 @@
 $(document).ready(function() {
 
-  slickifyDropdown($(".items-dropdown"));
+  if (gon.items !== undefined) {
+    var itemData = JSON.parse(gon.items)
+  };
+  slickifyDropdown($(".items-dropdown"), itemData);
 
   $("#add-existing-item-button").click(function() {
     var itemId = $(".dd-selected-value")[0].value
     var proposalId = gon.proposalId
     $.ajax({
-      url: '/proposals/' + proposalId + '/add_existing_item',
+      url: '/items/' + itemId,
       type: "PUT",
       data: { item: {
         id: itemId, proposal_id: proposalId }
@@ -14,23 +17,57 @@ $(document).ready(function() {
     });
   });
 
-  $(":radio").change(function() {
+  $(".remove-existing-item-button").click(function() {
+    var itemId = this.dataset.itemId
+    var proposalId = null
+    $.ajax({
+      url: '/items/' + itemId,
+      type: "PUT",
+      data: { item: {
+        id: itemId, proposal_id: proposalId }
+      }
+    });
+  });
+
+  $(":radio.intention-selector").change(function() {
+    var intention = $(this).val()
     $.ajax({
       url: $(this).parents('form')[0].action,
       type: "PUT",
       data: { item: {
-        client_intention: $(this).val()
+        client_intention: intention
       }}
     })
   });
 
+  $(":radio.offer-selector").change(function() {
+    var offer = $(this).val()
+    $.ajax({
+      url: $(this).parents('form')[0].action,
+      type: "PUT",
+      data: { item: {
+        offer_type: offer
+      }},
+      complete: function(xhr, textStatus) {
+        if (xhr.status == 200) {
+          var itemId = this.url.split("/").slice(-1).pop()
+          var offer = this.data.split("=").slice(-1).pop()
+          if (offer == "purchase") {
+            $(("#best_in_place_item_" + itemId + "_listing_price")).html("$0.00");
+            $(("#best_in_place_item_" + itemId + "_minimum_sale_price")).html("$0.00");
+          } else {
+            $(("#best_in_place_item_" + itemId + "_purchase_price")).html("$0.00");
+          }
+        }
+      }
+    });
+  });
+
   // init Masonry
   var $grid = $('.grid').masonry({
-    // options...
     columnWidth: '.grid-sizer',
     itemSelector: '.grid-item',
     percentPosition: true,
-    // gutter: 10
   });
   // layout Masonry after each image loads
   $grid.imagesLoaded().progress( function() {
@@ -39,12 +76,9 @@ $(document).ready(function() {
 
 });
 
-var slickifyDropdown = function(selector) {
-  if (gon.items !== undefined) {
-    var itemData = JSON.parse(gon.items)
-  };
+var slickifyDropdown = function(selector, items) {
   selector.ddslick({
-    data: itemData,
+    data: items,
     imagePosition: "left",
     width: 280,
     selectText: "Choose an Item"

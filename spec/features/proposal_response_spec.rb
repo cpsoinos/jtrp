@@ -34,7 +34,7 @@ feature "proposal response" do
 
       scenario "one intention" do
         Item.update_all(client_intention: "sell")
-        click_link("Generate Forms")
+        click_link("Generate Agreements")
 
         expect(page).to have_link("sell")
       end
@@ -43,7 +43,7 @@ feature "proposal response" do
         items.each_with_index do |item, i|
           item.update_attribute("client_intention", intentions[i])
         end
-        click_link("Generate Forms")
+        click_link("Generate Agreements")
 
         intentions.each do |intention|
           expect(page).to have_link(intention) unless intention == "nothing"

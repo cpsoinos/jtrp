@@ -1,4 +1,6 @@
-<legend><%= legend %></legend>
+<div class="text-center">
+  <legend><%= legend %></legend>
+</div>
 
 <% if item.errors.present? %>
   <div class="row">
@@ -14,7 +16,7 @@
 
 <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
 
-<% unless @client.present? %>
+<% if action_name == "edit" && controller_name == "items" %>
   <div class="row form-row">
     <div class="text-center">
       <div class="col-xs-12 col-md-3 form-label">
@@ -25,18 +27,19 @@
       </div>
     </div>
   </div>
-<% end %>
 
-<div class="row form-row">
-  <div class="text-center">
-    <div class="col-xs-12 col-md-3 form-label">
-      <%= f.label :category, class: "control-label" %>
-    </div>
-    <div class="col-xs-12 col-md-9 text-left">
-      <%= f.collection_select :category_id, @categories, :id, :name, {include_blank: "Select Category"}, {class: "form-control"} %>
+  <div class="row form-row">
+    <div class="text-center">
+      <div class="col-xs-12 col-md-3 form-label">
+        <%= f.label :category, class: "control-label" %>
+      </div>
+      <div class="col-xs-12 col-md-9 text-left">
+        <%= f.collection_select :category_id, @categories, :id, :name, {include_blank: "Select Category"}, {class: "form-control"} %>
+      </div>
     </div>
   </div>
-</div>
+<% end %>
+
 
 <div class="row form-row">
   <div class="text-center">
@@ -60,80 +63,161 @@
   </div>
 </div>
 
+<% if @item.initial_photos.present? %>
+  <div class="row text-center large-top-margin grid">
+    <div class="grid-sizer col-xs-12 col-sm-6 col-md-4"></div>
+    <% @item.initial_photos.each do |photo| %>
+      <div class="grid-item col-xs-12 col-sm-6 col-md-4">
+        <%= image_tag photo.photo_url(:thumb), class: "img-rounded" %></br></br>
+      </div>
+    <% end %>
+  </div>
+<% end %>
+
 <div class="row form-row">
-  <%= f.fields_for :photos, Photo.new do |ff| %>
-    <div class="text-center">
-      <div class="col-xs-12 col-md-3 form-label">
-        <%= ff.label :initial_photos, class: "control-label" %>
-      </div>
-      <div class="col-xs-12 col-md-9 text-left">
-        <%= ff.file_field :photos, multiple: true, class: "dropzone form-control", name: "initial_photos[]" %>
-      </div>
+  <div class="text-center">
+    <div class="col-xs-12 col-md-3 form-label">
+      <%= f.label :initial_photos, class: "control-label" %>
+    </div>
+    <div class="col-xs-12 col-md-9 text-left">
+      <%= f.file_field :initial_photos, multiple: true, class: "dropzone form-control" %>
+    </div>
+  </div>
+</div>
+
+<% if action_name == "edit" && controller_name == "items" %>
+
+  <% if @item.listing_photos.present? %>
+    <div class="row text-center large-top-margin grid">
+      <div class="grid-sizer col-xs-12 col-sm-6 col-md-4"></div>
+      <% @item.listing_photos.each do |photo| %>
+        <div class="grid-item col-xs-12 col-sm-6 col-md-4">
+          <%= image_tag photo.photo_url(:thumb), class: "img-rounded" %></br></br>
+        </div>
+      <% end %>
     </div>
   <% end %>
-</div>
 
-<div class="row form-row">
-  <%= f.fields_for :photos, Photo.new do |ff| %>
+  <div class="row form-row">
     <div class="text-center">
       <div class="col-xs-12 col-md-3 form-label">
-        <%= ff.label :listing_photos, class: "control-label" %>
+        <%= f.label :listing_photos, class: "control-label" %>
       </div>
       <div class="col-xs-12 col-md-9 text-left">
-        <%= ff.file_field :photos, multiple: true, class: "dropzone form-control", name: "listing_photos[]" %>
+        <%= f.file_field :listing_photos, multiple: true, class: "dropzone form-control" %>
       </div>
     </div>
-  <% end %>
-</div>
-
-<div class="row form-row">
-  <div class="text-center">
-    <div class="col-xs-12 col-md-3 form-label">
-      <%= f.label :listing_price, class: "control-label" %>
-    </div>
-    <div class="col-xs-12 col-md-3 text-left">
-      <%= f.text_field :listing_price, class: "form-control", placeholder: "$" %>
-    </div>
   </div>
-</div>
 
-<div class="row form-row">
-  <div class="text-center">
-    <div class="col-xs-12 col-md-3 form-label">
-      <%= f.label :purchase_price, class: "control-label" %>
-    </div>
-    <div class="col-xs-12 col-md-3 text-left">
-      <%= f.text_field :purchase_price, class: "form-control", placeholder: "$" %>
-    </div>
-  </div>
-</div>
+  <div class="row form-row">
 
-<div class="row form-row">
-  <div class="text-center">
-    <div class="col-xs-12 col-md-3 form-label">
-      <%= f.label :minimum_sale_price, class: "control-label" %>
+    <div class="col-xs-6 col-md-3 col-md-offset-3">
+      <div class="row">
+        <div class="text-center">
+          <div class="col-xs-12 col-md-6 form-label">
+            <%= f.label :listing_price, class: "control-label" %>
+          </div>
+          <div class="col-xs-12 col-md-6 text-left">
+            <%= f.text_field :listing_price, class: "form-control", placeholder: "$" %>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="col-xs-12 col-md-3 text-left">
-      <%= f.text_field :minimum_sale_price, class: "form-control", placeholder: "$" %>
-    </div>
-  </div>
-</div>
 
-<div class="row form-row">
-  <div class="text-center">
-    <div class="col-xs-12 col-md-3 form-label">
-      <%= f.label :condition, class: "control-label" %>
+    <div class="col-xs-6 col-md-3">
+      <div class="row">
+        <div class="text-center">
+          <div class="col-xs-12 col-md-6 form-label">
+            <%= f.label :purchase_price, class: "control-label" %>
+          </div>
+          <div class="col-xs-12 col-md-6 text-left">
+            <%= f.text_field :purchase_price, class: "form-control", placeholder: "$" %>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="col-xs-12 col-md-3 text-left">
-      <%= f.text_field :condition, class: "form-control" %>
-    </div>
+
   </div>
-</div>
+
+  <div class="row form-row">
+
+    <div class="col-xs-6 col-md-3 col-md-offset-3">
+      <div class="row">
+        <div class="text-center">
+          <div class="col-xs-6 col-md-6 form-label">
+            <%= f.label :minimum_sale_price, class: "control-label" %>
+          </div>
+          <div class="col-xs-6 col-md-6 text-left">
+            <%= f.text_field :minimum_sale_price, class: "form-control", placeholder: "$" %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xs-6 col-md-3">
+      <div class="row">
+        <div class="text-center">
+          <div class="col-xs-6 col-md-6 form-label">
+            <%= f.label :condition, class: "control-label" %>
+          </div>
+          <div class="col-xs-6 col-md-6 text-left">
+            <%= f.text_field :condition, class: "form-control" %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="row form-row">
+
+    <div class="col-xs-6 col-md-3 col-md-offset-3">
+      <div class="row">
+        <div class="text-center">
+          <div class="col-xs-6 col-md-6 form-label">
+            <%= f.label :height, class: "control-label" %>
+          </div>
+          <div class="col-xs-6 col-md-6 text-left">
+            <%= f.text_field :height, class: "form-control" %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xs-6 col-md-3">
+      <div class="row">
+        <div class="text-center">
+          <div class="col-xs-6 col-md-6 form-label">
+            <%= f.label :width, class: "control-label" %>
+          </div>
+          <div class="col-xs-6 col-md-6 text-left">
+            <%= f.text_field :width, class: "form-control" %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xs-6 col-md-3">
+      <div class="row">
+        <div class="text-center">
+          <div class="col-xs-6 col-md-6 form-label">
+            <%= f.label :depth, class: "control-label" %>
+          </div>
+          <div class="col-xs-6 col-md-6 text-left">
+            <%= f.text_field :depth, class: "form-control" %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+<% end %>
 
 <div class="row form-row">
   <div class="actions">
     <div class="col-xs-12 text-center">
-      <%= f.submit "Add Item", class: "btn btn-raised btn-primary" %>
+      <%= f.submit class: "btn btn-raised btn-primary" %>
     </div>
   </div>
 </div>

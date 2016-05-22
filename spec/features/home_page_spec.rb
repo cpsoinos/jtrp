@@ -59,7 +59,8 @@ feature "home page" do
       expect(page).to have_link("Quick-Add Client")
       expect(page).to have_link("Create New Proposal")
       expect(page).to have_link("Open Proposals")
-      expect(page).to have_link("Executed Agreements")
+      expect(page).to have_link("Pending Agreements")
+      expect(page).to have_link("Signed Agreements")
 
       expect(page).to have_content("Recent Items")
       expect(page).to have_content("Recent Sales")

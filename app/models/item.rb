@@ -31,6 +31,7 @@ class Item < ActiveRecord::Base
   scope :active, -> { where(state: "active") }
   scope :sold, -> { where(state: "sold") }
   scope :unsold, -> { where.not(state: "sold") }
+  scope :unclaimed, -> { where(client_id: nil, proposal_id: nil) }
 
   state_machine :state, initial: :potential do
     state :potential
@@ -103,6 +104,14 @@ class Item < ActiveRecord::Base
 
   def meets_requirements_sold?
     meets_requirements_active?
+  end
+
+  def will_purchase?
+    offer_type == "purchase"
+  end
+
+  def will_consign?
+    offer_type == "consign"
   end
 
 end

@@ -43,15 +43,14 @@ feature "client show" do
       scenario "client has some potential items" do
         proposal = create(:proposal, client: client, created_by: user)
         items = create_list(:item, 2, :with_initial_photo, proposal: proposal)
-        items.first.update_attribute("client_intention", "undecided")
+        items.first.update_attribute("offer_type", "consign")
         items.last.update_attribute("client_intention", "sell")
 
         visit client_path(client)
 
         expect(page).to have_content("Potential Items")
         expect(page).not_to have_content("No potential items.")
-        expect(page).to have_content("Intention: undecided")
-        expect(page).to have_content("Intention: sell")
+        expect(page).to have_content("Offer: consign")
 
         expect(page).to have_content("Potential Proposals")
         expect(page).not_to have_content("No potential proposals.")
@@ -72,7 +71,7 @@ feature "client show" do
       let(:item) { proposal.items.first }
 
       before do
-        item.update_attributes(client_intention: "sell", purchase_price_cents: 5500, minimum_sale_price_cents: 7500)
+        item.update_attributes(client_intention: "sell", offer_type: "purchase", purchase_price_cents: 5500, listing_price_cents: 7500)
       end
 
       scenario "clicks through from client index" do
@@ -102,11 +101,8 @@ feature "client show" do
         visit client_path(client)
 
         expect(page).not_to have_content("No active items.")
-        expect(page).to have_content("Intention: sell")
-        expect(page).to have_content("Purchase price:")
-        expect(page).to have_content("$55.00")
-        expect(page).to have_content("Minimum sale price:")
-        expect(page).to have_content("$75.00")
+        expect(page).to have_content("Purchased for $55.00")
+        expect(page).to have_content("Listed for $75.00")
         expect(page).to have_content("No sold items.")
 
         expect(page).not_to have_content("No active proposals.")
@@ -115,14 +111,13 @@ feature "client show" do
       end
 
       scenario "client has a sold item" do
-        create(:item, :sold, proposal: proposal, sale_price_cents: 8500)
+        create(:item, :sold, proposal: proposal, purchase_price_cents: 5500, sale_price_cents: 8500, client_intention: "sell", offer_type: "purchase")
         visit client_path(client)
 
         expect(page).not_to have_content("No active items.")
-        expect(page).to have_content("Purchase price:")
-        expect(page).to have_content("$55.00")
-        expect(page).to have_content("Sale price:")
-        expect(page).to have_content("$85.00")
+        expect(page).to have_content("Purchased for $55.00")
+        expect(page).to have_content("Sold for $85.00")
+        expect(page).to have_content("$30.00 in profit!")
         expect(page).not_to have_content("No sold items.")
 
         expect(page).not_to have_content("No active proposals.")
@@ -169,34 +164,13 @@ feature "client show" do
         visit client_path(client)
 
         expect(page).to have_content("No active items.")
-        expect(page).to have_content("Purchase price:")
-        expect(page).to have_content("$55.00")
-        expect(page).to have_content("Sale price:")
-        expect(page).to have_content("$85.00")
+        expect(page).to have_content("Sold for $85.00")
         expect(page).not_to have_content("No sold items.")
 
         expect(page).to have_content("No active proposals.")
         expect(page).to have_link("Proposal No. #{proposal.id}")
         expect(page).not_to have_content("No inactive proposals.")
       end
-
-      # scenario "client has a sold item" do
-      #   create(:item, :active, proposal: proposal)
-      #   item.mark_sold
-      #   item.update_attribute("sale_price_cents", 8500)
-      #   visit client_path(client)
-      #
-      #   expect(page).not_to have_content("No active items.")
-      #   expect(page).to have_content("Purchase price:")
-      #   expect(page).to have_content("$55.00")
-      #   expect(page).to have_content("Sale price:")
-      #   expect(page).to have_content("$85.00")
-      #   expect(page).not_to have_content("No sold items.")
-      #
-      #   expect(page).not_to have_content("No active proposals.")
-      #   expect(page).to have_link("Proposal No. #{proposal.id}")
-      #   expect(page).to have_content("No inactive proposals.")
-      # end
 
     end
 

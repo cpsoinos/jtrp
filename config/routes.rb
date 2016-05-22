@@ -25,6 +25,7 @@ Rails.application.routes.draw do
   resources :proposals do
     resources :items
     resources :agreements
+    get '/details', to: 'proposals#details', as: "details"
     get '/response_form', to: 'proposals#response_form'
     get '/agreement', to: 'proposals#agreement'
   end
@@ -35,5 +36,9 @@ Rails.application.routes.draw do
     resources :items
   end
   put '/purchase_orders/:purchase_order_id/add_existing_item', to: 'purchase_orders#add_existing_item'
+
+  resources :agreements do
+    get '/agreements_list', to: 'agreements#agreements_list', as: 'agreements_list', on: :collection
+  end
 
 end
