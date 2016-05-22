@@ -40,10 +40,11 @@ class ItemsController < ApplicationController
   def batch_create
     if ItemImporter.new(@client, @proposal).import(archive_params[:archive])
       flash[:notice] = "Items imported"
+      redirect_to edit_proposal_path(@proposal)
     else
       flash[:alert] = "Upload failed"
+      render :edit
     end
-    render :edit
   end
 
   def show
