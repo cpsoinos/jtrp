@@ -14,5 +14,4 @@ $(document).ready(function() {
     $clientGrid.masonry('layout');
   });
 
-
 });

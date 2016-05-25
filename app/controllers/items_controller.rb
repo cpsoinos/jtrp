@@ -7,6 +7,7 @@ class ItemsController < ApplicationController
 
   def index
     @items = ItemsPresenter.new(params).filter
+    @intentions = @items.pluck(:client_intention).uniq
     @filter = params[:state].try(:capitalize)
   end
 
