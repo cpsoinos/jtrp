@@ -13,7 +13,7 @@ feature "update an item" do
     scenario "visits edit item path" do
       visit item_path(item)
 
-      expect(page).to have_content(item.name)
+      expect(page).to have_content(item.description)
       expect(page).to have_content(item.description)
     end
 
@@ -21,8 +21,7 @@ feature "update an item" do
       visit item_path(item)
       click_link("Edit")
 
-      fill_in("Name", with: "Chair")
-      fill_in("Description", with: "Sit in it")
+      fill_in("Description", with: "Chair")
       fill_in("Height", with: "3'")
       fill_in("Width", with: "1'")
       fill_in("Depth", with: "1 1/2'")
@@ -31,7 +30,6 @@ feature "update an item" do
 
       expect(page).to have_content("Item was successfully updated.")
       expect(page).to have_content("Chair")
-      expect(page).to have_content("Sit in it")
       expect(page).to have_content("3'")
       expect(page).to have_content("1'")
       expect(page).to have_content("1 1/2'")
@@ -40,11 +38,11 @@ feature "update an item" do
     scenario "unsuccessfully updates an item" do
       visit edit_item_path(item)
 
-      fill_in("Name", with: "")
+      fill_in("Description", with: "")
       click_button("Update Item")
 
       expect(page).to have_content("Could not update item.")
-      expect(page).to have_content("Name can't be blank")
+      expect(page).to have_content("Description can't be blank")
       expect(page).not_to have_content("Chair")
     end
 

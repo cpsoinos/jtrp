@@ -16,7 +16,7 @@
           <%= link_to(image_tag(item.initial_photos.first.photo_url(:thumb), class: "img-rounded"), item_path(item)) %>
         <% end %>
         <div class="caption text-center">
-          <h3><%= link_to item.name, item_path(item) %></h3>
+          <h3><%= link_to item.description, item_path(item) %></h3>
           <p><%= item.description %></p>
           <p>Listed for: $<%= item.try(:listing_price) %></p>
           <p>Minimum sale price: $<%= item.try(:minimum_sale_price) %></p>

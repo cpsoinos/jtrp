@@ -25,7 +25,7 @@ feature "item index" do
 
       expect(page).to have_content("All Items")
       all_items.each do |item|
-        expect(page).to have_link(item.name)
+        expect(page).to have_link(item.description)
       end
       expect(page).to have_content("Client")
       expect(page).to have_content("Purchase Price")
@@ -49,7 +49,7 @@ feature "item index" do
 
       expect(page).to have_content("Active Items")
       active_items.each do |item|
-        expect(page).to have_link(item.name)
+        expect(page).to have_link(item.description)
         expect(page).to have_link(item.proposal.client.full_name)
       end
       expect(page).to have_content("Client")
@@ -74,7 +74,7 @@ feature "item index" do
 
       expect(page).to have_content("Sold Items")
       sold_items.each do |item|
-        expect(page).to have_link(item.name)
+        expect(page).to have_link(item.description)
       end
       expect(page).to have_content("Client")
       expect(page).to have_content("Purchase Price")
@@ -99,7 +99,7 @@ feature "item index" do
 
       expect(page).to have_content("Potential Items")
       potential_items.each do |item|
-        expect(page).to have_link(item.name)
+        expect(page).to have_link(item.description)
       end
       expect(page).to have_content("Client")
       expect(page).to have_content("Purchase Price")
