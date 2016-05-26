@@ -91,6 +91,20 @@ feature "new proposal" do
         expect(page).not_to have_content(item.description)
       end
 
+      scenario "uploads a batch of items" do
+        visit edit_proposal_path(proposal)
+        attach_file("item[archive]", File.join(Rails.root, '/spec/fixtures/archive.zip'))
+        click_on("Upload Archive")
+
+        expect(page).to have_content("microwave")
+        expect(page).to have_content("dish washer")
+        expect(page).to have_css("img[src*='test_3.png']")
+        expect(page).to have_css("img[src*='test_4.png']")
+        expect(page).to have_css("img[src*='test_5.png']")
+        expect(page).to have_css("img[src*='test_6.png']")
+        expect(Item.count).to eq(2)
+      end
+
       context "item details" do
         let!(:item) { create(:item, proposal: proposal, client: client) }
 

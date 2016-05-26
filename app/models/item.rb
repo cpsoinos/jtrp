@@ -108,9 +108,11 @@ class Item < ActiveRecord::Base
   def will_purchase?
     offer_type == "purchase"
   end
+  alias owned? will_purchase?
 
   def will_consign?
     offer_type == "consign"
   end
+  alias consigned? will_consign?
 
 end

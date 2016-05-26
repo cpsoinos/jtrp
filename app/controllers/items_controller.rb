@@ -8,6 +8,7 @@ class ItemsController < ApplicationController
   def index
     @items = ItemsPresenter.new(params).filter
     @intentions = @items.pluck(:client_intention).uniq
+    intentions_map
     @filter = params[:state].try(:capitalize)
   end
 
@@ -105,6 +106,17 @@ class ItemsController < ApplicationController
 
   def archive_params
     params.require(:item).permit(:archive)
+  end
+
+  def intentions_map
+    @intentions_map = {
+      "consign" => "consigned",
+      "sell" => "owned",
+      "donate" => "will donate",
+      "dump" => "will dump",
+      "move" => "will move",
+      "undecided" => "undecided"
+    }
   end
 
 end

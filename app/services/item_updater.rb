@@ -11,6 +11,8 @@ class ItemUpdater
     process_photos
     process_offer_type
     item.update(attrs)
+    item.mark_sold if attrs[:sale_price]
+    item
   end
 
   private

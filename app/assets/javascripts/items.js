@@ -87,7 +87,6 @@ $(document).ready(function() {
 		}); //end shown
 	});  //end each
 
-
 });
 
 $(".items.index").ready(function() {

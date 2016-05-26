@@ -48,16 +48,18 @@
                       <% end %>
                     </td>
                   </tr>
-                  <tr>
-                    <th>Purchase Price</th>
-                    <td>
-                      <% if item.purchase_price_cents %>
-                        <%= humanized_money_with_symbol(item.purchase_price) %>
-                      <% else %>
-                        <i>none</i>
-                      <% end %>
-                    </td>
-                  </tr>
+                  <% if item.owned? %>
+                    <tr>
+                      <th>Purchase Price</th>
+                      <td>
+                        <% if item.purchase_price_cents %>
+                          <%= humanized_money_with_symbol(item.purchase_price) %>
+                        <% else %>
+                          <i>none</i>
+                        <% end %>
+                      </td>
+                    </tr>
+                  <% end %>
                   <tr>
                     <th>Listing Price</th>
                     <td>
@@ -78,6 +80,14 @@
                       <% end %>
                     </td>
                   </tr>
+                  <% if item.sold? %>
+                    <tr>
+                      <th>Sale Price</th>
+                      <td>
+                        <%= humanized_money_with_symbol(item.sale_price) %>
+                      </td>
+                    </tr>
+                  <% end %>
                 </table>
               </div>
             </div>

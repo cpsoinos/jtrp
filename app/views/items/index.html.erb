@@ -14,14 +14,12 @@
   </div>
 </div>
 
-
-
 <div class="col-xs-12 col-md-8 col-md-offset-2">
 
   <!-- Tabs -->
   <ul class="nav nav-pills nav-justified" role="tablist">
-    <% @intentions.each do |intention| %>
-    <li role="presentation"><a href="#<%= intention %>" aria-controls="<%= intention %>" role="tab" data-toggle="tab" class="agreement-tab"><%= intention %></a></li>
+    <% @intentions_map.each do |key, value| %>
+    <li role="presentation"><a href="#<%= key %>" aria-controls="<%= key %>" role="tab" data-toggle="tab" class="agreement-tab"><%= value %></a></li>
     <% end %>
   </ul>
 

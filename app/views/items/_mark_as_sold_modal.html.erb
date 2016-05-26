@@ -1,0 +1,26 @@
+<div class="modal fade" id="mark-as-sold-modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <%= form_for @item do |f| %>
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+          <h4 class="modal-title">Mark as Sold</h4>
+        </div>
+        <div class="modal-body">
+          <div class="form-group label-floating is-empty">
+            <div class="input-group">
+              <span class="input-group-addon">$</span>
+              <%= f.label :sale_price, class: "control-group" %>
+              <%= f.text_field :sale_price, class: "form-control" %>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <%= f.submit class: "btn btn-raised btn-primary"%>
+        </div>
+
+      <% end %>
+    </div>
+  </div>
+</div>
