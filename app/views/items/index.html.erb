@@ -18,8 +18,8 @@
 
   <!-- Tabs -->
   <ul class="nav nav-pills nav-justified" role="tablist">
-    <% @intentions_map.each do |key, value| %>
-    <li role="presentation"><a href="#<%= key %>" aria-controls="<%= key %>" role="tab" data-toggle="tab" class="agreement-tab"><%= value %></a></li>
+    <% @intentions.each do |intention| %>
+      <li role="presentation"><a href="#<%= intention %>" aria-controls="<%= intention %>" role="tab" data-toggle="tab" class="agreement-tab"><%= @intentions_map[intention] %></a></li>
     <% end %>
   </ul>
 
