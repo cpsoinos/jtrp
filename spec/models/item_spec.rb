@@ -4,7 +4,6 @@ describe Item do
   it { should belong_to(:proposal) }
   it { should have_many(:photos) }
 
-  it { should validate_presence_of(:name) }
   it { should validate_presence_of(:description) }
 
   it { should monetize(:purchase_price).allow_nil }
@@ -74,7 +73,7 @@ describe Item do
   describe Item, "state_machine" do
 
     it "starts as 'pending'" do
-      expect(Item.new(name: "a", description: "b").state).to eq("potential")
+      expect(Item.new(description: "b").state).to eq("potential")
     end
 
     it "transitions 'potential' to 'active'" do

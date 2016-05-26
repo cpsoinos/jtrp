@@ -15,7 +15,7 @@
 
           <div class="row text-center vertical-align">
             <div class="col-xs-10">
-              <b>Item #<%= item.id %>: <%= item.name %></b> - <i><%= item.description %></i>
+              <b>Item #<%= item.id %>: <%= item.description %></b>
             </div>
             <div class="col-xs-2">
               <%= link_to "Remove", "javascript:void()", class: "btn btn-raised btn-xs btn-danger remove-existing-item-button", data: { item_id: item.id } %>

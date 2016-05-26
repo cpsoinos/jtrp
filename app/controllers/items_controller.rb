@@ -7,6 +7,8 @@ class ItemsController < ApplicationController
 
   def index
     @items = ItemsPresenter.new(params).filter
+    @intentions = @items.pluck(:client_intention).uniq
+    intentions_map
     @filter = params[:state].try(:capitalize)
   end
 
@@ -99,11 +101,22 @@ class ItemsController < ApplicationController
   protected
 
   def item_params
-    params.require(:item).permit(:name, :description, {photos: []}, {initial_photos: []}, {listing_photos: []}, :proposal_id, :purchase_price, :asking_price, :listing_price, :sale_price, :minimum_sale_price, :condition, :client_id, :category_id, :client_intention, :notes, :height, :width, :depth, :offer_type)
+    params.require(:item).permit(:description, {photos: []}, {initial_photos: []}, {listing_photos: []}, :proposal_id, :purchase_price, :asking_price, :listing_price, :sale_price, :minimum_sale_price, :condition, :client_id, :category_id, :client_intention, :notes, :height, :width, :depth, :offer_type)
   end
 
   def archive_params
     params.require(:item).permit(:archive)
+  end
+
+  def intentions_map
+    @intentions_map = {
+      "consign" => "consigned",
+      "sell" => "owned",
+      "donate" => "will donate",
+      "dump" => "will dump",
+      "move" => "will move",
+      "undecided" => "undecided"
+    }
   end
 
 end

@@ -74,7 +74,25 @@ $(document).ready(function() {
     $grid.masonry('layout');
   });
 
+
+  //Reinitialize masonry inside each panel after the relative tab link is clicked -
+	$('a[data-toggle=tab]').each(function () {
+		var $this = $(this);
+
+		$this.on('shown.bs.tab', function () {
+
+      $grid.imagesLoaded().progress( function() {
+        $grid.masonry('layout');
+      });
+		}); //end shown
+	});  //end each
+
 });
+
+$(".items.index").ready(function() {
+  var $tab = $($("a[role='tab'")[0])
+  $tab.tab("show");
+})
 
 var slickifyDropdown = function(selector, items) {
   selector.ddslick({
