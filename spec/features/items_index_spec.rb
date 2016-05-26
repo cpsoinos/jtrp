@@ -26,10 +26,16 @@ feature "item index" do
     end
 
     scenario "visits item list" do
+      Item.first.update_attribute("client_intention", "sell")
+      Item.second.update_attribute("client_intention", "consign")
+      Item.third.update_attribute("client_intention", "donate")
+      Item.fourth.update_attribute("client_intention", "dump")
+      Item.fifth.update_attribute("client_intention", "move")
       visit items_path
 
       expect(page).to have_content("All Items")
       intentions.each do |intention|
+        next if intention
         expect(page).to have_link(intention)
       end
     end
