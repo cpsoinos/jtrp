@@ -35,7 +35,6 @@ feature "add an item" do
       click_link("Quick-Add Item")
 
       expect(page).to have_content("Add an item")
-      expect(page).to have_field("Name")
       expect(page).to have_field("Description")
       expect(page).to have_field("item[initial_photos][]")
 
@@ -52,13 +51,11 @@ feature "add an item" do
       visit new_item_path
 
       attach_file('item[initial_photos][]', File.join(Rails.root, '/spec/fixtures/test.png'))
-      fill_in "Name", with: "Chair"
-      fill_in "Description", with: "People sit in it."
+      fill_in "Description", with: "Chair"
       click_on("Create Item")
 
       expect(page).to have_content("Item created")
       expect(page).to have_content("Chair")
-      expect(page).to have_content("People sit in it.")
       expect(page).to have_css("img[src*='test.png']")
     end
 
@@ -74,7 +71,6 @@ feature "add an item" do
 
       expect(page).to have_content(category.name)
       expect(page).to have_content("Add an item")
-      expect(page).to have_field("Name")
       expect(page).to have_field("Description")
 
       expect(page).not_to have_content("Select Client")
@@ -90,23 +86,21 @@ feature "add an item" do
       visit new_category_item_path(category)
 
       attach_file('item[initial_photos][]', File.join(Rails.root, '/spec/fixtures/test.png'))
-      fill_in "Name", with: "Chair"
-      fill_in "Description", with: "People sit in it."
+      fill_in "Description", with: "Chair"
       click_on("Create Item")
 
       expect(page).to have_content("Item created")
       expect(page).to have_content("Chair")
-      expect(page).to have_content("People sit in it.")
       expect(page).to have_css("img[src*='test.png']")
     end
 
     scenario "unsuccessfully adds an item" do
       visit new_category_item_path(category)
-      fill_in "Description", with: "People sit in it."
+      fill_in "Description", with: ""
       click_on("Create Item")
 
       expect(page).to have_content("Item could not be saved")
-      expect(page).to have_content("Name can't be blank")
+      expect(page).to have_content("Description can't be blank")
     end
   end
 

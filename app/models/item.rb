@@ -24,7 +24,6 @@ class Item < ActiveRecord::Base
   belongs_to :proposal
   belongs_to :client, class_name: "User", foreign_key: "client_id"
 
-  validates :name, presence: true
   validates :description, presence: true
 
   scope :potential, -> { where(state: "potential") }
@@ -109,9 +108,11 @@ class Item < ActiveRecord::Base
   def will_purchase?
     offer_type == "purchase"
   end
+  alias owned? will_purchase?
 
   def will_consign?
     offer_type == "consign"
   end
+  alias consigned? will_consign?
 
 end

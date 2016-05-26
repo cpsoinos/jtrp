@@ -10,7 +10,6 @@ class ItemImporter
   def import(archive)
     @archive = archive
     execute
-
   end
 
   private
@@ -46,10 +45,9 @@ class ItemImporter
 
   def massage_attrs
     @massaged_attrs ||= begin
-      @items.map do |item_name, photos|
+      @items.map do |item_description, photos|
         {
-          name: item_name,
-          description: Time.now.strftime("uploaded on %m/%d/%Y"),
+          description: item_description,
           initial_photos: process_images(photos)
         }
       end
