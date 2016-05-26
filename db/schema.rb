@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160521033915) do
+ActiveRecord::Schema.define(version: 20160525122348) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -86,7 +86,6 @@ ActiveRecord::Schema.define(version: 20160521033915) do
     t.string   "state",                       default: "potential", null: false
     t.integer  "minimum_sale_price_cents"
     t.string   "minimum_sale_price_currency", default: "USD",       null: false
-    t.string   "name",                                              null: false
     t.integer  "client_id"
     t.string   "client_intention",            default: "undecided"
     t.text     "notes"

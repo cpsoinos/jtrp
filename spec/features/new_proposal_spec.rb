@@ -52,7 +52,6 @@ feature "new proposal" do
         expect(page).to have_content("Step 1")
         expect(page).to have_content("Choose an existing item")
         expect(page).to have_content("Add a New Item")
-        expect(page).to have_field("item_name")
         expect(page).to have_field("item_description")
         expect(page).to have_field("item[initial_photos][]")
         expect(page).not_to have_field("item_listing_price")
@@ -72,12 +71,11 @@ feature "new proposal" do
 
       scenario "successfully fills in proposal information", js: true do
         visit edit_proposal_path(proposal)
-        fill_in("item_name", with: "Chair")
-        fill_in("item_description", with: "sit in it")
+        fill_in("item_description", with: "Chair")
         attach_file('item[initial_photos][]', [File.join(Rails.root, '/spec/fixtures/test.png'), File.join(Rails.root, '/spec/fixtures/test_2.png')])
         click_on("Create Item")
 
-        expect(page).to have_content("sit in it")
+        expect(page).to have_content("Chair")
         expect(page).to have_css("img[src*='test.png']")
         expect(page).to have_css("img[src*='test_2.png']")
       end
@@ -86,11 +84,25 @@ feature "new proposal" do
         item = create(:item, proposal: proposal)
         visit edit_proposal_path(proposal)
 
-        expect(page).to have_content(item.name)
+        expect(page).to have_content(item.description)
 
         click_on("Remove")
 
-        expect(page).not_to have_content(item.name)
+        expect(page).not_to have_content(item.description)
+      end
+
+      scenario "uploads a batch of items" do
+        visit edit_proposal_path(proposal)
+        attach_file("item[archive]", File.join(Rails.root, '/spec/fixtures/archive.zip'))
+        click_on("Upload Archive")
+
+        expect(page).to have_content("microwave")
+        expect(page).to have_content("dish washer")
+        expect(page).to have_css("img[src*='test_3.png']")
+        expect(page).to have_css("img[src*='test_4.png']")
+        expect(page).to have_css("img[src*='test_5.png']")
+        expect(page).to have_css("img[src*='test_6.png']")
+        expect(Item.count).to eq(2)
       end
 
       context "item details" do
@@ -185,7 +197,7 @@ feature "new proposal" do
 
           expect(page).to have_content("This proposal is not binding and shall not be deemed an enforceable contract. It is for information purposes only.")
           expect(page).to have_content("Item ##{item.id}")
-          expect(page).to have_content(item.name)
+          expect(page).to have_content(item.description)
           expect(page).to have_content("Purchase Offer")
           expect(page).to have_content("Consignment Offer")
           expect(page).to have_link("Response Form")
@@ -199,7 +211,7 @@ feature "new proposal" do
 
         expect(page).to have_content("This proposal is not binding and shall not be deemed an enforceable contract. It is for information purposes only.")
         expect(page).to have_content("Item ##{item.id}")
-        expect(page).to have_content(item.name)
+        expect(page).to have_content(item.description)
         expect(page).to have_content("Purchase Offer")
         expect(page).to have_content("Consignment Offer")
         expect(page).to have_link("Response Form")
@@ -211,7 +223,7 @@ feature "new proposal" do
 
         expect(page).to have_content("Proposal Response")
         expect(page).to have_content(item.id)
-        expect(page).to have_content(item.name)
+        expect(page).to have_content(item.description)
         %w(sell consign donate dump move nothing).each do |intention|
           expect(page).to have_content(intention)
         end
