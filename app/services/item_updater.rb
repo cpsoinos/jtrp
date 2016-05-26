@@ -10,9 +10,8 @@ class ItemUpdater
     @attrs = attrs
     process_photos
     process_offer_type
+    process_sale
     item.update(attrs)
-    item.mark_sold if attrs[:sale_price]
-    item
   end
 
   private
@@ -41,6 +40,12 @@ class ItemUpdater
       elsif offer_type == "consign"
         item.purchase_price = nil
       end
+    end
+  end
+
+  def process_sale
+    if attrs[:sale_price] && !item.sold?
+      item.mark_sold!
     end
   end
 
