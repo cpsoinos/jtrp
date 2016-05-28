@@ -1,6 +1,6 @@
 <div class="row">
 
-  <div class="col-xs-12 col-md-6">
+  <div class="col-xs-12 col-sm-6">
     <h1 class="company-title"><%= @company.name %></h1>
     <p><%= @company.full_address %></p>
     <table class="form-header-table">
@@ -19,9 +19,9 @@
     </table>
   </div>
 
-  <div class="col-xs-12 col-md-6 text-right form-header-table">
+  <div class="col-xs-12 col-sm-6 text-right form-header-table">
     <h1><%= form_name %></h1>
-    <table class="pull-right" id="proposal-table-info">
+    <table class="pull-right">
       <tr>
         <td class="text-left">Date</td>
         <td><%= @proposal.updated_at.strftime("%B %d, %Y") %></td>
@@ -40,7 +40,7 @@
 
 <div class="row top-margin">
 
-  <div class="col-md-6">
+  <div class="col-sm-6">
     <table class="form-header-table">
       <tr class="client-header">
         <td colspan="2" class="client-header-text">Client:</th>
@@ -69,7 +69,7 @@
   </div>
 
   <% if action_name == "response_form" %>
-    <div class="col-md-6">
+    <div class="col-sm-6">
       For each item, please select only one option for what it is you would like to do with it:  sell to us at our purchase offer price, consign with us at our consignment offer prices, request our services to donate the item to a local charity, bring it to the dump, or move it to another location, or do nothing with the item. Please provide additional information where appropriate.
     </div>
   <% end %>

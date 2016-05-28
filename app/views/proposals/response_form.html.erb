@@ -10,7 +10,7 @@
               Item #<%= item.id %>: <%= item.description %>
             </div>
           </div>
-          <div class="row vertical-align response-thumb">
+          <div class="row vertical-align">
             <div class="col-xs-3">
               <% if item.initial_photos.present? %>
                 <%= image_tag(item.initial_photos.first.photo_url(:small_thumb)) %>
@@ -22,7 +22,7 @@
               <%= form_for item, remote: true do |f| %>
                 <div class="row">
                   <% %w(sell consign donate).each do |intention| %>
-                    <div class="col-xs-4 text-right">
+                    <div class="col-sm-4 col-xs-8 text-right">
                       <%= f.label :client_intention, intention %>
                       <%= f.radio_button :client_intention, intention, class: "selector intention-selector", id: "item_#{item.id}_client_intention_#{intention}" %>
                     </div>
@@ -30,7 +30,7 @@
                 </div>
                 <div class="row">
                   <% %w(dump move nothing).each do |intention| %>
-                    <div class="col-xs-4 text-right">
+                    <div class="col-sm-4 col-xs-8 text-right">
                       <%= f.label :client_intention, intention %>
                       <%= f.radio_button :client_intention, intention, class: "selector intention-selector", id: "item_#{item.id}_client_intention_#{intention}" %>
                     </div>
@@ -41,7 +41,7 @@
                 <div class="col-xs-4 text-right">
                   notes:
                 </div>
-                <div class="col-xs-8">
+                <div class="col-xs-8 hidden-print">
                   <%= best_in_place item, :notes, place_holder: "<i>click or tap here to edit</i>".html_safe %>
                 </div>
               </div>
@@ -55,12 +55,12 @@
 
     <% if current_user.internal? %>
 
-      <div class="row large-top-margin">
+      <div class="row large-top-margin hidden-print">
         <div class="col-xs-6">
-          <%= link_to "<i class='fa fa-caret-left'></i> Step 4: View Proposal".html_safe, proposal_path(@proposal), class: "btn btn-raised btn-success" %>
+          <%= link_to "<i class='fa fa-caret-left'></i> Step 4: View Proposal".html_safe, proposal_path(@proposal), class: "btn btn-raised btn-success btn-responsive" %>
         </div>
         <div class="col-xs-6 text-right">
-          <%= link_to "Step 6: Generate Agreements <i class='fa fa-caret-right'></i>".html_safe, proposal_agreements_path(@proposal), method: :post, class: "btn btn-raised btn-success" %>
+          <%= link_to "Step 6: Generate Agreements <i class='fa fa-caret-right'></i>".html_safe, proposal_agreements_path(@proposal), method: :post, class: "btn btn-raised btn-success btn-responsive" %>
         </div>
       </div>
 
