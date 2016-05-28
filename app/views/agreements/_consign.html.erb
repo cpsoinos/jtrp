@@ -1,5 +1,5 @@
 <h1 class="text-center company-title"><%= @company.name %></h1>
-<h3 class="text-center">Consignment Agreement</h2><br>
+<h3 class="text-center">Consignment Agreement</h3><br>
 
 <p>
   This consignment agreement (the “<b>Agreement</b>”) is entered into as of <%= DateTime.now.strftime("%B %d, %Y") %>, by and between <b><%= @company.name %>, LLC</b> (the <b>“Consignee”</b>) of <b><%= @company.full_address %></b> and <b><%= @client.full_name %></b> (the <b>“Consignor”</b>) of <b><%= @client.full_address %></b>, (collectively, the <b>“Parties”</b>).
@@ -130,7 +130,7 @@
 <br />
 <br />
 <div class="row">
-  <p>AGREED AND EXECUTED BY, effective on the date first written above:</b></p>
+  <p><b>AGREED AND EXECUTED BY, effective on the date first written above:</b></p>
 
   <div class="col-xs-12 col-md-6">
     <p>Consignee:  <%= @company.name %>, LLC</p>
