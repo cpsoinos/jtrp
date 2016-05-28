@@ -1,14 +1,14 @@
 <div class="col-xs-12 col-md-8 col-md-offset-2">
 
   <!-- Tabs -->
-  <ul class="nav nav-pills nav-justified" role="tablist">
+  <ul class="nav nav-pills nav-justified hidden-print large-bottom-margin" role="tablist">
     <% @agreements.each do |agreement| %>
     <li role="presentation"><a href="#<%= agreement.agreement_type %>" aria-controls="<%= agreement.agreement_type %>" role="tab" data-toggle="tab" class="agreement-tab"><%= agreement.agreement_type %></a></li>
     <% end %>
   </ul>
 
   <!-- Tab panes -->
-  <div class="well bs-component large-top-margin">
+  <div class="well bs-component">
     <div class="tab-content">
       <% @agreements.each do |agreement| %>
         <div role="tabpanel" class="tab-pane fade" id="<%= agreement.agreement_type %>"><%= render "#{agreement.agreement_type}", items: @items.where(client_intention: agreement.agreement_type), agreement: agreement %></div>

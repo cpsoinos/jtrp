@@ -1,12 +1,11 @@
-<h1 class="text-center">Items for <%= @proposal.client.full_name %></h1>
-</br>
+<h1 class="text-center hidden-print bottom-margin">Items for <%= @proposal.client.full_name %></h1>
 
 <div class="col-md-8 col-md-offset-2">
   <div class="well bs-component">
     <%= render 'header', form_name: "Proposal" %>
     <%= render 'disclaimer' %>
     <%= render 'item_list', items: @items %>
-    <div class="row">
+    <div class="row hidden-print">
       <div class="col-xs-6">
         <%= link_to "<i class='fa fa-caret-left'></i> Step 2: Details".html_safe, proposal_details_path(@proposal), class: "btn btn-raised btn-success" %>
       </div>
