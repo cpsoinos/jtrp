@@ -1,7 +1,7 @@
 <div class="row">
   <div class="panel panel-default panel-item-row" id="panel-item-<%= item.id %>">
     <div class="row vertical-align">
-      <div class="col-xs-12 col-md-3 text-center">
+      <div class="col-xs-12 col-sm-3 text-center">
         <% if item.initial_photos.present? %>
           <%= image_tag(item.initial_photos.first.photo_url(:thumb)) %>
         <% else %>
@@ -9,7 +9,7 @@
         <% end %>
       </div>
 
-      <div class="col-xs-12 col-md-9">
+      <div class="col-xs-12 col-sm-9">
 
         <div class="row text-center vertical-align">
           <div class="col-xs-10">
@@ -23,36 +23,36 @@
         </div>
 
         <div class="row">
-          <div class="col-xs-12 col-md-6">
+          <div class="col-xs-12 col-sm-6">
             <div class="row">
               <div class="client-header text-center">
                 <p class="client-header-text">Purchase Offer</p>
               </div>
             </div>
             <div class="row">
-              <div class="col-xs-8 col-md-6 text-right">
+              <div class="col-xs-8 text-right">
                 will purchase:
               </div>
-              <div class="col-xs-4 col-md-6">
+              <div class="col-xs-4">
                 <%= item.will_purchase? ? "yes" : "no" %>
               </div>
             </div>
             <div class="row">
-              <div class="col-xs-8 col-md-6 text-right">
+              <div class="col-xs-8 text-right">
                 purchase price:
               </div>
-              <div class="col-xs-4 col-md-6">
+              <div class="col-xs-4">
                 <%= humanized_money_with_symbol(item.purchase_price) if item.purchase_price %>
               </div>
             </div>
           </div>
-          <div class="hidden-xs col-md-6">
+          <div class="hidden-xs col-sm-6">
             <div class="client-header text-center">
               <p class="client-header-text">Condition/Notes</p>
             </div>
           </div>
           <div class="row">
-            <div class="hidden-xs col-md-6">
+            <div class="hidden-xs col-sm-6">
               <%= item.condition %>
             </div>
           </div>
@@ -60,43 +60,43 @@
 
 
         <div class="row">
-          <div class="col-xs-12 col-md-6">
+          <div class="col-xs-12 col-sm-6">
             <div class="row">
               <div class="client-header text-center">
                 <p class="client-header-text">Consignment Offer</p>
               </div>
             </div>
             <div class="row">
-              <div class="col-xs-8 col-md-6 text-right">
+              <div class="col-xs-8 text-right">
                 will consign:
               </div>
-              <div class="col-xs-4 col-md-6">
+              <div class="col-xs-4">
                 <%= item.will_consign? ? "yes" : "no" %>
               </div>
             </div>
             <div class="row">
-              <div class="col-xs-8 col-md-6 text-right">
+              <div class="col-xs-8 text-right">
                 original asking price:
               </div>
-              <div class="col-xs-4 col-md-6">
+              <div class="col-xs-4">
                 <%= humanized_money_with_symbol(item.listing_price) if item.listing_price %>
               </div>
             </div>
             <div class="row">
-              <div class="col-xs-8 col-md-6 text-right">
+              <div class="col-xs-8 text-right">
                 minimum sale price:
               </div>
-              <div class="col-xs-4 col-md-6">
+              <div class="col-xs-4">
                 <%= humanized_money_with_symbol(item.minimum_sale_price) if item.minimum_sale_price %>
               </div>
             </div>
           </div>
 
-          <div class="hidden-xs col-md-6">
+          <div class="hidden-xs col-sm-6">
             <div class="row vertical-align">
               <% if item.initial_photos.present? %>
                 <% item.initial_photos[1..3].each do |photo| %>
-                  <div class="col-md-12">
+                  <div class="col-sm-12">
                     <%= image_tag(photo.photo_url(:thumb), class: "half-thumb") %>
                   </div>
                 <% end %>
