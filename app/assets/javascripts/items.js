@@ -90,7 +90,7 @@ $(document).ready(function() {
 });
 
 $(".items.index").ready(function() {
-  var $tab = $($("a[role='tab'")[0])
+  var $tab = $($("a[role='tab']")[0])
   $tab.tab("show");
 })
 
