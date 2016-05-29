@@ -17,7 +17,7 @@
           <% else %>
             <%= render "#{agreement.agreement_type}", items: @items.where(client_intention: agreement.agreement_type), agreement: agreement %>
           <% end %>
-          <% unless agreement.scanned_agreement.present? %>
+          <% if agreement.potential? %>
             <%= render 'scanned_upload_form', agreement: agreement %>
           <% end %>
         </div>
