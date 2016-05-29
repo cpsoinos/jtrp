@@ -1,24 +1,28 @@
 <%= render 'proposals/header', form_name: "Purchase Invoice" %>
 
 <div class="row vertical-align large-top-margin">
-  <% items.each do |item| %>
-    <div class="col-xs-4">
-      <% if item.initial_photos.present? %>
-        <%= image_tag(item.initial_photos.first.photo_url(:thumb)) %>
-      <% else %>
-        <%= image_tag("thumb_No_Image_Available.png") %>
-      <% end %>
-    </div>
-    <div class="col-xs-4">
-      Item #<%= item.id %>: <%= item.description %>
-    </div>
-    <div class="col-xs-4">
-      <%= humanized_money_with_symbol(item.purchase_price).html_safe %>
-    </div>
-  <% end %>
+  <div class="col-xs-12">
+    <% items.each do |item| %>
+      <div class="col-xs-12 col-lg-6 no-break">
+        <div class="col-xs-6">
+          <% if item.initial_photos.present? %>
+            <%= image_tag(item.initial_photos.first.photo_url(:thumb)) %>
+          <% else %>
+            <%= image_tag("thumb_No_Image_Available.png") %>
+          <% end %>
+        </div>
+        <div class="col-xs-3">
+          Item #<%= item.id %>: <%= item.description %>
+        </div>
+        <div class="col-xs-3">
+          <%= humanized_money_with_symbol(item.purchase_price).html_safe %>
+        </div>
+      </div>
+    <% end %>
+  </div>
 </div>
 
-<div class="row large-top-margin">
+<div class="row large-top-margin no-break">
   <div class="col-xs-6">
     Vendor, being the rightful owner of the above-mentioned items, hereby sells them to Just the Right Piece, LLC for the stated consideration, and hereby acknowledges the receipt and sufficiency of the consideration as stated herein.
   </div>
