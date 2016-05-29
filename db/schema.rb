@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160525122348) do
+ActiveRecord::Schema.define(version: 20160528170131) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -114,6 +114,13 @@ ActiveRecord::Schema.define(version: 20160525122348) do
     t.string   "state"
   end
 
+  create_table "scanned_agreements", force: :cascade do |t|
+    t.integer "agreement_id", null: false
+    t.string  "scan",         null: false
+  end
+
+  add_index "scanned_agreements", ["agreement_id"], name: "index_scanned_agreements_on_agreement_id", using: :btree
+
   create_table "users", force: :cascade do |t|
     t.string   "email",                       default: "",       null: false
     t.string   "encrypted_password",          default: "",       null: false
@@ -151,5 +158,6 @@ ActiveRecord::Schema.define(version: 20160525122348) do
   add_foreign_key "agreements", "proposals"
   add_foreign_key "items", "categories"
   add_foreign_key "photos", "items"
+  add_foreign_key "scanned_agreements", "agreements"
   add_foreign_key "users", "companies"
 end
