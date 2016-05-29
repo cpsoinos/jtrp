@@ -1,0 +1,23 @@
+<div class="hidden-print large-top-margin text-center">
+  - or -
+
+  <h3>Upload a scanned copy:</h3>
+
+  <%= form_for [agreement, agreement.build_scanned_agreement] do |f| %>
+
+    <div class="row form-row">
+      <div class="text-center">
+        <div class="col-xs-12 col-sm-3 form-label">
+          <%= f.label :scanned_agreement, class: "control-label" %>
+        </div>
+        <div class="col-xs-12 col-sm-9 text-left">
+          <%= f.file_field :scan, class: "dropzone form-control" %>
+        </div>
+      </div>
+    </div>
+
+    <%= f.submit class: "btn btn-raised btn-primary" %>
+
+  <% end %>
+
+</div>

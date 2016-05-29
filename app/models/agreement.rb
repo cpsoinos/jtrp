@@ -1,5 +1,6 @@
 class Agreement < ActiveRecord::Base
   belongs_to :proposal
+  has_one :scanned_agreement
 
   validates :agreement_type, presence: true
   validates :proposal, presence: true
@@ -40,14 +41,22 @@ class Agreement < ActiveRecord::Base
 
   def meets_requirements_active?
     if agreement_type == "consign"
-      client_signature.present? && manager_signature.present?
+      manager_signed? && client_signed?
     else
-      client_signature.present?
+      client_signed?
     end
   end
 
   def meets_requirements_inactive?
     items.active.empty?
+  end
+
+  def manager_signed?
+    manager_signature.present? || scanned_agreement.present?
+  end
+
+  def client_signed?
+    client_signature.present? || scanned_agreement.present?
   end
 
 end
