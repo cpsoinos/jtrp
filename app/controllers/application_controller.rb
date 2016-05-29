@@ -27,6 +27,10 @@ class ApplicationController < ActionController::Base
     @client ||= Client.find(params[:client_id])
   end
 
+  def find_agreement
+    @agreement ||= Agreement.find(params[:agreement_id])
+  end
+
   def find_categories
     @categories = Category.all
   end

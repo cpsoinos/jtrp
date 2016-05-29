@@ -11,7 +11,16 @@
   <div class="well bs-component">
     <div class="tab-content">
       <% @agreements.each do |agreement| %>
-        <div role="tabpanel" class="tab-pane fade" id="<%= agreement.agreement_type %>"><%= render "#{agreement.agreement_type}", items: @items.where(client_intention: agreement.agreement_type), agreement: agreement %></div>
+        <div role="tabpanel" class="tab-pane fade" id="<%= agreement.agreement_type %>">
+          <% if agreement.scanned_agreement.present? %>
+            <iframe src="<%= agreement.scanned_agreement.scan_url %>" width="100%" style="border: none;" class="full-height"> </iframe>
+          <% else %>
+            <%= render "#{agreement.agreement_type}", items: @items.where(client_intention: agreement.agreement_type), agreement: agreement %>
+          <% end %>
+          <% unless agreement.scanned_agreement.present? %>
+            <%= render 'scanned_upload_form', agreement: agreement %>
+          <% end %>
+        </div>
       <% end %>
     </div>
   </div>

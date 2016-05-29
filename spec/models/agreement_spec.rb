@@ -1,6 +1,7 @@
 describe Agreement do
 
   it { should belong_to(:proposal) }
+  it { should have_one(:scanned_agreement) }
   it { should validate_presence_of(:proposal) }
   it { should validate_presence_of(:agreement_type) }
 
