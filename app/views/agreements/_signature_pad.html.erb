@@ -7,7 +7,7 @@
   </div>
 
   <% unless agreement.send("#{role}_signature") %>
-    <div class="text-center">
+    <div class="text-center hidden-print">
       <%= f.submit "I accept the terms of this agreement", class: "btn btn-primary btn-raised btn-responsive", id: "#{agreement.agreement_type}-#{role}-submit" %>
     </div>
   <% end %>
