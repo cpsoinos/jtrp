@@ -1,10 +1,12 @@
 <h1 class="text-center">Edit a Category</h1>
-</br>
 
-<div class="col-md-8 col-md-offset-2">
+<div class="col-md-8 col-md-offset-2 large-top-margin">
   <div class="well bs-component">
 
-    <%= render "form", legend: "Edit a Category" %>
+    <%= render "form", legend: "Edit #{@category.name}" %>
+    <div class="text-right large-top-margin">
+      <%= link_to "Delete", category_path(@category), method: "DELETE", class: "btn btn-raised btn-danger" %>
+    </div>
 
   </div>
 </div>

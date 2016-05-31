@@ -14,13 +14,13 @@ feature "edit a category" do
       visit categories_path
 
       expect(page).to have_content(category.name)
-      expect(page).to have_link("edit")
+      expect(page).to have_link("Edit")
     end
 
     scenario "clicks on edit category link" do
       visit categories_path
 
-      click_link("edit")
+      click_link("Edit")
       expect(page).to have_field("Name")
       expect(page).to have_field("Photo")
       expect(page).to have_content("optional")
@@ -45,7 +45,7 @@ feature "edit a category" do
       expect(page).to have_content("Category updated!")
       expect(page).to have_content(category.name)
       expect(page).to have_css("img[src*='test.png']")
-      expect(page).to have_link("edit")
+      expect(page).to have_link("Edit")
     end
 
     scenario "tries to update a category by removing name" do
@@ -65,7 +65,7 @@ feature "edit a category" do
       click_link("Cancel")
 
       expect(page).to have_content(category.name)
-      expect(page).to have_link("edit")
+      expect(page).to have_link("Edit")
     end
   end
 
@@ -74,7 +74,7 @@ feature "edit a category" do
     scenario "visits categories page" do
       visit categories_path
 
-      expect(page).not_to have_link("edit")
+      expect(page).not_to have_link("Edit")
     end
 
     scenario "visits edit category page" do
@@ -94,7 +94,7 @@ feature "edit a category" do
     scenario "visits categories page" do
       visit categories_path
 
-      expect(page).not_to have_link("edit")
+      expect(page).not_to have_link("Edit")
     end
 
     scenario "visits edit category page" do
