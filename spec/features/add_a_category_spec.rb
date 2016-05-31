@@ -33,7 +33,7 @@ feature "add a category" do
 
       expect(page).to have_content("Category created!")
       expect(page).to have_content("Great Room")
-      expect(page).to have_link("edit")
+      expect(page).to have_link("Edit")
     end
 
     scenario "successfully adds a category with a photo" do
@@ -45,7 +45,7 @@ feature "add a category" do
       expect(page).to have_content("Category created!")
       expect(page).to have_content("Great Room")
       expect(page).to have_css("img[src*='test.png']")
-      expect(page).to have_link("edit")
+      expect(page).to have_link("Edit")
     end
 
     scenario "unsuccessfully tries to add a category without a name" do
@@ -65,6 +65,25 @@ feature "add a category" do
 
       expect(page).to have_link("Add a category")
     end
+
+    scenario "adds a subcategory" do
+      category = create(:category, name: "Bedroom")
+      visit category_path(category)
+      click_link("Add a subcategory")
+
+      expect(page).to have_field("Name")
+      expect(page).to have_field("Photo")
+      expect(page).to have_content("optional")
+      expect(page).to have_button("Create Category")
+      expect(page).to have_link("Cancel")
+
+      fill_in("Name", with: "Accessories")
+      click_on("Create Category")
+
+      expect(page).to have_content("Category created!")
+      expect(page).to have_link("Accessories")
+    end
+
   end
 
   context "guest" do

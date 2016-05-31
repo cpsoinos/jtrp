@@ -75,3 +75,11 @@ td.item-row-description {
 .grid-item--width2 {
   width: 400px;
 }
+
+a.panel-title:hover {
+  color: white;
+}
+
+.panel-body, .well-caption {
+  padding: 2rem;
+}

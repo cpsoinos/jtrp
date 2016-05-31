@@ -37,10 +37,21 @@ class CategoriesController < ApplicationController
     end
   end
 
+  def destroy
+    @category = Cagegory.find(params[:id])
+    if @category.destroy
+      flash[:notice] = "Category destroyed"
+      redirect_to categories_path
+    else
+      flash[:notice] = "Category could not be destroyed"
+      redirect_to :back
+    end
+  end
+
   protected
 
   def category_params
-    params.require(:category).permit([:name, :photo])
+    params.require(:category).permit([:name, :photo, :parent_id])
   end
 
 end
