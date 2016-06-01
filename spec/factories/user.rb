@@ -22,26 +22,27 @@ FactoryGirl.define do
     end
 
     factory :client, class: Client do
-
+      account
       status "potential"
+      primary_contact true
 
       trait :potential do
         after(:create) do |instance|
-          create(:proposal, client: instance)
+          create(:proposal, account: instance.account)
         end
       end
 
       trait :active do
         status "active"
         after(:create) do |instance|
-          create(:item, :active, :with_listing_photo, client_intention: "sell", proposal: create(:proposal, :active, client: instance))
+          create(:item, :active, :with_listing_photo, client_intention: "sell", proposal: create(:proposal, :active, account: instance.account))
         end
       end
 
       trait :inactive do
         status "inactive"
         after(:create) do |instance|
-          create(:item, :sold, proposal: create(:proposal, :inactive, client: instance))
+          create(:item, :sold, proposal: create(:proposal, :inactive, account: instance.account))
         end
       end
 

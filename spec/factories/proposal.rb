@@ -3,7 +3,7 @@ require 'factory_girl'
 FactoryGirl.define do
 
   factory :proposal do
-    client
+    account
     association :created_by, factory: :user
 
     trait :active do

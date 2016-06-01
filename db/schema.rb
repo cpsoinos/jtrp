@@ -11,10 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160531022638) do
+ActiveRecord::Schema.define(version: 20160531235952) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "accounts", force: :cascade do |t|
+    t.integer  "account_number",                 null: false
+    t.boolean  "is_company",     default: false
+    t.string   "company_name"
+    t.integer  "created_by_id"
+    t.integer  "updated_by_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.text     "notes"
+  end
 
   create_table "agreements", force: :cascade do |t|
     t.integer "proposal_id"
@@ -110,12 +121,14 @@ ActiveRecord::Schema.define(version: 20160531022638) do
   add_index "photos", ["item_id"], name: "index_photos_on_item_id", using: :btree
 
   create_table "proposals", force: :cascade do |t|
-    t.integer  "client_id",     null: false
     t.integer  "created_by_id", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "state"
+    t.integer  "account_id"
   end
+
+  add_index "proposals", ["account_id"], name: "index_proposals_on_account_id", using: :btree
 
   create_table "scanned_agreements", force: :cascade do |t|
     t.integer "agreement_id", null: false
@@ -152,8 +165,10 @@ ActiveRecord::Schema.define(version: 20160531022638) do
     t.string   "avatar"
     t.integer  "company_id"
     t.boolean  "primary_contact",             default: false
+    t.integer  "account_id"
   end
 
+  add_index "users", ["account_id"], name: "index_users_on_account_id", using: :btree
   add_index "users", ["company_id"], name: "index_users_on_company_id", using: :btree
   add_index "users", ["email"], name: "index_users_on_email", using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
@@ -161,6 +176,8 @@ ActiveRecord::Schema.define(version: 20160531022638) do
   add_foreign_key "agreements", "proposals"
   add_foreign_key "items", "categories"
   add_foreign_key "photos", "items"
+  add_foreign_key "proposals", "accounts"
   add_foreign_key "scanned_agreements", "agreements"
+  add_foreign_key "users", "accounts"
   add_foreign_key "users", "companies"
 end

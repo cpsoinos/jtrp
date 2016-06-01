@@ -1,7 +1,9 @@
 class Client < User
-
-  has_many :proposals
+  belongs_to :account
+  has_many :proposals, through: :account
   has_many :items, through: :proposals
+
+  validates :primary_contact, uniqueness: { :scope => :account, message: "** DOUBLE EVENT **" }  
 
   scope :potential, -> { where(status: "potential") }
   scope :active, -> { where(status: "active") }

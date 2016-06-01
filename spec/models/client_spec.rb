@@ -1,6 +1,7 @@
 describe Client do
 
-  it { should have_many(:proposals) }
+  it { should belong_to(:account) }
+  it { should have_many(:proposals).through(:account) }
   it { should have_many(:items).through(:proposals) }
 
   describe "scopes" do
@@ -32,7 +33,7 @@ describe Client do
 
     it "transitions 'potential' to 'active'" do
       client = create(:client)
-      create(:proposal, :active, client: client)
+      create(:proposal, :active, account: client.account)
       client.mark_active
 
       expect(client.status).to eq("active")

@@ -1,10 +1,10 @@
 class Proposal < ActiveRecord::Base
-  belongs_to :client
+  belongs_to :account
   belongs_to :created_by, class_name: "User"
   has_many :items
   has_many :agreements
 
-  validates :client, presence: true
+  # validates :client, presence: true
   validates :created_by, presence: true
 
   scope :potential, -> { where(state: "potential") }
@@ -29,6 +29,10 @@ class Proposal < ActiveRecord::Base
 
   end
 
+  def client
+    account.primary_contact
+  end
+
   def meets_requirements_active?
     agreements.active.present?
   end
@@ -49,6 +53,10 @@ class Proposal < ActiveRecord::Base
 
   def mark_client_inactive
     client.mark_inactive
+  end
+
+  def client
+    account.primary_contact
   end
 
 end
