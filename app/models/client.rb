@@ -3,7 +3,7 @@ class Client < User
   has_many :proposals, through: :account
   has_many :items, through: :proposals
 
-  validates :primary_contact, uniqueness: { :scope => :account, message: "** DOUBLE PRIMARY CONTACT **" }  
+  validates :primary_contact, uniqueness: { :scope => :account_id, message: "** DOUBLE PRIMARY CONTACT **" }  
 
   scope :potential, -> { where(status: "potential") }
   scope :active, -> { where(status: "active") }
