@@ -3,7 +3,7 @@ require 'factory_girl'
 FactoryGirl.define do
 
   factory :account do
-    sequence(:account_number) { |n| 10 + n }
+    sequence(:account_number) { |n| 11 + n }
     is_company false
 
     trait :company do

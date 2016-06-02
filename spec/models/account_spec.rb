@@ -10,4 +10,22 @@ describe Account do
   let!(:account) { create(:account) }
   it { should validate_uniqueness_of(:account_number) }
 
+  describe "callbacks" do
+
+    it "sets the account number" do
+      account = Account.new
+      account.save
+
+      expect(account.account_number).to eq(11)
+    end
+
+    it "increments the system info account number" do
+      account = Account.new
+      account.save
+
+      expect(SystemInfo.first.last_account_number).to eq(12)
+    end
+
+  end
+
 end

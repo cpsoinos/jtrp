@@ -29,6 +29,7 @@ RSpec.configure do |config|
 
   config.before(:each) do
     FactoryGirl.create(:company, name: "Just the Right Piece")
+    FactoryGirl.create(:system_info)
   end
 
   config.expect_with :rspec do |expectations|

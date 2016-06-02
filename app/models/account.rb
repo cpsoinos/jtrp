@@ -7,4 +7,18 @@ class Account < ActiveRecord::Base
   belongs_to :updated_by, class_name: "InternalUser", foreign_key: "updated_by_id"
 
   validates :account_number, uniqueness: true
+
+  before_create :set_account_number
+  after_create :increment_system_info
+
+  private
+
+  def set_account_number
+    self.account_number = SystemInfo.first.last_account_number
+  end
+
+  def increment_system_info
+    SystemInfo.first.increment!(:last_account_number)
+  end
+
 end
