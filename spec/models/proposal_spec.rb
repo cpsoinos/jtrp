@@ -1,10 +1,10 @@
 describe Proposal do
 
-  it { should belong_to(:client) }
+  it { should belong_to(:account) }
   it { should belong_to(:created_by) }
   it { should have_many(:items) }
 
-  it { should validate_presence_of(:client) }
+  it { should validate_presence_of(:account) }
   it { should validate_presence_of(:created_by) }
 
   describe "scopes" do
@@ -35,14 +35,14 @@ describe Proposal do
   describe Proposal, "state_machine" do
 
     it "starts as 'potential'" do
-      expect(Proposal.new(client: build_stubbed(:client)).state).to eq("potential")
+      expect(Proposal.new(account: build_stubbed(:account)).state).to eq("potential")
     end
 
     it "transitions 'potential' to 'active'" do
       proposal = create(:proposal)
       expect(proposal.state).to eq("potential")
       create(:agreement, :active, proposal: proposal)
-      proposal.mark_active
+      proposal.mark_active!
 
       expect(proposal.state).to eq("active")
     end

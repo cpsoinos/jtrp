@@ -52,6 +52,7 @@ group :development, :test, :local do
   gem 'web-console', '~> 2.0'
   gem 'guard-rspec', require: false
   gem 'terminal-notifier-guard'
+  gem 'to_factory'
 end
 
 group :development, :local do

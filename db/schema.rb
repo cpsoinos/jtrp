@@ -11,21 +11,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160531235952) do
+ActiveRecord::Schema.define(version: 20160602011723) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "accounts", force: :cascade do |t|
-    t.integer  "account_number",                 null: false
-    t.boolean  "is_company",     default: false
+    t.integer  "account_number",                     null: false
+    t.boolean  "is_company",         default: false
     t.string   "company_name"
     t.integer  "created_by_id"
     t.integer  "updated_by_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "notes"
+    t.integer  "primary_contact_id"
   end
+
+  add_index "accounts", ["primary_contact_id"], name: "index_accounts_on_primary_contact_id", using: :btree
 
   create_table "agreements", force: :cascade do |t|
     t.integer "proposal_id"
@@ -62,23 +65,26 @@ ActiveRecord::Schema.define(version: 20160531235952) do
   add_index "categories", ["parent_id"], name: "index_categories_on_parent_id", using: :btree
 
   create_table "companies", force: :cascade do |t|
-    t.string "name",                        null: false
-    t.string "slogan"
-    t.text   "description"
-    t.string "address_1"
-    t.string "address_2"
-    t.string "city"
-    t.string "state"
-    t.string "zip"
-    t.string "phone"
-    t.string "phone_ext"
-    t.string "website"
-    t.string "logo"
-    t.text   "consignment_policies"
-    t.text   "service_rate_schedule"
-    t.text   "agent_service_rate_schedule"
-    t.string "email"
+    t.string  "name",                        null: false
+    t.string  "slogan"
+    t.text    "description"
+    t.string  "address_1"
+    t.string  "address_2"
+    t.string  "city"
+    t.string  "state"
+    t.string  "zip"
+    t.string  "phone"
+    t.string  "phone_ext"
+    t.string  "website"
+    t.string  "logo"
+    t.text    "consignment_policies"
+    t.text    "service_rate_schedule"
+    t.text    "agent_service_rate_schedule"
+    t.string  "email"
+    t.integer "primary_contact_id"
   end
+
+  add_index "companies", ["primary_contact_id"], name: "index_companies_on_primary_contact_id", using: :btree
 
   create_table "items", force: :cascade do |t|
     t.text     "description",                                       null: false
@@ -164,7 +170,6 @@ ActiveRecord::Schema.define(version: 20160531235952) do
     t.boolean  "consignment_policy_accepted", default: false
     t.string   "avatar"
     t.integer  "company_id"
-    t.boolean  "primary_contact",             default: false
     t.integer  "account_id"
   end
 

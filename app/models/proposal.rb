@@ -4,7 +4,7 @@ class Proposal < ActiveRecord::Base
   has_many :items
   has_many :agreements
 
-  # validates :client, presence: true
+  validates :account, presence: true
   validates :created_by, presence: true
 
   scope :potential, -> { where(state: "potential") }

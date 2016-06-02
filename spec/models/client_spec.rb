@@ -4,7 +4,7 @@ describe Client do
   it { should have_many(:proposals).through(:account) }
   it { should have_many(:items).through(:proposals) }
 
-  let!(:primary_contact_client) { create(:client, :active) }
+  let!(:primary_contact_client) { create(:client, :active, primary_contact: true) }
   it { should validate_uniqueness_of(:primary_contact).scoped_to(:account_id).with_message("** DOUBLE PRIMARY CONTACT **") }
 
   describe "scopes" do
@@ -14,6 +14,7 @@ describe Client do
     let!(:inactive_client) { create(:client, :inactive) }
 
     it 'potential' do
+      binding.pry
       expect(Client.potential.first).to eq(potential_client)
     end
 

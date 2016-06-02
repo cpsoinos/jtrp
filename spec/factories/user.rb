@@ -24,7 +24,6 @@ FactoryGirl.define do
     factory :client, class: Client do
       account
       status "potential"
-      primary_contact true
 
       trait :potential do
         after(:create) do |instance|

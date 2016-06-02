@@ -15,6 +15,7 @@ FactoryGirl.define do
     phone_ext Faker::PhoneNumber.extension
     website Faker::Internet.url
     logo { Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'fixtures', 'test.png')) }
+    association :primary_contact, factory: :internal_user
   end
 
 end
