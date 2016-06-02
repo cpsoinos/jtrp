@@ -4,9 +4,6 @@ describe Client do
   it { should have_many(:proposals).through(:account) }
   it { should have_many(:items).through(:proposals) }
 
-  let!(:primary_contact_client) { create(:client, :active, primary_contact: true) }
-  it { should validate_uniqueness_of(:primary_contact).scoped_to(:account_id).with_message("** DOUBLE PRIMARY CONTACT **") }
-
   describe "scopes" do
 
     let!(:potential_client) { create(:client) }
@@ -14,12 +11,11 @@ describe Client do
     let!(:inactive_client) { create(:client, :inactive) }
 
     it 'potential' do
-      binding.pry
       expect(Client.potential.first).to eq(potential_client)
     end
 
     it 'active' do
-      expect(Client.active.second).to eq(active_client)
+      expect(Client.active.first).to eq(active_client)
     end
 
     it 'inactive' do
@@ -46,7 +42,7 @@ describe Client do
     it "transitions 'active' to 'inactive'" do
       client = create(:client, :active)
       client.items.each do |item|
-        item.mark_sold
+        item.mark_sold!
       end
       client.reload
 

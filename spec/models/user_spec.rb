@@ -39,7 +39,7 @@ describe User do
     end
 
     it "internal" do
-      expect(User.internal.count).to eq(3)
+      expect(User.internal.count).to eq(4) # must count the company's primary contact
       User.internal.each do |user|
         expect(user.internal?).to be(true)
       end

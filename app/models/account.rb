@@ -7,8 +7,4 @@ class Account < ActiveRecord::Base
   belongs_to :updated_by, class_name: "InternalUser", foreign_key: "updated_by_id"
 
   validates :account_number, uniqueness: true
-
-  def primary_contact
-    clients.find_by(primary_contact: true)
-  end
 end

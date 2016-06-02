@@ -47,6 +47,16 @@ describe Proposal do
       expect(proposal.state).to eq("active")
     end
 
+    it "does not transition 'potential' to 'active' if no active agreements" do
+      proposal = create(:proposal)
+      expect(proposal.state).to eq("potential")
+      proposal.mark_active
+      proposal.reload
+
+      expect(proposal.state).not_to eq("active")
+      expect(proposal.state).to eq("potential")
+    end
+
     it "transitions 'active' to 'inactive'" do
       proposal = create(:proposal, :active)
       item = create(:item, :active, proposal: proposal, client_intention: "sell")
@@ -54,6 +64,16 @@ describe Proposal do
       proposal.reload
 
       expect(proposal.state).to eq("inactive")
+    end
+
+    it "does not transition 'active' to 'inactive' if there are active items" do
+      proposal = create(:proposal, :active)
+      items = create_list(:item, 2, :active, proposal: proposal, client_intention: "sell")
+      items.first.mark_sold
+      proposal.reload
+
+      expect(proposal.state).not_to eq("inactive")
+      expect(proposal.state).to eq("active")
     end
 
   end

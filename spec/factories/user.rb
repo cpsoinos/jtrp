@@ -22,13 +22,11 @@ FactoryGirl.define do
     end
 
     factory :client, class: Client do
-      account
       status "potential"
+      account
 
-      trait :potential do
-        after(:create) do |instance|
-          create(:proposal, account: instance.account)
-        end
+      after(:create) do |instance|
+        instance.account.update_attribute("primary_contact_id", instance.id)
       end
 
       trait :active do

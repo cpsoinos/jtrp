@@ -10,5 +10,4 @@ describe Account do
   let!(:account) { create(:account) }
   it { should validate_uniqueness_of(:account_number) }
 
-
 end

@@ -36,7 +36,7 @@ describe Agreement do
       agreement = create(:agreement)
       expect(agreement.state).to eq("potential")
       agreement.client_signature = ["signed"]
-      agreement.mark_active
+      agreement.mark_active!
 
       expect(agreement.state).to eq("active")
     end
@@ -47,7 +47,7 @@ describe Agreement do
         expect(agreement.state).to eq("potential")
         agreement.manager_signature = ["signed"]
         agreement.client_signature = ["signed"]
-        agreement.mark_active
+        agreement.mark_active!
 
         expect(agreement.state).to eq("active")
       end
@@ -66,19 +66,12 @@ describe Agreement do
     it "transitions 'active' to 'inactive'" do
       item = create(:item, :active, client_intention: "sell")
       agreement = item.agreement
-      item.mark_sold!
+      item.mark_sold
       agreement.reload
 
       expect(agreement.state).to eq("inactive")
     end
 
-    it "transitions proposal to inactive when marked inactive" do
-      agreement = create(:agreement, :active)
-
-    end
-
-
   end
-
 
 end

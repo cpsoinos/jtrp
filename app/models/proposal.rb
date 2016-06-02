@@ -16,8 +16,8 @@ class Proposal < ActiveRecord::Base
     state :active
     state :inactive
 
-    after_transition potential: :active, do: [:mark_items_active, :mark_client_active]
-    after_transition active: :inactive, do: :mark_client_inactive
+    after_transition potential: :active, do: [:mark_items_active, :mark_clients_active]
+    after_transition active: :inactive, do: :mark_clients_inactive
 
     event :mark_active do
       transition potential: :active, if: lambda { |proposal| proposal.meets_requirements_active? }
@@ -43,16 +43,16 @@ class Proposal < ActiveRecord::Base
 
   def mark_items_active
     items.each do |item|
-      item.mark_active
+      item.mark_active!
     end
   end
 
-  def mark_client_active
-    client.mark_active
+  def mark_clients_active
+    account.clients.map(&:mark_active!)
   end
 
-  def mark_client_inactive
-    client.mark_inactive
+  def mark_clients_inactive
+    account.clients.map(&:mark_inactive!)
   end
 
   def client
