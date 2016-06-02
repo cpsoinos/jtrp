@@ -5,9 +5,11 @@ describe Item do
   it { should have_many(:photos) }
 
   it { should validate_presence_of(:description) }
+  it { should validate_presence_of(:account) }
 
   it { should monetize(:purchase_price).allow_nil }
   it { should monetize(:listing_price).allow_nil }
+  it { should monetize(:minimum_sale_price).allow_nil }
   it { should monetize(:sale_price).allow_nil }
 
   it "potential?" do
@@ -58,14 +60,6 @@ describe Item do
       Item.sold.each do |item|
         expect(item.state).to eq("sold")
       end
-    end
-
-    it "unclaimed" do
-      claimed_item = create(:item, :with_client)
-      Item.all.update_all(proposal_id: nil)
-
-      expect(Item.unclaimed.count).to eq(9)
-      expect(Item.unclaimed).not_to include(claimed_item)
     end
 
   end

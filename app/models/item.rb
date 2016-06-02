@@ -22,15 +22,15 @@ class Item < ActiveRecord::Base
 
   belongs_to :category
   belongs_to :proposal
-  belongs_to :client, class_name: "User", foreign_key: "client_id"
+  belongs_to :account
 
   validates :description, presence: true
+  validates :account, presence: true
 
   scope :potential, -> { where(state: "potential") }
   scope :active, -> { where(state: "active") }
   scope :sold, -> { where(state: "sold") }
   scope :unsold, -> { where.not(state: "sold") }
-  scope :unclaimed, -> { where(client_id: nil, proposal_id: nil) }
 
   state_machine :state, initial: :potential do
     state :potential
@@ -46,7 +46,6 @@ class Item < ActiveRecord::Base
     event :mark_sold do
       transition active: :sold, if: lambda { |item| item.meets_requirements_sold? }
     end
-
   end
 
   def initial_photos

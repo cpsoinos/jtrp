@@ -29,6 +29,10 @@ FactoryGirl.define do
         instance.account.update_attribute("primary_contact_id", instance.id)
       end
 
+      trait :potential do
+        status "potential"
+      end
+
       trait :active do
         status "active"
         after(:create) do |instance|

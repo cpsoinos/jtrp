@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160602024545) do
+ActiveRecord::Schema.define(version: 20160602123526) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -106,14 +106,14 @@ ActiveRecord::Schema.define(version: 20160602024545) do
     t.string   "state",                       default: "potential", null: false
     t.integer  "minimum_sale_price_cents"
     t.string   "minimum_sale_price_currency", default: "USD",       null: false
-    t.integer  "client_id"
     t.string   "client_intention",            default: "undecided"
     t.text     "notes"
     t.string   "offer_type"
+    t.integer  "account_id",                                        null: false
   end
 
+  add_index "items", ["account_id"], name: "index_items_on_account_id", using: :btree
   add_index "items", ["category_id"], name: "index_items_on_category_id", using: :btree
-  add_index "items", ["client_id"], name: "index_items_on_client_id", using: :btree
   add_index "items", ["proposal_id"], name: "index_items_on_proposal_id", using: :btree
 
   create_table "photos", force: :cascade do |t|

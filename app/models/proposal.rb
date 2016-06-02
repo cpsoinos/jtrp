@@ -26,12 +26,9 @@ class Proposal < ActiveRecord::Base
     event :mark_inactive do
       transition active: :inactive, if: lambda { |proposal| proposal.meets_requirements_inactive? }
     end
-
   end
 
-  def client
-    account.primary_contact
-  end
+  delegate :client, to: :account
 
   def meets_requirements_active?
     agreements.active.present?
@@ -53,10 +50,6 @@ class Proposal < ActiveRecord::Base
 
   def mark_clients_inactive
     account.clients.map(&:mark_inactive!)
-  end
-
-  def client
-    account.primary_contact
   end
 
 end
