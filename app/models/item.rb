@@ -26,6 +26,7 @@ class Item < ActiveRecord::Base
 
   validates :description, presence: true
   validates :account, presence: true
+  validate :proposal_account_must_match_account
 
   scope :potential, -> { where(state: "potential") }
   scope :active, -> { where(state: "active") }
@@ -113,5 +114,13 @@ class Item < ActiveRecord::Base
     offer_type == "consign"
   end
   alias consigned? will_consign?
+
+  private
+
+  def proposal_account_must_match_account
+    if proposal && proposal.account != account
+      errors.add(:proposal, "account must match account")
+    end
+  end
 
 end

@@ -12,6 +12,15 @@ describe Item do
   it { should monetize(:minimum_sale_price).allow_nil }
   it { should monetize(:sale_price).allow_nil }
 
+  context "custom validations" do
+    it "validates that proposal account matches account" do
+      item = build(:item, proposal: build_stubbed(:proposal), account: build_stubbed(:account))
+
+      expect(item.valid?).to be(false)
+      expect(item.errors.full_messages).to include("Proposal account must match account")
+    end
+  end
+
   it "potential?" do
     item = create(:item)
     expect(item.active?).to be(false)
@@ -72,8 +81,8 @@ describe Item do
 
     it "transitions 'potential' to 'active'" do
       proposal = create(:proposal, :active)
-      item = create(:item, proposal: proposal, client_intention: "sell")
       create(:agreement, :sell, :active, proposal: proposal)
+      item = create(:item, proposal: proposal, account: proposal.account, client_intention: "sell")
       item.mark_active!
 
       expect(item.state).to eq("active")

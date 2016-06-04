@@ -35,7 +35,7 @@ feature "item index" do
 
       expect(page).to have_content("All Items")
       intentions.each do |intention|
-        next if intention
+        next if intention == "will move" || intention == "undecided"
         expect(page).to have_link(intention)
       end
     end

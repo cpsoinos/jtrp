@@ -27,6 +27,7 @@
                     <th>Client</th>
                     <td>
                       <% if item.proposal %>
+                        <% binding.pry %>
                         <%= link_to(item.proposal.client.full_name, client_path(item.proposal.client)) %>
                       <% else %>
                         <i>none</i>

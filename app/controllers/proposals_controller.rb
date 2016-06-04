@@ -47,31 +47,11 @@ class ProposalsController < ApplicationController
     @items = @proposal.items.order(:id)
   end
 
-  # def create_client
-  #   @client = Client.new(user_params)
-  #   @client.skip_password_validation = true
-  #   if @client.save
-  #     @proposal = Proposal.new(client: @client, created_by: current_user)
-  #     if @proposal.save
-  #       redirect_to edit_proposal_path(@proposal)
-  #     else
-  #       render :new
-  #     end
-  #   else
-  #     flash[:alert] = @client.errors.full_messages.uniq.join
-  #     redirect_to new_proposal_path
-  #   end
-  # end
-
   protected
 
   def proposal_params
     params.require(:proposal).permit([:account_id, :created_by_id])
   end
-
-  # def user_params
-  #   params.require(:user).permit([:email, :first_name, :last_name, :address_1, :address_2, :city, :state, :zip, :phone, :phone_ext])
-  # end
 
   def build_json_for_items
     items_for_list = @account.items.potential.where(proposal_id: nil)
