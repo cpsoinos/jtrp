@@ -1,6 +1,6 @@
 class Proposal < ActiveRecord::Base
   belongs_to :account
-  belongs_to :created_by, class_name: "User"
+  belongs_to :created_by, class_name: "InternalUser"
   has_many :items
   has_many :agreements
 

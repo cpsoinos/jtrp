@@ -4,6 +4,7 @@ class AgreementsController < ApplicationController
   before_filter :pull_intentions, only: :create
 
   def index
+    @account = @proposal.account
     @client = @proposal.client
     @agreements = @proposal.agreements
     @items = @proposal.items

@@ -42,6 +42,7 @@ describe Client do
     it "transitions 'active' to 'inactive'" do
       client = create(:client, :active)
       client.items.each do |item|
+        binding.pry
         item.mark_sold!
       end
       client.reload

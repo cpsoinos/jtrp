@@ -15,6 +15,22 @@ class Account < ActiveRecord::Base
 
   delegate :full_name, to: :primary_contact
 
+  def self.yard_sale
+    Account.find_by(account_number: 1)
+  end
+
+  def self.estate_sale
+    Account.find_by(account_number: 2)
+  end
+
+  def yard_sale?
+    account_number == 1 && company_name == "Yard Sale"
+  end
+
+  def estate_sale?
+    account_number == 2 && company_name == "Estate Sale"
+  end
+
   private
 
   def set_account_number

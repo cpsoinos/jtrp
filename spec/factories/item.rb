@@ -18,7 +18,8 @@ FactoryGirl.define do
       state "active"
 
       after(:create) do |item|
-        proposal = item.create_proposal(account: item.account, created_by: build_stubbed(:internal_user))
+        item.account.client.update_attribute("status", "active")
+        proposal = item.proposal || item.create_proposal(account: item.account, created_by: build_stubbed(:internal_user), state: "active")
         create(:agreement, :active, proposal: proposal)
       end
     end

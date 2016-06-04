@@ -25,7 +25,18 @@ def create_company
 end
 
 def create_categories
-  Category.create([{ name: "Bedroom" }, { name: "Dining Room" }, { name: "Living Room" } ])
+  Category.create([
+    { name: "Bedroom" },
+    { name: "Dining Room" },
+    { name: "Living Room" }
+  ])
+end
+
+def create_default_accounts
+  Account.create([
+    { account_number: 1, is_company: true, company_name: "Yard Sale" },
+    { account_number: 2, is_company: true, company_name: "Estate Sale" }
+  ])
 end
 
 create_company

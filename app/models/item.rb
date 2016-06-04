@@ -89,16 +89,19 @@ class Item < ActiveRecord::Base
   end
 
   def check_agreement_state
+    return if self_procured?
     if agreement.items.active.empty?
       agreement.mark_inactive!
     end
   end
 
   def meets_requirements_active?
-    agreement.present? &&
-    agreement.active? &&
-    proposal.present? &&
-    proposal.active?
+    self_procured? || (
+      agreement.present? &&
+      agreement.active? &&
+      proposal.present? &&
+      proposal.active?
+    )
   end
 
   def meets_requirements_sold?
@@ -114,6 +117,10 @@ class Item < ActiveRecord::Base
     offer_type == "consign"
   end
   alias consigned? will_consign?
+
+  def self_procured?
+    account.yard_sale? || account.estate_sale?
+  end
 
   private
 

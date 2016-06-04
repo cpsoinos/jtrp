@@ -1,9 +1,8 @@
 feature "proposal response" do
 
-  let!(:client) { create(:client) }
-  let!(:user) { create(:internal_user, company: Company.first, primary_contact: true) }
-  let(:proposal) { create(:proposal, created_by: user, client: client) }
-  let!(:items) { create_list(:item, 6, proposal: proposal) }
+  let(:user) { create(:internal_user) }
+  let(:proposal) { create(:proposal) }
+  let!(:items) { create_list(:item, 6, proposal: proposal, account: proposal.account) }
   let!(:intentions) { %w(sell consign donate dump move nothing) }
 
   context "guest" do

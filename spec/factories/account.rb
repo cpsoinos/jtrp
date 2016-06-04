@@ -12,8 +12,9 @@ FactoryGirl.define do
     end
 
     trait :with_client do
+      association :primary_contact, factory: :client
       after(:create) do |instance|
-        instance.create_primary_contact(attributes_for(:client, account_id: instance.id))
+        instance.primary_contact.update_attribute("account_id", instance.id)
       end
     end
 
