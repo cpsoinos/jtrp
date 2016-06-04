@@ -13,6 +13,8 @@ class Account < ActiveRecord::Base
 
   alias :client :primary_contact
 
+  delegate :full_name, to: :primary_contact
+
   private
 
   def set_account_number

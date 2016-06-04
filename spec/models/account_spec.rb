@@ -11,7 +11,6 @@ describe Account do
   it { should validate_uniqueness_of(:account_number) }
 
   describe "callbacks" do
-
     it "sets the account number" do
       account = Account.new
       account.save
@@ -25,7 +24,18 @@ describe Account do
 
       expect(SystemInfo.first.last_account_number).to eq(12)
     end
+  end
 
+  it "client" do
+    account = create(:account, :with_client)
+
+    expect(account.primary_contact).to eq(account.clients.first)
+  end
+
+  it "full_name" do
+    account = create(:account, :with_client)
+
+    expect(account.full_name).to eq(account.primary_contact.full_name)
   end
 
 end

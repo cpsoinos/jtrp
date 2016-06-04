@@ -13,7 +13,7 @@ FactoryGirl.define do
       state "active"
 
       after(:create) do |item|
-        create(:agreement, :active, proposal: proposal)
+        create(:agreement, :active, proposal: item.proposal)
       end
     end
 

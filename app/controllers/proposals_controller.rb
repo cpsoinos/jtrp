@@ -1,5 +1,5 @@
 class ProposalsController < ApplicationController
-  before_filter :find_clients, only: [:new, :edit]
+  before_filter :find_accounts, only: [:new, :edit]
   before_filter :find_categories, only: [:new, :edit]
   before_filter :require_internal, except: [:show]
 

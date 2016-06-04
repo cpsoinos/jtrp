@@ -41,12 +41,12 @@ feature "new proposal" do
       scenario "an existing client" do
         visit new_proposal_path
 
-        expect(page).to have_select("proposal_client_id", with_options: [client.full_name])
+        expect(page).to have_select("proposal_account_id", with_options: [client.full_name])
       end
 
       scenario "selects an existing client" do
         visit new_proposal_path
-        select(client.full_name, from: "proposal_client_id")
+        select(client.full_name, from: "proposal_account_id")
         click_button("Next")
 
         expect(page).to have_content("Step 1")
