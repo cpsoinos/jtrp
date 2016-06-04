@@ -5,7 +5,7 @@ class ProposalsController < ApplicationController
 
   def new
     @proposal = Proposal.new
-    @client = User.new
+    @client = Client.new
   end
 
   def create
@@ -21,13 +21,14 @@ class ProposalsController < ApplicationController
 
   def show
     @proposal = Proposal.find(params[:id])
-    @client = @proposal.client
+    @account = @proposal.account
+    @client = @account.primary_contact
     @items = @proposal.items
   end
 
   def edit
     @proposal = Proposal.find(params[:id])
-    @client = @proposal.client
+    @account = @proposal.account
     @item = @proposal.items.new
     @items = @proposal.items
     gon.items = build_json_for_items
@@ -41,38 +42,39 @@ class ProposalsController < ApplicationController
 
   def response_form
     @proposal = Proposal.find(params[:proposal_id])
-    @client = @proposal.client
+    @account = @proposal.account
+    @client = @account.primary_contact
     @items = @proposal.items.order(:id)
   end
 
-  def create_client
-    @client = Client.new(user_params)
-    @client.skip_password_validation = true
-    if @client.save
-      @proposal = Proposal.new(client: @client, created_by: current_user)
-      if @proposal.save
-        redirect_to edit_proposal_path(@proposal)
-      else
-        render :new
-      end
-    else
-      flash[:alert] = @client.errors.full_messages.uniq.join
-      redirect_to new_proposal_path
-    end
-  end
+  # def create_client
+  #   @client = Client.new(user_params)
+  #   @client.skip_password_validation = true
+  #   if @client.save
+  #     @proposal = Proposal.new(client: @client, created_by: current_user)
+  #     if @proposal.save
+  #       redirect_to edit_proposal_path(@proposal)
+  #     else
+  #       render :new
+  #     end
+  #   else
+  #     flash[:alert] = @client.errors.full_messages.uniq.join
+  #     redirect_to new_proposal_path
+  #   end
+  # end
 
   protected
 
   def proposal_params
-    params.require(:proposal).permit([:client_id, :created_by_id])
+    params.require(:proposal).permit([:account_id, :created_by_id])
   end
 
-  def user_params
-    params.require(:user).permit([:email, :first_name, :last_name, :address_1, :address_2, :city, :state, :zip, :phone, :phone_ext])
-  end
+  # def user_params
+  #   params.require(:user).permit([:email, :first_name, :last_name, :address_1, :address_2, :city, :state, :zip, :phone, :phone_ext])
+  # end
 
   def build_json_for_items
-    items_for_list = @client.items.potential.where(proposal_id: nil) | Item.unclaimed
+    items_for_list = @account.items.potential.where(proposal_id: nil)
     items_for_list.map do |item|
       {
         text: item.description,

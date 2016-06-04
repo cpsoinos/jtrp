@@ -1,6 +1,6 @@
 class ItemCreator
 
-  attr_reader :proposal
+  attr_reader :proposal, :account
 
   def initialize(proposal=nil)
     @proposal = proposal
@@ -8,6 +8,7 @@ class ItemCreator
 
   def create(attrs)
     @attrs = attrs
+    @attrs.merge!(account_id: proposal.account_id) if proposal.present?
     photo_attrs = attrs.delete(:initial_photos)
 
     @item = creator.new(attrs)

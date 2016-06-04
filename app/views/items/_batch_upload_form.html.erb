@@ -8,7 +8,7 @@
         <%= f.file_field :archive, class: "dropzone form-control" %>
       </div>
       <%= hidden_field_tag :proposal_id, @proposal.id %>
-      <%= hidden_field_tag :client_id, @proposal.client_id %>
+      <%= hidden_field_tag :account_id, @proposal.account_id %>
       <%= f.submit "Upload Archive", class: "btn btn-raised btn-primary" %>
     </div>
   </div>

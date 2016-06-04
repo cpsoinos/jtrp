@@ -20,10 +20,10 @@
   <div class="row form-row">
     <div class="text-center">
       <div class="col-xs-12 col-md-3 form-label">
-        <%= f.label :client, class: "control-label" %>
+        <%= f.label :account, class: "control-label" %>
       </div>
       <div class="col-xs-12 col-md-9 text-left">
-        <%= f.collection_select :client_id, @clients, :id, :full_name, {include_blank: "Select Client"}, {class: "form-control"} %>
+        <%= f.collection_select :account_id, @accounts, :id, :full_name, {include_blank: "Select Client"}, {class: "form-control"} %>
       </div>
     </div>
   </div>

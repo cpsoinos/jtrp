@@ -16,11 +16,15 @@ class ClientsController < ApplicationController
   end
 
   def create
-    @client = Client.new(client_params)
-    @client.skip_password_validation = true
-    if @client.save
+    @client = ClientCreator.new(current_user).create(client_params, params[:proposal])
+
+    if @client.errors.empty?
       flash[:notice] = "Client created!"
-      render :show
+      if params[:proposal]
+        redirect_to edit_proposal_path(@client.proposals.first)
+      else
+        render :show
+      end
     else
       flash[:alert] = @client.errors.full_messages.uniq.join
       redirect_to :back

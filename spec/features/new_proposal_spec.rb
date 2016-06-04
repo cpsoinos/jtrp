@@ -36,7 +36,7 @@ feature "new proposal" do
 
     context "existing client" do
 
-      let(:proposal) { create(:proposal, client: client)}
+      let(:proposal) { create(:proposal, account: client.account)}
 
       scenario "an existing client" do
         visit new_proposal_path
@@ -65,7 +65,7 @@ feature "new proposal" do
         visit new_proposal_path
         click_button("Next")
 
-        expect(page).to have_content("Client can't be blank")
+        expect(page).to have_content("Account can't be blank")
         expect(Proposal.count).to eq(0)
       end
 
@@ -106,7 +106,7 @@ feature "new proposal" do
       end
 
       context "item details" do
-        let!(:item) { create(:item, proposal: proposal, client: client) }
+        let!(:item) { create(:item, proposal: proposal, account: proposal.account) }
 
         scenario "chooses offer type", js: true do
           visit edit_proposal_path(proposal)
@@ -218,7 +218,7 @@ feature "new proposal" do
       end
 
       scenario "generates a proposal response form for the client" do
-        item = create(:item, proposal: proposal)
+        item = create(:item, proposal: proposal, account: proposal.account)
         visit proposal_response_form_path(proposal)
 
         expect(page).to have_content("Proposal Response")
@@ -237,13 +237,13 @@ feature "new proposal" do
         visit new_proposal_path
         click_on("New Client")
 
-        fill_in("user_email", with: "sally@salamander.com")
-        fill_in("user_first_name", with: "Sally")
-        fill_in("user_last_name", with: "Salamander")
-        fill_in("user_address_1", with: "3 Tropic Schooner")
-        fill_in("user_address_2", with: "Pool 1")
-        fill_in("user_state", with: "FL")
-        fill_in("user_zip", with: "12345")
+        fill_in("client_email", with: "sally@salamander.com")
+        fill_in("client_first_name", with: "Sally")
+        fill_in("client_last_name", with: "Salamander")
+        fill_in("client_address_1", with: "3 Tropic Schooner")
+        fill_in("client_address_2", with: "Pool 1")
+        fill_in("client_state", with: "FL")
+        fill_in("client_zip", with: "12345")
         click_on("Create Client")
 
         expect(page).to have_content("Step 1")
@@ -253,12 +253,12 @@ feature "new proposal" do
         visit new_proposal_path
         click_on("New Client")
 
-        fill_in("user_first_name", with: "Sally")
-        fill_in("user_last_name", with: "Salamander")
-        fill_in("user_address_1", with: "3 Tropic Schooner")
-        fill_in("user_address_2", with: "Pool 1")
-        fill_in("user_state", with: "FL")
-        fill_in("user_zip", with: "12345")
+        fill_in("client_first_name", with: "Sally")
+        fill_in("client_last_name", with: "Salamander")
+        fill_in("client_address_1", with: "3 Tropic Schooner")
+        fill_in("client_address_2", with: "Pool 1")
+        fill_in("client_state", with: "FL")
+        fill_in("client_zip", with: "12345")
         click_on("Create Client")
 
         expect(page).to have_content("Email can't be blank")

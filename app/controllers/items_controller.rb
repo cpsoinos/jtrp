@@ -2,7 +2,6 @@ class ItemsController < ApplicationController
   before_filter :find_clients, only: [:new, :edit]
   before_filter :find_categories, only: [:new, :edit]
   before_filter :find_proposal, only: [:create, :batch_create]
-  before_filter :find_client, only: :batch_create
   before_filter :require_internal, only: [:new, :create, :update, :destroy]
 
   def index
@@ -40,7 +39,7 @@ class ItemsController < ApplicationController
   end
 
   def batch_create
-    if ItemImporter.new(@client, @proposal).import(archive_params[:archive])
+    if ItemImporter.new(@proposal).import(archive_params[:archive])
       flash[:notice] = "Items imported"
       redirect_to edit_proposal_path(@proposal)
     else
@@ -102,7 +101,7 @@ class ItemsController < ApplicationController
   protected
 
   def item_params
-    params.require(:item).permit(:description, {photos: []}, {initial_photos: []}, {listing_photos: []}, :proposal_id, :purchase_price, :asking_price, :listing_price, :sale_price, :minimum_sale_price, :condition, :client_id, :category_id, :client_intention, :notes, :height, :width, :depth, :offer_type)
+    params.require(:item).permit(:description, {photos: []}, {initial_photos: []}, {listing_photos: []}, :proposal_id, :account_id, :purchase_price, :asking_price, :listing_price, :sale_price, :minimum_sale_price, :condition, :category_id, :client_intention, :notes, :height, :width, :depth, :offer_type)
   end
 
   def archive_params

@@ -19,9 +19,10 @@
 
     <div class="row hidden" id="new-client-form">
 
-      <%= form_for @client, url: create_client_path do |f| %>
+      <%= form_for @client do |f| %>
 
         <%= render 'users/form', resource: @client, f: f %>
+        <%= hidden_field_tag :proposal, value: true %>
         <div class="text-center">
           <%= f.submit "Create Client", class: "btn btn-raised btn-success" %>
         </div>
