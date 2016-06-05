@@ -10,11 +10,13 @@ FactoryGirl.define do
 
     trait :active do
       status "active"
+      client_intention "sell"
       association :proposal, :active
     end
 
     trait :sold do
       status "sold"
+      client_intention "sell"
       association :proposal, :inactive
     end
 

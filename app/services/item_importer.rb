@@ -1,6 +1,6 @@
 class ItemImporter
 
-  attr_reader :client, :proposal, :archive
+  attr_reader :proposal, :archive
 
   def initialize(proposal)
     @proposal = proposal

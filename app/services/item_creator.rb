@@ -1,19 +1,19 @@
 class ItemCreator
 
-  attr_reader :proposal, :account
+  attr_reader :proposal
 
-  def initialize(proposal=nil)
+  def initialize(proposal)
     @proposal = proposal
   end
 
   def create(attrs)
-    @attrs = attrs
-    @attrs.merge!(account_id: proposal.account_id) if proposal.present?
-    photo_attrs = attrs.delete(:initial_photos)
+    initial_photo_attrs = attrs.delete(:initial_photos)
+    listing_photo_attrs = attrs.delete(:listing_photos)
 
-    @item = creator.new(attrs)
+    @item = proposal.items.new(attrs)
     if @item.save
-      process_photos(photo_attrs)
+      process_photos(initial_photo_attrs, "initial") if initial_photo_attrs
+      process_photos(listing_photo_attrs, "listing") if listing_photo_attrs
     end
 
     @item
@@ -21,17 +21,9 @@ class ItemCreator
 
   private
 
-  def process_photos(photo_attrs)
+  def process_photos(photo_attrs, type)
     photo_attrs.each do |photo|
-      @item.photos.create!(photo: photo, photo_type: "initial")
-    end
-  end
-
-  def creator
-    if proposal
-      proposal.items
-    else
-      Item
+      @item.photos.create!(photo: photo, photo_type: type)
     end
   end
 
