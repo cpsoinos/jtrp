@@ -6,15 +6,15 @@ FactoryGirl.define do
     description Faker::Beer.name
     category
     proposal
-    state "potential"
+    status "potential"
 
     trait :active do
-      state "active"
+      status "active"
       association :proposal, :active
     end
 
     trait :sold do
-      state "sold"
+      status "sold"
       association :proposal, :inactive
     end
 

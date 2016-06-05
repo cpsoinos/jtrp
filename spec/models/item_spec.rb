@@ -12,27 +12,6 @@ describe Item do
   it { should monetize(:minimum_sale_price).allow_nil }
   it { should monetize(:sale_price).allow_nil }
 
-  it "potential?" do
-    item = create(:item)
-    expect(item.active?).to be(false)
-    expect(item.potential?).to be(true)
-    expect(item.sold?).to be(false)
-  end
-
-  it "active?" do
-    item = create(:item, :active)
-    expect(item.active?).to be(true)
-    expect(item.potential?).to be(false)
-    expect(item.sold?).to be(false)
-  end
-
-  it "sold?" do
-    item = create(:item, :sold)
-    expect(item.active?).to be(false)
-    expect(item.potential?).to be(false)
-    expect(item.sold?).to be(true)
-  end
-
   describe "scopes" do
 
     before do
@@ -44,21 +23,21 @@ describe Item do
     it "potential" do
       expect(Item.potential.count).to eq(2)
       Item.potential.each do |item|
-        expect(item.state).to eq("potential")
+        expect(item.status).to eq("potential")
       end
     end
 
     it "active" do
       expect(Item.active.count).to eq(3)
       Item.active.each do |item|
-        expect(item.state).to eq("active")
+        expect(item.status).to eq("active")
       end
     end
 
     it "sold" do
       expect(Item.sold.count).to eq(4)
       Item.sold.each do |item|
-        expect(item.state).to eq("sold")
+        expect(item.status).to eq("sold")
       end
     end
 
@@ -67,23 +46,41 @@ describe Item do
   describe Item, "state_machine" do
 
     it "starts as 'potential'" do
-      expect(Item.new(description: "b").state).to eq("potential")
+      expect(Item.new.status).to eq("potential")
     end
 
-    it "transitions 'potential' to 'active'" do
+    it "transitions 'potential' to 'active' when requirements met" do
       proposal = create(:proposal, :active)
-      create(:agreement, :sell, :active, proposal: proposal)
       item = create(:item, proposal: proposal, client_intention: "sell")
       item.mark_active!
 
-      expect(item.state).to eq("active")
+      expect(item.status).to eq("active")
     end
 
-    it "transitions 'active' to 'sold'" do
-      item = create(:item, :active, client_intention: "sell")
-      item.mark_sold!
+    it "does not transition 'potential' to 'active' when requirements not met" do
+      proposal = create(:proposal, :active)
+      item = create(:item, proposal: proposal, client_intention: "sell")
+      proposal.update_attribute("status", "potential")
+      item.mark_active
 
-      expect(item.state).to eq("sold")
+      expect(item.status).not_to eq("active")
+      expect(item.status).to eq("potential")
+    end
+
+    it "transitions 'active' to 'sold' when requirements met" do
+      item = create(:item, :active, client_intention: "sell")
+      item.mark_sold
+
+      expect(item.status).to eq("sold")
+    end
+
+    it "does not transition 'active' to 'sold' when requirements not met" do
+      item = create(:item, :active, client_intention: "sell")
+      item.agreement.update_attribute("status", "potential")
+      item.mark_sold
+
+      expect(item.status).not_to eq("sold")
+      expect(item.status).to eq("active")
     end
 
   end

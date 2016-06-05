@@ -13,22 +13,18 @@ describe Proposal do
     let!(:active_proposal) { create(:proposal, :active) }
     let!(:inactive_proposal) { create(:proposal, :inactive) }
 
-    describe "scopes" do
+    it "potential" do
+      create(:proposal)
 
-      it "potential" do
-        create(:proposal)
+      expect(Proposal.potential.count).to eq(1)
+    end
 
-        expect(Proposal.potential.count).to eq(1)
-      end
+    it "active" do
+      expect(Proposal.active.first).to eq(active_proposal)
+    end
 
-      it "active" do
-        expect(Proposal.active.first).to eq(active_proposal)
-      end
-
-      it "inactive" do
-        expect(Proposal.inactive.first).to eq(inactive_proposal)
-      end
-
+    it "inactive" do
+      expect(Proposal.inactive.first).to eq(inactive_proposal)
     end
 
   end
@@ -36,45 +32,44 @@ describe Proposal do
   describe Proposal, "state_machine" do
 
     it "starts as 'potential'" do
-      expect(Proposal.new(account: build_stubbed(:account)).state).to eq("potential")
+      expect(Proposal.new.status).to eq("potential")
     end
 
-    it "transitions 'potential' to 'active'" do
+    it "transitions 'potential' to 'active' when requirements met" do
       proposal = create(:proposal)
-      expect(proposal.state).to eq("potential")
+      expect(proposal.status).to eq("potential")
       create(:agreement, :active, proposal: proposal)
       proposal.mark_active!
 
-      expect(proposal.state).to eq("active")
+      expect(proposal.status).to eq("active")
     end
 
-    it "does not transition 'potential' to 'active' if no active agreements" do
+    it "does not transition 'potential' to 'active' when requirements not met" do
       proposal = create(:proposal)
-      expect(proposal.state).to eq("potential")
+      expect(proposal.status).to eq("potential")
       proposal.mark_active
       proposal.reload
 
-      expect(proposal.state).not_to eq("active")
-      expect(proposal.state).to eq("potential")
+      expect(proposal.status).not_to eq("active")
+      expect(proposal.status).to eq("potential")
     end
 
-    it "transitions 'active' to 'inactive'" do
+    it "transitions 'active' to 'inactive' when requirements met" do
       proposal = create(:proposal, :active)
-      item = create(:item, :active, proposal: proposal, client_intention: "sell")
-      item.mark_sold!
-      proposal.reload
+      create(:item, :sold, proposal: proposal, client_intention: "sell")
+      proposal.agreements.first.update_attribute("status", "inactive")
+      proposal.mark_inactive
 
-      expect(proposal.state).to eq("inactive")
+      expect(proposal.status).to eq("inactive")
     end
 
-    it "does not transition 'active' to 'inactive' if there are active items" do
+    it "does not transition 'active' to 'inactive' when requirements not met" do
       proposal = create(:proposal, :active)
-      items = create_list(:item, 2, :active, proposal: proposal, client_intention: "sell")
-      items.first.mark_sold
-      proposal.reload
+      create(:item, :active, proposal: proposal, client_intention: "sell")
+      proposal.mark_inactive
 
-      expect(proposal.state).not_to eq("inactive")
-      expect(proposal.state).to eq("active")
+      expect(proposal.status).not_to eq("inactive")
+      expect(proposal.status).to eq("active")
     end
 
   end

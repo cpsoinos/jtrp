@@ -9,11 +9,11 @@ class Proposal < ActiveRecord::Base
   validates :job, presence: true
   validates :created_by, presence: true
 
-  scope :potential, -> { where(state: "potential") }
-  scope :active, -> { where(state: "active") }
-  scope :inactive, -> { where(state: "inactive") }
+  scope :potential, -> { where(status: "potential") }
+  scope :active, -> { where(status: "active") }
+  scope :inactive, -> { where(status: "inactive") }
 
-  state_machine initial: :potential do
+  state_machine :status, initial: :potential do
     state :potential
     state :active
     state :inactive

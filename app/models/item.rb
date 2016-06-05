@@ -27,17 +27,17 @@ class Item < ActiveRecord::Base
 
   validates :description, :proposal, presence: true
 
-  scope :potential, -> { where(state: "potential") }
-  scope :active, -> { where(state: "active") }
-  scope :sold, -> { where(state: "sold") }
-  scope :unsold, -> { where.not(state: "sold") }
+  scope :potential, -> { where(status: "potential") }
+  scope :active, -> { where(status: "active") }
+  scope :sold, -> { where(status: "sold") }
+  scope :unsold, -> { where.not(status: "sold") }
 
-  state_machine :state, initial: :potential do
+  state_machine :status, initial: :potential do
     state :potential
     state :active
     state :sold
 
-    after_transition active: :sold, do: :check_agreement_state
+    after_transition active: :sold, do: :mark_agreement_inactive
 
     event :mark_active do
       transition potential: :active, if: lambda { |item| item.meets_requirements_active? }
@@ -75,32 +75,16 @@ class Item < ActiveRecord::Base
     barcode
   end
 
-  def active?
-    state == "active"
-  end
-
-  def potential?
-    state == "potential"
-  end
-
-  def sold?
-    state == "sold"
-  end
-
-  def check_agreement_state
-    return if self_procured?
-    if agreement.items.active.empty?
-      agreement.mark_inactive!
-    end
+  def mark_agreement_inactive
+    # return if self_procured?
+    agreement.mark_inactive
   end
 
   def meets_requirements_active?
-    self_procured? || (
-      agreement.present? &&
-      agreement.active? &&
-      proposal.present? &&
-      proposal.active?
-    )
+    agreement.present? &&
+    agreement.active? &&
+    proposal.present? &&
+    proposal.active?
   end
 
   def meets_requirements_sold?
@@ -117,8 +101,8 @@ class Item < ActiveRecord::Base
   end
   alias consigned? will_consign?
 
-  def self_procured?
-    account.yard_sale? || account.estate_sale?
-  end
+  # def self_procured?
+  #   account.yard_sale? || account.estate_sale?
+  # end
 
 end

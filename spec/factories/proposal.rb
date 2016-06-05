@@ -8,7 +8,7 @@ FactoryGirl.define do
 
     trait :active do
       association :job, :active
-      state "active"
+      status "active"
 
       after(:create) do |instance|
         create(:agreement, :active, proposal: instance)
@@ -17,7 +17,7 @@ FactoryGirl.define do
 
     trait :inactive do
       association :job, :complete
-      state "inactive"
+      status "inactive"
 
       after(:create) do |instance|
         create(:agreement, :inactive, proposal: instance)

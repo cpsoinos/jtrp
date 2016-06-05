@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160605004749) do
+ActiveRecord::Schema.define(version: 20160605021441) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,7 +36,7 @@ ActiveRecord::Schema.define(version: 20160605004749) do
     t.jsonb   "manager_signature"
     t.jsonb   "client_signature"
     t.string  "agreement_type",    null: false
-    t.string  "state"
+    t.string  "status"
   end
 
   add_index "agreements", ["proposal_id"], name: "index_agreements_on_proposal_id", using: :btree
@@ -104,7 +104,7 @@ ActiveRecord::Schema.define(version: 20160605004749) do
     t.string   "sale_price_currency",         default: "USD",       null: false
     t.string   "token"
     t.integer  "proposal_id"
-    t.string   "state",                       default: "potential", null: false
+    t.string   "status",                      default: "potential", null: false
     t.integer  "minimum_sale_price_cents"
     t.string   "minimum_sale_price_currency", default: "USD",       null: false
     t.string   "client_intention",            default: "undecided"
@@ -141,7 +141,7 @@ ActiveRecord::Schema.define(version: 20160605004749) do
     t.integer  "created_by_id", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "state"
+    t.string   "status"
     t.integer  "job_id",        null: false
   end
 
