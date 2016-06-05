@@ -31,23 +31,36 @@ describe Client do
       ).to eq("potential")
     end
 
-    it "transitions 'potential' to 'active'" do
+    it "transitions 'potential' to 'active' when requirements met" do
       client = create(:client)
-      create(:proposal, :active, account: client.account)
+      client.account.update_attribute("status", "active")
       client.mark_active
 
       expect(client.status).to eq("active")
     end
 
-    it "transitions 'active' to 'inactive'" do
+    it "does not transition 'potential' to 'active' when requirements not met" do
+      client = create(:client)
+      client.mark_active
+
+      expect(client.status).not_to eq("active")
+      expect(client.status).to eq("potential")
+    end
+
+    it "transitions 'active' to 'inactive' when requirements met" do
       client = create(:client, :active)
-      client.items.each do |item|
-        binding.pry
-        item.mark_sold!
-      end
-      client.reload
+      client.account.update_attribute("status", "inactive")
+      client.mark_inactive
 
       expect(client.status).to eq("inactive")
+    end
+
+    it "does not transition 'active' to 'inactive' when requirements not met" do
+      client = create(:client, :active)
+      client.mark_inactive
+
+      expect(client.status).not_to eq("inactive")
+      expect(client.status).to eq("active")
     end
 
   end
