@@ -5,31 +5,17 @@ FactoryGirl.define do
   factory :item do
     description Faker::Beer.name
     category
-    association :account, :with_client
+    proposal
     state "potential"
-
-    trait :with_proposal do
-      after(:create) do |item|
-        item.create_proposal(account: item.account, created_by: build_stubbed(:internal_user))
-      end
-    end
 
     trait :active do
       state "active"
-
-      after(:create) do |item|
-        item.account.client.update_attribute("status", "active")
-        proposal = item.proposal || item.create_proposal(account: item.account, created_by: build_stubbed(:internal_user), state: "active")
-        create(:agreement, :active, proposal: proposal)
-      end
+      association :proposal, :active
     end
 
     trait :sold do
       state "sold"
-
-      after(:create) do |item|
-        create(:proposal, :inactive, account: item.account)
-      end
+      association :proposal, :inactive
     end
 
     trait :with_initial_photo do

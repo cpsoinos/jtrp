@@ -5,21 +5,12 @@ describe Item do
   it { should have_many(:photos) }
 
   it { should validate_presence_of(:description) }
-  it { should validate_presence_of(:account) }
+  it { should validate_presence_of(:proposal) }
 
   it { should monetize(:purchase_price).allow_nil }
   it { should monetize(:listing_price).allow_nil }
   it { should monetize(:minimum_sale_price).allow_nil }
   it { should monetize(:sale_price).allow_nil }
-
-  context "custom validations" do
-    it "validates that proposal account matches account" do
-      item = build(:item, proposal: build_stubbed(:proposal), account: build_stubbed(:account))
-
-      expect(item.valid?).to be(false)
-      expect(item.errors.full_messages).to include("Proposal account must match account")
-    end
-  end
 
   it "potential?" do
     item = create(:item)
@@ -75,7 +66,7 @@ describe Item do
 
   describe Item, "state_machine" do
 
-    it "starts as 'pending'" do
+    it "starts as 'potential'" do
       expect(Item.new(description: "b").state).to eq("potential")
     end
 

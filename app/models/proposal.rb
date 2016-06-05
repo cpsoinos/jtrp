@@ -1,10 +1,12 @@
 class Proposal < ActiveRecord::Base
-  belongs_to :account
+  belongs_to :job
   belongs_to :created_by, class_name: "InternalUser"
   has_many :items
   has_many :agreements
 
-  validates :account, presence: true
+  delegate :account, to: :job
+
+  validates :job, presence: true
   validates :created_by, presence: true
 
   scope :potential, -> { where(state: "potential") }
@@ -16,8 +18,8 @@ class Proposal < ActiveRecord::Base
     state :active
     state :inactive
 
-    after_transition potential: :active, do: [:mark_items_active, :mark_clients_active]
-    after_transition active: :inactive, do: :mark_clients_inactive
+    after_transition potential: :active, do: [:mark_items_active, :mark_job_active]
+    after_transition active: :inactive, do: :mark_job_complete
 
     event :mark_active do
       transition potential: :active, if: lambda { |proposal| proposal.meets_requirements_active? }
@@ -44,12 +46,12 @@ class Proposal < ActiveRecord::Base
     end
   end
 
-  def mark_clients_active
-    account.clients.map(&:mark_active!)
+  def mark_job_active
+    job.mark_active!
   end
 
-  def mark_clients_inactive
-    account.clients.map(&:mark_inactive!)
+  def mark_job_complete
+    job.mark_complete!
   end
 
 end

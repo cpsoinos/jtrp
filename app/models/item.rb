@@ -1,7 +1,10 @@
 class Item < ActiveRecord::Base
-  has_secure_token
   has_many :photos, dependent: :destroy
   accepts_nested_attributes_for :photos
+  belongs_to :category
+  belongs_to :proposal
+
+  has_secure_token
 
   monetize :purchase_price_cents, allow_nil: true, numericality: {
     greater_than_or_equal_to: 0,
@@ -20,13 +23,9 @@ class Item < ActiveRecord::Base
     less_than_or_equal_to: 100000
   }
 
-  belongs_to :category
-  belongs_to :proposal
-  belongs_to :account
+  delegate :job, :account, to: :proposal
 
-  validates :description, presence: true
-  validates :account, presence: true
-  validate :proposal_account_must_match_account
+  validates :description, :proposal, presence: true
 
   scope :potential, -> { where(state: "potential") }
   scope :active, -> { where(state: "active") }
@@ -120,14 +119,6 @@ class Item < ActiveRecord::Base
 
   def self_procured?
     account.yard_sale? || account.estate_sale?
-  end
-
-  private
-
-  def proposal_account_must_match_account
-    if proposal && proposal.account != account
-      errors.add(:proposal, "account must match account")
-    end
   end
 
 end

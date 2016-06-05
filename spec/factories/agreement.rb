@@ -35,9 +35,12 @@ FactoryGirl.define do
     end
 
     trait :active do
-      association :proposal, :active
       client_signature ["signed_by_client"]
       state "active"
+
+      after(:create) do |instance|
+        instance.proposal.update_attribute("state", "active")
+      end
     end
 
     trait :inactive do

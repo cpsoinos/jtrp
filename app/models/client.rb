@@ -23,11 +23,11 @@ class Client < User
   end
 
   def meets_requirements_active?
-    proposals.active.present?
+    account.active?
   end
 
   def meets_requirements_inactive?
-    proposals.active.empty?
+    account.inactive?
   end
 
 end

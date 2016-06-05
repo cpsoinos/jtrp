@@ -3,10 +3,11 @@ require 'factory_girl'
 FactoryGirl.define do
 
   factory :proposal do
-    association :account, :with_client
+    job
     association :created_by, factory: :internal_user
 
     trait :active do
+      association :job, :active
       state "active"
 
       after(:create) do |instance|
@@ -15,7 +16,12 @@ FactoryGirl.define do
     end
 
     trait :inactive do
+      association :job, :complete
       state "inactive"
+
+      after(:create) do |instance|
+        create(:agreement, :inactive, proposal: instance)
+      end
     end
 
   end

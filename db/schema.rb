@@ -11,13 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160602123526) do
+ActiveRecord::Schema.define(version: 20160605004749) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "accounts", force: :cascade do |t|
-    t.integer  "account_number",                     null: false
+    t.integer  "account_number",                           null: false
     t.boolean  "is_company",         default: false
     t.string   "company_name"
     t.integer  "created_by_id"
@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(version: 20160602123526) do
     t.datetime "updated_at"
     t.text     "notes"
     t.integer  "primary_contact_id"
+    t.string   "status",             default: "potential", null: false
   end
 
   add_index "accounts", ["primary_contact_id"], name: "index_accounts_on_primary_contact_id", using: :btree
@@ -109,12 +110,22 @@ ActiveRecord::Schema.define(version: 20160602123526) do
     t.string   "client_intention",            default: "undecided"
     t.text     "notes"
     t.string   "offer_type"
-    t.integer  "account_id",                                        null: false
   end
 
-  add_index "items", ["account_id"], name: "index_items_on_account_id", using: :btree
   add_index "items", ["category_id"], name: "index_items_on_category_id", using: :btree
   add_index "items", ["proposal_id"], name: "index_items_on_proposal_id", using: :btree
+
+  create_table "jobs", force: :cascade do |t|
+    t.integer "account_id"
+    t.string  "address_1"
+    t.string  "address_2"
+    t.string  "city"
+    t.string  "state"
+    t.string  "zip"
+    t.string  "status",     default: "potential", null: false
+  end
+
+  add_index "jobs", ["account_id"], name: "index_jobs_on_account_id", using: :btree
 
   create_table "photos", force: :cascade do |t|
     t.integer  "item_id"
@@ -131,10 +142,10 @@ ActiveRecord::Schema.define(version: 20160602123526) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "state"
-    t.integer  "account_id"
+    t.integer  "job_id",        null: false
   end
 
-  add_index "proposals", ["account_id"], name: "index_proposals_on_account_id", using: :btree
+  add_index "proposals", ["job_id"], name: "index_proposals_on_job_id", using: :btree
 
   create_table "scanned_agreements", force: :cascade do |t|
     t.integer "agreement_id", null: false
@@ -182,8 +193,8 @@ ActiveRecord::Schema.define(version: 20160602123526) do
 
   add_foreign_key "agreements", "proposals"
   add_foreign_key "items", "categories"
+  add_foreign_key "jobs", "accounts"
   add_foreign_key "photos", "items"
-  add_foreign_key "proposals", "accounts"
   add_foreign_key "scanned_agreements", "agreements"
   add_foreign_key "users", "accounts"
 end
