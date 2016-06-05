@@ -26,6 +26,20 @@ FactoryGirl.define do
       status "inactive"
     end
 
+    trait :yard_sale do
+      status "active"
+      account_number 1
+      is_company true
+      company_name "Yard Sale"
+    end
+
+    trait :estate_sale do
+      status "active"
+      account_number 2
+      is_company true
+      company_name "Estate Sale"
+    end
+
   end
 
 end
