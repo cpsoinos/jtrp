@@ -73,7 +73,7 @@ describe Item do
     it "transitions 'potential' to 'active'" do
       proposal = create(:proposal, :active)
       create(:agreement, :sell, :active, proposal: proposal)
-      item = create(:item, proposal: proposal, account: proposal.account, client_intention: "sell")
+      item = create(:item, proposal: proposal, client_intention: "sell")
       item.mark_active!
 
       expect(item.state).to eq("active")
