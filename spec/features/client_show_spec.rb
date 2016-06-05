@@ -41,7 +41,7 @@ feature "client show" do
       end
 
       scenario "client has some potential items" do
-        proposal = create(:proposal, client: client, created_by: user)
+        proposal = create(:proposal, job: create(:job, account: client.account), created_by: user)
         items = create_list(:item, 2, :with_initial_photo, proposal: proposal)
         items.first.update_attribute("offer_type", "consign")
         items.last.update_attribute("client_intention", "sell")
@@ -66,13 +66,9 @@ feature "client show" do
 
     context "active client" do
 
-      let!(:client) { create(:client, :active) }
-      let(:proposal) { client.proposals.first }
-      let(:item) { proposal.items.first }
-
-      before do
-        item.update_attributes(client_intention: "sell", offer_type: "purchase", purchase_price_cents: 5500, listing_price_cents: 7500)
-      end
+      let(:client) { create(:client, :active) }
+      let(:proposal) { create(:proposal, :active, job: create(:job, :active, account: client.account)) }
+      let!(:item) { create(:item, :active, proposal: proposal, client_intention: "sell", offer_type: "purchase", purchase_price_cents: 5500, listing_price_cents: 7500) }
 
       scenario "clicks through from client index" do
         visit clients_path(status: 'active')
@@ -130,12 +126,8 @@ feature "client show" do
     context "inactive client" do
 
       let!(:client) { create(:client, :inactive) }
-      let(:proposal) { client.proposals.first }
-      let(:item) { proposal.items.first }
-
-      before do
-        item.update_attributes(client_intention: "sell", purchase_price_cents: 5500, minimum_sale_price_cents: 7500, sale_price_cents: 8500)
-      end
+      let(:proposal) { create(:proposal, :inactive, job: create(:job, :complete, account: client.account)) }
+      let!(:item) { create(:item, :sold, proposal: proposal, client_intention: "sell", offer_type: "purchase", purchase_price_cents: 5500, minimum_sale_price_cents: 7500, sale_price_cents: 8500) }
 
       scenario "clicks through from client index" do
         visit clients_path(status: 'inactive')

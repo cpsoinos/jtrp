@@ -2,7 +2,7 @@ feature "proposal response" do
 
   let(:user) { create(:internal_user) }
   let(:proposal) { create(:proposal) }
-  let!(:items) { create_list(:item, 6, proposal: proposal, account: proposal.account) }
+  let!(:items) { create_list(:item, 6, proposal: proposal) }
   let!(:intentions) { %w(sell consign donate dump move nothing) }
 
   context "guest" do

@@ -1,6 +1,10 @@
 <div class="col-md-8 col-md-offset-2">
   <div class="well bs-component">
     <%= form_for @item, class: "form-horizontal", html: { multipart: true } do |f| %>
+      <%= f.label :proposal_id, "Yard Sale" %>
+      <%= f.radio_button :proposal_id, Accound.yard_sale.proposals.first.id, class: "selector" %>
+      <%= f.label :proposal_id, "Estate Sale" %>
+      <%= f.radio_button :proposal_id, Accound.estate_sale.proposals.first.id, class: "selector" %>
       <%= render 'form', item: @item, f: f, legend: "Add an item" %>
     <% end %>
   </div>

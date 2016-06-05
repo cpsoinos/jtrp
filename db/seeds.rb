@@ -41,3 +41,4 @@ end
 
 create_company
 create_categories
+create_default_accounts
