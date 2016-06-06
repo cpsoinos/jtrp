@@ -13,7 +13,7 @@
 </head>
 <body class="<%= controller_name %> <%= action_name %>">
 
-  <div class="navbar navbar-default">
+  <div class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
       <div class="navbar-header">
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
@@ -49,10 +49,12 @@
   </div>
 
   <div class="container-fluid">
-    <div class="row">
+    <div class="row vertical-align">
 
       <div class="col-sm-3 col-md-2 sidebar">
         <% if current_user.try(:internal?) %>
+
+
           <ul class="nav nav-sidebar">
             <li>
               <a class="btn btn-primary" role="button" data-toggle="collapse" href="#categories" aria-expanded="false" aria-controls="categories">

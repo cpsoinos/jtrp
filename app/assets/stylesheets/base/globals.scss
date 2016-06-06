@@ -26,3 +26,54 @@ div.navbar.navbar-default {
 .panel.panel-primary > .panel-heading {
   background-color: $brand-primary;
 }
+
+.navbar-brand {
+  font-family: "bradley hand";
+}
+
+.sidebar {
+  background-color: $brand-darker;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1000;
+  display: block;
+  padding: 80px 15px 15px 15px;
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  a.btn.btn-primary {
+    color: white;
+  }
+}
+
+.panel, .panel-heading, body .container .well, body .container-fluid .well, body .container .jumbotron, body .container-fluid .jumbotron {
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  border-radius: 0px;
+}
+
+.panel.panel-primary > .panel-heading.complement-primary {
+  background-color: $complement-primary;
+}
+
+.panel.panel-primary > .panel-heading.complement-darker {
+  background-color: $complement-darker;
+}
+
+.panel.panel-primary > .panel-heading.complement-lighter {
+  background-color: $complement-lighter;
+}
+
+.panel.panel-primary > .panel-heading.secondary-primary {
+  background-color: $secondary-primary;
+}
+
+.panel.panel-primary > .panel-heading.secondary-darker {
+  background-color: $secondary-darker;
+}
+
+.panel.panel-primary > .panel-heading.secondary-lighter {
+  background-color: $secondary-lighter;
+}

@@ -25,6 +25,9 @@
 //= require jquery-readyselector
 //= require masonry.pkgd.min
 //= require imagesloaded.pkgd.min
+//= require react
+//= require react_ujs
+//= require components
 //= require_tree .
 
 $(document).ready(function() {

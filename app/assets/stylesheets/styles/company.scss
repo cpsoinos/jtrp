@@ -6,24 +6,3 @@
 textarea#wysiwyg {
   height: 500px;
 }
-
-.navbar-brand {
-  font-family: "bradley hand";
-}
-
-.sidebar {
-  background-color: $brand-primary;
-  position: fixed;
-  top: 51px;
-  bottom: 0;
-  left: 0;
-  z-index: 1000;
-  display: block;
-  padding: 20px;
-  overflow-x: hidden;
-  overflow-y: auto;
-
-  a.btn.btn-primary {
-    color: white;
-  }
-}
