@@ -300,6 +300,11 @@ GEM
     rails_12factor (0.0.3)
       rails_serve_static_assets
       rails_stdout_logging
+    rails_real_favicon (0.0.3)
+      json (~> 1.7)
+      rails (>= 3.1, < 5)
+      rest-client (~> 1.8)
+      rubyzip (~> 1)
     rails_serve_static_assets (0.0.5)
     rails_stdout_logging (0.0.4)
     railties (4.2.5.2)
@@ -490,6 +495,7 @@ DEPENDENCIES
   rails (= 4.2.5.2)
   rails-assets-bootstrap-material-design!
   rails_12factor
+  rails_real_favicon
   react-rails
   remotipart (~> 1.2)
   rollbar (~> 2.8.3)

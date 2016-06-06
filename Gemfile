@@ -58,6 +58,7 @@ end
 
 group :development, :local do
   gem 'spring'
+  gem 'rails_real_favicon'
 end
 
 group :test do

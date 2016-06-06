@@ -10,6 +10,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <%= Gon::Base.render_data %>
   <%= csrf_meta_tags %>
+  <%= render 'favicon' %>
 </head>
 <body class="<%= controller_name %> <%= action_name %>">
 
@@ -22,7 +23,9 @@
           <span class="icon-bar"></span>
         </button>
         <% if @company %>
-          <%= link_to @company.name, root_path, class: "navbar-brand" %>
+        <div class="brand-logo-link">
+          <%= link_to "#{image_tag('JTRPv2_allwhite.png', class: 'logo')} #{@company.name}".html_safe, root_path, class: "navbar-brand" %>
+        </div>
         <% end %>
       </div>
       <div class="navbar-collapse collapse navbar-responsive-collapse">
