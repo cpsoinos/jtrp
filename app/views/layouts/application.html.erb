@@ -26,56 +26,6 @@
         <% end %>
       </div>
       <div class="navbar-collapse collapse navbar-responsive-collapse">
-        <% if current_user.try(:internal?) %>
-          <ul class="nav navbar-nav">
-            <li class="dropdown">
-              <a href="<%= categories_path %>" data-target="#" class="dropdown-toggle" data-toggle="dropdown">Categories
-                <b class="caret"></b></a>
-                <ul class="dropdown-menu">
-                  <% if @categories %>
-                  <% @categories.each do |category| %>
-                  <li><%= link_to category.name, category_path(category) %></li>
-                  <% end %>
-                  <% end %>
-                  <li class="divider"></li>
-                  <li><%= link_to "All Categories", categories_path %></li>
-                </ul>
-              </li>
-            <li class="dropdown">
-              <a href="<%= items_path %>" data-target="#" class="dropdown-toggle" data-toggle="dropdown">Items
-                <b class="caret"></b></a>
-              <ul class="dropdown-menu">
-                <li><%= link_to "Potential", items_path(state: 'potential') %></li>
-                <li><%= link_to "Active", items_path(state: 'active') %></li>
-                <li><%= link_to "Sold", items_path(state: 'sold') %></li>
-                <li class="divider"></li>
-                <li><%= link_to "All Items", items_path %></li>
-              </ul>
-            </li>
-            <li class="dropdown">
-              <a href="<%= clients_path %>" data-target="#" class="dropdown-toggle" data-toggle="dropdown">Clients
-                <b class="caret"></b></a>
-              <ul class="dropdown-menu">
-                <li><%= link_to "Potential", clients_path(status: 'potential') %></li>
-                <li><%= link_to "Active", clients_path(status: 'active') %></li>
-                <li><%= link_to "Inactive", clients_path(status: 'inactive') %></li>
-                <li class="divider"></li>
-                <li><%= link_to "All Clients", clients_path %></li>
-              </ul>
-            </li>
-            <li class="dropdown">
-              <a href="<%= proposals_path %>" data-target="#" class="dropdown-toggle" data-toggle="dropdown">Agreements
-                <b class="caret"></b></a>
-              <ul class="dropdown-menu">
-                <li><%= link_to "Potential", agreements_list_agreements_path(status: 'potential') %></li>
-                <li><%= link_to "Active", agreements_list_agreements_path(status: 'active') %></li>
-                <li><%= link_to "Inactive", agreements_list_agreements_path(status: 'inactive') %></li>
-                <li class="divider"></li>
-                <li><%= link_to "All Agreements", agreements_list_agreements_path %></li>
-              </ul>
-            </li>
-          </ul>
-        <% end %>
         <ul class="nav navbar-nav navbar-right">
           <li class="dropdown">
             <a href="<%= company_client_services_path(@company) %>" data-target="#" class="dropdown-toggle" data-toggle="dropdown">About Us
@@ -93,45 +43,93 @@
             <li><%= link_to 'Sign In', new_user_session_path %></li>
             <li><%= link_to 'Sign Up', new_user_registration_path %></li>
           <% end %>
-          <!-- <li class="dropdown">
-            <a href="bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown
-              <b class="caret"></b></a>
-            <ul class="dropdown-menu">
-              <li><a href="javascript:void(0)">Action</a></li>
-              <li><a href="javascript:void(0)">Another action</a></li>
-              <li><a href="javascript:void(0)">Something else here</a></li>
-              <li class="divider"></li>
-              <li><a href="javascript:void(0)">Separated link</a></li>
-            </ul>
-          </li> -->
         </ul>
-        <!-- <form class="navbar-form navbar-right">
-          <div class="form-group is-empty">
-            <input type="text" class="form-control col-md-8" placeholder="Search">
-            <span class="material-input"></span>
-          </div>
-        </form> -->
       </div>
     </div>
   </div>
 
   <div class="container-fluid">
     <div class="row">
-      <div class="col-sm-12">
+
+      <div class="col-sm-3 col-md-2 sidebar">
+        <% if current_user.try(:internal?) %>
+          <ul class="nav nav-sidebar">
+            <li>
+              <a class="btn btn-primary" role="button" data-toggle="collapse" href="#categories" aria-expanded="false" aria-controls="categories">
+                <i class='material-icons'>view_list</i> Categories <b class="caret"></b>
+              </a>
+              <div class="collapse text-center" id="categories">
+                <div class="btn-group-vertical">
+                  <% if @categories %>
+                    <% @categories.each do |category| %>
+                      <%= link_to category.name, category_path(category), class: "btn btn-primary" %>
+                    <% end %>
+                  <% end %>
+                  <%= link_to "All Categories", categories_path, class: "btn btn-primary" %>
+                </div>
+              </div>
+            </li>
+
+            <li>
+              <a class="btn btn-primary" role="button" data-toggle="collapse" href="#items" aria-expanded="false" aria-controls="items">
+                <i class='material-icons'>weekend</i> Items <b class="caret"></b>
+              </a>
+              <div class="collapse text-center" id="items">
+                <div class="btn-group-vertical">
+                <%= link_to "Potential", items_path(status: 'potential'), class: "btn btn-primary" %>
+                <%= link_to "Active", items_path(status: 'active'), class: "btn btn-primary" %>
+                <%= link_to "Sold", items_path(status: 'sold'), class: "btn btn-primary" %>
+                  <%= link_to "All Items", items_path, class: "btn btn-primary" %>
+                </div>
+              </div>
+            </li>
+
+            <li>
+              <a class="btn btn-primary" role="button" data-toggle="collapse" href="#clients" aria-expanded="false" aria-controls="clients">
+                <i class='material-icons'>person</i> Clients <b class="caret"></b>
+              </a>
+              <div class="collapse text-center" id="clients">
+                <div class="btn-group-vertical">
+                  <%= link_to "Potential", clients_path(status: 'potential'), class: "btn btn-primary" %>
+                  <%= link_to "Active", clients_path(status: 'active'), class: "btn btn-primary" %>
+                  <%= link_to "Inactive", clients_path(status: 'inactive'), class: "btn btn-primary" %>
+                  <%= link_to "All Clients", clients_path, class: "btn btn-primary" %>
+                </div>
+              </div>
+            </li>
+            <li>
+              <a class="btn btn-primary" role="button" data-toggle="collapse" href="#agreements" aria-expanded="false" aria-controls="agreements">
+                <i class='material-icons'>assignment</i> Agreements <b class="caret"></b>
+              </a>
+              <div class="collapse text-center" id="agreements">
+                <div class="btn-group-vertical">
+                  <%= link_to "Potential", agreements_list_agreements_path(status: 'potential'), class: "btn btn-primary" %>
+                  <%= link_to "Active", agreements_list_agreements_path(status: 'active'), class: "btn btn-primary" %>
+                  <%= link_to "Inactive", agreements_list_agreements_path(status: 'inactive'), class: "btn btn-primary" %>
+                  <%= link_to "All Agreements", agreements_list_agreements_path, class: "btn btn-primary" %>
+                </div>
+              </div>
+            </li>
+          </ul>
+        <% end %>
+      </div>
+
+      <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2">
         <% if alert %>
-        <div class="alert alert-dismissible alert-warning">
-          <button type="button" class="close" data-dismiss="alert">×</button>
-          <p><%= alert %></p>
-        </div>
+          <div class="alert alert-dismissible alert-warning">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <p><%= alert %></p>
+          </div>
         <% end %>
         <% if notice %>
-        <div class="alert alert-dismissible alert-success">
-          <button type="button" class="close" data-dismiss="alert">×</button>
-          <p><%= notice %></p>
-        </div>
+          <div class="alert alert-dismissible alert-success">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <p><%= notice %></p>
+          </div>
         <% end %>
 
         <%= yield %>
+
       </div>
     </div>
   </div>

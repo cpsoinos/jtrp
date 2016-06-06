@@ -8,7 +8,7 @@ class ItemsController < ApplicationController
     @items = ItemsPresenter.new(params).filter
     @intentions = @items.pluck(:client_intention).uniq
     intentions_map
-    @filter = params[:state].try(:capitalize)
+    @filter = params[:status].try(:capitalize)
   end
 
   def new
@@ -79,10 +79,10 @@ class ItemsController < ApplicationController
 
   def destroy
     @item = Item.find(params[:id])
-    filter = @item.state
+    filter = @item.status
     if @item.destroy
       flash[:notice] = "Item removed"
-      redirect_to items_path(state: filter)
+      redirect_to items_path(status: filter)
     else
       redirect_to :back
     end
