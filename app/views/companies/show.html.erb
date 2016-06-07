@@ -10,7 +10,7 @@
   <div class="grid-item col-xs-6 col-md-3">
     <div class="panel panel-primary text-center">
       <div class="panel-body">
-        <h1>5</h1>
+        <h1><%= @metrics[:for_sale_count] %></h1>
       </div>
       <div class="panel-heading complement-primary">
         <h3>Items For Sale</h3>
@@ -21,7 +21,7 @@
   <div class="grid-item col-xs-6 col-md-3">
     <div class="panel panel-primary text-center">
       <div class="panel-body">
-        <h1>4</h1>
+        <h1><%= @metrics[:consigned_count] %></h1>
       </div>
       <div class="panel-heading complement-darker">
         <h3>Items On Consignment</h3>
@@ -32,7 +32,7 @@
   <div class="grid-item col-xs-6 col-md-3">
     <div class="panel panel-primary text-center">
       <div class="panel-body">
-        <h1>$7,300</h1>
+        <h1><%= humanized_money_with_symbol(@metrics[:thirty_day_revenue]) %></h1>
       </div>
       <div class="panel-heading secondary-primary">
         <h3>Sold in the last 30 days</h3>
@@ -43,7 +43,7 @@
   <div class="grid-item col-xs-6 col-md-3">
     <div class="panel panel-primary text-center">
       <div class="panel-body">
-        <h1>$2,000</h1>
+        <h1><%= humanized_money_with_symbol(@metrics[:owed_to_consignors]) %></h1>
       </div>
       <div class="panel-heading secondary-darker">
         <h3>Owed to Clients</h3>
