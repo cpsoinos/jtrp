@@ -31,6 +31,8 @@ class Item < ActiveRecord::Base
   scope :active, -> { where(status: "active") }
   scope :sold, -> { where(status: "sold") }
   scope :unsold, -> { where.not(status: "sold") }
+  scope :for_sale, -> { where(status: "active", client_intention: "sell") }
+  scope :consigned, -> { where(status: "active", client_intention: "consign") }
 
   state_machine :status, initial: :potential do
     state :potential

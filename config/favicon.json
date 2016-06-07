@@ -4,7 +4,7 @@
         "ios": {
             "picture_aspect": "background_and_margin",
             "background_color": "#ffffff",
-            "margin": "0%"
+            "margin": "14%"
         },
         "desktop_browser": [
 
@@ -15,12 +15,10 @@
             "on_conflict": "override"
         },
         "android_chrome": {
-            "picture_aspect": "background_and_margin",
-            "margin": "17%",
-            "background_color": "#ffffff",
+            "picture_aspect": "no_change",
             "theme_color": "#ffffff",
             "manifest": {
-                "name": "Just the Right PIece",
+                "name": "Just the Right Piece",
                 "display": "browser",
                 "orientation": "not_set",
                 "on_conflict": "override",
