@@ -7,6 +7,7 @@
   <%= stylesheet_link_tag    'application', media: 'all' %>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
   <%= javascript_include_tag 'application' %>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <%= Gon::Base.render_data %>
   <%= csrf_meta_tags %>
@@ -51,14 +52,14 @@
     </div>
   </div>
 
-  <div class="container-fluid">
-    <div class="row vertical-align">
+  <div id="wrapper">
 
+    <!-- Sidebar -->
+    <div id="sidebar-wrapper">
       <% if current_user.try(:internal?) %>
-        <div class="col-sm-3 col-md-2 sidebar">
 
-          <ul class="nav nav-sidebar">
-            <li>
+          <ul class="sidebar-nav">
+            <li class="extra-large-top-margin">
               <a class="btn btn-primary" role="button" data-toggle="collapse" href="#categories" aria-expanded="false" aria-controls="categories">
                 <i class='material-icons'>view_list</i> Categories <b class="caret"></b>
               </a>
@@ -80,9 +81,10 @@
               </a>
               <div class="collapse text-center" id="items">
                 <div class="btn-group-vertical">
-                <%= link_to "Potential", items_path(status: 'potential'), class: "btn btn-primary" %>
-                <%= link_to "Active", items_path(status: 'active'), class: "btn btn-primary" %>
-                <%= link_to "Sold", items_path(status: 'sold'), class: "btn btn-primary" %>
+                  <%= link_to "Potential", items_path(status: 'potential'), class: "btn btn-primary" %>
+                  <%= link_to "For Sale", items_path(status: 'active', type: 'sell'), class: "btn btn-primary" %>
+                  <%= link_to "Consigned", items_path(status: 'active', type: 'consign'), class: "btn btn-primary" %>
+                  <%= link_to "Sold", items_path(status: 'sold'), class: "btn btn-primary" %>
                   <%= link_to "All Items", items_path, class: "btn btn-primary" %>
                 </div>
               </div>
@@ -90,14 +92,14 @@
 
             <li>
               <a class="btn btn-primary" role="button" data-toggle="collapse" href="#clients" aria-expanded="false" aria-controls="clients">
-                <i class='material-icons'>person</i> Clients <b class="caret"></b>
+                <i class='material-icons'>person</i> Accounts <b class="caret"></b>
               </a>
               <div class="collapse text-center" id="clients">
                 <div class="btn-group-vertical">
-                  <%= link_to "Potential", clients_path(status: 'potential'), class: "btn btn-primary" %>
-                  <%= link_to "Active", clients_path(status: 'active'), class: "btn btn-primary" %>
-                  <%= link_to "Inactive", clients_path(status: 'inactive'), class: "btn btn-primary" %>
-                  <%= link_to "All Clients", clients_path, class: "btn btn-primary" %>
+                  <%= link_to "Potential", accounts_path(status: 'potential'), class: "btn btn-primary" %>
+                  <%= link_to "Active", accounts_path(status: 'active'), class: "btn btn-primary" %>
+                  <%= link_to "Inactive", accounts_path(status: 'inactive'), class: "btn btn-primary" %>
+                  <%= link_to "All Accounts", accounts_path, class: "btn btn-primary" %>
                 </div>
               </div>
             </li>
@@ -115,30 +117,50 @@
               </div>
             </li>
           </ul>
-        </div>
       <% end %>
+    </div>
+  <!-- /#sidebar-wrapper -->
 
-      <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2">
-        <div class="large-top-margin">
-          <% if alert %>
-            <div class="alert alert-dismissible alert-warning">
-              <button type="button" class="close" data-dismiss="alert">×</button>
-              <p><%= alert %></p>
+  <!-- Page Content -->
+    <div id="page-content-wrapper">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="large-top-margin">
+              <% if alert %>
+                <div class="alert alert-dismissible alert-warning">
+                  <button type="button" class="close" data-dismiss="alert">×</button>
+                  <p><%= alert %></p>
+                </div>
+              <% end %>
+              <% if notice %>
+                <div class="alert alert-dismissible alert-success">
+                  <button type="button" class="close" data-dismiss="alert">×</button>
+                  <p><%= notice %></p>
+                </div>
+              <% end %>
             </div>
-          <% end %>
-          <% if notice %>
-            <div class="alert alert-dismissible alert-success">
-              <button type="button" class="close" data-dismiss="alert">×</button>
-              <p><%= notice %></p>
+            <div class="menu-toggle-overlay">
+              <a href="#menu-toggle" class="btn btn-default top-margin float" id="menu-toggle">Toggle Sidebar</a>
             </div>
-          <% end %>
+
+            <%= yield %>
+
+          </div>
         </div>
-
-        <%= yield %>
-
       </div>
     </div>
+    <!-- /#page-content-wrapper -->
+
   </div>
+  <!-- #wrapper -->
+
+  <script>
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
+  </script>
 
 </body>
 </html>

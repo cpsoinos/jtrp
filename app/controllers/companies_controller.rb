@@ -8,8 +8,6 @@ class CompaniesController < ApplicationController
       thirty_day_revenue: Item.sold.where("items.sale_date >= ?", 30.days.ago).sum(:sale_price_cents),
       owed_to_consignors: Item.consigned.sold.where("items.sale_date >= ?", 30.days.ago).sum(:sale_price_cents) / 2
     }
-    # @potential_items = Item.potential.order(created_at: :desc).limit(10)
-    # @sold_items = Item.sold.order(created_at: :desc).limit(10)
   end
 
   def edit

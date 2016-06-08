@@ -1,4 +1,4 @@
-class ItemsPresenter
+class AccountsPresenter
 
   attr_reader :params
 
@@ -7,7 +7,7 @@ class ItemsPresenter
   end
 
   def filter
-    Item.filter(params.slice(:status, :type))
+    Account.filter(params.slice(:status))
   end
 
 end

@@ -33,6 +33,7 @@ gem 'state_machines-activerecord'
 gem 'bootsy'
 gem 'rubyzip'
 gem 'react-rails'
+gem 'chartkick'
 
 group :production, :staging, :local do
   gem 'rails_12factor'

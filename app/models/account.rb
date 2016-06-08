@@ -1,4 +1,6 @@
 class Account < ActiveRecord::Base
+  include Filterable
+
   has_many :clients
   belongs_to :primary_contact, class_name: "Client", foreign_key: "primary_contact_id"
   has_many :jobs
@@ -9,6 +11,8 @@ class Account < ActiveRecord::Base
 
   validates :account_number, uniqueness: true
   validates :status, presence: true
+
+  scope :status, -> (status) { where(status: status) }
 
   scope :potential, -> { where(status: "potential") }
   scope :active, -> { where(status: "active") }
@@ -37,7 +41,19 @@ class Account < ActiveRecord::Base
 
   alias :client :primary_contact
 
-  delegate :full_name, to: :primary_contact
+  def full_name
+    if company_name.present?
+      company_name
+    elsif primary_contact.present?
+      primary_contact.full_name
+    else
+      "No Name Provided"
+    end
+  end
+
+  def avatar
+    primary_contact.present? ? primary_contact.avatar : nil
+  end
 
   def meets_requirements_active?
     jobs.active.present?

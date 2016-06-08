@@ -31,23 +31,6 @@ div.navbar.navbar-default {
   font-family: "bradley hand";
 }
 
-.sidebar {
-  background-color: $brand-darker;
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 1000;
-  display: block;
-  padding: 80px 15px 15px 15px;
-  overflow-x: hidden;
-  overflow-y: auto;
-
-  a.btn.btn-primary {
-    color: white;
-  }
-}
-
 .panel, .panel-heading, body .container .well, body .container-fluid .well, body .container .jumbotron, body .container-fluid .jumbotron {
   -webkit-border-radius: 0px;
   -moz-border-radius: 0px;
@@ -77,3 +60,10 @@ div.navbar.navbar-default {
 .panel.panel-primary > .panel-heading.secondary-lighter {
   background-color: $secondary-lighter;
 }
+
+@media(min-width:768px){
+  .menu-toggle-overlay {
+    position: absolute;
+    z-index: 1
+  }
+} 

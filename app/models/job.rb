@@ -1,13 +1,17 @@
 class Job < ActiveRecord::Base
+  include Filterable
+
   belongs_to :account
   has_many :proposals, dependent: :destroy
   has_many :items, through: :proposals
 
   validates :account, presence: true
 
+  scope :status, -> (status) { where(status: status) }
+
   scope :potential, -> { where(status: "potential") }
   scope :active, -> { where(status: "active") }
-  scope :inactive, -> { where(status: "inactive") }
+  scope :complete, -> { where(status: "complete") }
 
   state_machine :status, initial: :potential do
     state :potential
@@ -42,6 +46,10 @@ class Job < ActiveRecord::Base
 
   def mark_account_inactive
     account.mark_inactive
+  end
+
+  def maps_url
+    GeolocationService.new(self).static_map_url
   end
 
 end

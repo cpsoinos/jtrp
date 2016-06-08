@@ -1,4 +1,6 @@
 class Item < ActiveRecord::Base
+  include Filterable
+
   has_many :photos, dependent: :destroy
   accepts_nested_attributes_for :photos
   belongs_to :category
@@ -26,6 +28,9 @@ class Item < ActiveRecord::Base
   delegate :job, :account, to: :proposal
 
   validates :description, :proposal, presence: true
+
+  scope :status, -> (status) { where(status: status) }
+  scope :type, -> (type) { where(client_intention: type) }
 
   scope :potential, -> { where(status: "potential") }
   scope :active, -> { where(status: "active") }
