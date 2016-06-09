@@ -23,7 +23,7 @@ class ClientsController < ApplicationController
       if params[:proposal]
         redirect_to edit_proposal_path(@client.proposals.first)
       else
-        render :show
+        redirect_to account_path(@client.account)
       end
     else
       flash[:alert] = @client.errors.full_messages.uniq.join

@@ -21,19 +21,6 @@ feature "new proposal" do
       sign_in user
     end
 
-    scenario "visit root path" do
-      visit root_path
-
-      expect(page).to have_link("New Proposal")
-    end
-
-    scenario "clicks 'New Proposal' link" do
-      visit root_path
-      click_link("New Proposal")
-
-      expect(page).to have_content("Step 1: Select a Client")
-    end
-
     context "existing client" do
 
       let(:proposal) { create(:proposal, account: client.account)}

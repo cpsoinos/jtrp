@@ -33,10 +33,10 @@
   <div class="grid-item col-xs-6 col-md-4">
     <div class="panel panel-primary text-center">
       <div class="panel-body">
-        <h1><%= Job.complete.count %></h1>
+        <h1><%= Job.completed.count %></h1>
       </div>
       <div class="panel-heading secondary-primary">
-        <h3><%= link_to "Completed Jobs", jobs_path(status: 'complete') %></h3>
+        <h3><%= link_to "Completed Jobs", jobs_path(status: 'completed') %></h3>
       </div>
     </div>
   </div>

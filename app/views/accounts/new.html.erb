@@ -1,0 +1,20 @@
+<div class="row extra-large-top-margin full-height">
+
+  <div class="text-center">
+    <h1>Is this a company?</h1>
+  </div>
+
+  <div class="extra-large-top-margin text-center">
+    <%= link_to "No", new_client_path, class: "btn btn-raised btn-primary btn-lg" %>
+    <%= link_to "Yes", "#", class: "btn btn-raised btn-primary btn-lg", id: "new-account-button" %>
+  </div>
+
+  <div class="row large-top-margin hidden" id="new-account-form">
+    <div class="col-md-8 col-md-offset-2">
+      <div class="well bs-component">
+        <%= render 'form' %>
+      </div>
+    </div>
+  </div>
+
+</div>

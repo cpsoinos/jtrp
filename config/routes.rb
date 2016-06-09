@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   end
 
   resources :accounts do
+    resources :clients
     resources :transactions
     resources :items, only: :index
     resources :jobs do
@@ -31,7 +32,7 @@ Rails.application.routes.draw do
   end
 
   resources :clients
-  resources :jobs, only: [:index, :show]
+  resources :jobs
   resources :proposals, only: [:index, :show]
 
   resources :users_admin, controller: "users"

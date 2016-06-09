@@ -37,6 +37,14 @@ div.navbar.navbar-default {
   border-radius: 0px;
 }
 
+.panel.panel-primary > .panel-heading.primary-lighter {
+  background-color: $brand-lighter;
+}
+
+.panel.panel-primary > .panel-heading.primary-darker {
+  background-color: $brand-darker;
+}
+
 .panel.panel-primary > .panel-heading.complement-primary {
   background-color: $complement-primary;
 }
@@ -66,4 +74,16 @@ div.navbar.navbar-default {
     position: absolute;
     z-index: 1
   }
-} 
+}
+
+.material-icons.md-18 { font-size: 18px; }
+.material-icons.md-24 { font-size: 24px; }
+.material-icons.md-36 { font-size: 36px; }
+.material-icons.md-48 { font-size: 48px; }
+
+h1, h3, h4 {
+  overflow-wrap: break-word;
+  a {
+    color: black;
+  }
+}

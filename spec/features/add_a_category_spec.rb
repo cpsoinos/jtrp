@@ -67,7 +67,7 @@ feature "add a category" do
     end
 
     scenario "adds a subcategory" do
-      category = create(:category, name: "Bedroom")
+      category = create(:category, name: "Aquarium")
       visit category_path(category)
       click_link("Add a subcategory")
 

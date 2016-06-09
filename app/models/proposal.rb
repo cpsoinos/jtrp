@@ -1,8 +1,8 @@
 class Proposal < ActiveRecord::Base
   belongs_to :job
   belongs_to :created_by, class_name: "InternalUser"
-  has_many :items
-  has_many :agreements
+  has_many :items, dependent: :destroy
+  has_many :agreements, dependent: :destroy
 
   delegate :account, to: :job
 

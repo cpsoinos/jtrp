@@ -71,11 +71,7 @@
           <h4><%= link_to account.full_name, account_path(account) %></h4>
         </div>
         <div class="panel-body">
-          <% if account.avatar.present? %>
-            <%= link_to image_tag(account.avatar.photo_url(:thumb)), account_path(account) %>
-          <% else %>
-            <%= link_to image_tag("thumb_default_avatar.png", class: "thumb"), account_path(account) %>
-          <% end %>
+          <%= link_to image_tag(account.avatar), account_path(account) %>
           <div class="row">
             <div class="col-xs-7 text-right">Total jobs: </div>
             <div class="col-xs-5 text-left"><%= account.jobs.count %></div>

@@ -1,6 +1,7 @@
 <div class="row">
   <div class="col-sm-12 text-center">
-    <h1 class="company-title"><%= @account.full_name %></h1>
+    <span class="pull-right"><%= link_to "Edit", edit_account_path(@account), class: "btn btn-raised btn-primary" %></span>
+    <h1 class="company-title"><%= @account.short_name %></h1>
   </div>
 </div>
 
@@ -10,10 +11,10 @@
   <div class="grid-item col-xs-6 col-md-3">
     <div class="panel panel-primary text-center">
       <div class="panel-body">
-        <h1><%= @account.account_number %></h1>
+        <h1><%= link_to @account.account_number, account_path(@account) %></h1>
       </div>
       <div class="panel-heading complement-primary">
-        <h3><%= link_to "Account Number", account_path(@account) %></h3>
+        <h3><%= link_to "<i class='material-icons'>assignment_ind</i> Account Number".html_safe, account_path(@account) %></h3>
       </div>
     </div>
   </div>
@@ -21,10 +22,22 @@
   <div class="grid-item col-xs-6 col-md-3">
     <div class="panel panel-primary text-center">
       <div class="panel-body">
-        <h1><%= @account.jobs.potential.count %></h1>
+        <% if @account.is_company? %>
+          <% if @account.primary_contact.present? %>
+            <h1><%= link_to @account.full_name, client_path(@account.primary_contact) %></h1>
+          <% else %>
+            <h1><%= link_to "<i class='material-icons md-36'>person_add</i>".html_safe, new_account_client_path(@account) %></h1>
+          <% end %>
+        <% else %>
+          <h1><%= link_to @account.full_name, client_path(@account.primary_contact) %></h1>
+        <% end %>
       </div>
       <div class="panel-heading complement-darker">
-        <h3><%= link_to "Potential Jobs", account_jobs_path(@account, status: 'potential') %></h3>
+        <% if @account.primary_contact.present? %>
+          <h3><%= link_to "<i class='material-icons md-24'>person</i> Primary Contact".html_safe, client_path(@account.client) %></h3>
+        <% else %>
+          <h3><%= link_to "<i class='material-icons md-24'>person_add</i> Add Primary Contact".html_safe, new_account_client_path(@account) %></h3>
+        <% end %>
       </div>
     </div>
   </div>
@@ -32,10 +45,10 @@
   <div class="grid-item col-xs-6 col-md-3">
     <div class="panel panel-primary text-center">
       <div class="panel-body">
-        <h1><%= @account.jobs.active.count %></h1>
+        <h1><%= link_to @account.status.titleize, account_jobs_path(@account) %></h1>
       </div>
       <div class="panel-heading secondary-primary">
-        <h3><%= link_to "Active Jobs", account_jobs_path(@account, status: 'potential') %></h3>
+        <h3><%= link_to "Status", account_jobs_path(@account) %></h3>
       </div>
     </div>
   </div>

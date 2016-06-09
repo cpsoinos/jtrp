@@ -53,15 +53,53 @@
 </div>
 
 <div class="row grid">
+  <div class="col-xs-4 col-md-4 grid-sizer"></div>
 
+  <div class="col-xs-4 col-md-4 grid-item">
+    <div class="panel panel-primary text-center">
+      <div class="panel-body">
+        <h1><%= link_to "<i class='material-icons md-48'>person_add</i>".html_safe, new_account_path %></h1>
+      </div>
+      <div class="panel-heading primary-lighter">
+        <h3><%= link_to "New Account", new_account_path %></h3>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-xs-4 col-md-4 grid-item">
+    <div class="panel panel-primary text-center">
+      <div class="panel-body">
+        <h1><%= link_to "<i class='material-icons md-48'>add_location</i>".html_safe, new_job_path %></h1>
+      </div>
+      <div class="panel-heading complement-lighter">
+        <h3><%= link_to "New Job", new_job_path %></h3>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-xs-4 col-md-4 grid-item">
+    <div class="panel panel-primary text-center">
+      <div class="panel-body">
+        <h1><%= link_to "<i class='material-icons md-48'>add</i>".html_safe, new_item_path %></h1>
+      </div>
+      <div class="panel-heading secondary-lighter">
+        <h3><%= link_to "New Item", new_item_path %></h3>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="row grid">
   <div class="col-xs-12 col-md-6 grid-sizer"></div>
+
   <div class="col-xs-12 col-md-6 grid-item">
     <div class="panel panel-primary">
       <div class="panel-heading text-center">
         <h3>Items</h3>
       </div>
       <div class="panel-body">
-        <%= pie_chart Account.group(:status).count %>
+        <%= pie_chart Item.active.group(:client_intention).count %>
       </div>
     </div>
   </div>

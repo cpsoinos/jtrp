@@ -3,7 +3,7 @@ class Account < ActiveRecord::Base
 
   has_many :clients
   belongs_to :primary_contact, class_name: "Client", foreign_key: "primary_contact_id"
-  has_many :jobs
+  has_many :jobs, dependent: :destroy
   has_many :proposals, through: :jobs
   has_many :items, through: :proposals
   belongs_to :created_by, class_name: "InternalUser", foreign_key: "created_by_id"
@@ -67,7 +67,15 @@ class Account < ActiveRecord::Base
   end
 
   def avatar
-    primary_contact.present? ? primary_contact.avatar : nil
+    if primary_contact.present? && primary_contact.avatar.present?
+      primary_contact.avatar
+    else
+      ActionController::Base.helpers.asset_path("thumb_default_avatar.png")
+    end
+  end
+
+  def self.default_url
+    ActionController::Base.helpers.asset_path("thumb_No_Image_Available.png")
   end
 
   def meets_requirements_active?

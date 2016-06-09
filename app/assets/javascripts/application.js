@@ -30,6 +30,8 @@
 //= require components
 //= require jsapi
 //= require chartkick
+//= require sweetalert
+//= require sweet-alert-confirm
 //= require_tree .
 
 $(document).ready(function() {
