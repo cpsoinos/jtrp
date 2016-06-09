@@ -1,0 +1,70 @@
+<%= form_for @job, class: "form-horizontal" do |f| %>
+
+  <% if @account.present? %>
+    <%= f.hidden_field :account_id, value: @account.id %>
+  <% end %>
+
+  <div class="row form-row">
+    <div class="text-center">
+      <div class="col-xs-12 col-md-3 form-label">
+        <%= f.label :address_1, class: "control-label required" %>
+      </div>
+      <div class="col-xs-12 col-md-9 text-left">
+        <%= f.text_field :address_1, class: "form-control", placeholder: "Address", required: true %>
+      </div>
+    </div>
+  </div>
+
+  <div class="row form-row">
+    <div class="text-center">
+      <div class="col-xs-12 col-md-3 form-label">
+        <%= f.label :address_2, class: "control-label" %>
+      </div>
+      <div class="col-xs-12 col-md-9 text-left">
+        <%= f.text_field :address_2, class: "form-control", placeholder: "Address Line Two" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="row form-row">
+    <div class="text-center">
+      <div class="col-xs-12 col-md-3 form-label">
+        <%= f.label :city, class: "control-label required" %>
+      </div>
+      <div class="col-xs-12 col-md-9 text-left">
+        <%= f.text_field :city, class: "form-control", placeholder: "City", required: true %>
+      </div>
+    </div>
+  </div>
+
+  <div class="row form-row">
+    <div class="text-center">
+      <div class="col-xs-12 col-md-3 form-label">
+        <%= f.label :state, class: "control-label required" %>
+      </div>
+      <div class="col-xs-12 col-md-9 text-left">
+        <%= f.text_field :state, class: "form-control", placeholder: "State", required: true %>
+      </div>
+    </div>
+  </div>
+
+  <div class="row form-row">
+    <div class="text-center">
+      <div class="col-xs-12 col-md-3 form-label">
+        <%= f.label :zip, class: "control-label" %>
+      </div>
+      <div class="col-xs-12 col-md-9 text-left">
+        <%= f.number_field :zip, class: "form-control", placeholder: "Zip" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="row form-row">
+    <div class="actions">
+      <div class="col-xs-12 text-center">
+        <%= f.submit "Next", class: "btn btn-raised btn-primary" %>
+      </div>
+    </div>
+  </div>
+
+<% end %>
