@@ -91,10 +91,10 @@
             </li>
 
             <li>
-              <a class="btn btn-primary" role="button" data-toggle="collapse" href="#clients" aria-expanded="false" aria-controls="clients">
-                <i class='material-icons'>person</i> Accounts <b class="caret"></b>
+              <a class="btn btn-primary" role="button" data-toggle="collapse" href="#accounts" aria-expanded="false" aria-controls="accounts">
+                <i class='material-icons'>assignment_ind</i> Accounts <b class="caret"></b>
               </a>
-              <div class="collapse text-center" id="clients">
+              <div class="collapse text-center" id="accounts">
                 <div class="btn-group-vertical">
                   <%= link_to "Potential", accounts_path(status: 'potential'), class: "btn btn-primary" %>
                   <%= link_to "Active", accounts_path(status: 'active'), class: "btn btn-primary" %>
@@ -103,9 +103,38 @@
                 </div>
               </div>
             </li>
+
+            <li>
+              <a class="btn btn-primary" role="button" data-toggle="collapse" href="#jobs" aria-expanded="false" aria-controls="jobs">
+                <i class='material-icons'>place</i> Jobs <b class="caret"></b>
+              </a>
+              <div class="collapse text-center" id="jobs">
+                <div class="btn-group-vertical">
+                  <%= link_to "Potential", jobs_path(status: 'potential'), class: "btn btn-primary" %>
+                  <%= link_to "Active", jobs_path(status: 'active'), class: "btn btn-primary" %>
+                  <%= link_to "Complete", jobs_path(status: 'complete'), class: "btn btn-primary" %>
+                  <%= link_to "All Jobs", jobs_path, class: "btn btn-primary" %>
+                </div>
+              </div>
+            </li>
+
+            <li>
+              <a class="btn btn-primary" role="button" data-toggle="collapse" href="#proposals" aria-expanded="false" aria-controls="proposals">
+                <i class='material-icons'>assignment</i> Proposals <b class="caret"></b>
+              </a>
+              <div class="collapse text-center" id="proposals">
+                <div class="btn-group-vertical">
+                  <%= link_to "Potential", proposals_path(status: 'potential'), class: "btn btn-primary" %>
+                  <%= link_to "Active", proposals_path(status: 'active'), class: "btn btn-primary" %>
+                  <%= link_to "Inactive", proposals_path(status: 'inactive'), class: "btn btn-primary" %>
+                  <%= link_to "All Proposals", proposals_path, class: "btn btn-primary" %>
+                </div>
+              </div>
+            </li>
+
             <li>
               <a class="btn btn-primary" role="button" data-toggle="collapse" href="#agreements" aria-expanded="false" aria-controls="agreements">
-                <i class='material-icons'>assignment</i> Agreements <b class="caret"></b>
+                <i class='material-icons'>assignment_turned_in</i> Agreements <b class="caret"></b>
               </a>
               <div class="collapse text-center" id="agreements">
                 <div class="btn-group-vertical">

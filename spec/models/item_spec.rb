@@ -23,22 +23,32 @@ describe Item do
     it "potential" do
       expect(Item.potential.count).to eq(2)
       Item.potential.each do |item|
-        expect(item.status).to eq("potential")
+        expect(item).to be_potential
       end
     end
 
     it "active" do
       expect(Item.active.count).to eq(3)
       Item.active.each do |item|
-        expect(item.status).to eq("active")
+        expect(item).to be_active
       end
     end
 
     it "sold" do
       expect(Item.sold.count).to eq(4)
       Item.sold.each do |item|
-        expect(item.status).to eq("sold")
+        expect(item).to be_sold
       end
+    end
+
+    it "for_sale" do
+      expect(Item.for_sale.count).to eq(3)
+    end
+
+    it "consigned" do
+      create(:item, :active, client_intention: "consign")
+
+      expect(Item.consigned.count).to eq(1)
     end
 
   end
@@ -46,7 +56,7 @@ describe Item do
   describe Item, "state_machine" do
 
     it "starts as 'potential'" do
-      expect(Item.new.status).to eq("potential")
+      expect(Item.new).to be_potential
     end
 
     it "transitions 'potential' to 'active' when requirements met" do
@@ -54,7 +64,7 @@ describe Item do
       item = create(:item, proposal: proposal, client_intention: "sell")
       item.mark_active!
 
-      expect(item.status).to eq("active")
+      expect(item).to be_active
     end
 
     it "does not transition 'potential' to 'active' when requirements not met" do
@@ -63,15 +73,16 @@ describe Item do
       proposal.update_attribute("status", "potential")
       item.mark_active
 
-      expect(item.status).not_to eq("active")
-      expect(item.status).to eq("potential")
+      expect(item).not_to be_active
+      expect(item).to be_potential
     end
 
     it "transitions 'active' to 'sold' when requirements met" do
       item = create(:item, :active, client_intention: "sell")
       item.mark_sold
 
-      expect(item.status).to eq("sold")
+      expect(item).to be_sold
+      expect(item.agreement).to be_inactive
     end
 
     it "does not transition 'active' to 'sold' when requirements not met" do
@@ -79,8 +90,8 @@ describe Item do
       item.agreement.update_attribute("status", "potential")
       item.mark_sold
 
-      expect(item.status).not_to eq("sold")
-      expect(item.status).to eq("active")
+      expect(item).not_to be_sold
+      expect(item).to be_active
     end
 
   end

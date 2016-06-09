@@ -1,55 +1,46 @@
 <div class="row">
   <div class="col-sm-12 text-center">
-    <h1 class="company-title">Jobs for <%= @account.full_name %></h1>
+    <h1 class="company-title">Jobs</h1>
+    <h4>Showing <%= @filter.present? ? @filter : "all" %> jobs</h4>
   </div>
 </div>
 
 <div class="row grid">
-  <div class="grid-sizer col-xs-6 col-md-3"></div>
+  <div class="grid-sizer col-xs-6 col-md-4"></div>
 
-  <div class="grid-item col-xs-6 col-md-3">
+  <div class="grid-item col-xs-6 col-md-4">
     <div class="panel panel-primary text-center">
       <div class="panel-body">
-        <h1><%= @account.jobs.potential.count %></h1>
+        <h1><%= Job.potential.count %></h1>
       </div>
       <div class="panel-heading complement-primary">
-        <h3><%= link_to "Potential Jobs", account_jobs_path(@account, status: 'potential') %></h3>
+        <h3><%= link_to "Potential Jobs", jobs_path(status: 'potential') %></h3>
       </div>
     </div>
   </div>
 
-  <div class="grid-item col-xs-6 col-md-3">
+  <div class="grid-item col-xs-6 col-md-4">
     <div class="panel panel-primary text-center">
       <div class="panel-body">
-        <h1><%= @account.jobs.active.count %></h1>
+        <h1><%= Job.active.count %></h1>
       </div>
       <div class="panel-heading complement-darker">
-        <h3><%= link_to "Active Jobs", account_jobs_path(@account, status: 'active') %></h3>
+        <h3><%= link_to "Active Jobs", jobs_path(status: 'active') %></h3>
       </div>
     </div>
   </div>
 
-  <div class="grid-item col-xs-6 col-md-3">
+  <div class="grid-item col-xs-6 col-md-4">
     <div class="panel panel-primary text-center">
       <div class="panel-body">
-        <h1><%= @account.jobs.complete.count %></h1>
+        <h1><%= Job.complete.count %></h1>
       </div>
       <div class="panel-heading secondary-primary">
-        <h3><%= link_to "Completed Jobs", account_jobs_path(@account, status: 'complete') %></h3>
+        <h3><%= link_to "Completed Jobs", jobs_path(status: 'complete') %></h3>
       </div>
     </div>
   </div>
 
-  <div class="grid-item col-xs-6 col-md-3">
-    <div class="panel panel-primary text-center">
-      <div class="panel-body">
-        <h1><%= link_to "<i class='material-icons'>add_location</i>".html_safe, new_account_job_path(@account), style: "color: black" %></h1>
-      </div>
-      <div class="panel-heading secondary-darker">
-        <h3><%= link_to "New Job", new_account_job_path(@account) %></h3>
-      </div>
-    </div>
-  </div>
 </div>
 
 <div class="row grid">
@@ -59,10 +50,10 @@
     <div class="col-xs-12 col-md-6 grid-item">
       <div class="panel panel-primary text-center">
         <div class="panel-heading">
-          <h4><%= link_to "#{job.address_1}, #{job.city}", account_job_path(@account, job) %></h4>
+          <h4><%= link_to "#{job.address_1}, #{job.city}", account_job_path(job.account, job) %></h4>
         </div>
         <div class="panel-body">
-          <%= image_tag(job.maps_url, class: "thumb", alt: "Job Address") %>
+          <%= link_to image_tag(job.maps_url, class: "thumb", alt: "Job Address"), account_job_path(job.account, job) %>
         </div>
       </div>
     </div>

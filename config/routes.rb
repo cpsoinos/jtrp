@@ -31,6 +31,8 @@ Rails.application.routes.draw do
   end
 
   resources :clients
+  resources :jobs, only: [:index, :show]
+  resources :proposals, only: [:index, :show]
 
   resources :users_admin, controller: "users"
 

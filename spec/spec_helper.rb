@@ -23,13 +23,12 @@ RSpec.configure do |config|
   config.include EmailSpec::Matchers
   config.include BestInPlace::TestHelpers
 
-  config.before(:all) do
-    FactoryGirl.reload
+  config.before(:suite) do
+    Rails.application.load_seed # loading seeds
   end
 
-  config.before(:each) do
-    FactoryGirl.create(:company, name: "Just the Right Piece")
-    FactoryGirl.create(:system_info)
+  config.before(:all) do
+    FactoryGirl.reload
   end
 
   config.expect_with :rspec do |expectations|

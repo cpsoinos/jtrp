@@ -3,6 +3,7 @@ class AccountsController < ApplicationController
 
   def index
     @accounts = AccountsPresenter.new(params).filter
+    @filter = params[:status]
     @yard_sale = Account.find(1)
     @estate_sale = Account.find(2)
   end

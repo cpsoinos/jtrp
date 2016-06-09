@@ -41,6 +41,7 @@ end
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-bootstrap-material-design'
+  gem 'rails-assets-classnames'
 end
 
 group :development, :test, :local do

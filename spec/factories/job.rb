@@ -15,8 +15,8 @@ FactoryGirl.define do
       status "active"
     end
 
-    trait :complete do
-      status "complete"
+    trait :completed do
+      status "completed"
     end
 
   end

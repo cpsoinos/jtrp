@@ -1,9 +1,13 @@
 class Agreement < ActiveRecord::Base
+  include Filterable
+
   belongs_to :proposal
   has_one :scanned_agreement
 
   validates :agreement_type, presence: true
   validates :proposal, presence: true
+
+  scope :status, -> (status) { where(status: status) }
 
   scope :potential, -> { where(status: "potential") }
   scope :active, -> { where(status: "active") }

@@ -51,7 +51,7 @@ class Proposal < ActiveRecord::Base
   end
 
   def mark_job_complete
-    job.mark_complete!
+    job.mark_completed!
   end
 
 end

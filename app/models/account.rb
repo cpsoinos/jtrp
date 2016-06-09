@@ -34,18 +34,33 @@ class Account < ActiveRecord::Base
       transition active: :inactive, if: lambda { |account| account.meets_requirements_inactive? }
     end
 
-    after_transition potential: :active, do: :mark_clients_active
-    after_transition active: :inactive, do: :mark_clients_inactive
-
   end
 
   alias :client :primary_contact
+
+  def self.yard_sale
+    Account.find_by(account_number: 1)
+  end
+
+  def self.estate_sale
+    Account.find_by(account_number: 2)
+  end
 
   def full_name
     if company_name.present?
       company_name
     elsif primary_contact.present?
       primary_contact.full_name
+    else
+      "No Name Provided"
+    end
+  end
+
+  def short_name
+    if company_name.present?
+      company_name
+    elsif primary_contact.present?
+      primary_contact.last_name
     else
       "No Name Provided"
     end
@@ -60,23 +75,7 @@ class Account < ActiveRecord::Base
   end
 
   def meets_requirements_inactive?
-    jobs.present? && jobs.complete.count == jobs.count
-  end
-
-  def mark_clients_active
-    clients.map(&:mark_active)
-  end
-
-  def mark_clients_inactive
-    clients.map(&:mark_inactive)
-  end
-
-  def self.yard_sale
-    Account.find_by(account_number: 1)
-  end
-
-  def self.estate_sale
-    Account.find_by(account_number: 2)
+    jobs.present? && jobs.completed.count == jobs.count
   end
 
   def yard_sale?

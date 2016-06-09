@@ -33,12 +33,18 @@ def create_categories
 end
 
 def create_default_accounts
-  Account.create([
-    { account_number: 1, is_company: true, company_name: "Yard Sale" },
-    { account_number: 2, is_company: true, company_name: "Estate Sale" }
-  ])
+  yard_sale = Account.create(account_number: 1, is_company: true, company_name: "Yard Sale")
+  estate_sale = Account.create(account_number: 2, is_company: true, company_name: "Estate Sale")
+  yard_sale.update_attribute("account_number", 1)
+  estate_sale.update_attribute("account_number", 2)
+  SystemInfo.first.update_attribute("last_account_number", 10)
+end
+
+def create_system_defaults
+  SystemInfo.create(last_account_number: 10)
 end
 
 create_company
 create_categories
+create_system_defaults
 create_default_accounts

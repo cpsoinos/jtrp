@@ -9,6 +9,7 @@ class ItemsController < ApplicationController
     @intentions = @items.pluck(:client_intention).uniq
     intentions_map
     @filter = params[:status].try(:capitalize)
+    @type = params[:type]
   end
 
   def new

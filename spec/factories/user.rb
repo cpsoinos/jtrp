@@ -22,27 +22,11 @@ FactoryGirl.define do
     end
 
     factory :client, class: Client do
-      status "potential"
       account
 
       after(:create) do |instance|
         instance.account.update_attribute("primary_contact_id", instance.id)
       end
-
-      trait :potential do
-        status "potential"
-      end
-
-      trait :active do
-        association :account, :active
-        status "active"
-      end
-
-      trait :inactive do
-        association :account, :inactive
-        status "inactive"
-      end
-
     end
 
     factory :admin, class: Admin

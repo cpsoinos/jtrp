@@ -83,7 +83,6 @@ class Item < ActiveRecord::Base
   end
 
   def mark_agreement_inactive
-    # return if self_procured?
     agreement.mark_inactive
   end
 
@@ -107,9 +106,5 @@ class Item < ActiveRecord::Base
     offer_type == "consign"
   end
   alias consigned? will_consign?
-
-  # def self_procured?
-  #   account.yard_sale? || account.estate_sale?
-  # end
 
 end

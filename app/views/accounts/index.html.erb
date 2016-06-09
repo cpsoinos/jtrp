@@ -1,6 +1,16 @@
 <div class="row">
   <div class="col-sm-12 text-center">
     <h1 class="company-title">Accounts</h1>
+    <% if @filter.present? %>
+      <% case @filter %>
+      <% when "potential" %>
+        <h4>Potential accounts have not yet signed an agreement.</h4>
+      <% when "active" %>
+        <h4>Active accounts have an active job.</h4>
+      <% when "inactive" %>
+        <h4>Inactive accounts have completed agreements or service orders.</h4>
+      <% end %>
+    <% end %>
   </div>
 </div>
 

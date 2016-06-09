@@ -289,6 +289,7 @@ GEM
       rails-assets-jquery (~> 2.1.1)
     rails-assets-bootstrap-sass (3.3.6)
       rails-assets-jquery (>= 1.9.0)
+    rails-assets-classnames (2.2.5)
     rails-assets-jquery (2.1.4)
     rails-deprecated_sanitizer (1.0.3)
       activesupport (>= 4.2.0.alpha)
@@ -496,6 +497,7 @@ DEPENDENCIES
   pry-rails
   rails (= 4.2.5.2)
   rails-assets-bootstrap-material-design!
+  rails-assets-classnames!
   rails_12factor
   rails_real_favicon
   react-rails

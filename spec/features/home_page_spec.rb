@@ -45,52 +45,187 @@ feature "home page" do
       sign_in user
     end
 
-    scenario "visits home page" do
+    it "has navigation links" do
       visit root_path
 
       expect(page).to have_content(company.name)
       expect(page).not_to have_content(company.slogan)
 
-      expect(page).to have_link("Items")
       expect(page).to have_link("Categories")
-      expect(page).to have_link("Clients")
-
-      expect(page).to have_link("Quick-Add Item")
-      expect(page).to have_link("Quick-Add Client")
-      expect(page).to have_link("Create New Proposal")
-      expect(page).to have_link("Open Proposals")
-      expect(page).to have_link("Pending Agreements")
-      expect(page).to have_link("Signed Agreements")
-
-      expect(page).to have_content("Recent Items")
-      expect(page).to have_content("Recent Sales")
-    end
-
-    scenario "clicks 'Items' link", js: true do
-      visit root_path
-      click_link("Items")
-
-      expect(page).to have_link("Potential")
-      expect(page).to have_link("Active")
-      expect(page).to have_link("Sold")
-    end
-
-    scenario "clicks 'Categories' link", js: true do
-      categories = create_list(:category, 3)
-      visit root_path
-      click_link("Categories")
-
-      categories.each do |category|
+      Category.all.each do |category|
         expect(page).to have_link(category.name)
       end
+
+      expect(page).to have_link("Items")
+      within("#items") do
+        expect(page).to have_link("Potential")
+        expect(page).to have_link("For Sale")
+        expect(page).to have_link("Consigned")
+        expect(page).to have_link("Sold")
+        expect(page).to have_link("All Items")
+      end
+
+      expect(page).to have_link("Accounts")
+      within("#accounts") do
+        expect(page).to have_link("Potential")
+        expect(page).to have_link("Active")
+        expect(page).to have_link("Inactive")
+        expect(page).to have_link("All Accounts")
+      end
+
+      expect(page).to have_link("Jobs")
+      within("#jobs") do
+        expect(page).to have_link("Potential")
+        expect(page).to have_link("Active")
+        expect(page).to have_link("Complete")
+        expect(page).to have_link("All Jobs")
+      end
+
+      expect(page).to have_link("Proposals")
+      within("#proposals") do
+        expect(page).to have_link("Potential")
+        expect(page).to have_link("Active")
+        expect(page).to have_link("Inactive")
+        expect(page).to have_link("All Proposals")
+      end
+
+      expect(page).to have_link("Agreements")
+      within("#agreements") do
+        expect(page).to have_link("Potential")
+        expect(page).to have_link("Active")
+        expect(page).to have_link("Inactive")
+        expect(page).to have_link("All Agreements")
+      end
+
+      # expect(page).to have_link("Create New Proposal")
+      # expect(page).to have_link("Open Proposals")
+      # expect(page).to have_link("Pending Agreements")
+      # expect(page).to have_link("Signed Agreements")
+      #
+      # expect(page).to have_content("Recent Items")
+      # expect(page).to have_content("Recent Sales")
     end
 
-    scenario "clicks 'Clients' link", js: true do
+    it "has information panels" do
       visit root_path
-      click_link("Clients")
 
-      expect(page).to have_link("Active")
-      expect(page).to have_link("Inactive")
+      expect(page).to have_link("Items for Sale")
+      expect(page).to have_link("Items Consigned")
+      expect(page).to have_link("Sold in the last 30 days")
+      expect(page).to have_link("Owed to Clients")
+    end
+
+    it "has an activity feed" do
+      expect(page).to have_content("Activity Feed")
+    end
+
+    context "clicks links" do
+
+      context "items" do
+        scenario "potential" do
+          visit root_path
+          within('#items') do
+            click_link("Potential")
+          end
+
+          expect(page).to have_content("Potential items have not yet been listed for sale or consigned.")
+        end
+
+        scenario "for sale" do
+          visit root_path
+          within('#items') do
+            click_link("For Sale")
+          end
+
+          expect(page).to have_content("For Sale items have a signed purchase order and are actively for sale.")
+        end
+
+        scenario "consigned" do
+          visit root_path
+          within('#items') do
+            click_link("Consigned")
+          end
+
+          expect(page).to have_content("Consigned items have a signed agreement and are actively on consignment.")
+        end
+
+        scenario "sold" do
+          visit root_path
+          within('#items') do
+            click_link("Sold")
+          end
+
+          expect(page).to have_content("Sold items have been sold.")
+        end
+      end
+
+      context "categories" do
+        scenario "clicks on a category link" do
+          category = create(:category)
+          visit root_path
+          click_link(category.name)
+
+          expect(page).to have_content(category.name)
+        end
+      end
+
+      context "accounts" do
+        scenario "potential" do
+          visit root_path
+          within('#accounts') do
+            click_link("Potential")
+          end
+
+          expect(page).to have_content("Potential accounts have not yet signed an agreement.")
+        end
+
+        scenario "active" do
+          visit root_path
+          within('#accounts') do
+            click_link("Active")
+          end
+
+          expect(page).to have_content("Active accounts have an active job.")
+        end
+
+        scenario "inactive" do
+          visit root_path
+          within('#accounts') do
+            click_link("Inactive")
+          end
+
+          expect(page).to have_content("Inactive accounts have completed agreements or service orders.")
+        end
+      end
+
+      context "jobs" do
+        scenario "potential" do
+          visit root_path
+          within('#jobs') do
+            click_link("Potential")
+          end
+
+          expect(page).to have_content("Showing potential jobs")
+        end
+
+        scenario "active" do
+          visit root_path
+          within('#jobs') do
+            click_link("Active")
+          end
+
+          expect(page).to have_content("Showing active jobs")
+        end
+
+        scenario "inactive" do
+          visit root_path
+          within('#jobs') do
+            click_link("Completed")
+          end
+
+          expect(page).to have_content("Showing completed jobs")
+        end
+      end
     end
 
   end

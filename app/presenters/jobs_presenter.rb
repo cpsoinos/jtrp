@@ -1,4 +1,4 @@
-class AgreementsPresenter
+class JobsPresenter
 
   attr_reader :params
 
@@ -7,7 +7,7 @@ class AgreementsPresenter
   end
 
   def filter
-    Agreement.filter(params.slice(:status))
+    Job.filter(params.slice(:status))
   end
 
 end

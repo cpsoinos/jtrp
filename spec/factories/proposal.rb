@@ -16,7 +16,7 @@ FactoryGirl.define do
     end
 
     trait :inactive do
-      association :job, :complete
+      association :job, :completed
       status "inactive"
 
       after(:create) do |instance|

@@ -7,26 +7,27 @@ class Job < ActiveRecord::Base
 
   validates :account, presence: true
 
+  scope :account_id, -> (account_id) { where(account_id: account_id) }
   scope :status, -> (status) { where(status: status) }
 
   scope :potential, -> { where(status: "potential") }
   scope :active, -> { where(status: "active") }
-  scope :complete, -> { where(status: "complete") }
+  scope :completed, -> { where(status: "completed") }
 
   state_machine :status, initial: :potential do
     state :potential
     state :active
-    state :complete
+    state :completed
 
     after_transition potential: :active, do: :mark_account_active
-    after_transition active: :complete, do: :mark_account_inactive
+    after_transition active: :completed, do: :mark_account_inactive
 
     event :mark_active do
       transition potential: :active, if: lambda { |job| job.meets_requirements_active? }
     end
 
-    event :mark_complete do
-      transition active: :complete, if: lambda { |job| job.meets_requirements_complete? }
+    event :mark_completed do
+      transition active: :completed, if: lambda { |job| job.meets_requirements_completed? }
     end
   end
 
@@ -34,7 +35,7 @@ class Job < ActiveRecord::Base
     proposals.active.present?
   end
 
-  def meets_requirements_complete?
+  def meets_requirements_completed?
     proposals.present? && proposals.inactive.count == proposals.count
   end
 
