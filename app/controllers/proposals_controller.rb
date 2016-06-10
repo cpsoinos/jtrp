@@ -1,6 +1,7 @@
 class ProposalsController < ApplicationController
   before_filter :find_accounts, only: [:new, :edit]
   before_filter :find_categories, only: [:new, :edit]
+  before_filter :find_account, :find_job
   before_filter :require_internal, except: [:show]
 
   def new
@@ -9,29 +10,25 @@ class ProposalsController < ApplicationController
   end
 
   def create
-    @proposal = Proposal.new(proposal_params)
+    @proposal = @job.proposals.new(created_by: current_user)
     if @proposal.save
-      redirect_to edit_proposal_path(@proposal)
+      redirect_to edit_account_job_proposal_path(@account, @job, @proposal)
     else
       flash[:alert] = @proposal.errors.full_messages.uniq.join
-      @client = Client.new
-      render :new
+      redirect_to :back
     end
   end
 
   def show
     @proposal = Proposal.find(params[:id])
-    @account = @proposal.account
     @client = @account.primary_contact
     @items = @proposal.items
   end
 
   def edit
     @proposal = Proposal.find(params[:id])
-    @account = @proposal.account
     @item = @proposal.items.new
     @items = @proposal.items
-    gon.items = build_json_for_items
     gon.proposalId = @proposal.id
   end
 
@@ -50,19 +47,7 @@ class ProposalsController < ApplicationController
   protected
 
   def proposal_params
-    params.require(:proposal).permit([:account_id, :created_by_id])
-  end
-
-  def build_json_for_items
-    items_for_list = @account.items.potential.where(proposal_id: nil)
-    items_for_list.map do |item|
-      {
-        text: item.description,
-        value: item.id,
-        selected: false,
-        imageSrc: (item.initial_photos.present? ? item.initial_photos.first.photo_url(:thumb) : Photo.default_url)
-      }
-    end.to_json
+    params.require(:proposal).permit([:job_id, :created_by_id])
   end
 
 end

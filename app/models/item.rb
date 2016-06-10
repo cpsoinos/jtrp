@@ -87,24 +87,16 @@ class Item < ActiveRecord::Base
   end
 
   def meets_requirements_active?
-    agreement.present? &&
-    agreement.active? &&
-    proposal.present? &&
-    proposal.active?
+    agreement.reload.present? &&
+    agreement.active?
   end
 
   def meets_requirements_sold?
     meets_requirements_active?
   end
 
-  def will_purchase?
-    offer_type == "purchase"
+  def owned?
+    active? && client_intention == "sell"
   end
-  alias owned? will_purchase?
-
-  def will_consign?
-    offer_type == "consign"
-  end
-  alias consigned? will_consign?
 
 end

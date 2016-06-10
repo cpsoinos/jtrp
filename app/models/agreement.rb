@@ -18,7 +18,7 @@ class Agreement < ActiveRecord::Base
     state :active
     state :inactive
 
-    after_transition potential: :active, do: :mark_proposal_active
+    after_transition potential: :active, do: [:mark_items_active, :mark_proposal_active]
     after_transition active: :inactive, do: :mark_proposal_inactive
 
     event :mark_active do
@@ -35,8 +35,12 @@ class Agreement < ActiveRecord::Base
     proposal.items.where(client_intention: agreement_type)
   end
 
+  def mark_items_active
+    items.map(&:mark_active)
+  end
+
   def mark_proposal_active
-    proposal.mark_active! if proposal.potential?
+    proposal.mark_active if proposal.potential?
   end
 
   def mark_proposal_inactive

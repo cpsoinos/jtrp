@@ -3,6 +3,7 @@ describe Job do
   it { should belong_to(:account) }
   it { should have_many(:proposals) }
   it { should have_many(:items).through(:proposals) }
+  it { should have_many(:agreements).through(:proposals) }
 
   it { should validate_presence_of(:account) }
 

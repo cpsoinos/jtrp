@@ -20,32 +20,17 @@ feature "add a category" do
 
       click_link("Add a category")
       expect(page).to have_field("Name")
-      expect(page).to have_field("Photo")
-      expect(page).to have_content("optional")
       expect(page).to have_button("Create Category")
       expect(page).to have_link("Cancel")
     end
 
-    scenario "successfully adds a category without a photo" do
+    scenario "successfully adds a category" do
       visit new_category_path
       fill_in "Name", with: "Great Room"
       click_on("Create Category")
 
       expect(page).to have_content("Category created!")
       expect(page).to have_content("Great Room")
-      expect(page).to have_link("Edit")
-    end
-
-    scenario "successfully adds a category with a photo" do
-      visit new_category_path
-      fill_in "Name", with: "Great Room"
-      attach_file('category_photo', File.join(Rails.root, '/spec/fixtures/test.png'))
-      click_on("Create Category")
-
-      expect(page).to have_content("Category created!")
-      expect(page).to have_content("Great Room")
-      expect(page).to have_css("img[src*='test.png']")
-      expect(page).to have_link("Edit")
     end
 
     scenario "unsuccessfully tries to add a category without a name" do
@@ -56,7 +41,6 @@ feature "add a category" do
       expect(page).to have_content("Name can't be blank")
       expect(page).to have_content("Add a Category")
       expect(page).to have_field("Name")
-      expect(page).to have_field("Photo")
     end
 
     scenario "cancels adding a category" do
@@ -72,8 +56,6 @@ feature "add a category" do
       click_link("Add a subcategory")
 
       expect(page).to have_field("Name")
-      expect(page).to have_field("Photo")
-      expect(page).to have_content("optional")
       expect(page).to have_button("Create Category")
       expect(page).to have_link("Cancel")
 

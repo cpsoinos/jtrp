@@ -8,7 +8,7 @@ class GeolocationService
   end
 
   def static_map_url
-    "https://maps.googleapis.com/maps/api/staticmap?center=#{location_string}&zoom=13&size=200x200&maptype=roadmap&markers=color:blue%7Clabel:Client%7C#{location_string}&key=#{api_key}"
+    "https://maps.googleapis.com/maps/api/staticmap?center=#{location_string}&zoom=13&size=800x800&maptype=roadmap&markers=color:blue%7Clabel:Client%7C#{location_string}&key=#{api_key}"
   end
 
   private

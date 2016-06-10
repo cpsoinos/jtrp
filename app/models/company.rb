@@ -3,7 +3,7 @@ class Company < ActiveRecord::Base
   mount_uploader :logo, LogoUploader
 
   has_many :internal_users
-  belongs_to :primary_contact, class_name: "InternalUser", foreign_key: "primary_contact_id"
+  belongs_to :primary_contact, class_name: "User", foreign_key: "primary_contact_id"
 
   validates :name, presence: true
 

@@ -81,14 +81,6 @@ feature "home page" do
         expect(page).to have_link("All Jobs")
       end
 
-      expect(page).to have_link("Proposals")
-      within("#proposals") do
-        expect(page).to have_link("Potential")
-        expect(page).to have_link("Active")
-        expect(page).to have_link("Inactive")
-        expect(page).to have_link("All Proposals")
-      end
-
       expect(page).to have_link("Agreements")
       within("#agreements") do
         expect(page).to have_link("Potential")
@@ -96,14 +88,6 @@ feature "home page" do
         expect(page).to have_link("Inactive")
         expect(page).to have_link("All Agreements")
       end
-
-      # expect(page).to have_link("Create New Proposal")
-      # expect(page).to have_link("Open Proposals")
-      # expect(page).to have_link("Pending Agreements")
-      # expect(page).to have_link("Signed Agreements")
-      #
-      # expect(page).to have_content("Recent Items")
-      # expect(page).to have_content("Recent Sales")
     end
 
     it "has information panels" do

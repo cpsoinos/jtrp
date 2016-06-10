@@ -2,9 +2,10 @@ feature "item index" do
 
   let(:user) { create(:internal_user) }
   let!(:potential_items) { create_list(:item, 3, description: "connor") }
-  let!(:active_items) { create_list(:item, 3, :active, description: "buddy") }
+  let!(:active_owned_items) { create_list(:item, 3, :active, description: "buddy") }
+  let!(:active_consigned_items) { create_list(:item, 3, :active, description: "vasha", client_intention: "consign") }
   let!(:sold_items) { create_list(:item, 2, :sold, description: "katniss") }
-  let!(:all_items) { active_items | sold_items | potential_items }
+  let!(:all_items) { active_owned_items | active_consigned_items | sold_items | potential_items }
   let(:intentions) { ["consigned", "owned", "will donate", "will dump", "will move", "undecided"] }
 
   before do
@@ -17,9 +18,8 @@ feature "item index" do
 
   context "all items" do
 
-    scenario "visits item list from home page", js: true do
+    scenario "visits item list from home page" do
       visit root_path
-      click_link("Items")
       click_link("All Items")
 
       expect(page).to have_content("All Items")
@@ -42,23 +42,46 @@ feature "item index" do
 
   end
 
-  context "active items" do
+  context "purchased items" do
 
-    scenario "visits item list from home page", js: true do
+    scenario "visits item list from home page" do
       visit root_path
-      click_link("Items")
-      click_link("Active")
+      click_link("For Sale")
 
-      expect(page).to have_content("Active Items")
+      expect(page).to have_content("For Sale items have a signed purchase order and are actively for sale.")
     end
 
     scenario "visits item list" do
-      visit items_path(state: 'active')
+      visit items_path(status: 'active', type: 'sell')
 
-      expect(page).to have_content("Active Items")
-      active_items.each do |item|
+      expect(page).to have_content("For Sale items have a signed purchase order and are actively for sale.")
+      active_owned_items.each do |item|
         expect(page).to have_link("buddy")
       end
+      expect(page).not_to have_link("vasha")
+      expect(page).not_to have_link("connor")
+      expect(page).not_to have_link("katniss")
+    end
+
+  end
+
+  context "consigned items" do
+
+    scenario "visits item list from home page" do
+      visit root_path
+      click_link("Consigned")
+
+      expect(page).to have_content("Consigned items have a signed agreement and are actively on consignment.")
+    end
+
+    scenario "visits item list" do
+      visit items_path(status: 'active', type: 'consign')
+
+      expect(page).to have_content("Consigned items have a signed agreement and are actively on consignment.")
+      active_owned_items.each do |item|
+        expect(page).to have_link("vasha")
+      end
+      expect(page).not_to have_link("buddy")
       expect(page).not_to have_link("connor")
       expect(page).not_to have_link("katniss")
     end
@@ -67,21 +90,21 @@ feature "item index" do
 
   context "sold items" do
 
-    scenario "visits item list from home page", js: true do
+    scenario "visits item list from home page" do
       visit root_path
-      click_link("Items")
       click_link("Sold")
 
-      expect(page).to have_content("Sold Items")
+      expect(page).to have_content("Sold items have been sold.")
     end
 
     scenario "visits item list" do
-      visit items_path(state: 'sold')
+      visit items_path(status: 'sold')
 
-      expect(page).to have_content("Sold Items")
+      expect(page).to have_content("Sold items have been sold.")
       sold_items.each do |item|
         expect(page).to have_link("katniss")
       end
+      expect(page).not_to have_link("vasha")
       expect(page).not_to have_link("buddy")
       expect(page).not_to have_link("connor")
     end
@@ -90,21 +113,23 @@ feature "item index" do
 
   context "potential items" do
 
-    scenario "visits item list from home page", js: true do
+    scenario "visits item list from home page" do
       visit root_path
-      click_link("Items")
-      click_link("Potential")
+      within("#items") do
+        click_link("Potential")
+      end
 
-      expect(page).to have_content("Potential Items")
+      expect(page).to have_content("Potential items have not yet been listed for sale or consigned.")
     end
 
     scenario "visits item list" do
-      visit items_path(state: 'potential')
+      visit items_path(status: 'potential')
 
-      expect(page).to have_content("Potential Items")
+      expect(page).to have_content("Potential items have not yet been listed for sale or consigned.")
       potential_items.each do |item|
         expect(page).to have_link("connor")
       end
+      expect(page).not_to have_link("vasha")
       expect(page).not_to have_link("buddy")
       expect(page).not_to have_link("katniss")
     end

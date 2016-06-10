@@ -1,9 +1,5 @@
   <div class="well">
 
-    <% if category.photo.present? %>
-      <%= image_tag(category.photo.thumb.url) %>
-    <% end %>
-
     <% if current_user.try(:internal?) %>
       <div class="row">
         <div class="col-xs-6">

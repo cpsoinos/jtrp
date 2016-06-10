@@ -1,6 +1,6 @@
 class Proposal < ActiveRecord::Base
   belongs_to :job
-  belongs_to :created_by, class_name: "InternalUser"
+  belongs_to :created_by, class_name: "User"
   has_many :items, dependent: :destroy
   has_many :agreements, dependent: :destroy
 
@@ -18,7 +18,7 @@ class Proposal < ActiveRecord::Base
     state :active
     state :inactive
 
-    after_transition potential: :active, do: [:mark_items_active, :mark_job_active]
+    after_transition potential: :active, do: :mark_job_active
     after_transition active: :inactive, do: :mark_job_complete
 
     event :mark_active do

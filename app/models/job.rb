@@ -4,6 +4,7 @@ class Job < ActiveRecord::Base
   belongs_to :account
   has_many :proposals, dependent: :destroy
   has_many :items, through: :proposals
+  has_many :agreements, through: :proposals
 
   validates :account, presence: true
 
@@ -51,6 +52,10 @@ class Job < ActiveRecord::Base
 
   def maps_url
     GeolocationService.new(self).static_map_url
+  end
+
+  def name
+    "#{account.short_name} - #{address_1}"
   end
 
 end

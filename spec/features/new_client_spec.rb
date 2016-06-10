@@ -14,27 +14,6 @@ feature "new client" do
       sign_in user
     end
 
-    scenario "visits new client path from home page" do
-      visit root_path
-      click_link("Quick-Add Client")
-
-      expect(page).to have_content("New Client")
-      expect(page).to have_field("client_email")
-      expect(page).not_to have_field("client_password")
-      expect(page).not_to have_field("client_password_confirmation")
-      expect(page).to have_field("client_first_name")
-      expect(page).to have_field("client_last_name")
-      expect(page).to have_field("client_address_1")
-      expect(page).to have_field("client_address_2")
-      expect(page).to have_field("client_city")
-      expect(page).to have_field("client_state")
-      expect(page).to have_field("client_zip")
-      expect(page).to have_field("client_phone")
-      expect(page).to have_field("client_phone_ext")
-      expect(page).not_to have_field("client_role")
-      expect(page).to have_button("Create Client")
-    end
-
     scenario "successfully creates a new client" do
       visit new_client_path
       fill_in("client_email", with: "sally@seashell.com")

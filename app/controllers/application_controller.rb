@@ -23,12 +23,20 @@ class ApplicationController < ActionController::Base
     @clients ||= Client.all
   end
 
+  def find_client
+    @client ||= Client.find(params[:client_id])
+  end
+
   def find_accounts
     @accounts ||= Account.all
   end
 
-  def find_client
-    @client ||= Client.find(params[:client_id])
+  def find_account
+    @account = Account.find(params[:account_id])
+  end
+
+  def find_job
+    @job = Job.find(params[:job_id])
   end
 
   def find_agreement

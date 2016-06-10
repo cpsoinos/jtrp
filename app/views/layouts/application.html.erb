@@ -55,7 +55,7 @@
   <div id="wrapper">
 
     <!-- Sidebar -->
-    <div id="sidebar-wrapper">
+    <div id="sidebar-wrapper" class="hidden-print">
       <% if current_user.try(:internal?) %>
 
           <ul class="sidebar-nav">
@@ -119,20 +119,6 @@
             </li>
 
             <li>
-              <a class="btn btn-primary" role="button" data-toggle="collapse" href="#proposals" aria-expanded="false" aria-controls="proposals">
-                <i class='material-icons'>assignment</i> Proposals <b class="caret"></b>
-              </a>
-              <div class="collapse text-center" id="proposals">
-                <div class="btn-group-vertical">
-                  <%= link_to "Potential", proposals_path(status: 'potential'), class: "btn btn-primary" %>
-                  <%= link_to "Active", proposals_path(status: 'active'), class: "btn btn-primary" %>
-                  <%= link_to "Inactive", proposals_path(status: 'inactive'), class: "btn btn-primary" %>
-                  <%= link_to "All Proposals", proposals_path, class: "btn btn-primary" %>
-                </div>
-              </div>
-            </li>
-
-            <li>
               <a class="btn btn-primary" role="button" data-toggle="collapse" href="#agreements" aria-expanded="false" aria-controls="agreements">
                 <i class='material-icons'>assignment_turned_in</i> Agreements <b class="caret"></b>
               </a>
@@ -169,7 +155,7 @@
                 </div>
               <% end %>
             </div>
-            <div class="menu-toggle-overlay">
+            <div class="menu-toggle-overlay hidden-print">
               <a href="#menu-toggle" class="btn btn-default top-margin float" id="menu-toggle">Toggle Sidebar</a>
             </div>
 

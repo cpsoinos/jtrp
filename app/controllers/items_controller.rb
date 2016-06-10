@@ -42,10 +42,10 @@ class ItemsController < ApplicationController
   def batch_create
     if ItemImporter.new(@proposal).import(archive_params[:archive])
       flash[:notice] = "Items imported"
-      redirect_to edit_proposal_path(@proposal)
+      redirect_to edit_account_job_proposal_path(@proposal.account, @proposal.job, proposal)
     else
       flash[:alert] = "Upload failed"
-      render :edit
+      redirect_to :back
     end
   end
 
@@ -62,10 +62,7 @@ class ItemsController < ApplicationController
     @item = Item.find(params[:id])
     respond_to do |format|
       if ItemUpdater.new(@item).update(item_params)
-        format.js do
-          render 'proposals/add_item' if @item.proposal_id
-          render 'proposals/remove_item' if @item.proposal_id == nil
-        end
+        format.js { render nothing: true }
         format.html { redirect_to(@item, :notice => 'Item was successfully updated.') }
         format.json { respond_with_bip(@item) }
       else
@@ -82,8 +79,15 @@ class ItemsController < ApplicationController
     @item = Item.find(params[:id])
     filter = @item.status
     if @item.destroy
-      flash[:notice] = "Item removed"
-      redirect_to items_path(status: filter)
+      respond_to do |format|
+        format.js do
+          render 'proposals/remove_item'
+        end
+        format.html do
+          flash[:notice] = "Item removed"
+          redirect_to items_path(status: filter)
+        end
+      end
     else
       redirect_to :back
     end
@@ -102,7 +106,7 @@ class ItemsController < ApplicationController
   protected
 
   def item_params
-    params.require(:item).permit(:description, {photos: []}, {initial_photos: []}, {listing_photos: []}, :proposal_id, :account_id, :purchase_price, :asking_price, :listing_price, :sale_price, :minimum_sale_price, :condition, :category_id, :client_intention, :notes, :height, :width, :depth, :offer_type)
+    params.require(:item).permit(:description, {photos: []}, {initial_photos: []}, {listing_photos: []}, :proposal_id, :account_id, :purchase_price, :asking_price, :listing_price, :sale_price, :minimum_sale_price, :condition, :category_id, :client_intention, :notes, :height, :width, :depth, :will_purchase, :will_consign)
   end
 
   def archive_params
