@@ -10,6 +10,11 @@ class GeolocationService
   def static_map_url
     "https://maps.googleapis.com/maps/api/staticmap?center=#{location_string}&zoom=13&size=800x800&maptype=roadmap&markers=color:blue%7Clabel:Client%7C#{location_string}&key=#{api_key}"
   end
+  
+  def location_string
+    string ||= "#{address_1} #{address_2} #{city},#{state} #{zip}"
+    string.gsub!(" ", "+")
+  end
 
   private
 
@@ -19,11 +24,6 @@ class GeolocationService
     @city = object.try(:city)
     @state = object.try(:state)
     @zip = object.try(:zip)
-  end
-
-  def location_string
-    string ||= "#{address_1} #{address_2} #{city},#{state} #{zip}"
-    string.gsub!(" ", "+")
   end
 
   def api_key

@@ -15,7 +15,6 @@ feature "new proposal" do
 
   context "internal user" do
     let(:user) { create(:internal_user) }
-    let!(:client) { create(:client) }
 
     before do
       sign_in user
@@ -23,12 +22,15 @@ feature "new proposal" do
 
     context "existing client" do
 
-      let(:proposal) { create(:proposal, account: client.account)}
+      let(:account) { create(:account, :with_client) }
+      let(:job) { create(:job, account: account) }
 
-      scenario "an existing client" do
-        visit new_proposal_path
+      scenario "new proposal from account page" do
+        visit account_path(account)
+        expect(page).to have_link("New Proposal")
+        click_link("New Proposal")
 
-        expect(page).to have_select("proposal_account_id", with_options: [client.full_name])
+        expect(page).to have_content("Proposal for #{account.full_name}")
       end
 
       scenario "selects an existing client" do

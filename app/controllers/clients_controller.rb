@@ -3,6 +3,7 @@ class ClientsController < ApplicationController
 
   def show
     @client = User.find(params[:id])
+    @account = @client.account
     @maps_url = GeolocationService.new(@client).static_map_url
   end
 
@@ -11,15 +12,10 @@ class ClientsController < ApplicationController
   end
 
   def create
-    @client = ClientCreator.new(current_user).create(client_params, params[:proposal])
-
-    if @client.errors.empty?
+    @client = Client.new(client_params)
+    if @client.save
       flash[:notice] = "Client created!"
-      if params[:proposal]
-        redirect_to edit_proposal_path(@client.proposals.first)
-      else
-        redirect_to account_path(@client.account)
-      end
+      redirect_to account_path(@client.account)
     else
       flash[:alert] = @client.errors.full_messages.uniq.join
       redirect_to :back
@@ -34,7 +30,7 @@ class ClientsController < ApplicationController
     @client = Client.find(params[:id])
     if @client.update(client_params)
       flash[:notice] = "Client updated"
-      render :show
+      redirect_to account_client_path(@client.account, @client)
     else
       flash[:alert] = @client.errors.full_messages.uniq.join
       redirect_to :back
@@ -44,7 +40,7 @@ class ClientsController < ApplicationController
   protected
 
   def client_params
-    params.require(:client).permit([:email, :first_name, :last_name, :address_1, :address_2, :city, :state, :zip, :phone, :phone_ext])
+    params.require(:client).permit([:email, :first_name, :last_name, :address_1, :address_2, :city, :state, :zip, :phone, :phone_ext, :account_id])
   end
 
 end

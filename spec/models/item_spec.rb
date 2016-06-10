@@ -68,11 +68,11 @@ describe Item do
     end
 
     it "does not transition 'potential' to 'active' when requirements not met" do
-      proposal = create(:proposal, :active)
-      item = create(:item, proposal: proposal, client_intention: "sell")
-      proposal.update_attribute("status", "potential")
+      agreement = create(:agreement, status: "potential", agreement_type: "sell")
+      item = create(:item, proposal: agreement.proposal, client_intention: "sell")
       item.mark_active
 
+      expect(agreement).to be_potential
       expect(item).not_to be_active
       expect(item).to be_potential
     end

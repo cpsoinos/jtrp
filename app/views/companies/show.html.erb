@@ -99,7 +99,7 @@
         <h3>Items</h3>
       </div>
       <div class="panel-body">
-        <%= pie_chart Item.active.group(:client_intention).count %>
+        <%= pie_chart Item.active.group(:client_intention).count, library: {pieHole: 0.5} %>
       </div>
     </div>
   </div>

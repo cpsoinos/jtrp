@@ -8,6 +8,7 @@ feature "new job" do
   end
 
   scenario "clicks 'new job' from the dashboard" do
+    pending("job from dashboard")
     visit root_path
     click_link("New Job")
 
