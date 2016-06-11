@@ -31,6 +31,7 @@ feature "yard sale" do
   end
 
   scenario "successfully fills in new job information" do
+    pending("yard sale workflow")
     visit new_account_job_path(account)
     fill_in("Address 1", with: "55 Fifty Street")
     fill_in("Address 2", with: "Suite 5")
@@ -44,6 +45,7 @@ feature "yard sale" do
   end
 
   scenario "adds items" do
+    pending("yard sale workflow")
     visit new_account_job_proposal_path(account, job)
 
     expect(page).not_to have_content("Proposal")
@@ -69,6 +71,7 @@ feature "yard sale" do
   end
 
   scenario "generates 'agreement'" do
+    pending("yard sale workflow")
     item
     visit edit_account_job_proposal_path(account, job, proposal)
     click_link("Generate Agreements")
@@ -78,6 +81,7 @@ feature "yard sale" do
   end
 
   scenario "uploads receipt" do
+    pending("yard sale workflow")
     item
     agreement
     visit account_job_proposal_agreements_path(account, job, proposal)

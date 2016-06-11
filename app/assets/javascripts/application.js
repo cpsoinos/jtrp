@@ -32,6 +32,7 @@
 //= require chartkick
 //= require sweetalert
 //= require sweet-alert-confirm
+//= require jquery.geocomplete.min
 //= require_tree .
 
 $(document).ready(function() {
@@ -40,6 +41,7 @@ $(document).ready(function() {
 
   // $.material.init()
   $.material.ripples();
+  // $.material.input();
   // $.material.checkbox();
   // $.material.radio();
 });

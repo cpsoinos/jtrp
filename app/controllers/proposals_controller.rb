@@ -1,12 +1,17 @@
 class ProposalsController < ApplicationController
-  before_filter :find_accounts, only: [:new, :edit]
   before_filter :find_categories, only: [:new, :edit]
-  before_filter :find_account, :find_job
+  before_filter :find_account
+  before_filter :find_job, except: [:new]
   before_filter :require_internal, except: [:show]
 
   def new
     @proposal = Proposal.new
-    @client = Client.new
+    find_job if params[:job_id]
+    @jobs = @account.jobs
+    if @jobs.empty?
+      redirect_to new_account_job_path(@account)
+    end
+    gon.jobs = build_json_for_jobs
   end
 
   def create
@@ -48,6 +53,17 @@ class ProposalsController < ApplicationController
 
   def proposal_params
     params.require(:proposal).permit([:job_id, :created_by_id])
+  end
+
+  def build_json_for_jobs
+    @jobs.map do |job|
+      {
+        text: job.name,
+        value: job.id,
+        selected: false,
+        imageSrc: job.maps_url
+      }
+    end.to_json
   end
 
 end

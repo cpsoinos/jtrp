@@ -7,7 +7,6 @@ class ClientCreator
   end
 
   def create(attrs, proposal=nil)
-    binding.pry
     @client = Client.new(attrs)
     @client.skip_password_validation = true
 
@@ -20,7 +19,6 @@ class ClientCreator
   private
 
   def verify_account
-    binding.pry
     if @client.account.nil?
       @client.create_account(primary_contact: @client)
     end

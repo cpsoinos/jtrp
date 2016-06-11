@@ -2,12 +2,18 @@ feature "proposal response" do
 
   let(:user) { create(:internal_user) }
   let(:proposal) { create(:proposal) }
+  let(:job) { proposal.job }
+  let(:account) { job.account }
   let!(:items) { create_list(:item, 6, proposal: proposal) }
   let!(:intentions) { %w(sell consign donate dump move nothing) }
 
+  before do
+    account.primary_contact = create(:client, account: account)
+  end
+
   context "guest" do
     scenario "visits consignment agreement path" do
-      visit proposal_response_form_path(proposal)
+      visit account_job_proposal_response_form_path(account, job, proposal)
 
       expect(page).to have_content("Forbidden")
     end
@@ -17,7 +23,7 @@ feature "proposal response" do
 
     before do
       sign_in(user)
-      visit proposal_response_form_path(proposal)
+      visit account_job_proposal_response_form_path(account, job, proposal)
     end
 
     scenario "user chooses client intentions", js: true do
@@ -30,6 +36,10 @@ feature "proposal response" do
     end
 
     context "creates client agreements" do
+
+      before do
+        Company.first.update_attribute("primary_contact_id", user.id)
+      end
 
       scenario "one intention" do
         Item.update_all(client_intention: "sell")

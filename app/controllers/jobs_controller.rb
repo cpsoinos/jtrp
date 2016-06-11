@@ -1,6 +1,7 @@
 class JobsController < ApplicationController
   before_filter :require_internal
   before_filter :find_accounts, only: :new
+  before_filter :find_account, only: :create
 
   def index
     @jobs = JobsPresenter.new(params).filter
@@ -16,10 +17,13 @@ class JobsController < ApplicationController
   def new
     @account = Account.find(params[:account_id]) if params[:account_id]
     @job = Job.new
+    unless @account.present?
+      gon.accounts = build_json_for_accounts
+    end
   end
 
   def create
-    @job = Job.new(job_params)
+    @job = @account.jobs.new(job_params)
     if @job.save
       flash[:notice] = "Job created"
       redirect_to account_job_path(@job.account, @job)
@@ -33,6 +37,17 @@ class JobsController < ApplicationController
 
   def job_params
     params.require(:job).permit(:account_id, :address_1, :address_2, :city, :state, :zip)
+  end
+
+  def build_json_for_accounts
+    @accounts.map do |account|
+      {
+        text: account.full_name,
+        value: account.id,
+        selected: false,
+        imageSrc: account.avatar
+      }
+    end.to_json
   end
 
 end

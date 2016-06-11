@@ -1,82 +1,51 @@
-<%= form_for @job, class: "form-horizontal" do |f| %>
-  <%= f.hidden_field :created_by_id, value: current_user.id %>
+<%= form_for [@account, @job], class: "form-horizontal" do |f| %>
 
-  <% if @account.present? %>
-    <%= f.hidden_field :account_id, value: @account.id %>
-  <% else %>
-    <legend>Step 1: Select an Account</legend>
-    <div class="row form-row">
+  <% if @job.errors.present? %>
+    <div class="row">
       <div class="text-center">
-        <div class="col-xs-12 col-md-3 form-label">
-          <%= f.label :account, class: "control-label" %>
-        </div>
-        <div class="col-xs-12 col-md-9 text-left">
-          <%= f.collection_select :account_id, @accounts, :id, :full_name, {include_blank: "Select Account"}, {class: "form-control"} %>
+        <div class="error_messages notice alert alert-danger text-center">
+          <% @job.errors.full_messages.each do |msg| %>
+            <p><%= msg %></p>
+          <% end %>
         </div>
       </div>
     </div>
   <% end %>
 
-  <div class="row form-row">
-    <div class="text-center">
-      <div class="col-xs-12 col-md-3 form-label">
-        <%= f.label :address_1, class: "control-label required" %>
-      </div>
-      <div class="col-xs-12 col-md-9 text-left">
-        <%= f.text_field :address_1, class: "form-control", placeholder: "Address", required: true %>
-      </div>
-    </div>
+  <%= f.hidden_field :created_by_id, value: current_user.id %>
+
+  <div class="form-group label-static">
+    <%= f.label :address_1, class: "control-label required" %>
+    <%= f.text_field :address_1, class: "form-control", required: true, data: {geo: "name"} %>
   </div>
 
-  <div class="row form-row">
-    <div class="text-center">
-      <div class="col-xs-12 col-md-3 form-label">
-        <%= f.label :address_2, class: "control-label" %>
-      </div>
-      <div class="col-xs-12 col-md-9 text-left">
-        <%= f.text_field :address_2, class: "form-control", placeholder: "Address Line Two" %>
-      </div>
-    </div>
+
+  <div class="form-group label-static">
+    <%= f.label :address_2, class: "control-label" %>
+    <%= f.text_field :address_2, class: "form-control"%>
   </div>
 
-  <div class="row form-row">
-    <div class="text-center">
-      <div class="col-xs-12 col-md-3 form-label">
-        <%= f.label :city, class: "control-label required" %>
-      </div>
-      <div class="col-xs-12 col-md-9 text-left">
-        <%= f.text_field :city, class: "form-control", placeholder: "City", required: true %>
-      </div>
-    </div>
+
+  <div class="form-group label-static">
+    <%= f.label :city, class: "control-label required" %>
+    <%= f.text_field :city, class: "form-control", required: true, data: {geo: "locality"} %>
   </div>
 
-  <div class="row form-row">
-    <div class="text-center">
-      <div class="col-xs-12 col-md-3 form-label">
-        <%= f.label :state, class: "control-label required" %>
-      </div>
-      <div class="col-xs-12 col-md-9 text-left">
-        <%= f.text_field :state, class: "form-control", placeholder: "State", required: true %>
-      </div>
-    </div>
+
+  <div class="form-group label-static">
+    <%= f.label :state, class: "control-label required" %>
+    <%= f.text_field :state, class: "form-control", required: true, data: {geo: "administrative_area_level_1"} %>
   </div>
 
-  <div class="row form-row">
-    <div class="text-center">
-      <div class="col-xs-12 col-md-3 form-label">
-        <%= f.label :zip, class: "control-label" %>
-      </div>
-      <div class="col-xs-12 col-md-9 text-left">
-        <%= f.number_field :zip, class: "form-control", placeholder: "Zip" %>
-      </div>
-    </div>
+
+  <div class="form-group label-static">
+    <%= f.label :zip, class: "control-label" %>
+    <%= f.number_field :zip, class: "form-control", data: {geo: "postal_code"} %>
   </div>
 
-  <div class="row form-row">
-    <div class="actions">
-      <div class="col-xs-12 text-center">
-        <%= f.submit "Next", class: "btn btn-raised btn-primary" %>
-      </div>
+  <div class="actions">
+    <div class="col-xs-12 text-center">
+      <%= f.submit "Next", class: "btn btn-raised btn-primary" %>
     </div>
   </div>
 

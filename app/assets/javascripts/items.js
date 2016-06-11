@@ -1,10 +1,5 @@
 $(document).ready(function() {
 
-  if (gon.items !== undefined) {
-    var itemData = JSON.parse(gon.items)
-  };
-  slickifyDropdown($(".items-dropdown"), itemData);
-
   $("#add-existing-item-button").click(function() {
     var itemId = $(".dd-selected-value")[0].value
     var proposalId = gon.proposalId
@@ -78,12 +73,3 @@ $(".items.index").ready(function() {
   var $tab = $($("a[role='tab']")[0])
   $tab.tab("show");
 })
-
-var slickifyDropdown = function(selector, items) {
-  selector.ddslick({
-    data: items,
-    imagePosition: "left",
-    width: 280,
-    selectText: "Choose an Item"
-  });
-}

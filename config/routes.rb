@@ -23,6 +23,7 @@ Rails.application.routes.draw do
     resources :clients
     resources :transactions
     resources :items, only: :index
+    resources :proposals, only: :new
     resources :jobs do
       resources :proposals do
         get '/details', to: 'proposals#details', as: "details"

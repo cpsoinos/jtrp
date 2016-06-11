@@ -5,7 +5,7 @@ class AgreementsController < ApplicationController
 
   def index
     @account = @proposal.account
-    @client = @proposal.client
+    @client = @proposal.job.account.primary_contact
     @agreements = @proposal.agreements
     @items = @proposal.items
     gon.signatures = build_json_for_signatures
