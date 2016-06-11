@@ -4,9 +4,15 @@
     <% if @filter.present? %>
       <% case @filter %>
       <% when "Potential" %>
-        <h4><%= @filter %> items have not yet been listed for sale.</h4>
+        <h4><%= @filter %> items have not yet been listed for sale or consigned.</h4>
       <% when "Active" %>
-        <h4><%= @filter %> items have a signed proposal and are  actively for sale.</h4>
+        <% if @type == "sell" %>
+          <h4>For Sale items have a signed purchase order and are actively for sale.</h4>
+        <% elsif @type == "consign" %>
+          <h4>Consigned items have a signed agreement and are actively on consignment.</h4>
+        <% else %>
+          <h4>Active items are actively for sale or on consignment.</h4>
+        <% end %>
       <% when "Sold" %>
         <h4><%= @filter %> items have been sold.</h4>
       <% end %>

@@ -5,77 +5,195 @@
 </div>
 
 <div class="row grid">
-  <div class="grid-sizer col-xs-6 col-sm-6 col-md-4"></div>
-  <div class="grid-item col-xs-6 col-md-4">
-    <div class="well text-center">
-      <div class="caption">
-        <h3><%= link_to "<i class='material-icons'>weekend</i> Quick-Add Item".html_safe, new_item_path %></h3>
+  <div class="grid-sizer col-xs-6 col-md-3"></div>
+
+  <div class="grid-item col-xs-6 col-md-3">
+    <div class="panel panel-primary text-center">
+      <div class="panel-body">
+        <h1><%= @metrics[:for_sale_count] %></h1>
+      </div>
+      <div class="panel-heading complement-primary">
+        <h3><%= link_to "Items for Sale", items_path(status: 'active', type: 'sell') %></h3>
       </div>
     </div>
   </div>
 
-  <div class="grid-item col-xs-6 col-md-4">
-    <div class="well text-center">
-      <div class="caption">
-        <h3><%= link_to "<i class='material-icons'>person_add</i> Quick-Add Client".html_safe, new_client_path %></h3>
+  <div class="grid-item col-xs-6 col-md-3">
+    <div class="panel panel-primary text-center">
+      <div class="panel-body">
+        <h1><%= @metrics[:consigned_count] %></h1>
+      </div>
+      <div class="panel-heading complement-darker">
+        <h3><%= link_to "Items Consigned", items_path(status: 'active', type: 'consign') %></h3>
       </div>
     </div>
   </div>
 
-  <div class="grid-item col-xs-6 col-md-4">
-    <div class="well text-center">
-      <div class="caption">
-        <h3><%= link_to "<i class='material-icons'>assignment_ind</i> Create New Proposal".html_safe, new_proposal_path %></h3>
+  <div class="grid-item col-xs-6 col-md-3">
+    <div class="panel panel-primary text-center">
+      <div class="panel-body">
+        <h1><%= humanized_money_with_symbol(@metrics[:thirty_day_revenue]) %></h1>
+      </div>
+      <div class="panel-heading secondary-primary">
+        <h3><%= link_to "Sold in the last 30 days", items_path(status: 'sold') %></h3>
       </div>
     </div>
   </div>
 
-  <div class="grid-item col-xs-6 col-md-4">
-    <div class="well text-center">
-      <div class="caption">
-        <h3><%= link_to "<i class='material-icons'>assignment</i> Open Proposals".html_safe, clients_path(status: 'potential') %></h3>
+  <div class="grid-item col-xs-6 col-md-3">
+    <div class="panel panel-primary text-center">
+      <div class="panel-body">
+        <h1><%= humanized_money_with_symbol(@metrics[:owed_to_consignors]) %></h1>
       </div>
-    </div>
-  </div>
-
-  <div class="grid-item col-xs-6 col-md-4">
-    <div class="well text-center">
-      <div class="caption">
-        <h3><%= link_to "<i class='material-icons'>assignment_late</i> Pending Agreements".html_safe, agreements_list_agreements_path(status: 'potential') %></h3>
-      </div>
-    </div>
-  </div>
-
-  <div class="grid-item col-xs-6 col-md-4">
-    <div class="well text-center">
-      <div class="caption">
-        <h3><%= link_to "<i class='material-icons'>assignment_turned_in</i> Signed Agreements".html_safe, agreements_list_agreements_path(status: 'active') %></h3>
+      <div class="panel-heading secondary-darker">
+        <h3><%= link_to "Owed to Clients", accounts_path %></h3>
       </div>
     </div>
   </div>
 </div>
 
 <div class="row grid">
-  <div class="grid-sizer col-xs-12 col-md-6"></div>
-  <div class="grid-item col-xs-12 col-md-6">
-    <div class="well text-center">
-      <div class="caption">
-        <h3><%= link_to "<i class='material-icons'>event_seat</i> Recent Items".html_safe, items_path(type: 'potential') %></h3>
-        <div class="row well-caption">
-          <%= render "clients/items_preview", items: @potential_items, type: "" %>
-        </div>
+  <div class="col-xs-4 col-md-4 grid-sizer"></div>
+
+  <div class="col-xs-4 col-md-4 grid-item">
+    <div class="panel panel-primary text-center">
+      <div class="panel-body">
+        <h1><%= link_to "<i class='material-icons md-48'>person_add</i>".html_safe, new_account_path %></h1>
+      </div>
+      <div class="panel-heading primary-lighter">
+        <h3><%= link_to "New Account", new_account_path %></h3>
       </div>
     </div>
   </div>
 
-  <div class="grid-item col-xs-12 col-md-6">
-    <div class="well text-center">
-      <div class="caption">
-        <h3><%= link_to "<i class='material-icons'>monetization_on</i> Recent Sales".html_safe, items_path(type: 'sold') %></h3>
-        <div class="row well-caption">
-          <%= render "clients/items_preview", items: @sold_items, type: "" %>
-        </div>
+  <div class="col-xs-4 col-md-4 grid-item">
+    <div class="panel panel-primary text-center">
+      <div class="panel-body">
+        <h1><%= link_to "<i class='material-icons md-48'>add_location</i>".html_safe, new_job_path %></h1>
+      </div>
+      <div class="panel-heading complement-lighter">
+        <h3><%= link_to "New Job", new_job_path %></h3>
       </div>
     </div>
   </div>
+
+  <div class="col-xs-4 col-md-4 grid-item">
+    <div class="panel panel-primary text-center">
+      <div class="panel-body">
+        <h1><%= link_to "<i class='material-icons md-48'>add</i>".html_safe, new_item_path %></h1>
+      </div>
+      <div class="panel-heading secondary-lighter">
+        <h3><%= link_to "New Item", new_item_path %></h3>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="row grid">
+  <div class="col-xs-12 col-md-6 grid-sizer"></div>
+
+  <div class="col-xs-12 col-md-6 grid-item">
+    <div class="panel panel-primary">
+      <div class="panel-heading text-center">
+        <h3>Items</h3>
+      </div>
+      <div class="panel-body">
+        <%= pie_chart Item.active.group(:client_intention).count, library: {pieHole: 0.5} %>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-xs-12 col-md-6 grid-item">
+    <div class="panel panel-primary">
+      <div class="panel-heading text-center">
+        <h3>Activity Feed</h3>
+      </div>
+      <div class="panel-body">
+
+        <div class="list-group">
+          <div class="list-group-item">
+            <div class="row-action-primary">
+              <i class="material-icons">weekend</i>
+            </div>
+            <div class="row-content">
+              <div class="least-content">15m</div>
+              <h4 class="list-group-item-heading">Couch Sold</h4>
+
+              <p class="list-group-item-text">$150.00</p>
+            </div>
+          </div>
+          <div class="list-group-item">
+            <div class="row-action-primary">
+              <i class="material-icons">weekend</i>
+            </div>
+            <div class="row-content">
+              <div class="least-content">15m</div>
+              <h4 class="list-group-item-heading">Couch Sold</h4>
+
+              <p class="list-group-item-text">$150.00</p>
+            </div>
+          </div>
+          <div class="list-group-item">
+            <div class="row-action-primary">
+              <i class="material-icons">weekend</i>
+            </div>
+            <div class="row-content">
+              <div class="least-content">15m</div>
+              <h4 class="list-group-item-heading">Couch Sold</h4>
+
+              <p class="list-group-item-text">$150.00</p>
+            </div>
+          </div>
+          <div class="list-group-item">
+            <div class="row-action-primary">
+              <i class="material-icons">weekend</i>
+            </div>
+            <div class="row-content">
+              <div class="least-content">15m</div>
+              <h4 class="list-group-item-heading">Couch Sold</h4>
+
+              <p class="list-group-item-text">$150.00</p>
+            </div>
+          </div>
+          <div class="list-group-item">
+            <div class="row-action-primary">
+              <i class="material-icons">weekend</i>
+            </div>
+            <div class="row-content">
+              <div class="least-content">15m</div>
+              <h4 class="list-group-item-heading">Couch Sold</h4>
+
+              <p class="list-group-item-text">$150.00</p>
+            </div>
+          </div>
+          <div class="list-group-item">
+            <div class="row-action-primary">
+              <i class="material-icons">weekend</i>
+            </div>
+            <div class="row-content">
+              <div class="least-content">15m</div>
+              <h4 class="list-group-item-heading">Couch Sold</h4>
+
+              <p class="list-group-item-text">$150.00</p>
+            </div>
+          </div>
+          <div class="list-group-item">
+            <div class="row-action-primary">
+              <i class="material-icons">weekend</i>
+            </div>
+            <div class="row-content">
+              <div class="least-content">15m</div>
+              <h4 class="list-group-item-heading">Couch Sold</h4>
+
+              <p class="list-group-item-text">$150.00</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
 </div>

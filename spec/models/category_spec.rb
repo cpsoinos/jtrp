@@ -8,7 +8,7 @@ describe Category do
 
   context "scopes" do
 
-    let!(:primary_categories) { create_list(:category, 3) }
+    let(:primary_categories) { Category.all }
     let!(:subcategories) { create_list(:category, 2, parent: primary_categories.first) }
 
     it "primary" do
@@ -17,7 +17,7 @@ describe Category do
 
     it "secondary" do
       expect(Category.secondary.count).to eq(2)
-      
+
       subcategories.each do |subcategory|
         expect(subcategory.parent).to eq(primary_categories.first)
       end

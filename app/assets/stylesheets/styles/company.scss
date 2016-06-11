@@ -7,6 +7,15 @@ textarea#wysiwyg {
   height: 500px;
 }
 
-.navbar-brand {
-  font-family: "bradley hand";
+img.logo {
+  height: 3rem;
+}
+
+.brand-logo-link img {
+  float: left;
+  margin-right: 1em;
+}
+
+.panel-heading a {
+  color: white;
 }

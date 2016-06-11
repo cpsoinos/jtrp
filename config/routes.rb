@@ -19,7 +19,25 @@ Rails.application.routes.draw do
     get '/tag', to: 'items#tag', as: 'tag'
   end
 
+  resources :accounts do
+    resources :clients
+    resources :transactions
+    resources :items, only: :index
+    resources :proposals, only: :new
+    resources :jobs do
+      resources :proposals do
+        get '/details', to: 'proposals#details', as: "details"
+        get '/response_form', to: 'proposals#response_form'
+        get '/agreement', to: 'proposals#agreement'
+        resources :agreements
+        resources :items
+      end
+    end
+  end
+
   resources :clients
+  resources :jobs
+  resources :proposals, only: [:index, :show]
 
   resources :users_admin, controller: "users"
 

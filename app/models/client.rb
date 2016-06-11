@@ -1,33 +1,20 @@
 class Client < User
-
-  has_many :proposals
+  belongs_to :account
+  has_many :proposals, through: :account
   has_many :items, through: :proposals
 
-  scope :potential, -> { where(status: "potential") }
-  scope :active, -> { where(status: "active") }
-  scope :inactive, -> { where(status: "inactive") }
+  after_create :verify_account
 
-  state_machine :status, initial: :potential do
-    state :potential
-    state :active
-    state :inactive
-
-    event :mark_active do
-      transition any => :active, if: lambda { |client| client.meets_requirements_active?}
-    end
-
-    event :mark_inactive do
-      transition :active => :inactive, if: lambda { |client| client.meets_requirements_inactive? }
-    end
-
+  def address_string
+    GeolocationService.new(self).location_string
   end
 
-  def meets_requirements_active?
-    proposals.active.present?
-  end
+  private
 
-  def meets_requirements_inactive?
-    proposals.active.empty?
+  def verify_account
+    if account.nil?
+      create_account(primary_contact: self)
+    end
   end
 
 end

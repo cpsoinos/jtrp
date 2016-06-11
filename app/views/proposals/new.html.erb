@@ -1,33 +1,45 @@
-<h1 class="text-center">New Proposal</h1>
-</br>
-
-<div class="col-md-8 col-md-offset-2">
+<div class="col-xs-12 extra-large-top-margin">
   <div class="well bs-component">
-
-    <% if @clients.present? %>
-      <%= render 'form', legend: "New Proposal" %>
-    <% end %>
-
-    <div class="row">
-      <div class="text-center">
-        <% if @clients.present? %>
-          - or -</br>
-        <% end %>
-        <%= link_to "New Client", "javascript:void(0)", class: "btn btn-raised btn-primary", id: "new-client-button" %>
-      </div>
+    <div class="text-center">
+      <h1>New Proposal</h1>
     </div>
 
-    <div class="row hidden" id="new-client-form">
+    <% if @job %>
 
-      <%= form_for @client, url: create_client_path do |f| %>
+      <div class="row vertical-align">
+        <div class="col-xs-12 col-md-8 col-md-offset-2">
+          <%= render 'form' %>
+        </div>
+      </div>
 
-        <%= render 'users/form', resource: @client, f: f %>
-        <div class="text-center">
-          <%= f.submit "Create Client", class: "btn btn-raised btn-success" %>
+    <% else %>
+
+      <div class="text-center">
+        <h1>Is this for an existing job?</h1>
+      </div>
+
+      <div class="extra-large-top-margin text-center">
+        <%= link_to "No", new_account_job_path(@account), class: "btn btn-raised btn-primary btn-lg" %>
+        <%= link_to "Yes", "#", class: "btn btn-raised btn-primary btn-lg", id: "job-selector-button" %>
+      </div>
+
+      <div class="row large-top-margin hidden" id="job-selector">
+
+        <%= form_for @proposal do |f| %>
+          <%= hidden_field_tag(:account_id, @account.id) %>
+          <%= hidden_field_tag(:job_id, "") %>
+
+          <div class="col-xs-12 col-md-4 col-md-offset-4">
+            <div class="jobs-dropdown" data-class-name="Job" data-account-id="<%= @account.id %>"></div>
+          </div>
+          <div class="text-center hidden" id="new-account-job-proposal-button">
+            <%= f.submit class: "btn btn-raised btn-primary" %>
+          </div>
         </div>
 
       <% end %>
-    </div>
+
+    <% end %>
 
   </div>
 </div>

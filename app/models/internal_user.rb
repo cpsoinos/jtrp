@@ -1,3 +1,3 @@
 class InternalUser < User
-  belongs_to :company
+  has_one :company
 end

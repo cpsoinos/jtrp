@@ -5,31 +5,12 @@ describe Item do
   it { should have_many(:photos) }
 
   it { should validate_presence_of(:description) }
+  it { should validate_presence_of(:proposal) }
 
   it { should monetize(:purchase_price).allow_nil }
   it { should monetize(:listing_price).allow_nil }
+  it { should monetize(:minimum_sale_price).allow_nil }
   it { should monetize(:sale_price).allow_nil }
-
-  it "potential?" do
-    item = create(:item)
-    expect(item.active?).to be(false)
-    expect(item.potential?).to be(true)
-    expect(item.sold?).to be(false)
-  end
-
-  it "active?" do
-    item = create(:item, :active)
-    expect(item.active?).to be(true)
-    expect(item.potential?).to be(false)
-    expect(item.sold?).to be(false)
-  end
-
-  it "sold?" do
-    item = create(:item, :sold)
-    expect(item.active?).to be(false)
-    expect(item.potential?).to be(false)
-    expect(item.sold?).to be(true)
-  end
 
   describe "scopes" do
 
@@ -42,54 +23,75 @@ describe Item do
     it "potential" do
       expect(Item.potential.count).to eq(2)
       Item.potential.each do |item|
-        expect(item.state).to eq("potential")
+        expect(item).to be_potential
       end
     end
 
     it "active" do
       expect(Item.active.count).to eq(3)
       Item.active.each do |item|
-        expect(item.state).to eq("active")
+        expect(item).to be_active
       end
     end
 
     it "sold" do
       expect(Item.sold.count).to eq(4)
       Item.sold.each do |item|
-        expect(item.state).to eq("sold")
+        expect(item).to be_sold
       end
     end
 
-    it "unclaimed" do
-      claimed_item = create(:item, :with_client)
-      Item.all.update_all(proposal_id: nil)
+    it "for_sale" do
+      expect(Item.for_sale.count).to eq(3)
+    end
 
-      expect(Item.unclaimed.count).to eq(9)
-      expect(Item.unclaimed).not_to include(claimed_item)
+    it "consigned" do
+      create(:item, :active, client_intention: "consign")
+
+      expect(Item.consigned.count).to eq(1)
     end
 
   end
 
   describe Item, "state_machine" do
 
-    it "starts as 'pending'" do
-      expect(Item.new(description: "b").state).to eq("potential")
+    it "starts as 'potential'" do
+      expect(Item.new).to be_potential
     end
 
-    it "transitions 'potential' to 'active'" do
+    it "transitions 'potential' to 'active' when requirements met" do
       proposal = create(:proposal, :active)
       item = create(:item, proposal: proposal, client_intention: "sell")
-      create(:agreement, :sell, :active, proposal: proposal)
       item.mark_active!
 
-      expect(item.state).to eq("active")
+      expect(item).to be_active
     end
 
-    it "transitions 'active' to 'sold'" do
-      item = create(:item, :active, client_intention: "sell")
-      item.mark_sold!
+    it "does not transition 'potential' to 'active' when requirements not met" do
+      agreement = create(:agreement, status: "potential", agreement_type: "sell")
+      item = create(:item, proposal: agreement.proposal, client_intention: "sell")
+      item.mark_active
 
-      expect(item.state).to eq("sold")
+      expect(agreement).to be_potential
+      expect(item).not_to be_active
+      expect(item).to be_potential
+    end
+
+    it "transitions 'active' to 'sold' when requirements met" do
+      item = create(:item, :active, client_intention: "sell")
+      item.mark_sold
+
+      expect(item).to be_sold
+      expect(item.agreement).to be_inactive
+    end
+
+    it "does not transition 'active' to 'sold' when requirements not met" do
+      item = create(:item, :active, client_intention: "sell")
+      item.agreement.update_attribute("status", "potential")
+      item.mark_sold
+
+      expect(item).not_to be_sold
+      expect(item).to be_active
     end
 
   end

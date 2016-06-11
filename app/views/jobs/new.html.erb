@@ -1,0 +1,38 @@
+<div class="col-xs-12 extra-large-top-margin">
+  <div class="well bs-component">
+    <div class="text-center">
+      <h1>New Job</h1>
+    </div>
+
+    <% if @account %>
+
+      <div class="row vertical-align">
+        <div class="col-xs-12 col-md-6" id="job-map"></div>
+        <div class="col-xs-12 col-md-6">
+          <%= render 'form' %>
+        </div>
+      </div>
+
+    <% else %>
+
+      <div class="text-center">
+        <h1>Is this for an existing account?</h1>
+      </div>
+
+      <div class="extra-large-top-margin text-center">
+        <%= link_to "No", new_client_path, class: "btn btn-raised btn-primary btn-lg" %>
+        <%= link_to "Yes", "#", class: "btn btn-raised btn-primary btn-lg", id: "account-selector-button" %>
+      </div>
+
+      <div class="row large-top-margin hidden" id="account-selector">
+        <div class="col-xs-12 col-md-4 col-md-offset-4">
+          <div class="accounts-dropdown" data-class-name="Account"></div>
+        </div>
+        <div class="text-center" id="new-account-job-button">
+        </div>
+      </div>
+
+    <% end %>
+
+  </div>
+</div>

@@ -2,8 +2,12 @@ class CompaniesController < ApplicationController
   before_filter :require_internal, except: [:client_services, :consignment_policies, :service_rate_schedule, :agent_service_rate_schedule]
 
   def show
-    @potential_items = Item.potential.order(created_at: :desc).limit(10)
-    @sold_items = Item.sold.order(created_at: :desc).limit(10)
+    @metrics = {
+      for_sale_count: Item.for_sale.count,
+      consigned_count: Item.consigned.count,
+      thirty_day_revenue: Item.sold.where("items.sale_date >= ?", 30.days.ago).sum(:sale_price_cents),
+      owed_to_consignors: Item.consigned.sold.where("items.sale_date >= ?", 30.days.ago).sum(:sale_price_cents) / 2
+    }
   end
 
   def edit

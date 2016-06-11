@@ -68,6 +68,8 @@ feature "sign up" do
 
   context "new client" do
     scenario "successfully signs up as a client", js: true do
+      pending("client sign up")
+      Company.find_or_create_by(name: "Just the Right Piece")
       visit new_user_registration_path
       fill_in("user_email", with: "sally@seashell.com")
       fill_in("user_password", with: "supersecretsupersafe")
@@ -92,6 +94,7 @@ feature "sign up" do
     end
 
     scenario "does not agree to policies", js: true do
+      Company.find_or_create_by(name: "Just the Right Piece")
       visit new_user_registration_path
       fill_in("user_email", with: "sally@seashell.com")
       fill_in("user_password", with: "supersecretsupersafe")

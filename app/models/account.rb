@@ -1,0 +1,107 @@
+class Account < ActiveRecord::Base
+  include Filterable
+
+  has_many :clients
+  belongs_to :primary_contact, class_name: "Client", foreign_key: "primary_contact_id"
+  has_many :jobs, dependent: :destroy
+  has_many :proposals, through: :jobs
+  has_many :items, through: :proposals
+  belongs_to :created_by, class_name: "InternalUser", foreign_key: "created_by_id"
+  belongs_to :updated_by, class_name: "InternalUser", foreign_key: "updated_by_id"
+
+  validates :account_number, uniqueness: true
+  validates :status, presence: true
+
+  scope :status, -> (status) { where(status: status) }
+
+  scope :potential, -> { where(status: "potential") }
+  scope :active, -> { where(status: "active") }
+  scope :inactive, -> { where(status: "inactive") }
+
+  before_create :set_account_number
+  after_create :increment_system_info
+
+  state_machine :status, initial: :potential do
+    state :potential
+    state :active
+    state :inactive
+
+    event :mark_active do
+      transition potential: :active, if: lambda { |account| account.meets_requirements_active? }
+    end
+
+    event :mark_inactive do
+      transition active: :inactive, if: lambda { |account| account.meets_requirements_inactive? }
+    end
+
+  end
+
+  alias :client :primary_contact
+
+  def self.yard_sale
+    Account.find_by(account_number: 1)
+  end
+
+  def self.estate_sale
+    Account.find_by(account_number: 2)
+  end
+
+  def full_name
+    if company_name.present?
+      company_name
+    elsif primary_contact.present?
+      primary_contact.full_name
+    else
+      "No Name Provided"
+    end
+  end
+
+  def short_name
+    if company_name.present?
+      company_name
+    elsif primary_contact.present?
+      primary_contact.last_name
+    else
+      "No Name Provided"
+    end
+  end
+
+  def avatar
+    if primary_contact.present? && primary_contact.avatar.present?
+      primary_contact.avatar
+    else
+      ActionController::Base.helpers.asset_path("thumb_default_avatar.png")
+    end
+  end
+
+  def self.default_url
+    ActionController::Base.helpers.asset_path("thumb_No_Image_Available.png")
+  end
+
+  def meets_requirements_active?
+    jobs.active.present?
+  end
+
+  def meets_requirements_inactive?
+    jobs.present? && jobs.completed.count == jobs.count
+  end
+
+  def yard_sale?
+    account_number == 1 && company_name == "Yard Sale"
+  end
+
+  def estate_sale?
+    account_number == 2 && company_name == "Estate Sale"
+  end
+
+  private
+
+  def set_account_number
+    self.account_number = SystemInfo.first.last_account_number
+  end
+
+  def increment_system_info
+    SystemInfo.first.increment!(:last_account_number)
+  end
+
+end

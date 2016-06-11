@@ -1,0 +1,167 @@
+<div class="row">
+  <div class="col-sm-12 text-center">
+    <span class="pull-right"><%= link_to "Edit", edit_job_path(@job), class: "btn btn-raised btn-primary" %></span>
+    <h1 class="company-title"><%= @job.name %></h1>
+  </div>
+</div>
+
+<div class="row grid">
+  <div class="grid-sizer col-xs-6 col-md-3"></div>
+
+  <div class="grid-item col-xs-6 col-md-3">
+    <div class="panel panel-primary text-center">
+      <div class="panel-body">
+        <h1><%= link_to @job.id, account_job_path(@account, @job) %></h1>
+      </div>
+      <div class="panel-heading complement-primary">
+        <h3><%= link_to "<i class='material-icons'>location_on</i> Job Number".html_safe, account_job_path(@account, @job) %></h3>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid-item col-xs-6 col-md-3">
+    <div class="panel panel-primary text-center">
+      <div class="panel-body">
+        <h1><%= link_to @account.id, account_path(@account) %></h1>
+      </div>
+      <div class="panel-heading complement-darker">
+        <h3><%= link_to "<i class='material-icons'>assignment_ind</i> Account Number".html_safe, account_path(@account) %></h3>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid-item col-xs-6 col-md-3">
+    <div class="panel panel-primary text-center">
+      <div class="panel-body">
+        <h1><%= link_to @account.status.titleize, account_jobs_path(@account) %></h1>
+      </div>
+      <div class="panel-heading secondary-primary">
+        <h3><%= link_to "Status", account_jobs_path(@account) %></h3>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid-item col-xs-6 col-md-3">
+    <div class="panel panel-primary text-center">
+      <div class="panel-body">
+        <h1><%= @job.items.count %></h1>
+      </div>
+      <div class="panel-heading secondary-darker">
+        <h3>Items</h3>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row grid">
+  <div class="col-xs-6 col-md-4 grid-sizer"></div>
+
+  <div class="col-xs-6 col-md-4 grid-item">
+    <div class="panel panel-primary">
+      <div class="panel-heading text-center primary-lighter">
+        <h3>Address</h3>
+      </div>
+      <div class="panel-body text-center">
+        <p><%= @job.address_1 %></p>
+        <% if @job.address_2.present? %>
+          <p><%= @job.address_2 %></p>
+        <% end %>
+        <p><%= @job.city %></p>
+        <p><%= @job.state %>, <%= @job.zip %></p>
+        <%= image_tag(@job.maps_url, alt: "Job Address", width: "100%") %>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-xs-6 col-md-4 grid-item">
+    <div class="panel panel-primary">
+      <div class="panel-heading text-center complement-lighter">
+        <h3>Proposals</h3>
+      </div>
+      <div class="panel-body text-center">
+        <% if @job.proposals.present? %>
+          <div class="row client-grid">
+            <div class="col-xs-4 client-grid-sizer"></div>
+            <% @job.proposals.each do |proposal| %>
+              <div class="col-xs-4 client-grid-item">
+                <div class="panel panel-primary text-center">
+                  <div class="panel-body">
+                    <h4><%= link_to "<i class='material-icons md-48'>assignment</i>".html_safe, account_job_proposal_path(@account, @job, proposal) %></h4>
+                  </div>
+                  <div class="panel-heading secondary-primary">
+                    <h5><%= link_to "No. #{proposal.id}", account_job_proposal_path(@account, @job, proposal) %></h5>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        <% else %>
+          <%= link_to "New Proposal", account_job_proposals_path(@account, @job), method: "POST", class: "btn btn-raised btn-primary" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-xs-6 col-md-4 grid-item">
+    <div class="panel panel-primary">
+      <div class="panel-heading text-center secondary-lighter">
+        <h3>Agreements</h3>
+      </div>
+      <div class="panel-body text-center">
+        <% if @job.agreements.present? %>
+          <div class="row client-grid">
+            <div class="col-xs-4 client-grid-sizer"></div>
+            <% @job.agreements.each do |agreement| %>
+              <div class="col-xs-4 client-grid-item">
+                <div class="panel panel-primary text-center">
+                  <div class="panel-body">
+                    <h4><%= link_to "<i class='material-icons md-48'>assignment_turned_in</i>".html_safe, account_job_proposal_agreement_path(@account, @job, agreement.proposal, agreement) %></h4>
+                  </div>
+                  <div class="panel-heading secondary-primary">
+                    <h5><%= link_to agreement.agreement_type.titleize, account_job_proposal_agreement_path(@account, @job, agreement.proposal, agreement) %></h5>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        <% else %>
+          <i>No agreements</i>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-xs-6 col-md-4 grid-item">
+    <div class="panel panel-primary">
+      <div class="panel-heading text-center primary-darker">
+        <h3>Items</h3>
+      </div>
+      <div class="panel-body text-center">
+        <% if @job.items.present? %>
+          <div class="row client-grid">
+            <div class="col-xs-4 client-grid-sizer"></div>
+            <% @job.items.each do |item| %>
+              <div class="col-xs-4 client-grid-item">
+                <div class="panel panel-primary text-center">
+                  <div class="panel-body">
+                    <% if item.listing_photos.present? %>
+                      <h4><%= link_to image_tag(item.listing_photos.first.photo_url(:thumb)), item_path(item) %></h4>
+                    <% elsif item.initial_photos.present? %>
+                      <h4><%= link_to image_tag(item.initial_photos.first.photo_url(:thumb)), item_path(item) %></h4>
+                    <% end %>
+                  </div>
+                  <div class="panel-heading secondary-primary">
+                    <h5><%= link_to item.client_intention.titleize, item_path(item) %></h5>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        <% else %>
+          <i>No items</i>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+</div>

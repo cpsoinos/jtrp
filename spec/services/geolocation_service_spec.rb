@@ -1,7 +1,7 @@
 describe GeolocationService do
 
   let(:client) { create(:client, address_1: "1 Drury Ln", address_2: nil, city: "Boston", state: "MA", zip: "12345") }
-  let(:expected_url) { "https://maps.googleapis.com/maps/api/staticmap?center=1+Drury+Ln++Boston,MA+12345&zoom=13&size=200x200&maptype=roadmap&markers=color:blue%7Clabel:Client%7C1+Drury+Ln++Boston,MA+12345&key=secret" }
+  let(:expected_url) { "https://maps.googleapis.com/maps/api/staticmap?center=1+Drury+Ln+Boston,MA+12345&zoom=13&size=800x800&maptype=roadmap&markers=color:blue%7Clabel:Client%7C1+Drury+Ln+Boston,MA+12345&key=secret" }
 
   before do
     allow(ENV).to receive(:[]).with("GOOGLE_MAPS_API_KEY").and_return("secret")

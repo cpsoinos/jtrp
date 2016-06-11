@@ -6,24 +6,18 @@ FactoryGirl.define do
     description Faker::Beer.name
     category
     proposal
-    state "potential"
+    status "potential"
 
     trait :active do
+      status "active"
+      client_intention "sell"
       association :proposal, :active
-      state "active"
-
-      after(:create) do |item|
-        create(:agreement, :active, proposal: item.proposal)
-      end
-    end
-
-    trait :with_client do
-      client
     end
 
     trait :sold do
+      status "sold"
+      client_intention "sell"
       association :proposal, :inactive
-      state "sold"
     end
 
     trait :with_initial_photo do
