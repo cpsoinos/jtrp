@@ -120,30 +120,3 @@
   <% end %>
 
 </div>
-
-<div class="row grid">
-  <div class="col-xs-12 col-sm-6 grid-sizer"></div>
-
-  <div class="col-xs-12 col-sm-6 grid-item">
-    <div class="panel panel-primary text-center">
-      <div class="panel-heading">
-        <h4><%= link_to "Potential Items", account_items_path(@account, status: 'potential') %></h4>
-      </div>
-      <div class="panel-body">
-        <%= render "clients/items_preview", items: @account.items.potential, type: "potential" %>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-xs-12 col-sm-6 grid-item">
-    <div class="panel panel-primary text-center">
-      <div class="panel-heading">
-        <h4><%= link_to "Active Items", account_items_path(@account, status: 'active') %></h4>
-      </div>
-      <div class="panel-body">
-        <%= render "clients/items_preview", items: @account.items.active, type: "active" %>
-      </div>
-    </div>
-  </div>
-
-</div>
