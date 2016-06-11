@@ -3,7 +3,7 @@ require 'factory_girl'
 FactoryGirl.define do
 
   factory :item do
-    description Faker::Beer.name
+    description Faker::Lorem.word
     category
     proposal
     status "potential"

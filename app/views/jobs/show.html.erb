@@ -115,10 +115,10 @@
               <div class="col-xs-4 client-grid-item">
                 <div class="panel panel-primary text-center">
                   <div class="panel-body">
-                    <h4><%= link_to "<i class='material-icons md-48'>assignment_turned_in</i>".html_safe, account_job_proposal_agreement_path(@account, @job, agreement.proposal, agreement) %></h4>
+                    <h4><%= link_to "<i class='material-icons md-48'>assignment_turned_in</i>".html_safe, account_job_proposal_agreements_path(@account, @job, agreement.proposal) %></h4>
                   </div>
-                  <div class="panel-heading secondary-primary">
-                    <h5><%= link_to agreement.agreement_type.titleize, account_job_proposal_agreement_path(@account, @job, agreement.proposal, agreement) %></h5>
+                  <div class="panel-heading complement-primary">
+                    <h5><%= link_to agreement.agreement_type.titleize, account_job_proposal_agreements_path(@account, @job, agreement.proposal) %></h5>
                   </div>
                 </div>
               </div>
@@ -130,27 +130,31 @@
       </div>
     </div>
   </div>
+</div>
 
-  <div class="col-xs-6 col-md-4 grid-item">
+<div class="row grid">
+  <div class="col-xs-12 grid-sizer">
+
+  <div class="col-xs-12 grid-item">
     <div class="panel panel-primary">
       <div class="panel-heading text-center primary-darker">
-        <h3>Items</h3>
+        <h3>Potential Items</h3>
       </div>
       <div class="panel-body text-center">
-        <% if @job.items.present? %>
+        <% if @job.items.potential.present? %>
           <div class="row client-grid">
             <div class="col-xs-4 client-grid-sizer"></div>
-            <% @job.items.each do |item| %>
+            <% @job.items.potential.each do |item| %>
               <div class="col-xs-4 client-grid-item">
                 <div class="panel panel-primary text-center">
                   <div class="panel-body">
                     <% if item.listing_photos.present? %>
-                      <h4><%= link_to image_tag(item.listing_photos.first.photo_url(:thumb)), item_path(item) %></h4>
+                      <h4><%= link_to image_tag(item.listing_photos.first.photo_url(:thumb), class: "thumb"), item_path(item) %></h4>
                     <% elsif item.initial_photos.present? %>
-                      <h4><%= link_to image_tag(item.initial_photos.first.photo_url(:thumb)), item_path(item) %></h4>
+                      <h4><%= link_to image_tag(item.initial_photos.first.photo_url(:thumb), class: "thumb"), item_path(item) %></h4>
                     <% end %>
                   </div>
-                  <div class="panel-heading secondary-primary">
+                  <div class="panel-heading <%= item.panel_color %>">
                     <h5><%= link_to item.client_intention.titleize, item_path(item) %></h5>
                   </div>
                 </div>
@@ -163,5 +167,75 @@
       </div>
     </div>
   </div>
+
+  <div class="col-xs-12 grid-item">
+    <div class="panel panel-primary">
+      <div class="panel-heading text-center secondary-darker">
+        <h3>Active Items</h3>
+      </div>
+      <div class="panel-body text-center">
+        <% if @job.items.active.present? %>
+          <div class="row client-grid">
+            <div class="col-xs-4 client-grid-sizer"></div>
+            <% @job.items.active.each do |item| %>
+              <div class="col-xs-4 client-grid-item">
+                <div class="panel panel-primary text-center">
+                  <div class="panel-body">
+                    <% if item.listing_photos.present? %>
+                      <h4><%= link_to image_tag(item.listing_photos.first.photo_url(:thumb), class: "thumb"), item_path(item) %></h4>
+                    <% elsif item.initial_photos.present? %>
+                      <h4><%= link_to image_tag(item.initial_photos.first.photo_url(:thumb), class: "thumb"), item_path(item) %></h4>
+                    <% end %>
+                  </div>
+                  <div class="panel-heading <%= item.panel_color %>">
+                    <h5><%= link_to item.client_intention.titleize, item_path(item) %></h5>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        <% else %>
+          <i>No items</i>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-xs-12 grid-item">
+    <div class="panel panel-primary">
+      <div class="panel-heading text-center complement-darker">
+        <h3>Sold Items</h3>
+      </div>
+      <div class="panel-body text-center">
+        <% if @job.items.sold.present? %>
+          <div class="row client-grid">
+            <div class="col-xs-4 client-grid-sizer"></div>
+            <% @job.items.sold.each do |item| %>
+              <div class="col-xs-4 client-grid-item">
+                <div class="panel panel-primary text-center">
+                  <div class="panel-body">
+                    <% if item.listing_photos.present? %>
+                      <h4><%= link_to image_tag(item.listing_photos.first.photo_url(:thumb), class: "thumb"), item_path(item) %></h4>
+                    <% elsif item.initial_photos.present? %>
+                      <h4><%= link_to image_tag(item.initial_photos.first.photo_url(:thumb), class: "thumb"), item_path(item) %></h4>
+                    <% end %>
+                  </div>
+                  <div class="panel-heading <%= item.panel_color %>">
+                    <h5><%= link_to item.client_intention.titleize, item_path(item) %></h5>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        <% else %>
+          <i>No items</i>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
 
 </div>

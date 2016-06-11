@@ -104,28 +104,19 @@
 </div>
 
 <div class="row grid">
-  <div class="col-xs-12 col-sm-6 grid-sizer"></div>
+  <div class="col-xs-6 col-md-4 grid-sizer"></div>
 
-  <div class="col-xs-12 col-sm-6 grid-item">
-    <div class="panel panel-primary text-center">
-      <div class="panel-heading">
-        <h4><%= link_to "Potential Items", account_items_path(@account, status: 'potential') %></h4>
-      </div>
-      <div class="panel-body">
-        <%= render "clients/items_preview", items: @account.items.potential, type: "potential" %>
+  <% @account.jobs.each do |job| %>
+    <div class="col-xs-6 col-md-4 grid-item">
+      <div class="panel panel-primary">
+        <div class="panel-heading text-center primary-lighter">
+          <h3><%= link_to "Job No. #{job.id} - #{job.address_1}", account_job_path(@account, job) %></h3>
+        </div>
+        <div class="panel-body text-center">
+          <%= link_to image_tag(job.maps_url, alt: "Job Address", width: "100%"), account_job_path(@account, job) %>
+        </div>
       </div>
     </div>
-  </div>
-
-  <div class="col-xs-12 col-sm-6 grid-item">
-    <div class="panel panel-primary text-center">
-      <div class="panel-heading">
-        <h4><%= link_to "Active Items", account_items_path(@account, status: 'active') %></h4>
-      </div>
-      <div class="panel-body">
-        <%= render "clients/items_preview", items: @account.items.active, type: "active" %>
-      </div>
-    </div>
-  </div>
+  <% end %>
 
 </div>
