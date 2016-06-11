@@ -99,4 +99,18 @@ class Item < ActiveRecord::Base
     active? && client_intention == "sell"
   end
 
+  def consigned?
+    active? && client_intention == "consign"
+  end
+
+  def panel_color
+    if owned?
+      "complement-primary"
+    elsif consigned?
+      "secondary-primary"
+    else
+      "primary-lighter"
+    end
+  end
+
 end
