@@ -6,9 +6,9 @@
       <div class="col-xs-12 col-lg-6 no-break top-margin">
         <div class="col-xs-6">
           <% if item.initial_photos.present? %>
-            <%= image_tag(item.initial_photos.first.photo_url(:thumb)) %>
+            <%= image_tag(item.initial_photos.first.photo_url(:thumb), class: "thumb") %>
           <% else %>
-            <%= image_tag("thumb_No_Image_Available.png") %>
+            <%= image_tag("thumb_No_Image_Available.png", class: "thumb") %>
           <% end %>
         </div>
         <div class="col-xs-3">

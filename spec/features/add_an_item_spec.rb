@@ -7,7 +7,7 @@ feature "add an item" do
     scenario "visits category page" do
       visit category_path(category)
 
-      expect(page).not_to have_link("Quick-Add Item")
+      expect(page).not_to have_link("New Item")
     end
 
     scenario "visits add an item page" do
@@ -27,12 +27,12 @@ feature "add an item" do
     scenario "visits home page" do
       visit root_path
 
-      expect(page).to have_link("Quick-Add Item")
+      expect(page).to have_link("New Item")
     end
 
     scenario "clicks on 'Add an item' from home page" do
       visit root_path
-      click_link("Quick-Add Item")
+      click_link("New Item")
 
       expect(page).to have_content("Add an item")
       expect(page).to have_field("Description")
@@ -48,6 +48,7 @@ feature "add an item" do
     end
 
     scenario "successfully adds an uncategorized item" do
+      pending("items without a proposal")
       visit new_item_path
 
       attach_file('item[initial_photos][]', File.join(Rails.root, '/spec/fixtures/test.png'))
@@ -83,6 +84,7 @@ feature "add an item" do
     end
 
     scenario "successfully adds an item" do
+      pending("items without a proposal")
       visit new_category_item_path(category)
 
       attach_file('item[initial_photos][]', File.join(Rails.root, '/spec/fixtures/test.png'))
@@ -95,6 +97,7 @@ feature "add an item" do
     end
 
     scenario "unsuccessfully adds an item" do
+      pending("items without a proposal")
       visit new_category_item_path(category)
       fill_in "Description", with: ""
       click_on("Create Item")

@@ -4,9 +4,18 @@ class AgreementsController < ApplicationController
   before_filter :pull_intentions, only: :create
 
   def index
-    @client = @proposal.client
+    @account = @proposal.account
+    @client = @proposal.job.account.primary_contact
     @agreements = @proposal.agreements
     @items = @proposal.items
+    gon.signatures = build_json_for_signatures
+  end
+
+  def show
+    @agreement = Agreement.find(params[:id])
+    @account = @agreement.proposal.job.account
+    @client = @account.primary_contact
+    @agreements = [@agreement]
     gon.signatures = build_json_for_signatures
   end
 

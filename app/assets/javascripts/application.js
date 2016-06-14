@@ -25,6 +25,14 @@
 //= require jquery-readyselector
 //= require masonry.pkgd.min
 //= require imagesloaded.pkgd.min
+//= require react
+//= require react_ujs
+//= require components
+//= require jsapi
+//= require chartkick
+//= require sweetalert
+//= require sweet-alert-confirm
+//= require jquery.geocomplete.min
 //= require_tree .
 
 $(document).ready(function() {
@@ -32,7 +40,8 @@ $(document).ready(function() {
   jQuery(".best_in_place").best_in_place();
 
   // $.material.init()
-  // $.material.ripples();
+  $.material.ripples();
+  // $.material.input();
   // $.material.checkbox();
   // $.material.radio();
 });

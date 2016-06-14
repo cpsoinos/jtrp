@@ -1,0 +1,52 @@
+<%= form_for [@account, @job], class: "form-horizontal" do |f| %>
+
+  <% if @job.errors.present? %>
+    <div class="row">
+      <div class="text-center">
+        <div class="error_messages notice alert alert-danger text-center">
+          <% @job.errors.full_messages.each do |msg| %>
+            <p><%= msg %></p>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <%= f.hidden_field :created_by_id, value: current_user.id %>
+
+  <div class="form-group label-static">
+    <%= f.label :address_1, class: "control-label required" %>
+    <%= f.text_field :address_1, class: "form-control", required: true, data: {geo: "name"} %>
+  </div>
+
+
+  <div class="form-group label-static">
+    <%= f.label :address_2, class: "control-label" %>
+    <%= f.text_field :address_2, class: "form-control"%>
+  </div>
+
+
+  <div class="form-group label-static">
+    <%= f.label :city, class: "control-label required" %>
+    <%= f.text_field :city, class: "form-control", required: true, data: {geo: "locality"} %>
+  </div>
+
+
+  <div class="form-group label-static">
+    <%= f.label :state, class: "control-label required" %>
+    <%= f.text_field :state, class: "form-control", required: true, data: {geo: "administrative_area_level_1"} %>
+  </div>
+
+
+  <div class="form-group label-static">
+    <%= f.label :zip, class: "control-label" %>
+    <%= f.number_field :zip, class: "form-control", data: {geo: "postal_code"} %>
+  </div>
+
+  <div class="actions">
+    <div class="col-xs-12 text-center">
+      <%= f.submit "Next", class: "btn btn-raised btn-primary" %>
+    </div>
+  </div>
+
+<% end %>

@@ -28,7 +28,7 @@ RSpec.configure do |config|
   end
 
   config.before(:each) do
-    FactoryGirl.create(:company, name: "Just the Right Piece")
+    Rails.application.load_seed # loading seeds
   end
 
   config.expect_with :rspec do |expectations|

@@ -4,6 +4,7 @@
   <% if current_user && current_user.internal? %>
   <%= link_to "Add an item", new_category_item_path(@category), class: "btn btn-raised btn-primary" %>
   <%= link_to "Add a subcategory", new_category_path(parent_id: @category.id), class: "btn btn-raised btn-primary" %>
+  <%= link_to "Edit", edit_category_path(@category), class: "btn btn-raised btn-primary pull-right" %>
   <% end %>
 </div>
 

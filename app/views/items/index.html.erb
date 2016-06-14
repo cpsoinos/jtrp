@@ -4,9 +4,15 @@
     <% if @filter.present? %>
       <% case @filter %>
       <% when "Potential" %>
-        <h4><%= @filter %> items have not yet been listed for sale.</h4>
+        <h4><%= @filter %> items have not yet been listed for sale or consigned.</h4>
       <% when "Active" %>
-        <h4><%= @filter %> items have a signed proposal and are  actively for sale.</h4>
+        <% if @type == "sell" %>
+          <h4>For Sale items have a signed purchase order and are actively for sale.</h4>
+        <% elsif @type == "consign" %>
+          <h4>Consigned items have a signed agreement and are actively on consignment.</h4>
+        <% else %>
+          <h4>Active items are actively for sale or on consignment.</h4>
+        <% end %>
       <% when "Sold" %>
         <h4><%= @filter %> items have been sold.</h4>
       <% end %>
@@ -14,22 +20,37 @@
   </div>
 </div>
 
-<div class="col-xs-12 col-md-8 col-md-offset-2">
 
-  <!-- Tabs -->
-  <ul class="nav nav-pills nav-justified" role="tablist">
-    <% @intentions.each do |intention| %>
-      <li role="presentation"><a href="#<%= intention %>" aria-controls="<%= intention %>" role="tab" data-toggle="tab" class="agreement-tab"><%= @intentions_map[intention] %></a></li>
-    <% end %>
-  </ul>
+<!-- Tabs -->
+<div class="row">
+  <div class="col-xs-12 col-md-8 col-md-offset-2">
+    <ul class="nav nav-pills nav-justified" role="tablist">
+      <div class="row grid">
+        <div class="grid-sizer col-xs-6 col-md-3"></div>
+        <% @intentions.each do |intention| %>
+          <li role="presentation">
+            <div class="grid-item col-xs-6 col-md-3">
+              <div class="panel panel-primary text-center">
+                <div class="panel-body">
+                  <h1><%= Item.type(intention).count %></h1>
+                </div>
+                <div class="panel-heading <%= Item.panel_color(intention) %>">
+                  <h3><a href="#<%= intention %>" aria-controls="<%= intention %>" role="tab" data-toggle="tab" class="agreement-tab"><%= @intentions_map[intention] %></a></h3>
+                </div>
+              </div>
+            </div>
+          </li>
+        <% end %>
+      </div>
+    </ul>
 
-  <!-- Tab panes -->
-  <div class="well bs-component large-top-margin">
-    <div class="tab-content">
-      <% @intentions.each do |intention| %>
-        <div role="tabpanel" class="tab-pane fade" id="<%= intention %>"><%= render "items_list", items: @items.where(client_intention: intention) %></div>
-      <% end %>
+    <!-- Tab panes -->
+    <div class="large-top-margin">
+      <div class="tab-content">
+        <% @intentions.each do |intention| %>
+          <div role="tabpanel" class="tab-pane fade" id="<%= intention %>"><%= render "items_list", items: @items.where(client_intention: intention) %></div>
+        <% end %>
+      </div>
     </div>
   </div>
-
 </div>

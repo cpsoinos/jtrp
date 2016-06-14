@@ -7,13 +7,16 @@
   <%= stylesheet_link_tag    'application', media: 'all' %>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
   <%= javascript_include_tag 'application' %>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAPS_API_KEY'] %>&libraries=places,staticmap"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <%= Gon::Base.render_data %>
   <%= csrf_meta_tags %>
+  <%= render 'favicon' %>
 </head>
 <body class="<%= controller_name %> <%= action_name %>">
 
-  <div class="navbar navbar-default">
+  <div class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
       <div class="navbar-header">
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
@@ -22,60 +25,12 @@
           <span class="icon-bar"></span>
         </button>
         <% if @company %>
-          <%= link_to @company.name, root_path, class: "navbar-brand" %>
+        <div class="brand-logo-link">
+          <%= link_to "#{image_tag('JTRPv2_allwhite_noname.png', class: 'logo')} #{@company.name}".html_safe, root_path, class: "navbar-brand" %>
+        </div>
         <% end %>
       </div>
       <div class="navbar-collapse collapse navbar-responsive-collapse">
-        <% if current_user.try(:internal?) %>
-          <ul class="nav navbar-nav">
-            <li class="dropdown">
-              <a href="<%= categories_path %>" data-target="#" class="dropdown-toggle" data-toggle="dropdown">Categories
-                <b class="caret"></b></a>
-                <ul class="dropdown-menu">
-                  <% if @categories %>
-                  <% @categories.each do |category| %>
-                  <li><%= link_to category.name, category_path(category) %></li>
-                  <% end %>
-                  <% end %>
-                  <li class="divider"></li>
-                  <li><%= link_to "All Categories", categories_path %></li>
-                </ul>
-              </li>
-            <li class="dropdown">
-              <a href="<%= items_path %>" data-target="#" class="dropdown-toggle" data-toggle="dropdown">Items
-                <b class="caret"></b></a>
-              <ul class="dropdown-menu">
-                <li><%= link_to "Potential", items_path(state: 'potential') %></li>
-                <li><%= link_to "Active", items_path(state: 'active') %></li>
-                <li><%= link_to "Sold", items_path(state: 'sold') %></li>
-                <li class="divider"></li>
-                <li><%= link_to "All Items", items_path %></li>
-              </ul>
-            </li>
-            <li class="dropdown">
-              <a href="<%= clients_path %>" data-target="#" class="dropdown-toggle" data-toggle="dropdown">Clients
-                <b class="caret"></b></a>
-              <ul class="dropdown-menu">
-                <li><%= link_to "Potential", clients_path(status: 'potential') %></li>
-                <li><%= link_to "Active", clients_path(status: 'active') %></li>
-                <li><%= link_to "Inactive", clients_path(status: 'inactive') %></li>
-                <li class="divider"></li>
-                <li><%= link_to "All Clients", clients_path %></li>
-              </ul>
-            </li>
-            <li class="dropdown">
-              <a href="<%= proposals_path %>" data-target="#" class="dropdown-toggle" data-toggle="dropdown">Agreements
-                <b class="caret"></b></a>
-              <ul class="dropdown-menu">
-                <li><%= link_to "Potential", agreements_list_agreements_path(status: 'potential') %></li>
-                <li><%= link_to "Active", agreements_list_agreements_path(status: 'active') %></li>
-                <li><%= link_to "Inactive", agreements_list_agreements_path(status: 'inactive') %></li>
-                <li class="divider"></li>
-                <li><%= link_to "All Agreements", agreements_list_agreements_path %></li>
-              </ul>
-            </li>
-          </ul>
-        <% end %>
         <ul class="nav navbar-nav navbar-right">
           <li class="dropdown">
             <a href="<%= company_client_services_path(@company) %>" data-target="#" class="dropdown-toggle" data-toggle="dropdown">About Us
@@ -93,48 +48,135 @@
             <li><%= link_to 'Sign In', new_user_session_path %></li>
             <li><%= link_to 'Sign Up', new_user_registration_path %></li>
           <% end %>
-          <!-- <li class="dropdown">
-            <a href="bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown
-              <b class="caret"></b></a>
-            <ul class="dropdown-menu">
-              <li><a href="javascript:void(0)">Action</a></li>
-              <li><a href="javascript:void(0)">Another action</a></li>
-              <li><a href="javascript:void(0)">Something else here</a></li>
-              <li class="divider"></li>
-              <li><a href="javascript:void(0)">Separated link</a></li>
-            </ul>
-          </li> -->
         </ul>
-        <!-- <form class="navbar-form navbar-right">
-          <div class="form-group is-empty">
-            <input type="text" class="form-control col-md-8" placeholder="Search">
-            <span class="material-input"></span>
+      </div>
+    </div>
+  </div>
+
+  <div id="wrapper">
+
+    <!-- Sidebar -->
+    <div id="sidebar-wrapper" class="hidden-print">
+      <% if current_user.try(:internal?) %>
+
+          <ul class="sidebar-nav">
+            <li class="extra-large-top-margin">
+              <a class="btn btn-primary" role="button" data-toggle="collapse" href="#categories" aria-expanded="false" aria-controls="categories">
+                <i class='material-icons'>view_list</i> Categories <b class="caret"></b>
+              </a>
+              <div class="collapse text-center" id="categories">
+                <div class="btn-group-vertical">
+                  <% if @categories %>
+                    <% @categories.each do |category| %>
+                      <%= link_to category.name, category_path(category), class: "btn btn-primary" %>
+                    <% end %>
+                  <% end %>
+                  <%= link_to "All Categories", categories_path, class: "btn btn-primary" %>
+                </div>
+              </div>
+            </li>
+
+            <li>
+              <a class="btn btn-primary" role="button" data-toggle="collapse" href="#items" aria-expanded="false" aria-controls="items">
+                <i class='material-icons'>weekend</i> Items <b class="caret"></b>
+              </a>
+              <div class="collapse text-center" id="items">
+                <div class="btn-group-vertical">
+                  <%= link_to "Potential", items_path(status: 'potential'), class: "btn btn-primary" %>
+                  <%= link_to "For Sale", items_path(status: 'active', type: 'sell'), class: "btn btn-primary" %>
+                  <%= link_to "Consigned", items_path(status: 'active', type: 'consign'), class: "btn btn-primary" %>
+                  <%= link_to "Sold", items_path(status: 'sold'), class: "btn btn-primary" %>
+                  <%= link_to "All Items", items_path, class: "btn btn-primary" %>
+                </div>
+              </div>
+            </li>
+
+            <li>
+              <a class="btn btn-primary" role="button" data-toggle="collapse" href="#accounts" aria-expanded="false" aria-controls="accounts">
+                <i class='material-icons'>assignment_ind</i> Accounts <b class="caret"></b>
+              </a>
+              <div class="collapse text-center" id="accounts">
+                <div class="btn-group-vertical">
+                  <%= link_to "Potential", accounts_path(status: 'potential'), class: "btn btn-primary" %>
+                  <%= link_to "Active", accounts_path(status: 'active'), class: "btn btn-primary" %>
+                  <%= link_to "Inactive", accounts_path(status: 'inactive'), class: "btn btn-primary" %>
+                  <%= link_to "All Accounts", accounts_path, class: "btn btn-primary" %>
+                </div>
+              </div>
+            </li>
+
+            <li>
+              <a class="btn btn-primary" role="button" data-toggle="collapse" href="#jobs" aria-expanded="false" aria-controls="jobs">
+                <i class='material-icons'>place</i> Jobs <b class="caret"></b>
+              </a>
+              <div class="collapse text-center" id="jobs">
+                <div class="btn-group-vertical">
+                  <%= link_to "Potential", jobs_path(status: 'potential'), class: "btn btn-primary" %>
+                  <%= link_to "Active", jobs_path(status: 'active'), class: "btn btn-primary" %>
+                  <%= link_to "Completed", jobs_path(status: 'completed'), class: "btn btn-primary" %>
+                  <%= link_to "All Jobs", jobs_path, class: "btn btn-primary" %>
+                </div>
+              </div>
+            </li>
+
+            <li>
+              <a class="btn btn-primary" role="button" data-toggle="collapse" href="#agreements" aria-expanded="false" aria-controls="agreements">
+                <i class='material-icons'>assignment_turned_in</i> Agreements <b class="caret"></b>
+              </a>
+              <div class="collapse text-center" id="agreements">
+                <div class="btn-group-vertical">
+                  <%= link_to "Potential", agreements_list_agreements_path(status: 'potential'), class: "btn btn-primary" %>
+                  <%= link_to "Active", agreements_list_agreements_path(status: 'active'), class: "btn btn-primary" %>
+                  <%= link_to "Inactive", agreements_list_agreements_path(status: 'inactive'), class: "btn btn-primary" %>
+                  <%= link_to "All Agreements", agreements_list_agreements_path, class: "btn btn-primary" %>
+                </div>
+              </div>
+            </li>
+          </ul>
+      <% end %>
+    </div>
+    <!-- /#sidebar-wrapper -->
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="large-top-margin">
+              <% if alert %>
+                <div class="alert alert-dismissible alert-warning">
+                  <button type="button" class="close" data-dismiss="alert">×</button>
+                  <p><%= alert %></p>
+                </div>
+              <% end %>
+              <% if notice %>
+                <div class="alert alert-dismissible alert-success">
+                  <button type="button" class="close" data-dismiss="alert">×</button>
+                  <p><%= notice %></p>
+                </div>
+              <% end %>
+            </div>
+            <div class="menu-toggle-overlay hidden-print">
+              <a href="#menu-toggle" class="btn btn-default top-margin float" id="menu-toggle">Toggle Sidebar</a>
+            </div>
+
+            <%= yield %>
+
           </div>
-        </form> -->
+        </div>
       </div>
     </div>
-  </div>
+    <!-- /#page-content-wrapper -->
 
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-sm-12">
-        <% if alert %>
-        <div class="alert alert-dismissible alert-warning">
-          <button type="button" class="close" data-dismiss="alert">×</button>
-          <p><%= alert %></p>
-        </div>
-        <% end %>
-        <% if notice %>
-        <div class="alert alert-dismissible alert-success">
-          <button type="button" class="close" data-dismiss="alert">×</button>
-          <p><%= notice %></p>
-        </div>
-        <% end %>
-
-        <%= yield %>
-      </div>
-    </div>
   </div>
+  <!-- #wrapper -->
+
+  <script>
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
+  </script>
 
 </body>
 </html>

@@ -1,6 +1,4 @@
-<div class="text-center">
-  <legend><%= legend %></legend>
-</div>
+<legend><%= legend %></legend>
 
 <% if item.errors.present? %>
   <div class="row">
@@ -17,17 +15,6 @@
 <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
 
 <% if action_name == "edit" && controller_name == "items" %>
-  <div class="row form-row">
-    <div class="text-center">
-      <div class="col-xs-12 col-md-3 form-label">
-        <%= f.label :client, class: "control-label" %>
-      </div>
-      <div class="col-xs-12 col-md-9 text-left">
-        <%= f.collection_select :client_id, @clients, :id, :full_name, {include_blank: "Select Client"}, {class: "form-control"} %>
-      </div>
-    </div>
-  </div>
-
   <div class="row form-row">
     <div class="text-center">
       <div class="col-xs-12 col-md-3 form-label">

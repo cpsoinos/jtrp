@@ -32,6 +32,10 @@ gem 'state_machines'
 gem 'state_machines-activerecord'
 gem 'bootsy'
 gem 'rubyzip'
+gem 'react-rails'
+gem 'chartkick'
+gem 'sweet-alert-confirm'
+
 
 group :production, :staging, :local do
   gem 'rails_12factor'
@@ -39,6 +43,8 @@ end
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-bootstrap-material-design'
+  gem 'rails-assets-classnames'
+  gem 'rails-assets-sweetalert'
 end
 
 group :development, :test, :local do
@@ -52,10 +58,12 @@ group :development, :test, :local do
   gem 'web-console', '~> 2.0'
   gem 'guard-rspec', require: false
   gem 'terminal-notifier-guard'
+  gem 'selenium-webdriver'
 end
 
 group :development, :local do
   gem 'spring'
+  gem 'rails_real_favicon'
 end
 
 group :test do

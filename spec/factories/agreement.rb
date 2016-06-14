@@ -35,14 +35,13 @@ FactoryGirl.define do
     end
 
     trait :active do
-      association :proposal, :active
       client_signature ["signed_by_client"]
-      state "active"
+      status "active"
     end
 
     trait :inactive do
       client_signature ["signed_by_client"]
-      state "inactive"
+      status "inactive"
     end
 
   end
