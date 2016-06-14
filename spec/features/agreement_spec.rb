@@ -1,8 +1,10 @@
 feature "agreement" do
 
-  let(:client) { create(:client) }
-  let(:user) { create(:internal_user, company: Company.first, primary_contact: true) }
-  let(:proposal) { create(:proposal, created_by: user, client: client) }
+  let(:user) { create(:internal_user) }
+  let(:account) { create(:account, :with_client) }
+  let(:client) { account.primary_contact }
+  let(:job) { create(:job, account: account) }
+  let(:proposal) { create(:proposal, created_by: user, job: job) }
 
   context "guest" do
     scenario "visits consignment agreement path" do
@@ -44,7 +46,8 @@ feature "agreement" do
       let!(:agreement) { create(:agreement, :consign, proposal: proposal) }
 
       before do
-        visit proposal_agreements_path(proposal)
+        Company.first.update_attribute("primary_contact_id", user.id)
+        visit account_job_proposal_agreements_path(account, job, proposal)
       end
 
       before :each, js: true do
@@ -96,7 +99,7 @@ feature "agreement" do
 
         expect(agreement.client_signature).not_to be(nil)
         expect(agreement.manager_signature).not_to be(nil)
-        expect(agreement.state).to eq("active")
+        expect(agreement).to be_active
       end
 
     end

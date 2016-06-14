@@ -1,9 +1,9 @@
 <div class="row client-grid">
 
   <% items.each do |item| %>
-    <div class="col-xs-6 client-grid-sizer"></div>
-    <div class="col-xs-6 client-grid-item">
-      <div class="thumbnail text-center">
+    <div class="col-xs-6 col-md-4 col-lg-3 client-grid-sizer"></div>
+    <div class="col-xs-6 col-md-4 col-lg-3 client-grid-item">
+      <div class="panel panel-primary text-center">
         <% url = begin %>
           <% if item.listing_photos.present? %>
             <% image_tag(item.listing_photos.first.photo_url(:tiny_thumb)) %>
@@ -14,43 +14,45 @@
           <% end %>
         <% end %>
 
-        <div class="text-center">
+        <div class="panel-heading">
+          <%= link_to item.description, item_path(item), class: "panel-title" %>
+        </div>
+
+        <div class="panel-body">
           <%= link_to url, item_path(item) %>
+
+          <% case type %>
+          <% when "potential" %>
+            <div class="row">
+              <% #if item.offer_type %>
+                <div class="col-xs-12">Offer: <%#= item.offer_type %></div>
+              <%# end %>
+            </div>
+          <% when "active" %>
+            <div class="row">
+              <% if item.client_intention == "sell" %>
+                <div class="col-xs-12">Purchased for <%= humanized_money_with_symbol(item.purchase_price) %></div>
+                <div class="col-xs-12">Listed for <%= humanized_money_with_symbol(item.listing_price) %></div>
+              <% elsif item.client_intention == "consign" %>
+                <div class="col-xs-12">Consigned for <%= humanized_money_with_symbol(item.listing_price) %></div>
+                <div class="col-xs-12">Will accept <%= humanized_money_with_symbol(item.minimum_sale_price) %></div>
+              <% else %>
+                <div class="col-xs-12"><%= item.client_intention %>ing</div>
+              <% end %>
+            </div>
+          <% when "sold" %>
+            <div class="row">
+              <div class="col-xs-12">Sold for <%= humanized_money_with_symbol(item.sale_price) %></div>
+              <% if item.client_intention == "sell" %>
+                <div class="col-xs-12"><%= humanized_money_with_symbol(item.sale_price - item.purchase_price).html_safe %> in profit!</div>
+              <% elsif item.client_intention == "consign" %>
+                <div class="col-xs-12"><%= humanized_money_with_symbol(item.sale_price / 2).html_safe %> in profit from consignment!</div>
+              <% end %>
+            </div>
+          <% end %>
         </div>
 
-        <div class="caption">
-          <h4><%= link_to item.description, item_path(item) %></h4>
-        </div>
 
-        <% case type %>
-        <% when "potential" %>
-          <div class="row">
-            <% if item.offer_type %>
-              <div class="col-xs-12">Offer: <%= item.offer_type %></div>
-            <% end %>
-          </div>
-        <% when "active" %>
-          <div class="row">
-            <% if item.client_intention == "sell" %>
-              <div class="col-xs-12">Purchased for <%= humanized_money_with_symbol(item.purchase_price) %></div>
-              <div class="col-xs-12">Listed for <%= humanized_money_with_symbol(item.listing_price) %></div>
-            <% elsif item.client_intention == "consign" %>
-              <div class="col-xs-12">Consigned for <%= humanized_money_with_symbol(item.listing_price) %></div>
-              <div class="col-xs-12">Will accept <%= humanized_money_with_symbol(item.minimum_sale_price) %></div>
-            <% else %>
-              <div class="col-xs-12"><%= item.client_intention %>ing</div>
-            <% end %>
-          </div>
-        <% when "sold" %>
-          <div class="row">
-            <div class="col-xs-12">Sold for <%= humanized_money_with_symbol(item.sale_price) %></div>
-            <% if item.client_intention == "sell" %>
-              <div class="col-xs-12"><%= humanized_money_with_symbol(item.sale_price - item.purchase_price).html_safe %> in profit!</div>
-            <% elsif item.client_intention == "consign" %>
-              <div class="col-xs-12"><%= humanized_money_with_symbol(item.sale_price / 2).html_safe %> in profit from consignment!</div>
-            <% end %>
-          </div>
-        <% end %>
       </div>
     </div>
 

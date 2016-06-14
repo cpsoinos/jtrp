@@ -7,11 +7,7 @@ class ItemsPresenter
   end
 
   def filter
-    if params[:state]
-      Item.send(params[:state])
-    else
-      Item.all
-    end
+    Item.filter(params.slice(:status, :type))
   end
 
 end

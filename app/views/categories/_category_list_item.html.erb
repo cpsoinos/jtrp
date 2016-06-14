@@ -1,0 +1,32 @@
+  <div class="well">
+
+    <% if current_user.try(:internal?) %>
+      <div class="row">
+        <div class="col-xs-6">
+          <%= link_to "Edit", edit_category_path(category), class: "btn btn-raised btn-xs btn-info pull-left" %>
+        </div>
+        <div class="col-xs-6">
+          <%= link_to "Delete", category_path(category), method: :delete, class: "btn btn-raised btn-xs btn-danger pull-right" %>
+        </div>
+      </div>
+    <% end %>
+
+    <div class="caption">
+      <h3><%= link_to category.name, category_path(category) %></h3>
+
+      <% if category.subcategories.present? %>
+        <div class="row client-grid top-margin">
+          <div class="col-xs-6 col-sm-4 client-grid-sizer"></div>
+          <% category.subcategories.each do |subcategory| %>
+            <div class="col-xs-6 col-sm-4 client-grid-item">
+              <%= render 'category_list_item', category: subcategory %>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+
+      <p>Find just the right piece for your <%= category.name %>.</p>
+      <p><%= link_to "Browse", category_path(category) %></a></p>
+    </div>
+
+  </div>

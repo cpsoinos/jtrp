@@ -29,56 +29,49 @@ describe Agreement do
   describe "state_machine" do
 
     it "starts as 'potential'" do
-      expect(Agreement.new(proposal: build_stubbed(:proposal)).state).to eq("potential")
+      expect(Agreement.new(proposal: build_stubbed(:proposal))).to be_potential
     end
 
     it "transitions 'potential' to 'active'" do
       agreement = create(:agreement)
-      expect(agreement.state).to eq("potential")
+      expect(agreement.status).to eq("potential")
       agreement.client_signature = ["signed"]
       agreement.mark_active
 
-      expect(agreement.state).to eq("active")
+      expect(agreement).to be_active
     end
 
     context "consign" do
       it "transitions 'potential' to 'active'" do
         agreement = create(:agreement)
-        expect(agreement.state).to eq("potential")
+        expect(agreement).to be_potential
         agreement.manager_signature = ["signed"]
         agreement.client_signature = ["signed"]
-        agreement.mark_active
+        agreement.mark_active!
 
-        expect(agreement.state).to eq("active")
+        expect(agreement).to be_active
       end
 
       it "does not transition 'potential' to 'active' without a manager signature" do
         agreement = create(:agreement, :consign)
-        expect(agreement.state).to eq("potential")
+        expect(agreement).to be_potential
         agreement.client_signature = ["signed"]
         agreement.mark_active
 
-        expect(agreement.state).not_to eq("active")
-        expect(agreement.state).to eq("potential")
+        expect(agreement).not_to be_active
+        expect(agreement).to be_potential
       end
     end
 
     it "transitions 'active' to 'inactive'" do
       item = create(:item, :active, client_intention: "sell")
       agreement = item.agreement
-      item.mark_sold!
+      item.mark_sold
       agreement.reload
 
-      expect(agreement.state).to eq("inactive")
+      expect(agreement).to be_inactive
     end
-
-    it "transitions proposal to inactive when marked inactive" do
-      agreement = create(:agreement, :active)
-
-    end
-
 
   end
-
 
 end

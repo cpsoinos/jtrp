@@ -7,11 +7,7 @@ class AgreementsPresenter
   end
 
   def filter
-    if params[:status]
-      Agreement.send(params[:status])
-    else
-      Agreement.all
-    end
+    Agreement.filter(params.slice(:status))
   end
 
 end

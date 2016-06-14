@@ -1,7 +1,12 @@
 class Item < ActiveRecord::Base
-  has_secure_token
+  include Filterable
+
   has_many :photos, dependent: :destroy
   accepts_nested_attributes_for :photos
+  belongs_to :category
+  belongs_to :proposal
+
+  has_secure_token
 
   monetize :purchase_price_cents, allow_nil: true, numericality: {
     greater_than_or_equal_to: 0,
@@ -20,24 +25,26 @@ class Item < ActiveRecord::Base
     less_than_or_equal_to: 100000
   }
 
-  belongs_to :category
-  belongs_to :proposal
-  belongs_to :client, class_name: "User", foreign_key: "client_id"
+  delegate :job, :account, to: :proposal
 
-  validates :description, presence: true
+  validates :description, :proposal, presence: true
 
-  scope :potential, -> { where(state: "potential") }
-  scope :active, -> { where(state: "active") }
-  scope :sold, -> { where(state: "sold") }
-  scope :unsold, -> { where.not(state: "sold") }
-  scope :unclaimed, -> { where(client_id: nil, proposal_id: nil) }
+  scope :status, -> (status) { where(status: status) }
+  scope :type, -> (type) { where(client_intention: type) }
 
-  state_machine :state, initial: :potential do
+  scope :potential, -> { where(status: "potential") }
+  scope :active, -> { where(status: "active") }
+  scope :sold, -> { where(status: "sold") }
+  scope :unsold, -> { where.not(status: "sold") }
+  scope :for_sale, -> { where(status: "active", client_intention: "sell") }
+  scope :consigned, -> { where(status: "active", client_intention: "consign") }
+
+  state_machine :status, initial: :potential do
     state :potential
     state :active
     state :sold
 
-    after_transition active: :sold, do: :check_agreement_state
+    after_transition active: :sold, do: :mark_agreement_inactive
 
     event :mark_active do
       transition potential: :active, if: lambda { |item| item.meets_requirements_active? }
@@ -46,7 +53,6 @@ class Item < ActiveRecord::Base
     event :mark_sold do
       transition active: :sold, if: lambda { |item| item.meets_requirements_sold? }
     end
-
   end
 
   def initial_photos
@@ -76,43 +82,57 @@ class Item < ActiveRecord::Base
     barcode
   end
 
-  def active?
-    state == "active"
-  end
-
-  def potential?
-    state == "potential"
-  end
-
-  def sold?
-    state == "sold"
-  end
-
-  def check_agreement_state
-    if agreement.items.active.empty?
-      agreement.mark_inactive!
-    end
+  def mark_agreement_inactive
+    agreement.mark_inactive
   end
 
   def meets_requirements_active?
-    agreement.present? &&
-    agreement.active? &&
-    proposal.present? &&
-    proposal.active?
+    agreement.reload.present? &&
+    agreement.active?
   end
 
   def meets_requirements_sold?
     meets_requirements_active?
   end
 
-  def will_purchase?
-    offer_type == "purchase"
+  def owned?
+    active? && client_intention == "sell"
   end
-  alias owned? will_purchase?
 
-  def will_consign?
-    offer_type == "consign"
+  def consigned?
+    active? && client_intention == "consign"
   end
-  alias consigned? will_consign?
+
+  def panel_color
+    if owned?
+      "complement-primary"
+    elsif consigned?
+      "secondary-primary"
+    elsif client_intention == "junk"
+      "secondary-lighter"
+    elsif client_intention == "donate"
+      "secondar-darker"
+    elsif client_intention == "move"
+      "primary-darker"
+    else
+      "primary-lighter"
+    end
+  end
+
+  def self.panel_color(type)
+    if type == "sell"
+      "complement-primary"
+    elsif type == "consign"
+      "secondary-primary"
+    elsif type == "junk"
+      "secondary-lighter"
+    elsif type == "donate"
+      "secondar-darker"
+    elsif type == "move"
+      "primary-darker"
+    else
+      "primary-lighter"
+    end
+  end
 
 end

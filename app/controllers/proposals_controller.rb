@@ -1,36 +1,39 @@
 class ProposalsController < ApplicationController
-  before_filter :find_clients, only: [:new, :edit]
   before_filter :find_categories, only: [:new, :edit]
+  before_filter :find_account
+  before_filter :find_job, except: [:new]
   before_filter :require_internal, except: [:show]
 
   def new
     @proposal = Proposal.new
-    @client = User.new
+    find_job if params[:job_id]
+    @jobs = @account.jobs
+    if @jobs.empty?
+      redirect_to new_account_job_path(@account)
+    end
+    gon.jobs = build_json_for_jobs
   end
 
   def create
-    @proposal = Proposal.new(proposal_params)
+    @proposal = @job.proposals.new(created_by: current_user)
     if @proposal.save
-      redirect_to edit_proposal_path(@proposal)
+      redirect_to edit_account_job_proposal_path(@account, @job, @proposal)
     else
       flash[:alert] = @proposal.errors.full_messages.uniq.join
-      @client = Client.new
-      render :new
+      redirect_to :back
     end
   end
 
   def show
     @proposal = Proposal.find(params[:id])
-    @client = @proposal.client
+    @client = @account.primary_contact
     @items = @proposal.items
   end
 
   def edit
     @proposal = Proposal.find(params[:id])
-    @client = @proposal.client
     @item = @proposal.items.new
     @items = @proposal.items
-    gon.items = build_json_for_items
     gon.proposalId = @proposal.id
   end
 
@@ -41,44 +44,24 @@ class ProposalsController < ApplicationController
 
   def response_form
     @proposal = Proposal.find(params[:proposal_id])
-    @client = @proposal.client
+    @account = @proposal.account
+    @client = @account.primary_contact
     @items = @proposal.items.order(:id)
-  end
-
-  def create_client
-    @client = Client.new(user_params)
-    @client.skip_password_validation = true
-    if @client.save
-      @proposal = Proposal.new(client: @client, created_by: current_user)
-      if @proposal.save
-        redirect_to edit_proposal_path(@proposal)
-      else
-        render :new
-      end
-    else
-      flash[:alert] = @client.errors.full_messages.uniq.join
-      redirect_to new_proposal_path
-    end
   end
 
   protected
 
   def proposal_params
-    params.require(:proposal).permit([:client_id, :created_by_id])
+    params.require(:proposal).permit([:job_id, :created_by_id])
   end
 
-  def user_params
-    params.require(:user).permit([:email, :first_name, :last_name, :address_1, :address_2, :city, :state, :zip, :phone, :phone_ext])
-  end
-
-  def build_json_for_items
-    items_for_list = @client.items.potential.where(proposal_id: nil) | Item.unclaimed
-    items_for_list.map do |item|
+  def build_json_for_jobs
+    @jobs.map do |job|
       {
-        text: item.description,
-        value: item.id,
+        text: job.name,
+        value: job.id,
         selected: false,
-        imageSrc: (item.initial_photos.present? ? item.initial_photos.first.photo_url(:thumb) : Photo.default_url)
+        imageSrc: job.maps_url
       }
     end.to_json
   end

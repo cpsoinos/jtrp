@@ -14,6 +14,10 @@
     </div>
   <% end %>
 
+  <% if params[:parent_id].present? %>
+    <%= f.hidden_field :parent_id, value: params[:parent_id] %>
+  <% end %>
+
   <div class="row form-row">
     <div class="text-center">
       <div class="col-xs-12 col-md-3 form-label">
@@ -21,18 +25,6 @@
       </div>
       <div class="col-xs-12 col-md-9 text-left">
         <%= f.text_field :name, class: "form-control", placeholder: "Category name", required: true %>
-      </div>
-    </div>
-  </div>
-
-  <div class="row form-row">
-    <div class="text-center">
-      <div class="col-xs-12 col-md-3 form-label">
-        <%= f.label :photo, class: "control-label" %>
-      </div>
-      <div class="col-xs-12 col-md-9 text-left">
-        <%= f.file_field :photo, class: "form-control" %>
-        <i>optional</i>
       </div>
     </div>
   </div>

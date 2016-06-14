@@ -11,17 +11,32 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160528170131) do
+ActiveRecord::Schema.define(version: 20160610041410) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "accounts", force: :cascade do |t|
+    t.integer  "account_number",                           null: false
+    t.boolean  "is_company",         default: false
+    t.string   "company_name"
+    t.integer  "created_by_id"
+    t.integer  "updated_by_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.text     "notes"
+    t.integer  "primary_contact_id"
+    t.string   "status",             default: "potential", null: false
+  end
+
+  add_index "accounts", ["primary_contact_id"], name: "index_accounts_on_primary_contact_id", using: :btree
 
   create_table "agreements", force: :cascade do |t|
     t.integer "proposal_id"
     t.jsonb   "manager_signature"
     t.jsonb   "client_signature"
     t.string  "agreement_type",    null: false
-    t.string  "state"
+    t.string  "status"
   end
 
   add_index "agreements", ["proposal_id"], name: "index_agreements_on_proposal_id", using: :btree
@@ -44,27 +59,32 @@ ActiveRecord::Schema.define(version: 20160528170131) do
     t.string   "name",       null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "photo"
+    t.integer  "parent_id"
   end
 
+  add_index "categories", ["parent_id"], name: "index_categories_on_parent_id", using: :btree
+
   create_table "companies", force: :cascade do |t|
-    t.string "name",                        null: false
-    t.string "slogan"
-    t.text   "description"
-    t.string "address_1"
-    t.string "address_2"
-    t.string "city"
-    t.string "state"
-    t.string "zip"
-    t.string "phone"
-    t.string "phone_ext"
-    t.string "website"
-    t.string "logo"
-    t.text   "consignment_policies"
-    t.text   "service_rate_schedule"
-    t.text   "agent_service_rate_schedule"
-    t.string "email"
+    t.string  "name",                        null: false
+    t.string  "slogan"
+    t.text    "description"
+    t.string  "address_1"
+    t.string  "address_2"
+    t.string  "city"
+    t.string  "state"
+    t.string  "zip"
+    t.string  "phone"
+    t.string  "phone_ext"
+    t.string  "website"
+    t.string  "logo"
+    t.text    "consignment_policies"
+    t.text    "service_rate_schedule"
+    t.text    "agent_service_rate_schedule"
+    t.string  "email"
+    t.integer "primary_contact_id"
   end
+
+  add_index "companies", ["primary_contact_id"], name: "index_companies_on_primary_contact_id", using: :btree
 
   create_table "items", force: :cascade do |t|
     t.text     "description",                                       null: false
@@ -83,18 +103,30 @@ ActiveRecord::Schema.define(version: 20160528170131) do
     t.string   "sale_price_currency",         default: "USD",       null: false
     t.string   "token"
     t.integer  "proposal_id"
-    t.string   "state",                       default: "potential", null: false
+    t.string   "status",                      default: "potential", null: false
     t.integer  "minimum_sale_price_cents"
     t.string   "minimum_sale_price_currency", default: "USD",       null: false
-    t.integer  "client_id"
     t.string   "client_intention",            default: "undecided"
     t.text     "notes"
-    t.string   "offer_type"
+    t.datetime "sale_date"
+    t.boolean  "will_purchase"
+    t.boolean  "will_consign"
   end
 
   add_index "items", ["category_id"], name: "index_items_on_category_id", using: :btree
-  add_index "items", ["client_id"], name: "index_items_on_client_id", using: :btree
   add_index "items", ["proposal_id"], name: "index_items_on_proposal_id", using: :btree
+
+  create_table "jobs", force: :cascade do |t|
+    t.integer "account_id"
+    t.string  "address_1"
+    t.string  "address_2"
+    t.string  "city"
+    t.string  "state"
+    t.string  "zip"
+    t.string  "status",     default: "potential", null: false
+  end
+
+  add_index "jobs", ["account_id"], name: "index_jobs_on_account_id", using: :btree
 
   create_table "photos", force: :cascade do |t|
     t.integer  "item_id"
@@ -107,12 +139,14 @@ ActiveRecord::Schema.define(version: 20160528170131) do
   add_index "photos", ["item_id"], name: "index_photos_on_item_id", using: :btree
 
   create_table "proposals", force: :cascade do |t|
-    t.integer  "client_id",     null: false
     t.integer  "created_by_id", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "state"
+    t.string   "status"
+    t.integer  "job_id",        null: false
   end
+
+  add_index "proposals", ["job_id"], name: "index_proposals_on_job_id", using: :btree
 
   create_table "scanned_agreements", force: :cascade do |t|
     t.integer "agreement_id", null: false
@@ -120,6 +154,10 @@ ActiveRecord::Schema.define(version: 20160528170131) do
   end
 
   add_index "scanned_agreements", ["agreement_id"], name: "index_scanned_agreements_on_agreement_id", using: :btree
+
+  create_table "system_infos", force: :cascade do |t|
+    t.integer "last_account_number", default: 10
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                       default: "",       null: false
@@ -147,17 +185,17 @@ ActiveRecord::Schema.define(version: 20160528170131) do
     t.string   "status",                      default: "active", null: false
     t.boolean  "consignment_policy_accepted", default: false
     t.string   "avatar"
-    t.integer  "company_id"
-    t.boolean  "primary_contact",             default: false
+    t.integer  "account_id"
   end
 
-  add_index "users", ["company_id"], name: "index_users_on_company_id", using: :btree
+  add_index "users", ["account_id"], name: "index_users_on_account_id", using: :btree
   add_index "users", ["email"], name: "index_users_on_email", using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
   add_foreign_key "agreements", "proposals"
   add_foreign_key "items", "categories"
+  add_foreign_key "jobs", "accounts"
   add_foreign_key "photos", "items"
   add_foreign_key "scanned_agreements", "agreements"
-  add_foreign_key "users", "companies"
+  add_foreign_key "users", "accounts"
 end

@@ -34,7 +34,7 @@
                   will purchase:
                 </div>
                 <div class="col-xs-4 col-md-6">
-                  <%= f.radio_button :offer_type, "purchase", class: "selector offer-selector", id: "item_#{item.id}_offer_type_purchase", data: { item_id: item.id } %>
+                  <%= best_in_place item, :will_purchase, as: :checkbox, collection: {false: "No", true: "Yes"}, place_holder: "Yes/No" %>
                 </div>
               </div>
               <div class="row">
@@ -70,7 +70,7 @@
                   will consign:
                 </div>
                 <div class="col-xs-4 col-md-6">
-                  <%= f.radio_button :offer_type, "consign", class: "selector offer-selector", id: "item_#{item.id}_offer_type_consign", data: { item_id: item.id } %>
+                  <%= best_in_place item, :will_consign, as: :checkbox, collection: {false: "No", true: "Yes"}, place_holder: "Yes/No" %>
                 </div>
               </div>
               <div class="row">

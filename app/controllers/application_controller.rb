@@ -27,12 +27,24 @@ class ApplicationController < ActionController::Base
     @client ||= Client.find(params[:client_id])
   end
 
+  def find_accounts
+    @accounts ||= Account.all
+  end
+
+  def find_account
+    @account = Account.find(params[:account_id])
+  end
+
+  def find_job
+    @job = Job.find(params[:job_id])
+  end
+
   def find_agreement
     @agreement ||= Agreement.find(params[:agreement_id])
   end
 
   def find_categories
-    @categories = Category.all
+    @categories = Category.primary
   end
 
   def find_categories_for_dropdown
