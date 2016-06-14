@@ -108,6 +108,28 @@ class Item < ActiveRecord::Base
       "complement-primary"
     elsif consigned?
       "secondary-primary"
+    elsif client_intention == "junk"
+      "secondary-lighter"
+    elsif client_intention == "donate"
+      "secondar-darker"
+    elsif client_intention == "move"
+      "primary-darker"
+    else
+      "primary-lighter"
+    end
+  end
+
+  def self.panel_color(type)
+    if type == "sell"
+      "complement-primary"
+    elsif type == "consign"
+      "secondary-primary"
+    elsif type == "junk"
+      "secondary-lighter"
+    elsif type == "donate"
+      "secondar-darker"
+    elsif type == "move"
+      "primary-darker"
     else
       "primary-lighter"
     end

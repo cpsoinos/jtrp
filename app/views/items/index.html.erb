@@ -20,22 +20,37 @@
   </div>
 </div>
 
-<div class="col-xs-12 col-md-8 col-md-offset-2">
 
-  <!-- Tabs -->
-  <ul class="nav nav-pills nav-justified" role="tablist">
-    <% @intentions.each do |intention| %>
-      <li role="presentation"><a href="#<%= intention %>" aria-controls="<%= intention %>" role="tab" data-toggle="tab" class="agreement-tab"><%= @intentions_map[intention] %></a></li>
-    <% end %>
-  </ul>
+<!-- Tabs -->
+<div class="row">
+  <div class="col-xs-12 col-md-8 col-md-offset-2">
+    <ul class="nav nav-pills nav-justified" role="tablist">
+      <div class="row grid">
+        <div class="grid-sizer col-xs-6 col-md-3"></div>
+        <% @intentions.each do |intention| %>
+          <li role="presentation">
+            <div class="grid-item col-xs-6 col-md-3">
+              <div class="panel panel-primary text-center">
+                <div class="panel-body">
+                  <h1><%= Item.type(intention).count %></h1>
+                </div>
+                <div class="panel-heading <%= Item.panel_color(intention) %>">
+                  <h3><a href="#<%= intention %>" aria-controls="<%= intention %>" role="tab" data-toggle="tab" class="agreement-tab"><%= @intentions_map[intention] %></a></h3>
+                </div>
+              </div>
+            </div>
+          </li>
+        <% end %>
+      </div>
+    </ul>
 
-  <!-- Tab panes -->
-  <div class="well bs-component large-top-margin">
-    <div class="tab-content">
-      <% @intentions.each do |intention| %>
-        <div role="tabpanel" class="tab-pane fade" id="<%= intention %>"><%= render "items_list", items: @items.where(client_intention: intention) %></div>
-      <% end %>
+    <!-- Tab panes -->
+    <div class="large-top-margin">
+      <div class="tab-content">
+        <% @intentions.each do |intention| %>
+          <div role="tabpanel" class="tab-pane fade" id="<%= intention %>"><%= render "items_list", items: @items.where(client_intention: intention) %></div>
+        <% end %>
+      </div>
     </div>
   </div>
-
 </div>

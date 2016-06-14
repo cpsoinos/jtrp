@@ -28,7 +28,6 @@ Rails.application.routes.draw do
       resources :proposals do
         get '/details', to: 'proposals#details', as: "details"
         get '/response_form', to: 'proposals#response_form'
-        get '/agreement', to: 'proposals#agreement'
         resources :agreements
         resources :items
       end

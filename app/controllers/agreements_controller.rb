@@ -11,6 +11,14 @@ class AgreementsController < ApplicationController
     gon.signatures = build_json_for_signatures
   end
 
+  def show
+    @agreement = Agreement.find(params[:id])
+    @account = @agreement.proposal.job.account
+    @client = @account.primary_contact
+    @agreements = [@agreement]
+    gon.signatures = build_json_for_signatures
+  end
+
   def agreements_list
     @agreements = AgreementsPresenter.new(params).filter
     @intentions = @agreements.pluck(:agreement_type).uniq
