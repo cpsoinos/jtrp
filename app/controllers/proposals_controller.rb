@@ -34,6 +34,10 @@ class ProposalsController < ApplicationController
     @proposal = Proposal.find(params[:id])
     @item = @proposal.items.new
     @items = @proposal.items
+
+    @archive = Archive.new
+    @uploader = @archive.archive
+    @uploader.success_action_redirect = items_batch_create_url(proposal_id: @proposal.id)
     gon.proposalId = @proposal.id
   end
 
