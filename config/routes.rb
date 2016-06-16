@@ -1,4 +1,7 @@
+require 'sidekiq/web'
+
 Rails.application.routes.draw do
+  mount Sidekiq::Web => '/sidekiq'
   mount Bootsy::Engine => '/bootsy', as: 'bootsy'
   devise_for :users, controllers: { registrations: 'registrations' }
   root 'passthrough#index'
@@ -14,7 +17,7 @@ Rails.application.routes.draw do
     resources :items
   end
 
-  post '/batch_create', to: 'items#batch_create', as: 'items_batch_create'
+  get '/batch_create', to: 'items#batch_create', as: 'items_batch_create'
   resources :items do
     get '/tag', to: 'items#tag', as: 'tag'
   end
@@ -37,6 +40,7 @@ Rails.application.routes.draw do
   resources :clients
   resources :jobs
   resources :proposals, only: [:index, :show]
+  resources :archives
 
   resources :users_admin, controller: "users"
 

@@ -4,7 +4,7 @@ CarrierWave.configure do |config|
     config.storage = :file
     config.enable_processing = false
   else
-    config.fog_provider = 'fog/aws'                        # required
+    # config.fog_provider = 'fog/aws'                        # required
     config.fog_credentials = {
       provider:              'AWS',                        # required
       aws_access_key_id:     ENV['AWS_ACCESS_KEY_ID'],     # required
@@ -17,6 +17,7 @@ CarrierWave.configure do |config|
     config.storage = :fog
     # config.fog_public     = false                                        # optional, defaults to true
     # config.fog_attributes = { 'Cache-Control' => "max-age=#{365.day.to_i}" } # optional, defaults to {}
+    config.max_file_size = 1024.megabytes
   end
 
 end
