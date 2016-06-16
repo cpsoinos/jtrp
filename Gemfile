@@ -14,6 +14,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'dotenv-rails', require: 'dotenv/rails-now'
 gem 'devise'
 gem 'carrierwave', github: 'carrierwaveuploader/carrierwave'
+gem 'carrierwave_direct'
 gem 'mini_magick'
 gem 'best_in_place', '~> 3.0.1'
 gem 'money-rails'
@@ -23,7 +24,7 @@ gem 'cairo'
 gem 'has_secure_token'
 gem 'remotipart', '~> 1.2'
 gem 'dropzonejs-rails'
-gem 'fog-aws'
+gem 'fog', require: 'fog/aws'
 gem 'gon'
 gem 'rollbar', '~> 2.8.3'
 gem 'wicked_pdf'
@@ -35,7 +36,9 @@ gem 'rubyzip'
 gem 'react-rails'
 gem 'chartkick'
 gem 'sweet-alert-confirm'
-
+gem 'jquery-fileupload-rails'
+gem 'sidekiq'
+gem 'sinatra', :require => nil
 
 group :production, :staging, :local do
   gem 'rails_12factor'

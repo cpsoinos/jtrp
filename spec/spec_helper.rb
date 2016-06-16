@@ -22,6 +22,7 @@ RSpec.configure do |config|
   config.include EmailSpec::Helpers
   config.include EmailSpec::Matchers
   config.include BestInPlace::TestHelpers
+  config.include CarrierWaveDirect::Test::CapybaraHelpers
 
   config.before(:all) do
     FactoryGirl.reload

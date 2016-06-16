@@ -40,13 +40,11 @@ class ItemsController < ApplicationController
   end
 
   def batch_create
-    if ItemImporter.new(@proposal).import(archive_params[:archive])
-      flash[:notice] = "Items imported"
-      redirect_to edit_account_job_proposal_path(@proposal.account, @proposal.job, @proposal)
-    else
-      flash[:alert] = "Upload failed"
-      redirect_to :back
-    end
+    find_proposal
+    @archive = Archive.new
+    @archive.update_attribute(:key, params[:key])
+    @archive.save_and_process_items(@proposal)
+    redirect_to edit_account_job_proposal_path(@proposal.account, @proposal.job, @proposal)
   end
 
   def show
@@ -106,7 +104,7 @@ class ItemsController < ApplicationController
   protected
 
   def item_params
-    params.require(:item).permit(:description, {photos: []}, {initial_photos: []}, {listing_photos: []}, :proposal_id, :account_id, :purchase_price, :asking_price, :listing_price, :sale_price, :minimum_sale_price, :condition, :category_id, :client_intention, :notes, :height, :width, :depth, :will_purchase, :will_consign)
+    params.require(:item).permit(:description, {photos: []}, {initial_photos: []}, {listing_photos: []}, :purchase_price, :asking_price, :listing_price, :sale_price, :minimum_sale_price, :condition, :category_id, :client_intention, :notes, :height, :width, :depth, :will_purchase, :will_consign)
   end
 
   def archive_params
