@@ -30,30 +30,25 @@ $(document).ready(function() {
       }}
     })
   });
-  //
-  // $(":checkbox.offer-selector").change(function() {
-  //   var offerType = this.dataset.offerType
-  //   var offer = $(this).val()
-  //   $.ajax({
-  //     url: $(this).parents('form')[0].action,
-  //     type: "PUT",
-  //     data: { item: {
-  //       offerType: offer
-  //     }}
-  //   });
-  // });
 
   // init Masonry
   var $grid = $('.grid').masonry({
     columnWidth: '.grid-sizer',
     itemSelector: '.grid-item',
-    percentPosition: true,
+    percentPosition: true
   });
   // layout Masonry after each image loads
   $grid.imagesLoaded().progress( function() {
     $grid.masonry('layout');
-  });
 
+    // init masonry within panels
+    var $itemGrid = $('.item-grid').masonry({
+      itemSelector: '.item-grid-item',
+      columnWidth: '.item-grid-sizer',
+      gutter: 10,
+      percentPosition: true
+    });
+  });
 
   //Reinitialize masonry inside each panel after the relative tab link is clicked -
 	$('a[data-toggle=tab]').each(function () {

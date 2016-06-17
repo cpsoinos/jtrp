@@ -15,5 +15,5 @@ $(document).ready(function() {
     if(this.checked) {
       $("#sign-up-button").removeAttr('disabled');
     }
-  })
+  });
 })
