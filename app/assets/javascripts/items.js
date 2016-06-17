@@ -14,6 +14,9 @@ $(document).ready(function() {
 
   $(".remove-existing-item-button").click(function() {
     var itemId = this.dataset.itemId
+    var panel = $(this).closest(".panel")
+    var panelBody = panel.find('.panel-body')
+    panelBody.html('<div class="showbox"><div class="loader"><svg class="circular" viewBox="25 25 50 50"><circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/></svg></div></div>')
     $.ajax({
       url: '/items/' + itemId,
       type: "DELETE"

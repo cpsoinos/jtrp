@@ -67,8 +67,18 @@ td.item-row-description {
 }
 
 .grid-sizer,
-.grid-item {
+.grid-item,
+.item-grid-item,
+.item-grid-item--width2 {
   margin-bottom: 10px;
+}
+
+.item-grid-sizer {
+  width: 20%;
+}
+
+.item-grid-item--width2 {
+  width: 40%;
 }
 
 /* 2 columns wide */

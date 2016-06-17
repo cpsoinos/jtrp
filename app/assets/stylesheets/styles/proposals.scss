@@ -13,11 +13,13 @@
 @media (max-width: 767px) {
   .thumb {
     max-width: 145px;
+    border-radius: 8px;
   }
 }
 
 .thumb {
   max-width: 100%;
+  border-radius: 8px;
 }
 
 .btn-responsive {

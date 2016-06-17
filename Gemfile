@@ -39,6 +39,7 @@ gem 'sweet-alert-confirm'
 gem 'jquery-fileupload-rails'
 gem 'sidekiq'
 gem 'sinatra', :require => nil
+gem 'pusher'
 
 group :production, :staging, :local do
   gem 'rails_12factor'

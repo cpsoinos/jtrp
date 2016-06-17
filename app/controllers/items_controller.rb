@@ -18,6 +18,9 @@ class ItemsController < ApplicationController
 
   def create
     @item = ItemCreator.new(@proposal).create(item_params)
+    @proposal = @item.proposal
+    @job = @proposal.job
+    @account = @job.account
     respond_to do |format|
       if @item.persisted?
         format.html do
