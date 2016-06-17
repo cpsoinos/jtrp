@@ -1,3 +1,5 @@
+require 'restclient'
+
 class ItemImporter
 
   attr_reader :proposal, :archive
@@ -13,6 +15,17 @@ class ItemImporter
 
   private
 
+  def zipfile
+    @_zipfile ||= begin
+      url = archive.archive.direct_fog_url(with_path: true)
+      response = RestClient::Request.execute({url: url, method: :get, content_type: 'application/zip'})
+      zipfile = Tempfile.new("downloaded")
+      zipfile.binmode
+      zipfile.write(response)
+      zipfile
+    end
+  end
+
   def execute
     extract_entries
     group_by_item
@@ -25,7 +38,7 @@ class ItemImporter
 
   def extract_entries
     @entries ||= begin
-      Zip::File.open(archive.tempfile) do |zip_file|
+      Zip::File.open(zipfile.path) do |zip_file|
         zip_file.entries.map do |entry|
           next if entry.name =~ /__MACOSX/ or entry.name =~ /\.DS_Store/ or !entry.file?
           entry
@@ -44,13 +57,22 @@ class ItemImporter
 
   def massage_attrs
     @massaged_attrs ||= begin
-      @items.map do |item_description, photos|
+      @items.map do |attrs, photos|
         {
-          description: item_description,
+          description: description(attrs),
+          account_item_number: item_number(attrs),
           initial_photos: process_images(photos)
         }
       end
     end
+  end
+
+  def description(attrs)
+    attrs.split("-").last
+  end
+
+  def item_number(attrs)
+    attrs.split("-").shift.to_i
   end
 
   def process_images(entries)

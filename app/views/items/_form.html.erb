@@ -38,6 +38,17 @@
   </div>
 </div>
 
+<div class="row form-row">
+  <div class="text-center">
+    <div class="col-xs-12 col-md-3 form-label">
+      <%= f.label :account_item_number, "Item No.", class: "control-label" %>
+    </div>
+    <div class="col-xs-12 col-md-9 text-left">
+      <%= f.number_field :account_item_number, class: "form-control", placeholder: "optional" %>
+    </div>
+  </div>
+</div>
+
 <% if @item.initial_photos.present? %>
   <div class="row text-center large-top-margin grid">
     <div class="grid-sizer col-xs-12 col-sm-6 col-md-4"></div>

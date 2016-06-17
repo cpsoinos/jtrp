@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160610041410) do
+ActiveRecord::Schema.define(version: 20160615015952) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,6 +27,7 @@ ActiveRecord::Schema.define(version: 20160610041410) do
     t.text     "notes"
     t.integer  "primary_contact_id"
     t.string   "status",             default: "potential", null: false
+    t.integer  "last_item_number",   default: 0
   end
 
   add_index "accounts", ["primary_contact_id"], name: "index_accounts_on_primary_contact_id", using: :btree
@@ -40,6 +41,10 @@ ActiveRecord::Schema.define(version: 20160610041410) do
   end
 
   add_index "agreements", ["proposal_id"], name: "index_agreements_on_proposal_id", using: :btree
+
+  create_table "archives", force: :cascade do |t|
+    t.string "archive"
+  end
 
   create_table "bootsy_image_galleries", force: :cascade do |t|
     t.integer  "bootsy_resource_id"
@@ -111,6 +116,7 @@ ActiveRecord::Schema.define(version: 20160610041410) do
     t.datetime "sale_date"
     t.boolean  "will_purchase"
     t.boolean  "will_consign"
+    t.integer  "account_item_number"
   end
 
   add_index "items", ["category_id"], name: "index_items_on_category_id", using: :btree
