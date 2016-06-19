@@ -1,0 +1,4 @@
+var panel = $("#panel-item-<%= @item.id %>")
+var panelHeading = panel.find(".panel-heading")
+
+panelHeading.removeClass("primary-lighter").addClass("<%= @item.panel_color %>")

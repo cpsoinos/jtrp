@@ -31,9 +31,8 @@ class ProposalsController < ApplicationController
   end
 
   def edit
-    @proposal = Proposal.find(params[:id])
+    @proposal = Proposal.includes(items: :photos).find(params[:id])
     @item = @proposal.items.new
-    @items = @proposal.items
 
     @archive = Archive.new
     @uploader = @archive.archive
@@ -44,13 +43,6 @@ class ProposalsController < ApplicationController
   def details
     @proposal = Proposal.find(params[:proposal_id])
     @items = @proposal.items
-  end
-
-  def response_form
-    @proposal = Proposal.find(params[:proposal_id])
-    @account = @proposal.account
-    @client = @account.primary_contact
-    @items = @proposal.items.order(:id)
   end
 
   protected

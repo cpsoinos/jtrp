@@ -72,32 +72,6 @@
       </div>
       <div class="col-xs-12 col-md-4 text-center">
         <h3><%= @item.description %></h3>
-        <div class="row large-top-margin">
-          <div class="col-xs-6 col-md-3 col-md-offset-3 form-label">
-            Height:
-          </div>
-          <div class="col-xs-6 col-md-3">
-            <%= @item.height %>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-xs-6 col-md-3 col-md-offset-3 form-label">
-            Width:
-          </div>
-          <div class="col-xs-6 col-md-3">
-            <%= @item.width %>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-xs-6 col-md-3 col-md-offset-3 form-label">
-            Depth:
-          </div>
-          <div class="col-xs-6 col-md-3">
-            <%= @item.depth %>
-          </div>
-        </div>
 
         <div class="row">
           <div class="col-xs-6 col-md-3 col-md-offset-3 form-label">
@@ -207,7 +181,7 @@
               </div>
             <% end %>
 
-            <%= f.file_field :initial_photos, multiple: true, class: "dropzone form-control" %>
+            <%= f.file_field :initial_photos, multiple: true, class: "dropzone" %>
 
           </div>
         </div>
@@ -226,7 +200,7 @@
               </div>
             <% end %>
 
-            <%= f.file_field :listing_photos, multiple: true, class: "dropzone form-control" %>
+            <%= f.file_field :listing_photos, multiple: true, class: "dropzone" %>
 
           </div>
         </div>

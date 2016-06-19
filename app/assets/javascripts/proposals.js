@@ -23,8 +23,8 @@ $(".proposals.new").ready(function() {
 
 })
 
-$(".proposals").ready(function() {
-  $('.best_in_place').click(function() {
-    $(this).closest('.grid-item').find('.panel-heading').removeClass('primary-lighter').addClass('complement-lighter');
-  })
-})
+// $(".proposals").ready(function() {
+//   $('.best_in_place').click(function() {
+//     $(this).closest('.grid-item').find('.panel-heading').removeClass('primary-lighter').addClass('complement-lighter');
+//   })
+// })
