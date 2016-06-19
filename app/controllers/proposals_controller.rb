@@ -25,6 +25,7 @@ class ProposalsController < ApplicationController
   end
 
   def show
+    require_internal_or_client
     @proposal = Proposal.find(params[:id])
     @client = @account.primary_contact
     @items = @proposal.items
