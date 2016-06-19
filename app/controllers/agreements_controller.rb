@@ -1,10 +1,11 @@
 class AgreementsController < ApplicationController
   before_filter :require_internal
   before_filter :find_proposal, only: [:index, :create]
+  before_filter :find_job, only: [:index, :create]
+  before_filter :find_account, only: [:index, :create]
   before_filter :pull_intentions, only: :create
 
   def index
-    @account = @proposal.account
     @client = @proposal.job.account.primary_contact
     @agreements = @proposal.agreements
     @items = @proposal.items
@@ -27,7 +28,7 @@ class AgreementsController < ApplicationController
   def create
     @client = @proposal.client
     @agreements = AgreementCreator.new(current_user).create(@proposal)
-    redirect_to proposal_agreements_path(@proposal)
+    redirect_to account_job_proposal_agreements_path(@account, @job, @proposal)
   end
 
   def update

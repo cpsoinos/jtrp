@@ -1,0 +1,78 @@
+<table>
+  <tr>
+    <th>
+      Purchase Offer:
+    </th>
+    <td>
+      <%= item.will_purchase? ? "Yes" : "No" %>
+    </td>
+  </tr>
+  <% if item.will_purchase? %>
+    <tr>
+      <td>
+        for:
+      </td>
+      <td>
+        <%= humanized_money_with_symbol(item.purchase_price) %>
+      </td>
+    </tr>
+  <% end %>
+  <tr>
+    <th>
+      Consignment Offer:
+    </th>
+    <td>
+      <%= item.will_consign? ? "Yes" : "No" %>
+    </td>
+  </tr>
+  <% if item.will_consign? %>
+    <tr>
+      <td>
+        at:
+      </td>
+      <td>
+        <%= item.consignment_rate %>%
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Listing price:
+      </td>
+      <td>
+        <%= humanized_money_with_symbol(item.listing_price) %>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Minimum sale price:
+      </td>
+      <td>
+        <%= humanized_money_with_symbol(item.minimum_sale_price) %>
+      </td>
+    </tr>
+  <% end %>
+</table>
+<%= form_for item, class: "form-horizontal", remote: true do |f| %>
+
+  <div class="form-group">
+    <% intentions = %w(sell consign donate dump move nothing) %>
+    <% if !item.will_purchase? %>
+      <% intentions.delete("sell") %>
+    <% end %>
+    <% if !item.will_consign? %>
+      <% intentions.delete("consign") %>
+    <% end %>
+
+    <% intentions.each do |intention| %>
+
+      <div class="radio radio-primary">
+        <label>
+          <%= f.label :client_intention, intention, for: "item_#{item.id}_client_intention_#{intention}" %>
+          <%= f.radio_button :client_intention, intention, class: "intention-selector", id: "item_#{item.id}_client_intention_#{intention}" %>
+        </label>
+      </div>
+
+    <% end %>
+  </div>
+
+<% end %>

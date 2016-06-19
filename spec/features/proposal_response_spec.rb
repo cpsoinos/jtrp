@@ -13,7 +13,7 @@ feature "proposal response" do
 
   context "guest" do
     scenario "visits consignment agreement path" do
-      visit account_job_proposal_response_form_path(account, job, proposal)
+      visit account_job_proposal_path(account, job, proposal)
 
       expect(page).to have_content("Forbidden")
     end
@@ -22,13 +22,15 @@ feature "proposal response" do
   context "internal user" do
 
     before do
+      items.first.update_attribute("will_purchase", true)
+      items.second.update_attribute("will_consign", true)
       sign_in(user)
-      visit account_job_proposal_response_form_path(account, job, proposal)
+      visit account_job_proposal_path(account, job, proposal)
     end
 
     scenario "user chooses client intentions", js: true do
       items.each_with_index do |item, i|
-        choose("item_#{item.id}_client_intention_#{intentions[i]}")
+        find(:css, "#item_#{item.id}_client_intention_#{intentions[i]}", visible: false).trigger("click")
         wait_for_ajax
         item.reload
         expect(item.client_intention).to eq(intentions[i])

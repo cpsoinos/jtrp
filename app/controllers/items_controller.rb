@@ -18,6 +18,9 @@ class ItemsController < ApplicationController
 
   def create
     @item = ItemCreator.new(@proposal).create(item_params)
+    @proposal = @item.proposal
+    @job = @proposal.job
+    @account = @job.account
     respond_to do |format|
       if @item.persisted?
         format.html do
@@ -60,7 +63,7 @@ class ItemsController < ApplicationController
     @item = Item.find(params[:id])
     respond_to do |format|
       if ItemUpdater.new(@item).update(item_params)
-        format.js { render nothing: true }
+        format.js { render 'proposals/update_item_details' }
         format.html { redirect_to(@item, :notice => 'Item was successfully updated.') }
         format.json { respond_with_bip(@item) }
       else
@@ -104,7 +107,7 @@ class ItemsController < ApplicationController
   protected
 
   def item_params
-    params.require(:item).permit(:description, {photos: []}, {initial_photos: []}, {listing_photos: []}, :purchase_price, :asking_price, :listing_price, :sale_price, :minimum_sale_price, :condition, :category_id, :client_intention, :notes, :height, :width, :depth, :will_purchase, :will_consign)
+    params.require(:item).permit(:description, {photos: []}, {initial_photos: []}, {listing_photos: []}, :purchase_price, :asking_price, :listing_price, :sale_price, :minimum_sale_price, :condition, :category_id, :client_intention, :notes, :will_purchase, :will_consign, :account_item_number, :consignment_rate)
   end
 
   def archive_params

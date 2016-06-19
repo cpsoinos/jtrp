@@ -1,4 +1,14 @@
-$("<%= escape_javascript(render 'proposals/item_row', item: @item) %>").appendTo("#proposal-item-list");
+var $grid = $('.grid').masonry({
+  columnWidth: '.grid-sizer',
+  itemSelector: '.grid-item',
+  percentPosition: true
+});
+
+var $item = $("<%= escape_javascript(render 'proposals/item_row', item: @item, :@account => @account, :@job => @job, :@proposal => @proposal) %>")
+
+$grid.append($item)
+  .masonry("appended", $item)
+
 $(".new_item")[0].reset();
 
 $(".remove-existing-item-button").click(function() {

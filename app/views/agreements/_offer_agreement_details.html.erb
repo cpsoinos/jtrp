@@ -1,0 +1,61 @@
+<table>
+  <% if item.client_intention == "sell" %>
+    <tr>
+      <td>
+        Purchase Offer:
+      </td>
+      <td>
+        <%= humanized_money_with_symbol(item.purchase_price) %>
+      </td>
+    </tr>
+  <% elsif item.client_intention == "consign" %>
+    <tr>
+      <td>
+        Consignment Rate:
+      </td>
+      <td>
+        <%= item.consignment_rate %>%
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Listing price:
+      </td>
+      <td>
+        <%= humanized_money_with_symbol(item.listing_price) %>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Minimum sale price:
+      </td>
+      <td>
+        <%= humanized_money_with_symbol(item.minimum_sale_price) %>
+      </td>
+    </tr>
+  <% elsif item.client_intention == "donate" %>
+    <tr>
+      <th>
+        Donate to:
+      </th>
+      <td>
+        charityName
+      </td>
+    </tr>
+  <% elsif item.client_intention == "dump" %>
+    <tr>
+      <td>
+        Will Dump
+      </td>
+    </tr>
+  <% elsif item.client_intention == "move" %>
+    <tr>
+      <th>
+        Move to:
+      </th>
+      <td>
+        destinationAddress
+      </td>
+    </tr>
+  <% end %>
+</table>
