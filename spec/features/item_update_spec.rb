@@ -22,17 +22,11 @@ feature "update an item" do
       click_link("Edit")
 
       fill_in("Description", with: "Chair")
-      fill_in("Height", with: "3'")
-      fill_in("Width", with: "1'")
-      fill_in("Depth", with: "1 1/2'")
 
       click_button("Update Item")
 
       expect(page).to have_content("Item was successfully updated.")
       expect(page).to have_content("Chair")
-      expect(page).to have_content("3'")
-      expect(page).to have_content("1'")
-      expect(page).to have_content("1 1/2'")
     end
 
     scenario "unsuccessfully updates an item" do
