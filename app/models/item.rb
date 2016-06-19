@@ -103,6 +103,10 @@ class Item < ActiveRecord::Base
     active? && client_intention == "consign"
   end
 
+  def offer_chosen?
+    potential? && (!will_consign.nil? || !will_purchase.nil?)
+  end
+
   def panel_color
     if owned?
       "complement-primary"
@@ -111,9 +115,11 @@ class Item < ActiveRecord::Base
     elsif client_intention == "junk"
       "secondary-lighter"
     elsif client_intention == "donate"
-      "secondar-darker"
+      "secondary-darker"
     elsif client_intention == "move"
       "primary-darker"
+    elsif offer_chosen?
+      "complement-lighter"
     else
       "primary-lighter"
     end

@@ -27,26 +27,14 @@
   </div>
 <% end %>
 
-<div class="row form-row">
-  <div class="text-center">
-    <div class="col-xs-12 col-md-3 form-label">
-      <%= f.label :description, class: "control-label required" %>
-    </div>
-    <div class="col-xs-12 col-md-9 text-left">
-      <%= f.text_field :description, class: "form-control", placeholder: "Item description", required: true %>
-    </div>
-  </div>
+<div class="form-group label-floating">
+  <%= f.label :description, class: "control-label required" %>
+  <%= f.text_field :description, class: "form-control", required: true %>
 </div>
 
-<div class="row form-row">
-  <div class="text-center">
-    <div class="col-xs-12 col-md-3 form-label">
-      <%= f.label :account_item_number, "Item No.", class: "control-label" %>
-    </div>
-    <div class="col-xs-12 col-md-9 text-left">
-      <%= f.number_field :account_item_number, class: "form-control", placeholder: "optional" %>
-    </div>
-  </div>
+<div class="form-group label-floating">
+  <%= f.label :account_item_number, "Item No. <i>optional - this will be auto-populated if left blank</i>".html_safe, class: "control-label" %>
+  <%= f.number_field :account_item_number, class: "form-control" %>
 </div>
 
 <% if @item.initial_photos.present? %>
@@ -61,13 +49,9 @@
 <% end %>
 
 <div class="row form-row">
-  <div class="text-center">
-    <div class="col-xs-12 col-md-3 form-label">
-      <%= f.label :initial_photos, class: "control-label" %>
-    </div>
-    <div class="col-xs-12 col-md-9 text-left">
-      <%= f.file_field :initial_photos, multiple: true, class: "dropzone form-control" %>
-    </div>
+  <div class="dropzone-file-field">
+    <%= f.label :initial_photos %>
+    <%= f.file_field :initial_photos, multiple: true, class: "dropzone" %>
   </div>
 </div>
 
@@ -85,13 +69,9 @@
   <% end %>
 
   <div class="row form-row">
-    <div class="text-center">
-      <div class="col-xs-12 col-md-3 form-label">
-        <%= f.label :listing_photos, class: "control-label" %>
-      </div>
-      <div class="col-xs-12 col-md-9 text-left">
-        <%= f.file_field :listing_photos, multiple: true, class: "dropzone form-control" %>
-      </div>
+    <div class="dropzone-file-field">
+      <%= f.label :listing_photos %>
+      <%= f.file_field :listing_photos, multiple: true, class: "dropzone" %>
     </div>
   </div>
 
@@ -148,49 +128,6 @@
           </div>
           <div class="col-xs-6 col-md-6 text-left">
             <%= f.text_field :condition, class: "form-control" %>
-          </div>
-        </div>
-      </div>
-    </div>
-
-  </div>
-
-  <div class="row form-row">
-
-    <div class="col-xs-6 col-md-3 col-md-offset-3">
-      <div class="row">
-        <div class="text-center">
-          <div class="col-xs-6 col-md-6 form-label">
-            <%= f.label :height, class: "control-label" %>
-          </div>
-          <div class="col-xs-6 col-md-6 text-left">
-            <%= f.text_field :height, class: "form-control" %>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-xs-6 col-md-3">
-      <div class="row">
-        <div class="text-center">
-          <div class="col-xs-6 col-md-6 form-label">
-            <%= f.label :width, class: "control-label" %>
-          </div>
-          <div class="col-xs-6 col-md-6 text-left">
-            <%= f.text_field :width, class: "form-control" %>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-xs-6 col-md-3">
-      <div class="row">
-        <div class="text-center">
-          <div class="col-xs-6 col-md-6 form-label">
-            <%= f.label :depth, class: "control-label" %>
-          </div>
-          <div class="col-xs-6 col-md-6 text-left">
-            <%= f.text_field :depth, class: "form-control" %>
           </div>
         </div>
       </div>

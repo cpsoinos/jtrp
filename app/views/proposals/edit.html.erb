@@ -1,34 +1,35 @@
-<h1 class="text-center large-top-margin company-title">Proposal for <%= @proposal.client.full_name %></h1>
-</br>
-
 <div class="row">
-  <div class="col-xs-12 col-md-8 col-md-offset-2" id="proposal-item-list">
-    <%= render 'item_list', items: @items %>
+  <div class="col-xs-12 col-md-8 col-md-offset-2">
+    <div class="panel panel-primary large-top-margin">
+
+      <div class="panel-heading primary-lighter">
+        <h1 class="text-center company-font">Proposal for <%= @proposal.client.full_name %></h1>
+      </div>
+
+      <div class="panel-body">
+        <div class="row text-center">
+          <h2>Step 1</h2>
+        </div>
+
+        <%= form_for [@proposal, @item], class: "form-horizontal", remote: true do |f| %>
+          <%= render 'items/form', item: @item, f: f, legend: "Add a New Item:", remote: true %>
+        <% end %>
+
+        <div class="row" id="existing-item">
+          <div class="text-center"> - or -</div>
+        </div>
+
+        <%= render 'items/batch_upload_form', legend: "Upload a set of items:" %>
+
+        <div class="text-right large-top-margin">
+          <%= link_to "Step 2: Details <i class='fa fa-caret-right'></i>".html_safe, account_job_proposal_details_path(@account, @job, @proposal), class: "btn btn-raised btn-primary" %>
+        </div>
+      </div>
+
+    </div>
   </div>
 </div>
 
-<div class="col-xs-12 col-md-8 col-md-offset-2">
-  <div class="well bs-component">
-
-    <div class="row text-center">
-      <h2>Step 1</h1>
-    </div>
-
-    <%= form_for [@proposal, @item], class: "form-horizontal", remote: true do |f| %>
-      <%= render 'items/form', item: @item, f: f, legend: "Add a New Item:", remote: true %>
-    <% end %>
-
-    <div class="row" id="existing-item">
-      <div class="text-center"> - or -</div>
-    </div>
-
-    <div class="row">
-      <div class="col-xs-12 col-md-4"><h3>Upload a set of items:</h3></div>
-    </div>
-    <%= render 'items/batch_upload_form' %>
-
-    <div class="text-right large-top-margin">
-      <%= link_to "Step 2: Details <i class='fa fa-caret-right'></i>".html_safe, account_job_proposal_details_path(@account, @job, @proposal), class: "btn btn-raised btn-primary" %>
-    </div>
-  </div>
+<div class="row grid">
+  <%= render 'item_list', items: @proposal.items %>
 </div>

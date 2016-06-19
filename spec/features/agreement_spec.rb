@@ -8,7 +8,7 @@ feature "agreement" do
 
   context "guest" do
     scenario "visits consignment agreement path" do
-      visit proposal_agreements_path(proposal)
+      visit account_job_proposal_agreements_path(account, job, proposal)
 
       expect(page).to have_content("Forbidden")
     end
@@ -26,7 +26,7 @@ feature "agreement" do
       let!(:agreement) { create(:agreement, :sell, proposal: proposal) }
 
       scenario "client intends to sell an item", js: true do
-        visit proposal_agreements_path(proposal)
+        visit account_job_proposal_agreements_path(account, job, proposal)
 
         expect(page).not_to have_link("consign")
         expect(page).not_to have_link("dump")

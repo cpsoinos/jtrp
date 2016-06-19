@@ -1,111 +1,108 @@
-<div class="row">
-  <div class="panel panel-default panel-item-row" id="panel-item-<%= item.id %>">
-    <div class="row vertical-align">
-      <div class="col-xs-12 col-md-3 text-center">
-        <% if item.initial_photos.present? %>
-          <%= image_tag(item.initial_photos.first.photo_url(:thumb)) %>
-        <% else %>
-          <%= image_tag("thumb_No_Image_Available.png") %>
-        <% end %>
+<div class="col-xs-12">
+  <div class="panel panel-primary text-center" id="panel-item-<%= item.id %>">
+    <div class="panel-heading <%= item.panel_color %>">
+      <div class="row">
+        <div class="col-xs-3 text-left">
+          <span>Item No.</span> <span class="pull-right"><%= item.account_item_number %></span><br />
+          <span>SKU No.</span> <span class="pull-right"><%= item.id %></span>
+        </div>
+        <div class="col-xs-6">
+          <h3><%= link_to "#{item.description}", account_job_proposal_item_path(@account, @job, @proposal, item) %></h3>
+        </div>
+        <div class="col-xs-3">
+          <%= link_to "<i class='material-icons'>delete_forever</i>".html_safe, "javascript:void(0)", class: "btn btn-fab btn-fab-mini btn-danger remove-existing-item-button pull-right", data: { item_id: item.id } %>
+        </div>
       </div>
+    </div>
 
-      <div class="col-xs-12 col-md-9">
+    <div class="panel-body">
+      <div class="row">
 
-        <%= form_for item, remote: true do |f| %>
-
-          <div class="row text-center vertical-align">
-            <div class="col-xs-10">
-              <b>Item #<%= item.id %>: <%= item.description %></b>
-            </div>
-            <div class="col-xs-2">
-              <%= link_to "Remove", "javascript:void()", class: "btn btn-raised btn-xs btn-danger remove-existing-item-button", data: { item_id: item.id } %>
-            </div>
+        <div class="col-xs-12 col-md-6">
+          <div class="row grid">
+            <div class="col-xs-6 grid-sizer"></div>
+            <% if item.initial_photos.present? %>
+              <% item.initial_photos.each do |photo| %>
+                <div class="col-xs-6 grid-item">
+                  <%= link_to image_tag(photo.photo_url, class: "thumb"), account_job_proposal_item_path(@account, @job, @proposal, item) %>
+                </div>
+              <% end %>
+            <% else %>
+              <div class="col-xs-6 grid-item grid-item--width2">
+                <%= link_to image_tag("thumb_No_Image_Available.png", class: "thumb"), account_job_proposal_item_path(@account, @job, @proposal, item) %>
+              </div>
+            <% end %>
           </div>
+        </div>
 
-          <div class="row">
-            <div class="col-xs-12 col-md-6">
-              <div class="row">
-                <div class="client-header text-center">
-                  <p class="client-header-text">Purchase Offer</p>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-xs-8 col-md-6 text-right">
-                  will purchase:
-                </div>
-                <div class="col-xs-4 col-md-6">
-                  <%= best_in_place item, :will_purchase, as: :checkbox, collection: {false: "No", true: "Yes"}, place_holder: "Yes/No" %>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-xs-8 col-md-6 text-right">
-                  purchase price:
-                </div>
-                <div class="col-xs-4 col-md-6 field-purchase">
-                  <%= best_in_place item, :purchase_price, display_with: lambda { |v| humanized_money_with_symbol(v).html_safe } %>
-                </div>
-              </div>
-            </div>
-            <div class="hidden-xs col-md-6">
-              <div class="client-header text-center">
-                <p class="client-header-text">Condition/Notes</p>
-              </div>
-            </div>
-            <div class="row">
-              <div class="hidden-xs col-md-6">
-                <%= best_in_place item, :notes, place_holder: "<i>click or tap here to edit</i>".html_safe %>
-              </div>
-            </div>
-          </div>
+        <div class="col-xs-12 col-md-6 text-left">
+          <%= form_for item, class: "form-horizontal", remote: true do |f| %>
 
-          <div class="row">
-            <div class="col-xs-12 col-md-6">
-              <div class="row">
-                <div class="client-header text-center">
-                  <p class="client-header-text">Consignment Offer</p>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-xs-8 col-md-6 text-right">
-                  will consign:
-                </div>
-                <div class="col-xs-4 col-md-6">
-                  <%= best_in_place item, :will_consign, as: :checkbox, collection: {false: "No", true: "Yes"}, place_holder: "Yes/No" %>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-xs-8 col-md-6 text-right">
-                  original asking price:
-                </div>
-                <div class="col-xs-4 col-md-6 field-consign">
-                  <%= best_in_place item, :listing_price, display_with: lambda { |v| humanized_money_with_symbol(v).html_safe } %>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-xs-8 col-md-6 text-right">
-                  minimum sale price:
-                </div>
-                <div class="col-xs-4 col-md-6 field-consign">
-                  <%= best_in_place item, :minimum_sale_price, display_with: lambda { |v| humanized_money_with_symbol(v).html_safe } %>
-                </div>
-              </div>
-            </div>
-
-            <div class="hidden-xs col-md-6">
-              <div class="row vertical-align">
-                <% if item.initial_photos.present? %>
-                  <% item.initial_photos[1..3].each do |photo| %>
-                    <div class="col-md-12">
-                      <%= image_tag(photo.photo_url(:thumb), class: "half-thumb") %>
-                    </div>
-                  <% end %>
+            <div class="form-group">
+              <div class="checkbox">
+                <%= f.label :will_purchase, for: "item_#{item.id}_will_purchase" do %>
+                  <%= f.check_box :will_purchase, id: "item_#{item.id}_will_purchase" %> Will purchase
                 <% end %>
               </div>
+              <p class="help-block">Offer to purchase this item from the client account</p>
             </div>
 
-          </div>
+            <div class="form-group">
+              <%= f.label :purchase_price, class: "control-label" %>
+              <div class="input-group">
+                <span class="input-group-addon">$</span>
+                <%= f.number_field :purchase_price, class: "form-control text-field", step: 0.01 %>
+              </div>
+            </div>
 
-        <% end %>
+            <div class="form-group">
+              <div class="checkbox">
+                <%= f.label :will_consign, for: "item_#{item.id}_will_consign" do %>
+                  <%= f.check_box :will_consign, id: "item_#{item.id}_will_consign" %> Will consign
+                <% end %>
+              </div>
+              <p class="help-block">Offer to let the client account consign this item</p>
+            </div>
+
+            <div class="form-group label-floating">
+              <div class="input-group">
+                <%= f.label :consignment_rate, class: "control-label" %>
+                <%= f.number_field :consignment_rate, class: "form-control text-field", step: 0.01 %>
+                <span class="input-group-btn">
+                  <button type="button" class="btn btn-fab btn-fab-mini">
+                    %
+                  </button>
+                </span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :listing_price, class: "control-label" %>
+              <div class="input-group">
+                <span class="input-group-addon">$</span>
+                <%= f.number_field :listing_price, class: "form-control text-field", step: 0.01 %>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :minimum_sale_price, class: "control-label" %>
+              <div class="input-group">
+                <span class="input-group-addon">$</span>
+                <%= f.number_field :minimum_sale_price, class: "form-control text-field", step: 0.01 %>
+              </div>
+            </div>
+
+            <div class="form-group label-floating">
+              <%= f.label :notes, class: "control-label" %>
+              <%= f.text_field :notes, class: "form-control" %>
+            </div>
+
+            <div class="form-group pull-right">
+              <%= f.submit class: "btn btn-primary" %>
+             </div>
+
+          <% end %>
+        </div>
 
       </div>
     </div>

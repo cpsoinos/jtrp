@@ -14,6 +14,9 @@ $(document).ready(function() {
 
   $(".remove-existing-item-button").click(function() {
     var itemId = this.dataset.itemId
+    var panel = $(this).closest(".panel")
+    var panelBody = panel.find('.panel-body')
+    panelBody.html('<div class="showbox"><div class="loader"><svg class="circular" viewBox="25 25 50 50"><circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/></svg></div></div>')
     $.ajax({
       url: '/items/' + itemId,
       type: "DELETE"
@@ -30,30 +33,25 @@ $(document).ready(function() {
       }}
     })
   });
-  //
-  // $(":checkbox.offer-selector").change(function() {
-  //   var offerType = this.dataset.offerType
-  //   var offer = $(this).val()
-  //   $.ajax({
-  //     url: $(this).parents('form')[0].action,
-  //     type: "PUT",
-  //     data: { item: {
-  //       offerType: offer
-  //     }}
-  //   });
-  // });
 
   // init Masonry
   var $grid = $('.grid').masonry({
     columnWidth: '.grid-sizer',
     itemSelector: '.grid-item',
-    percentPosition: true,
+    percentPosition: true
   });
   // layout Masonry after each image loads
   $grid.imagesLoaded().progress( function() {
     $grid.masonry('layout');
-  });
 
+    // init masonry within panels
+    var $itemGrid = $('.item-grid').masonry({
+      itemSelector: '.item-grid-item',
+      columnWidth: '.item-grid-sizer',
+      gutter: 10,
+      percentPosition: true
+    });
+  });
 
   //Reinitialize masonry inside each panel after the relative tab link is clicked -
 	$('a[data-toggle=tab]').each(function () {
@@ -66,6 +64,8 @@ $(document).ready(function() {
       });
 		}); //end shown
 	});  //end each
+
+  // $("input#item_initial_photos").dropzone();
 
 });
 
