@@ -10,7 +10,7 @@ class ItemCreator
   def create(attrs)
     initial_photo_attrs = attrs.delete(:initial_photos)
     listing_photo_attrs = attrs.delete(:listing_photos)
-    if attrs[:account_item_number].empty?
+    if attrs[:account_item_number].blank?
       attrs[:account_item_number] = account.last_item_number += 1
     end
 
