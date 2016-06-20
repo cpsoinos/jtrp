@@ -102,3 +102,11 @@ a.panel-title:hover {
 .dropzone {
   width: 100%;
 }
+
+#item-attributes {
+  margin: 0 auto;
+
+  th, td {
+    padding: 5px;
+  }
+}
