@@ -71,7 +71,6 @@ group :development, :local do
 end
 
 group :test do
-  gem 'fuubar'
   gem 'rspec-rails', '~> 3.0'
   gem 'shoulda-matchers', require: false
   gem 'capybara'
