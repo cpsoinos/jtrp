@@ -23,7 +23,7 @@
 
 <!-- Tabs -->
 <div class="row">
-  <div class="col-xs-12 col-md-8 col-md-offset-2">
+  <div class="col-xs-12">
     <ul class="nav nav-pills nav-justified" role="tablist">
       <div class="row grid">
         <div class="grid-sizer col-xs-6 col-md-3"></div>
@@ -48,7 +48,9 @@
     <div class="large-top-margin">
       <div class="tab-content">
         <% @intentions.each do |intention| %>
-          <div role="tabpanel" class="tab-pane fade" id="<%= intention %>"><%= render "items_list", items: @items.where(client_intention: intention) %></div>
+          <div role="tabpanel" class="tab-pane fade" id="<%= intention %>">
+            <%= render "items_list", items: @items.where(client_intention: intention) %>
+          </div>
         <% end %>
       </div>
     </div>
