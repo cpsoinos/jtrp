@@ -1,5 +1,5 @@
 <div class="col-xs-12 col-md-4 grid-sizer" id="proposal-item-list"></div>
 <% items.order(:account_item_number).each do |item| %>
   <% next unless item.persisted? %>
-    <%= render 'proposals/item_row', item: item %>
+    <%= render 'proposals/item_preview_row', item: item %>
 <% end %>
