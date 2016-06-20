@@ -19,7 +19,7 @@ feature "update an item" do
 
     scenario "successfully updates an item" do
       visit item_path(item)
-      click_link("Edit")
+      click_link("edit")
 
       fill_in("Description", with: "Chair")
 
@@ -42,7 +42,7 @@ feature "update an item" do
 
     scenario "adds a second initial photo" do
       item = create(:item, :with_initial_photo)
-      visit item_path(item)
+      visit edit_item_path(item)
 
       expect(page).to have_css("img[src*='test.png']")
 
@@ -55,7 +55,7 @@ feature "update an item" do
 
     scenario "adds a second listing photo" do
       item = create(:item, :with_listing_photo)
-      visit item_path(item)
+      visit edit_item_path(item)
 
       expect(page).to have_css("img[src*='test.png']")
 
@@ -68,7 +68,7 @@ feature "update an item" do
 
     scenario "deletes an item" do
       visit item_path(item)
-      click_link("Delete")
+      click_link("delete_forever")
 
       expect(page).to have_content("Item removed")
     end
