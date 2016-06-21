@@ -103,7 +103,7 @@ describe Item do
       Timecop.return
       item.reload
 
-      expect(item.listed_at).to eq(now)
+      expect(item.listed_at).to be_within(1.second).of(now)
     end
 
     it "sets sold_at" do
@@ -114,7 +114,7 @@ describe Item do
       Timecop.return
       item.reload
 
-      expect(item.sold_at).to eq(now)
+      expect(item.sold_at).to be_within(1.second).of(now)
     end
 
   end
