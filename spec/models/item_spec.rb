@@ -94,6 +94,29 @@ describe Item do
       expect(item).to be_active
     end
 
+    it "sets listed_at" do
+      now = DateTime.now
+      Timecop.freeze(now)
+      proposal = create(:proposal, :active)
+      item = create(:item, proposal: proposal, client_intention: "sell")
+      item.mark_active!
+      Timecop.return
+      item.reload
+
+      expect(item.listed_at).to eq(now)
+    end
+
+    it "sets sold_at" do
+      now = DateTime.now
+      Timecop.freeze(now)
+      item = create(:item, :active, client_intention: "sell")
+      item.mark_sold
+      Timecop.return
+      item.reload
+
+      expect(item.sold_at).to eq(now)
+    end
+
   end
 
 end
