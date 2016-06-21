@@ -39,6 +39,7 @@ gem 'sweet-alert-confirm'
 gem 'jquery-fileupload-rails'
 gem 'sidekiq'
 gem 'sinatra', :require => nil
+gem 'pusher'
 
 group :production, :staging, :local do
   gem 'rails_12factor'
@@ -70,7 +71,6 @@ group :development, :local do
 end
 
 group :test do
-  gem 'fuubar'
   gem 'rspec-rails', '~> 3.0'
   gem 'shoulda-matchers', require: false
   gem 'capybara'
@@ -84,4 +84,5 @@ group :test do
   gem 'capybara-mechanize'
   gem 'coveralls', require: false
   gem 'pdf-reader'
+  gem 'timecop'
 end

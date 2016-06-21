@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160615015952) do
+ActiveRecord::Schema.define(version: 20160621123902) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -97,9 +97,6 @@ ActiveRecord::Schema.define(version: 20160615015952) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "condition"
-    t.string   "height"
-    t.string   "width"
-    t.string   "depth"
     t.integer  "purchase_price_cents"
     t.string   "purchase_price_currency",     default: "USD",       null: false
     t.integer  "listing_price_cents"
@@ -113,10 +110,12 @@ ActiveRecord::Schema.define(version: 20160615015952) do
     t.string   "minimum_sale_price_currency", default: "USD",       null: false
     t.string   "client_intention",            default: "undecided"
     t.text     "notes"
-    t.datetime "sale_date"
     t.boolean  "will_purchase"
     t.boolean  "will_consign"
     t.integer  "account_item_number"
+    t.decimal  "consignment_rate"
+    t.datetime "listed_at"
+    t.datetime "sold_at"
   end
 
   add_index "items", ["category_id"], name: "index_items_on_category_id", using: :btree

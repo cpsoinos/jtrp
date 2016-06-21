@@ -1,1 +1,10 @@
 $("#panel-item-<%= @item.id %>").remove();
+var $grid = $('.grid').masonry({
+  columnWidth: '.grid-sizer',
+  itemSelector: '.grid-item',
+  percentPosition: true
+});
+// layout Masonry after each image loads
+$grid.imagesLoaded().progress( function() {
+  $grid.masonry('layout');
+});

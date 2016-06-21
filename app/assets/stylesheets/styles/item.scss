@@ -67,8 +67,18 @@ td.item-row-description {
 }
 
 .grid-sizer,
-.grid-item {
+.grid-item,
+.item-grid-item,
+.item-grid-item--width2 {
   margin-bottom: 10px;
+}
+
+.item-grid-sizer {
+  width: 20%;
+}
+
+.item-grid-item--width2 {
+  width: 40%;
 }
 
 /* 2 columns wide */
@@ -82,4 +92,44 @@ a.panel-title:hover {
 
 .panel-body, .well-caption {
   padding: 2rem;
+}
+
+.dropzone-file-field {
+  margin-left: 15px;
+  margin-right: 15px;
+}
+
+.dropzone {
+  width: 100%;
+}
+
+#item-attributes {
+  margin: 0 auto;
+
+  th, td {
+    padding: 5px;
+  }
+}
+
+.tags-row {
+  height: 258px;
+}
+
+.tag-row {
+  height: 128px;
+  margin-bottom: 3px;
+}
+
+.tag-logo {
+  max-height: 100px;
+  max-width: 160px;
+  margin: 0 auto;
+}
+
+.tag-thumb {
+  max-height: 95%;
+}
+
+.tag-barcode {
+  margin-top: 32px;
 }

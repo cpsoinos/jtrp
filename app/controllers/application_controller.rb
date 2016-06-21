@@ -59,4 +59,10 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def require_internal_or_client
+    unless current_user.present? && (current_user.internal? || current_user.account == @account)
+      render status: :forbidden, text: "Forbidden fruit"
+    end
+  end
+
 end

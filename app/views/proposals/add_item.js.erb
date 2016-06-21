@@ -1,14 +1,32 @@
-$("<%= escape_javascript(render 'proposals/item_row', item: @item) %>").appendTo("#proposal-item-list");
+var $grid = $('.grid').masonry({
+  columnWidth: '.grid-sizer',
+  itemSelector: '.grid-item',
+  percentPosition: true
+});
+
+var $item = $("<%= escape_javascript(render 'proposals/item_preview_row', item: @item, :@account => @account, :@job => @job, :@proposal => @proposal) %>")
+
+$grid.append($item)
+  .masonry("appended", $item)
+
+var $clientGrid = $('.client-grid').masonry({
+  columnWidth: '.client-grid-sizer',
+  itemSelector: '.client-grid-item',
+  percentPosition: true,
+});
+// layout Masonry after each image loads
+$clientGrid.imagesLoaded().progress( function() {
+  $clientGrid.masonry('layout');
+});
+
 $(".new_item")[0].reset();
 
 $(".remove-existing-item-button").click(function() {
   var itemId = this.dataset.itemId
-  var proposalId = null
+  var panel = $(this).closest(".panel")
+  panel.html('<div class="showbox"><div class="loader"><svg class="circular" viewBox="25 25 50 50"><circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/></svg></div></div>')
   $.ajax({
     url: '/items/' + itemId,
-    type: "PUT",
-    data: { item: {
-      id: itemId, proposal_id: proposalId }
-    }
+    type: "DELETE"
   });
 });

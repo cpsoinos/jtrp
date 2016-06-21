@@ -1,4 +1,0 @@
-<% items.order(:id).each do |item| %>
-  <% next unless item.persisted? %>
-  <%= render 'proposals/item_details_row', item: item %>
-<% end %>

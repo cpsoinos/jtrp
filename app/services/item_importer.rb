@@ -33,6 +33,7 @@ class ItemImporter
 
     @massaged_attrs.each do |attrs|
       ItemCreator.new(@proposal).create(attrs)
+      # push_item_html(item)
     end
   end
 
@@ -84,6 +85,16 @@ class ItemImporter
       file.content_type = "image/#{entry.name.split('.').last}"
       file
     end
+  end
+
+  def channel
+    @_channel ||= "proposal#{proposal.id}"
+  end
+
+  def push_item_html(item)
+    Pusher.trigger(channel, "new_item", {
+      item: StaticRender.render_partial('proposals/item_row', nil, {:@account => proposal.account, :@job => proposal.job, :@proposal => proposal, item: item})
+    })
   end
 
 end

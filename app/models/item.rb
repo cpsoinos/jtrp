@@ -44,7 +44,8 @@ class Item < ActiveRecord::Base
     state :active
     state :sold
 
-    after_transition active: :sold, do: :mark_agreement_inactive
+    after_transition potential: :active, do: [:set_listed_at]
+    after_transition active: :sold, do: [:mark_agreement_inactive, :set_sold_at]
 
     event :mark_active do
       transition potential: :active, if: lambda { |item| item.meets_requirements_active? }
@@ -75,7 +76,7 @@ class Item < ActiveRecord::Base
     require 'barby/outputter/cairo_outputter'
 
     barcode = Barby::Code128B.new(token)
-    barcode = Barby::CairoOutputter.new(barcode).to_svg
+    barcode = Barby::CairoOutputter.new(barcode).to_svg(width: '160px')
     if pdf
       barcode = "data:image/svg+xml;base64,#{Base64.encode64(barcode)}"
     end
@@ -95,12 +96,34 @@ class Item < ActiveRecord::Base
     meets_requirements_active?
   end
 
+  def set_listed_at
+    self.listed_at = DateTime.now
+    self.save
+  end
+
+  def set_sold_at
+    self.sold_at = DateTime.now
+    self.save
+  end
+
   def owned?
     active? && client_intention == "sell"
   end
 
   def consigned?
     active? && client_intention == "consign"
+  end
+
+  def offer_chosen?
+    potential? && (!will_consign.nil? || !will_purchase.nil?)
+  end
+
+  def ownership_type
+    if owned?
+      "owned"
+    elsif consigned?
+      "consigned"
+    end
   end
 
   def panel_color
@@ -111,9 +134,11 @@ class Item < ActiveRecord::Base
     elsif client_intention == "junk"
       "secondary-lighter"
     elsif client_intention == "donate"
-      "secondar-darker"
+      "secondary-darker"
     elsif client_intention == "move"
       "primary-darker"
+    elsif offer_chosen?
+      "complement-lighter"
     else
       "primary-lighter"
     end

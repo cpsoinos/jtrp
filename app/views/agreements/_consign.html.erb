@@ -48,7 +48,9 @@
     <b>Consigned Items:</b>  The Items to be consigned in accordance with this Agreement are listed below with a photo, item number, description, consignment fee, original asking price, and minimum sale price:   
   </li>
 
-  <%= render 'proposals/item_list', items: items %>
+  <% items.each do |item| %>
+    <%= render 'proposals/item_row', item: item %>
+  <% end %>
 
   <li>
     <b>Early Termination by Consignor:</b>  Consignor shall have the right to terminate consignment of any or all Items at any time before the final day of the consignment period subject to an <b>early termination fee of 25%</b> of the total original asking price of each of the terminated Items. Early termination by Consignor shall not take effect until Consignee has received the termination request from Consignor in a signed document or by email, and Consignee has received full payment of the early termination fee and any other amounts due from Consignor. If Consignor requests early termination, but has not made the request in a signed document or by email, or has not delivered full payment of the early termination fee and any other amounts due from Consignor, Consignee shall have the option to either continue consignment of the requested terminated Items or discontinue any attempts to sell or show the Items.

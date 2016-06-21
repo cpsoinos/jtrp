@@ -87,3 +87,21 @@ h1, h3, h4 {
     color: black;
   }
 }
+
+.checkbox input[type=checkbox]:checked + .checkbox-material .check:before {
+  color: $brand-primary;
+  border-color: $brand-primary;
+}
+
+.checkbox input[type=checkbox]:checked + .checkbox-material .check {
+  color: $brand-primary;
+  border-color: $brand-primary;
+}
+
+.btn:not(.btn-raised).btn-primary, .input-group-btn .btn:not(.btn-raised).btn-primary {
+  color: $brand-primary;
+}
+
+.btn:not(.btn-raised).btn-primary, .input-group-btn .btn:not(.btn-raised).btn-primary {
+  color: white;
+}
