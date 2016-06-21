@@ -84,4 +84,5 @@ group :test do
   gem 'capybara-mechanize'
   gem 'coveralls', require: false
   gem 'pdf-reader'
+  gem 'timecop'
 end
