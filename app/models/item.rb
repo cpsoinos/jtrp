@@ -75,7 +75,7 @@ class Item < ActiveRecord::Base
     require 'barby/outputter/cairo_outputter'
 
     barcode = Barby::Code128B.new(token)
-    barcode = Barby::CairoOutputter.new(barcode).to_svg
+    barcode = Barby::CairoOutputter.new(barcode).to_svg(width: '160px')
     if pdf
       barcode = "data:image/svg+xml;base64,#{Base64.encode64(barcode)}"
     end

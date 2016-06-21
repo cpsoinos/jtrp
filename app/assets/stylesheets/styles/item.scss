@@ -110,3 +110,26 @@ a.panel-title:hover {
     padding: 5px;
   }
 }
+
+.tags-row {
+  height: 258px;
+}
+
+.tag-row {
+  height: 128px;
+  margin-bottom: 3px;
+}
+
+.tag-logo {
+  max-height: 100px;
+  max-width: 160px;
+  margin: 0 auto;
+}
+
+.tag-thumb {
+  max-height: 95%;
+}
+
+.tag-barcode {
+  margin-top: 32px;
+}
