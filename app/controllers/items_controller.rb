@@ -2,6 +2,7 @@ class ItemsController < ApplicationController
   before_filter :find_clients, only: [:new, :edit]
   before_filter :find_categories, only: [:new, :edit]
   before_filter :find_proposal, only: [:create, :batch_create]
+  before_filter :find_job, only: :tags
   before_filter :require_internal, only: [:new, :create, :update, :destroy]
 
   def index
@@ -100,6 +101,16 @@ class ItemsController < ApplicationController
       format.html
       format.pdf do
         render pdf: "tag"
+      end
+    end
+  end
+
+  def tags
+    @items = @job.items.filter(status: params[:status])
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render pdf: "tags", margin: { top: 5, bottom: 0, right: 5 }
       end
     end
   end
