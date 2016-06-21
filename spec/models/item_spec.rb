@@ -96,9 +96,9 @@ describe Item do
 
     it "sets listed_at" do
       now = DateTime.now
-      Timecop.freeze(now)
       proposal = create(:proposal, :active)
       item = create(:item, proposal: proposal, client_intention: "sell")
+      Timecop.freeze(now)
       item.mark_active!
       Timecop.return
       item.reload
