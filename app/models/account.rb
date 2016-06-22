@@ -37,6 +37,9 @@ class Account < ActiveRecord::Base
   end
 
   alias :client :primary_contact
+  delegate :full_address, to: :primary_contact
+  delegate :phone, to: :primary_contact
+  delegate :email, to: :primary_contact
 
   def self.yard_sale
     Account.find_by(account_number: 1)

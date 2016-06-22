@@ -120,9 +120,9 @@ class Item < ActiveRecord::Base
 
   def ownership_type
     if owned?
-      "owned"
+      "owned".titleize
     elsif consigned?
-      "consigned"
+      "consigned".titleize
     end
   end
 
