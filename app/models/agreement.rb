@@ -18,7 +18,7 @@ class Agreement < ActiveRecord::Base
     state :active
     state :inactive
 
-    after_transition potential: :active, do: [:mark_items_active, :mark_proposal_active]
+    after_transition potential: :active, do: [:mark_items_active, :mark_proposal_active, :set_agreement_date]
     after_transition active: :inactive, do: :mark_proposal_inactive
 
     event :mark_active do
@@ -47,6 +47,11 @@ class Agreement < ActiveRecord::Base
     proposal.mark_inactive!
   end
 
+  def set_agreement_date
+    self.date = DateTime.now
+    self.save
+  end
+
   def meets_requirements_active?
     if agreement_type == "consign"
       manager_signed? && client_signed?
@@ -65,6 +70,10 @@ class Agreement < ActiveRecord::Base
 
   def client_signed?
     client_signature.present? || scanned_agreement.present?
+  end
+
+  def is_addendum?
+    agreement_id.present?
   end
 
 end
