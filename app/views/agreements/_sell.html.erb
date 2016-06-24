@@ -19,7 +19,7 @@
         <td class="panel-item-row"><%= humanized_money_with_symbol(items.sum(:purchase_price_cents) / 100).html_safe %></td>
       </tr>
       <tr>
-        <th>Paid, ck. #<%= "number" %>:</th>
+        <th>Paid, ck. #_____:</th>
         <td class="panel-item-row"><%= humanized_money_with_symbol(items.sum(:purchase_price_cents) / 100 * -1).html_safe %></td>
       </tr>
       <tr>

@@ -1,0 +1,29 @@
+<h3>Consignment Agreement Addendum</h3><br />
+
+<p>
+  This consignment agreement addendum (the “<b>Addendum</b>”) shall be added to and be made a part of the Consignment Agreement (the “<b>Agreement</b>”), numbered #<%= agreement.id %> and dated <%= agreement.date %>, entered into by and between Just the Right Piece, LLC (“JTRP”) of 369 South Broadway, Salem, NH and consignorName (the “Consignor”) of consignorAddress. This Addendum shall take effect on the date signed by Consignor, or if that date is not provided, then the date signed by JTRP.
+</p>
+
+<p>
+  All consignment Items listed in the provision entitled “Added Items” shall be added to the Agreement with the terms specified for those Items. The term “period” shall mean the consignment period, which shall commence on the effective date of this Addendum. The term “fee rate” shall mean the consignment fee rate. (An added Item may be the same Item as a removed Item, but with new terms, in which case it will be assigned a new Item number and be treated as a new Item with the consignment period commencing on the effective date of this Addendum.) 
+</p>
+
+<p>
+  All consignment Items listed in the provision entitled “Removed Items” shall be removed from the Agreement on the effective date of this Addendum.
+</p>
+
+<p>Added Items:</p>
+
+<div class="row">
+  <% added_items.each do |item| %>
+    <%= render 'proposals/item_row', item: item %>
+  <% end %>
+</div>
+
+<p>Removed Items:</p>
+
+<div class="row">
+  <% removed_items.each do |item| %>
+    <%= render 'proposals/item_row', item: item %>
+  <% end %>
+</div>
