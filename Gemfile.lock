@@ -599,7 +599,7 @@ PLATFORMS
 
 DEPENDENCIES
   barby
-  best_in_place (~> 3.0.1)
+  best_in_place (= 3.0.3)
   better_errors
   bootsy
   bundler (>= 1.8.4)
@@ -632,7 +632,7 @@ DEPENDENCIES
   pdf-reader
   pg (~> 0.15)
   poltergeist (~> 1.7)
-  pry-byebug
+  pry-byebug (~> 3.3)
   pry-coolline
   pry-rails
   pusher
