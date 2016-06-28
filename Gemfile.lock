@@ -391,6 +391,7 @@ GEM
       coolline (~> 0.5)
     pry-rails (0.3.4)
       pry (>= 0.9.10)
+    puma (3.4.0)
     pusher (1.1.0)
       httpclient (~> 2.7)
       multi_json (~> 1.0)
@@ -635,6 +636,7 @@ DEPENDENCIES
   pry-byebug (~> 3.3)
   pry-coolline
   pry-rails
+  puma
   pusher
   rails (= 4.2.5.2)
   rails-assets-bootstrap-material-design!

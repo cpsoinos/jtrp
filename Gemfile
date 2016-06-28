@@ -40,6 +40,7 @@ gem 'jquery-fileupload-rails'
 gem 'sidekiq'
 gem 'sinatra', :require => nil
 gem 'pusher'
+gem 'puma'
 
 group :production, :staging, :local do
   gem 'rails_12factor'
