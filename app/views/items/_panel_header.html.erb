@@ -13,7 +13,7 @@
     </div>
     <div class="col-xs-2 text-right hidden-print">
       <%= link_to "<i class='material-icons'>edit</i>".html_safe, edit_account_job_proposal_item_path(account, job, proposal, item), class: "btn btn-fab btn-fab-mini btn-primary" %><br /><br />
-      <%= link_to "<i class='material-icons'>delete_forever</i>".html_safe, item_path(item), method: :delete, class: "btn btn-fab btn-fab-mini btn-danger", data: {confirm: "Are you sure?", :'confirm-button-text' => "Yes, I'm sure", :'cancel-button-text' => "No, cancel!", :'sweet-alert-type' => 'warning', :'confirm-button-color' => '#f44336', text: "This will delete the item. This is irreversable."} %>
+      <%= link_to "<i class='material-icons'>delete_forever</i>".html_safe, "javascript:void(0)", method: :delete, class: "btn btn-fab btn-fab-mini btn-danger remove-existing-item-button", data: { item_id: item.id } %>
     </div>
   </div>
 </div>

@@ -41,8 +41,9 @@
   <div class="row text-center large-top-margin grid">
     <div class="grid-sizer col-xs-12 col-sm-6 col-md-4"></div>
     <% @item.initial_photos.each do |photo| %>
-      <div class="grid-item col-xs-12 col-sm-6 col-md-4">
-        <%= image_tag photo.photo_url(:thumb), class: "img-rounded" %></br></br>
+      <div class="grid-item col-xs-12 col-sm-6 col-md-4" id="photo-<%= photo.id %>">
+        <%= image_tag photo.photo_url(:thumb), class: "img-rounded" %>
+        <%= link_to "<i class='material-icons'>delete_forever</i>".html_safe, "javascript:void(0)", method: :delete, class: "btn btn-fab btn-fab-mini btn-danger delete-button", data: { photo_id: photo.id } %>
       </div>
     <% end %>
   </div>

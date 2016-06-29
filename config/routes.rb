@@ -17,6 +17,8 @@ Rails.application.routes.draw do
     resources :items
   end
 
+  resources :photos, only: :destroy
+
   get '/batch_create', to: 'items#batch_create', as: 'items_batch_create'
   resources :items do
     get '/tag', to: 'items#tag', as: 'tag'
