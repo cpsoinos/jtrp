@@ -1,1 +1,2 @@
 $("#<%= @agreement.agreement_type %>-<%= @role %>-submit").remove();
+$("#<%= @role %>-agreement-form").html('<p><i>agreed on <%= @agreement.send("#{@role}_agreed_at").strftime("%B %d, %Y") %></i></p>');

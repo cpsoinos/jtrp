@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160629030846) do
+ActiveRecord::Schema.define(version: 20160629142238) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,13 +34,15 @@ ActiveRecord::Schema.define(version: 20160629030846) do
 
   create_table "agreements", force: :cascade do |t|
     t.integer  "proposal_id"
-    t.string   "agreement_type", null: false
+    t.string   "agreement_type",    null: false
     t.string   "status"
     t.datetime "date"
     t.integer  "agreement_id"
     t.integer  "check_number"
     t.boolean  "client_agreed"
     t.boolean  "manager_agreed"
+    t.datetime "manager_agreed_at"
+    t.datetime "client_agreed_at"
   end
 
   add_index "agreements", ["agreement_id"], name: "index_agreements_on_agreement_id", using: :btree
