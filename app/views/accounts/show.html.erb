@@ -56,7 +56,7 @@
   <div class="grid-item col-xs-6 col-md-3">
     <div class="panel panel-primary text-center">
       <div class="panel-body">
-        <h1>$35.00<%#= humanized_money_with_symbol(@account.balance) %></h1>
+        <h1><%#= humanized_money_with_symbol(@account.balance) %></h1>
       </div>
       <div class="panel-heading secondary-darker">
         <h3><%= link_to "Account Balance", account_transactions_path(@account) %></h3>
