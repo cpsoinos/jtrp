@@ -33,8 +33,7 @@ class AgreementsController < ApplicationController
 
   def update
     @agreement = Agreement.find(params[:id])
-    binding.pry
-    if @agreement.update(signature_params)
+    if @agreement.update(agreement_params)
       @agreement.mark_active
       respond_to do |format|
         format.html do
@@ -50,17 +49,16 @@ class AgreementsController < ApplicationController
 
   protected
 
-  def signature_params
-    key = "#{params[:role]}_signature".to_sym
-    { key => params[:signature] }
+  def agreement_params
+    params.require(:agreement).permit(:manager_agreed, :client_agreed)
   end
 
   def build_json_for_signatures
     signatures = begin
       @agreements.each do |agreement|
         {
-          manager: agreement.manager_signature,
-          client: agreement.client_signature
+          manager: agreement.manager_agreed,
+          client: agreement.client_agreed
         }
       end
     end

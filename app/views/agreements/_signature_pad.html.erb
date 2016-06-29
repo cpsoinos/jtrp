@@ -5,25 +5,21 @@
       <div class="form-group">
         <div class="checkbox">
           <%= hidden_field_tag :role, role %>
-          <%= f.label :"#{role}_signature", name: "signature", for: "agreement_#{agreement.id}_#{role}_signature" do %>
-            <%= f.check_box :"#{role}_signature", id: "agreement_#{agreement.id}_#{role}_signature" %> Agree
+          <%= f.label :"#{role}_agreed", name: "signature", for: "agreement_#{agreement.id}_#{role}_agreed" do %>
+            <%= f.check_box :"#{role}_agreed", id: "agreement_#{agreement.id}_#{role}_agreed" %> Agree
           <% end %>
         </div>
         <p class="help-block">I accept the terms of this agreement</p>
       </div>
     </div>
 
-    <% unless agreement.send("#{role}_signature") %>
+    <% unless agreement.send("#{role}_agreed") %>
       <div class="col-xs-4">
         <div class="text-center large-top-margin hidden-print">
           <%= f.submit class: "btn btn-primary btn-raised btn-responsive", id: "#{agreement.agreement_type}-#{role}-submit" %>
         </div>
       </div>
     <% end %>
-
   </div>
-
-
-
 
 <% end %>

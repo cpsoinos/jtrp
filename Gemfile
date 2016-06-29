@@ -80,7 +80,6 @@ group :test do
   gem 'email_spec'
   gem 'rspec-sidekiq'
   gem 'database_cleaner'
-  gem 'vcr'
   gem 'webmock'
   gem 'capybara-mechanize'
   gem 'coveralls', require: false
