@@ -59,19 +59,22 @@
               <div class="col-xs-6 grid-sizer"></div>
               <% if @item.listing_photos.present? %>
                 <% @item.listing_photos.each do |photo| %>
-                  <div class="col-xs-6 grid-item">
+                  <div class="col-xs-6 grid-item" id="photo-<%= photo.id %>">
                     <%= link_to image_tag(photo.photo_url, class: "thumb"), account_job_proposal_item_path(@item.account, @item.job, @item.proposal, @item) %>
+                    <%= link_to "<i class='material-icons'>delete_forever</i>".html_safe, "javascript:void(0)", method: :delete, class: "btn btn-fab btn-fab-mini btn-danger delete-button", data: { photo_id: photo.id } %>
                   </div>
                 <% end %>
               <% elsif @item.initial_photos.present? %>
                 <% @item.initial_photos.each do |photo| %>
-                  <div class="col-xs-6 grid-item">
+                  <div class="col-xs-6 grid-item" id="photo-<%= photo.id %>">
                     <%= link_to image_tag(photo.photo_url, class: "thumb"), account_job_proposal_item_path(@item.account, @item.job, @item.proposal, @item) %>
+                    <%= link_to "<i class='material-icons'>delete_forever</i>".html_safe, "javascript:void(0)", method: :delete, class: "btn btn-fab btn-fab-mini btn-danger delete-button", data: { photo_id: photo.id } %>
                   </div>
                 <% end %>
               <% else %>
                 <div class="col-xs-6 grid-item grid-item--width2">
                   <%= link_to image_tag("thumb_No_Image_Available.png", class: "thumb"), account_job_proposal_item_path(@item.account, @item.job, @item.proposal, @item) %>
+                  <%= link_to "<i class='material-icons'>delete_forever</i>".html_safe, "javascript:void(0)", method: :delete, class: "btn btn-fab btn-fab-mini btn-danger delete-button", data: { photo_id: photo.id } %>
                 </div>
               <% end %>
             </div>
