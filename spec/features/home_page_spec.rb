@@ -93,8 +93,8 @@ feature "home page" do
     it "has information panels" do
       visit root_path
 
-      expect(page).to have_link("Items for Sale")
-      expect(page).to have_link("Items Consigned")
+      expect(page).to have_link("Owned Items For Sale")
+      expect(page).to have_link("Consigned Items For Sale")
       expect(page).to have_link("Sold in the last 30 days")
       expect(page).to have_link("Owed to Clients")
     end

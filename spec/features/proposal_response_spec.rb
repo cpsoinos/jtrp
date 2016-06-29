@@ -4,8 +4,8 @@ feature "proposal response" do
   let(:proposal) { create(:proposal) }
   let(:job) { proposal.job }
   let(:account) { job.account }
-  let!(:items) { create_list(:item, 6, proposal: proposal) }
-  let!(:intentions) { %w(sell consign donate dump move nothing) }
+  let!(:items) { create_list(:item, 5, proposal: proposal) }
+  let!(:intentions) { %w(sell consign donate dump nothing) }
 
   before do
     account.primary_contact = create(:client, account: account)

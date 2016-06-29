@@ -52,10 +52,11 @@
     </tr>
   <% end %>
 </table>
+
 <%= form_for item, class: "form-horizontal", remote: true do |f| %>
 
   <div class="form-group">
-    <% intentions = %w(sell consign donate dump move nothing) %>
+    <% intentions = %w(sell consign donate dump nothing) %>
     <% if !item.will_purchase? %>
       <% intentions.delete("sell") %>
     <% end %>
