@@ -1,17 +1,17 @@
 <div class="panel-heading <%= item.panel_color %>">
   <div class="row vertical-align">
-    <div class="col-xs-2 text-left">
+    <div class="col-xs-3 text-left">
       <span>No. <%= item.account_item_number %></span><br /><br />
       <span>SKU <%= item.id %></span>
     </div>
-    <div class="col-xs-8 text-center">
+    <div class="col-xs-7 text-center">
       <% if current_user.internal? %>
-        <h1><%= link_to "#{item.description}", account_job_proposal_item_path(account, job, proposal, item) %></h1>
+        <h4><%= link_to "#{item.description}", account_job_proposal_item_path(account, job, proposal, item) %></h4>
       <% else %>
-        <h1><%= item.description %></h1>
+        <h4><%= item.description %></h4>
       <% end %>
     </div>
-    <div class="col-xs-2 text-right hidden-print">
+    <div class="col-xs-3 text-right hidden-print">
       <%= link_to "<i class='material-icons'>edit</i>".html_safe, edit_account_job_proposal_item_path(account, job, proposal, item), class: "btn btn-fab btn-fab-mini btn-primary" %><br /><br />
       <%= link_to "<i class='material-icons'>delete_forever</i>".html_safe, "javascript:void(0)", method: :delete, class: "btn btn-fab btn-fab-mini btn-danger remove-existing-item-button", data: { item_id: item.id } %>
     </div>
