@@ -75,8 +75,4 @@ class Agreement < ActiveRecord::Base
     client_agreed? || scanned_agreement.present?
   end
 
-  def is_addendum?
-    agreement_id.present?
-  end
-
 end

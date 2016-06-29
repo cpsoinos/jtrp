@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160629142238) do
+ActiveRecord::Schema.define(version: 20160629145239) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,7 +37,6 @@ ActiveRecord::Schema.define(version: 20160629142238) do
     t.string   "agreement_type",    null: false
     t.string   "status"
     t.datetime "date"
-    t.integer  "agreement_id"
     t.integer  "check_number"
     t.boolean  "client_agreed"
     t.boolean  "manager_agreed"
@@ -45,7 +44,6 @@ ActiveRecord::Schema.define(version: 20160629142238) do
     t.datetime "client_agreed_at"
   end
 
-  add_index "agreements", ["agreement_id"], name: "index_agreements_on_agreement_id", using: :btree
   add_index "agreements", ["proposal_id"], name: "index_agreements_on_proposal_id", using: :btree
 
   create_table "archives", force: :cascade do |t|
@@ -203,7 +201,6 @@ ActiveRecord::Schema.define(version: 20160629142238) do
   add_index "users", ["email"], name: "index_users_on_email", using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
-  add_foreign_key "agreements", "agreements"
   add_foreign_key "agreements", "proposals"
   add_foreign_key "items", "categories"
   add_foreign_key "jobs", "accounts"
