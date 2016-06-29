@@ -88,9 +88,9 @@
       <div class="panel-body text-center">
         <% if @job.proposals.present? %>
           <div class="row client-grid">
-            <div class="col-xs-6 col-md-4 client-grid-sizer"></div>
+            <div class="col-xs-6 client-grid-sizer"></div>
             <% @job.proposals.each do |proposal| %>
-              <div class="col-xs-6 col-md-4 client-grid-item">
+              <div class="col-xs-6 client-grid-item">
                 <div class="panel panel-primary text-center">
                   <div class="panel-body">
                     <h4><%= link_to "<i class='material-icons md-48'>assignment</i>".html_safe, account_job_proposal_path(@account, @job, proposal) %></h4>
@@ -124,9 +124,9 @@
       <div class="panel-body text-center">
         <% if @job.agreements.present? %>
           <div class="row client-grid">
-            <div class="col-xs-6 col-md-4 client-grid-sizer"></div>
+            <div class="col-xs-6 client-grid-sizer"></div>
             <% @job.agreements.each do |agreement| %>
-              <div class="col-xs-6 col-md-4 client-grid-item">
+              <div class="col-xs-6 client-grid-item">
                 <div class="panel panel-primary text-center">
                   <div class="panel-body">
                     <h4><%= link_to "<i class='material-icons md-48'>assignment_turned_in</i>".html_safe, account_job_proposal_agreements_path(@account, @job, agreement.proposal) %></h4>
