@@ -7,13 +7,13 @@
             <%= link_to "<i class='material-icons'>assignment_ind</i> #{agreement.proposal.client.full_name}".html_safe, client_path(agreement.proposal.client) %>
           </p>
           <p>
-            <%= link_to "<i class='material-icons'>assignment_turned_in</i> Proposal No. #{agreement.proposal.id}".html_safe, proposal_path(agreement.proposal) %>
+            <%= link_to "<i class='material-icons'>assignment_turned_in</i> Proposal No. #{agreement.proposal.id}".html_safe, account_job_proposal_path(agreement.account, agreement.job, agreement.proposal) %>
           </p>
           <p>
-            <%= link_to "<i class='material-icons'>assignment</i> Agreement No. #{agreement.id}".html_safe, proposal_agreements_path(agreement.proposal) %>
+            <%= link_to "<i class='material-icons'>assignment</i> Agreement No. #{agreement.id}".html_safe, account_job_proposal_agreements_path(agreement.account, agreement.job, agreement.proposal) %>
           </p>
           <% if agreement.potential? %>
-            <p class="pending"><%= link_to "pending signature", proposal_agreements_path(agreement.proposal), class: "pending" %></p>
+            <p class="pending"><%= link_to "pending signature", account_job_proposal_agreements_path(agreement.account, agreement.job, agreement.proposal), class: "pending" %></p>
           <% end %>
         </div>
       </div>

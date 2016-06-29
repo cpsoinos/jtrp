@@ -51,11 +51,22 @@ class Job < ActiveRecord::Base
   end
 
   def maps_url
-    GeolocationService.new(self).static_map_url
+    GeolocationService.new(self).static_map_url || ""
   end
 
   def name
     "#{account.short_name} - #{address_1}"
+  end
+
+  def panel_color
+    case status
+    when "potential"
+      "complement-primary"
+    when "active"
+      "complement-darker"
+    when "completed"
+      "secondary-primary"
+    end
   end
 
 end

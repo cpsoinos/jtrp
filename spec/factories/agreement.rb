@@ -27,20 +27,20 @@ FactoryGirl.define do
     end
 
     trait :signed_by_manager do
-      manager_signature ["signed_by_manager"]
+      manager_agreed true
     end
 
     trait :signed_by_client do
-      client_signature ["signed_by_client"]
+      client_agreed true
     end
 
     trait :active do
-      client_signature ["signed_by_client"]
+      client_agreed true
       status "active"
     end
 
     trait :inactive do
-      client_signature ["signed_by_client"]
+      client_agreed true
       status "inactive"
     end
 

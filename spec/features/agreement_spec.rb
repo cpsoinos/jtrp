@@ -31,7 +31,6 @@ feature "agreement" do
         expect(page).not_to have_link("consign")
         expect(page).not_to have_link("dump")
         expect(page).not_to have_link("donate")
-        expect(page).not_to have_link("move")
 
         click_link("sell")
 
@@ -52,14 +51,12 @@ feature "agreement" do
 
       before :each, js: true do
         page.execute_script("$($('a[role=tab]')[0]).tab('show');")
-        page.execute_script("handleSignatures();")
       end
 
       scenario "visits consignment agreement path" do
         expect(page).not_to have_link("sell")
         expect(page).not_to have_link("dump")
         expect(page).not_to have_link("donate")
-        expect(page).not_to have_link("move", exact: true)
 
         click_link("consign")
 
@@ -72,33 +69,33 @@ feature "agreement" do
       end
 
       scenario "manager signs", js: true do
-        find(".consign-manager-signed").click
+        first('input[name="agreement[manager_agreed]"]', visible: :false).set(true)
         click_button("consign-manager-submit")
         wait_for_ajax
         agreement.reload
 
-        expect(agreement.manager_signature).not_to be(nil)
+        expect(agreement.manager_agreed).to be(true)
       end
 
       scenario "client signs", js: true do
-        find(".consign-client-signed").click
+        first('input[name="agreement[client_agreed]"]', visible: :false).set(true)
         click_button("consign-client-submit")
         wait_for_ajax
         agreement.reload
 
-        expect(agreement.client_signature).not_to be(nil)
+        expect(agreement.client_agreed).to be(true)
       end
 
       scenario "both client and manager sign", js: true do
-        find(".consign-manager-signed").click
+        first('input[name="agreement[manager_agreed]"]', visible: :false).set(true)
         click_button("consign-manager-submit")
-        find(".consign-client-signed").click
+        first('input[name="agreement[client_agreed]"]', visible: :false).set(true)
         click_button("consign-client-submit")
         wait_for_ajax
         agreement.reload
 
-        expect(agreement.client_signature).not_to be(nil)
-        expect(agreement.manager_signature).not_to be(nil)
+        expect(agreement.client_agreed).to be(true)
+        expect(agreement.manager_agreed).to be(true)
         expect(agreement).to be_active
       end
 

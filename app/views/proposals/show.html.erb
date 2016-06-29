@@ -1,6 +1,9 @@
-<h1 class="text-center hidden-print bottom-margin">Items for <%= @proposal.client.full_name %></h1>
+<h1 class="text-center hidden-print large-top-margin bottom-margin">Items for <%= @proposal.client.full_name %></h1>
 
 <div class="col-md-8 col-md-offset-2">
+  
+  <%= link_to "<i class='fa fa-caret-left'></i> Back to Job".html_safe, account_job_path(@account, @job), class: "btn btn-raised btn-primary hidden-print" %>
+
   <div class="well bs-component">
     <%= render 'header', form_name: "Proposal" %>
     <%= render 'disclaimer' %>

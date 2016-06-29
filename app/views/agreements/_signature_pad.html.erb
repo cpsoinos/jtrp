@@ -1,15 +1,31 @@
-<%= form_for [@proposal, agreement], html: { class: "sigPad", id: "#{agreement.agreement_type}-#{role}-signed" }, remote: true do |f| %>
+<%= form_for [@proposal, agreement], html: { class: "form-horizontal", id: "#{agreement.agreement_type}-#{role}-signed" }, remote: true do |f| %>
 
-  <div class="sig sigWrapper <%= agreement.agreement_type %>-<%= role %>-signed">
-    <canvas class="pad" width="277" height="55"></canvas>
-    <%= f.hidden_field :"#{role}_signature", name: "signature", class: "output" %>
-    <%= hidden_field_tag :role, role %>
-  </div>
+  <div class="row vertical-align">
+    <div class="col-xs-4" id="<%= role %>-agreement-form">
 
-  <% unless agreement.send("#{role}_signature") %>
-    <div class="text-center hidden-print">
-      <%= f.submit "I accept the terms of this agreement", class: "btn btn-primary btn-raised btn-responsive", id: "#{agreement.agreement_type}-#{role}-submit" %>
+      <% if agreement.send("#{role}_agreed?") %>
+        <p>
+          <i>agreed on <%= agreement.send("#{role}_agreed_at").strftime("%B %d, %Y") %></i>
+        </p>
+      <% else %>
+        <div class="form-group">
+          <div class="checkbox">
+            <%= f.hidden_field :"#{role}_agreed_at", value: DateTime.now %>
+            <%= hidden_field_tag :role, role %>
+            <%= f.label :"#{role}_agreed", name: "signature", for: "agreement_#{agreement.id}_#{role}_agreed" do %>
+              <%= f.check_box :"#{role}_agreed", id: "agreement_#{agreement.id}_#{role}_agreed" %> Agree
+            <% end %>
+          </div>
+          <p class="help-block">I accept the terms of this agreement</p>
+        </div>
+        <div class="col-xs-4">
+          <div class="text-center large-top-margin hidden-print">
+            <%= f.submit class: "btn btn-primary btn-raised btn-responsive", id: "#{agreement.agreement_type}-#{role}-submit" %>
+          </div>
+        </div>
+      <% end %>
+
     </div>
-  <% end %>
+  </div>
 
 <% end %>

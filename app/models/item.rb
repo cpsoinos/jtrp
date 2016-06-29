@@ -135,8 +135,6 @@ class Item < ActiveRecord::Base
       "secondary-lighter"
     elsif client_intention == "donate"
       "secondary-darker"
-    elsif client_intention == "move"
-      "primary-darker"
     elsif offer_chosen?
       "complement-lighter"
     else
@@ -150,11 +148,9 @@ class Item < ActiveRecord::Base
     elsif type == "consign"
       "secondary-primary"
     elsif type == "junk"
-      "secondary-lighter"
+      "complement-darker"
     elsif type == "donate"
-      "secondar-darker"
-    elsif type == "move"
-      "primary-darker"
+      "secondary-darker"
     else
       "primary-lighter"
     end

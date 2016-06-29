@@ -16,7 +16,7 @@ gem 'devise'
 gem 'carrierwave', github: 'carrierwaveuploader/carrierwave'
 gem 'carrierwave_direct'
 gem 'mini_magick'
-gem 'best_in_place', '~> 3.0.1'
+gem 'best_in_place', '= 3.0.3'
 gem 'money-rails'
 gem 'barby'
 gem 'chunky_png'
@@ -40,6 +40,7 @@ gem 'jquery-fileupload-rails'
 gem 'sidekiq'
 gem 'sinatra', :require => nil
 gem 'pusher'
+gem 'puma'
 
 group :production, :staging, :local do
   gem 'rails_12factor'
@@ -54,7 +55,7 @@ end
 group :development, :test, :local do
   gem 'pry-rails'
   gem 'pry-coolline'
-  gem 'pry-byebug'
+  gem 'pry-byebug', '~> 3.3'
   gem 'sextant'
   gem 'better_errors'
   gem 'faker'
@@ -79,7 +80,6 @@ group :test do
   gem 'email_spec'
   gem 'rspec-sidekiq'
   gem 'database_cleaner'
-  gem 'vcr'
   gem 'webmock'
   gem 'capybara-mechanize'
   gem 'coveralls', require: false
