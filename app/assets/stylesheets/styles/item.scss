@@ -133,3 +133,29 @@ a.panel-title:hover {
 .tag-barcode {
   margin-top: 32px;
 }
+
+.list-group .list-group-item .row-picture, .list-group .list-group-item .row-action-primary {
+  i.complement-primary {
+    background: $complement-primary;
+  }
+
+  i.secondary-lighter {
+    background: $secondary-lighter;
+  }
+
+  i.secondary-darker {
+    background: $secondary-darker;
+  }
+
+  i.complement-lighter {
+    background: $complement-lighter;
+  }
+
+  i.complement-darker {
+    background: $complement-darker;
+  }
+
+  i.primary-lighter {
+    background: $brand-lighter;
+  }
+}

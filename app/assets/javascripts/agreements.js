@@ -2,7 +2,7 @@ $(".agreements").ready(function() {
   var $tab = $($("a[role='tab']")[0])
   $tab.tab("show");
 
-  handleSignatures();
+  // handleSignatures();
 
 })
 
@@ -32,6 +32,6 @@ var handleSignatures = function() {
 
 }
 
-var fillSignatures = function(selector, sig) {
-  $(selector).signaturePad({displayOnly:true}).regenerate(sig);
-}
+// var fillSignatures = function(selector, sig) {
+//   $(selector).signaturePad({displayOnly:true}).regenerate(sig);
+// }

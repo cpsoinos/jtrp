@@ -31,6 +31,9 @@ class Agreement < ActiveRecord::Base
 
   end
 
+  delegate :account, to: :proposal
+  delegate :job, to: :proposal
+
   def items
     proposal.items.where(client_intention: agreement_type)
   end
@@ -65,11 +68,11 @@ class Agreement < ActiveRecord::Base
   end
 
   def manager_signed?
-    manager_signature.present? || scanned_agreement.present?
+    manager_agreed? || scanned_agreement.present?
   end
 
   def client_signed?
-    client_signature.present? || scanned_agreement.present?
+    client_agreed? || scanned_agreement.present?
   end
 
   def is_addendum?

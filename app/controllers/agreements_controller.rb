@@ -33,10 +33,14 @@ class AgreementsController < ApplicationController
 
   def update
     @agreement = Agreement.find(params[:id])
+    binding.pry
     if @agreement.update(signature_params)
       @agreement.mark_active
       respond_to do |format|
-        format.html
+        format.html do
+          flash[:notice] = "Agreement updated!"
+          redirect_to account_job_path(@agreement.account, @agreement.job)
+        end
         format.js do
           @role = params[:role]
         end
