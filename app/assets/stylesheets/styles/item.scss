@@ -159,3 +159,11 @@ a.panel-title:hover {
     background: $brand-lighter;
   }
 }
+
+.delete-button {
+  position:absolute !important;
+  bottom:10px;
+  right:10px;
+  width:100px;
+  height:30px;
+}
