@@ -9,7 +9,6 @@ class AgreementsController < ApplicationController
     @client = @proposal.job.account.primary_contact
     @agreements = @proposal.agreements
     @items = @proposal.items
-    gon.signatures = build_json_for_signatures
   end
 
   def show
@@ -17,7 +16,6 @@ class AgreementsController < ApplicationController
     @account = @agreement.proposal.job.account
     @client = @account.primary_contact
     @agreements = [@agreement]
-    gon.signatures = build_json_for_signatures
   end
 
   def agreements_list
@@ -33,10 +31,13 @@ class AgreementsController < ApplicationController
 
   def update
     @agreement = Agreement.find(params[:id])
-    if @agreement.update(signature_params)
+    if @agreement.update(agreement_params)
       @agreement.mark_active
       respond_to do |format|
-        format.html
+        format.html do
+          flash[:notice] = "Agreement updated!"
+          redirect_to account_job_path(@agreement.account, @agreement.job)
+        end
         format.js do
           @role = params[:role]
         end
@@ -46,21 +47,8 @@ class AgreementsController < ApplicationController
 
   protected
 
-  def signature_params
-    key = "#{params[:role]}_signature".to_sym
-    { key => params[:signature] }
-  end
-
-  def build_json_for_signatures
-    signatures = begin
-      @agreements.each do |agreement|
-        {
-          manager: agreement.manager_signature,
-          client: agreement.client_signature
-        }
-      end
-    end
-    signatures
+  def agreement_params
+    params.require(:agreement).permit(:manager_agreed, :manager_agreed_at, :client_agreed, :client_agreed_at)
   end
 
   def pull_intentions

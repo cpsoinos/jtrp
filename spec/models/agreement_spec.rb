@@ -35,7 +35,7 @@ describe Agreement do
     it "transitions 'potential' to 'active'" do
       agreement = create(:agreement)
       expect(agreement.status).to eq("potential")
-      agreement.client_signature = ["signed"]
+      agreement.client_agreed = true
       agreement.mark_active
 
       expect(agreement).to be_active
@@ -45,8 +45,8 @@ describe Agreement do
       it "transitions 'potential' to 'active'" do
         agreement = create(:agreement)
         expect(agreement).to be_potential
-        agreement.manager_signature = ["signed"]
-        agreement.client_signature = ["signed"]
+        agreement.manager_agreed = true
+        agreement.client_agreed = true
         agreement.mark_active!
 
         expect(agreement).to be_active
@@ -55,7 +55,7 @@ describe Agreement do
       it "does not transition 'potential' to 'active' without a manager signature" do
         agreement = create(:agreement, :consign)
         expect(agreement).to be_potential
-        agreement.client_signature = ["signed"]
+        agreement.client_agreed = true
         agreement.mark_active
 
         expect(agreement).not_to be_active

@@ -20,7 +20,6 @@
 //= require dropzone
 //= require jquery-ddslick
 //= require flashcanvas
-//= require jquery.signaturepad.min
 //= require json2.min
 //= require jquery-readyselector
 //= require masonry.pkgd.min

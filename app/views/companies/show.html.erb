@@ -13,7 +13,7 @@
         <h1><%= @metrics[:for_sale_count] %></h1>
       </div>
       <div class="panel-heading complement-primary">
-        <h3><%= link_to "Items for Sale", items_path(status: 'active', type: 'sell') %></h3>
+        <h3><%= link_to "<i class='material-icons'>store</i> Owned Items For Sale".html_safe, items_path(status: 'active', type: 'sell') %></h3>
       </div>
     </div>
   </div>
@@ -23,8 +23,8 @@
       <div class="panel-body">
         <h1><%= @metrics[:consigned_count] %></h1>
       </div>
-      <div class="panel-heading complement-darker">
-        <h3><%= link_to "Items Consigned", items_path(status: 'active', type: 'consign') %></h3>
+      <div class="panel-heading secondary-primary">
+        <h3><%= link_to "<i class='material-icons'>supervisor_account</i> Consigned Items For Sale".html_safe, items_path(status: 'active', type: 'consign') %></h3>
       </div>
     </div>
   </div>
@@ -34,8 +34,8 @@
       <div class="panel-body">
         <h1><%= humanized_money_with_symbol(@metrics[:thirty_day_revenue]) %></h1>
       </div>
-      <div class="panel-heading secondary-primary">
-        <h3><%= link_to "Sold in the last 30 days", items_path(status: 'sold') %></h3>
+      <div class="panel-heading complement-darker">
+        <h3><%= link_to "<i class='fa fa-credit-card-alt' aria-hidden='true'></i> Sold in the last 30 days".html_safe, items_path(status: 'sold') %></h3>
       </div>
     </div>
   </div>
@@ -46,7 +46,7 @@
         <h1><%= humanized_money_with_symbol(@metrics[:owed_to_consignors]) %></h1>
       </div>
       <div class="panel-heading secondary-darker">
-        <h3><%= link_to "Owed to Clients", accounts_path %></h3>
+        <h3><%= link_to "<i class='fa fa-money' aria-hidden='true'></i> Owed to Clients".html_safe, accounts_path %></h3>
       </div>
     </div>
   </div>

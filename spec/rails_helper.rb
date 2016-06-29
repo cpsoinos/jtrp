@@ -16,11 +16,6 @@ RSpec.configure do |config|
 
   config.infer_spec_type_from_file_location!
 
-  # Fast login for tests that specify 'login: true'
-  # config.before(:each, login: true) do
-  #   @user = FactoryGirl.create(:user)
-  #   login_as(@user, scope: :user)
-  # end
   config.include WaitForAjax, type: :feature
-  
+
 end

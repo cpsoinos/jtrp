@@ -32,8 +32,8 @@
 
 <div class="row large-top-margin">
   <div class="col-xs-12 col-md-6">
-    <p>Vendor:</p>
+    <span>Vendor:</span>
+    <span class="agreement-name-printed"><%= @client.full_name %></span>
     <%= render "signature_pad", user: @client, role: "client", agreement: agreement %>
-    <p class="agreement-name-printed"><%= @client.full_name %></p>
   </div>
 </div>
