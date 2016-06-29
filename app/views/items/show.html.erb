@@ -51,7 +51,27 @@
 <div class="row">
   <div class="col-md-8 col-md-offset-2">
     <div class="panel panel-primary large-top-margin">
-      <%= render 'items/panel_header', account: @item.account, job: @item.job, proposal: @item.proposal, item: @item %>
+
+      <div class="panel-heading <%= @item.panel_color %>">
+        <div class="row vertical-align">
+          <div class="col-xs-2 text-left">
+            <span>No. <%= @item.account_item_number %></span><br /><br />
+            <span>SKU <%= @item.id %></span>
+          </div>
+          <div class="col-xs-8 text-center">
+            <% if current_user.internal? %>
+              <h1><%= link_to "#{@item.description}", account_job_proposal_item_path(@item.account, @item.job, @item.proposal, @item) %></h1>
+            <% else %>
+              <h1><%= @item.description %></h1>
+            <% end %>
+          </div>
+          <div class="col-xs-2 text-right hidden-print">
+            <%= link_to "<i class='material-icons'>edit</i>".html_safe, edit_account_job_proposal_item_path(@item.account, @item.job, @item.proposal, @item), class: "btn btn-fab btn-fab-mini btn-primary" %><br /><br />
+            <%= link_to "<i class='material-icons'>delete_forever</i>".html_safe, item_path(@item), method: :delete, class: "btn btn-fab btn-fab-mini btn-danger", data: {confirm: "Are you sure?", :'confirm-button-text' => "Yes, I'm sure", :'cancel-button-text' => "No, cancel!", :'sweet-alert-type' => 'warning', :'confirm-button-color' => '#f44336', text: "This will delete the item. This is irreversable."} %>
+          </div>
+        </div>
+      </div>
+
       <div class="panel-body">
         <div class="row">
           <div class="col-xs-12 col-md-6">
@@ -59,14 +79,16 @@
               <div class="col-xs-6 grid-sizer"></div>
               <% if @item.listing_photos.present? %>
                 <% @item.listing_photos.each do |photo| %>
-                  <div class="col-xs-6 grid-item">
+                  <div class="col-xs-6 grid-item" id="photo-<%= photo.id %>">
                     <%= link_to image_tag(photo.photo_url, class: "thumb"), account_job_proposal_item_path(@item.account, @item.job, @item.proposal, @item) %>
+                    <%= link_to "<i class='material-icons'>delete_forever</i>".html_safe, "javascript:void(0)", method: :delete, class: "btn btn-fab btn-fab-mini btn-danger delete-button", data: { photo_id: photo.id } %>
                   </div>
                 <% end %>
               <% elsif @item.initial_photos.present? %>
                 <% @item.initial_photos.each do |photo| %>
-                  <div class="col-xs-6 grid-item">
+                  <div class="col-xs-6 grid-item" id="photo-<%= photo.id %>">
                     <%= link_to image_tag(photo.photo_url, class: "thumb"), account_job_proposal_item_path(@item.account, @item.job, @item.proposal, @item) %>
+                    <%= link_to "<i class='material-icons'>delete_forever</i>".html_safe, "javascript:void(0)", method: :delete, class: "btn btn-fab btn-fab-mini btn-danger delete-button", data: { photo_id: photo.id } %>
                   </div>
                 <% end %>
               <% else %>

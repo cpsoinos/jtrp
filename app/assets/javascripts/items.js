@@ -15,10 +15,44 @@ $(document).ready(function() {
   $(".remove-existing-item-button").click(function() {
     var itemId = this.dataset.itemId
     var panel = $(this).closest(".panel")
-    panel.html('<div class="showbox"><div class="loader"><svg class="circular" viewBox="25 25 50 50"><circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/></svg></div></div>')
-    $.ajax({
-      url: '/items/' + itemId,
-      type: "DELETE"
+    swal({
+      title: 'Are you sure?',
+      text: 'This will delete the item. This is irreversable.',
+      type: 'warning',
+      showCancelButton: true,
+      closeOnConfirm: true,
+      disableButtonsOnConfirm: true,
+      confirmButtonText: "Yes, I'm sure",
+      cancelButtonText: "No, cancel!",
+      confirmButtonColor: '#f44336'
+    }, function(){
+      panel.html('<div class="showbox"><div class="loader"><svg class="circular" viewBox="25 25 50 50"><circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/></svg></div></div>')
+      $.ajax({
+        url: '/items/' + itemId,
+        type: "DELETE"
+      });
+    });
+  });
+
+  $(".delete-button").click(function() {
+    var photoId = this.dataset.photoId
+    var container = $("#photo-" + photoId)
+    swal({
+      title: 'Are you sure?',
+      text: 'This will delete the photo. This is irreversable.',
+      type: 'warning',
+      showCancelButton: true,
+      closeOnConfirm: true,
+      disableButtonsOnConfirm: true,
+      confirmButtonText: "Yes, I'm sure",
+      cancelButtonText: "No, cancel!",
+      confirmButtonColor: '#f44336'
+    }, function(){
+      container.html('<div class="showbox"><div class="loader"><svg class="circular" viewBox="25 25 50 50"><circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/></svg></div></div>')
+      $.ajax({
+        url: '/photos/' + photoId,
+        type: "DELETE"
+      });
     });
   });
 
