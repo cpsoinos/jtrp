@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160629145239) do
+ActiveRecord::Schema.define(version: 20160701014504) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -195,6 +195,9 @@ ActiveRecord::Schema.define(version: 20160629145239) do
     t.boolean  "consignment_policy_accepted", default: false
     t.string   "avatar"
     t.integer  "account_id"
+    t.string   "provider"
+    t.string   "uid"
+    t.string   "clover_token"
   end
 
   add_index "users", ["account_id"], name: "index_users_on_account_id", using: :btree

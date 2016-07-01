@@ -3,7 +3,7 @@ require 'sidekiq/web'
 Rails.application.routes.draw do
   mount Sidekiq::Web => '/sidekiq'
   mount Bootsy::Engine => '/bootsy', as: 'bootsy'
-  devise_for :users, controllers: { registrations: 'registrations' }
+  devise_for :users, controllers: { registrations: 'registrations', omniauth_callbacks: 'users/omniauth_callbacks' }
   root 'passthrough#index'
 
   resources :companies do
