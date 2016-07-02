@@ -108,7 +108,7 @@ class Item < ActiveRecord::Base
   end
 
   def sync_inventory
-    InventorySync.new(self).remote_create
+    InventorySyncJob.perform_later(self)
   end
 
   def owned?
