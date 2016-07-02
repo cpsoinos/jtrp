@@ -5,6 +5,12 @@ describe ItemUpdater do
   let(:attrs) { attributes_for(:item, description: "cats be meowin'") }
   let(:initial_photo_attrs) { attributes_for(:photo) }
   let(:listing_photo_attrs) { attributes_for(:photo, :listing) }
+  let(:syncer) { double("syncer") }
+
+  before do
+    allow(InventorySync).to receive(:new).and_return(syncer)
+    allow(syncer).to receive(:remote_update).and_return(true)
+  end
 
   it "can be instantiated" do
     expect(ItemUpdater.new(item)).to be_an_instance_of(ItemUpdater)
@@ -14,6 +20,12 @@ describe ItemUpdater do
     ItemUpdater.new(item).update(attrs)
 
     expect(item.description).to eq("cats be meowin'")
+  end
+
+  it "syncs to clover" do
+    ItemUpdater.new(item).update(attrs)
+
+    expect(syncer).to have_received(:remote_update)
   end
 
   it "processes photos" do

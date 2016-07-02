@@ -11,6 +11,7 @@ class ItemUpdater
     process_photos
     process_sale
     item.update(attrs)
+    sync_inventory
   end
 
   private
@@ -42,6 +43,10 @@ class ItemUpdater
     if attrs[:sale_price] && !item.sold?
       item.mark_sold!
     end
+  end
+
+  def sync_inventory
+    InventorySync.new(item).remote_update
   end
 
 end

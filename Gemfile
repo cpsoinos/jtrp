@@ -42,6 +42,8 @@ gem 'sinatra', :require => nil
 gem 'pusher'
 gem 'puma'
 gem 'omniauth-clover'
+gem 'deepstruct'
+gem 'rack-timeout'
 
 group :production, :staging, :local do
   gem 'rails_12factor'
