@@ -44,5 +44,4 @@ Rails.application.configure do
 
   config.clover_url = "https://sandbox.dev.clover.com"
   config.clover_api_url = "https://apisandbox.dev.clover.com"
-
 end

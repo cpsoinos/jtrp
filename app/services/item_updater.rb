@@ -10,8 +10,9 @@ class ItemUpdater
     @attrs = attrs
     process_photos
     process_sale
-    item.update(attrs)
-    sync_inventory
+    if item.update(attrs)
+      sync_inventory
+    end
   end
 
   private
