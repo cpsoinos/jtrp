@@ -67,4 +67,6 @@ Rails.application.routes.draw do
     resources :scanned_agreements, only: [:create, :show, :destroy]
   end
 
+  post '/:integration_name' => 'webhooks#receive', as: :receive_webhooks
+
 end
