@@ -3,7 +3,7 @@ require 'sidekiq/web'
 Rails.application.routes.draw do
   mount Sidekiq::Web => '/sidekiq'
   mount Bootsy::Engine => '/bootsy', as: 'bootsy'
-  devise_for :users, controllers: { registrations: 'registrations' }
+  devise_for :users, controllers: { registrations: 'registrations', omniauth_callbacks: 'users/omniauth_callbacks' }
   root 'passthrough#index'
 
   resources :companies do
@@ -66,5 +66,7 @@ Rails.application.routes.draw do
     get '/agreements_list', to: 'agreements#agreements_list', as: 'agreements_list', on: :collection
     resources :scanned_agreements, only: [:create, :show, :destroy]
   end
+
+  post '/:integration_name' => 'webhooks#receive', as: :receive_webhooks
 
 end

@@ -2,7 +2,8 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable
+         :recoverable, :rememberable, :trackable,
+         :omniauthable, omniauth_providers: [:clover]
 
   attr_accessor :skip_password_validation  # virtual attribute to skip password validation while saving
 
@@ -24,6 +25,21 @@ class User < ActiveRecord::Base
   scope :internal, -> { where(role: "InternalUser") }
   scope :active, -> { where(status: "active") }
   scope :inactive, -> { where(status: "inactive") }
+
+  def self.from_omniauth(auth)
+    oauth_user = where(email: auth.info.email).first_or_create do |user|
+      user.email = auth.info.email
+      user.password = Devise.friendly_token[0,20]
+      user.first_name = auth.info.name.split(" ").first   # assuming the user model has a name
+      user.last_name = auth.info.name.split(" ").last   # assuming the user model has a name
+      user.avatar = auth.info.image # assuming the user model has an image
+    end
+    oauth_user.provider = auth.provider
+    oauth_user.uid = auth.uid
+    oauth_user.clover_token = auth.credentials.token
+    oauth_user.save
+    oauth_user
+  end
 
   def internal?
     role == "InternalUser" || role == "Admin"
