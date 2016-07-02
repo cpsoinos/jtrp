@@ -43,9 +43,12 @@ feature "agreement" do
 
       let!(:item) { create(:item, proposal: proposal, client_intention: "consign") }
       let!(:agreement) { create(:agreement, :consign, proposal: proposal) }
+      let(:syncer) { double("syncer") }
 
       before do
         Company.first.update_attribute("primary_contact_id", user.id)
+        allow(InventorySync).to receive(:new).and_return(syncer)
+        allow(syncer).to receive(:remote_create).and_return(true)
         visit account_job_proposal_agreements_path(account, job, proposal)
       end
 

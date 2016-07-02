@@ -1,6 +1,12 @@
 feature "update an item" do
 
   let(:item) { create(:item) }
+  let(:syncer) { double("syncer") }
+
+  before do
+    allow(InventorySync).to receive(:new).and_return(syncer)
+    allow(syncer).to receive(:remote_update).and_return(true)
+  end
 
   context "internal user" do
 

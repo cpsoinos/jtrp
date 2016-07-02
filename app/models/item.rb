@@ -5,6 +5,7 @@ class Item < ActiveRecord::Base
   accepts_nested_attributes_for :photos
   belongs_to :category
   belongs_to :proposal
+  belongs_to :order
 
   has_secure_token
 
@@ -44,7 +45,7 @@ class Item < ActiveRecord::Base
     state :active
     state :sold
 
-    after_transition potential: :active, do: [:set_listed_at]
+    after_transition potential: :active, do: [:set_listed_at, :sync_inventory]
     after_transition active: :sold, do: [:mark_agreement_inactive, :set_sold_at]
 
     event :mark_active do
@@ -104,6 +105,10 @@ class Item < ActiveRecord::Base
   def set_sold_at
     self.sold_at = DateTime.now
     self.save
+  end
+
+  def sync_inventory
+    InventorySyncJob.perform_later(self)
   end
 
   def owned?

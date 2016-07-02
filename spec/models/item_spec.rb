@@ -2,6 +2,7 @@ describe Item do
 
   it { should belong_to(:category) }
   it { should belong_to(:proposal) }
+  it { should belong_to(:order) }
   it { should have_many(:photos) }
 
   it { should validate_presence_of(:description) }
@@ -55,6 +56,13 @@ describe Item do
 
   describe Item, "state_machine" do
 
+    let(:syncer) { double("syncer") }
+
+    before do
+      allow(InventorySync).to receive(:new).and_return(syncer)
+      allow(syncer).to receive(:remote_create).and_return(true)
+    end
+
     it "starts as 'potential'" do
       expect(Item.new).to be_potential
     end
@@ -65,6 +73,14 @@ describe Item do
       item.mark_active!
 
       expect(item).to be_active
+    end
+
+    it "syncs to clover when transitioning 'potential' to 'active'" do
+      proposal = create(:proposal, :active)
+      item = create(:item, proposal: proposal, client_intention: "sell")
+      item.mark_active!
+
+      expect(syncer).to have_received(:remote_create)
     end
 
     it "does not transition 'potential' to 'active' when requirements not met" do
