@@ -43,7 +43,9 @@ module Clover
       }.to_json, headers) do |response, request, result|
         case response.code
         when 200
-          DeepStruct.wrap(JSON.parse(response))
+          inventory_item = DeepStruct.wrap(JSON.parse(response))
+          item.remote_id ||= inventory_item.id
+          item.save
         else
           raise 'unable to find item - ' + result.to_s
         end
