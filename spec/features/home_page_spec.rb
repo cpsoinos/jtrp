@@ -109,8 +109,6 @@ feature "home page" do
     end
 
     it "has a to do list", js: true do
-      allow()
-
       expect(page).to have_content("To Do")
       expect(page).to have_content(item.description)
       expect(page).to have_content("needs a price added")

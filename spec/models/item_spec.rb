@@ -56,7 +56,7 @@ describe Item do
       create(:item, :active, client_intention: "consign")
       create(:item, :active, client_intention: "sell")
 
-      expect(Item.for_sale.count).to eq(2)
+      expect(Item.for_sale.count).to eq(5)
     end
 
   end
