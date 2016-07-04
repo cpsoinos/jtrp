@@ -40,9 +40,14 @@ feature "home page" do
   context "internal user" do
 
     let(:user) { create(:internal_user) }
+    let!(:item) { create(:item, :active, listing_price_cents: nil) }
+    let(:syncer) { double("syncer") }
 
     before do
       sign_in user
+      allow(InventorySync).to receive(:new).and_return(syncer)
+      allow(syncer).to receive(:remote_create).and_return(true)
+      allow(syncer).to receive(:remote_update).and_return(true)
     end
 
     it "has navigation links" do
@@ -101,6 +106,24 @@ feature "home page" do
 
     it "has an activity feed" do
       expect(page).to have_content("Activity Feed")
+    end
+
+    it "has a to do list", js: true do
+      expect(page).to have_content("To Do")
+      expect(page).to have_content(item.description)
+      expect(page).to have_content("needs a price added")
+
+      click_button("done")
+      expect(page).to have_content("SKU: #{item.id}")
+      expect(page).to have_field("Listing price")
+
+      fill_in("Listing price", with: "12.34")
+      click_button("Update Item")
+      wait_for_ajax
+      item.reload
+
+      expect(page).not_to have_content(item.description)
+      expect(item.listing_price_cents).to eq(1234)
     end
 
     context "clicks links" do

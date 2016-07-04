@@ -47,7 +47,7 @@ class ItemUpdater
   end
 
   def sync_inventory
-    InventorySync.new(item).remote_update
+    InventorySyncJob.perform_later(item)
   end
 
 end

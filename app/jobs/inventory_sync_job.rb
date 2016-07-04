@@ -2,7 +2,11 @@ class InventorySyncJob < ActiveJob::Base
   queue_as :default
 
   def perform(item)
-    InventorySync.new(item).remote_create
+    if item.remote_id
+      InventorySync.new(item).remote_update
+    else
+      InventorySync.new(item).remote_create
+    end
   end
 
 end

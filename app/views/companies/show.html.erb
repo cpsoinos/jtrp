@@ -10,7 +10,7 @@
   <div class="grid-item col-xs-6 col-md-3">
     <div class="panel panel-primary text-center">
       <div class="panel-body">
-        <h1><%= @metrics[:for_sale_count] %></h1>
+        <h1><%= @metrics[:owned_count] %></h1>
       </div>
       <div class="panel-heading complement-primary">
         <h3><%= link_to "<i class='material-icons'>store</i> Owned Items For Sale".html_safe, items_path(status: 'active', type: 'sell') %></h3>
@@ -99,7 +99,7 @@
         <h3>To Do</h3>
       </div>
       <div class="panel-body">
-        <%= render 'proposals/to_do_list' %>
+        <%= render 'to_do_list' %>
       </div>
     </div>
   </div>

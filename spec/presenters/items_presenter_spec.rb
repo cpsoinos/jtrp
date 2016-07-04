@@ -28,4 +28,10 @@ describe ItemsPresenter do
 
   end
 
+  it 'todo' do
+    to_do_items = create_list(:item, 2, :active, listing_price: nil)
+
+    expect(ItemsPresenter.new.todo).to eq(to_do_items)
+  end
+
 end

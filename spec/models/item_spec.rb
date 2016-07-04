@@ -42,14 +42,21 @@ describe Item do
       end
     end
 
-    it "for_sale" do
-      expect(Item.for_sale.count).to eq(3)
+    it "owned" do
+      expect(Item.owned.count).to eq(3)
     end
 
     it "consigned" do
       create(:item, :active, client_intention: "consign")
 
       expect(Item.consigned.count).to eq(1)
+    end
+
+    it "for_sale" do
+      create(:item, :active, client_intention: "consign")
+      create(:item, :active, client_intention: "sell")
+
+      expect(Item.for_sale.count).to eq(5)
     end
 
   end
