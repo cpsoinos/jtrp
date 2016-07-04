@@ -47,7 +47,7 @@ class Item < ActiveRecord::Base
     state :sold
 
     after_transition potential: :active, do: [:set_listed_at, :sync_inventory]
-    after_transition active: :sold, do: [:mark_agreement_inactive, :set_sold_at]
+    after_transition active: :sold, do: [:mark_agreement_inactive, :set_sold_at, :sync_inventory]
 
     event :mark_active do
       transition potential: :active, if: lambda { |item| item.meets_requirements_active? }
@@ -104,7 +104,7 @@ class Item < ActiveRecord::Base
   end
 
   def set_sold_at
-    self.sold_at = DateTime.now
+    self.sold_at ||= DateTime.now
     self.save
   end
 

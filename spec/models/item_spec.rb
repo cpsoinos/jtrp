@@ -68,6 +68,8 @@ describe Item do
     before do
       allow(InventorySync).to receive(:new).and_return(syncer)
       allow(syncer).to receive(:remote_create).and_return(true)
+      allow(syncer).to receive(:remote_update).and_return(true)
+      allow(syncer).to receive(:remote_destroy).and_return(true)
     end
 
     it "starts as 'potential'" do
@@ -101,11 +103,12 @@ describe Item do
     end
 
     it "transitions 'active' to 'sold' when requirements met" do
-      item = create(:item, :active, client_intention: "sell")
+      item = create(:item, :active, client_intention: "sell", remote_id: "ABC123")
       item.mark_sold
 
       expect(item).to be_sold
       expect(item.agreement).to be_inactive
+      expect(syncer).to have_received(:remote_destroy)
     end
 
     it "does not transition 'active' to 'sold' when requirements not met" do
