@@ -37,8 +37,9 @@ class Item < ActiveRecord::Base
   scope :active, -> { where(status: "active") }
   scope :sold, -> { where(status: "sold") }
   scope :unsold, -> { where.not(status: "sold") }
-  scope :for_sale, -> { where(status: "active", client_intention: "sell") }
+  scope :owned, -> { where(status: "active", client_intention: "sell") }
   scope :consigned, -> { where(status: "active", client_intention: "consign") }
+  scope :for_sale, -> { active.where(client_intention: ['sell', 'consign']) }
 
   state_machine :status, initial: :potential do
     state :potential
@@ -158,6 +159,16 @@ class Item < ActiveRecord::Base
       "secondary-darker"
     else
       "primary-lighter"
+    end
+  end
+
+  def task
+    if active?
+      if listing_price_cents.nil?
+        { name: "add price", description: "needs a price added", task_field: :listing_price }
+      elsif minimum_sale_price_cents.nil?
+        { name: "add minimum sale price", description: "needs a minimum sale price added", task_field: :minimum_sale_price }
+      end
     end
   end
 
