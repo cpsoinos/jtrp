@@ -1,10 +1,5 @@
 class ArchivesController < ApplicationController
 
-  # def new
-  #   @uploader = User.new.avatar
-  #   @uploader.success_action_redirect = new_user_url
-  # end
-
   def create
     find_proposal
     @archive = Archive.new(archive_params)

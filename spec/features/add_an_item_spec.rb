@@ -47,19 +47,6 @@ feature "add an item" do
       expect(page).not_to have_field("item[listing_photos][]")
     end
 
-    scenario "successfully adds an uncategorized item" do
-      pending("items without a proposal")
-      visit new_item_path
-
-      attach_file('item[initial_photos][]', File.join(Rails.root, '/spec/fixtures/test.png'))
-      fill_in "Description", with: "Chair"
-      click_on("Create Item")
-
-      expect(page).to have_content("Item created")
-      expect(page).to have_content("Chair")
-      expect(page).to have_css("img[src*='test.png']")
-    end
-
     scenario "visits category page" do
       visit category_path(category)
 
@@ -83,28 +70,6 @@ feature "add an item" do
       expect(page).not_to have_field("listing_photos[]")
     end
 
-    scenario "successfully adds an item" do
-      pending("items without a proposal")
-      visit new_category_item_path(category)
-
-      attach_file('item[initial_photos][]', File.join(Rails.root, '/spec/fixtures/test.png'))
-      fill_in "Description", with: "Chair"
-      click_on("Create Item")
-
-      expect(page).to have_content("Item created")
-      expect(page).to have_content("Chair")
-      expect(page).to have_css("img[src*='test.png']")
-    end
-
-    scenario "unsuccessfully adds an item" do
-      pending("items without a proposal")
-      visit new_category_item_path(category)
-      fill_in "Description", with: ""
-      click_on("Create Item")
-
-      expect(page).to have_content("Item could not be saved")
-      expect(page).to have_content("Description can't be blank")
-    end
   end
 
 end

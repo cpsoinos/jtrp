@@ -1,4 +1,5 @@
 feature "edit a proposal" do
+  include CarrierWaveDirect::Test::CapybaraHelpers
 
   let(:user) { create(:internal_user) }
   let(:proposal) { create(:proposal) }
@@ -20,35 +21,37 @@ feature "edit a proposal" do
     end
 
     scenario "successfully adds an item", js: true do
-      pending("carrierwave_direct test fixes")
       visit edit_account_job_proposal_path(account, job, proposal)
 
       fill_in("item_description", with: "Chair")
-      attach_file('item[initial_photos][]', [File.join(Rails.root, '/spec/fixtures/test.png'), File.join(Rails.root, '/spec/fixtures/test_2.png')])
+      attach_file('item[initial_photos][]', File.join(Rails.root, '/spec/fixtures/test.png'))
       click_on("Create Item")
 
       expect(page).to have_content("Chair")
       expect(page).to have_css("img[src*='test.png']")
-      expect(page).to have_css("img[src*='test_2.png']")
     end
 
     scenario "removes an item", js: true do
-      pending("carrierwave_direct test fixes")
       item = create(:item, proposal: proposal)
       visit edit_account_job_proposal_path(account, job, proposal)
 
       expect(page).to have_content(item.description)
 
-      click_on("Remove")
+      click_on("delete_forever")
+      sleep(1)
+      click_on("Yes, I'm sure")
+      wait_for_ajax
 
       expect(page).not_to have_content(item.description)
     end
 
-    scenario "uploads a batch of items" do
-      pending("carrierwave_direct test fixes")
+    scenario "uploads a batch of items", js: true do
+      pending("carrierwave_direct tests")
+      archive = create(:archive)
+
       visit edit_account_job_proposal_path(account, job, proposal)
-      attach_file("item[archive]", File.join(Rails.root, '/spec/fixtures/archive.zip'))
-      click_on("Upload Archive")
+      attach_file_for_direct_upload(File.join(Rails.root, '/spec/fixtures/archive.zip'))
+      upload_directly(archive, "Process Items")
 
       expect(page).to have_content("microwave")
       expect(page).to have_content("dish washer")
@@ -63,13 +66,13 @@ feature "edit a proposal" do
       let!(:item) { create(:item, proposal: proposal) }
 
       scenario "arrives at details path" do
-        pending("carrierwave_direct test fixes")
         visit edit_account_job_proposal_path(account, job, proposal)
         click_link("Step 2: Details")
 
-        expect(page).to have_content("Proposal Details for #{account.full_name}")
-        expect(page).to have_content("will purchase:")
-        expect(page).to have_content("will consign:")
+        expect(page).to have_content("Will purchase")
+        expect(page).to have_content("Offer to purchase this item")
+        expect(page).to have_content("Will consign")
+        expect(page).to have_content("Offer to let the client account consign this item")
       end
 
       scenario "offers to purchase", js: true do
