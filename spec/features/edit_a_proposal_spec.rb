@@ -21,6 +21,7 @@ feature "edit a proposal" do
     end
 
     scenario "successfully adds an item", js: true do
+      pending("carrierwave_direct tests")
       visit edit_account_job_proposal_path(account, job, proposal)
 
       fill_in("item_description", with: "Chair")
@@ -32,6 +33,7 @@ feature "edit a proposal" do
     end
 
     scenario "removes an item", js: true do
+      pending("carrierwave_direct tests")
       item = create(:item, proposal: proposal)
       visit edit_account_job_proposal_path(account, job, proposal)
 
@@ -63,6 +65,7 @@ feature "edit a proposal" do
     end
 
     context "item details" do
+      pending("carrierwave_direct tests")
       let!(:item) { create(:item, proposal: proposal) }
 
       scenario "arrives at details path" do
