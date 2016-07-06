@@ -7,7 +7,7 @@ class AccountsPresenter
   end
 
   def filter
-    Account.filter(params.slice(:status))
+    Account.filter(params.slice(:status)).order(:account_number)
   end
 
 end
