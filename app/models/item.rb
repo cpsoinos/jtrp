@@ -37,8 +37,9 @@ class Item < ActiveRecord::Base
   scope :active, -> { where(status: "active") }
   scope :sold, -> { where(status: "sold") }
   scope :unsold, -> { where.not(status: "sold") }
-  scope :for_sale, -> { where(status: "active", client_intention: "sell") }
+  scope :owned, -> { where(status: "active", client_intention: "sell") }
   scope :consigned, -> { where(status: "active", client_intention: "consign") }
+  scope :for_sale, -> { active.where(client_intention: ['sell', 'consign']) }
 
   state_machine :status, initial: :potential do
     state :potential
@@ -46,7 +47,7 @@ class Item < ActiveRecord::Base
     state :sold
 
     after_transition potential: :active, do: [:set_listed_at, :sync_inventory]
-    after_transition active: :sold, do: [:mark_agreement_inactive, :set_sold_at]
+    after_transition active: :sold, do: [:mark_agreement_inactive, :set_sold_at, :sync_inventory]
 
     event :mark_active do
       transition potential: :active, if: lambda { |item| item.meets_requirements_active? }
@@ -103,7 +104,7 @@ class Item < ActiveRecord::Base
   end
 
   def set_sold_at
-    self.sold_at = DateTime.now
+    self.sold_at ||= DateTime.now
     self.save
   end
 
@@ -158,6 +159,16 @@ class Item < ActiveRecord::Base
       "secondary-darker"
     else
       "primary-lighter"
+    end
+  end
+
+  def task
+    if active?
+      if listing_price_cents.nil?
+        { name: "add price", description: "needs a price added", task_field: :listing_price }
+      elsif minimum_sale_price_cents.nil?
+        { name: "add minimum sale price", description: "needs a minimum sale price added", task_field: :minimum_sale_price }
+      end
     end
   end
 

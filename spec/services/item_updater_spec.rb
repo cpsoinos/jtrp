@@ -1,7 +1,7 @@
 describe ItemUpdater do
 
   let(:item) { create(:item) }
-  let(:active_item) { create(:item, :active) }
+  let(:active_item) { create(:item, :active, remote_id: 'ABC123') }
   let(:attrs) { attributes_for(:item, description: "cats be meowin'") }
   let(:initial_photo_attrs) { attributes_for(:photo) }
   let(:listing_photo_attrs) { attributes_for(:photo, :listing) }
@@ -9,7 +9,9 @@ describe ItemUpdater do
 
   before do
     allow(InventorySync).to receive(:new).and_return(syncer)
+    allow(syncer).to receive(:remote_create).and_return(true)
     allow(syncer).to receive(:remote_update).and_return(true)
+    allow(syncer).to receive(:remote_destroy).and_return(true)
   end
 
   it "can be instantiated" do
@@ -22,10 +24,21 @@ describe ItemUpdater do
     expect(item.description).to eq("cats be meowin'")
   end
 
-  it "syncs to clover" do
-    ItemUpdater.new(item).update(attrs)
+  context "clover" do
 
-    expect(syncer).to have_received(:remote_update)
+    it "syncs to clover when inventory item already exists" do
+      ItemUpdater.new(active_item).update(attrs)
+
+      expect(syncer).to have_received(:remote_update)
+    end
+
+    it "syncs to clover when inventory item does not exist" do
+      other_item = create(:item, :active, remote_id: nil)
+      ItemUpdater.new(other_item).update(attrs)
+
+      expect(syncer).to have_received(:remote_create)
+    end
+
   end
 
   it "processes photos" do

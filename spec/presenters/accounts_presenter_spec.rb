@@ -9,7 +9,7 @@ describe AccountsPresenter do
   end
 
   it 'returns accounts' do
-    expect(AccountsPresenter.new.filter).to eq(Account.all)
+    expect(AccountsPresenter.new.filter).to eq(Account.all.order(:account_number))
   end
 
   context 'filters' do

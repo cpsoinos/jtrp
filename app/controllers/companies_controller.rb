@@ -3,11 +3,12 @@ class CompaniesController < ApplicationController
 
   def show
     @metrics = {
-      for_sale_count: Item.for_sale.count,
+      owned_count: Item.owned.count,
       consigned_count: Item.consigned.count,
       thirty_day_revenue: Item.sold.where("items.sold_at >= ?", 30.days.ago).sum(:sale_price_cents),
       owed_to_consignors: Item.consigned.sold.where("items.sold_at >= ?", 30.days.ago).sum(:sale_price_cents) / 2
     }
+    @items = ItemsPresenter.new.todo
   end
 
   def edit

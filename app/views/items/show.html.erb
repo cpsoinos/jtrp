@@ -1,3 +1,5 @@
+<%= render 'mark_sold_modal' %>
+
 <div class="row extra-large-top-margin grid">
   <div class="grid-sizer col-xs-6 col-md-3"></div>
 
@@ -154,6 +156,11 @@
 
             <div class="row large-top-margin">
               <div class="text-center">
+                <% unless @item.sold? %>
+                  <button type="button" class="btn btn-raised btn-primary" data-toggle="modal" data-target="#<%= @item.id %>-mark-sold-modal">
+                    Mark as Sold <i class='material-icons'>done</i>
+                  </button>
+                <% end %>
                 <%= link_to "Print Tag <i class='fa fa-caret-right'></i>".html_safe, item_tag_path(@item, format: :pdf), class: "btn btn-raised btn-primary" %>
               </div>
             </div>

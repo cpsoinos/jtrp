@@ -1,7 +1,7 @@
 # Fog.mock!
 #
 # def fog_directory
-#   ENV['AWS_FOG_DIRECTORY']
+#   ENV['FOG_DIRECTORY']
 # end
 #
 # connection = ::Fog::Storage.new(
