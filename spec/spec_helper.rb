@@ -32,16 +32,6 @@ RSpec.configure do |config|
     Rails.application.load_seed # loading seeds
   end
 
-  config.before :each, js: true do
-    # page.execute_script('jQuery.material.init()
-    # jQuery.material.options = {
-    #   "withRipples": ".btn:not(.btn-link), .card-image, .navbar a:not(.withoutripple), .nav-tabs a:not(.withoutripple), .withripple",
-    #   "inputElements": "input.form-control, .input:not(.dropzone), textarea.form-control, select.form-control",
-    #   "checkboxElements": ".checkbox > label > input[type=checkbox]",
-    #   "radioElements": ".radio > label > input[type=radio]"
-    # }')
-  end
-
   config.expect_with :rspec do |expectations|
     expectations.include_chain_clauses_in_custom_matcher_descriptions = true
   end

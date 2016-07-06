@@ -11,6 +11,7 @@ describe ItemUpdater do
     allow(InventorySync).to receive(:new).and_return(syncer)
     allow(syncer).to receive(:remote_create).and_return(true)
     allow(syncer).to receive(:remote_update).and_return(true)
+    allow(syncer).to receive(:remote_destroy).and_return(true)
   end
 
   it "can be instantiated" do

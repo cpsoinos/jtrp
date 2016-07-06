@@ -106,3 +106,8 @@ $(".items.index").ready(function() {
   var $tab = $($("a[role='tab']")[0])
   $tab.tab("show");
 })
+
+$(".items.show").ready(function() {
+  $('#sale-date').datepicker({
+  });
+})

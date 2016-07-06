@@ -42,12 +42,22 @@ class ItemUpdater
 
   def process_sale
     if attrs[:sale_price] && !item.sold?
+      process_sold_at
       item.mark_sold!
     end
   end
 
   def sync_inventory
     InventorySyncJob.perform_later(item)
+  end
+
+  def process_sold_at
+    if attrs[:sold_at]
+      formatted_date = attrs[:sold_at].split("/")
+      attrs[:sold_at] = "#{formatted_date[1]}/#{formatted_date[0]}/#{formatted_date[2]}"
+    else
+      attrs[:sold_at] = DateTime.now
+    end
   end
 
 end
