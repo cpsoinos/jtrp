@@ -13,4 +13,5 @@
 /tmp
 /public/uploads
 .env
+.env.test
 /coverage/
