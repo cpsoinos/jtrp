@@ -575,6 +575,7 @@ GEM
       activerecord (~> 4.1)
       state_machines-activemodel (>= 0.3.0)
     sweet-alert-confirm (0.4.1)
+    swiftype (1.2.2)
     term-ansicolor (1.3.2)
       tins (~> 1.0)
     terminal-notifier-guard (1.7.0)
@@ -686,6 +687,7 @@ DEPENDENCIES
   state_machines
   state_machines-activerecord
   sweet-alert-confirm
+  swiftype
   terminal-notifier-guard
   timecop
   uglifier (>= 1.3.0)

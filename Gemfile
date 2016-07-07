@@ -44,6 +44,7 @@ gem 'puma'
 gem 'omniauth-clover'
 gem 'deepstruct'
 gem 'rack-timeout'
+gem 'swiftype'
 
 group :production, :staging, :local do
   gem 'rails_12factor'
