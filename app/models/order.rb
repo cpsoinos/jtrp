@@ -44,7 +44,6 @@ class Order < ActiveRecord::Base
   end
 
   def mark_items_sold
-    binding.pry
     items.map(&:mark_sold)
   end
 
