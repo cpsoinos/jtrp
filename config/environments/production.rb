@@ -76,7 +76,4 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
-
-  config.clover_url = "https://www.clover.com"
-  config.clover_api_url = "https://api.clover.com"
 end
