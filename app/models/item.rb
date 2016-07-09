@@ -41,6 +41,9 @@ class Item < ActiveRecord::Base
   scope :consigned, -> { where(status: "active", client_intention: "consign") }
   scope :for_sale, -> { active.where(client_intention: ['sell', 'consign']) }
 
+  after_save :enqueue_create_or_update_document_job
+  after_destroy :enqueue_delete_document_job
+
   state_machine :status, initial: :potential do
     state :potential
     state :active
@@ -170,6 +173,17 @@ class Item < ActiveRecord::Base
         { name: "add minimum sale price", description: "needs a minimum sale price added", task_field: :minimum_sale_price }
       end
     end
+  end
+
+
+  private
+
+  def enqueue_create_or_update_document_job
+    CreateOrUpdateSwiftypeDocumentJob.perform_later(self)
+  end
+
+  def enqueue_delete_document_job
+    DeleteSwiftypeDocumentJob.perform_later(self)
   end
 
 end
