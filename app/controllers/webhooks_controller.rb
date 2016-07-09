@@ -11,7 +11,6 @@ class WebhooksController < ApplicationController
 
     WebhookProcessor.new(data).process
     head :ok
-    render nothing: true
   end
 
 end
