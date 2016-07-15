@@ -15,7 +15,14 @@
 //= require bootsy
 //= require jquery.remotipart
 //= require bootstrap
-//= require bootstrap-material-design
+//= require bootstrap-datepicker
+//= require jasny-bootstrap.min
+//= require jquery.dropdown
+//= require jquery.flexisel
+//= require jquery.tagsinput
+//= require material-kit
+//= require material.min
+//= require nouislider.min
 //= require best_in_place
 //= require dropzone
 //= require jquery-ddslick
@@ -38,13 +45,13 @@ $(document).ready(function() {
   /* Activating Best In Place */
   jQuery(".best_in_place").best_in_place();
 
-  $.material.init()
-  $.material.options = {
-    "withRipples": ".btn:not(.btn-link), .card-image, .navbar a:not(.withoutripple), .nav-tabs a:not(.withoutripple), .withripple",
-    "inputElements": "input.form-control, .input:not(.dropzone), textarea.form-control, select.form-control",
-    "checkboxElements": ".checkbox > label > input[type=checkbox]",
-    "radioElements": ".radio > label > input[type=radio]"
-  }
+  $.material.init();
+  // $.material.options = {
+  //   "withRipples": ".btn:not(.btn-link), .card-image, .navbar a:not(.withoutripple), .nav-tabs a:not(.withoutripple), .withripple",
+  //   "inputElements": "input.form-control, .input:not(.dropzone), textarea.form-control, select.form-control",
+  //   "checkboxElements": ".checkbox > label > input[type=checkbox]",
+  //   "radioElements": ".radio > label > input[type=radio]"
+  // }
   // $.material.ripples();
   // $.material.input();
   // $.material.checkbox();

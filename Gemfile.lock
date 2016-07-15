@@ -440,16 +440,7 @@ GEM
       bundler (>= 1.3.0, < 2.0)
       railties (= 4.2.5.2)
       sprockets-rails
-    rails-assets-bootstrap (3.3.6)
-      rails-assets-jquery (>= 1.9.1, < 3)
-    rails-assets-bootstrap-material-design (0.5.9)
-      rails-assets-bootstrap (~> 3.3.6)
-      rails-assets-bootstrap-sass (~> 3.3.6)
-      rails-assets-jquery (~> 2.1.1)
-    rails-assets-bootstrap-sass (3.3.6)
-      rails-assets-jquery (>= 1.9.0)
     rails-assets-classnames (2.2.5)
-    rails-assets-jquery (2.1.4)
     rails-assets-sweetalert (1.1.3)
     rails-deprecated_sanitizer (1.0.3)
       activesupport (>= 4.2.0.alpha)
@@ -669,7 +660,6 @@ DEPENDENCIES
   pusher
   rack-timeout
   rails (= 4.2.5.2)
-  rails-assets-bootstrap-material-design!
   rails-assets-classnames!
   rails-assets-sweetalert!
   rails_12factor

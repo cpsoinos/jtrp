@@ -51,7 +51,6 @@ group :production, :staging, :local do
 end
 
 source 'https://rails-assets.org' do
-  gem 'rails-assets-bootstrap-material-design'
   gem 'rails-assets-classnames'
   gem 'rails-assets-sweetalert'
 end
