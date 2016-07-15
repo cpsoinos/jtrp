@@ -36,6 +36,11 @@
       </div>
       <div class="navbar-collapse collapse navbar-responsive-collapse">
         <ul class="nav navbar-nav navbar-right">
+          <%= form_tag search_index_path, method: :get, class: "navbar-form navbar-left" do %>
+            <div class="form-group">
+              <%= text_field_tag :query, params[:query], class: "form-control col-sm-8", placeholder: "Search" %>
+            </div>
+          <% end %>
           <li class="dropdown">
             <a href="<%= company_client_services_path(@company) %>" data-target="#" class="dropdown-toggle" data-toggle="dropdown">About Us
               <b class="caret"></b></a>
@@ -47,20 +52,6 @@
             </ul>
           </li>
           <% if current_user %>
-
-            <%= form_tag search_index_path, method: :get, class: "navbar-form navbar-right" do %>
-              <div class="form-group">
-                <%= text_field_tag :query, params[:query], class: "form-control col-sm-8", placehoder: "Search" %>
-                <%= submit_tag "GO", name: nil %>
-              </div>
-            <% end %>
-
-            <!-- <form class="navbar-form navbar-left">
-              <div class="form-group">
-                <input type="text" class="form-control col-sm-8" placeholder="Search">
-              </div>
-            </form> -->
-
             <li><%= link_to 'Sign Out', destroy_user_session_path, method: 'delete' %></li>
             <li><%= link_to 'Sign Out', destroy_user_session_path, method: 'delete' %></li>
           <% else %>
