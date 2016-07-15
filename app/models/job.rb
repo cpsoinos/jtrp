@@ -1,5 +1,8 @@
 class Job < ActiveRecord::Base
   include Filterable
+  include PgSearch
+
+  multisearchable against: [:address_1, :city, :state, :zip, :status]
 
   belongs_to :account
   has_many :proposals, dependent: :destroy

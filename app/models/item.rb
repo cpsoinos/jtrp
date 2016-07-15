@@ -1,5 +1,8 @@
 class Item < ActiveRecord::Base
   include Filterable
+  include PgSearch
+
+  multisearchable against: [:description, :status, :client_intention, :will_consign, :will_purchase]
 
   has_many :photos, dependent: :destroy
   accepts_nested_attributes_for :photos
