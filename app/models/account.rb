@@ -1,5 +1,8 @@
 class Account < ActiveRecord::Base
   include Filterable
+  include PgSearch
+
+  multisearchable against: [:account_number, :full_name, :status]
 
   has_many :clients
   belongs_to :primary_contact, class_name: "Client", foreign_key: "primary_contact_id"

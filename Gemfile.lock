@@ -396,6 +396,10 @@ GEM
       ruby-rc4
       ttfunk
     pg (0.18.4)
+    pg_search (1.0.6)
+      activerecord (>= 3.1)
+      activesupport (>= 3.1)
+      arel
     pkg-config (1.1.7)
     poltergeist (1.9.0)
       capybara (~> 2.1)
@@ -656,6 +660,7 @@ DEPENDENCIES
   omniauth-clover
   pdf-reader
   pg (~> 0.15)
+  pg_search
   poltergeist (~> 1.7)
   pry-byebug (~> 3.3)
   pry-coolline

@@ -44,6 +44,7 @@ gem 'puma'
 gem 'omniauth-clover'
 gem 'deepstruct'
 gem 'rack-timeout'
+gem 'pg_search'
 
 group :production, :staging, :local do
   gem 'rails_12factor'
