@@ -671,7 +671,7 @@ DEPENDENCIES
   rails_real_favicon
   react-rails
   remotipart (~> 1.2)
-  rollbar (~> 2.8.3)
+  rollbar
   rspec-rails (~> 3.0)
   rspec-sidekiq
   rubyzip
