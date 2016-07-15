@@ -47,6 +47,21 @@
             </ul>
           </li>
           <% if current_user %>
+
+            <%= form_tag search_index_path, method: :get, class: "navbar-form navbar-right" do %>
+              <div class="form-group">
+                <%= text_field_tag :query, params[:query], class: "form-control col-sm-8", placehoder: "Search" %>
+                <%= submit_tag "GO", name: nil %>
+              </div>
+            <% end %>
+
+            <!-- <form class="navbar-form navbar-left">
+              <div class="form-group">
+                <input type="text" class="form-control col-sm-8" placeholder="Search">
+              </div>
+            </form> -->
+
+            <li><%= link_to 'Sign Out', destroy_user_session_path, method: 'delete' %></li>
             <li><%= link_to 'Sign Out', destroy_user_session_path, method: 'delete' %></li>
           <% else %>
             <li><%= link_to "Sign in with Clover", user_omniauth_authorize_path(:clover) %></li>
