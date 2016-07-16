@@ -120,7 +120,7 @@ feature "home page" do
         first(:button, "done").click
         click_button("Close")
 
-        expect(page).not_to have_field("Listing price")
+        expect(page).not_to have_field("Listing price", visible: true)
         expect(page).to have_content(item.description)
       end
 
@@ -130,7 +130,7 @@ feature "home page" do
         click_button("Update Item")
         wait_for_ajax
 
-        first(:button, "done").click
+        find(:button, "done").click
         expect(page).to have_content("SKU: #{item_2.id}")
         expect(page).to have_field("Listing price")
       end
