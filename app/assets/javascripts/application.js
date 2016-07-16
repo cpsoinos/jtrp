@@ -14,7 +14,7 @@
 //= require jquery_ujs
 //= require bootsy
 //= require jquery.remotipart
-//= require bootstrap
+//= require bootstrap.min
 //= require bootstrap-datepicker
 //= require jasny-bootstrap.min
 //= require jquery.dropdown

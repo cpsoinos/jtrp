@@ -3,6 +3,7 @@ class Item < ActiveRecord::Base
   include PgSearch
 
   multisearchable against: [:description, :status, :client_intention, :will_consign, :will_purchase]
+  paginates_per 10
 
   has_many :photos, dependent: :destroy
   accepts_nested_attributes_for :photos
