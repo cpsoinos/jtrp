@@ -27,12 +27,12 @@ feature "add an item" do
     scenario "visits home page" do
       visit root_path
 
-      expect(page).to have_link("New Item")
+      expect(page).to have_link("Item")
     end
 
     scenario "clicks on 'Add an item' from home page" do
       visit root_path
-      click_link("New Item")
+      click_link("Item")
 
       expect(page).to have_content("Add an item")
       expect(page).to have_field("Description")
@@ -57,7 +57,6 @@ feature "add an item" do
       visit category_path(category)
       click_on "Add an item"
 
-      expect(page).to have_content(category.name)
       expect(page).to have_content("Add an item")
       expect(page).to have_field("Description")
 

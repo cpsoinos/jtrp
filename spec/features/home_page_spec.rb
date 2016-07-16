@@ -17,9 +17,9 @@ feature "home page" do
     scenario "sees category links" do
       visit root_path
 
-      expect(page).to have_link(category_1.name)
-      expect(page).to have_link(category_2.name)
-      expect(page).to have_link(category_3.name)
+      expect(page).to have_link(category_1.name, visible: true)
+      expect(page).to have_link(category_2.name, visible: true)
+      expect(page).to have_link(category_3.name, visible: true)
     end
 
     scenario "does not see edit category links" do
@@ -30,7 +30,7 @@ feature "home page" do
 
     scenario "clicks a category link" do
       visit root_path
-      click_link(category_1.name)
+      first(:link, category_1.name).click
 
       expect(page).to have_content(category_1.name)
     end
@@ -40,7 +40,8 @@ feature "home page" do
   context "internal user" do
 
     let(:user) { create(:internal_user) }
-    let!(:item) { create(:item, :active, listing_price_cents: nil) }
+    let!(:item) { create(:item, :active, description: "abc12345", listing_price_cents: nil) }
+    let!(:item_2) { create(:item, :active, description: "defghij", listing_price_cents: nil) }
     let(:syncer) { double("syncer") }
 
     before do
@@ -55,11 +56,6 @@ feature "home page" do
 
       expect(page).to have_content(company.name)
       expect(page).not_to have_content(company.slogan)
-
-      expect(page).to have_link("Categories")
-      Category.all.each do |category|
-        expect(page).to have_link(category.name)
-      end
 
       expect(page).to have_link("Items")
       within("#items") do
@@ -85,45 +81,59 @@ feature "home page" do
         expect(page).to have_link("Complete")
         expect(page).to have_link("All Jobs")
       end
-
-      expect(page).to have_link("Agreements")
-      within("#agreements") do
-        expect(page).to have_link("Potential")
-        expect(page).to have_link("Active")
-        expect(page).to have_link("Inactive")
-        expect(page).to have_link("All Agreements")
-      end
     end
 
     it "has information panels" do
       visit root_path
 
-      expect(page).to have_link("Owned Items For Sale")
-      expect(page).to have_link("Consigned Items For Sale")
-      expect(page).to have_link("Sold in the last 30 days")
-      expect(page).to have_link("Owed to Clients")
+      expect(page).to have_content("Owned Items For Sale")
+      expect(page).to have_content("Consigned Items For Sale")
+      expect(page).to have_content("Sold in the last 30 days")
     end
 
     it "has an activity feed" do
       expect(page).to have_content("Activity Feed")
     end
 
-    it "has a to do list", js: true do
-      expect(page).to have_content("To Do")
-      expect(page).to have_content(item.description)
-      expect(page).to have_content("needs a price added")
+    context "to do list" do
+      it "has a to do list" do
+        expect(page).to have_content("To Do")
+        expect(page).to have_content(item.description)
+        expect(page).to have_content("needs a price added")
+      end
 
-      click_button("done")
-      expect(page).to have_content("SKU: #{item.id}")
-      expect(page).to have_field("Listing price")
+      scenario "completes a to do list item", js: true do
+        first(:button, "done").click
+        expect(page).to have_content("SKU: #{item.id}")
+        expect(page).to have_field("Listing price")
 
-      fill_in("Listing price", with: "12.34")
-      click_button("Update Item")
-      wait_for_ajax
-      item.reload
+        fill_in("Listing price", with: "12.34")
+        click_button("Update Item")
+        wait_for_ajax
+        item.reload
 
-      expect(page).not_to have_content(item.description)
-      expect(item.listing_price_cents).to eq(1234)
+        expect(page).not_to have_content(item.description)
+        expect(item.listing_price_cents).to eq(1234)
+      end
+
+      scenario "closes a to do list modal without completing", js: true do
+        first(:button, "done").click
+        click_button("Close")
+
+        expect(page).not_to have_field("Listing price")
+        expect(page).to have_content(item.description)
+      end
+
+      scenario "completes a to do list item and starts a second", js: true do
+        first(:button, "done").click
+        fill_in("Listing price", with: "12.34")
+        click_button("Update Item")
+        wait_for_ajax
+
+        first(:button, "done").click
+        expect(page).to have_content("SKU: #{item_2.id}")
+        expect(page).to have_field("Listing price")
+      end
     end
 
     context "clicks links" do
@@ -163,16 +173,6 @@ feature "home page" do
           end
 
           expect(page).to have_content("Sold items have been sold.")
-        end
-      end
-
-      context "categories" do
-        scenario "clicks on a category link" do
-          category = create(:category)
-          visit root_path
-          click_link(category.name)
-
-          expect(page).to have_content(category.name)
         end
       end
 
