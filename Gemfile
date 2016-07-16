@@ -79,7 +79,7 @@ group :test do
   gem 'rspec-rails', '~> 3.0'
   gem 'shoulda-matchers', require: false
   gem 'capybara'
-  gem 'poltergeist', '~> 1.7'
+  gem 'poltergeist'
   gem 'launchy'
   gem 'email_spec'
   gem 'rspec-sidekiq'
