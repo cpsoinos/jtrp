@@ -131,7 +131,7 @@ feature "home page" do
         click_button("Update Item")
         wait_for_ajax
 
-        find(:button, "done").click
+        first(:button, "done").click
         expect(page).to have_content("SKU: #{item_2.id}")
         expect(page).to have_field("Listing price")
       end
