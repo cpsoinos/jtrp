@@ -1,5 +1,6 @@
+<div class="col-md-4 grid-sizer"></div>
 <% items.each do |item| %>
-  <div class="col-md-4">
+  <div class="col-md-4 grid-item">
     <div class="card card-plain card-blog">
       <a href="<%= account_job_proposal_item_path(@account, @job, item.proposal, item) %>">
         <div class="card-image">
