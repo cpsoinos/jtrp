@@ -120,8 +120,8 @@ feature "home page" do
         click_button("Close")
         wait_for_ajax
 
-        expect(page).not_to have_field("Listing price", visible: true)
-        expect(page).to have_content(item.description)
+        expect(page).to have_field("Listing price", visible: false)
+        expect(page).to have_content("#{item.description} needs a price added")
       end
 
       scenario "completes a to do list item and starts a second", js: true do
