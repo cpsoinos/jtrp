@@ -76,9 +76,11 @@
   padding: 1em;
 }
 
-.vertical-align {
-  display: flex;
-  align-items: center;
+@media only screen and (min-width : 768px) {
+  .vertical-align {
+    display: flex;
+    align-items: center;
+  }
 }
 
 .response-thumb {

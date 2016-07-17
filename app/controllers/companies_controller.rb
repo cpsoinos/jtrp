@@ -5,10 +5,10 @@ class CompaniesController < ApplicationController
     @metrics = {
       owned_count: Item.owned.count,
       consigned_count: Item.consigned.count,
-      thirty_day_revenue: Item.sold.where("items.sold_at >= ?", 30.days.ago).sum(:sale_price_cents),
+      thirty_day_revenue: Order.all.sum(:amount_cents) / 100,
       owed_to_consignors: Item.consigned.sold.where("items.sold_at >= ?", 30.days.ago).sum(:sale_price_cents) / 2
     }
-    @items = ItemsPresenter.new.todo
+    @items = ItemsPresenter.new.todo.page(params[:page])
   end
 
   def edit

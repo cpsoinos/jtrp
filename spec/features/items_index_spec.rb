@@ -6,7 +6,7 @@ feature "item index" do
   let!(:active_consigned_items) { create_list(:item, 3, :active, description: "vasha", client_intention: "consign") }
   let!(:sold_items) { create_list(:item, 2, :sold, description: "katniss") }
   let!(:all_items) { active_owned_items | active_consigned_items | sold_items | potential_items }
-  let(:intentions) { ["consigned", "owned", "will donate", "will dump", "will move", "undecided"] }
+  let(:intentions) { ["consigned", "owned", "will donate", "will dump", "undecided"] }
 
   before do
     sign_in user
@@ -30,12 +30,11 @@ feature "item index" do
       Item.second.update_attribute("client_intention", "consign")
       Item.third.update_attribute("client_intention", "donate")
       Item.fourth.update_attribute("client_intention", "dump")
-      Item.fifth.update_attribute("client_intention", "move")
       visit items_path
 
       expect(page).to have_content("All Items")
       intentions.each do |intention|
-        next if intention == "will move" || intention == "undecided"
+        next if intention == "undecided"
         expect(page).to have_link(intention)
       end
     end
@@ -43,13 +42,6 @@ feature "item index" do
   end
 
   context "purchased items" do
-
-    scenario "visits item list from home page" do
-      visit root_path
-      click_link("For Sale")
-
-      expect(page).to have_content("For Sale items have a signed purchase order and are actively for sale.")
-    end
 
     scenario "visits item list" do
       visit items_path(status: 'active', type: 'sell')
@@ -66,13 +58,6 @@ feature "item index" do
   end
 
   context "consigned items" do
-
-    scenario "visits item list from home page" do
-      visit root_path
-      click_link("Consigned")
-
-      expect(page).to have_content("Consigned items have a signed agreement and are actively on consignment.")
-    end
 
     scenario "visits item list" do
       visit items_path(status: 'active', type: 'consign')

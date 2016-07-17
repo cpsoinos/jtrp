@@ -26,7 +26,7 @@ gem 'remotipart', '~> 1.2'
 gem 'dropzonejs-rails'
 gem 'fog', require: 'fog/aws'
 gem 'gon'
-gem 'rollbar', '~> 2.8.3'
+gem 'rollbar'
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary-edge', '~> 0.12.3.0'
 gem 'state_machines'
@@ -44,13 +44,14 @@ gem 'puma'
 gem 'omniauth-clover'
 gem 'deepstruct'
 gem 'rack-timeout'
+gem 'pg_search'
+gem 'kaminari'
 
 group :production, :staging, :local do
   gem 'rails_12factor'
 end
 
 source 'https://rails-assets.org' do
-  gem 'rails-assets-bootstrap-material-design'
   gem 'rails-assets-classnames'
   gem 'rails-assets-sweetalert'
 end
@@ -78,7 +79,7 @@ group :test do
   gem 'rspec-rails', '~> 3.0'
   gem 'shoulda-matchers', require: false
   gem 'capybara'
-  gem 'poltergeist', '~> 1.7'
+  gem 'poltergeist'
   gem 'launchy'
   gem 'email_spec'
   gem 'rspec-sidekiq'
