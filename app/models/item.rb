@@ -70,6 +70,16 @@ class Item < ActiveRecord::Base
     photos.listing
   end
 
+  def featured_photo_url
+    if listing_photos.present?
+      listing_photos.first.photo_url
+    elsif initial_photos.present?
+      initial_photos.first.photo_url
+    else
+      "thumb_No_Image_Available.png"
+    end
+  end
+
   def agreement
     if proposal
       proposal.agreements.find_by(agreement_type: client_intention)

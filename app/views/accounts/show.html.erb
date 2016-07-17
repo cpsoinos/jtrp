@@ -5,118 +5,37 @@
   </div>
 </div>
 
-<div class="row grid">
-  <div class="grid-sizer col-xs-6 col-md-3"></div>
-
-  <div class="grid-item col-xs-6 col-md-3">
-    <div class="panel panel-primary text-center">
-      <div class="panel-body">
-        <h1><%= link_to @account.account_number, account_path(@account) %></h1>
-      </div>
-      <div class="panel-heading complement-primary">
-        <h3><%= link_to "<i class='material-icons'>assignment_ind</i> Account Number".html_safe, account_path(@account) %></h3>
-      </div>
-    </div>
-  </div>
-
-  <div class="grid-item col-xs-6 col-md-3">
-    <div class="panel panel-primary text-center">
-      <div class="panel-body">
-        <% if @account.is_company? %>
-          <% if @account.primary_contact.present? %>
-            <h1><%= link_to @account.full_name, client_path(@account.primary_contact) %></h1>
-          <% else %>
-            <h1><%= link_to "<i class='material-icons md-36'>person_add</i>".html_safe, new_account_client_path(@account) %></h1>
-          <% end %>
-        <% else %>
-          <h1><%= link_to @account.full_name, client_path(@account.primary_contact) %></h1>
-        <% end %>
-      </div>
-      <div class="panel-heading complement-darker">
-        <% if @account.primary_contact.present? %>
-          <h3><%= link_to "<i class='material-icons md-24'>person</i> Primary Contact".html_safe, client_path(@account.client) %></h3>
-        <% else %>
-          <h3><%= link_to "<i class='material-icons md-24'>person_add</i> Add Primary Contact".html_safe, new_account_client_path(@account) %></h3>
-        <% end %>
-      </div>
-    </div>
-  </div>
-
-  <div class="grid-item col-xs-6 col-md-3">
-    <div class="panel panel-primary text-center">
-      <div class="panel-body">
-        <h1><%= link_to @account.status.titleize, account_jobs_path(@account) %></h1>
-      </div>
-      <div class="panel-heading secondary-primary">
-        <h3><%= link_to "Status", account_jobs_path(@account) %></h3>
-      </div>
-    </div>
-  </div>
-
-  <div class="grid-item col-xs-6 col-md-3">
-    <div class="panel panel-primary text-center">
-      <div class="panel-body">
-        <h1>$35.00<%#= humanized_money_with_symbol(@account.balance) %></h1>
-      </div>
-      <div class="panel-heading secondary-darker">
-        <h3><%= link_to "Account Balance", account_transactions_path(@account) %></h3>
-      </div>
-    </div>
+<div class="row text-center">
+  <div class="col-md-8 col-md-offset-2 col-xs-12">
+    <%= render 'header_cards' %>
   </div>
 </div>
 
-<div class="row grid">
-  <div class="col-xs-4 col-md-4 grid-sizer"></div>
-
-  <div class="col-xs-4 col-md-4 grid-item">
-    <div class="panel panel-primary text-center">
-      <div class="panel-body">
-        <h1><%= link_to "<i class='material-icons md-48'>add_location</i>".html_safe, new_job_path %></h1>
-      </div>
-      <div class="panel-heading primary-lighter">
-        <h3><%= link_to "New Job", new_account_job_path(@account) %></h3>
-      </div>
-    </div>
+<div class="row text-center section section-dark extra-large-top-margin">
+  <div class="col-md-8 col-md-offset-2 col-xs-12">
+    <%= render 'new_buttons' %>
   </div>
-
-  <div class="col-xs-4 col-md-4 grid-item">
-    <div class="panel panel-primary text-center">
-      <div class="panel-body">
-        <h1><%= link_to "<i class='material-icons md-48'>add_location</i>".html_safe, new_account_proposal_path(@account) %></h1>
-      </div>
-      <div class="panel-heading complement-lighter">
-        <h3><%= link_to "New Proposal", new_account_proposal_path(@account) %></h3>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-xs-4 col-md-4 grid-item">
-    <div class="panel panel-primary text-center">
-      <div class="panel-body">
-        <h1><%= link_to "<i class='material-icons md-48'>add</i>".html_safe, new_item_path %></h1>
-      </div>
-      <div class="panel-heading secondary-lighter">
-        <h3><%= link_to "New Item", new_item_path %></h3>
-      </div>
-    </div>
-  </div>
-
 </div>
 
-<div class="row grid">
-  <div class="col-xs-6 col-md-4 grid-sizer"></div>
+<div class="row extra-large-top-margin">
+  <div class="col-xs-12 col-md-8 col-md-offset-2">
+    <% @account.jobs.each do |job| %>
+      <div class="col-xs-6 col-md-4">
+        <a href="<%= account_job_path(@account, job) %>">
+          <div class="card card-blog">
+        		<div class="card-image">
+                <%= image_tag(job.maps_url, class: "img") %>
+        		<div class="ripple-container"></div></div>
 
-  <% @account.jobs.each do |job| %>
-    <div class="col-xs-6 col-md-4 grid-item">
-      <div class="panel panel-primary">
-        <div class="panel-heading text-center primary-lighter">
-          <h3><%= link_to "Job No. #{job.id} - #{job.address_1}", account_job_path(@account, job) %></h3>
-        </div>
-        <div class="panel-body text-center">
-          <%= link_to image_tag(job.maps_url, alt: "Job Address", width: "100%"), account_job_path(@account, job) %>
-        </div>
+        		<div class="content">
+        			<h6 class="category text-info"><%= job.status %></h6>
+        			<p class="card-description">
+        				<%= "Job No. #{job.id} - #{job.address_1}" %>
+        			</p>
+        		</div>
+        	</div>
+        </a>
       </div>
-    </div>
-  <% end %>
-
+    <% end %>
+  </div>
 </div>

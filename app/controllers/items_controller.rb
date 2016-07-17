@@ -127,12 +127,11 @@ class ItemsController < ApplicationController
 
   def intentions_map
     @intentions_map = {
-      "consign" => "consigned",
-      "sell" => "owned",
-      "donate" => "will donate",
-      "dump" => "will dump",
-      "move" => "will move",
-      "undecided" => "undecided"
+      "consign" => { display_name: "consigned", icon: "<i class='material-icons'>supervisor_account</i>", color: "secondary-primary" },
+      "sell" => { display_name: "owned", icon: "<i class='material-icons'>store</i>", color: "complement-primary" },
+      "donate" => { display_name: "will donate", icon: "<i class='fa fa-gift' aria-hidden='true'></i>", color: "secondary-darker" },
+      "dump" => { display_name: "will dump", icon: "<i class='material-icons'>delete</i>", color: "complement-darker" },
+      "undecided" => { display_name: "undecided", icon: "<i class='fa fa-question' aria-hidden='true'></i>", color: "primary-lighter" }
     }
   end
 

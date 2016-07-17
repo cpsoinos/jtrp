@@ -1,30 +1,36 @@
 <div class="row">
 	<div class="col-xs-12 col-sm-4">
-		<div class="info">
-			<div class="icon icon-info">
-				<i class="material-icons">store</i>
+		<a href="<%= items_path(status: 'active', type: 'sell') %>">
+			<div class="info">
+				<div class="icon icon-info">
+					<i class="material-icons">store</i>
+				</div>
+				<h1 class="info-title"><%= @metrics[:owned_count] %></h1>
+				<p>Owned Items For Sale</p>
 			</div>
-			<h1 class="info-title"><%= link_to @metrics[:owned_count], items_path(status: 'active', type: 'sell') %></h1>
-			<p>Owned Items For Sale</p>
-		</div>
+		</a>
 	</div>
 
 	<div class="col-xs-12 col-sm-4">
+		<a href="<%= items_path(status: 'active', type: 'consign') %>">
+		</a>
 		<div class="info">
 			<div class="icon icon-warning">
 				<i class="material-icons">supervisor_account</i>
 			</div>
-			<h1 class="info-title"><%= link_to @metrics[:consigned_count], items_path(status: 'active', type: 'consign') %></h1>
+			<h1 class="info-title"><%= @metrics[:consigned_count] %></h1>
 			<p>Consigned Items For Sale</p>
 		</div>
 	</div>
 
 	<div class="col-xs-12 col-sm-4">
+		<a href="<%= items_path(status: 'sold') %>">
+		</a>
 		<div class="info">
 			<div class="icon icon-success">
 				<i class='fa fa-credit-card-alt' aria-hidden='true'></i>
 			</div>
-			<h1 class="info-title"><%= link_to humanized_money_with_symbol(@metrics[:thirty_day_revenue]), items_path(status: 'sold') %></h1>
+			<h1 class="info-title"><%= humanized_money_with_symbol(@metrics[:thirty_day_revenue]) %></h1>
 			<p>Sold in the last 30 days</p>
 		</div>
 	</div>
