@@ -60,8 +60,7 @@ feature "home page" do
       expect(page).to have_link("Items")
       within("#items") do
         expect(page).to have_link("Potential")
-        expect(page).to have_link("For Sale")
-        expect(page).to have_link("Consigned")
+        expect(page).to have_link("Active")
         expect(page).to have_link("Sold")
         expect(page).to have_link("All Items")
       end
@@ -149,22 +148,13 @@ feature "home page" do
           expect(page).to have_content("Potential items have not yet been listed for sale or consigned.")
         end
 
-        scenario "for sale" do
+        scenario "active" do
           visit root_path
           within('#items') do
-            click_link("For Sale")
+            click_link("Active")
           end
 
-          expect(page).to have_content("For Sale items have a signed purchase order and are actively for sale.")
-        end
-
-        scenario "consigned" do
-          visit root_path
-          within('#items') do
-            click_link("Consigned")
-          end
-
-          expect(page).to have_content("Consigned items have a signed agreement and are actively on consignment.")
+          expect(page).to have_content("Active items are actively for sale or on consignment.")
         end
 
         scenario "sold" do

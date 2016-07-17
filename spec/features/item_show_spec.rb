@@ -53,7 +53,7 @@ feature "item show" do
         expect(page).to have_link("delete_forever".html_safe)
         expect(page).to have_link("edit")
         expect(page).to have_content("active")
-        expect(page).to have_content("For Sale")
+        expect(page).to have_content("Owned")
         expect(page).to have_content("$11.11")
       end
 

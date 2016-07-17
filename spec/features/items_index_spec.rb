@@ -43,13 +43,6 @@ feature "item index" do
 
   context "purchased items" do
 
-    scenario "visits item list from home page" do
-      visit root_path
-      click_link("For Sale")
-
-      expect(page).to have_content("For Sale items have a signed purchase order and are actively for sale.")
-    end
-
     scenario "visits item list" do
       visit items_path(status: 'active', type: 'sell')
 
@@ -65,13 +58,6 @@ feature "item index" do
   end
 
   context "consigned items" do
-
-    scenario "visits item list from home page" do
-      visit root_path
-      click_link("Consigned")
-
-      expect(page).to have_content("Consigned items have a signed agreement and are actively on consignment.")
-    end
 
     scenario "visits item list" do
       visit items_path(status: 'active', type: 'consign')

@@ -21,7 +21,7 @@
           <tr>
             <td class="text-center">
               <div class="img-container">
-                <%= image_tag(item.featured_photo_url, class: "img-rounded img-responsive img-raised") %>
+                <%= link_to image_tag(item.featured_photo_url, class: "img-rounded img-responsive img-raised"), item_path(item) %>
               </div>
             </td>
             <td class="td-name">
