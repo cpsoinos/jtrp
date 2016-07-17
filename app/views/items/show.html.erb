@@ -1,3 +1,9 @@
+<div class="row">
+  <div class="col-sm-12 text-center">
+    <h1 class="company-title"><%= @item.description %></h1>
+  </div>
+</div>
+
 <%= render 'mark_sold_modal' %>
 
 <div class="row text-center">
@@ -6,175 +12,82 @@
   </div>
 </div>
 
+<div class="section text-center section section-dark">
 
-<div class="section" id="carousel">
-	<div class="container">
-		<div class="row">
-			<div class="col-xs-10 col-xs-offset-1 col-md-6 col-md-offset-3">
+  <div class="row vertical-align">
+    <div class="col-xs-10 col-xs-offset-1 col-md-4 col-md-offset-2">
+      <!-- Carousel Card -->
+      <div class="card card-raised card-carousel">
+        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+          <div class="carousel slide" data-ride="carousel">
 
-				<!-- Carousel Card -->
-				<div class="card card-raised card-carousel">
-					<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-						<div class="carousel slide" data-ride="carousel">
+            <!-- Indicators -->
+            <ol class="carousel-indicators">
+              <% @item.initial_photos.each_with_index do |_photo, index| %>
+                <li data-target="#carousel-example-generic" data-slide-to="<%= index %>" class=""></li>
+              <% end %>
+            </ol>
 
-							<!-- Indicators -->
-							<ol class="carousel-indicators">
-                <% @item.initial_photos.each_with_index do |_photo, index| %>
-  								<li data-target="#carousel-example-generic" data-slide-to="<%= index %>" class=""></li>
-                <% end %>
-							</ol>
-
-							<!-- Wrapper for slides -->
-							<div class="carousel-inner">
-								<div class="item active">
-                  <%= image_tag(@item.featured_photo_url, class: "img-rounded img-responsive img-raised") %>
-								</div>
-                <% if @item.initial_photos.length > 1 %>
-                  <% @item.initial_photos[1..-1].each do |photo| %>
-                    <div class="item">
-                      <%= image_tag(photo.photo_url, class: "img-rounded img-responsive img-raised") %>
-                    </div>
-                  <% end %>
-                <% end %>
-							</div>
-
-							<!-- Controls -->
-							<a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
-								<i class="material-icons">keyboard_arrow_left</i>
-							</a>
-							<a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
-								<i class="material-icons">keyboard_arrow_right</i>
-							</a>
-						</div>
-					</div>
-				</div>
-				<!-- End Carousel Card -->
-
-			</div>
-		</div>
-	</div>
-</div>
-
-<div class="row">
-  <div class="col-md-8 col-md-offset-2">
-    <div class="panel panel-primary large-top-margin">
-
-      <div class="panel-heading <%= @item.panel_color %>">
-        <div class="row vertical-align">
-          <div class="col-xs-2 text-left">
-            <span>No. <%= @item.account_item_number %></span><br /><br />
-            <span>SKU <%= @item.id %></span>
-          </div>
-          <div class="col-xs-8 text-center">
-            <% if current_user.internal? %>
-              <h1><%= link_to "#{@item.description}", account_job_proposal_item_path(@item.account, @item.job, @item.proposal, @item) %></h1>
-            <% else %>
-              <h1><%= @item.description %></h1>
-            <% end %>
-          </div>
-          <div class="col-xs-2 text-right hidden-print">
-            <%= link_to "<i class='material-icons'>edit</i>".html_safe, edit_account_job_proposal_item_path(@item.account, @item.job, @item.proposal, @item), class: "btn btn-fab btn-fab-mini btn-primary" %><br /><br />
-            <%= link_to "<i class='material-icons'>delete_forever</i>".html_safe, item_path(@item), method: :delete, class: "btn btn-fab btn-fab-mini btn-danger", data: {confirm: "Are you sure?", :'confirm-button-text' => "Yes, I'm sure", :'cancel-button-text' => "No, cancel!", :'sweet-alert-type' => 'warning', :'confirm-button-color' => '#f44336', text: "This will delete the item. This is irreversable."} %>
-          </div>
-        </div>
-      </div>
-
-      <div class="panel-body">
-        <div class="row">
-          <div class="col-xs-12 col-md-6">
-            <div class="row grid">
-              <div class="col-xs-6 grid-sizer"></div>
-              <% if @item.listing_photos.present? %>
-                <% @item.listing_photos.each do |photo| %>
-                  <div class="col-xs-6 grid-item" id="photo-<%= photo.id %>">
-                    <%= link_to image_tag(photo.photo_url, class: "thumb"), account_job_proposal_item_path(@item.account, @item.job, @item.proposal, @item) %>
-                    <%= link_to "<i class='material-icons'>delete_forever</i>".html_safe, "javascript:void(0)", method: :delete, class: "btn btn-fab btn-fab-mini btn-danger delete-button", data: { photo_id: photo.id } %>
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner">
+              <div class="item active">
+                <%= image_tag(@item.featured_photo_url, class: "img-rounded img-responsive img-raised") %>
+              </div>
+              <% if @item.initial_photos.length > 1 %>
+                <% @item.initial_photos[1..-1].each do |photo| %>
+                  <div class="item">
+                    <%= image_tag(photo.photo_url, class: "img-rounded img-responsive img-raised") %>
                   </div>
                 <% end %>
-              <% elsif @item.initial_photos.present? %>
-                <% @item.initial_photos.each do |photo| %>
-                  <div class="col-xs-6 grid-item" id="photo-<%= photo.id %>">
-                    <%= link_to image_tag(photo.photo_url, class: "thumb"), account_job_proposal_item_path(@item.account, @item.job, @item.proposal, @item) %>
-                    <%= link_to "<i class='material-icons'>delete_forever</i>".html_safe, "javascript:void(0)", method: :delete, class: "btn btn-fab btn-fab-mini btn-danger delete-button", data: { photo_id: photo.id } %>
-                  </div>
-                <% end %>
-              <% else %>
-                <div class="col-xs-6 grid-item grid-item--width2">
-                  <%= link_to image_tag("thumb_No_Image_Available.png", class: "thumb"), account_job_proposal_item_path(@item.account, @item.job, @item.proposal, @item) %>
-                </div>
               <% end %>
             </div>
+
+            <!-- Controls -->
+            <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+              <i class="material-icons">keyboard_arrow_left</i>
+            </a>
+            <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+              <i class="material-icons">keyboard_arrow_right</i>
+            </a>
           </div>
-
-          <div class="col-xs-12 col-md-6 text-center">
-            <div class="row">
-              <table id="item-attributes">
-                <tr>
-                  <th valign="center">
-                    <h2>Status:</h2>
-                  </th>
-                  <td valign="center">
-                    <h3><%= @item.status %></h3>
-                  </td>
-                </tr>
-                <% if @item.owned? %>
-                  <tr>
-                    <th valign="center">
-                      <h2>For Sale</h2>
-                    </th>
-                    <td valign="center">
-                      <h3><%= humanized_money_with_symbol(@item.listing_price) %></h3>
-                    </td>
-                  </tr>
-                <% elsif @item.consigned? %>
-                  <tr>
-                    <th valign="center">
-                      <h2>Consigned at:</h2>
-                    </th>
-                    <td valign="center">
-                      <h3><%= @item.consignment_rate %>%</h3>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th valign="center">
-                      <h2>Listed at:</h2>
-                    </th>
-                    <td valign="center">
-                      <h3><%= humanized_money_with_symbol(@item.listing_price) %></h3>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th valign="center">
-                      <h2>Min Price:</h2>
-                    </th>
-                    <td valign="center">
-                      <h3><%= humanized_money_with_symbol(@item.minimum_sale_price) %></h3>
-                    </td>
-                  </tr>
-                <% end %>
-              </table>
-            </div>
-
-            <div class="large-top-margin">
-              <%= @item.barcode.html_safe %>
-            </div>
-
-            <div class="row large-top-margin">
-              <div class="text-center">
-                <% unless @item.sold? %>
-                  <button type="button" class="btn btn-raised btn-primary" data-toggle="modal" data-target="#<%= @item.id %>-mark-sold-modal">
-                    Mark as Sold <i class='material-icons'>done</i>
-                  </button>
-                <% end %>
-                <%= link_to "Print Tag <i class='fa fa-caret-right'></i>".html_safe, item_tag_path(@item, format: :pdf), class: "btn btn-raised btn-primary" %>
-              </div>
-            </div>
-
-          </div>
-
         </div>
       </div>
-
+      <!-- End Carousel Card -->
     </div>
+
+    <div class="col-xs-10 col-xs-offset-1 col-md-4">
+      <div class="card card-pricing">
+        <div class="content">
+          <span class="hidden-print">
+              <%= link_to "<i class='material-icons'>edit</i>".html_safe, edit_account_job_proposal_item_path(@item.account, @item.job, @item.proposal, @item), class: "btn btn-fab btn-fab-mini btn-primary pull-left" %>
+          </span>
+          <span class="hidden-print">
+              <%= link_to "<i class='material-icons'>delete_forever</i>".html_safe, item_path(@item), method: :delete, class: "btn btn-fab btn-fab-mini btn-danger pull-right", data: {confirm: "Are you sure?", :'confirm-button-text' => "Yes, I'm sure", :'cancel-button-text' => "No, cancel!", :'sweet-alert-type' => 'warning', :'confirm-button-color' => '#f44336', text: "This will delete the item. This is irreversable."} %>
+          </span>
+          <h6 class="category text-success"><%= @item.description %></h6>
+          <% if @item.listing_price_cents %>
+            <h1 class="card-title"><small>$</small><%= humanized_money(@item.listing_price) %></h1>
+          <% end %>
+          <% if current_user.try(:internal?) %>
+            <ul>
+              <li>No. <%= @item.account_item_number %></li>
+              <li>SKU <%= @item.id %></li>
+              <li><%= @item.status.titleize %></li>
+              <li><%= @item.ownership_type %></li>
+              <% if @item.consigned? %>
+                <li>at <%= @item.consignment_rate %></li>
+              <% end %>
+              <li>Min. Price: <%= humanized_money_with_symbol(@item.minimum_sale_price) %></li>
+            </ul>
+            <% unless @item.sold? %>
+              <button type="button" class="btn btn-raised btn-primary btn-round" data-toggle="modal" data-target="#<%= @item.id %>-mark-sold-modal">
+                Mark as Sold <i class='material-icons'>done</i>
+              </button>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>
