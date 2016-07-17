@@ -1,31 +1,36 @@
 <div class="list-group">
 
   <% @items.each do |item| %>
+    <%= render 'items/to_do_task', item: item, task_field: item.task[:task_field] %>
     <div id="to-do-list-item-<%= item.id %>">
-      <%= render 'items/to_do_task', item: item, task_field: item.task[:task_field] %>
 
-      <div class="list-group-item">
-        <div class="row-picture">
+      <div class="row list-group-item vertical-align">
+        <div class="col-xs-4">
           <% if item.initial_photos.present? %>
-            <%= image_tag(item.initial_photos.first.photo_url(:thumb), class: "circle", alt: "icon") %>
+            <%= image_tag(item.initial_photos.first.photo_url(:thumb), class: "img-circle img-raised img-responsive", alt: "icon") %>
           <% else %>
-            <%= image_tag(Photo.default_url, class: "circle", alt: "icon") %>
+            <%= image_tag(Photo.default_url, class: "img-circle img-raised img-responsive", alt: "icon") %>
           <% end %>
         </div>
-        <div class="row-content">
-          <div class="least-content">
-            <button type="button" class="btn btn-fab btn-fab-mini btn-primary" data-toggle="modal" data-target="#<%= item.id %>-task-modal">
-              <i class='material-icons'>done</i>
-            </button>
-          </div>
+        <div class="col-xs-6">
           <h4 class="list-group-item-heading"><%= item.task[:name] %></h4>
           <p class="list-group-item-text"><%= link_to item.description, edit_item_path(item) %> <%= item.task[:description] %></p>
         </div>
+        <div class="col-xs-2">
+          <button type="button" class="btn btn-fab btn-fab-mini btn-primary" data-toggle="modal" data-target="#<%= item.id %>-task-modal">
+            <i class='material-icons'>done</i>
+          </button>
+        </div>
       </div>
+
       <div class="list-group-separator"></div>
 
     </div>
 
   <% end %>
+
+  <div class="text-center">
+    <%= paginate @items, html: {class: "pagination pagination-primary"} %>
+  </div>
 
 </div>

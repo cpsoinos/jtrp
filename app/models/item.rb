@@ -3,6 +3,7 @@ class Item < ActiveRecord::Base
   include PgSearch
 
   multisearchable against: [:description, :status, :client_intention, :will_consign, :will_purchase]
+  paginates_per 10
 
   has_many :photos, dependent: :destroy
   accepts_nested_attributes_for :photos
@@ -69,6 +70,16 @@ class Item < ActiveRecord::Base
     photos.listing
   end
 
+  def featured_photo_url
+    if listing_photos.present?
+      listing_photos.first.photo_url
+    elsif initial_photos.present?
+      initial_photos.first.photo_url
+    else
+      "thumb_No_Image_Available.png"
+    end
+  end
+
   def agreement
     if proposal
       proposal.agreements.find_by(agreement_type: client_intention)
@@ -116,11 +127,11 @@ class Item < ActiveRecord::Base
   end
 
   def owned?
-    active? && client_intention == "sell"
+    (active? || sold?) && client_intention == "sell"
   end
 
   def consigned?
-    active? && client_intention == "consign"
+    (active? || sold?) && client_intention == "consign"
   end
 
   def offer_chosen?
@@ -132,6 +143,8 @@ class Item < ActiveRecord::Base
       "owned".titleize
     elsif consigned?
       "consigned".titleize
+    else
+      status
     end
   end
 

@@ -25,7 +25,6 @@ feature "item show" do
       expect(page).to have_content(item.id)
       expect(page).to have_link("delete_forever".html_safe)
       expect(page).to have_link("edit")
-      expect(page).to have_content("Status:")
       expect(page).to have_content("potential")
     end
 
@@ -53,9 +52,8 @@ feature "item show" do
         expect(page).to have_content(agreement.id)
         expect(page).to have_link("delete_forever".html_safe)
         expect(page).to have_link("edit")
-        expect(page).to have_content("Status:")
         expect(page).to have_content("active")
-        expect(page).to have_content("For Sale")
+        expect(page).to have_content("Owned")
         expect(page).to have_content("$11.11")
       end
 
@@ -93,13 +91,10 @@ feature "item show" do
         expect(page).to have_content(item.id)
         expect(page).to have_link("delete_forever".html_safe)
         expect(page).to have_link("edit")
-        expect(page).to have_content("Status:")
         expect(page).to have_content("active")
-        expect(page).to have_content("Consigned at:")
-        expect(page).to have_content("45.0%")
-        expect(page).to have_content("Listed at:")
+        expect(page).to have_content("at 45.0%")
         expect(page).to have_content("$11.11")
-        expect(page).to have_content("Min Price:")
+        expect(page).to have_content("Min. Price:")
         expect(page).to have_content("$10.10")
       end
 

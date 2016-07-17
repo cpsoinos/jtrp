@@ -23,3 +23,14 @@ img.logo {
 .panel-heading a {
   color: white;
 }
+
+.white-link {
+  color: white;
+  &:hover {
+    color: black;
+  }
+}
+
+.dashboard-button {
+  width: 150px;
+}

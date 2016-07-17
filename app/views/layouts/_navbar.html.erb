@@ -1,0 +1,113 @@
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation-demo">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <% if @company %>
+        <div class="brand-logo-link">
+          <%= link_to "#{image_tag('JTRPv2_allwhite_noname.png', class: 'logo')} #{@company.name}".html_safe, root_path, class: "navbar-brand" %>
+        </div>
+      <% end %>
+    </div>
+
+<!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <% if current_user && current_user.internal? %>
+
+          <li class="dropdown">
+            <a href="<%= company_client_services_path(@company) %>" data-target="#" class="dropdown-toggle" data-toggle="dropdown"><i class='material-icons'>weekend</i> Items <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu" id="items">
+              <li><%= link_to "Potential", items_path(status: 'potential')%></li>
+              <li><%= link_to "Active", items_path(status: 'active')%></li>
+              <li><%= link_to "Sold", items_path(status: 'sold')%></li>
+              <li><%= link_to "All Items", items_path%></li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a href="<%= company_client_services_path(@company) %>" data-target="#" class="dropdown-toggle" data-toggle="dropdown"><i class='material-icons'>assignment_ind</i> Accounts <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu" id="accounts">
+              <li><%= link_to "Potential", accounts_path(status: 'potential') %></li>
+              <li><%= link_to "Active", accounts_path(status: 'active') %></li>
+              <li><%= link_to "Inactive", accounts_path(status: 'inactive') %></li>
+              <li><%= link_to "All Accounts", accounts_path %></li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a href="<%= company_client_services_path(@company) %>" data-target="#" class="dropdown-toggle" data-toggle="dropdown"><i class='material-icons'>place</i> Jobs <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu" id="jobs">
+              <li><%= link_to "Potential", jobs_path(status: 'potential') %></li>
+              <li><%= link_to "Active", jobs_path(status: 'active') %></li>
+              <li><%= link_to "Completed", jobs_path(status: 'completed') %></li>
+              <li><%= link_to "All Jobs", jobs_path %></li>
+            </ul>
+          </li>
+
+        <% else %>
+
+          <li class="dropdown">
+            <a href="<%= company_client_services_path(@company) %>" data-target="#" class="dropdown-toggle" data-toggle="dropdown"><i class='material-icons'>view_list</i> Categories <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+              <% if @categories %>
+                <% @categories.each do |category| %>
+                  <li>
+                    <%= link_to category.name, category_path(category) %>
+                  </li>
+                <% end %>
+              <% end %>
+              <li>
+                <%= link_to "All Categories", categories_path %>
+              </li>
+            </ul>
+          </li>
+
+        <% end %>
+      </ul>
+
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+          <a href="<%= company_client_services_path(@company) %>" data-target="#" class="dropdown-toggle" data-toggle="dropdown"><i class='material-icons'>search</i>
+          </a>
+          <ul class="dropdown-menu">
+            <li>
+              <%= form_tag search_index_path, method: :get do %>
+                <div class="input-group">
+                  <div class="form-group is-empty" style="padding-left: 5px;">
+                    <%= text_field_tag :query, params[:query], class: "form-control", placeholder: "Search" %>
+                    <span class="material-input"></span>
+                  </div>
+                </div>
+              <% end %>
+            </li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="<%= company_client_services_path(@company) %>" data-target="#" class="dropdown-toggle" data-toggle="dropdown">About Us
+            <b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <li><%= link_to 'Client Services', company_client_services_path(@company) %></li>
+            <li><%= link_to 'Consignment Policies', company_consignment_policies_path(@company) %></li>
+            <li><%= link_to 'Service Rate Schedule', company_service_rate_schedule_path(@company) %></li>
+            <li><%= link_to 'Service Rate Schedule for Agents', company_agent_service_rate_schedule_path(@company) %></li>
+          </ul>
+        </li>
+        <% if current_user %>
+          <li><%= link_to 'Sign Out', destroy_user_session_path, method: 'delete' %></li>
+        <% else %>
+          <li><%= link_to "Sign in with Clover", user_omniauth_authorize_path(:clover) %></li>
+          <li><%= link_to 'Sign In', new_user_session_path %></li>
+          <li><%= link_to 'Sign Up', new_user_registration_path %></li>
+        <% end %>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-->
+</nav>

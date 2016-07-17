@@ -45,13 +45,13 @@ gem 'omniauth-clover'
 gem 'deepstruct'
 gem 'rack-timeout'
 gem 'pg_search'
+gem 'kaminari'
 
 group :production, :staging, :local do
   gem 'rails_12factor'
 end
 
 source 'https://rails-assets.org' do
-  gem 'rails-assets-bootstrap-material-design'
   gem 'rails-assets-classnames'
   gem 'rails-assets-sweetalert'
 end
@@ -79,7 +79,7 @@ group :test do
   gem 'rspec-rails', '~> 3.0'
   gem 'shoulda-matchers', require: false
   gem 'capybara'
-  gem 'poltergeist', '~> 1.7'
+  gem 'poltergeist'
   gem 'launchy'
   gem 'email_spec'
   gem 'rspec-sidekiq'
