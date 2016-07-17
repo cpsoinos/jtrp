@@ -48,7 +48,7 @@
               <%= humanized_money_with_symbol(item.minimum_sale_price) %>
             </td>
             <td class="text-center">
-              <% if item.sold? %>
+              <% if item.sold? && item.sold_at %>
                 <h4><%= item.sold_at.strftime("%-m/%-d/%y") %></h4>
               <% end %>
             </td>

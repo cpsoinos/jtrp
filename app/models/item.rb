@@ -127,11 +127,11 @@ class Item < ActiveRecord::Base
   end
 
   def owned?
-    active? && client_intention == "sell"
+    (active? || sold?) && client_intention == "sell"
   end
 
   def consigned?
-    active? && client_intention == "consign"
+    (active? || sold?) && client_intention == "consign"
   end
 
   def offer_chosen?

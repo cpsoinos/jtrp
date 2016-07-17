@@ -16,7 +16,7 @@ feature "add an account" do
 
     scenario "visits new account path from home page" do
       visit root_path
-      click_link("Account")
+      click_link("add Account")
 
       expect(page).to have_content("Is this a company?")
       expect(page).to have_field("Company name", visible: false)

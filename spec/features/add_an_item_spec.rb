@@ -32,7 +32,7 @@ feature "add an item" do
 
     scenario "clicks on 'Add an item' from home page" do
       visit root_path
-      click_link("Item")
+      click_link("add Item")
 
       expect(page).to have_content("Add an item")
       expect(page).to have_field("Description")

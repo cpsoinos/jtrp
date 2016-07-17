@@ -72,12 +72,15 @@
             <ul>
               <li>No. <%= @item.account_item_number %></li>
               <li>SKU <%= @item.id %></li>
-              <li><%= @item.status.titleize %></li>
               <li><%= @item.ownership_type %></li>
               <% if @item.consigned? %>
-                <li>at <%= @item.consignment_rate %></li>
+                <li>at <%= @item.consignment_rate %>%</li>
               <% end %>
               <li>Min. Price: <%= humanized_money_with_symbol(@item.minimum_sale_price) %></li>
+              <li><%= @item.status.titleize %></li>
+              <% if @item.sold? %>
+                <li>for <%= humanized_money_with_symbol(@item.sale_price) %></li>
+              <% end %>
             </ul>
             <% unless @item.sold? %>
               <button type="button" class="btn btn-raised btn-primary btn-round" data-toggle="modal" data-target="#<%= @item.id %>-mark-sold-modal">

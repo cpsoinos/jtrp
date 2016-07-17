@@ -11,17 +11,19 @@
 		</a>
 	</div>
 
-	<div class="col-xs-12 col-sm-4">
-		<a href="<%= client_path(@account.primary_contact) %>">
-		</a>
-		<div class="info">
-			<div class="icon icon-warning">
-				<i class="material-icons">person</i>
-			</div>
-			<h1 class="info-title"><%= @account.primary_contact.full_name %></h1>
-			<p>Primary Contact</p>
+	<% if @account.primary_contact %>
+		<div class="col-xs-12 col-sm-4">
+			<a href="<%= client_path(@account.primary_contact) %>">
+				<div class="info">
+					<div class="icon icon-warning">
+						<i class="material-icons">person</i>
+					</div>
+					<h1 class="info-title"><%= @account.primary_contact.full_name %></h1>
+					<p>Primary Contact</p>
+				</div>
+			</a>
 		</div>
-	</div>
+	<% end %>
 
 	<div class="col-xs-12 col-sm-4">
 		<a href="<%= account_jobs_path(@account) %>">

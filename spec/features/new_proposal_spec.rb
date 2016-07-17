@@ -23,7 +23,7 @@ feature "new proposal" do
       context "without an existing job" do
         scenario "new proposal from account page" do
           visit account_path(account)
-          click_link("New Proposal")
+          click_link("Proposal")
 
           expect(page).to have_content("New Job")
           expect(page).to have_field("Address 1")
@@ -39,7 +39,7 @@ feature "new proposal" do
 
         scenario "new proposal from account page" do
           visit account_path(account)
-          click_link("New Proposal")
+          click_link("Proposal")
 
           expect(page).to have_content("Is this for an existing job?")
           expect(page).to have_link("Yes")
