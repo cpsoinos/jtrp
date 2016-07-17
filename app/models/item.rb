@@ -143,6 +143,8 @@ class Item < ActiveRecord::Base
       "owned".titleize
     elsif consigned?
       "consigned".titleize
+    else
+      status
     end
   end
 

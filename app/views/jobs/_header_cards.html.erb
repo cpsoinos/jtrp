@@ -24,6 +24,16 @@
 	</div>
 
 	<div class="col-xs-12 col-sm-3">
+		<div class="info">
+			<div class="icon icon-primary">
+				<i class="material-icons">weekend</i>
+			</div>
+			<h1 class="info-title"><%= @job.items.count %></h1>
+			<p>Items</p>
+		</div>
+	</div>
+
+	<div class="col-xs-12 col-sm-3">
 		<a href="<%= account_job_path(@account, @job) %>">
   		<div class="info">
   			<div class="icon icon-success">
@@ -35,13 +45,4 @@
     </a>
 	</div>
 
-	<div class="col-xs-12 col-sm-3">
-		<div class="info">
-			<div class="icon icon-primary">
-				<i class="material-icons">weekend</i>
-			</div>
-			<h1 class="info-title"><%= @job.items.count %></h1>
-			<p>Items</p>
-		</div>
-	</div>
 </div>

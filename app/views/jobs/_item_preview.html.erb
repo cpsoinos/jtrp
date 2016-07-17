@@ -1,0 +1,20 @@
+<% items.each do |item| %>
+  <div class="col-md-4">
+    <div class="card card-plain card-blog">
+      <a href="<%= account_job_proposal_item_path(@account, @job, item.proposal, item) %>">
+        <div class="card-image">
+            <%= image_tag(item.featured_photo_url, class: "img img-raised") %>
+          <div class="ripple-container"></div>
+        </div>
+      </a>
+
+      <div class="content">
+        <%= link_to "<i class='material-icons'>edit</i>".html_safe, edit_account_job_proposal_item_path(@account, @job, item.proposal, item), class: "btn btn-fab btn-fab-mini btn-primary pull-right" %>
+        <h6 class="category text-info"><%= item.ownership_type %></h6>
+        <h4 class="card-title">
+          <%= link_to item.description, account_job_proposal_item_path(@account, @job, item.proposal, item) %>
+        </h4>
+      </div>
+    </div>
+  </div>
+<% end %>
