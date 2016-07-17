@@ -1,0 +1,38 @@
+<div class="row text-center">
+	<div class="col-xs-12 col-md-4">
+		<a href="<%= accounts_path(status: 'potential') %>">
+			<div class="info">
+				<div class="icon icon-info">
+					<i class="material-icons">assignment_ind</i>
+				</div>
+				<h1 class="info-title"><%= Account.potential.count %></h1>
+				<p>Potential Accounts</p>
+			</div>
+		</a>
+	</div>
+
+	<div class="col-xs-12 col-md-4">
+		<a href="<%= accounts_path(status: 'active') %>">
+			<div class="info">
+				<div class="icon icon-primary">
+					<i class="material-icons">person</i>
+				</div>
+				<h1 class="info-title"><%= Account.active.count %></h1>
+				<p>Active Accounts</p>
+			</div>
+		</a>
+	</div>
+
+	<div class="col-xs-12 col-md-4">
+		<a href="<%= accounts_path(status: 'inactive') %>">
+			<div class="info">
+				<div class="icon icon-warning">
+					<i class="material-icons">person</i>
+				</div>
+				<h1 class="info-title"><%= Account.inactive.count %></h1>
+				<p>Inctive Accounts</p>
+			</div>
+		</a>
+	</div>
+
+</div>
