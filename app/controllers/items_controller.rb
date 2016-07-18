@@ -3,7 +3,7 @@ class ItemsController < ApplicationController
   before_filter :find_categories, only: [:new, :edit]
   before_filter :find_proposal, only: [:create, :batch_create]
   before_filter :find_job, only: :tags
-  before_filter :require_internal, only: [:new, :create, :update, :destroy]
+  before_filter :require_internal
 
   def index
     @items = ItemsPresenter.new(params).filter
