@@ -93,23 +93,25 @@
         <%= form_for @message, id: "contact-form" do |f| %>
 
 					<div class="form-group label-floating is-empty">
-            <%= f.label :name, "Your name" %>
+            <%= f.label :name, "Your name", class: "control-label" %>
             <%= f.text_field :name, class: "form-control" %>
           </div>
 					<div class="form-group label-floating is-empty">
-            <%= f.label :email, "Email address" %>
+            <%= f.label :email, "Email address", class: "control-label" %>
             <%= f.email_field :email, class: "form-control" %>
           </div>
 					<div class="form-group label-floating is-empty">
-            <%= f.label :phone, "Phone" %>
+            <%= f.label :phone, "Phone", class: "control-label" %>
             <%= f.phone_field :phone, class: "form-control" %>
           </div>
 					<div class="form-group label-floating is-empty">
-            <%= f.label :message, "Your message" %>
+            <%= f.label :message, "Your message", class: "control-label" %>
             <%= f.text_area :message, class: "form-control" %>
           </div>
 
-          <%= f.submit "Contact Us", class: "btn btn-round btn-primary btn-raised" %>
+          <div class="text-center">
+            <%= f.submit "Contact Us", class: "btn btn-round btn-primary btn-raised" %>
+          </div>
 
         <% end %>
 			</div>
