@@ -2,6 +2,8 @@ class CategoriesController < ApplicationController
   before_filter :require_internal, except: [:index, :show]
 
   def index
+    @items = Item.active.sample(3)
+    @message = Message.new
   end
 
   def show
