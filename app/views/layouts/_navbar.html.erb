@@ -77,18 +77,20 @@
         <li class="dropdown">
           <a href="<%= company_client_services_path(@company) %>" data-target="#" class="dropdown-toggle" data-toggle="dropdown"><i class='material-icons'>search</i>
           </a>
-          <ul class="dropdown-menu">
-            <li>
-              <%= form_tag search_index_path, method: :get do %>
-                <div class="input-group">
-                  <div class="form-group is-empty" style="padding-left: 5px;">
-                    <%= text_field_tag :query, params[:query], class: "form-control", placeholder: "Search" %>
-                    <span class="material-input"></span>
+          <% if current_user.try(:internal?) %>
+            <ul class="dropdown-menu">
+              <li>
+                <%= form_tag search_index_path, method: :get do %>
+                  <div class="input-group">
+                    <div class="form-group is-empty" style="padding-left: 5px;">
+                      <%= text_field_tag :query, params[:query], class: "form-control", placeholder: "Search" %>
+                      <span class="material-input"></span>
+                    </div>
                   </div>
-                </div>
-              <% end %>
-            </li>
-          </ul>
+                <% end %>
+              </li>
+            </ul>
+          <% end %>
         </li>
         <li class="dropdown">
           <a href="<%= company_client_services_path(@company) %>" data-target="#" class="dropdown-toggle" data-toggle="dropdown">About Us
