@@ -22,7 +22,7 @@ feature "yard sale" do
     click_link("Yard Sale")
 
     expect(page).to have_content("Yard Sale")
-    expect(page).to have_content("New Job")
+    expect(page).to have_link("Job")
     # expect(page).to have_field("Address 1")
     # expect(page).to have_field("Address 2")
     # expect(page).to have_field("City")

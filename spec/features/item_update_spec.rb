@@ -61,6 +61,7 @@ feature "update an item" do
     end
 
     scenario "adds a second listing photo" do
+      pending("listing photos")
       item = create(:item, :with_listing_photo)
       visit edit_item_path(item)
 

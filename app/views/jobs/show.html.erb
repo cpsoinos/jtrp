@@ -5,291 +5,123 @@
   </div>
 </div>
 
-<div class="row grid">
-  <div class="grid-sizer col-xs-6 col-md-3"></div>
-
-  <div class="grid-item col-xs-6 col-md-3">
-    <div class="panel panel-primary text-center">
-      <div class="panel-body">
-        <h1><%= link_to @job.id, account_job_path(@account, @job) %></h1>
-      </div>
-      <div class="panel-heading complement-primary">
-        <h3><%= link_to "<i class='material-icons'>location_on</i> Job Number".html_safe, account_job_path(@account, @job) %></h3>
-      </div>
-    </div>
+<div class="row text-center">
+  <div class="col-md-8 col-md-offset-2 col-xs-10 col-xs-offset-1">
+    <%= render 'header_cards' %>
   </div>
+</div>
 
-  <div class="grid-item col-xs-6 col-md-3">
-    <div class="panel panel-primary text-center">
-      <div class="panel-body">
-        <h1><%= link_to @account.id, account_path(@account) %></h1>
-      </div>
-      <div class="panel-heading complement-darker">
-        <h3><%= link_to "<i class='material-icons'>assignment_ind</i> Account Number".html_safe, account_path(@account) %></h3>
-      </div>
-    </div>
-  </div>
+<div class="row section section-dark extra-large-top-margin">
+  <div class="col-xs-10 col-xs-offset-1 col-md-8 col-md-offset-2">
+    <div class="row">
 
-  <div class="grid-item col-xs-6 col-md-3">
-    <div class="panel panel-primary text-center">
-      <div class="panel-body">
-        <h1><%= link_to @account.status.titleize, account_jobs_path(@account) %></h1>
-      </div>
-      <div class="panel-heading secondary-primary">
-        <h3><%= link_to "Status", account_jobs_path(@account) %></h3>
-      </div>
-    </div>
-  </div>
+      <div class="col-xs-12 col-md-4">
+        <div class="card card-blog">
+      		<div class="card-image">
+            <%= image_tag(@job.maps_url, class: "img") %>
+        		<div class="ripple-container"></div>
+          </div>
 
-  <div class="grid-item col-xs-6 col-md-3">
-    <div class="panel panel-primary text-center">
-      <div class="panel-body">
-        <h1><%= @job.items.count %></h1>
+      		<div class="content text-center">
+      			<p class="card-description">
+              <p><%= @job.address_1 %></p>
+              <% if @job.address_2.present? %>
+                <p><%= @job.address_2 %></p>
+              <% end %>
+              <p><%= @job.city %>, <%= @job.state %> <%= @job.zip %></p>
+      			</p>
+      		</div>
+      	</div>
       </div>
-      <div class="panel-heading secondary-darker">
-        <h3>Items</h3>
-      </div>
+
+      <div class="col-xs-12 col-md-4">
+        <div class="card card-blog">
+
+          <% @job.proposals.each do |proposal| %>
+            <div class="row vertical-align">
+              <div class="col-xs-8">
+                <a href="<%= account_job_proposal_path(@account, @job, proposal) %>">
+          				<div class="info info-horizontal">
+          					<div class="icon icon-info">
+          						<i class="material-icons">assignment</i>
+          					</div>
+          					<div class="description">
+          						<h3 class="info-title">Proposal <%= proposal.id %></h3>
+          						<p style="color: black;">
+          							<%= proposal.status %>
+          						</p>
+          					</div>
+                	</div>
+                </a>
+              </div>
+              <div class="col-xs-3">
+                <%= link_to "<i class='material-icons'>edit</i>".html_safe, edit_account_job_proposal_path(@account, @job, proposal), class: "btn btn-fab btn-fab-mini btn-primary" %>
+              </div>
+            </div>
+            <hr />
+          <% end %>
+          <div class="row text-center bottom-margin">
+            <%= link_to "<i class='material-icons'>add</i>".html_safe, account_job_proposals_path(@account, @job), method: "POST", class: "btn btn-fab btn-primary" %>
+          </div>
+        </div>
+			</div>
+
+      <div class="col-xs-12 col-md-4">
+        <div class="card card-blog">
+          <% @job.agreements.each do |agreement| %>
+            <a href="<%= account_job_proposal_agreements_path(@account, @job, agreement.proposal) %>">
+      				<div class="info info-horizontal">
+      					<div class="icon icon-primary">
+      						<i class="material-icons">assignment_turned_in</i>
+      					</div>
+      					<div class="description">
+      						<h3 class="info-title">Agreement <%= agreement.id %></h3>
+      						<p style="color: black;">
+      							<%= agreement.status %>
+      						</p>
+      					</div>
+            	</div>
+            </a>
+            <hr />
+          <% end %>
+        </div>
+			</div>
+
     </div>
   </div>
 </div>
 
-<div class="row grid">
-  <div class="col-xs-12 col-md-4 grid-sizer"></div>
+<div class="row extra-large-top-margin">
 
-  <div class="col-xs-12 col-md-4 grid-item">
-    <div class="panel panel-primary">
-      <div class="panel-heading text-center primary-lighter">
-        <h3>Address</h3>
-      </div>
-      <div class="panel-body text-center">
-        <p><%= @job.address_1 %></p>
-        <% if @job.address_2.present? %>
-          <p><%= @job.address_2 %></p>
-        <% end %>
-        <p><%= @job.city %></p>
-        <p><%= @job.state %>, <%= @job.zip %></p>
-        <%= image_tag(@job.maps_url, alt: "Job Address", width: "100%") %>
-      </div>
+  <div class="row">
+		<div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-4 text-center">
+			<ul class="nav nav-pills nav-pills-primary">
+			  <li class="active"><a href="#pill1" data-toggle="tab" aria-expanded="true">All</a></li>
+			  <li class=""><a href="#pill2" data-toggle="tab" aria-expanded="false">Potential</a></li>
+			  <li class=""><a href="#pill3" data-toggle="tab" aria-expanded="false">Owned</a></li>
+			  <li class=""><a href="#pill4" data-toggle="tab" aria-expanded="false">Consigned</a></li>
+			  <li class=""><a href="#pill5" data-toggle="tab" aria-expanded="false">Sold</a></li>
+			</ul>
     </div>
-  </div>
-
-  <div class="col-xs-12 col-md-4 grid-item">
-    <div class="panel panel-primary">
-      <div class="panel-heading text-center complement-lighter">
-        <div class="row vertical-align">
-          <div class="col-xs-10 col-xs-offset-1">
-            <h3>Proposals</h3>
-          </div>
-          <div class="col-xs-1">
-            <%= link_to "<i class='material-icons'>add</i>".html_safe, account_job_proposals_path(@account, @job), method: "POST", class: "btn btn-fab btn-fab-mini btn-primary pull-right" %>
-          </div>
-        </div>
-      </div>
-      <div class="panel-body text-center">
-        <% if @job.proposals.present? %>
-          <div class="row client-grid">
-            <div class="col-xs-6 client-grid-sizer"></div>
-            <% @job.proposals.each do |proposal| %>
-              <div class="col-xs-6 client-grid-item">
-                <div class="panel panel-primary text-center">
-                  <div class="panel-body">
-                    <h4><%= link_to "<i class='material-icons md-48'>assignment</i>".html_safe, account_job_proposal_path(@account, @job, proposal) %></h4>
-                  </div>
-                  <div class="panel-heading secondary-primary">
-                    <div class="row vertical-align">
-                      <div class="col-xs-12 col-xs-offset-1">
-                        <h5><%= link_to "No. #{proposal.id}", account_job_proposal_path(@account, @job, proposal) %></h5>
-                      </div>
-                      <div class="col-xs-1">
-                        <%= link_to "<i class='material-icons'>edit</i>".html_safe, edit_account_job_proposal_path(@account, @job, proposal), class: "btn btn-fab btn-fab-mini btn-primary pull-right" %>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            <% end %>
-          </div>
-        <% else %>
-          <%= link_to "New Proposal", account_job_proposals_path(@account, @job), method: "POST", class: "btn btn-raised btn-primary" %>
-        <% end %>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-xs-12 col-md-4 grid-item">
-    <div class="panel panel-primary">
-      <div class="panel-heading text-center secondary-lighter">
-        <h3>Agreements</h3>
-      </div>
-      <div class="panel-body text-center">
-        <% if @job.agreements.present? %>
-          <div class="row client-grid">
-            <div class="col-xs-6 client-grid-sizer"></div>
-            <% @job.agreements.each do |agreement| %>
-              <div class="col-xs-6 client-grid-item">
-                <div class="panel panel-primary text-center">
-                  <div class="panel-body">
-                    <h4><%= link_to "<i class='material-icons md-48'>assignment_turned_in</i>".html_safe, account_job_proposal_agreements_path(@account, @job, agreement.proposal) %></h4>
-                  </div>
-                  <div class="panel-heading complement-primary">
-                    <h5><%= link_to agreement.agreement_type.titleize, account_job_proposal_agreements_path(@account, @job, agreement.proposal) %></h5>
-                  </div>
-                </div>
-              </div>
-            <% end %>
-          </div>
-        <% else %>
-          <i>No agreements</i>
-        <% end %>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-xs-12 col-md-4 grid-item">
-    <div class="panel panel-primary">
-      <div class="panel-heading text-center">
-        <h3>Legend</h3>
-      </div>
-      <div class="panel-body">
-        <div class="list-group">
-          <div class="list-group-item">
-            <div class="row-action-primary">
-              <i class="material-icons complement-primary">store</i>
-            </div>
-            <div class="row-content">
-              <h4 class="list-group-item-heading">owned</h4>
-              <p class="list-group-item-text">These items have been purchased outright from clients.</p>
-            </div>
-          </div>
-          <div class="list-group-separator"></div>
-          <div class="list-group-item">
-            <div class="row-action-primary">
-              <i class="material-icons secondary-lighter">supervisor_account</i>
-            </div>
-            <div class="row-content">
-              <h4 class="list-group-item-heading">consigned</h4>
-              <p class="list-group-item-text">These items are on consignment with a client.</p>
-            </div>
-          </div>
-          <div class="list-group-separator"></div>
-          <div class="list-group-item">
-            <div class="row-action-primary">
-              <i class="fa fa-trash complement-darker" aria-hidden="true"></i>
-            </div>
-            <div class="row-content">
-              <h4 class="list-group-item-heading">junk</h4>
-              <p class="list-group-item-text">These items are to be taken to the dump.</p>
-            </div>
-          </div>
-          <div class="list-group-separator"></div>
-          <div class="list-group-item">
-            <div class="row-action-primary">
-              <i class="fa fa-gift secondary-darker" aria-hidden="true"></i>
-            </div>
-            <div class="row-content">
-              <h4 class="list-group-item-heading">donate</h4>
-              <p class="list-group-item-text">These items will be donated to the client's charity of choice.</p>
-            </div>
-          </div>
-          <div class="list-group-separator"></div>
-          <div class="list-group-item">
-            <div class="row-action-primary">
-              <i class="fa fa-question primary-lighter" aria-hidden="true"></i>
-            </div>
-            <div class="row-content">
-              <h4 class="list-group-item-heading">undecided</h4>
-              <p class="list-group-item-text">The client hasn't yet decided what to do with these items.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="row grid">
-
-  <div class="col-xs-12 grid-sizer"></div>
-
-  <div class="col-xs-12 grid-item">
-    <div class="panel panel-primary">
-      <div class="panel-heading text-center primary-lighter">
-        <div class="row vertical-align">
-          <div class="col-xs-8 col-xs-offset-2">
-            <span><h3>Potential Items</h3></span>
-          </div>
-          <div class="col-xs-2">
-            <span><%= link_to "<i class='material-icons'>print</i>".html_safe, tags_items_path(job_id: @job.id, status: "potential", format: :pdf), class: "btn btn-fab btn-fab-mini btn-primary pull-right" %></span>
-          </div>
-        </div>
-      </div>
-      <div class="panel-body text-center">
-        <% if @job.items.potential.present? %>
-          <div class="row client-grid">
-            <div class="col-xs-6 col-md-4 client-grid-sizer"></div>
-            <% @job.items.potential.each do |item| %>
-              <%= render 'items/preview_panel', item: item, path: account_job_proposal_item_path(@account, @job, item.proposal, item) %>
-            <% end %>
-          </div>
-        <% else %>
-          <i>No items</i>
-        <% end %>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-xs-12 grid-item">
-    <div class="panel panel-primary">
-      <div class="panel-heading text-center complement-darker">
-        <div class="row vertical-align">
-          <div class="col-xs-8 col-xs-offset-2">
-            <span><h3>Active Items</h3></span>
-          </div>
-          <div class="col-xs-2">
-            <span><%= link_to "<i class='material-icons'>print</i>".html_safe, tags_items_path(job_id: @job.id, status: "active", format: :pdf), class: "btn btn-fab btn-fab-mini btn-primary pull-right" %></span>
-          </div>
-        </div>
-      </div>
-      <div class="panel-body text-center">
-        <% if @job.items.active.present? %>
-          <div class="row client-grid">
-            <div class="col-xs-6 col-md-4 client-grid-sizer"></div>
-            <% @job.items.active.each do |item| %>
-              <%= render 'items/preview_panel', item: item, path: account_job_proposal_item_path(@account, @job, item.proposal, item) %>
-            <% end %>
-          </div>
-        <% else %>
-          <i>No items</i>
-        <% end %>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-xs-12 grid-item">
-    <div class="panel panel-primary">
-      <div class="panel-heading text-center secondary-darker">
-        <div class="row vertical-align">
-          <div class="col-xs-8 col-xs-offset-2">
-            <span><h3>Sold Items</h3></span>
-          </div>
-          <div class="col-xs-2">
-            <span><%= link_to "<i class='material-icons'>print</i>".html_safe, tags_items_path(job_id: @job.id, status: "sold", format: :pdf), class: "btn btn-fab btn-fab-mini btn-primary pull-right" %></span>
-          </div>
-        </div>
-      </div>
-      <div class="panel-body text-center">
-        <% if @job.items.sold.present? %>
-          <div class="row client-grid">
-            <div class="col-xs-6 col-md-4 client-grid-sizer"></div>
-            <% @job.items.sold.each do |item| %>
-              <%= render 'items/preview_panel', item: item, path: account_job_proposal_item_path(@account, @job, item.proposal, item) %>
-            <% end %>
-          </div>
-        <% else %>
-          <i>No items</i>
-        <% end %>
-      </div>
-    </div>
-  </div>
+    <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2">
+      <div class="tab-content tab-space">
+				<div class="tab-pane active grid" id="pill1">
+          <%= render 'item_preview', items: @job.items %>
+				</div>
+				<div class="tab-pane grid" id="pill2">
+          <%= render 'item_preview', items: @job.items.potential %>
+				</div>
+				<div class="tab-pane grid" id="pill3">
+          <%= render 'item_preview', items: @job.items.owned %>
+				</div>
+				<div class="tab-pane grid" id="pill4">
+          <%= render 'item_preview', items: @job.items.consigned %>
+				</div>
+				<div class="tab-pane grid" id="pill5">
+          <%= render 'item_preview', items: @job.items.sold %>
+				</div>
+			</div>
+		</div>
+	</div>
 
 </div>

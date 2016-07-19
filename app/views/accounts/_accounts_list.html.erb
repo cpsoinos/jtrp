@@ -1,0 +1,47 @@
+<div class="row">
+
+  <div class="table-responsive">
+    <table class="table table-shopping">
+      <thead>
+        <tr>
+          <th class="text-center"></th>
+          <th class="text-center th-description">Name</th>
+          <th class="text-center">Account No.</th>
+          <th class="text-center">Jobs</th>
+          <th class="text-center">Items</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% accounts.each do |account| %>
+          <tr>
+            <td class="text-center">
+              <div class="img-container">
+                <%= link_to image_tag(account.avatar, class: "img-rounded img-responsive img-raised"), account_path(account) %>
+              </div>
+            </td>
+            <td class="td-name">
+              <%= link_to account.full_name, account_path(account) %>
+              <br><small>Primary Contact: <%= account.primary_contact ? link_to(account.primary_contact.full_name, client_path(account.primary_contact)) : '' %></small>
+            </td>
+            <td class="text-center">
+              <%= account.account_number %>
+            </td>
+            <td class="text-center">
+              <%= account.jobs.count %>
+            </td>
+            <td class="text-center">
+              <%= account.items.count %>
+            </td>
+            <!-- <td class="td-actions">
+              <button type="button" rel="tooltip" data-placement="left" title="" class="btn btn-simple" data-original-title="Remove account">
+                  <i class="material-icons">close</i>
+              </button>
+            </td> -->
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+</div>

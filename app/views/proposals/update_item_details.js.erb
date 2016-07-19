@@ -6,5 +6,5 @@ panelHeading.removeClass("primary-lighter").addClass("<%= @item.panel_color %>")
 var listItem = $("#to-do-list-item-<%= @item.id %>")
 var modal = $("#<%= @item.id %>-task-modal")
 
-modal.modal('hide');
+modal.modal('toggle');
 listItem.remove();

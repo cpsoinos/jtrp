@@ -14,73 +14,46 @@
   </div>
 </div>
 
-<div class="row grid">
-  <div class="grid-sizer col-xs-6 col-md-3"></div>
+<%= render 'index_header_cards' %>
 
-  <div class="grid-item col-xs-6 col-md-3">
-    <div class="panel panel-primary text-center">
-      <div class="panel-body">
-        <h1><%= Account.potential.count %></h1>
-      </div>
-      <div class="panel-heading complement-primary">
-        <h3><%= link_to "Potential Accounts", accounts_path(status: 'potential') %></h3>
-      </div>
+<div class="row">
+  <div class="col-md-8 col-md-offset-2 col-xs-12">
+    <div class="row">
+      <ul class="nav nav-pills nav-pills-icons nav-pills-primary text-center" role="tablist">
+        <li class="">
+          <a href="#potential" aria-controls="potential" role="tab" data-toggle="tab" aria-expanded="false">
+            <i class="material-icons info">av_timer</i>
+            <h5>Potential</h5>
+          </a>
+        </li>
+        <li class="">
+          <a href="#active" aria-controls="active" role="tab" data-toggle="tab" aria-expanded="false">
+            <i class="material-icons primary">av_timer</i>
+            <h5>Active</h5>
+          </a>
+        </li>
+        <li class="">
+          <a href="#inactive" aria-controls="inactive" role="tab" data-toggle="tab" aria-expanded="false">
+            <i class="material-icons warning">av_timer</i>
+            <h5>Inactive</h5>
+          </a>
+        </li>
+      </ul>
     </div>
-  </div>
 
-  <div class="grid-item col-xs-6 col-md-3">
-    <div class="panel panel-primary text-center">
-      <div class="panel-body">
-        <h1><%= Account.active.count %></h1>
-      </div>
-      <div class="panel-heading complement-darker">
-        <h3><%= link_to "Active Accounts", accounts_path(status: 'active') %></h3>
-      </div>
-    </div>
-  </div>
-
-  <div class="grid-item col-xs-6 col-md-3">
-    <div class="panel panel-primary text-center">
-      <div class="panel-body">
-        <h1><%= @yard_sale.jobs.active.count %></h1>
-      </div>
-      <div class="panel-heading secondary-primary">
-        <h3><%= link_to "Active Yard Sales", account_path(@yard_sale) %></h3>
-      </div>
-    </div>
-  </div>
-
-  <div class="grid-item col-xs-6 col-md-3">
-    <div class="panel panel-primary text-center">
-      <div class="panel-body">
-        <h1><%= @estate_sale.jobs.active.count %></h1>
-      </div>
-      <div class="panel-heading secondary-darker">
-        <h3><%= link_to "Active Estate Sales", account_path(@estate_sale) %></h3>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="row grid">
-  <div class="col-xs-6 col-md-3 grid-sizer"></div>
-  <% @accounts.each do |account| %>
-    <div class="col-xs-6 col-md-3 grid-item">
-      <div class="panel panel-primary text-center">
-        <div class="panel-heading">
-          <h4><%= link_to account.full_name, account_path(account) %></h4>
+    <!-- Tab panes -->
+    <div class="large-top-margin">
+      <div class="tab-content">
+        <div role="tabpanel" class="tab-pane fade" id="potential">
+          <%= render "accounts_list", accounts: Account.potential %>
         </div>
-        <div class="panel-body">
-          <%= link_to image_tag(account.avatar), account_path(account) %>
-          <div class="row">
-            <div class="col-xs-7 text-right">Total jobs: </div>
-            <div class="col-xs-5 text-left"><%= account.jobs.count %></div>
-            <div class="col-xs-7 text-right">Total items: </div>
-            <div class="col-xs-5 text-left"><%= account.items.count %></div>
-          </div>
+        <div role="tabpanel" class="tab-pane fade" id="active">
+          <%= render "accounts_list", accounts: Account.active %>
+        </div>
+        <div role="tabpanel" class="tab-pane fade" id="inactive">
+          <%= render "accounts_list", accounts: Account.inactive %>
         </div>
       </div>
     </div>
-  <% end %>
-
+  </div>
 </div>

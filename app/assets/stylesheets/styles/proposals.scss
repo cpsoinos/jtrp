@@ -57,6 +57,14 @@
   margin-bottom: 3em;
 }
 
+.extra-large-bottom-margin {
+  margin-bottom: 8em;
+}
+
+.large-bottom-padding {
+  padding-bottom: 3em;
+}
+
 .client-header {
   background: $brand-primary;
 }
@@ -76,9 +84,11 @@
   padding: 1em;
 }
 
-.vertical-align {
-  display: flex;
-  align-items: center;
+@media only screen and (min-width : 768px) {
+  .vertical-align {
+    display: flex;
+    align-items: center;
+  }
 }
 
 .response-thumb {

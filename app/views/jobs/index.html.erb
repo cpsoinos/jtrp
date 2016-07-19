@@ -5,83 +5,46 @@
   </div>
 </div>
 
-<div class="row grid">
-  <div class="grid-sizer col-xs-6 col-md-4"></div>
+<%= render 'index_header_cards' %>
 
-  <div class="grid-item col-xs-6 col-md-4">
-    <div class="panel panel-primary text-center">
-      <div class="panel-body">
-        <h1><%= Job.potential.count %></h1>
-      </div>
-      <div class="panel-heading complement-primary">
-        <h3><%= link_to "Potential Jobs", jobs_path(status: 'potential') %></h3>
-      </div>
+<div class="row">
+  <div class="col-md-8 col-md-offset-2 col-xs-12">
+    <div class="row">
+      <ul class="nav nav-pills nav-pills-icons nav-pills-primary text-center" role="tablist">
+        <li class="">
+          <a href="#potential" aria-controls="potential" role="tab" data-toggle="tab" aria-expanded="false">
+            <i class="material-icons info">av_timer</i>
+            <h5>Potential</h5>
+          </a>
+        </li>
+        <li class="">
+          <a href="#active" aria-controls="active" role="tab" data-toggle="tab" aria-expanded="false">
+            <i class="material-icons primary">av_timer</i>
+            <h5>Active</h5>
+          </a>
+        </li>
+        <li class="">
+          <a href="#completed" aria-controls="completed" role="tab" data-toggle="tab" aria-expanded="false">
+            <i class="material-icons warning">av_timer</i>
+            <h5>Inactive</h5>
+          </a>
+        </li>
+      </ul>
     </div>
-  </div>
 
-  <div class="grid-item col-xs-6 col-md-4">
-    <div class="panel panel-primary text-center">
-      <div class="panel-body">
-        <h1><%= Job.active.count %></h1>
-      </div>
-      <div class="panel-heading complement-darker">
-        <h3><%= link_to "Active Jobs", jobs_path(status: 'active') %></h3>
-      </div>
-    </div>
-  </div>
-
-  <div class="grid-item col-xs-6 col-md-4">
-    <div class="panel panel-primary text-center">
-      <div class="panel-body">
-        <h1><%= Job.completed.count %></h1>
-      </div>
-      <div class="panel-heading secondary-primary">
-        <h3><%= link_to "Completed Jobs", jobs_path(status: 'completed') %></h3>
-      </div>
-    </div>
-  </div>
-
-</div>
-
-<div class="row grid">
-  <div class="col-xs-12 col-md-6 grid-sizer"></div>
-
-  <% @jobs.each do |job| %>
-    <div class="col-xs-12 col-md-6 grid-item">
-      <div class="panel panel-primary text-center">
-        <div class="panel-heading <%= job.panel_color %>">
-          <h4><%= link_to "#{job.address_1}, #{job.city}", account_job_path(job.account, job) %></h4>
+    <!-- Tab panes -->
+    <div class="large-top-margin">
+      <div class="tab-content">
+        <div role="tabpanel" class="tab-pane fade" id="potential">
+          <%= render "jobs_list", jobs: Job.potential %>
         </div>
-        <div class="panel-body" style="background: url(<%= job.maps_url %>);">
-          <div class="row client-grid">
-            <div class="col-xs-6 client-grid-sizer"></div>
-
-            <div class="col-xs-6 client-grid-item">
-              <div class="panel panel-primary translucent text-center">
-                <div class="panel-body">
-                  <h4><%= link_to job.status, account_job_path(job.account, job) %></h3>
-                </div>
-                <div class="panel-heading">
-                  <h4><%= link_to "Status", account_job_path(job.account, job) %></h4>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-xs-6 client-grid-item">
-              <div class="panel panel-primary translucent text-center">
-                <div class="panel-body">
-                  <h4><%= link_to job.account.full_name, account_path(job.account) %></h3>
-                </div>
-                <div class="panel-heading">
-                  <h4><%= link_to "<i class='material-icons'>assignment_ind</i> Account".html_safe, account_path(job.account) %></h4>
-                </div>
-              </div>
-            </div>
-
-          </div>
-
+        <div role="tabpanel" class="tab-pane fade" id="active">
+          <%= render "jobs_list", jobs: Job.active %>
+        </div>
+        <div role="tabpanel" class="tab-pane fade" id="completed">
+          <%= render "jobs_list", jobs: Job.completed %>
         </div>
       </div>
     </div>
-  <% end %>
+  </div>
 </div>

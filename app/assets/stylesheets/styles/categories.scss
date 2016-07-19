@@ -1,0 +1,22 @@
+.background-image {
+  transform: translate3d(0px, 0px, 0px);
+  background: image-url('facebook_banner.jpg');
+  margin-top: -8em;
+  background-size: cover;
+
+ -khtml-opacity:.33;
+ -moz-opacity:.33;
+ -ms-filter:"alpha(opacity=33)";
+  filter:alpha(opacity=33);
+  filter: progid:DXImageTransform.Microsoft.Alpha(opacity=0.33);
+  opacity:.33;
+}
+
+.over-background {
+  margin-top: -70vh;
+}
+
+.info-landing {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
