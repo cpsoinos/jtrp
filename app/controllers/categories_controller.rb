@@ -3,7 +3,6 @@ class CategoriesController < ApplicationController
 
   def index
     @items = Item.active.sample(3)
-    @message = Message.new
   end
 
   def show
