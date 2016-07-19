@@ -39,6 +39,7 @@
 //= require sweetalert
 //= require sweet-alert-confirm
 //= require jquery.geocomplete.min
+//= require instafeed.min
 //= require_tree .
 
 $(document).ready(function() {
