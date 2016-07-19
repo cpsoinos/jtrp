@@ -14,27 +14,6 @@ feature "home page" do
       expect(page).to have_content(company.slogan)
     end
 
-    scenario "sees category links" do
-      visit root_path
-
-      expect(page).to have_link(category_1.name, visible: true)
-      expect(page).to have_link(category_2.name, visible: true)
-      expect(page).to have_link(category_3.name, visible: true)
-    end
-
-    scenario "does not see edit category links" do
-      visit root_path
-
-      expect(page).not_to have_link("edit")
-    end
-
-    scenario "clicks a category link" do
-      visit root_path
-      first(:link, category_1.name).click
-
-      expect(page).to have_content(category_1.name)
-    end
-
   end
 
   context "internal user" do
