@@ -69,10 +69,6 @@ feature "home page" do
       expect(page).to have_content("Sold in the last 30 days")
     end
 
-    it "has an activity feed" do
-      expect(page).to have_content("Activity Feed")
-    end
-
     context "to do list" do
       it "has a to do list" do
         expect(page).to have_content("To Do")
