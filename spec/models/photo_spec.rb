@@ -1,6 +1,5 @@
 describe Photo do
 
-  it { should validate_presence_of(:item) }
   it { should validate_presence_of(:photo_type) }
 
   describe "scopes" do
