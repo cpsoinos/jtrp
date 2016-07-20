@@ -17,7 +17,7 @@ Rails.application.routes.draw do
     resources :items
   end
 
-  resources :photos, only: :destroy
+  resources :photos, only: [:create, :destroy]
 
   get '/batch_create', to: 'items#batch_create', as: 'items_batch_create'
   resources :items do
