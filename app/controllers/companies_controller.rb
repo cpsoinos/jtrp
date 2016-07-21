@@ -11,9 +11,9 @@ class CompaniesController < ApplicationController
     @items = ItemsPresenter.new.todo.page(params[:page])
     @featured_photo = Photo.new(photo_type: 'featured_photo')
 
-    # @item_spreadsheet = ItemSpreadsheet.new
-    # @csv_uploader = @item_spreadsheet.csv
-    # @csv_uploader.success_action_redirect = items_csv_import_url
+    @csv = ItemSpreadsheet.new
+    @uploader = @csv.csv
+    @uploader.success_action_redirect = items_csv_import_url
   end
 
   def edit
