@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160715203514) do
+ActiveRecord::Schema.define(version: 20160720212433) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -94,6 +94,10 @@ ActiveRecord::Schema.define(version: 20160715203514) do
   end
 
   add_index "companies", ["primary_contact_id"], name: "index_companies_on_primary_contact_id", using: :btree
+
+  create_table "item_spreadsheets", force: :cascade do |t|
+    t.string "csv"
+  end
 
   create_table "items", force: :cascade do |t|
     t.text     "description",                                       null: false
