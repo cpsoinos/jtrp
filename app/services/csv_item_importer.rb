@@ -22,7 +22,7 @@ class CsvItemImporter
   end
 
   def execute(csv)
-    CSV.foreach(csv_file(csv), headers: true) do |row|
+    CSV.foreach(csv_file(csv), headers: true, encoding: 'utf-8') do |row|
       attrs = row.to_hash.symbolize_keys
       attrs = massage_attrs(attrs)
       account = find_account(attrs)
