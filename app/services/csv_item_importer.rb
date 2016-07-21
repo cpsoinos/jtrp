@@ -33,8 +33,8 @@ class CsvItemImporter
 
   def find_account(attrs)
     account = begin
-      if attrs[:account] = "jtrp"
-        Account.find_by(company_name: "JTRP")
+      if attrs[:account] == "jtrp"
+        Account.find_or_create_by(company_name: "JTRP", is_company: true)
       else
         find_client(attrs).try(:account)
       end
