@@ -27,7 +27,7 @@ class CsvItemImporter
       attrs = massage_attrs(attrs)
       account = find_account(attrs)
       proposal = create_proposal(account)
-      create_item(proposal)
+      create_item(proposal, attrs)
     end
   end
 
