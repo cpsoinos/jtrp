@@ -39,10 +39,6 @@ class ProposalsController < ApplicationController
     @uploader = @archive.archive
     @uploader.success_action_redirect = items_batch_create_url(proposal_id: @proposal.id)
 
-    @item_spreadsheet = ItemSpreadsheet.new
-    @csv_uploader = @item_spreadsheet.csv
-    @csv_uploader.success_action_redirect = items_csv_import_url(proposal_id: @proposal.id)
-
     gon.proposalId = @proposal.id
   end
 
