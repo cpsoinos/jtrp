@@ -50,7 +50,9 @@ class CsvItemImporter
   end
 
   def create_proposal(account)
-    account.jobs.last.proposals.create
+    proposal = account.jobs.last.proposals.new
+    proposal.save
+    proposal
   end
 
   def massage_attrs(attrs)
