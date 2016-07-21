@@ -27,18 +27,18 @@
 						</div>
 					<% end %>
 
-	        <% if current_user.admin? %>
-
-	          <div class="row" id="existing-item">
-	            <div class="text-center"> - or -</div>
-	          </div>
-
-	          <%= render 'items/csv_upload_form', legend: "Upload a list of items:" %>
-
-	        <% end %>
 
 				</div>
 
+				<% if current_user.admin? %>
+
+					<div class="row" id="existing-item">
+						<div class="text-center"> - or -</div>
+					</div>
+
+					<%= render 'items/csv_upload_form', legend: "Upload a list of items:" %>
+
+				<% end %>
 				<!-- <div class="social-feed">
 					<div class="feed-line">
 						<i class="fa fa-twitter"></i>
