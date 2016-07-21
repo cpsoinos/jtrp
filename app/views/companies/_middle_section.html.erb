@@ -26,16 +26,16 @@
 							<a href="#pablo" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Remove</a>
 						</div>
 					<% end %>
-					
-	        <% if current_user.admin? %>
 
-	          <div class="row" id="existing-item">
+	        <%# if current_user.admin? %>
+
+	          <!-- <div class="row" id="existing-item">
 	            <div class="text-center"> - or -</div>
-	          </div>
+	          </div> -->
 
-	          <%= render 'items/csv_upload_form', legend: "Upload a list of items:" %>
+	          <%#= render 'items/csv_upload_form', legend: "Upload a list of items:" %>
 
-	        <% end %>
+	        <%# end %>
 
 				</div>
 

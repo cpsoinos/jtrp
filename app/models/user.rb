@@ -45,6 +45,10 @@ class User < ActiveRecord::Base
     role == "InternalUser" || role == "Admin"
   end
 
+  def admin?
+    role == "Admin"
+  end
+
   def client?
     role == "Client"
   end

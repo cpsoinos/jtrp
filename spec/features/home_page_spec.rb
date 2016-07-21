@@ -1,4 +1,5 @@
 feature "home page" do
+  include CarrierWaveDirect::Test::CapybaraHelpers
 
   let!(:category_1) { create(:category) }
   let!(:category_2) { create(:category) }
