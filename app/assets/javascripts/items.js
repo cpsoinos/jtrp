@@ -98,8 +98,6 @@ $(document).ready(function() {
 		}); //end shown
 	});  //end each
 
-  // $("input#item_initial_photos").dropzone();
-
 });
 
 $(".index").ready(function() {
