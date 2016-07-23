@@ -10,6 +10,12 @@ class CompaniesController < ApplicationController
     }
     @items = ItemsPresenter.new.todo.page(params[:page])
     @featured_photo = Photo.new(photo_type: 'featured_photo')
+
+    if current_user.admin?
+      @csv = ItemSpreadsheet.new
+      @uploader = @csv.csv
+      @uploader.success_action_redirect = items_csv_import_url
+    end
   end
 
   def edit

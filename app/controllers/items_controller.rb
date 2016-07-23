@@ -51,6 +51,13 @@ class ItemsController < ApplicationController
     redirect_to edit_account_job_proposal_path(@proposal.account, @proposal.job, @proposal)
   end
 
+  def csv_import
+    @csv = ItemSpreadsheet.new
+    @csv.update_attribute(:key, params[:key])
+    @csv.save_and_process_items
+    redirect_to items_path
+  end
+
   def show
     @item = Item.find(params[:id])
   end
@@ -131,7 +138,8 @@ class ItemsController < ApplicationController
       "sell" => { display_name: "owned", icon: "<i class='material-icons'>store</i>", color: "complement-primary" },
       "donate" => { display_name: "will donate", icon: "<i class='fa fa-gift' aria-hidden='true'></i>", color: "secondary-darker" },
       "dump" => { display_name: "will dump", icon: "<i class='material-icons'>delete</i>", color: "complement-darker" },
-      "undecided" => { display_name: "undecided", icon: "<i class='fa fa-question' aria-hidden='true'></i>", color: "primary-lighter" }
+      "undecided" => { display_name: "undecided", icon: "<i class='fa fa-question' aria-hidden='true'></i>", color: "primary-lighter" },
+      "nothing" => { display_name: "client kept", icon: "<i class='material-icons'>weekend</i>", color: "primary-lighter" }
     }
   end
 

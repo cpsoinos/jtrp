@@ -1,0 +1,12 @@
+<%= direct_upload_form_for @uploader, class: "form-horizontal" do |f| %>
+  <legend><%= legend %></legend>
+  <div class="row form-row">
+    <div class="dropzone-file-field">
+      <%= f.label :csv %>
+      <%= f.file_field :csv, class: "dropzone" %>
+    </div>
+    <div class="text-center">
+      <%= f.submit "Process Items", class: "btn btn-raised btn-primary" %>
+    </div>
+  </div>
+<% end %>
