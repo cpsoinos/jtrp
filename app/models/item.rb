@@ -190,6 +190,10 @@ class Item < ActiveRecord::Base
       elsif minimum_sale_price_cents.nil?
         { name: "add minimum sale price", description: "needs a minimum sale price added", task_field: :minimum_sale_price }
       end
+    elsif sold?
+      if sale_price_cents.nil?
+        { name: "add sale price", description: "needs sale price recorded", task_field: :sale_price }
+      end
     end
   end
 

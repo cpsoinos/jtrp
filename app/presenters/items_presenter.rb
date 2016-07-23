@@ -11,13 +11,17 @@ class ItemsPresenter
   end
 
   def todo
-    no_listing_price
+    Item.where(id: (no_listing_price | no_sale_price))
   end
 
   private
 
   def no_listing_price
-    Item.for_sale.where(listing_price_cents: nil)
+    Item.for_sale.where(listing_price_cents: nil).pluck(:id)
+  end
+
+  def no_sale_price
+    Item.sold.where(sale_price_cents: nil).pluck(:id)
   end
 
 end
