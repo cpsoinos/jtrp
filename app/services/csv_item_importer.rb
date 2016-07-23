@@ -3,13 +3,20 @@ require 'restclient'
 
 class CsvItemImporter
 
-  def import(csv)
-    execute(csv)
+  attr_reader :csv, :user
+
+  def initialize(csv, user)
+    @csv = csv
+    @user = user
+  end
+
+  def import
+    execute
   end
 
   private
 
-  def csv_file(csv)
+  def csv_file
     begin
       url = csv.csv.direct_fog_url(with_path: true)
       response = RestClient::Request.execute({url: url, method: :get, content_type: 'text/csv'})
@@ -18,16 +25,16 @@ class CsvItemImporter
       csv_file.write(response)
       csv_file
     end
-
   end
 
-  def execute(csv)
-    CSV.foreach(csv_file(csv), headers: true, encoding: 'utf-8') do |row|
+  def execute
+    CSV.foreach(csv_file, headers: true, encoding: 'utf-8') do |row|
       attrs = row.to_hash.symbolize_keys
       attrs = massage_attrs(attrs)
       account = find_account(attrs)
       proposal = create_proposal(account)
-      create_item(proposal, attrs)
+      item = create_item(proposal, attrs)
+      item.sync_inventory
     end
   end
 
@@ -42,6 +49,7 @@ class CsvItemImporter
     if account.nil?
       account = Account.yard_sale
     end
+    attrs.delete(:account)
     account
   end
 
@@ -51,6 +59,7 @@ class CsvItemImporter
 
   def create_proposal(account)
     proposal = account.jobs.last.proposals.new
+    proposal.created_by = user
     proposal.save
     proposal
   end
@@ -59,7 +68,7 @@ class CsvItemImporter
     if attrs[:purchase_price]
       attrs[:purchase_price_cents] = attrs.delete(:purchase_price) * 100
     end
-    attrs.delete(:account)
+    attrs[:import] = true
     attrs
   end
 

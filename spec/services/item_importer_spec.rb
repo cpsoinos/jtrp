@@ -1,16 +1,21 @@
 describe ItemImporter do
 
   let(:proposal) { create(:proposal) }
-  let(:archive) { File.open(File.join(Rails.root, '/spec/fixtures/archive.zip')) }
+  let(:archive) { create(:archive) }
+  let(:importer) { ItemImporter.new(proposal) }
+
+  before do
+    allow(importer).to receive(:zipfile).and_return(archive.archive)
+    allow(archive.archive).to receive(:path).and_return(File.join(Rails.root, '/spec/fixtures/archive.zip'))
+  end
 
   it "can be instantiated" do
-    expect(ItemImporter.new(proposal)).to be_an_instance_of(ItemImporter)
+    expect(importer).to be_an_instance_of(ItemImporter)
   end
 
   it "imports items" do
-    pending("rubyzip unzipping specs")
     expect {
-      ItemImporter.new(proposal).import(archive)
+      importer.import(archive)
     }.to change {
       Item.count
     }.by(2)
