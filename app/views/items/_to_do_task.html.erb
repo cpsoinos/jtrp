@@ -28,8 +28,8 @@
           <div class="list-group-separator"></div>
 
           <div class="row list-group-item vertical-align">
-            <div class="col-xs-4">
-              <%= image_tag(item.account.avatar, class: "img-circle img-raised img-responsive", alt: "icon") %>
+            <div class="col-xs-4 text-center">
+              <i class="material-icons md-48">assignment_ind</i>
             </div>
             <div class="col-xs-6">
               <h4 class="list-group-item-heading"><%= link_to item.account.full_name, account_path(item.account) %></h4>
@@ -43,8 +43,8 @@
           <div class="list-group-separator"></div>
 
           <div class="row list-group-item vertical-align">
-            <div class="col-xs-4">
-              <%= image_tag(item.job.maps_url, class: "img-circle img-raised img-responsive", alt: "icon") %>
+            <div class="col-xs-4 text-center">
+              <i class="material-icons md-48">location_on</i>
             </div>
             <div class="col-xs-6">
               <h4 class="list-group-item-heading"><%= link_to item.job.name, account_job_path(item.account, item.job) %></h4>
@@ -58,8 +58,8 @@
           <div class="list-group-separator"></div>
 
           <div class="row list-group-item vertical-align">
-            <div class="col-xs-4">
-              <i class='material-icons'>assignment</i>
+            <div class="col-xs-4 text-center">
+              <i class='material-icons md-48'>assignment</i>
             </div>
             <div class="col-xs-6">
               <h4 class="list-group-item-heading"><%= link_to item.account.full_name, account_path(item.account) %></h4>
