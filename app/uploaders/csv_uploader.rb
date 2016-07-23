@@ -1,14 +1,11 @@
-class ArchiveUploader < CarrierWave::Uploader::Base
+class CsvUploader < CarrierWave::Uploader::Base
   include CarrierWaveDirect::Uploader
 
   def store_dir
-    "archives"
+    "item_spreadsheets"
   end
 
   def guid
     Time.now.utc.strftime("%Y-%m-%d-%H%M%S")
   end
-
-  # alias :extension_white_list :extension_whitelist
-
 end

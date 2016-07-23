@@ -100,12 +100,17 @@ class Item < ActiveRecord::Base
   end
 
   def mark_agreement_inactive
-    agreement.mark_inactive
+    agreement.mark_inactive unless import?
   end
 
   def meets_requirements_active?
-    agreement.reload.present? &&
-    agreement.active?
+    if import?
+      # bypass agreement requirement
+      true
+    else
+      agreement.reload.present? &&
+      agreement.active?
+    end
   end
 
   def meets_requirements_sold?

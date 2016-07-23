@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   resources :photos, only: [:create, :destroy]
 
   get '/batch_create', to: 'items#batch_create', as: 'items_batch_create'
+  get '/csv_import', to: 'items#csv_import', as: 'items_csv_import'
   resources :items do
     get '/tag', to: 'items#tag', as: 'tag'
     get '/tags', to: 'items#tags', on: :collection

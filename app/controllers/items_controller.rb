@@ -51,6 +51,13 @@ class ItemsController < ApplicationController
     redirect_to edit_account_job_proposal_path(@proposal.account, @proposal.job, @proposal)
   end
 
+  def csv_import
+    @csv = ItemSpreadsheet.new
+    @csv.update_attribute(:key, params[:key])
+    @csv.save_and_process_items
+    redirect_to items_path
+  end
+
   def show
     @item = Item.find(params[:id])
   end

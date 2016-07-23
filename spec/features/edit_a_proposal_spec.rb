@@ -21,7 +21,6 @@ feature "edit a proposal" do
     end
 
     scenario "successfully adds an item", js: true do
-      pending("carrierwave_direct tests")
       visit edit_account_job_proposal_path(account, job, proposal)
 
       fill_in("item_description", with: "Chair")
@@ -33,7 +32,6 @@ feature "edit a proposal" do
     end
 
     scenario "removes an item", js: true do
-      pending("carrierwave_direct tests")
       item = create(:item, proposal: proposal)
       visit edit_account_job_proposal_path(account, job, proposal)
 
@@ -47,29 +45,10 @@ feature "edit a proposal" do
       expect(page).not_to have_content(item.description)
     end
 
-    scenario "uploads a batch of items", js: true do
-      pending("carrierwave_direct tests")
-      archive = create(:archive)
-
-      visit edit_account_job_proposal_path(account, job, proposal)
-      attach_file_for_direct_upload(File.join(Rails.root, '/spec/fixtures/archive.zip'))
-      upload_directly(archive, "Process Items")
-
-      expect(page).to have_content("microwave")
-      expect(page).to have_content("dish washer")
-      expect(page).to have_css("img[src*='test_3.png']")
-      expect(page).to have_css("img[src*='test_4.png']")
-      expect(page).to have_css("img[src*='test_5.png']")
-      expect(page).to have_css("img[src*='test_6.png']")
-      expect(Item.count).to eq(2)
-    end
-
     context "item details" do
-      pending("carrierwave_direct tests")
       let!(:item) { create(:item, proposal: proposal) }
 
       scenario "arrives at details path" do
-        pending("carrierwave_direct tests")
         visit edit_account_job_proposal_path(account, job, proposal)
         click_link("Step 2: Details")
 
