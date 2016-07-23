@@ -1,4 +1,5 @@
 require 'factory_girl'
+include CarrierWaveDirect::Test::Helpers
 
 FactoryGirl.define do
 
