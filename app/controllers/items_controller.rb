@@ -54,7 +54,7 @@ class ItemsController < ApplicationController
   def csv_import
     @csv = ItemSpreadsheet.new
     @csv.update_attribute(:key, params[:key])
-    @csv.save_and_process_items
+    @csv.save_and_process_items(current_user)
     redirect_to items_path
   end
 
