@@ -33,8 +33,7 @@ class CsvItemImporter
       attrs = massage_attrs(attrs)
       account = find_account(attrs)
       proposal = create_proposal(account)
-      item = create_item(proposal, attrs)
-      item.sync_inventory
+      create_item(proposal, attrs)
     end
   end
 

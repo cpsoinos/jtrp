@@ -20,6 +20,7 @@
 
 								<!-- <input type="file" name="..."> -->
 								<%= f.file_field :photo %>
+								<%= f.hidden_field :photo_cache %>
 								<%= f.hidden_field :photo_type, value: "featured" %>
 							</span>
 							<%= f.submit class: "fileinput-exists btn btn-raised btn-round btn-primary" %>

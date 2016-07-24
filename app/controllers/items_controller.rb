@@ -54,7 +54,7 @@ class ItemsController < ApplicationController
   def csv_import
     @csv = ItemSpreadsheet.new
     @csv.update_attribute(:key, params[:key])
-    @csv.save_and_process_items
+    @csv.save_and_process_items(current_user)
     redirect_to items_path
   end
 
@@ -77,7 +77,7 @@ class ItemsController < ApplicationController
       else
         format.html do
           flash[:alert] = 'Could not update item.'
-          render :edit
+          redirect_to edit_account_job_proposal_item_path(@item.account, @item.job, @item.proposal, @item)
         end
         format.json { respond_with_bip(@item) }
       end
