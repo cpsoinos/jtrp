@@ -2,12 +2,10 @@ class PhotoUploader < CarrierWave::Uploader::Base
   include Cloudinary::CarrierWave
 
   version :standard do
-    eager
     process resize_to_fill: [800,800]
   end
 
   version :thumb do
-    eager
     resize_to_fit(200, 200)
   end
 
