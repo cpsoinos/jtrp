@@ -77,7 +77,7 @@ class ItemsController < ApplicationController
       else
         format.html do
           flash[:alert] = 'Could not update item.'
-          render :edit
+          redirect_to edit_account_job_proposal_item_path(@item.account, @item.job, @item.proposal, @item)
         end
         format.json { respond_with_bip(@item) }
       end

@@ -19,7 +19,11 @@ class Order < ActiveRecord::Base
   end
 
   def line_items
-    remote_order.lineItems.elements
+    if remote_order.try(:lineItems)
+      remote_order.lineItems.elements
+    else
+      []
+    end
   end
 
   def update_order

@@ -40,6 +40,7 @@
 //= require sweet-alert-confirm
 //= require jquery.geocomplete.min
 //= require instafeed.min
+//= require cloudinary
 //= require_tree .
 
 $(document).ready(function() {

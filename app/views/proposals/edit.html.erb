@@ -15,11 +15,13 @@
           <%= render 'items/form', item: @item, f: f, legend: "Add a New Item:", remote: true %>
         <% end %>
 
-        <div class="row" id="existing-item">
-          <div class="text-center"> - or -</div>
-        </div>
+        <% if current_user.admin? %>
+          <div class="row" id="existing-item">
+            <div class="text-center"> - or -</div>
+          </div>
 
-        <%= render 'items/batch_upload_form', legend: "Upload a set of items:" %>
+          <%= render 'items/batch_upload_form', legend: "Upload a set of items:" %>
+        <% end %>
 
         <div class="text-right large-top-margin">
           <%= link_to "Step 2: Details <i class='fa fa-caret-right'></i>".html_safe, account_job_proposal_details_path(@account, @job, @proposal), class: "btn btn-raised btn-primary" %>

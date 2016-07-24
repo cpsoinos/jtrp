@@ -43,7 +43,6 @@ feature "update an item" do
       click_button("Update Item")
 
       expect(page).to have_content("Could not update item.")
-      expect(page).to have_content("Description can't be blank")
       expect(page).not_to have_content("Chair")
     end
 
