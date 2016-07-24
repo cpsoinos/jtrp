@@ -1,17 +1,25 @@
 class PhotoUploader < CarrierWave::Uploader::Base
-  include CarrierWave::MiniMagick
+  include Cloudinary::CarrierWave
+
+  version :standard do
+    eager
+    process resize_to_fill: [800,800]
+  end
 
   version :thumb do
-    process resize_to_fit: [200,200]
+    eager
+    resize_to_fit(200, 200)
   end
 
   version :small_thumb do
-    process resize_to_fit: [100,100]
+    resize_to_fit(100, 100)
   end
 
   version :tiny_thumb do
-    process resize_to_fit: [50,50]
+    resize_to_fit(50, 50)
   end
+
+  process convert: 'png'
 
   def store_dir
     "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
@@ -20,9 +28,5 @@ class PhotoUploader < CarrierWave::Uploader::Base
   def filename
     "#{cache_id}_#{original_filename}" if original_filename
   end
-
-  process resize_to_fit: [800, 800]
-
-  protected
 
 end

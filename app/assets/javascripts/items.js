@@ -98,6 +98,12 @@ $(document).ready(function() {
 		}); //end shown
 	});  //end each
 
+  $(function() {
+    if($.fn.cloudinary_fileupload !== undefined) {
+      $("input.cloudinary-fileupload[type=file]").cloudinary_fileupload();
+    }
+  });
+
 });
 
 $(".index").ready(function() {

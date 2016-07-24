@@ -43,7 +43,6 @@ feature "add an item" do
       expect(page).not_to have_field("Listing price")
       expect(page).not_to have_field("Purchase price")
       expect(page).not_to have_field("Minimum sale price")
-      expect(page).not_to have_field("Condition")
       expect(page).not_to have_field("item[listing_photos][]")
     end
 
@@ -65,7 +64,6 @@ feature "add an item" do
       expect(page).not_to have_field("Listing price")
       expect(page).not_to have_field("Purchase price")
       expect(page).not_to have_field("Minimum sale price")
-      expect(page).not_to have_field("Condition")
       expect(page).not_to have_field("listing_photos[]")
     end
 
