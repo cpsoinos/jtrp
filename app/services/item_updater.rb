@@ -23,7 +23,7 @@ class ItemUpdater
   end
 
   def process_initial_photos
-    if attrs[:initial_photos]
+    if attrs[:initial_photos].present?
       initial_photos = attrs.delete(:initial_photos)
       initial_photos.each do |photo|
         item.photos.create!(photo: photo, photo_type: "initial")
@@ -32,7 +32,7 @@ class ItemUpdater
   end
 
   def process_listing_photos
-    if attrs[:listing_photos]
+    if attrs[:listing_photos].present?
       listing_photos = attrs.delete(:listing_photos)
       listing_photos.each do |photo|
         item.photos.create!(photo: photo, photo_type: "listing")
@@ -41,7 +41,7 @@ class ItemUpdater
   end
 
   def process_sale
-    if attrs[:sale_price] && !item.sold?
+    if attrs[:sale_price].present? && !item.sold?
       process_sold_at
       item.mark_sold!
     end
@@ -52,7 +52,7 @@ class ItemUpdater
   end
 
   def process_sold_at
-    if attrs[:sold_at]
+    if attrs[:sold_at].present?
       formatted_date = attrs[:sold_at].split("/")
       attrs[:sold_at] = "#{formatted_date[1]}/#{formatted_date[0]}/#{formatted_date[2]}"
     else
