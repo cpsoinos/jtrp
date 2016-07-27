@@ -40,11 +40,11 @@ class Order < ActiveRecord::Base
   end
 
   def remote_order_open?
-    remote_order.state == "open"
+    remote_order.try(:state) == "open"
   end
 
   def remote_order_locked?
-    remote_order.state == "locked"
+    remote_order.try(:state) == "locked"
   end
 
   def mark_items_sold
