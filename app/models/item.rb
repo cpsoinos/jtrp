@@ -10,6 +10,8 @@ class Item < ActiveRecord::Base
   belongs_to :category
   belongs_to :proposal
   belongs_to :order
+  has_many :children, class_name: "Item", foreign_key: "parent_item_id"
+  belongs_to :parent_item, class_name: "Item", foreign_key: "parent_item_id"
 
   has_secure_token
 
@@ -70,11 +72,11 @@ class Item < ActiveRecord::Base
     photos.listing
   end
 
-  def featured_photo_url
+  def featured_photo_url(format=:enhanced)
     if listing_photos.present?
-      listing_photos.first.photo_url
+      listing_photos.first.photo_url(format)
     elsif initial_photos.present?
-      initial_photos.first.photo_url
+      initial_photos.first.photo_url(format)
     else
       "thumb_No_Image_Available.png"
     end
@@ -195,6 +197,10 @@ class Item < ActiveRecord::Base
         { name: "add sale price", description: "needs sale price recorded", task_field: :sale_price }
       end
     end
+  end
+
+  def build_child_item
+    children.new(self.dup.attributes)
   end
 
 end

@@ -1,4 +1,9 @@
 $("#photo-<%= @photo.id %>").remove();
+$("#photo-<%= @photo.id %>-thumb").remove();
+
+var $tab = $($("a[role='tab'][aria-expanded='false']")[0])
+$tab.tab("show");
+
 var $grid = $('.grid').masonry({
   columnWidth: '.grid-sizer',
   itemSelector: '.grid-item',

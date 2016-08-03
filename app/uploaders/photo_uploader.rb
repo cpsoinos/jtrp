@@ -17,7 +17,15 @@ class PhotoUploader < CarrierWave::Uploader::Base
     resize_to_fit(50, 50)
   end
 
-  process convert: 'png'
+  version :enhanced do
+    cloudinary_transformation effect: "viesus_correct", sign_url: true
+  end
+
+  process convert: 'jpg'
+
+  def default_url
+    ActionController::Base.helpers.asset_path("image_placeholder.jpg").compact.join('_')
+  end
 
   def store_dir
     "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"

@@ -15,7 +15,7 @@ class ItemCreator
     end
 
     @item = proposal.items.new(attrs)
-    
+
     if @item.save
       process_photos(initial_photo_attrs, "initial") if initial_photo_attrs
       process_photos(listing_photo_attrs, "listing") if listing_photo_attrs

@@ -44,7 +44,6 @@ gem 'pusher'
 gem 'puma'
 gem 'omniauth-clover'
 gem 'deepstruct'
-gem 'rack-timeout'
 gem 'pg_search'
 gem 'kaminari'
 
