@@ -34,6 +34,7 @@ class Order < ActiveRecord::Base
   end
 
   def add_items_to_order
+    return unless line_items.present?
     remote_item_ids = line_items.map(&:id)
     items = Item.where(remote_id: remote_item_ids)
     items.update_all(order_id: id)

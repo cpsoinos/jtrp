@@ -167,3 +167,32 @@ a.panel-title:hover {
   width:100px;
   height:30px;
 }
+
+.image-container {
+  display: inline-block;
+  position: relative;
+  margin: 10px;
+}
+
+.img-featured {
+  margin: 0 auto;
+}
+
+.button-container {
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-top: 10px;
+}
+
+.btn-file {
+  display: inline-block;
+  overflow: visible;
+}
+
+.nav li a.img-tab {
+  &:hover, &:active, &:visited {
+    border: none;
+    background: none;
+    // color: #00adee;
+  }
+}
