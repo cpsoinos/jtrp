@@ -46,6 +46,7 @@ gem 'omniauth-clover'
 gem 'deepstruct'
 gem 'pg_search'
 gem 'kaminari'
+gem 'amoeba'
 
 group :production, :staging, :local do
   gem 'rails_12factor'

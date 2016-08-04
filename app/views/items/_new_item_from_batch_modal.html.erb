@@ -6,7 +6,6 @@
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         </div>
         <div class="modal-body">
-
           <%= render 'form', f: f, legend: "Item from #{@item.description}" %>
           <%= hidden_field_tag :proposal_id, @item.proposal_id %>
           <%= f.hidden_field :parent_item_id, value: @item.id %>
@@ -15,7 +14,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default btn-raised btn-round" data-dismiss="modal">Close</button>
-          <%= f.submit "Save Photo", class: "fileinput-exists btn btn-raised btn-round btn-primary" %>
+          <%#= f.submit "Save Photo", class: "fileinput-exists btn btn-raised btn-round btn-primary" %>
         </div>
       </div><!-- /.modal-content -->
     <% end %>

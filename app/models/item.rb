@@ -64,6 +64,12 @@ class Item < ActiveRecord::Base
     end
   end
 
+  amoeba do
+    include_association :category
+    include_association :proposal
+    include_association :photos
+  end
+
   def initial_photos
     photos.initial
   end
@@ -200,7 +206,13 @@ class Item < ActiveRecord::Base
   end
 
   def build_child_item
-    children.new(self.dup.attributes)
+    child = amoeba_dup
+    child.parent_item = self
+    child
+  end
+
+  def child?
+    parent_item.present?
   end
 
 end
