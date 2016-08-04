@@ -26,7 +26,7 @@ class ItemUpdater
     if attrs[:initial_photos].present?
       initial_photos = attrs.delete(:initial_photos)
       initial_photos.each do |photo|
-        item.photos.create!(photo: photo, photo_type: "initial")
+        item.photos.create(photo: photo, photo_type: "initial")
       end
     end
   end

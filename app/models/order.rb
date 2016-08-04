@@ -34,17 +34,18 @@ class Order < ActiveRecord::Base
   end
 
   def add_items_to_order
+    return unless line_items.present?
     remote_item_ids = line_items.map(&:id)
     items = Item.where(remote_id: remote_item_ids)
     items.update_all(order_id: id)
   end
 
   def remote_order_open?
-    remote_order.state == "open"
+    remote_order.try(:state) == "open"
   end
 
   def remote_order_locked?
-    remote_order.state == "locked"
+    remote_order.try(:state) == "locked"
   end
 
   def mark_items_sold

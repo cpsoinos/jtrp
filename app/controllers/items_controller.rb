@@ -1,6 +1,6 @@
 class ItemsController < ApplicationController
   before_filter :find_clients, only: [:new, :edit]
-  before_filter :find_categories, only: [:new, :edit]
+  before_filter :find_categories, only: [:new, :edit, :show]
   before_filter :find_proposal, only: [:create, :batch_create]
   before_filter :find_job, only: :tags
   before_filter :require_internal
@@ -60,6 +60,7 @@ class ItemsController < ApplicationController
 
   def show
     @item = Item.find(params[:id])
+    @child_item = @item.build_child_item
   end
 
   def edit
@@ -125,7 +126,7 @@ class ItemsController < ApplicationController
   protected
 
   def item_params
-    params.require(:item).permit(:description, {photos: []}, {initial_photos: []}, {listing_photos: []}, :purchase_price, :asking_price, :listing_price, :sale_price, :sold_at, :minimum_sale_price, :condition, :category_id, :client_intention, :notes, :will_purchase, :will_consign, :account_item_number, :consignment_rate)
+    params.require(:item).permit(:description, {photos: []}, {initial_photos: []}, {listing_photos: []}, :purchase_price, :asking_price, :listing_price, :sale_price, :sold_at, :minimum_sale_price, :condition, :category_id, :client_intention, :notes, :will_purchase, :will_consign, :account_item_number, :consignment_rate, :proposal_id, :parent_item_id)
   end
 
   def archive_params

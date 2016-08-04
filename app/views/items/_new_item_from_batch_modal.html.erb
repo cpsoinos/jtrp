@@ -1,0 +1,22 @@
+<div class="modal fade" tabindex="-1" role="dialog" id="new-item-from-batch-modal">
+  <div class="modal-dialog">
+    <%= form_for @child_item, multipart: true do |f| %>
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body">
+          <%= render 'form', f: f, legend: "Item from #{@item.description}" %>
+          <%= hidden_field_tag :proposal_id, @item.proposal_id %>
+          <%= f.hidden_field :parent_item_id, value: @item.id %>
+          <%= hidden_field_tag :_method, :post %>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default btn-raised btn-round" data-dismiss="modal">Close</button>
+          <%#= f.submit "Save Photo", class: "fileinput-exists btn btn-raised btn-round btn-primary" %>
+        </div>
+      </div><!-- /.modal-content -->
+    <% end %>
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
