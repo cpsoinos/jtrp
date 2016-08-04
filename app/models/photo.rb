@@ -9,7 +9,7 @@ class Photo < ActiveRecord::Base
   scope :featured, -> { where(photo_type: 'featured') }
 
   def self.default_url
-    ActionController::Base.helpers.asset_path("thumb_No_Image_Available.png")
+    ActionController::Base.helpers.asset_path("image_placeholder.jpg")
   end
 
 end
