@@ -6,7 +6,7 @@
 
       <div class="row list-group-item vertical-align">
         <div class="col-xs-4">
-          <%= image_tag(item.featured_photo_url(:thumb), class: "img-raised img-responsive", alt: "icon") %>
+          <%= image_tag(item.featured_photo_url(:thumb), fetch_format: :auto, class: "img-raised img-responsive", alt: "icon") %>
         </div>
         <div class="col-xs-6">
           <h4 class="list-group-item-heading"><%= item.task[:name] %></h4>

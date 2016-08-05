@@ -71,12 +71,12 @@
                 <!-- Wrapper for slides -->
                 <div class="carousel-inner">
                   <div class="item active">
-                    <%= image_tag(@featured_photos.first.photo_url, class: "img-rounded img-responsive img-raised") %>
+                    <%= image_tag(@featured_photos.first.photo_url, fetch_format: :auto, class: "img-rounded img-responsive img-raised") %>
                   </div>
                   <% if @featured_photos.length > 1 %>
                     <% @featured_photos[1..-1].each do |photo| %>
                       <div class="item">
-                        <%= image_tag(photo.photo_url, class: "img-rounded img-responsive img-raised") %>
+                        <%= image_tag(photo.photo_url, fetch_format: :auto, class: "img-rounded img-responsive img-raised") %>
                       </div>
                     <% end %>
                   <% end %>
