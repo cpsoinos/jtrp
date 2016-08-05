@@ -8,11 +8,15 @@
           <th class="text-center th-description">Item</th>
           <th class="text-center">Account Item No.</th>
           <th class="text-center">SKU</th>
-          <th class="text-center">Listing Price</th>
-          <th class="text-center">Consignment Rate</th>
-          <th class="text-center">Minimum Sale Price</th>
-          <th class="text-center">Sale Date</th>
-          <th class="text-center">Sale Price</th>
+          <% if current_user.try(:internal?) %>
+            <th class="text-center">Listing Price</th>
+            <th class="text-center">Consignment Rate</th>
+            <th class="text-center">Minimum Sale Price</th>
+            <th class="text-center">Sale Date</th>
+            <th class="text-center">Sale Price</th>
+          <% else %>
+            <th class="text-center">Price</th>
+          <% end %>
           <th></th>
         </tr>
       </thead>
@@ -26,7 +30,9 @@
             </td>
             <td class="td-name">
               <%= link_to "#{item.description}", item_path(item) %>
-              <br><small>from <%= link_to item.account.full_name, account_path(item.account) %></small>
+              <% if current_user.try(:internal?) %>
+                <br><small>from <%= link_to item.account.full_name, account_path(item.account) %></small>
+              <% end %>
             </td>
             <td class="text-center">
               <%= item.account_item_number %>
@@ -37,26 +43,28 @@
             <td class="text-center">
               <%= humanized_money_with_symbol(item.listing_price) %>
             </td>
-            <td class="text-center">
-              <% if item.consigned? %>
-                <%= item.consignment_rate %>%
-              <% else %>
-                N/A
-              <% end %>
-            </td>
-            <td class="text-center">
-              <%= humanized_money_with_symbol(item.minimum_sale_price) %>
-            </td>
-            <td class="text-center">
-              <% if item.sold? && item.sold_at %>
-                <h4><%= item.sold_at.strftime("%-m/%-d/%y") %></h4>
-              <% end %>
-            </td>
-            <td class="text-center">
-              <% if item.sold? %>
-                <h4><%= humanized_money_with_symbol(item.sale_price) %></h4>
-              <% end %>
-            </td>
+            <% if current_user.try(:internal?) %>
+              <td class="text-center">
+                <% if item.consigned? %>
+                  <%= item.consignment_rate %>%
+                <% else %>
+                  N/A
+                <% end %>
+              </td>
+              <td class="text-center">
+                <%= humanized_money_with_symbol(item.minimum_sale_price) %>
+              </td>
+              <td class="text-center">
+                <% if item.sold? && item.sold_at %>
+                  <h4><%= item.sold_at.strftime("%-m/%-d/%y") %></h4>
+                <% end %>
+              </td>
+              <td class="text-center">
+                <% if item.sold? %>
+                  <h4><%= humanized_money_with_symbol(item.sale_price) %></h4>
+                <% end %>
+              </td>
+            <% end %>
             <!-- <td class="td-actions">
               <button type="button" rel="tooltip" data-placement="left" title="" class="btn btn-simple" data-original-title="Remove item">
                   <i class="material-icons">close</i>
