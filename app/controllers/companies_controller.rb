@@ -1,5 +1,5 @@
 class CompaniesController < ApplicationController
-  before_filter :require_internal, except: [:client_services, :consignment_policies, :service_rate_schedule, :agent_service_rate_schedule]
+  before_filter :require_internal, except: [:client_services, :consignment_policies, :service_rate_schedule, :agent_service_rate_schedule, :home]
 
   def show
     @metrics = {
@@ -16,6 +16,10 @@ class CompaniesController < ApplicationController
       @uploader = @csv.csv
       @uploader.success_action_redirect = items_csv_import_url
     end
+  end
+
+  def home
+    @featured_photos = Photo.featured
   end
 
   def edit
