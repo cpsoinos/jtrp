@@ -15,8 +15,7 @@
 
 <div class="section text-center section section-dark">
 
-  <div class="row vertical-align">
-    <!-- <div class="col-xs-10 col-xs-offset-1 col-md-4 col-md-offset-2"> -->
+  <div class="row">
       <div class="col-xs-10 col-xs-offset-1 col-md-4 col-md-offset-1">
 
         <div class="tab-content">
@@ -37,16 +36,15 @@
           <% end %>
         </ul>
       </div>
-    <!-- </div> -->
 
     <div class="col-xs-10 col-xs-offset-1 col-md-4">
       <div class="card card-pricing">
         <div class="content">
           <span class="hidden-print">
-              <%= link_to "<i class='material-icons'>edit</i>".html_safe, edit_account_job_proposal_item_path(@item.account, @item.job, @item.proposal, @item), class: "btn btn-fab btn-fab-mini btn-primary pull-left" %>
+            <%= link_to "<i class='material-icons'>edit</i>".html_safe, edit_account_job_proposal_item_path(@item.account, @item.job, @item.proposal, @item), class: "btn btn-fab btn-fab-mini btn-primary pull-left" %>
           </span>
           <span class="hidden-print">
-              <%= link_to "<i class='material-icons'>delete_forever</i>".html_safe, item_path(@item), method: :delete, class: "btn btn-fab btn-fab-mini btn-danger pull-right", data: {confirm: "Are you sure?", :'confirm-button-text' => "Yes, I'm sure", :'cancel-button-text' => "No, cancel!", :'sweet-alert-type' => 'warning', :'confirm-button-color' => '#f44336', text: "This will delete the item. This is irreversable."} %>
+            <%= link_to "<i class='material-icons'>delete_forever</i>".html_safe, item_path(@item), method: :delete, class: "btn btn-fab btn-fab-mini btn-danger pull-right", data: {confirm: "Are you sure?", :'confirm-button-text' => "Yes, I'm sure", :'cancel-button-text' => "No, cancel!", :'sweet-alert-type' => 'warning', :'confirm-button-color' => '#f44336', text: "This will delete the item. This is irreversable."} %>
           </span>
           <h6 class="category text-success"><%= @item.description %></h6>
           <% if @item.listing_price_cents %>
@@ -75,8 +73,35 @@
               Create Item from this Batch <i class='material-icons'>content_copy</i>
             </button>
           <% end %>
+
+          <% if current_user.try(:internal?) && @item.child? %>
+            <div class="card card-plain card-blog">
+              <h4>This item was created from this batch:</h4>
+              <a href="<%= account_job_proposal_item_path(@item.account, @item.job, @item.proposal, @item.parent_item) %>">
+                <div class="card-image">
+                    <%= image_tag(@item.parent_item.featured_photo_url(fetch: :auto), class: "img img-raised") %>
+                  <div class="ripple-container"></div>
+                </div>
+              </a>
+
+              <div class="content">
+                <%= link_to "<i class='material-icons'>edit</i>".html_safe, edit_account_job_proposal_item_path(@item.account, @item.job, @item.proposal, @item.parent_item), class: "btn btn-fab btn-fab-mini btn-primary pull-right" %>
+                <h6 class="category text-info"><%= @item.parent_item.ownership_type %></h6>
+                <h4 class="card-title">
+                  <%= link_to @item.parent_item.description, account_job_proposal_item_path(@item.account, @item.job, @item.proposal, @item.parent_item) %>
+                </h4>
+              </div>
+            </div>
+          <% end %>
+
+          <div class="fb-like" data-href="<%= item_url(@item) %>" data-layout="standard" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
         </div>
       </div>
+
+      <div class="card card-pricing">
+        <div class="fb-comments" data-href="<%= item_url(@item) %>" data-numposts="5" data-width="100%"></div>
+      </div>
+
     </div>
 
   </div>
