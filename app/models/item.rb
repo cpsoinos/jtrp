@@ -116,8 +116,7 @@ class Item < ActiveRecord::Base
       # bypass agreement requirement
       true
     else
-      agreement.reload.present? &&
-      agreement.active?
+      agreement.try(:active?)
     end
   end
 
