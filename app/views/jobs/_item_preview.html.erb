@@ -4,7 +4,7 @@
     <div class="card card-plain card-blog">
       <a href="<%= account_job_proposal_item_path(@account, @job, item.proposal, item) %>">
         <div class="card-image">
-            <%= image_tag(item.featured_photo_url, class: "img img-raised") %>
+            <%= image_tag(item.featured_photo_url(fetch: :auto), class: "img img-raised") %>
           <div class="ripple-container"></div>
         </div>
       </a>
