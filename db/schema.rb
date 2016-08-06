@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160726111522) do
+ActiveRecord::Schema.define(version: 20160805221156) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -69,9 +69,11 @@ ActiveRecord::Schema.define(version: 20160726111522) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "parent_id"
+    t.integer  "photo_id"
   end
 
   add_index "categories", ["parent_id"], name: "index_categories_on_parent_id", using: :btree
+  add_index "categories", ["photo_id"], name: "index_categories_on_photo_id", using: :btree
 
   create_table "companies", force: :cascade do |t|
     t.string  "name",                        null: false
@@ -240,6 +242,7 @@ ActiveRecord::Schema.define(version: 20160726111522) do
   end
 
   add_foreign_key "agreements", "proposals"
+  add_foreign_key "categories", "photos"
   add_foreign_key "items", "categories"
   add_foreign_key "items", "orders"
   add_foreign_key "jobs", "accounts"

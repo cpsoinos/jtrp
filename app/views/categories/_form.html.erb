@@ -19,12 +19,28 @@
   <% end %>
 
   <div class="row form-row">
-    <div class="text-center">
-      <div class="col-xs-12 col-md-3 form-label">
+
+    <div class="col-xs-10 col-xs-offset-1 col-md-4 col-md-offset-2">
+      <div class="form-group label-floating">
         <%= f.label :name, class: "control-label required" %>
+        <%= f.text_field :name, class: "form-control", required: true %>
       </div>
-      <div class="col-xs-12 col-md-9 text-left">
-        <%= f.text_field :name, class: "form-control", placeholder: "Category name", required: true %>
+    </div>
+
+    <div class="col-xs-10 col-xs-offset-1 col-md-4 col-md-offset-2">
+      <div class="fileinput fileinput-new text-center" data-provides="fileinput">
+
+        <div class="preview thumbnail img-raised"></div>
+        <span class="btn-file" style="display: inline-block;">
+          <div class="thumbnail img-raised">
+            <%= image_tag(@category.featured_photo_url) %>
+          </div>
+          <%= f.cl_image_upload(:photo, return_delete_token: true) %>
+        </span>
+        <div class="progressbar fileupload-progressbar">
+          <div style="width:0%;"></div>
+        </div>
+        <span class="status"></span>
       </div>
     </div>
   </div>
