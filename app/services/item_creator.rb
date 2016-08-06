@@ -23,6 +23,12 @@ class ItemCreator
       account.save
     end
 
+    if @item.child?
+      if @item.parent_item.active?
+        @item.mark_active
+      end
+    end
+
     @item
   end
 
