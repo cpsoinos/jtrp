@@ -21,7 +21,7 @@
         <div class="tab-content">
           <% @item.initial_photos.each do |photo| %>
             <div class="tab-pane large-top-margin" id="product-page<%= photo.id %>">
-              <%= image_tag(photo.photo_url, class: "img-rounded img-responsive img-raised img-featured") %>
+              <%= image_tag(photo.photo_url(format: :auto), class: "img-rounded img-responsive img-raised img-featured") %>
             </div>
           <% end %>
         </div>
