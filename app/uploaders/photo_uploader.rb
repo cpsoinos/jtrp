@@ -21,8 +21,6 @@ class PhotoUploader < CarrierWave::Uploader::Base
     cloudinary_transformation effect: "viesus_correct", sign_url: true
   end
 
-  process convert: 'jpg'
-
   def default_url
     ActionController::Base.helpers.asset_path("image_placeholder.jpg").compact.join('_')
   end

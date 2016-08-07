@@ -21,7 +21,7 @@
         <div class="tab-content">
           <% @item.initial_photos.each do |photo| %>
             <div class="tab-pane large-top-margin" id="product-page<%= photo.id %>">
-              <%= image_tag(photo.photo_url, class: "img-rounded img-responsive img-raised img-featured") %>
+              <%= image_tag(photo.photo_url(format: :auto), class: "img-rounded img-responsive img-raised img-featured") %>
             </div>
           <% end %>
         </div>
@@ -73,6 +73,27 @@
               Create Item from this Batch <i class='material-icons'>content_copy</i>
             </button>
           <% end %>
+
+          <% if current_user.try(:internal?) && @item.child? %>
+            <div class="card card-plain card-blog">
+              <h4>This item was created from this batch:</h4>
+              <a href="<%= account_job_proposal_item_path(@item.account, @item.job, @item.proposal, @item.parent_item) %>">
+                <div class="card-image">
+                    <%= image_tag(@item.parent_item.featured_photo_url(fetch: :auto), class: "img img-raised") %>
+                  <div class="ripple-container"></div>
+                </div>
+              </a>
+
+              <div class="content">
+                <%= link_to "<i class='material-icons'>edit</i>".html_safe, edit_account_job_proposal_item_path(@item.account, @item.job, @item.proposal, @item.parent_item), class: "btn btn-fab btn-fab-mini btn-primary pull-right" %>
+                <h6 class="category text-info"><%= @item.parent_item.ownership_type %></h6>
+                <h4 class="card-title">
+                  <%= link_to @item.parent_item.description, account_job_proposal_item_path(@item.account, @item.job, @item.proposal, @item.parent_item) %>
+                </h4>
+              </div>
+            </div>
+          <% end %>
+
           <div class="fb-like" data-href="<%= item_url(@item) %>" data-layout="standard" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
         </div>
       </div>
