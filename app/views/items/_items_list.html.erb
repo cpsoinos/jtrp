@@ -65,7 +65,7 @@
                 <% end %>
               </td>
               <td class="td-actions">
-                <%= link_to "<i class='material-icons'>edit</i>".html_safe, edit_account_job_proposal_item_path(@account, @job, item.proposal, item), class: "btn btn-fab btn-fab-mini btn-primary" %>
+                <%= link_to "<i class='material-icons'>edit</i>".html_safe, edit_account_job_proposal_item_path(item.account, item.job, item.proposal, item), class: "btn btn-fab btn-fab-mini btn-primary" %>
               </td>
             <% else %>
               <td class="text-center">
