@@ -1,10 +1,6 @@
 class PhotoUploader < CarrierWave::Uploader::Base
   include Cloudinary::CarrierWave
 
-  version :standard do
-    process resize_to_fill: [800,800]
-  end
-
   version :thumb do
     resize_to_fit(200, 200)
   end
@@ -22,7 +18,7 @@ class PhotoUploader < CarrierWave::Uploader::Base
   end
 
   def default_url
-    ActionController::Base.helpers.asset_path("image_placeholder.jpg").compact.join('_')
+    ActionController::Base.helpers.asset_path("image_placeholder.jpg")
   end
 
   def store_dir

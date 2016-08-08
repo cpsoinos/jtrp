@@ -4,7 +4,9 @@
   <div class="well bs-component">
 
     <%= render "form", legend: "Edit #{@category.name}" %>
+
     <div class="text-right large-top-margin">
+      <%= link_to "Add a subcategory", new_category_path(parent_id: @category.id), class: "btn btn-raised btn-primary" %>
       <%= link_to "Delete", category_path(@category), method: "DELETE", class: "btn btn-raised btn-danger" %>
     </div>
 
