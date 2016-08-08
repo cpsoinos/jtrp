@@ -1,3 +1,11 @@
 machine:
   pre:
     - sudo curl --output /usr/local/bin/phantomjs https://s3.amazonaws.com/circle-downloads/phantomjs-2.1.1
+  post:
+    - sudo sh -c 'echo "deb http://apt.gemnasium.com stable main" > /etc/apt/sources.list.d/gemnasium.list'
+    - sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com E5CEAB0AC5F1CA2A
+    - sudo apt-get update
+    - sudo apt-get install gemnasium-toolbelt
+    - export GEMNASIUM_TESTSUITE="rspec spec"
+    - export GEMNASIUM_PROJECT_SLUG="github.com/cpsoinos/jtrp"
+    - gemnasium --token b38fa1f918ac0bc093e48975e57e88c0 autoupdate run
