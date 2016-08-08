@@ -38,7 +38,8 @@ class CategoriesController < ApplicationController
   end
 
   def destroy
-    @category = Cagegory.find(params[:id])
+    @category = Category.find(params[:id])
+    @category.items.update_all(category_id: nil)
     if @category.destroy
       flash[:notice] = "Category destroyed"
       redirect_to categories_path

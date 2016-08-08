@@ -11,7 +11,7 @@
   <div class="container">
 
     <div class="related-products">
-      <h3 class="title text-center">Shop by room:</h3>
+      <h3 class="title text-center">Shop by category:</h3>
 
       <div class="row">
 
@@ -24,20 +24,16 @@
                 </div>
 
                 <div class="content">
-                  <h6 class="category text-rose">Trending</h6>
                   <h4 class="card-title">
                     <%= category.name %>
                   </h4>
-                  <div class="card-description">
-                    Dolce & Gabbana's 'Greta' tote has been crafted in Italy from hard-wearing red textured-leather.
-                  </div>
                   <% if current_user.try(:internal?) %>
                     <div class="footer">
                       <div class="price">
-                        <%= link_to "<i class='material-icons'>edit</i>".html_safe, edit_category_path(@categories.first), class: "btn btn-fab btn-fab-mini btn-primary pull-left" %>
+                        <%= link_to "<i class='material-icons'>edit</i>".html_safe, edit_category_path(category), class: "btn btn-fab btn-fab-mini btn-primary pull-left" %>
                       </div>
                       <div class="pull-right">
-                        <%= link_to "<i class='material-icons'>delete_forever</i>".html_safe, category_path(@categories.first), method: :delete, class: "btn btn-fab btn-fab-mini btn-danger pull-right", data: {confirm: "Are you sure?", :'confirm-button-text' => "Yes, I'm sure", :'cancel-button-text' => "No, cancel!", :'sweet-alert-type' => 'warning', :'confirm-button-color' => '#f44336', text: "This will delete the category. This is irreversable. Items will not be deleted, but will be removed from this category."} %>
+                        <%= link_to "<i class='material-icons'>delete_forever</i>".html_safe, category_path(category), method: :delete, class: "btn btn-fab btn-fab-mini btn-danger pull-right", data: {confirm: "Are you sure?", :'confirm-button-text' => "Yes, I'm sure", :'cancel-button-text' => "No, cancel!", :'sweet-alert-type' => 'warning', :'confirm-button-color' => '#f44336', text: "This will delete the category. This is irreversable. Items will not be deleted, but will be removed from this category."} %>
                       </div>
                     </div>
                   <% end %>
@@ -51,16 +47,6 @@
         <% end %>
 
       </div>
-    </div>
-  </div>
-
-</div>
-
-<div class="main main-raised extra-large-top-margin extra-large-bottom-margin large-bottom-padding">
-
-  <div class="container">
-		<div class="row">
-
     </div>
   </div>
 
