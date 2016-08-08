@@ -15,6 +15,15 @@ feature "home page" do
       expect(page).to have_content(company.slogan)
     end
 
+    scenario "clicks through to a category" do
+      visit root_path
+      within(".categories-row") do
+        click_link(category_1.name)
+      end
+
+      expect(page).to have_content(category_1.name)
+    end
+
   end
 
   context "internal user" do

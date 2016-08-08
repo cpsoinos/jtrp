@@ -1,0 +1,38 @@
+<div class="related-products">
+  <h3 class="title text-center">Shop by category:</h3>
+
+  <div class="row large-top-margin">
+
+    <% @categories.primary.each do |category| %>
+      <div class="col-sm-6 col-md-3">
+        <a href="<%= category_path(category) %>">
+          <div class="card card-product">
+            <div class="card-image">
+              <%= image_tag(category.photo_url(quality: "auto", fetch_format: :auto), class: "img") %>
+            </div>
+
+            <div class="content">
+              <h4 class="card-title">
+                <%= category.name %>
+              </h4>
+              <% if current_user.try(:internal?) %>
+                <div class="footer">
+                  <div class="price">
+                    <%= link_to "<i class='material-icons'>edit</i>".html_safe, edit_category_path(category), class: "btn btn-fab btn-fab-mini btn-primary pull-left" %>
+                  </div>
+                  <div class="pull-right">
+                    <%= link_to "<i class='material-icons'>delete_forever</i>".html_safe, category_path(category), method: :delete, class: "btn btn-fab btn-fab-mini btn-danger pull-right", data: {confirm: "Are you sure?", :'confirm-button-text' => "Yes, I'm sure", :'cancel-button-text' => "No, cancel!", :'sweet-alert-type' => 'warning', :'confirm-button-color' => '#f44336', text: "This will delete the category. This is irreversable. Items will not be deleted, but will be removed from this category."} %>
+                  </div>
+                </div>
+              <% end %>
+
+            </div>
+
+          </div>
+        </a>
+      </div>
+
+    <% end %>
+
+  </div>
+</div>
