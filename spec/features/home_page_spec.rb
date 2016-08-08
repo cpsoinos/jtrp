@@ -22,6 +22,8 @@ feature "home page" do
       end
 
       expect(page).to have_content(category_1.name)
+      expect(page).not_to have_link("edit")
+      expect(page).not_to have_link("delete_forever")
     end
 
   end
@@ -208,6 +210,19 @@ feature "home page" do
 
           expect(page).to have_content("Showing completed jobs")
         end
+      end
+    end
+
+    context "home page" do
+      scenario "clicks through to a category" do
+        visit landing_page_path
+        within(".categories-row") do
+          click_link(category_1.name)
+        end
+
+        expect(page).to have_content(category_1.name)
+        expect(page).to have_link("edit")
+        expect(page).to have_link("delete_forever")
       end
     end
 
