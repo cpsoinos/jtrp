@@ -5,5 +5,6 @@ Cloudinary.config do |config|
   unless Rails.env.test?
     config.enhance_image_tag = true
     config.static_image_support = true
+    config.secure = true
   end
 end

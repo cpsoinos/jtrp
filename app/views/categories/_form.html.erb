@@ -28,20 +28,25 @@
     </div>
 
     <div class="col-xs-10 col-xs-offset-1 col-md-4 col-md-offset-2">
-      <div class="fileinput fileinput-new text-center" data-provides="fileinput">
 
-        <div class="preview thumbnail img-raised"></div>
-        <span class="btn-file" style="display: inline-block;">
-          <div class="thumbnail img-raised">
-            <%= image_tag(@category.featured_photo_url) %>
-          </div>
-          <%= f.cl_image_upload(:photo, return_delete_token: true) %>
-        </span>
-        <div class="progressbar fileupload-progressbar">
-          <div style="width:0%;"></div>
+      <div class="fileinput fileinput-new text-center" data-provides="fileinput">
+        <div class="fileinput-new thumbnail img-raised">
+          <%= image_tag(@category.photo.url) %>
         </div>
-        <span class="status"></span>
+        <div class="fileinput-preview fileinput-exists thumbnail img-raised"></div>
+        <div>
+          <span class="btn btn-raised btn-round btn-default btn-file">
+            <span class="fileinput-new">Select image</span>
+            <span class="fileinput-exists">Change</span>
+
+            <%= f.file_field :photo %>
+            <%= f.hidden_field :photo_cache %>
+          </span>
+          <a href="#" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Remove</a>
+        </div>
+
       </div>
+
     </div>
   </div>
 

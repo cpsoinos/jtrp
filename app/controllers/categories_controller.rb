@@ -31,7 +31,7 @@ class CategoriesController < ApplicationController
     @category = Category.find(params[:id])
     if @category.update(category_params)
       flash[:notice] = "Category updated!"
-      redirect_to categories_path
+      redirect_to category_path(@category)
     else
       render :edit
     end
@@ -51,7 +51,7 @@ class CategoriesController < ApplicationController
   protected
 
   def category_params
-    params.require(:category).permit([:name, :parent_id])
+    params.require(:category).permit(:name, :parent_id, :photo)
   end
 
 end

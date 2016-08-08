@@ -20,7 +20,7 @@
             <a href="<%= category_path(category) %>">
               <div class="card card-product">
                 <div class="card-image">
-                  <img class="img" src="../assets/img/examples/card-product1.jpg" />
+                  <%= image_tag(category.photo_url(quality: "auto", fetch_format: :auto), class: "img") %>
                 </div>
 
                 <div class="content">
