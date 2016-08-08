@@ -42,7 +42,7 @@
     <div class="col-xs-10 col-xs-offset-1 col-md-4">
       <div class="card card-pricing">
         <div class="content">
-          <% if current_user.try(:internal) %>
+          <% if current_user.try(:internal?) %>
             <span class="hidden-print">
               <%= link_to "<i class='material-icons'>edit</i>".html_safe, edit_account_job_proposal_item_path(@item.account, @item.job, @item.proposal, @item), class: "btn btn-fab btn-fab-mini btn-primary pull-left" %>
             </span>

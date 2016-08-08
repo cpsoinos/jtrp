@@ -14,18 +14,18 @@ feature "edit a category" do
       visit categories_path
 
       click_link(category.name, match: :first)
-
-      expect(page).to have_link("Add a subcategory")
-      expect(page).to have_link("Edit")
+      expect(page).to have_link("edit")
+      expect(page).to have_link("delete_forever")
     end
 
     scenario "visits edit category page from show" do
       visit category_path(category)
-      click_link("Edit")
+      click_link("edit")
 
       expect(page).to have_field("Name")
       expect(page).to have_button("Update Category")
       expect(page).to have_link("Cancel")
+      expect(page).to have_link("Add a subcategory")
     end
 
     scenario "successfully updates a category" do
@@ -90,7 +90,7 @@ feature "edit a category" do
     scenario "visits categories page" do
       visit categories_path
 
-      expect(page).not_to have_link("Edit")
+      expect(page).not_to have_link("edit")
     end
 
     scenario "visits edit category page" do
