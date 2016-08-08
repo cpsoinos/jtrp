@@ -2,6 +2,7 @@ class Category < ActiveRecord::Base
   has_many :items
   has_many :subcategories, class_name: "Category", foreign_key: "parent_id"
   belongs_to :parent, class_name: "Category"
+  mount_uploader :photo, PhotoUploader
 
   validates :name, presence: true, uniqueness: true
 
@@ -11,4 +12,5 @@ class Category < ActiveRecord::Base
   def subcategory?
     parent.present?
   end
+
 end

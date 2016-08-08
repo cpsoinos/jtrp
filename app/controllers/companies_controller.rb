@@ -1,5 +1,5 @@
 class CompaniesController < ApplicationController
-  before_filter :require_internal, except: [:client_services, :consignment_policies, :service_rate_schedule, :agent_service_rate_schedule]
+  before_filter :require_internal, except: [:client_services, :consignment_policies, :service_rate_schedule, :agent_service_rate_schedule, :home]
 
   def show
     @metrics = {
@@ -18,13 +18,17 @@ class CompaniesController < ApplicationController
     end
   end
 
+  def home
+    @featured_photos = Photo.featured
+  end
+
   def edit
   end
 
   def update
     if @company.update(company_params)
       flash[:notice] = "Changes saved!"
-      redirect_to company_client_services_path(@company)
+      redirect_to client_services_path
     else
       flash[:error] = "Unable to save changes."
       redirect_to :back

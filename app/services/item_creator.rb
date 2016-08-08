@@ -14,12 +14,16 @@ class ItemCreator
       attrs[:account_item_number] = account.last_item_number += 1
     end
 
-    @item = proposal.items.new(attrs)
+    if attrs[:parent_item_id].present?
+      @item = Item.find(attrs[:parent_item_id]).build_child_item
+      @item.update(attrs)
+    else
+      @item = proposal.items.new(attrs)
+    end
 
     if @item.save
       process_photos(initial_photo_attrs, "initial") if initial_photo_attrs
       process_photos(listing_photo_attrs, "listing") if listing_photo_attrs
-      process_parent_photos if @item.child?
       account.save
     end
 
@@ -32,11 +36,6 @@ class ItemCreator
     photo_attrs.each do |photo|
       @item.photos.create!(photo: photo, photo_type: type)
     end
-  end
-
-  def process_parent_photos
-    @item.photos << @item.parent_item.photos.map(&:dup)
-    @item.save
   end
 
 end
