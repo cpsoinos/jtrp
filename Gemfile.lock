@@ -622,7 +622,7 @@ PLATFORMS
 
 DEPENDENCIES
   amoeba
-  barby
+  barby (~> 0.6)
   best_in_place (= 3.0.3)
   better_errors
   bootsy
@@ -661,7 +661,7 @@ DEPENDENCIES
   pg (~> 0.15)
   pg_search
   poltergeist
-  pry-byebug (~> 3.3)
+  pry-byebug (~> 3.3.0)
   pry-coolline
   pry-rails
   puma
