@@ -5,7 +5,7 @@
 </div>
 
 <% if current_user.try(:internal?) %>
-  <%= render 'mark_sold_modal' %>
+  <%= render 'mark_sold_modal', item: @item %>
   <%= render 'new_item_from_batch_modal' %>
 
   <div class="row text-center">
