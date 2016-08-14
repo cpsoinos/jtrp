@@ -48,6 +48,9 @@ gem 'pg_search'
 gem 'kaminari'
 gem 'amoeba'
 gem 'metamagic'
+gem 'pry-rails'
+gem 'pry-coolline'
+gem 'pry-byebug', '~> 3.3.0'
 
 group :production, :staging, :local do
   gem 'rails_12factor'
@@ -59,9 +62,6 @@ source 'https://rails-assets.org' do
 end
 
 group :development, :test, :local do
-  gem 'pry-rails'
-  gem 'pry-coolline'
-  gem 'pry-byebug', '~> 3.3.0'
   gem 'sextant'
   gem 'better_errors'
   gem 'faker'
