@@ -5,8 +5,8 @@
       <thead>
         <tr>
           <th class="text-center"></th>
-          <th class="text-center th-description">Item</th>
-          <th class="text-center">SKU</th>
+          <th class="th-description">Item</th>
+          <th class="text-center hidden-xs">SKU</th>
           <% if current_user.try(:internal?) %>
             <th class="text-center">Account Item No.</th>
             <th class="text-center">Listing Price</th>
@@ -34,7 +34,7 @@
                 <br><small>from <%= link_to item.account.full_name, account_path(item.account) %></small>
               <% end %>
             </td>
-            <td class="text-center">
+            <td class="text-center hidden-xs">
               <%= item.id %>
             </td>
             <% if current_user.try(:internal?) %>
@@ -64,8 +64,18 @@
                   <h4><%= humanized_money_with_symbol(item.sale_price) %></h4>
                 <% end %>
               </td>
-              <td class="td-actions">
+              <td class="td-actions text-center">
                 <%= link_to "<i class='material-icons'>edit</i>".html_safe, edit_account_job_proposal_item_path(item.account, item.job, item.proposal, item), class: "btn btn-fab btn-fab-mini btn-primary" %>
+                <% if item.active? %>
+                  <br />
+                  <br />
+                  <div class="text-left">
+                    <%= render 'items/mark_sold_modal', item: item %>
+                  </div>
+                  <button type="button" class="btn btn-raised btn-success btn-round" data-toggle="modal" data-target="#<%= item.id %>-mark-sold-modal">
+                    Mark as Sold <i class='material-icons'>done</i>
+                  </button>
+                <% end %>
               </td>
             <% else %>
               <td class="text-center">

@@ -73,7 +73,7 @@ class ItemsController < ApplicationController
     respond_to do |format|
       if ItemUpdater.new(@item).update(item_params)
         format.js { render 'proposals/update_item_details' }
-        format.html { redirect_to(@item, :notice => 'Item was successfully updated.') }
+        format.html { redirect_to(:back, :notice => 'Item was successfully updated.') }
         format.json { respond_with_bip(@item) }
       else
         format.html do
