@@ -1,54 +1,86 @@
-<h1 class="text-center company-title"><%= @category.name %></h1>
-
-<div class="row text-center">
-  <% if current_user && current_user.internal? %>
-  <%= link_to "Add an item", new_category_item_path(@category), class: "btn btn-raised btn-primary" %>
-  <%= link_to "Add a subcategory", new_category_path(parent_id: @category.id), class: "btn btn-raised btn-primary" %>
-  <%= link_to "Edit", edit_category_path(@category), class: "btn btn-raised btn-primary pull-right" %>
-  <% end %>
+<div class="row">
+  <div class="col-xs-10 col-xs-offset-1 col-md-6 col-md-offset-3">
+    <% if current_user.try(:internal?) %>
+      <span class="hidden-print">
+        <%= link_to "<i class='material-icons'>edit</i>".html_safe, edit_category_path(@category), class: "btn btn-fab btn-fab-mini btn-primary pull-left" %>
+      </span>
+      <span class="hidden-print">
+        <%= link_to "<i class='material-icons'>delete_forever</i>".html_safe, category_path(@category), method: :delete, class: "btn btn-fab btn-fab-mini btn-danger pull-right", data: {confirm: "Are you sure?", :'confirm-button-text' => "Yes, I'm sure", :'cancel-button-text' => "No, cancel!", :'sweet-alert-type' => 'warning', :'confirm-button-color' => '#f44336', text: "This will delete the category. This is irreversable. Items will not be deleted, but will be removed from this category."} %>
+      </span>
+    <% end %>
+    <h1 class="text-center company-title"><%= @category.name %></h1>
+  </div>
 </div>
 
-<div class="col-xs-12 col-md-10 col-md-offset-1">
+<% if @category.subcategories.present? %>
+  <div class="row section section-dark extra-large-top-margin">
+    <div class="col-xs-6 col-xs-offset-3">
+      <% @category.subcategories.each do |subcategory| %>
+        <div class="col-sm-6 col-md-3">
+          <a href="<%= category_path(subcategory) %>">
+            <div class="card card-product">
+              <div class="card-image">
+                <%= image_tag(subcategory.photo_url(quality: "auto", fetch_format: :auto), class: "img") %>
+              </div>
 
-  <% if @category.subcategories.present? %>
-    <div class="text-center well bs-component">
-      <h3>Subcategories</h3>
-      <div class="row grid">
-        <% @category.subcategories.each do |subcategory| %>
-          <div class="col-xs-6 col-sm-4 grid-sizer"></div>
-          <div class="col-xs-6 col-sm-4 grid-item">
-            <%= render 'category_list_item', category: subcategory %>
-          </div>
-        <% end %>
-      </div>
-    </div>
-  <% end %>
+              <div class="content">
+                <h3 class="card-title">
+                  <%= subcategory.name %>
+                </h3>
+                <% if current_user.try(:internal?) %>
+                  <div class="footer">
+                    <div class="price">
+                      <%= link_to "<i class='material-icons'>edit</i>".html_safe, edit_category_path(subcategory), class: "btn btn-fab btn-fab-mini btn-primary pull-left" %>
+                    </div>
+                    <div class="pull-right">
+                      <%= link_to "<i class='material-icons'>delete_forever</i>".html_safe, category_path(subcategory), method: :delete, class: "btn btn-fab btn-fab-mini btn-danger pull-right", data: {confirm: "Are you sure?", :'confirm-button-text' => "Yes, I'm sure", :'cancel-button-text' => "No, cancel!", :'sweet-alert-type' => 'warning', :'confirm-button-color' => '#f44336', text: "This will delete the category. This is irreversable. Items will not be deleted, but will be removed from this category."} %>
+                    </div>
+                  </div>
+                <% end %>
 
-  <div class="well bs-component">
-    <div class="row grid">
-      <% @category.items.each do |item| %>
-        <div class="col-md-3 grid-sizer"></div>
-        <div class="col-md-3 grid-item">
-          <div class="panel panel-primary text-center">
-            <div class="panel-heading">
-              <%= link_to item.description, item_path(item), class: "panel-title" %>
+              </div>
+
             </div>
-            <div class="panel-body">
-              <% if item.listing_photos.present? %>
-                <%= link_to(image_tag(item.listing_photos.first.photo_url(:thumb), class: "img-rounded"), item_path(item)) %>
-              <% elsif item.initial_photos.present? %>
-                <%= link_to(image_tag(item.initial_photos.first.photo_url(:thumb), class: "img-rounded"), item_path(item)) %>
-              <% else %>
-                <%= link_to(image_tag(Photo.default_url, class: "img-rounded"), item_path(item)) %>
-              <% end %>
-              <p>Listed for: $<%= item.try(:listing_price) %></p>
-              <p>Minimum sale price: $<%= item.try(:minimum_sale_price) %></p>
-            </div>
-          </div>
+          </a>
         </div>
+
       <% end %>
     </div>
-  </div>
 
+  </div>
+<% end %>
+
+<div class="row extra-large-top-margin">
+  <div class="col-xs-10 col-xs-offset-1">
+
+    <% @category.items.active.each do |item| %>
+      <div class="col-sm-6 col-md-3">
+        <a href="<%= category_item_path(@category, item) %>">
+          <div class="card card-product">
+            <div class="card-image">
+              <%= image_tag(item.featured_photo_url, class: "img") %>
+            </div>
+
+            <div class="content">
+              <h4 class="card-title">
+                <%= item.description %>
+              </h4>
+              <div class="footer">
+                <div class="price">
+                  <%= humanized_money_with_symbol(item.listing_price) %>
+                </div>
+                <div class="stats">
+                  more info <i class="material-icons">keyboard_arrow_right</i>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        </a>
+      </div>
+    <% end %>
+
+  </div>
 
 </div>

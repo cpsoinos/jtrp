@@ -78,11 +78,11 @@ class Item < ActiveRecord::Base
     photos.listing
   end
 
-  def featured_photo_url(format=:enhanced)
+  def featured_photo_url(format=nil)
     if listing_photos.present?
-      listing_photos.first.photo_url(format)
+      listing_photos.first.photo_url(format, quality: "auto", fetch_format: :auto, effect: :improve)
     elsif initial_photos.present?
-      initial_photos.first.photo_url(format)
+      initial_photos.first.photo_url(format, quality: "auto", fetch_format: :auto, effect: :improve)
     else
       "thumb_No_Image_Available.png"
     end

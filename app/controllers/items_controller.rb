@@ -1,9 +1,9 @@
 class ItemsController < ApplicationController
   before_filter :find_clients, only: [:new, :edit]
-  before_filter :find_categories, only: [:new, :edit, :show]
+  before_filter :find_categories, only: [:new, :edit, :show, :index]
   before_filter :find_proposal, only: [:create, :batch_create]
   before_filter :find_job, only: :tags
-  before_filter :require_internal
+  before_filter :require_internal, except: [:index, :show]
 
   def index
     @items = ItemsPresenter.new(params).filter
@@ -73,7 +73,7 @@ class ItemsController < ApplicationController
     respond_to do |format|
       if ItemUpdater.new(@item).update(item_params)
         format.js { render 'proposals/update_item_details' }
-        format.html { redirect_to(@item, :notice => 'Item was successfully updated.') }
+        format.html { redirect_to(:back, :notice => 'Item was successfully updated.') }
         format.json { respond_with_bip(@item) }
       else
         format.html do

@@ -12,27 +12,22 @@
         </tr>
       </thead>
       <tbody>
-        <% jobs.each do |job| %>
+        <% clients.each do |client| %>
           <tr>
             <td class="text-center">
               <div class="img-container">
-                <%= link_to image_tag(job.maps_url, class: "img-rounded img-responsive img-raised"), account_job_path(job.account, job) %>
+                <%= link_to "<i class='material-icons'>person</i>".html_safe, client_path(client) %></h3>
               </div>
             </td>
             <td class="td-name">
-              <%= link_to job.name, account_job_path(job.account, job) %>
+              <%= link_to client.full_name, account_client_path(client.account, client) %>
             </td>
             <td class="text-center">
-              <%= job.account.account_number %>
+              <%= link_to client.account.account_number, account_path(client.account) %>
             </td>
             <td class="text-center">
-              <%= job.items.count %>
+              <%= client.account.items.count %>
             </td>
-            <!-- <td class="td-actions">
-              <button type="button" rel="tooltip" data-placement="left" title="" class="btn btn-simple" data-original-title="Remove account">
-                  <i class="material-icons">close</i>
-              </button>
-            </td> -->
           </tr>
         <% end %>
       </tbody>

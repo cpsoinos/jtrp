@@ -1,17 +1,23 @@
 require 'sidekiq/web'
 
 Rails.application.routes.draw do
-  mount Sidekiq::Web => '/sidekiq'
+
+  authenticate :user, lambda { |u| u.admin? } do
+    mount Sidekiq::Web => '/sidekiq'
+  end
+
   mount Bootsy::Engine => '/bootsy', as: 'bootsy'
   devise_for :users, controllers: { registrations: 'registrations', omniauth_callbacks: 'users/omniauth_callbacks' }
   root 'passthrough#index'
 
-  resources :companies do
-    get '/client_services', to: 'companies#client_services', as: 'client_services'
-    get '/consignment_policies', to: 'companies#consignment_policies', as: 'consignment_policies'
-    get '/service_rate_schedule', to: 'companies#service_rate_schedule', as: 'service_rate_schedule'
-    get '/agent_service_rate_schedule', to: 'companies#agent_service_rate_schedule', as: 'agent_service_rate_schedule'
-  end
+  get '/home', to: 'companies#home', as: 'landing_page'
+  get '/dashboard', to: 'companies#show', as: 'dashboard'
+  get '/client_services', to: 'companies#client_services', as: 'client_services'
+  get '/consignment_policies', to: 'companies#consignment_policies', as: 'consignment_policies'
+  get '/service_rate_schedule', to: 'companies#service_rate_schedule', as: 'service_rate_schedule'
+  get '/agent_service_rate_schedule', to: 'companies#agent_service_rate_schedule', as: 'agent_service_rate_schedule'
+
+  resources :companies
 
   resources :categories do
     resources :items

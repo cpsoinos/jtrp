@@ -46,27 +46,6 @@ feature "add an item" do
       # expect(page).not_to have_field("item[listing_photos][]")
     end
 
-    scenario "visits category page" do
-      visit category_path(category)
-
-      expect(page).to have_link("Add an item")
-    end
-
-    scenario "clicks on add item link" do
-      visit category_path(category)
-      click_on "Add an item"
-
-      expect(page).to have_content("Add an item")
-      expect(page).to have_field("Description")
-
-      expect(page).not_to have_content("Select Client")
-      expect(page).not_to have_content("Select Category")
-      expect(page).not_to have_field("Listing price")
-      expect(page).not_to have_field("Purchase price")
-      expect(page).not_to have_field("Minimum sale price")
-      # expect(page).not_to have_field("listing_photos[]")
-    end
-
   end
 
 end

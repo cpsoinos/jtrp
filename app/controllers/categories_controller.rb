@@ -2,7 +2,6 @@ class CategoriesController < ApplicationController
   before_filter :require_internal, except: [:index, :show]
 
   def index
-    # @items = Item.active.sample(3)
     @featured_photos = Photo.featured
   end
 
@@ -32,14 +31,15 @@ class CategoriesController < ApplicationController
     @category = Category.find(params[:id])
     if @category.update(category_params)
       flash[:notice] = "Category updated!"
-      redirect_to categories_path
+      redirect_to category_path(@category)
     else
       render :edit
     end
   end
 
   def destroy
-    @category = Cagegory.find(params[:id])
+    @category = Category.find(params[:id])
+    @category.items.update_all(category_id: nil)
     if @category.destroy
       flash[:notice] = "Category destroyed"
       redirect_to categories_path
@@ -52,7 +52,7 @@ class CategoriesController < ApplicationController
   protected
 
   def category_params
-    params.require(:category).permit([:name, :photo, :parent_id])
+    params.require(:category).permit(:name, :parent_id, :photo)
   end
 
 end
