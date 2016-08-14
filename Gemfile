@@ -47,6 +47,7 @@ gem 'deepstruct'
 gem 'pg_search'
 gem 'kaminari'
 gem 'amoeba'
+gem 'metamagic'
 
 group :production, :staging, :local do
   gem 'rails_12factor'

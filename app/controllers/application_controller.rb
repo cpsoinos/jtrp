@@ -65,4 +65,23 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def meta_tags
+    @meta_tags = {
+      site: "Just the Right Piece",
+      og: og_meta_tags
+      # title: 'Member Login',
+      # description: 'Member login page.',
+      # keywords: 'Site, Login, Members',
+    }
+  end
+
+  def og_meta_tags
+    {
+      title:    @item.description.titleize,
+      type:     'product',
+      url:      item_url(@item),
+      image:    @item.featured_photo_url,
+    }
+  end
+
 end
