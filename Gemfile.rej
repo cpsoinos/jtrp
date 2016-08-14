@@ -1,5 +1,5 @@
 ***************
-*** 14 ****
-- gem 'dotenv-rails', require: 'dotenv/rails-now'
---- 14 ----
-+ gem 'dotenv-rails', '~> 2.1', require: 'dotenv/rails-now'
+*** 21 ****
+- gem 'money-rails'
+--- 21 ----
++ gem 'money-rails', '~> 1.6'
