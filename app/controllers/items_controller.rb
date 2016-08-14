@@ -4,6 +4,8 @@ class ItemsController < ApplicationController
   before_filter :find_proposal, only: [:create, :batch_create]
   before_filter :find_job, only: :tags
   before_filter :require_internal, except: [:index, :show]
+  before_filter :find_item, only: :show
+  before_filter :meta_tags, only: :show
 
   def index
     @items = ItemsPresenter.new(params).filter
@@ -59,7 +61,6 @@ class ItemsController < ApplicationController
   end
 
   def show
-    @item = Item.find(params[:id])
     @child_item = @item.build_child_item
   end
 
@@ -142,6 +143,10 @@ class ItemsController < ApplicationController
       "undecided" => { display_name: "undecided", icon: "<i class='fa fa-question' aria-hidden='true'></i>", color: "primary-lighter" },
       "nothing" => { display_name: "client kept", icon: "<i class='material-icons'>weekend</i>", color: "primary-lighter" }
     }
+  end
+
+  def find_item
+    @item = Item.find(params[:id])
   end
 
 end
