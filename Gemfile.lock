@@ -674,7 +674,7 @@ DEPENDENCIES
   rails-assets-sweetalert!
   rails_12factor
   rails_real_favicon
-  react-rails
+  react-rails (~> 1.7)
   remotipart (~> 1.2)
   rollbar
   rspec-rails (~> 3.0)

@@ -34,7 +34,7 @@ gem 'state_machines'
 gem 'state_machines-activerecord'
 gem 'bootsy'
 gem 'rubyzip'
-gem 'react-rails'
+gem 'react-rails', '~> 1.7'
 gem 'chartkick'
 gem 'sweet-alert-confirm'
 gem 'jquery-fileupload-rails'
@@ -48,6 +48,9 @@ gem 'pg_search'
 gem 'kaminari'
 gem 'amoeba'
 gem 'metamagic'
+gem 'pry-rails'
+gem 'pry-coolline'
+gem 'pry-byebug', '~> 3.3.0'
 
 group :production, :staging, :local do
   gem 'rails_12factor'
@@ -59,9 +62,6 @@ source 'https://rails-assets.org' do
 end
 
 group :development, :test, :local do
-  gem 'pry-rails'
-  gem 'pry-coolline'
-  gem 'pry-byebug', '~> 3.3.0'
   gem 'sextant'
   gem 'better_errors'
   gem 'faker'
