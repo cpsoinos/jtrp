@@ -1,4 +1,5 @@
 <div class="related-products">
+
   <h3 class="title text-center">Shop by category:</h3>
 
   <div class="row large-top-margin">
@@ -35,4 +36,10 @@
     <% end %>
 
   </div>
+
+  <% if current_user.try(:internal?) %>
+    <div class="row bottom-margin">
+      <%= link_to "<i class='material-icons'>add</i>".html_safe, new_category_path, class: "btn btn-fab btn-primary pull-right" %>
+    </div>
+  <% end %>
 </div>
