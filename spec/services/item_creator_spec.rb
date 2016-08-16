@@ -28,4 +28,31 @@ describe ItemCreator do
     expect(item.photos.count).to eq(2)
   end
 
+  context "child item" do
+
+    let(:syncer) { double("syncer") }
+    let(:parent_item) { create(:item) }
+
+    before do
+      allow(InventorySync).to receive(:new).and_return(syncer)
+      allow(syncer).to receive(:remote_create).and_return(true)
+      allow(syncer).to receive(:remote_update).and_return(true)
+      allow(syncer).to receive(:remote_destroy).and_return(true)
+      attrs.merge!(parent_item_id: parent_item.id)
+    end
+
+    it "creates a child item" do
+      item = ItemCreator.new(proposal).create(attrs)
+
+      expect(item.parent_item).to eq(parent_item)
+    end
+
+    it "deactivates a parent item when creating a child item" do
+      ItemCreator.new(proposal).create(attrs)
+
+      expect(parent_item.reload).to be_inactive
+    end
+
+  end
+
 end
