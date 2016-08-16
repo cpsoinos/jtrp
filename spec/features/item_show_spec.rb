@@ -71,6 +71,14 @@ feature "item show" do
         expect(item.sale_price_cents).to eq(6466)
         expect(item.sold_at).to eq("04/07/2016".to_datetime)
       end
+
+      scenario "deactivates an item" do
+        allow(InventorySyncJob).to receive(:perform_later).and_return(true)
+        click_link("Deactivate")
+
+        expect(page).to have_content("Item marked inactive")
+        expect(item.reload).to be_inactive
+      end
     end
 
     context "consigned" do

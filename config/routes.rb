@@ -30,6 +30,7 @@ Rails.application.routes.draw do
   resources :items do
     get '/tag', to: 'items#tag', as: 'tag'
     get '/tags', to: 'items#tags', on: :collection
+    post '/deactivate', to: 'items#deactivate', on: :member
   end
 
   resources :accounts do

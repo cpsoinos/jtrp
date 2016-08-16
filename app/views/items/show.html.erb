@@ -78,6 +78,9 @@
             <button type="button" class="btn btn-raised btn-notice btn-round" data-toggle="modal" data-target="#new-item-from-batch-modal">
               Create Item from this Batch <i class='material-icons'>content_copy</i>
             </button>
+            <% unless @item.inactive? %>
+              <%= link_to "Deactivate <i class='material-icons'>visibility_off</i>".html_safe, deactivate_item_path(@item), class: "btn btn-raised btn-notice btn-round", method: :post %>
+            <% end %>
           <% end %>
 
           <% if current_user.try(:internal?) && @item.child? %>

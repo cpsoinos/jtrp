@@ -86,6 +86,12 @@ class ItemsController < ApplicationController
     end
   end
 
+  def deactivate
+    @item = Item.find(params[:id])
+    @item.mark_inactive
+    redirect_to @item, notice: "Item marked inactive"
+  end
+
   def destroy
     @item = Item.find(params[:id])
     filter = @item.status
