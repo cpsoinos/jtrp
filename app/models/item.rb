@@ -51,9 +51,11 @@ class Item < ActiveRecord::Base
     state :potential
     state :active
     state :sold
+    state :inactive
 
     after_transition potential: :active, do: [:set_listed_at, :sync_inventory]
     after_transition active: :sold, do: [:mark_agreement_inactive, :set_sold_at, :sync_inventory]
+    after_transition any => :inactive, do: :sync_inventory
 
     event :mark_active do
       transition potential: :active, if: lambda { |item| item.meets_requirements_active? }
@@ -61,6 +63,10 @@ class Item < ActiveRecord::Base
 
     event :mark_sold do
       transition active: :sold, if: lambda { |item| item.meets_requirements_sold? }
+    end
+
+    event :mark_inactive do
+      transition any => :inactive
     end
   end
 

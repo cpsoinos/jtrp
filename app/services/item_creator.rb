@@ -17,6 +17,7 @@ class ItemCreator
     if attrs[:parent_item_id].present?
       @item = Item.find(attrs[:parent_item_id]).build_child_item
       @item.update(attrs)
+      deactivate_parent_item
     else
       @item = proposal.items.new(attrs)
     end
@@ -36,6 +37,10 @@ class ItemCreator
     photo_attrs.each do |photo|
       @item.photos.create!(photo: photo, photo_type: type)
     end
+  end
+
+  def deactivate_parent_item
+    @item.parent_item.mark_inactive
   end
 
 end
