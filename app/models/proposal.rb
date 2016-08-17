@@ -3,6 +3,7 @@ class Proposal < ActiveRecord::Base
   belongs_to :created_by, class_name: "User"
   has_many :items, dependent: :destroy
   has_many :agreements, dependent: :destroy
+  has_many :photos
 
   delegate :account, to: :job
 

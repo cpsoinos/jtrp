@@ -1,5 +1,6 @@
 class Photo < ActiveRecord::Base
   belongs_to :item
+  belongs_to :proposal
   mount_uploader :photo, PhotoUploader
 
   validates :photo_type, presence: true

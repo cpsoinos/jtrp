@@ -23,7 +23,9 @@ Rails.application.routes.draw do
     resources :items
   end
 
-  resources :photos, only: [:create, :destroy]
+  resources :photos, only: [:create, :destroy] do
+    post '/batch_create', to: 'photos#batch_create', on: :collection
+  end
 
   get '/batch_create', to: 'items#batch_create', as: 'items_batch_create'
   get '/csv_import', to: 'items#csv_import', as: 'items_csv_import'
@@ -39,6 +41,7 @@ Rails.application.routes.draw do
     resources :proposals, only: :new
     resources :jobs do
       resources :proposals do
+        get '/sort_items', to: 'proposals#sort_items', as: "sort_items"
         get '/details', to: 'proposals#details', as: "details"
         get '/response_form', to: 'proposals#response_form'
         resources :agreements
