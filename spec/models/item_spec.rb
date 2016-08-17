@@ -120,6 +120,15 @@ describe Item do
       expect(item).to be_active
     end
 
+    it "transitions to 'inactive'" do
+      item = create(:item, :active, remote_id: "ABC123")
+      item.mark_inactive!
+
+      expect(item).not_to be_active
+      expect(item).to be_inactive
+      expect(syncer).to have_received(:remote_destroy)
+    end
+
     it "sets listed_at" do
       now = DateTime.now
       proposal = create(:proposal, :active)

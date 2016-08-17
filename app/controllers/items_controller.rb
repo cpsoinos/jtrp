@@ -28,7 +28,7 @@ class ItemsController < ApplicationController
       if @item.persisted?
         format.html do
           flash[:notice] = "Item created"
-          redirect_to item_path(@item)
+          redirect_to account_job_proposal_sort_items_path(@account, @job, @proposal)
         end
         format.js do
           render :'proposals/add_item'
@@ -74,7 +74,7 @@ class ItemsController < ApplicationController
     respond_to do |format|
       if ItemUpdater.new(@item).update(item_params)
         format.js { render 'proposals/update_item_details' }
-        format.html { redirect_to(:back, :notice => 'Item was successfully updated.') }
+        format.html { redirect_to(@item, :notice => 'Item was successfully updated.') }
         format.json { respond_with_bip(@item) }
       else
         format.html do

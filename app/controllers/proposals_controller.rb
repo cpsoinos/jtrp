@@ -1,5 +1,5 @@
 class ProposalsController < ApplicationController
-  before_filter :find_categories, only: [:new, :edit]
+  before_filter :find_categories, only: [:new, :edit, :sort_items]
   before_filter :find_account
   before_filter :find_job, except: [:new]
   before_filter :require_internal, except: [:show]
@@ -40,6 +40,11 @@ class ProposalsController < ApplicationController
     @uploader.success_action_redirect = items_batch_create_url(proposal_id: @proposal.id)
 
     gon.proposalId = @proposal.id
+  end
+
+  def sort_items
+    @proposal = Proposal.find(params[:proposal_id])
+    @item = @proposal.items.new
   end
 
   def details

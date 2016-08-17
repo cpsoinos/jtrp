@@ -41,6 +41,7 @@
 //= require jquery.geocomplete.min
 //= require instafeed.min
 //= require cloudinary
+//= require image-picker
 //= require_tree .
 
 $(document).ready(function() {

@@ -59,6 +59,7 @@ end
 source 'https://rails-assets.org' do
   gem 'rails-assets-classnames'
   gem 'rails-assets-sweetalert'
+  gem 'rails-assets-image-picker'
 end
 
 group :development, :test, :local do
