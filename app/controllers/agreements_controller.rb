@@ -1,5 +1,5 @@
 class AgreementsController < ApplicationController
-  before_filter :require_internal
+  before_filter :require_internal, except: [:show]
   before_filter :find_proposal, only: [:index, :create]
   before_filter :find_job, only: [:index, :create]
   before_filter :find_account, only: [:index, :create]

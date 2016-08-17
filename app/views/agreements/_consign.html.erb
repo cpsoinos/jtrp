@@ -12,7 +12,7 @@
         <h4 class="modal-title">Consignment Terms</h4>
       </div>
       <div class="modal-body">
-        <%= render 'consignment_terms', agreement: agreement %>
+        <%= render 'agreements/consignment_terms', agreement: agreement %>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -24,9 +24,12 @@
 <h4>Addendums:</h4>
 
 <div class="large-top-margin">
-  <% items.each do |item| %>
-    <%= render 'proposals/item_row', item: item %>
-  <% end %>
+
+  <%= render 'items/items_list', items: items %>
+
+  <%# items.each do |item| %>
+    <%#= render 'proposals/item_row', item: item %>
+  <%# end %>
 </div>
 
 <!-- Button trigger modal -->
@@ -37,5 +40,5 @@
 </div>
 
 <div class="large-top-margin">
-  <%= render 'consignment_signature_blocks', agreement: agreement %>
+  <%= render 'agreements/consignment_signature_blocks', agreement: agreement %>
 </div>
