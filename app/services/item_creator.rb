@@ -22,6 +22,10 @@ class ItemCreator
       @item = proposal.items.new(attrs)
     end
 
+    if @item.description.nil?
+      @item.description = "Item No. #{@item.account_item_number}"
+    end
+
     if @item.save
       process_photos(initial_photo_attrs, "initial") if initial_photo_attrs
       process_photos(listing_photo_attrs, "listing") if listing_photo_attrs
@@ -34,9 +38,9 @@ class ItemCreator
   private
 
   def process_photos(photo_attrs, type)
-    photo_attrs.each do |photo|
-      @item.photos.create!(photo: photo, photo_type: type)
-    end
+    photo_attrs.reject! { |p| p.empty? }
+    photos = Photo.where(id: photo_attrs)
+    photos.update_all(item_id: @item.id, photo_type: type)
   end
 
   def deactivate_parent_item

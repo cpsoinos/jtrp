@@ -19,6 +19,7 @@ describe ItemCreator do
   end
 
   it "processes photos" do
+    pending("image selector specs")
     attrs[:initial_photos] = [initial_photo_attrs]
     attrs[:listing_photos] = [listing_photo_attrs]
     item = ItemCreator.new(proposal).create(attrs)
