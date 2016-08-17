@@ -9,6 +9,7 @@
           <th class="text-center hidden-xs">SKU</th>
           <% if current_user.try(:internal?) %>
             <th class="text-center">Account Item No.</th>
+            <th class="text-center">JTRP No.</th>
             <th class="text-center">Listing Price</th>
             <th class="text-center">Consignment Rate</th>
             <th class="text-center">Minimum Sale Price</th>
@@ -40,6 +41,9 @@
             <% if current_user.try(:internal?) %>
               <td class="text-center">
                 <%= item.account_item_number %>
+              </td>
+              <td class="text-center">
+                <%= item.jtrp_number %>
               </td>
               <td class="text-center">
                 <%= humanized_money_with_symbol(item.listing_price) %>
