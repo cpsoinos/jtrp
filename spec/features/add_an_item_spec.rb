@@ -30,22 +30,6 @@ feature "add an item" do
       expect(page).to have_link("Item")
     end
 
-    scenario "clicks on 'Add an item' from home page" do
-      visit root_path
-      click_link("add Item")
-
-      expect(page).to have_content("Add an item")
-      expect(page).to have_field("Description")
-      # expect(page).to have_field("item[initial_photos][]")
-
-      expect(page).not_to have_content("Select Client")
-      expect(page).not_to have_content("Select Category")
-      expect(page).not_to have_field("Listing price")
-      expect(page).not_to have_field("Purchase price")
-      expect(page).not_to have_field("Minimum sale price")
-      # expect(page).not_to have_field("item[listing_photos][]")
-    end
-
   end
 
 end
