@@ -2,9 +2,7 @@
 
 <div class="row vertical-align large-top-margin">
   <div class="col-xs-12">
-    <% items.each do |item| %>
-      <%= render 'proposals/item_row', item: item %>
-    <% end %>
+    <%= render 'items/items_list', headers: purchase_invoice_headers, context: "purchase_invoice", items: items %>
   </div>
 </div>
 
@@ -13,27 +11,43 @@
     Vendor, being the rightful owner of the above-mentioned items, hereby sells them to Just the Right Piece, LLC for the stated consideration, and hereby acknowledges the receipt and sufficiency of the consideration as stated herein.
   </div>
   <div class="col-xs-6">
-    <table>
+    <table class="pull-right">
       <tr>
-        <th>Total:</th>
-        <td class="panel-item-row"><%= humanized_money_with_symbol(items.sum(:purchase_price_cents) / 100).html_safe %></td>
+        <th class="text-right">Subotal:</th>
+        <td class="text-right panel-item-row"><%= humanized_money_with_symbol(items.sum(:purchase_price_cents) / 100).html_safe %></td>
+      </tr>
+
+      <tr>
+        <th class="text-right">Service Charge:</th>
+        <td class="text-right panel-item-row">________</td>
+      </tr>
+
+      <tr>
+        <th class="text-right">Total:</th>
+        <td class="text-right panel-item-row">________</td>
+      </tr>
+
+      <tr>
+        <th class="text-right">Paid, ck. #_____:</th>
+        <td class="text-right panel-item-row"><%= humanized_money_with_symbol(items.sum(:purchase_price_cents) / 100 * -1).html_safe %></td>
       </tr>
       <tr>
-        <th>Paid, ck. #_____:</th>
-        <td class="panel-item-row"><%= humanized_money_with_symbol(items.sum(:purchase_price_cents) / 100 * -1).html_safe %></td>
-      </tr>
-      <tr>
-        <th>Balance due:</th>
-        <td class="panel-item-row"><%= humanized_money_with_symbol(0).html_safe %></td>
+        <th class="text-right">Balance due:</th>
+        <td class="text-right panel-item-row"><%= humanized_money_with_symbol(0).html_safe %></td>
       </tr>
     </table>
   </div>
 </div>
 
 <div class="row large-top-margin">
-  <div class="col-xs-12 col-md-6">
+  <div class="col-xs-7">
+    _________________________________________________________<br />
     <span>Vendor:</span>
     <span class="agreement-name-printed"><%= @client.full_name %></span>
-    <%= render "signature_pad", user: @client, role: "client", agreement: agreement %>
+    <%#= render "signature_pad", user: @client, role: "client", agreement: agreement %>
+  </div>
+  <div class="col-xs-5">
+    ____________<br />
+    <span>Date</span>
   </div>
 </div>

@@ -108,19 +108,19 @@
     <div class="col-xs-10 col-xs-offset-1">
       <div class="tab-content tab-space">
 				<div class="tab-pane active grid" id="pill1">
-          <%= render 'items/items_list', items: @job.items.order(:account_item_number) %>
+          <%= render 'items/items_list', headers: general_headers, context: "general", items: @job.items.order(:account_item_number) %>
 				</div>
 				<div class="tab-pane grid" id="pill2">
-          <%= render 'items/items_list', items: @job.items.potential.order(:account_item_number) %>
+          <%= render 'items/items_list', headers: general_headers, context: "general", items: @job.items.potential.order(:account_item_number) %>
 				</div>
 				<div class="tab-pane grid" id="pill3">
-          <%= render 'items/items_list', items: @job.items.owned.order(:account_item_number) %>
+          <%= render 'items/items_list', headers: general_headers, context: "general", items: @job.items.owned.order(:account_item_number) %>
 				</div>
 				<div class="tab-pane grid" id="pill4">
-          <%= render 'items/items_list', items: @job.items.consigned.order(:account_item_number) %>
+          <%= render 'items/items_list', headers: general_headers, context: "general", items: @job.items.consigned.order(:account_item_number) %>
 				</div>
 				<div class="tab-pane grid" id="pill5">
-          <%= render 'items/items_list', items: @job.items.sold.order(:account_item_number) %>
+          <%= render 'items/items_list', headers: general_headers, context: "general", items: @job.items.sold.order(:account_item_number) %>
 				</div>
 			</div>
 		</div>

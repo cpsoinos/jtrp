@@ -13,6 +13,8 @@ class AgreementsController < ApplicationController
 
   def show
     @agreement = Agreement.find(params[:id])
+    @proposal = @agreement.proposal
+    @job = @proposal.job
     @account = @agreement.proposal.job.account
     @client = @account.primary_contact
     @agreements = [@agreement]

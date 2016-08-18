@@ -67,11 +67,13 @@ feature "agreement" do
       end
 
       scenario "it has signature blocks" do
+        pending("client portal")
         expect(page).to have_css('#consign-client-signed')
         expect(page).to have_css('#consign-manager-signed')
       end
 
       scenario "manager signs", js: true do
+        pending("client portal")
         first('input[name="agreement[manager_agreed]"]', visible: :false).set(true)
         click_button("consign-manager-submit")
         wait_for_ajax
@@ -81,6 +83,7 @@ feature "agreement" do
       end
 
       scenario "client signs", js: true do
+        pending("client portal")
         first('input[name="agreement[client_agreed]"]', visible: :false).set(true)
         click_button("consign-client-submit")
         wait_for_ajax
@@ -90,6 +93,7 @@ feature "agreement" do
       end
 
       scenario "both client and manager sign", js: true do
+        pending("client portal")
         first('input[name="agreement[manager_agreed]"]', visible: :false).set(true)
         click_button("consign-manager-submit")
         first('input[name="agreement[client_agreed]"]', visible: :false).set(true)

@@ -1,4 +1,5 @@
 class PdfGenerator
+  # include Rails.application.routes.url_helpers
 
   attr_reader :agreement, :proposal, :job, :account
 
@@ -17,7 +18,7 @@ class PdfGenerator
 
   def create_response
     DocRaptor::DocApi.new.create_doc(
-      test:             true,                                         # test documents are free but watermarked
+      test:             (Rails.env == 'production' ? false : true),                                         # test documents are free but watermarked
       document_url:     document_url,
       name:             "#{account.full_name}_#{agreement.agreement_type}.pdf",                         # help you find a document later
       document_type:    "pdf",                                        # pdf or xls or xlsx
@@ -30,7 +31,7 @@ class PdfGenerator
   end
 
   def document_url
-    Rails.application.routes.url_helpers(account_job_proposal_agreement_url(account, job, proposal, agreement))
+    Rails.application.routes.url_helpers.agreement_url(agreement, host: ENV['HOST'])
   end
 
 end
