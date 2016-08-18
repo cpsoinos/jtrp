@@ -16,6 +16,12 @@ class AgreementsController < ApplicationController
     @account = @agreement.proposal.job.account
     @client = @account.primary_contact
     @agreements = [@agreement]
+    respond_to do |format|
+      format.html
+      format.pdf do
+        send_data(PdfGenerator.new(@agreement).render_pdf, :type => "application/pdf", :disposition => 'inline')
+      end
+    end
   end
 
   def agreements_list
