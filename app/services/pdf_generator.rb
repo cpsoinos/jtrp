@@ -30,7 +30,7 @@ class PdfGenerator
   end
 
   def document_url
-    Rails.application.routes.url_helpers(agreement_path(account, job, proposal, agreement))
+    Rails.application.routes.url_helpers(account_job_proposal_agreement_url(account, job, proposal, agreement))
   end
 
 end
