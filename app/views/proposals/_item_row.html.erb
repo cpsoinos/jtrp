@@ -49,7 +49,7 @@
 
         <div class="col-xs-12 col-sm-6 text-left">
           <% if action_name == "show" %>
-            <%= render "offer_choice_details", item: item %>
+            <%= render "proposals/offer_choice_details", item: item %>
           <% elsif action_name == "index" %>
             <%= render "agreements/offer_agreement_details", item: item %>
           <% end %>

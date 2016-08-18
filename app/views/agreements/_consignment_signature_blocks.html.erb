@@ -1,13 +1,21 @@
 <div class="row">
-  <p><b>AGREED AND EXECUTED BY, effective on the date first written above:</b></p>
+  <p class="text-center"><b>AGREED AND EXECUTED BY effective on the date first written above:</b></p>
 
   <div class="col-xs-12 col-md-6">
-    <p>JTRP:  <%= @company.name %>, LLC</p>
-    <%= render "signature_pad", user: @company.primary_contact, agreement: agreement, role: "manager" %>
+    <br />
+    <br />
+    <br />
+
+    _________________________________________________________<br />
+    <span><b>JTRP:</b> <%= @company.name %>, LLC</span>
   </div>
 
   <div class="col-xs-12 col-md-6">
-    <p>Consignor:  <%= @account.full_name %></p>
-    <%= render "signature_pad", user: @client, agreement: agreement, role: "client" %>
+    <br />
+    <br />
+    <br />
+    _________________________________________________________<br />
+    <span><b>Consignor:</b> <%= @account.full_name %></span>
   </div>
+
 </div>

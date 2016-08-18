@@ -8,6 +8,7 @@ class Agreement < ActiveRecord::Base
   validates :proposal, presence: true
 
   scope :status, -> (status) { where(status: status) }
+  scope :by_type, -> (type) { where(agreement_type: type) }
 
   scope :potential, -> { where(status: "potential") }
   scope :active, -> { where(status: "active") }
