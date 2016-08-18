@@ -1,5 +1,6 @@
 class PdfGenerator
-
+  include Rails.application.routes.url_helpers
+  
   attr_reader :agreement, :proposal, :job, :account
 
   def initialize(agreement)
