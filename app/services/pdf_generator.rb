@@ -5,9 +5,9 @@ class PdfGenerator
 
   def initialize(agreement)
     @agreement = agreement
-    # @proposal = agreement.proposal
-    # @job = @proposal.job
-    # @account = @job.account
+    @proposal = agreement.proposal
+    @job = @proposal.job
+    @account = @job.account
   end
 
   def render_pdf
