@@ -1,5 +1,5 @@
 class AgreementsController < ApplicationController
-  before_filter :require_internal
+  before_filter :require_internal, except: [:show]
   before_filter :find_proposal, only: [:index, :create]
   before_filter :find_job, only: [:index, :create]
   before_filter :find_account, only: [:index, :create]
@@ -16,6 +16,12 @@ class AgreementsController < ApplicationController
     @account = @agreement.proposal.job.account
     @client = @account.primary_contact
     @agreements = [@agreement]
+    respond_to do |format|
+      format.html
+      format.pdf do
+        send_data(PdfGenerator.new(@agreement).render_pdf, :type => "application/pdf", :disposition => 'inline')
+      end
+    end
   end
 
   def agreements_list
