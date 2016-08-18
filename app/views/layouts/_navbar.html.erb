@@ -1,4 +1,4 @@
-<nav class="navbar navbar-inverse navbar-fixed-top <%= hide if params[:hide_navbar?] %>" role="navigation-demo">
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation-demo">
   <div class="container">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
@@ -10,7 +10,8 @@
       </button>
       <% if @company %>
         <div class="brand-logo-link">
-          <%= link_to "#{image_tag('JTRPv2_allwhite_noname.png', class: 'logo')} #{@company.name}".html_safe, root_path, class: "navbar-brand" %>
+          <%#= link_to "#{image_tag('JTRPv2_allwhite_noname.png', class: 'logo')} #{@company.name}".html_safe, root_path, class: "navbar-brand" %>
+          <%= link_to @company.name, root_path, class: "navbar-brand" %>
         </div>
       <% end %>
     </div>

@@ -31,7 +31,7 @@ class PdfGenerator
   end
 
   def document_url
-    Rails.application.routes.url_helpers.agreement_url(agreement, host: ENV['HOST'], hide_navbar: true)
+    Rails.application.routes.url_helpers.agreement_url(agreement, host: ENV['HOST'])
   end
 
 end
