@@ -21,14 +21,21 @@
     </div>
 
     <div class="row">
-      <div class="col-xs-6">
+      <div class="col-xs-4">
         <div class="form-group label-floating">
           <%= f.label :account_item_number, "Item No.".html_safe, class: "control-label" %>
           <%= f.number_field :account_item_number, class: "form-control" %>
         </div>
       </div>
 
-      <div class="col-xs-6">
+      <div class="col-xs-4">
+        <div class="form-group label-floating">
+          <%= f.label :jtrp_number, "JTRP No.".html_safe, class: "control-label" %>
+          <%= f.number_field :jtrp_number, class: "form-control" %>
+        </div>
+      </div>
+
+      <div class="col-xs-4">
         <div class="form-group label-floating">
           <%= f.label :condition, class: "control-label" %>
           <%= f.text_field :condition, class: "form-control" %>
