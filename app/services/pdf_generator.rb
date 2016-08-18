@@ -1,13 +1,13 @@
 class PdfGenerator
   include Rails.application.routes.url_helpers
-  
+
   attr_reader :agreement, :proposal, :job, :account
 
   def initialize(agreement)
     @agreement = agreement
-    @proposal = agreement.proposal
-    @job = @proposal.job
-    @account = @job.account
+    # @proposal = agreement.proposal
+    # @job = @proposal.job
+    # @account = @job.account
   end
 
   def render_pdf
@@ -31,7 +31,7 @@ class PdfGenerator
   end
 
   def document_url
-    Rails.application.routes.url_helpers(account_job_proposal_agreement_url(account, job, proposal, agreement))
+    Rails.application.routes.url_helpers(agreement_url(agreement), host: ENV['HOST'])
   end
 
 end
