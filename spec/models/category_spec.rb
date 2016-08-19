@@ -12,7 +12,7 @@ describe Category do
     let!(:subcategories) { create_list(:category, 2, parent: primary_categories.first) }
 
     it "primary" do
-      expect(Category.primary.count).to eq(3)
+      expect(Category.primary.count).to eq(4)
     end
 
     it "secondary" do

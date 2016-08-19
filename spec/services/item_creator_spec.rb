@@ -18,6 +18,10 @@ describe ItemCreator do
     }.by (1)
   end
 
+  it "sets category to Uncategorized unless specified" do
+    expect(ItemCreator.new(proposal).create(attrs).category.name).to eq("Uncategorized")
+  end
+
   it "processes photos" do
     pending("image selector specs")
     attrs[:initial_photos] = [initial_photo_attrs]

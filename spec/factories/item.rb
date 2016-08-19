@@ -4,7 +4,6 @@ FactoryGirl.define do
 
   factory :item do
     description Faker::StarWars.character
-    category
     proposal
     status "potential"
 
