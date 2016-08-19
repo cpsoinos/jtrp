@@ -28,7 +28,8 @@ def create_categories
   Category.create([
     { name: "Bedroom" },
     { name: "Dining Room" },
-    { name: "Living Room" }
+    { name: "Living Room" },
+    { name: "Uncategorized" }
   ])
 end
 
