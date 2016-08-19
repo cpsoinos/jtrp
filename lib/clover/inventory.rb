@@ -6,7 +6,7 @@ module Clover
     def self.create(item)
       RestClient.post("#{base_url}/items", {
         name: item.description,
-        cost: item.purchase_price_cents,
+        cost: (item.purchase_price_cents || 0),
         price: item.listing_price_cents,
         sku: item.id
       }.to_json, headers) do |response, request, result|
@@ -37,7 +37,7 @@ module Clover
     def self.update(item)
       RestClient.post("#{base_url}/items/#{item.remote_id}", {
         name: item.description,
-        cost: item.purchase_price_cents,
+        cost: (item.purchase_price_cents || 0),
         price: item.listing_price_cents,
         sku: item.id
       }.to_json, headers) do |response, request, result|
