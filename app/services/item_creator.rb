@@ -27,6 +27,7 @@ class ItemCreator
     end
 
     if @item.save
+      check_category
       process_photos(initial_photo_attrs, "initial") if initial_photo_attrs
       process_photos(listing_photo_attrs, "listing") if listing_photo_attrs
       account.save
@@ -45,6 +46,13 @@ class ItemCreator
 
   def deactivate_parent_item
     @item.parent_item.mark_inactive
+  end
+
+  def check_category
+    if @item.category.nil?
+      @item.category = Category.find_by(name: "Uncategorized")
+      @item.save
+    end
   end
 
 end

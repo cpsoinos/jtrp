@@ -9,10 +9,6 @@ class Category < ActiveRecord::Base
   scope :primary, -> { where(parent: nil) }
   scope :secondary, -> { where.not(parent: nil) }
 
-  def self.uncategorized
-    Category.find_or_create_by(name: "Uncategorized")
-  end
-
   def subcategory?
     parent.present?
   end

@@ -13,13 +13,6 @@ describe Item do
   it { should monetize(:minimum_sale_price).allow_nil }
   it { should monetize(:sale_price).allow_nil }
 
-  it "sets the default category" do
-    attrs = attributes_for(:item)
-    item = Item.new(attrs)
-    item.save
-    expect(item.category).to eq(Category.uncategorized)
-  end
-
   describe "scopes" do
 
     before do

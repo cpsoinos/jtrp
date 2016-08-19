@@ -29,7 +29,7 @@ def create_categories
     { name: "Bedroom" },
     { name: "Dining Room" },
     { name: "Living Room" },
-    { name: "Uncategorized", id: 15 }
+    { name: "Uncategorized" }
   ])
 end
 
