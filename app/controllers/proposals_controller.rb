@@ -1,8 +1,8 @@
 class ProposalsController < ApplicationController
   before_filter :find_categories, only: [:new, :edit, :sort_items]
-  before_filter :find_account, except: [:send_email]
-  before_filter :find_job, except: [:new, :send_email]
-  before_filter :require_internal, except: [:show]
+  before_filter :find_account, except: [:send_email, :notify_response]
+  before_filter :find_job, except: [:new, :send_email, :notify_response]
+  before_filter :require_internal, except: [:show, :notify_response]
 
   def new
     @proposal = Proposal.new
@@ -41,6 +41,12 @@ class ProposalsController < ApplicationController
     @proposal = Proposal.find(params[:proposal_id])
     TransactionalEmailer.new(@proposal, current_user).send(params[:note])
     redirect_to :back, notice: "Email sent to client!"
+  end
+
+  def notify_response
+    @proposal = Proposal.find(params[:proposal_id])
+    TransactionalEmailer.new(@proposal, @proposal.account.primary_contact).send_notification(params[:note])
+    redirect_to :back, notice: "Thank you! We've been notified of your responses."
   end
 
   def edit

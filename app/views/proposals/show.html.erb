@@ -11,9 +11,7 @@
       <button type="button" class="btn btn-raised btn-primary pull-right" data-toggle="modal" data-target="#email-note-modal">
         Send this Proposal <i class='material-icons'>email</i>
       </button>
-      <%#= link_to "Send this Proposal <i class='material-icons'>email</i>".html_safe, proposal_send_email_path(@proposal), method: :post, class: "btn btn-raised btn-primary hidden-print pull-right" %>
     <% end %>
-    <%#= link_to "Print <i class='material-icons'>print</i>".html_safe, account_job_proposal_path(@account, @job, @proposal, format: :pdf), class: "btn btn-raised btn-primary hidden-print pull-right" %>
   <% end %>
 
   <div class="well bs-component">
@@ -33,6 +31,17 @@
           <%= link_to "Step 4: Generate Agreements <i class='fa fa-caret-right'></i>".html_safe, account_job_proposal_agreements_path(@account, @job, @proposal), method: :post, class: "btn btn-raised btn-success btn-responsive" %>
         </div>
       </div>
+
+    <% else %>
+
+      <%= render 'email_response_note_modal' %>
+      <div class="row hidden-print top-margin">
+        <button type="button" class="btn btn-raised btn-primary pull-right" data-toggle="modal" data-target="#email-response-note-modal">
+          I'm finished! <i class='material-icons'>email</i>
+        </button>
+      </div>
+
     <% end %>
+
   </div>
 </div>

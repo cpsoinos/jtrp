@@ -9,11 +9,7 @@
           </a>
         </div>
         <div class="col-xs-6">
-          <% if current_user.try(:internal?) %>
-            <h3><%= link_to "#{item.description.titleize}", account_job_proposal_item_path(@account, @job, @proposal, item) %></h3>
-          <% else %>
-            <h3><%= item.description %></h3>
-          <% end %>
+          <h3><%= link_to "#{item.description.titleize}", item_path(item) %></h3>
         </div>
         <% if current_user.try(:internal?) %>
           <div class="col-xs-3 hidden-print">
