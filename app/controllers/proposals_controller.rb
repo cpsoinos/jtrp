@@ -39,7 +39,7 @@ class ProposalsController < ApplicationController
 
   def send_email
     @proposal = Proposal.find(params[:proposal_id])
-    TransactionalEmailer.new(@proposal, current_user).send
+    TransactionalEmailer.new(@proposal, current_user).send(params[:note])
     redirect_to :back, notice: "Email sent to client!"
   end
 
