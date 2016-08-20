@@ -10,14 +10,14 @@ class TransactionalEmailer
     @user = user
   end
 
-  def send
-    response = build_email
+  def send(note)
+    response = build_email(note)
     record_response(response)
   end
 
   private
 
-  def build_email
+  def build_email(note)
     mail = Mail.new
     mail.from = Email.new(email: 'carole@justtherightpiece.furniture')
 
@@ -25,6 +25,7 @@ class TransactionalEmailer
     personalization.to = Email.new(email: proposal.account.primary_contact.email)
     personalization.substitutions = Substitution.new(key: '[name]', value: proposal.account.primary_contact.first_name)
     personalization.substitutions = Substitution.new(key: '[proposal_url]', value: proposal_url)
+    personalization.substitutions = Substitution.new(key: '[note]', value: note)
     personalization.substitutions = Substitution.new(key: '[Sender_Name]', value: "Just the Right Piece")
     personalization.substitutions = Substitution.new(key: '[Sender_Address]', value: "369 South Broadway")
     personalization.substitutions = Substitution.new(key: '[Sender_City]', value: "Salem")
