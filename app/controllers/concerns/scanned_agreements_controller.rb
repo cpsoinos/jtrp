@@ -6,7 +6,7 @@ class ScannedAgreementsController < ApplicationController
     @scanned_agreement = @agreement.build_scanned_agreement(scanned_agreement_params)
     if @scanned_agreement.save
       flash[:notice] = "Agreement uploaded!"
-      @agreement.mark_active!
+      @agreement.mark_active! unless @agreement.active?
       redirect_to proposal_agreements_path(@agreement.proposal)
     else
       flash[:alert] = "Agreement could not be uploaded."
