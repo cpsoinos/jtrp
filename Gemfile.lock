@@ -531,6 +531,7 @@ GEM
       sidekiq (>= 2.4.0)
     rspec-support (3.4.1)
     ruby-rc4 (0.1.5)
+    ruby_http_client (3.0.0)
     rubyzip (1.2.0)
     safe_yaml (1.0.4)
     sass (3.4.21)
@@ -547,6 +548,8 @@ GEM
       childprocess (~> 0.5)
       rubyzip (~> 1.0)
       websocket (~> 1.0)
+    sendgrid-ruby (4.0.2)
+      ruby_http_client (~> 3.0.0)
     sextant (0.2.4)
       rails (>= 3.2)
     shellany (0.0.1)
@@ -693,6 +696,7 @@ DEPENDENCIES
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)
   selenium-webdriver
+  sendgrid-ruby
   sextant
   shoulda-matchers
   sidekiq

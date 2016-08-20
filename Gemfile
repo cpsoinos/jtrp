@@ -52,6 +52,7 @@ gem 'pry-rails'
 gem 'pry-coolline'
 gem 'pry-byebug', '~> 3.3.0'
 gem 'docraptor'
+gem 'sendgrid-ruby'
 
 group :production, :staging, :local do
   gem 'rails_12factor'

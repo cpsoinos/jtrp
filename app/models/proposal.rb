@@ -55,4 +55,8 @@ class Proposal < ActiveRecord::Base
     job.mark_completed!
   end
 
+  def object_url
+    Rails.application.routes.url_helpers.account_job_proposal_url(account, job, self, host: ENV['HOST'], print: true)
+  end
+
 end

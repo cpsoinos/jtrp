@@ -1,13 +1,10 @@
 class PdfGenerator
-  # include Rails.application.routes.url_helpers
 
-  attr_reader :agreement, :proposal, :job, :account
+  attr_reader :object, :account
 
-  def initialize(agreement)
-    @agreement = agreement
-    @proposal = agreement.proposal
-    @job = @proposal.job
-    @account = @job.account
+  def initialize(object)
+    @object = object
+    @account = @object.account
   end
 
   def render_pdf
@@ -18,20 +15,15 @@ class PdfGenerator
 
   def create_response
     DocRaptor::DocApi.new.create_doc(
-      test:             (Rails.env == 'production' ? false : true),                                         # test documents are free but watermarked
-      document_url:     document_url,
-      name:             "#{account.full_name}_#{agreement.agreement_type}.pdf",                         # help you find a document later
-      document_type:    "pdf",                                        # pdf or xls or xlsx
-      javascript:       true,                                       # enable JavaScript processing
+      test:             (Rails.env == 'production' ? false : true),
+      document_url:     object.object_url,
+      name:             "#{account.full_name}_#{object.class.name}_#{object.id}.pdf",
+      document_type:    "pdf",
+      javascript:       true,
       prince_options: {
-        media: "screen",                                            # use screen styles instead of print styles
-        # baseurl: "http://hello.com",                                # pretend URL when using document_content
-      },
+        media: "screen"
+      }
     )
-  end
-
-  def document_url
-    Rails.application.routes.url_helpers.agreement_url(agreement, host: ENV['HOST'])
   end
 
 end

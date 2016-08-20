@@ -76,4 +76,8 @@ class Agreement < ActiveRecord::Base
     client_agreed? || scanned_agreement.present?
   end
 
+  def object_url
+    Rails.application.routes.url_helpers.agreement_url(self, host: ENV['HOST'], print: true)
+  end
+
 end
