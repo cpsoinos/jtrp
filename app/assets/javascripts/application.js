@@ -42,6 +42,7 @@
 //= require instafeed.min
 //= require cloudinary
 //= require image-picker
+//= require underscore
 //= require_tree .
 
 $(document).ready(function() {
