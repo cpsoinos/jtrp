@@ -52,7 +52,10 @@ Rails.application.routes.draw do
 
   resources :clients
   resources :jobs
-  resources :proposals, only: [:index, :show]
+  resources :proposals, only: [:index, :show] do
+    post '/send_email', to: 'proposals#send_email', as: 'send_email'
+    post '/notify_response', to: 'proposals#notify_response', as: 'notify_response'
+  end
   resources :archives
 
   resources :users_admin, controller: "users"

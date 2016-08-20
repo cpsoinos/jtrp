@@ -1,8 +1,8 @@
 class ProposalsController < ApplicationController
   before_filter :find_categories, only: [:new, :edit, :sort_items]
-  before_filter :find_account
-  before_filter :find_job, except: [:new]
-  before_filter :require_internal, except: [:show]
+  before_filter :find_account, except: [:send_email, :notify_response]
+  before_filter :find_job, except: [:new, :send_email, :notify_response]
+  before_filter :require_internal, except: [:show, :notify_response]
 
   def new
     @proposal = Proposal.new
@@ -25,10 +25,28 @@ class ProposalsController < ApplicationController
   end
 
   def show
-    require_internal_or_client
+    # require_internal_or_client
     @proposal = Proposal.find(params[:id])
     @client = @account.primary_contact
-    @items = @proposal.items
+    @items = @proposal.items.order(:account_item_number)
+    respond_to do |format|
+      format.html
+      format.pdf do
+        send_data(PdfGenerator.new(@proposal).render_pdf, :type => "application/pdf", :disposition => 'inline')
+      end
+    end
+  end
+
+  def send_email
+    @proposal = Proposal.find(params[:proposal_id])
+    TransactionalEmailJob.perform_later(@proposal, current_user, params[:note])
+    redirect_to :back, notice: "Email sent to client!"
+  end
+
+  def notify_response
+    @proposal = Proposal.find(params[:proposal_id])
+    NotificationEmailJob.perform_later(@proposal, @proposal.account.primary_contact, params[:note])
+    redirect_to :back, notice: "Thank you! We've been notified of your responses."
   end
 
   def edit
