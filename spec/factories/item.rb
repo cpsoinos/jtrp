@@ -3,7 +3,7 @@ require 'factory_girl'
 FactoryGirl.define do
 
   factory :item do
-    description Faker::StarWars.character
+    description Faker::Lorem.sentence(3, true, 6).titleize
     proposal
     status "potential"
 

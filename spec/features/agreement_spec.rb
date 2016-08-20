@@ -5,6 +5,14 @@ feature "agreement" do
   let(:client) { account.primary_contact }
   let(:job) { create(:job, account: account) }
   let(:proposal) { create(:proposal, created_by: user, job: job) }
+  let(:syncer) { double("syncer") }
+
+  before do
+    allow(InventorySync).to receive(:new).and_return(syncer)
+    allow(syncer).to receive(:remote_create).and_return(true)
+    allow(syncer).to receive(:remote_update).and_return(true)
+    allow(syncer).to receive(:remote_destroy).and_return(true)
+  end
 
   context "guest" do
     scenario "visits consignment agreement path" do
@@ -35,6 +43,30 @@ feature "agreement" do
         click_link("sell")
 
         expect(page).to have_content("Purchase Invoice")
+      end
+
+      scenario "uploads scanned agreement", js: true do
+        visit account_job_proposal_agreements_path(account, job, proposal)
+        click_link("sell")
+        attach_file('scanned_agreement[scan]', File.join(Rails.root, '/spec/fixtures/test.pdf'))
+        click_on("Create Scanned agreement")
+
+        expect(page).to have_selector('iframe')
+        expect(agreement.reload).to be_active
+      end
+
+      scenario "uploads an updated scanned agreement", js: true do
+        scanned_agreement = create(:scanned_agreement)
+        agreement = scanned_agreement.agreement
+
+        visit account_job_proposal_agreements_path(agreement.account, agreement.job, agreement.proposal)
+        click_link("sell")
+        attach_file('scanned_agreement[scan]', File.join(Rails.root, '/spec/fixtures/test.pdf'))
+        click_on("Update Scanned agreement")
+
+        expect(page).to have_content("Agreement updated!")
+        expect(page).to have_selector('iframe')
+        expect(agreement.reload).to be_active
       end
 
     end
@@ -105,6 +137,10 @@ feature "agreement" do
         expect(agreement.manager_agreed).to be(true)
         expect(agreement).to be_active
       end
+
+    end
+
+    scenario "uploads scanned agreement" do
 
     end
 

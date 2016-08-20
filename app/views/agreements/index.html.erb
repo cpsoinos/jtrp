@@ -7,7 +7,7 @@
     <% end %>
   </ul>
 
-  <%= link_to "<i class='fa fa-caret-left'></i> Back to Proposal".html_safe, account_job_proposal_path(@account, @job, @proposal), class: "btn btn-raised btn-primary" %>
+  <%= link_to "<i class='fa fa-caret-left'></i> Back to Proposal".html_safe, account_job_proposal_path(@account, @job, @proposal), class: "btn btn-raised btn-primary hidden-print" %>
 
   <!-- Tab panes -->
   <div class="well bs-component">
@@ -19,9 +19,7 @@
           <% else %>
             <%= render "#{agreement.agreement_type}", items: @items.where(client_intention: agreement.agreement_type), agreement: agreement %>
           <% end %>
-          <% if agreement.potential? %>
-            <%= render 'scanned_upload_form', agreement: agreement %>
-          <% end %>
+          <%= render 'scanned_upload_form', agreement: agreement %>
         </div>
       <% end %>
     </div>
