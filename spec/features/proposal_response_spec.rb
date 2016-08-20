@@ -11,14 +11,6 @@ feature "proposal response" do
     account.primary_contact = create(:client, account: account)
   end
 
-  context "guest" do
-    scenario "visits consignment agreement path" do
-      visit account_job_proposal_path(account, job, proposal)
-
-      expect(page).to have_content("Forbidden")
-    end
-  end
-
   context "internal user" do
 
     before do
