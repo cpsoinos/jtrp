@@ -1,12 +1,14 @@
 class AgreementsController < ApplicationController
   before_filter :require_internal, except: [:show]
   before_filter :find_proposal, only: [:index, :create]
-  before_filter :find_job, only: [:index, :create]
-  before_filter :find_account, only: [:index, :create]
+  before_filter :find_job, only: [:create]
+  before_filter :find_account, only: [:create]
   before_filter :pull_intentions, only: :create
 
   def index
-    @client = @proposal.job.account.primary_contact
+    @job = @proposal.job
+    @account = @job.account
+    @client = @job.account.primary_contact
     @agreements = @proposal.agreements
     @items = @proposal.items
   end
