@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160817191442) do
+ActiveRecord::Schema.define(version: 20160820053027) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -198,6 +198,15 @@ ActiveRecord::Schema.define(version: 20160817191442) do
 
   create_table "system_infos", force: :cascade do |t|
     t.integer "last_account_number", default: 10
+  end
+
+  create_table "transactional_email_records", force: :cascade do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "created_by_id"
+    t.integer  "recipient_id"
+    t.string   "category"
+    t.json     "sendgrid_response"
   end
 
   create_table "users", force: :cascade do |t|
