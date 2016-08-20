@@ -77,7 +77,7 @@ Rails.application.routes.draw do
 
   resources :agreements do
     get '/agreements_list', to: 'agreements#agreements_list', as: 'agreements_list', on: :collection
-    resources :scanned_agreements, only: [:create, :show, :destroy]
+    resources :scanned_agreements, only: [:create, :update, :show, :destroy]
   end
 
   post '/:integration_name' => 'webhooks#receive', as: :receive_webhooks
