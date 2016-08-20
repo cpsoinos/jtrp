@@ -54,6 +54,7 @@ Rails.application.routes.draw do
   resources :jobs
   resources :proposals, only: [:index, :show] do
     post '/send_email', to: 'proposals#send_email', as: 'send_email'
+    post '/notify_response', to: 'proposals#notify_response', as: 'notify_response'
   end
   resources :archives
 
