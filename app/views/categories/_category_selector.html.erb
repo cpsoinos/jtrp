@@ -2,10 +2,11 @@
 
   <h3 class="title text-center">Shop by category:</h3>
 
-  <div class="row large-top-margin">
+  <div class="row large-top-margin grid">
+    <div class="grid-sizer col-sm-6 col-md-3"></div>
 
     <% @categories.primary.each do |category| %>
-      <div class="col-sm-6 col-md-3">
+      <div class="col-sm-6 col-md-3 grid-item">
         <a href="<%= category_path(category) %>">
           <div class="card card-product">
             <div class="card-image">
