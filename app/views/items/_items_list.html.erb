@@ -15,7 +15,7 @@
 
       <tbody>
         <% items.each do |item| %>
-          <tr>
+          <tr class="no-break">
             <td class="text-center">
               <div class="img-container">
                 <%= link_to image_tag(item.featured_photo_url(:thumb), class: "img-rounded img-responsive img-raised"), item_path(item) %>

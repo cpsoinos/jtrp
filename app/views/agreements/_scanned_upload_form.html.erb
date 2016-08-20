@@ -1,9 +1,9 @@
 <div class="hidden-print large-top-margin text-center">
-  - or -
 
   <h3>Upload a scanned copy:</h3>
+  <% scanned_agreement = agreement.scanned_agreement || agreement.build_scanned_agreement %>
 
-  <%= form_for [agreement, agreement.build_scanned_agreement] do |f| %>
+  <%= form_for [agreement, scanned_agreement] do |f| %>
 
     <div class="row form-row">
       <div class="text-center">

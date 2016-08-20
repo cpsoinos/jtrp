@@ -14,6 +14,17 @@ class ScannedAgreementsController < ApplicationController
     end
   end
 
+  def update
+    @scanned_agreement = @agreement.scanned_agreement
+    if @scanned_agreement.update(scanned_agreement_params)
+      flash[:notice] = "Agreement updated!"
+      redirect_to proposal_agreements_path(@agreement.proposal)
+    else
+      flash[:alert] = "Agreement could not be updated."
+      redirect_to :back
+    end
+  end
+
   protected
 
   def scanned_agreement_params
