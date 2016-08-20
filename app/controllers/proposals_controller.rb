@@ -39,13 +39,13 @@ class ProposalsController < ApplicationController
 
   def send_email
     @proposal = Proposal.find(params[:proposal_id])
-    TransactionalEmailer.new(@proposal, current_user).send(params[:note])
+    TransactionalEmailJob.perform_later(@proposal, current_user, params[:note])
     redirect_to :back, notice: "Email sent to client!"
   end
 
   def notify_response
     @proposal = Proposal.find(params[:proposal_id])
-    TransactionalEmailer.new(@proposal, @proposal.account.primary_contact).send_notification(params[:note])
+    NotificationEmailJob.perform_later(@proposal, @proposal.account.primary_contact, params[:note])
     redirect_to :back, notice: "Thank you! We've been notified of your responses."
   end
 
