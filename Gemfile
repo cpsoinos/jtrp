@@ -53,8 +53,9 @@ gem 'pry-coolline'
 gem 'pry-byebug', '~> 3.3.0'
 gem 'docraptor'
 gem 'sendgrid-ruby'
+gem 'newrelic_rpm'
 
-group :production, :staging, :local do
+group :production, :staging, :local, :development do
   gem 'rails_12factor'
 end
 
