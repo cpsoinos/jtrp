@@ -1,0 +1,8 @@
+connections:
+  default:
+    url: redis://127.0.0.1:6379/2
+  # production:
+  #   host: mydomain.com
+  #   port: 6666
+  #   db: 1
+  #   auth: password

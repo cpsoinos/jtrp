@@ -46,8 +46,11 @@ module Jtrp
 
     config.cache_store = :readthis_store, {
       expires_in: 2.weeks.to_i,
+      compress: true,
+      compression_threshold: 2.kilobytes,
       namespace: 'cache',
-      redis: { url: "#{ENV['REDIS_URL']}/2", driver: :hiredis }
+      redis: { url: "#{ENV['REDIS_URL']}/2", driver: :hiredis },
+      refresh: true
     }
   end
 end

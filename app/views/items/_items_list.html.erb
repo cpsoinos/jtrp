@@ -15,7 +15,7 @@
 
       <tbody>
         <% items.each do |item| %>
-          <% cache item do %>
+          <% cache item %>
             <tr class="no-break">
               <td class="text-center">
                 <div class="img-container">
@@ -30,18 +30,16 @@
               </td>
 
               <% headers.each do |header| %>
-                <% cache header do %>
-                  <td class="text-center hidden-xs">
-                    <% case context %>
-                    <% when "purchase_invoice" %>
-                      <%= purchase_invoice_values(item)[header] %>
-                    <% when "consignment_agreement" %>
-                      <%= consignment_values(item)[header] %>
-                    <% when "general" %>
-                      <%= general_values(item)[header] %>
-                    <% end %>
-                  </td>
-                <% end %>
+                <td class="text-center hidden-xs">
+                  <% case context %>
+                  <% when "purchase_invoice" %>
+                    <%= purchase_invoice_values(item)[header] %>
+                  <% when "consignment_agreement" %>
+                    <%= consignment_values(item)[header] %>
+                  <% when "general" %>
+                    <%= general_values(item)[header] %>
+                  <% end %>
+                </td>
               <% end %>
 
               <% if current_user.try(:internal?) %>
@@ -51,7 +49,7 @@
                     <br />
                     <br />
                     <div class="text-left hidden-print">
-                      <%= render 'items/mark_sold_modal', item: item %>
+                      <%= render 'items/mark_sold_modal', item: item, cached: true %>
                     </div>
                     <button type="button" class="btn btn-raised btn-success btn-round hidden-print" data-toggle="modal" data-target="#<%= item.id %>-mark-sold-modal">
                       Mark as Sold <i class='material-icons'>done</i>
@@ -60,7 +58,7 @@
                 </td>
               <% end %>
             </tr>
-            <% end %>
+          <% end %>
         <% end %>
       </tbody>
 
