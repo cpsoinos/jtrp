@@ -77,11 +77,11 @@ class Item < ActiveRecord::Base
   end
 
   def initial_photos
-    photos.initial
+    fetch_photos.initial
   end
 
   def listing_photos
-    photos.listing
+    fetch_photos.listing
   end
 
   def featured_photo_url(format=nil)
