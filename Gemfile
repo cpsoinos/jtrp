@@ -27,9 +27,6 @@ gem 'remotipart', '~> 1.2'
 gem 'dropzonejs-rails'
 gem 'fog'
 gem 'gon'
-gem 'rollbar'
-gem 'wicked_pdf'
-gem 'wkhtmltopdf-binary-edge', '~> 0.12.3.0'
 gem 'state_machines'
 gem 'state_machines-activerecord'
 gem 'bootsy'
@@ -53,8 +50,9 @@ gem 'pry-coolline'
 gem 'pry-byebug', '~> 3.3.0'
 gem 'docraptor'
 gem 'sendgrid-ruby'
+gem 'newrelic_rpm'
 
-group :production, :staging, :local do
+group :production, :staging, :local, :development do
   gem 'rails_12factor'
 end
 
