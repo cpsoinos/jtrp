@@ -15,48 +15,52 @@
 
       <tbody>
         <% items.each do |item| %>
-          <tr class="no-break">
-            <td class="text-center">
-              <div class="img-container">
-                <%= link_to image_tag(item.featured_photo_url(:thumb), class: "img-rounded img-responsive img-raised"), item_path(item) %>
-              </div>
-            </td>
-            <td class="td-name">
-              <%= link_to "#{item.description}", item_path(item) %>
-              <% if current_user.try(:internal?) && (controller_name != "jobs" && controller_name != "agreements") %>
-                <br><small>from <%= link_to item.account.full_name, account_path(item.account) %></small>
+          <% cache item do %>
+            <tr class="no-break">
+              <td class="text-center">
+                <div class="img-container">
+                  <%= link_to image_tag(item.featured_photo_url(:thumb), class: "img-rounded img-responsive img-raised"), item_path(item) %>
+                </div>
+              </td>
+              <td class="td-name">
+                <%= link_to "#{item.description}", item_path(item) %>
+                <% if current_user.try(:internal?) && (controller_name != "jobs" && controller_name != "agreements") %>
+                  <br><small>from <%= link_to item.account.full_name, account_path(item.account) %></small>
+                <% end %>
+              </td>
+
+              <% headers.each do |header| %>
+                <% cache header do %>
+                  <td class="text-center hidden-xs">
+                    <% case context %>
+                    <% when "purchase_invoice" %>
+                      <%= purchase_invoice_values(item)[header] %>
+                    <% when "consignment_agreement" %>
+                      <%= consignment_values(item)[header] %>
+                    <% when "general" %>
+                      <%= general_values(item)[header] %>
+                    <% end %>
+                  </td>
+                <% end %>
               <% end %>
-            </td>
 
-            <% headers.each do |header| %>
-              <td class="text-center hidden-xs">
-                <% case context %>
-                <% when "purchase_invoice" %>
-                  <%= purchase_invoice_values(item)[header] %>
-                <% when "consignment_agreement" %>
-                  <%= consignment_values(item)[header] %>
-                <% when "general" %>
-                  <%= general_values(item)[header] %>
-                <% end %>
-              </td>
+              <% if current_user.try(:internal?) %>
+                <td class="td-actions text-center">
+                  <%= link_to "<i class='material-icons'>edit</i>".html_safe, edit_account_job_proposal_item_path(item.account, item.job, item.proposal, item), class: "btn btn-fab btn-fab-mini btn-primary hidden-print" %>
+                  <% if item.active? %>
+                    <br />
+                    <br />
+                    <div class="text-left hidden-print">
+                      <%= render 'items/mark_sold_modal', item: item %>
+                    </div>
+                    <button type="button" class="btn btn-raised btn-success btn-round hidden-print" data-toggle="modal" data-target="#<%= item.id %>-mark-sold-modal">
+                      Mark as Sold <i class='material-icons'>done</i>
+                    </button>
+                  <% end %>
+                </td>
+              <% end %>
+            </tr>
             <% end %>
-
-            <% if current_user.try(:internal?) %>
-              <td class="td-actions text-center">
-                <%= link_to "<i class='material-icons'>edit</i>".html_safe, edit_account_job_proposal_item_path(item.account, item.job, item.proposal, item), class: "btn btn-fab btn-fab-mini btn-primary hidden-print" %>
-                <% if item.active? %>
-                  <br />
-                  <br />
-                  <div class="text-left hidden-print">
-                    <%= render 'items/mark_sold_modal', item: item %>
-                  </div>
-                  <button type="button" class="btn btn-raised btn-success btn-round hidden-print" data-toggle="modal" data-target="#<%= item.id %>-mark-sold-modal">
-                    Mark as Sold <i class='material-icons'>done</i>
-                  </button>
-                <% end %>
-              </td>
-            <% end %>
-          </tr>
         <% end %>
       </tbody>
 

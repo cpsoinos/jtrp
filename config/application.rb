@@ -43,5 +43,11 @@ module Jtrp
     config.active_record.raise_in_transactional_callbacks = true
     config.active_job.queue_adapter = :sidekiq
     config.react.addons = true
+
+    config.cache_store = :readthis_store, {
+      expires_in: 2.weeks.to_i,
+      namespace: 'cache',
+      redis: { url: 'redis://localhost:6379/2', driver: :hiredis }
+    }
   end
 end

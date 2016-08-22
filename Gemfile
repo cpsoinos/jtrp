@@ -51,6 +51,8 @@ gem 'pry-byebug', '~> 3.3.0'
 gem 'docraptor'
 gem 'sendgrid-ruby'
 gem 'newrelic_rpm'
+gem 'readthis'
+gem 'hiredis'
 
 group :production, :staging, :local, :development do
   gem 'rails_12factor'
