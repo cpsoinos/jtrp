@@ -41,4 +41,13 @@ Rails.application.configure do
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
   config.web_console.development_only = false
+
+  config.cache_store = :readthis_store, {
+    expires_in: 2.weeks.to_i,
+    compress: true,
+    compression_threshold: 2.kilobytes,
+    namespace: 'cache',
+    redis: { url: "#{ENV['REDIS_URL']}/2", driver: :hiredis },
+    refresh: true
+  }
 end
