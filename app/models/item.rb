@@ -85,12 +85,14 @@ class Item < ActiveRecord::Base
   end
 
   def featured_photo_url(format=nil)
-    if listing_photos.present?
-      listing_photos.first.photo_url(format, quality: "auto", fetch_format: :auto, effect: :improve)
-    elsif initial_photos.present?
-      initial_photos.first.photo_url(format, quality: "auto", fetch_format: :auto, effect: :improve)
-    else
-      "thumb_No_Image_Available.png"
+    Rails.cache.fetch("#{cache_key}/featured_photo_url/format_#{format}", expires_in: 2.weeks) do
+      if listing_photos.present?
+        listing_photos.first.photo_url(format, quality: "auto", fetch_format: :auto, effect: :improve)
+      elsif initial_photos.present?
+        initial_photos.first.photo_url(format, quality: "auto", fetch_format: :auto, effect: :improve)
+      else
+        "thumb_No_Image_Available.png"
+      end
     end
   end
 

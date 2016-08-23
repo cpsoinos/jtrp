@@ -1,5 +1,5 @@
 class Photo < ActiveRecord::Base
-  belongs_to :item
+  belongs_to :item, touch: true
   belongs_to :proposal
   mount_uploader :photo, PhotoUploader
 
