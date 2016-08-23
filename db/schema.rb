@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160820053027) do
+ActiveRecord::Schema.define(version: 20160822035205) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -134,8 +134,11 @@ ActiveRecord::Schema.define(version: 20160820053027) do
   end
 
   add_index "items", ["category_id"], name: "index_items_on_category_id", using: :btree
+  add_index "items", ["client_intention"], name: "index_items_on_client_intention", using: :btree
   add_index "items", ["order_id"], name: "index_items_on_order_id", using: :btree
   add_index "items", ["proposal_id"], name: "index_items_on_proposal_id", using: :btree
+  add_index "items", ["status", "client_intention"], name: "index_items_on_status_and_client_intention", using: :btree
+  add_index "items", ["status"], name: "index_items_on_status", using: :btree
 
   create_table "jobs", force: :cascade do |t|
     t.integer "account_id"
@@ -176,7 +179,9 @@ ActiveRecord::Schema.define(version: 20160820053027) do
     t.integer  "proposal_id"
   end
 
+  add_index "photos", ["item_id", "photo_type"], name: "index_photos_on_item_id_and_photo_type", using: :btree
   add_index "photos", ["item_id"], name: "index_photos_on_item_id", using: :btree
+  add_index "photos", ["photo_type"], name: "index_photos_on_photo_type", using: :btree
   add_index "photos", ["proposal_id"], name: "index_photos_on_proposal_id", using: :btree
 
   create_table "proposals", force: :cascade do |t|
