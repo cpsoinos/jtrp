@@ -3,6 +3,9 @@
     <legend><%= legend %></legend>
 
     <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+    <% if local_assigns[:redirect_url] %>
+      <%= hidden_field_tag :redirect_url, redirect_url %>
+    <% end %>
 
     <div class="row">
       <div class="col-xs-12 col-md-6">
