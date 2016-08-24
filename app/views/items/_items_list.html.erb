@@ -44,7 +44,7 @@
 
               <% if current_user.try(:internal?) %>
                 <td class="td-actions text-center">
-                  <%= link_to "<i class='material-icons'>edit</i>".html_safe, edit_account_job_proposal_item_path(item.account, item.job, item.proposal, item), class: "btn btn-fab btn-fab-mini btn-primary hidden-print" %>
+                  <%= link_to "<i class='material-icons'>edit</i>".html_safe, edit_account_job_proposal_item_path(item.account, item.job, item.proposal, item, redirect_url: request.original_url), class: "btn btn-fab btn-fab-mini btn-primary hidden-print" %>
                   <% if item.active? %>
                     <br />
                     <br />
