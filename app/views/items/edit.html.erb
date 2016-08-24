@@ -36,7 +36,7 @@
 
       <div class="extra-large-top-margin">
         <%= form_for @item, class: "form-horizontal", html: { multipart: true } do |f| %>
-          <%= render 'form', item: @item, f: f, legend: "Edit item" %>
+          <%= render 'form', item: @item, f: f, legend: "Edit item", redirect_url: params[:redirect_url] %>
         <% end %>
       </div>
 
