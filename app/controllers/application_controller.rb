@@ -44,7 +44,7 @@ class ApplicationController < ActionController::Base
   end
 
   def find_categories
-    @categories = Category.all
+    @categories = Category.primary
   end
 
   def find_categories_for_dropdown
