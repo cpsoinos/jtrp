@@ -36,6 +36,7 @@ feature "proposal response" do
       end
 
       scenario "one intention" do
+        pending("tests with docraptor")
         Item.update_all(client_intention: "sell")
         click_link("Generate Agreements")
 
@@ -43,6 +44,7 @@ feature "proposal response" do
       end
 
       scenario "multiple intentions" do
+        pending("tests with docraptor")
         items.each_with_index do |item, i|
           item.update_attribute("client_intention", intentions[i])
         end

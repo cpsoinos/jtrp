@@ -4,7 +4,7 @@ class PdfGenerator
 
   def initialize(object)
     @object = object
-    @account = @object.account
+    @account = object.account
   end
 
   def render_pdf
