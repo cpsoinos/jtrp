@@ -24,7 +24,6 @@
 //= require material.min
 //= require nouislider.min
 //= require best_in_place
-//= require dropzone
 //= require jquery-ddslick
 //= require flashcanvas
 //= require json2.min

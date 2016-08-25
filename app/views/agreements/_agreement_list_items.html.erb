@@ -16,8 +16,6 @@
             <p class="pending"><%= link_to "pending signature", account_job_proposal_agreements_path(agreement.account, agreement.job, agreement.proposal), class: "pending" %></p>
           <% end %>
 
-          <%= link_to "Print PDF", agreement_path(agreement, format: "pdf") %>
-
         </div>
       </div>
     <% end %>
