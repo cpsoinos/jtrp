@@ -7,10 +7,10 @@
 </div>
 
 <div class="row large-top-margin no-break">
-  <div class="col-sm-6">
+  <span class="col-sm-6">
     Vendor, being the rightful owner of the above-mentioned items, hereby sells them to Just the Right Piece, LLC for the stated consideration, and hereby acknowledges the receipt and sufficiency of the consideration as stated herein.
-  </div>
-  <div class="col-sm-6">
+  </span>
+  <span class="col-sm-6">
     <table class="pull-right">
       <tr>
         <th class="text-right">Subotal:</th>
@@ -36,18 +36,18 @@
         <td class="text-right panel-item-row"><%= humanized_money_with_symbol(0).html_safe %></td>
       </tr>
     </table>
-  </div>
+  </span>
 </div>
 
 <div class="row large-top-margin">
-  <div class="col-sm-7">
+  <span class="col-sm-7">
     _________________________________________________________<br />
     <span>Vendor:</span>
     <span class="agreement-name-printed"><%= @client.full_name %></span>
     <%#= render "signature_pad", user: @client, role: "client", agreement: agreement %>
-  </div>
-  <div class="col-sm-5">
+  </span>
+  <span class="col-sm-5">
     ____________<br />
     <span>Date</span>
-  </div>
+  </span>
 </div>

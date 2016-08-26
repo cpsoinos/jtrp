@@ -2,9 +2,8 @@
 
   <span class="col-sm-6">
     <h3 class="company-title brand-logo-link">
-      <%= "#{image_tag('JTRPv2_color.png', class: 'logo')} #{@company.name}".html_safe %>
+      <%= link_to "#{image_tag('JTRPv2_color_noname.png', height: 30, width: 33, class: 'logo')} #{@company.name}".html_safe, root_path %>
     </h3>
-    <p><%= @company.full_address %></p>
     <table class="form-header-table">
       <tr>
         <td>phone:</td>
