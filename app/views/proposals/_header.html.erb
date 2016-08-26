@@ -1,12 +1,14 @@
 <div class="row">
 
-  <div class="col-xs-6">
-    <h3 class="company-title"><%= @company.name %></h3>
+  <span class="col-sm-6">
+    <h3 class="company-title brand-logo-link">
+      <%= "#{image_tag('JTRPv2_color.png', class: 'logo')} #{@company.name}".html_safe %>
+    </h3>
     <p><%= @company.full_address %></p>
     <table class="form-header-table">
       <tr>
         <td>phone:</td>
-        <td><%= @company.phone %></td>
+        <td><%= number_to_phone(@company.phone) %></td>
       </tr>
       <tr>
         <td>email:</td>
@@ -17,14 +19,18 @@
         <td><%= @company.website %></td>
       </tr>
     </table>
-  </div>
+  </span>
 
-  <div class="col-xs-6 text-right form-header-table">
+  <span class="col-sm-push-6 text-right form-header-table">
     <h3><%= form_name %></h3>
     <table class="pull-right">
       <tr>
         <td class="text-left">Date</td>
         <td><%= @proposal.updated_at.strftime("%B %d, %Y") %></td>
+      </tr>
+      <tr>
+        <td class="text-left"><%= form_name %> #</td>
+        <td><%= agreement.id %></td>
       </tr>
       <tr>
         <td class="text-left">Proposal #</td>
@@ -35,7 +41,7 @@
         <td><%= @account.id %></td>
       </tr>
     </table>
-  </div>
+  </span>
 </div>
 
 <div class="row top-margin">
@@ -59,7 +65,7 @@
       </tr>
       <tr>
         <td>phone:</td>
-        <td><%= @client.phone %></td>
+        <td><%= number_to_phone(@client.phone) %></td>
       </tr>
       <tr>
         <td>email:</td>
