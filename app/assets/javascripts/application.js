@@ -30,8 +30,6 @@
 //= require jquery-readyselector
 //= require masonry.pkgd.min
 //= require imagesloaded.pkgd.min
-//= require react
-//= require react_ujs
 //= require components
 //= require jsapi
 //= require chartkick

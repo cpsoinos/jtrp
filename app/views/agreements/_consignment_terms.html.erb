@@ -96,9 +96,9 @@
 
     <p class="indent">Unofficial correspondence may be made by phone or text to:</p>
 
-    <p class="indent">JTRP phone: <b><%= @company.phone %></b></p>
+    <p class="indent">JTRP phone: <b><%= number_to_phone(@company.phone) %></b></p>
 
-    <p class="indent">Consignor phone: <b><%= @account.phone %></b>  (<%= @account.full_name %>)</p>
+    <p class="indent">Consignor phone: <b><%= number_to_phone(@account.phone) %></b>  (<%= @account.full_name %>)</p>
   </li>
 
   <li>
