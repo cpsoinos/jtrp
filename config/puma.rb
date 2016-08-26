@@ -12,7 +12,7 @@ environment ENV['RACK_ENV'] || 'development'
 # the given timeout. If not the worker process will be restarted. Default
 # value is 60 seconds.
 #
-worker_timeout ENV['PUMA_WORKER_TIMEOUT'].to_i || 60
+worker_timeout Integer(ENV['PUMA_WORKER_TIMEOUT']) || 60
 
 on_worker_boot do
   # Worker specific setup for Rails 4.1+
