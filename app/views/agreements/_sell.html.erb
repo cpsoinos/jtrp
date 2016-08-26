@@ -1,16 +1,16 @@
 <%= render 'proposals/header', form_name: "Purchase Invoice" %>
 
 <div class="row vertical-align large-top-margin">
-  <div class="col-xs-12">
+  <div class="col-sm-12">
     <%= render 'items/items_list', headers: purchase_invoice_headers, context: "purchase_invoice", items: items %>
   </div>
 </div>
 
 <div class="row large-top-margin no-break">
-  <div class="col-xs-6">
+  <div class="col-sm-6">
     Vendor, being the rightful owner of the above-mentioned items, hereby sells them to Just the Right Piece, LLC for the stated consideration, and hereby acknowledges the receipt and sufficiency of the consideration as stated herein.
   </div>
-  <div class="col-xs-6">
+  <div class="col-sm-6">
     <table class="pull-right">
       <tr>
         <th class="text-right">Subotal:</th>
@@ -40,13 +40,13 @@
 </div>
 
 <div class="row large-top-margin">
-  <div class="col-xs-7">
+  <div class="col-sm-7">
     _________________________________________________________<br />
     <span>Vendor:</span>
     <span class="agreement-name-printed"><%= @client.full_name %></span>
     <%#= render "signature_pad", user: @client, role: "client", agreement: agreement %>
   </div>
-  <div class="col-xs-5">
+  <div class="col-sm-5">
     ____________<br />
     <span>Date</span>
   </div>
