@@ -1,7 +1,12 @@
 <div class="row">
   <div class="col-xs-12 col-md-8 col-md-offset-2">
     <div class="well bs-component">
-      <%= render "agreements/#{@agreement.agreement_type}", items: @agreement.items, agreement: @agreement %>
+      <% if @agreement.scanned_agreement.present? %>
+        <iframe src="<%= @agreement.scanned_agreement.scan_url %>" width="100%" style="border: none;" class="full-height"> </iframe>
+      <% else %>
+        <%= render "agreements/#{@agreement.agreement_type}", items: @agreement.items, agreement: @agreement %>
+      <% end %>
+      <%= render 'scanned_upload_form', agreement: @agreement %>
     </div>
   </div>
 </div>

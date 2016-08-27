@@ -8,6 +8,10 @@ describe AgreementCreator do
     end
   end
 
+  before do
+    allow(PdfGeneratorJob).to receive(:perform_later)
+  end
+
   it "can be instantiated" do
     expect(AgreementCreator.new(user)).to be_an_instance_of(AgreementCreator)
   end

@@ -6,7 +6,13 @@ preload_app!
 
 rackup      DefaultRackup
 port        ENV['PORT']     || 3000
-environment ENV['RACK_ENV'] || 'local'
+environment ENV['RACK_ENV'] || 'development'
+
+# Verifies that all workers have checked in to the master process within
+# the given timeout. If not the worker process will be restarted. Default
+# value is 60 seconds.
+#
+worker_timeout Integer(ENV['PUMA_WORKER_TIMEOUT'] || 60)
 
 on_worker_boot do
   # Worker specific setup for Rails 4.1+

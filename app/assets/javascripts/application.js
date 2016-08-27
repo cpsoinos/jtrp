@@ -24,15 +24,12 @@
 //= require material.min
 //= require nouislider.min
 //= require best_in_place
-//= require dropzone
 //= require jquery-ddslick
 //= require flashcanvas
 //= require json2.min
 //= require jquery-readyselector
 //= require masonry.pkgd.min
 //= require imagesloaded.pkgd.min
-//= require react
-//= require react_ujs
 //= require components
 //= require jsapi
 //= require chartkick

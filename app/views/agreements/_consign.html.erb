@@ -1,8 +1,8 @@
-<div class="text-right">
-  <h4>Agreement No. <%= agreement.id %></h4>
-</div>
+<%= render 'proposals/header', form_name: "Consignment Agreement", agreement: agreement %>
 
 <%= render 'agreements/consignment_terms', agreement: agreement %>
+
+<div class="page-break"></div>
 
 <h4>Addendums:</h4>
 
