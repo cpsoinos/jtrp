@@ -8,6 +8,7 @@ feature "agreement" do
   let(:syncer) { double("syncer") }
 
   before do
+    allow(TransactionalEmailJob).to receive(:perform_later)
     allow(InventorySync).to receive(:new).and_return(syncer)
     allow(syncer).to receive(:remote_create).and_return(true)
     allow(syncer).to receive(:remote_update).and_return(true)
@@ -98,14 +99,7 @@ feature "agreement" do
         expect(page).to have_content("Consignment Agreement")
       end
 
-      scenario "it has signature blocks" do
-        pending("client portal")
-        expect(page).to have_css('#consign-client-signed')
-        expect(page).to have_css('#consign-manager-signed')
-      end
-
-      scenario "manager signs", js: true do
-        pending("client portal")
+      scenario "manager agrees", skip: "not requiring manager signature", js: true do
         first('input[name="agreement[manager_agreed]"]', visible: :false).set(true)
         click_button("consign-manager-submit")
         wait_for_ajax
@@ -114,14 +108,15 @@ feature "agreement" do
         expect(agreement.manager_agreed).to be(true)
       end
 
-      scenario "client signs", js: true do
-        pending("client portal")
+      scenario "client agrees" do
+        Timecop.freeze(Time.now)
         first('input[name="agreement[client_agreed]"]', visible: :false).set(true)
-        click_button("consign-client-submit")
-        wait_for_ajax
+        click_button("I Accept")
         agreement.reload
 
+        expect(page).to have_content("#{account.full_name} accepted the terms of this agreement at #{DateTime.now.strftime('%l:%M %p on %B %d, %Y')}.")
         expect(agreement.client_agreed).to be(true)
+        Timecop.return
       end
 
       scenario "both client and manager sign", js: true do
@@ -137,10 +132,6 @@ feature "agreement" do
         expect(agreement.manager_agreed).to be(true)
         expect(agreement).to be_active
       end
-
-    end
-
-    scenario "uploads scanned agreement" do
 
     end
 
