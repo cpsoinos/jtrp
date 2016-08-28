@@ -1,5 +1,11 @@
 <div class="col-xs-12 col-lg-8 col-lg-offset-2">
 
+  <%= render 'agreement_note_modal' %>
+
+  <button type="button" class="btn btn-raised btn-primary pull-right" data-toggle="modal" data-target="#agreement-note-modal">
+    Send Agreements <i class='material-icons'>email</i>
+  </button>
+
   <!-- Tabs -->
   <ul class="nav nav-pills nav-justified hidden-print large-top-margin large-bottom-margin" role="tablist">
     <% @agreements.each do |agreement| %>

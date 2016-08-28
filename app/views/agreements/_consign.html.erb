@@ -1,8 +1,8 @@
 <%= render 'proposals/header', form_name: "Consignment Agreement", agreement: agreement %>
 
-<%= render 'agreements/consignment_terms', agreement: agreement %>
-
-<div class="page-break"></div>
+<% if params[:print] %>
+  <%= render 'agreements/consignment_terms', agreement: agreement %>
+<% end %>
 
 <h4>Addendums:</h4>
 
@@ -11,5 +11,9 @@
 </div>
 
 <div class="row large-top-margin">
-  <%= render 'agreements/consignment_signature_blocks', agreement: agreement %>
+  <% if agreement.client_agreed.nil? %>
+    <%= render 'agreements/agree_to_terms', agreement: agreement %>
+  <% else %>
+    <i><%= @account.full_name %> accepted the terms of this agreement at <%= agreement.client_agreed_at.localtime.strftime("%l:%M %p on %B %d, %Y") %>.</i>
+  <% end %>
 </div>

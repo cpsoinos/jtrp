@@ -9,7 +9,6 @@ class AgreementCreator
   def create(proposal)
     @proposal = proposal
     generate_agreements
-    generate_agreement_pdfs
     @agreements
   end
 
@@ -23,12 +22,12 @@ class AgreementCreator
       end.compact
     end
   end
-
-  def generate_agreement_pdfs
-    @agreements.each do |agreement|
-      PdfGeneratorJob.perform_later(agreement)
-    end
-  end
+  # 
+  # def generate_agreement_pdfs
+  #   @agreements.each do |agreement|
+  #     PdfGeneratorJob.perform_later(agreement)
+  #   end
+  # end
 
   def types
     @_types ||= proposal.items.pluck(:client_intention).uniq

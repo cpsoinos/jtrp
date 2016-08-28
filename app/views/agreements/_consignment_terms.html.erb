@@ -1,7 +1,5 @@
-<h3 class="text-center">Consignment Agreement</h3><br>
-
 <p>
-  This consignment agreement (the "<b>Agreement</b>") is entered into as of <%= agreement.date ? agreement.date.strftime("%B %d, %Y") : DateTime.now.strftime("%B %d, %Y") %>, by and between <b><%= @company.name %>, LLC</b> (<b>"JTRP"</b>) of <b><%= @company.full_address %></b> and <b><%= @account.full_name %></b> (the <b>"Consignor"</b>) of <b><%= @account.full_address %></b>, (collectively, the <b>"Parties"</b>). This Agreement shall take effect on the date signed by Consignor, or if that date is not provided, then the date signed by JTRP.
+  This consignment agreement (the "<b>Agreement</b>") is entered into as of <%= agreement.created_at.strftime("%B %d, %Y") %>, by and between <b><%= @company.name %>, LLC</b> (<b>"JTRP"</b>) of <b><%= @company.full_address %></b> and <b><%= @account.full_name %></b> (the <b>"Consignor"</b>) of <b><%= @account.full_address %></b>, (collectively, the <b>"Parties"</b>). This Agreement shall take effect on the date signed by Consignor, or if that date is not provided, then the date signed by JTRP.
 </p>
 
 <p>WHEREAS, JTRP is engaged in the business of selling used furniture and accessories on consignment; and</p>

@@ -1,5 +1,5 @@
 class AgreementsController < ApplicationController
-  before_filter :require_internal, except: [:show]
+  before_filter :require_internal, except: [:show, :update]
   before_filter :find_proposal, only: [:index, :create]
   before_filter :find_job, only: [:create]
   before_filter :find_account, only: [:create]
@@ -36,17 +36,24 @@ class AgreementsController < ApplicationController
   def update
     @agreement = Agreement.find(params[:id])
     if @agreement.update(agreement_params)
-      @agreement.mark_active
       respond_to do |format|
         format.html do
           flash[:notice] = "Agreement updated!"
-          redirect_to account_job_path(@agreement.account, @agreement.job)
+          redirect_to agreement_path(@agreement)
         end
         format.js do
           @role = params[:role]
         end
       end
     end
+  end
+
+  def send_email
+    @agreements = Agreement.where(id: params[:ids])
+    @agreements.each do |agreement|
+      TransactionalEmailJob.perform_later(agreement, current_user, agreement.account.primary_contact, "send_agreement", params[:note])
+    end
+    redirect_to :back, notice: "Email sent to client!"
   end
 
   protected

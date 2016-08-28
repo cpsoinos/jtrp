@@ -19,7 +19,7 @@ class Agreement < ActiveRecord::Base
     state :active
     state :inactive
 
-    after_transition potential: :active, do: [:mark_items_active, :mark_proposal_active, :set_agreement_date]
+    after_transition potential: :active, do: [:mark_items_active, :mark_proposal_active, :set_agreement_date, :save_as_pdf]
     after_transition active: :inactive, do: :mark_proposal_inactive
 
     event :mark_active do
@@ -57,11 +57,11 @@ class Agreement < ActiveRecord::Base
   end
 
   def meets_requirements_active?
-    if agreement_type == "consign"
-      manager_signed? && client_signed?
-    else
+    # if agreement_type == "consign"
+    #   manager_signed? && client_signed?
+    # else
       client_signed?
-    end
+    # end
   end
 
   def meets_requirements_inactive?
@@ -77,7 +77,13 @@ class Agreement < ActiveRecord::Base
   end
 
   def object_url
-    Rails.application.routes.url_helpers.agreement_url(self, host: ENV['HOST'], print: true)
+    Rails.application.routes.url_helpers.agreement_url(self, host: ENV['HOST'])
+  end
+
+  def save_as_pdf
+    unless scanned_agreement.present?
+      PdfGeneratorJob.perform_later(self)
+    end
   end
 
 end

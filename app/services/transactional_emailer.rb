@@ -3,59 +3,49 @@ require 'sendgrid-ruby'
 class TransactionalEmailer
   include SendGrid
 
-  attr_reader :proposal, :user
+  attr_reader :object, :user, :email_type
 
-  def initialize(proposal, user)
-    @proposal = proposal
+  def initialize(object, user, email_type)
+    @object = object
     @user = user
+    @email_type = email_type
   end
 
-  def send_to_client(note=nil)
-    response = build_email(note)
-    record_response(response)
-  end
-
-  def send_notification(note=nil)
-    response = build_notification(note)
-    record_response(response)
+  def send(recipient, note=nil)
+    response = build_email(recipient, note)
+    record_response(response, recipient)
   end
 
   private
 
-  def build_email(note)
+  def build_email(recipient, note=nil)
     mail = Mail.new
-    mail.from = Email.new(email: 'carole@justtherightpiece.furniture')
+    mail.from = Email.new(email: user.email)
 
-    personalization = Personalization.new
-    personalization.to = Email.new(email: proposal.account.primary_contact.email)
-    personalization.substitutions = Substitution.new(key: '[name]', value: proposal.account.primary_contact.first_name)
-    personalization.substitutions = Substitution.new(key: '[proposal_url]', value: proposal_url)
-    if note.present?
-      personalization.substitutions = Substitution.new(key: '[note]', value: note)
-    end
-    personalization.substitutions = Substitution.new(key: '[Sender_Name]', value: "Just the Right Piece")
-    personalization.substitutions = Substitution.new(key: '[Sender_Address]', value: "369 South Broadway")
-    personalization.substitutions = Substitution.new(key: '[Sender_City]', value: "Salem")
-    personalization.substitutions = Substitution.new(key: '[Sender_State]', value: "NH")
-    personalization.substitutions = Substitution.new(key: '[Sender_Zip]', value: "03079")
-    mail.personalizations = personalization
+    mail.personalizations = personalizations(recipient, note)
 
-    mail.template_id = '85fb04cb-9273-4718-8c64-858cf326c45d'
+    mail.template_id = template_hash[email_type]
 
     sg = SendGrid::API.new(api_key: ENV['SENDGRID_API_KEY'])
     response = sg.client.mail._('send').post(request_body: mail.to_json)
     response.to_json
   end
 
-  def build_notification(note)
-    mail = Mail.new
-    mail.from = Email.new(email: 'notifications@justtherightpiece.furniture')
+  def template_hash
+    {
+      "proposal" => '85fb04cb-9273-4718-8c64-858cf326c45d',
+      "notification" => '8373e719-6755-406d-a638-9de068a8c83e',
+      "agreement" => 'faae793c-7bf3-4f09-94c3-d0dda1c87fda',
+      "send_agreement" => '53c7255e-09fe-43b6-9f5d-07b3d9001240'
+    }
+  end
 
+  def personalizations(recipient, note=nil)
     personalization = Personalization.new
-    personalization.to = Email.new(email: proposal.created_by.email)
-    personalization.substitutions = Substitution.new(key: '[name]', value: proposal.created_by.first_name)
-    personalization.substitutions = Substitution.new(key: '[proposal_url]', value: proposal_url)
+    personalization.to = Email.new(email: recipient.email)
+    personalization.substitutions = Substitution.new(key: '[name]', value: recipient.first_name)
     personalization.substitutions = Substitution.new(key: '[client_name]', value: user.first_name)
+    personalization.substitutions = Substitution.new(key: '[object_url]', value: object.object_url)
     if note.present?
       personalization.substitutions = Substitution.new(key: '[note]', value: note)
     end
@@ -64,21 +54,11 @@ class TransactionalEmailer
     personalization.substitutions = Substitution.new(key: '[Sender_City]', value: "Salem")
     personalization.substitutions = Substitution.new(key: '[Sender_State]', value: "NH")
     personalization.substitutions = Substitution.new(key: '[Sender_Zip]', value: "03079")
-    mail.personalizations = personalization
-
-    mail.template_id = '8373e719-6755-406d-a638-9de068a8c83e'
-
-    sg = SendGrid::API.new(api_key: ENV['SENDGRID_API_KEY'])
-    response = sg.client.mail._('send').post(request_body: mail.to_json)
-    response.to_json
+    personalization
   end
 
-  def proposal_url
-    Rails.application.routes.url_helpers.account_job_proposal_url(proposal.account, proposal.job, proposal, host: ENV['HOST'])
-  end
-
-  def record_response(response)
-    TransactionalEmailRecord.create(recipient_id: proposal.account.primary_contact.id, created_by_id: user.id, category: "proposal", sendgrid_response: response)
+  def record_response(response, recipient)
+    TransactionalEmailRecord.create(recipient_id: recipient.id, created_by_id: user.id, category: "proposal", sendgrid_response: response)
   end
 
 end
