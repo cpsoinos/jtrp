@@ -20,7 +20,7 @@ class TransactionalEmailer
 
   def build_email(recipient, note=nil)
     mail = Mail.new
-    mail.from = Email.new(email: user.email)
+    mail.from = Email.new(email: (user.internal? ? user.email : "notifications@justtherightpiece.furniture"))
 
     mail.personalizations = personalizations(recipient, note)
 
@@ -36,7 +36,8 @@ class TransactionalEmailer
       "proposal" => '85fb04cb-9273-4718-8c64-858cf326c45d',
       "notification" => '8373e719-6755-406d-a638-9de068a8c83e',
       "agreement" => 'faae793c-7bf3-4f09-94c3-d0dda1c87fda',
-      "send_agreement" => '53c7255e-09fe-43b6-9f5d-07b3d9001240'
+      "send_agreement" => '53c7255e-09fe-43b6-9f5d-07b3d9001240',
+      "agreement_active_notifier" => 'a44c4a4e-a852-4250-bd24-026c74da4ca8'
     }
   end
 
@@ -58,7 +59,7 @@ class TransactionalEmailer
   end
 
   def record_response(response, recipient)
-    TransactionalEmailRecord.create(recipient_id: recipient.id, created_by_id: user.id, category: "proposal", sendgrid_response: response)
+    TransactionalEmailRecord.create(recipient_id: recipient.id, created_by_id: user.id, category: email_type, sendgrid_response: response)
   end
 
 end

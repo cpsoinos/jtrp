@@ -6,6 +6,9 @@
       <% else %>
         <%= render "agreements/#{@agreement.agreement_type}", items: @agreement.items, agreement: @agreement %>
       <% end %>
+
+      <%= render 'agreements/terms_form', agreement: @agreement, account: @account %>
+
       <% if current_user.try(:internal?) %>
         <%= render 'scanned_upload_form', agreement: @agreement %>
       <% end %>

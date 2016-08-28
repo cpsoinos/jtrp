@@ -7,6 +7,7 @@ describe Agreement do
 
   before do
     allow(PdfGeneratorJob).to receive(:perform_later)
+    allow(TransactionalEmailJob).to receive(:perform_later)
   end
 
   describe "scopes" do
@@ -43,6 +44,7 @@ describe Agreement do
       agreement.mark_active
 
       expect(agreement).to be_active
+      expect(TransactionalEmailJob).to have_received(:perform_later).with(agreement, agreement.account.primary_contact, agreement.proposal.created_by, "agreement_active_notifier")
     end
 
     context "consign" do

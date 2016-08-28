@@ -38,12 +38,14 @@ class AgreementsController < ApplicationController
     if @agreement.update(agreement_params)
       respond_to do |format|
         format.html do
+          @agreement.mark_active # will return if does not meet requirements
           flash[:notice] = "Agreement updated!"
-          redirect_to agreement_path(@agreement)
+          redirect_to :back
         end
         format.js do
           @role = params[:role]
         end
+        format.json { respond_with_bip(@agreement) }
       end
     end
   end
@@ -59,7 +61,7 @@ class AgreementsController < ApplicationController
   protected
 
   def agreement_params
-    params.require(:agreement).permit(:manager_agreed, :manager_agreed_at, :client_agreed, :client_agreed_at)
+    params.require(:agreement).permit(:manager_agreed, :manager_agreed_at, :client_agreed, :client_agreed_at, :service_charge, :check_number)
   end
 
   def pull_intentions

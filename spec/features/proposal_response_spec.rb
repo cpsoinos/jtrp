@@ -8,16 +8,17 @@ feature "proposal response" do
   let!(:intentions) { %w(sell consign donate dump nothing) }
 
   before do
+    allow(TransactionalEmailJob).to receive(:perform_later)
     account.primary_contact = create(:client, account: account)
+    items.first.update_attribute("will_purchase", true)
+    items.second.update_attribute("will_consign", true)
+    visit account_job_proposal_path(account, job, proposal)
   end
 
   context "internal user" do
 
     before do
-      items.first.update_attribute("will_purchase", true)
-      items.second.update_attribute("will_consign", true)
       sign_in(user)
-      visit account_job_proposal_path(account, job, proposal)
     end
 
     scenario "user chooses client intentions", js: true do
@@ -52,7 +53,18 @@ feature "proposal response" do
           expect(page).to have_link(intention) unless intention == "nothing"
         end
       end
+    end
+  end
 
+  context "client" do
+
+    scenario "sends a response to jtrp" do
+      save_and_open_page
+      click_button("I'm Finished!")
+      fill_in("note", with: "this is a note")
+      click_button("Send Email")
+
+      expect(TransactionalEmailJob).to have_received(:perform_later).with(proposal, account.primary_contact, user, "notification", "this is a note")
     end
 
   end

@@ -140,6 +140,16 @@ feature "edit a proposal" do
       expect(page).to have_content("Consignment Offer")
     end
 
+    scenario "sends a proposal to the client" do
+      allow(TransactionalEmailJob).to receive(:perform_later)
+      visit account_job_proposal_path(account, job, proposal)
+      click_button("Send this Proposal")
+      fill_in("note", with: "this is a note")
+      click_button("Send Email")
+
+      expect(TransactionalEmailJob).to have_received(:perform_later).with(proposal, user, account.primary_contact, "proposal", "this is a note")
+    end
+
   end
 
 end

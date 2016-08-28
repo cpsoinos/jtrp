@@ -14,12 +14,17 @@ class Agreement < ActiveRecord::Base
   scope :active, -> { where(status: "active") }
   scope :inactive, -> { where(status: "inactive") }
 
+  monetize :service_charge_cents, allow_nil: true, numericality: {
+    greater_than_or_equal_to: 0,
+    less_than_or_equal_to: 100000
+  }
+
   state_machine :status, initial: :potential do
     state :potential
     state :active
     state :inactive
 
-    after_transition potential: :active, do: [:mark_items_active, :mark_proposal_active, :set_agreement_date, :save_as_pdf]
+    after_transition potential: :active, do: [:mark_items_active, :mark_proposal_active, :set_agreement_date, :save_as_pdf, :notify_company]
     after_transition active: :inactive, do: :mark_proposal_inactive
 
     event :mark_active do
@@ -80,6 +85,11 @@ class Agreement < ActiveRecord::Base
     unless scanned_agreement.present?
       PdfGeneratorJob.perform_later(self)
     end
+  end
+
+  def notify_company
+    return unless self.active?
+    TransactionalEmailJob.perform_later(self, account.primary_contact, proposal.created_by, "agreement_active_notifier")
   end
 
 end

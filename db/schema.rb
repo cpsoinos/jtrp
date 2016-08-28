@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160827223327) do
+ActiveRecord::Schema.define(version: 20160828190937) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,7 +43,7 @@ ActiveRecord::Schema.define(version: 20160827223327) do
 
   create_table "agreements", force: :cascade do |t|
     t.integer  "proposal_id"
-    t.string   "agreement_type",    null: false
+    t.string   "agreement_type",                          null: false
     t.string   "status"
     t.datetime "date"
     t.integer  "check_number"
@@ -53,6 +53,8 @@ ActiveRecord::Schema.define(version: 20160827223327) do
     t.datetime "client_agreed_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "service_charge_cents",    default: 0,     null: false
+    t.string   "service_charge_currency", default: "USD", null: false
   end
 
   add_index "agreements", ["proposal_id"], name: "index_agreements_on_proposal_id", using: :btree
