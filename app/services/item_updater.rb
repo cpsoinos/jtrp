@@ -13,6 +13,7 @@ class ItemUpdater
     if item.update(attrs)
       sync_inventory
     end
+    item
   end
 
   private

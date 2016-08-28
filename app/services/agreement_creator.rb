@@ -22,12 +22,6 @@ class AgreementCreator
       end.compact
     end
   end
-  # 
-  # def generate_agreement_pdfs
-  #   @agreements.each do |agreement|
-  #     PdfGeneratorJob.perform_later(agreement)
-  #   end
-  # end
 
   def types
     @_types ||= proposal.items.pluck(:client_intention).uniq

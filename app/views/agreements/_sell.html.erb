@@ -19,7 +19,7 @@
 
       <tr>
         <th class="text-right">Service Charge:</th>
-        <td class="text-right panel-item-row" id="purchase-order-service-charge"><%= best_in_place agreement, :service_charge, display_with: lambda { |v| humanized_money_with_symbol(v) }, classes: "purchase-order-service-charge", data: {subtotal: (items.sum(:purchase_price_cents) / 100)} %></td>
+        <td class="text-right panel-item-row" id="purchase-order-service-charge"><%= best_in_place agreement, :service_charge, display_with: lambda { |v| humanized_money_with_symbol(v) }, class: "purchase-order-service-charge", data: {subtotal: (items.sum(:purchase_price_cents) / 100)} %></td>
       </tr>
 
       <tr>

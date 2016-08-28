@@ -108,17 +108,6 @@ feature "agreement" do
         expect(agreement.manager_agreed).to be(true)
       end
 
-      scenario "client agrees" do
-        Timecop.freeze(Time.now)
-        first('input[name="agreement[client_agreed]"]', visible: :false).set(true)
-        click_button("I Accept")
-        agreement.reload
-
-        expect(page).to have_content("#{account.full_name} accepted the terms of this agreement at #{DateTime.now.strftime('%l:%M %p on %B %d, %Y')}.")
-        expect(agreement.client_agreed).to be(true)
-        Timecop.return
-      end
-
       scenario "both client and manager sign", js: true do
         pending("client portal")
         first('input[name="agreement[manager_agreed]"]', visible: :false).set(true)
@@ -133,6 +122,31 @@ feature "agreement" do
         expect(agreement).to be_active
       end
 
+    end
+
+  end
+
+  context "client" do
+
+    let!(:item) { create(:item, proposal: proposal, client_intention: "consign") }
+    let!(:agreement) { create(:agreement, :consign, proposal: proposal) }
+
+    before do
+      allow(PdfGeneratorJob).to receive(:perform_later)
+      allow(TransactionalEmailJob).to receive(:perform_later)
+      allow(InventorySync).to receive(:new).and_return(syncer)
+    end
+
+    scenario "client agrees" do
+      Timecop.freeze(Time.now)
+      visit account_job_proposal_agreement_path(account, job, proposal, agreement)
+      first('input[name="agreement[client_agreed]"]', visible: :false).set(true)
+      click_button("I Accept")
+      agreement.reload
+
+      expect(page).to have_content("#{account.full_name} accepted the terms of this agreement at #{DateTime.now.strftime('%l:%M %p on %B %d, %Y')}.")
+      expect(agreement.client_agreed).to be(true)
+      Timecop.return
     end
 
   end
