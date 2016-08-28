@@ -14,40 +14,27 @@
     <table class="pull-right">
       <tr>
         <th class="text-right">Subotal:</th>
-        <td class="text-right panel-item-row"><%= humanized_money_with_symbol(items.sum(:purchase_price_cents) / 100).html_safe %></td>
+        <td class="text-right panel-item-row" id="purchase-order-subtotal"><%= humanized_money_with_symbol(items.sum(:purchase_price_cents) / 100).html_safe %></td>
       </tr>
 
       <tr>
         <th class="text-right">Service Charge:</th>
-        <td class="text-right panel-item-row">________</td>
+        <td class="text-right panel-item-row" id="purchase-order-service-charge"><%= best_in_place agreement, :service_charge, display_with: lambda { |v| humanized_money_with_symbol(v) }, class: "purchase-order-service-charge", data: {subtotal: (items.sum(:purchase_price_cents) / 100)} %></td>
       </tr>
 
       <tr>
         <th class="text-right">Total:</th>
-        <td class="text-right panel-item-row">________</td>
+        <td class="text-right panel-item-row" id="purchase-order-total"><%= humanized_money_with_symbol((items.sum(:purchase_price_cents) + agreement.service_charge_cents) / 100) %></td>
       </tr>
 
       <tr>
-        <th class="text-right">Paid, ck. #_____:</th>
-        <td class="text-right panel-item-row">________<%#= humanized_money_with_symbol(items.sum(:purchase_price_cents) / 100 * -1).html_safe %></td>
+        <th class="text-right">Paid, ck. #<%= best_in_place agreement, :check_number %>:</th>
+        <td class="text-right panel-item-row" id="paid-amount-total"><%= humanized_money_with_symbol(((items.sum(:purchase_price_cents) / 100) + agreement.service_charge_cents / 100) * -1).html_safe %></td>
       </tr>
       <tr>
         <th class="text-right">Balance due:</th>
         <td class="text-right panel-item-row"><%= humanized_money_with_symbol(0).html_safe %></td>
       </tr>
     </table>
-  </span>
-</div>
-
-<div class="row large-top-margin">
-  <span class="col-sm-7">
-    _________________________________________________________<br />
-    <span>Vendor:</span>
-    <span class="agreement-name-printed"><%= @client.full_name %></span>
-    <%#= render "signature_pad", user: @client, role: "client", agreement: agreement %>
-  </span>
-  <span class="col-sm-5">
-    ____________<br />
-    <span>Date</span>
   </span>
 </div>

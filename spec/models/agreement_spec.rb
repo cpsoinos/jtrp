@@ -5,6 +5,11 @@ describe Agreement do
   it { should validate_presence_of(:proposal) }
   it { should validate_presence_of(:agreement_type) }
 
+  before do
+    allow(PdfGeneratorJob).to receive(:perform_later)
+    allow(TransactionalEmailJob).to receive(:perform_later)
+  end
+
   describe "scopes" do
 
     let!(:active_agreement) { create(:agreement, :active) }
@@ -39,6 +44,7 @@ describe Agreement do
       agreement.mark_active
 
       expect(agreement).to be_active
+      expect(TransactionalEmailJob).to have_received(:perform_later).with(agreement, agreement.account.primary_contact, agreement.proposal.created_by, "agreement_active_notifier")
     end
 
     context "consign" do
@@ -52,7 +58,7 @@ describe Agreement do
         expect(agreement).to be_active
       end
 
-      it "does not transition 'potential' to 'active' without a manager signature" do
+      it "does not transition 'potential' to 'active' without a manager signature", skip: "only client signature required" do
         agreement = create(:agreement, :consign)
         expect(agreement).to be_potential
         agreement.client_agreed = true

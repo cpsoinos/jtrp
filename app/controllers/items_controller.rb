@@ -72,7 +72,7 @@ class ItemsController < ApplicationController
   def update
     @item = Item.find(params[:id])
     respond_to do |format|
-      if ItemUpdater.new(@item).update(item_params)
+      if ItemUpdater.new(@item).update(item_params) && !@item.errors.present?
         format.js { render 'proposals/update_item_details' }
         format.html do
           notice = 'Item was successfully updated.'
