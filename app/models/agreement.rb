@@ -57,11 +57,7 @@ class Agreement < ActiveRecord::Base
   end
 
   def meets_requirements_active?
-    # if agreement_type == "consign"
-    #   manager_signed? && client_signed?
-    # else
       client_signed?
-    # end
   end
 
   def meets_requirements_inactive?
