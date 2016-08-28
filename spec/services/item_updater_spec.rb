@@ -33,7 +33,7 @@ describe ItemUpdater do
     end
 
     it "does not try to sync to clover when item is potential" do
-      ItemUpdater.new(active_item).update(attrs)
+      ItemUpdater.new(item).update(attrs)
 
       expect(syncer).not_to have_received(:remote_update)
     end
