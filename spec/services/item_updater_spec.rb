@@ -2,7 +2,7 @@ describe ItemUpdater do
 
   let(:item) { create(:item) }
   let(:active_item) { create(:item, :active, remote_id: 'ABC123') }
-  let(:attrs) { attributes_for(:item, description: "cats be meowin'") }
+  let(:attrs) { {description: "cats be meowin'"} }
   let(:initial_photo_attrs) { attributes_for(:photo) }
   let(:listing_photo_attrs) { attributes_for(:photo, :listing) }
   let(:syncer) { double("syncer") }
@@ -30,6 +30,12 @@ describe ItemUpdater do
       ItemUpdater.new(active_item).update(attrs)
 
       expect(syncer).to have_received(:remote_update)
+    end
+
+    it "does not try to sync to clover when item is potential" do
+      ItemUpdater.new(item).update(attrs)
+
+      expect(syncer).not_to have_received(:remote_update)
     end
 
     it "syncs to clover when inventory item does not exist" do

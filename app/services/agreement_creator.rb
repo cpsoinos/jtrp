@@ -9,7 +9,6 @@ class AgreementCreator
   def create(proposal)
     @proposal = proposal
     generate_agreements
-    generate_agreement_pdfs
     @agreements
   end
 
@@ -21,12 +20,6 @@ class AgreementCreator
         next if type == "undecided" || type == "nothing"
         Agreement.find_or_create_by!(proposal: proposal, agreement_type: type)
       end.compact
-    end
-  end
-
-  def generate_agreement_pdfs
-    @agreements.each do |agreement|
-      PdfGeneratorJob.perform_later(agreement)
     end
   end
 

@@ -1,8 +1,8 @@
 class TransactionalEmailJob < ActiveJob::Base
   queue_as :default
 
-  def perform(proposal, user, note)
-    TransactionalEmailer.new(proposal, user).send_to_client(note)
+  def perform(object, user, recipient, email_type, note=nil)
+    TransactionalEmailer.new(object, user, email_type).send(recipient, note)
   end
 
 end

@@ -1,5 +1,5 @@
 class AgreementsController < ApplicationController
-  before_filter :require_internal, except: [:show]
+  before_filter :require_internal, except: [:show, :update]
   before_filter :find_proposal, only: [:index, :create]
   before_filter :find_job, only: [:create]
   before_filter :find_account, only: [:create]
@@ -36,23 +36,32 @@ class AgreementsController < ApplicationController
   def update
     @agreement = Agreement.find(params[:id])
     if @agreement.update(agreement_params)
-      @agreement.mark_active
       respond_to do |format|
         format.html do
+          @agreement.mark_active # will return if does not meet requirements
           flash[:notice] = "Agreement updated!"
-          redirect_to account_job_path(@agreement.account, @agreement.job)
+          redirect_to :back
         end
         format.js do
           @role = params[:role]
         end
+        format.json { respond_with_bip(@agreement) }
       end
     end
+  end
+
+  def send_email
+    @agreements = Agreement.where(id: params[:ids])
+    @agreements.each do |agreement|
+      TransactionalEmailJob.perform_later(agreement, current_user, agreement.account.primary_contact, "send_agreement", params[:note])
+    end
+    redirect_to :back, notice: "Email sent to client!"
   end
 
   protected
 
   def agreement_params
-    params.require(:agreement).permit(:manager_agreed, :manager_agreed_at, :client_agreed, :client_agreed_at)
+    params.require(:agreement).permit(:manager_agreed, :manager_agreed_at, :client_agreed, :client_agreed_at, :service_charge, :check_number)
   end
 
   def pull_intentions

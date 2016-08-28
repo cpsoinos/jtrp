@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160822035205) do
+ActiveRecord::Schema.define(version: 20160828190937) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,9 +32,18 @@ ActiveRecord::Schema.define(version: 20160822035205) do
 
   add_index "accounts", ["primary_contact_id"], name: "index_accounts_on_primary_contact_id", using: :btree
 
+  create_table "adobe_sign_accounts", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "token"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "adobe_sign_accounts", ["user_id"], name: "index_adobe_sign_accounts_on_user_id", using: :btree
+
   create_table "agreements", force: :cascade do |t|
     t.integer  "proposal_id"
-    t.string   "agreement_type",    null: false
+    t.string   "agreement_type",                          null: false
     t.string   "status"
     t.datetime "date"
     t.integer  "check_number"
@@ -42,6 +51,10 @@ ActiveRecord::Schema.define(version: 20160822035205) do
     t.boolean  "manager_agreed"
     t.datetime "manager_agreed_at"
     t.datetime "client_agreed_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "service_charge_cents",    default: 0,     null: false
+    t.string   "service_charge_currency", default: "USD", null: false
   end
 
   add_index "agreements", ["proposal_id"], name: "index_agreements_on_proposal_id", using: :btree
@@ -95,6 +108,17 @@ ActiveRecord::Schema.define(version: 20160822035205) do
   end
 
   add_index "companies", ["primary_contact_id"], name: "index_companies_on_primary_contact_id", using: :btree
+
+  create_table "identities", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "provider"
+    t.string   "uid"
+    t.string   "token"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "identities", ["user_id"], name: "index_identities_on_user_id", using: :btree
 
   create_table "item_spreadsheets", force: :cascade do |t|
     t.string "csv"
@@ -195,8 +219,10 @@ ActiveRecord::Schema.define(version: 20160822035205) do
   add_index "proposals", ["job_id"], name: "index_proposals_on_job_id", using: :btree
 
   create_table "scanned_agreements", force: :cascade do |t|
-    t.integer "agreement_id", null: false
-    t.string  "scan",         null: false
+    t.integer  "agreement_id", null: false
+    t.string   "scan",         null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "scanned_agreements", ["agreement_id"], name: "index_scanned_agreements_on_agreement_id", using: :btree
@@ -257,7 +283,9 @@ ActiveRecord::Schema.define(version: 20160822035205) do
     t.datetime "updated_at"
   end
 
+  add_foreign_key "adobe_sign_accounts", "users"
   add_foreign_key "agreements", "proposals"
+  add_foreign_key "identities", "users"
   add_foreign_key "items", "categories"
   add_foreign_key "items", "orders"
   add_foreign_key "jobs", "accounts"

@@ -1,0 +1,9 @@
+<div class="row large-top-margin">
+  <% if agreement.client_agreed.nil? %>
+    <% unless current_user.try(:internal?) %>
+      <%= render 'agreements/agree_to_terms', agreement: agreement %>
+    <% end %>
+  <% else %>
+    <i><%= account.full_name %> accepted the terms of this agreement at <%= agreement.client_agreed_at.localtime.strftime("%l:%M %p on %B %d, %Y") %>.</i>
+  <% end %>
+</div>

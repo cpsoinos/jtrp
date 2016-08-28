@@ -14,12 +14,17 @@ class Agreement < ActiveRecord::Base
   scope :active, -> { where(status: "active") }
   scope :inactive, -> { where(status: "inactive") }
 
+  monetize :service_charge_cents, allow_nil: true, numericality: {
+    greater_than_or_equal_to: 0,
+    less_than_or_equal_to: 100000
+  }
+
   state_machine :status, initial: :potential do
     state :potential
     state :active
     state :inactive
 
-    after_transition potential: :active, do: [:mark_items_active, :mark_proposal_active, :set_agreement_date]
+    after_transition potential: :active, do: [:mark_items_active, :mark_proposal_active, :set_agreement_date, :save_as_pdf, :notify_company]
     after_transition active: :inactive, do: :mark_proposal_inactive
 
     event :mark_active do
@@ -57,11 +62,7 @@ class Agreement < ActiveRecord::Base
   end
 
   def meets_requirements_active?
-    if agreement_type == "consign"
-      manager_signed? && client_signed?
-    else
       client_signed?
-    end
   end
 
   def meets_requirements_inactive?
@@ -77,7 +78,18 @@ class Agreement < ActiveRecord::Base
   end
 
   def object_url
-    Rails.application.routes.url_helpers.agreement_url(self, host: ENV['HOST'], print: true)
+    Rails.application.routes.url_helpers.agreement_url(self, host: ENV['HOST'])
+  end
+
+  def save_as_pdf
+    unless scanned_agreement.present?
+      PdfGeneratorJob.perform_later(self)
+    end
+  end
+
+  def notify_company
+    return unless self.active?
+    TransactionalEmailJob.perform_later(self, account.primary_contact, proposal.created_by, "agreement_active_notifier")
   end
 
 end

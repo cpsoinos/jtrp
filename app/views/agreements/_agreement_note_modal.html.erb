@@ -1,0 +1,24 @@
+<div class="modal fade" tabindex="-1" role="dialog" id="agreement-note-modal">
+  <div class="modal-dialog">
+    <%= form_tag agreement_send_email_path(@agreements) do %>
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">Email Agreements</h4>
+        </div>
+        <div class="modal-body">
+
+          <div class="form-group label-floating">
+            <%= hidden_field_tag :ids, @agreements.pluck(:id) %>
+            <%= label_tag :note, "Add a note?", class: "control-label" %>
+            <%= text_area_tag :note, nil, class: "form-control" %>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <%= submit_tag "Send Email", class: "btn btn-raised btn-primary" %>
+        </div>
+      </div><!-- /.modal-content -->
+    <% end %>
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

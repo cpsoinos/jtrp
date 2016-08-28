@@ -33,7 +33,7 @@ feature "update an item" do
       click_button("Update Item")
 
       expect(page).to have_content("Item was successfully updated.")
-      # expect(page).to have_content("Chair")
+      expect(page).to have_content("Chair")
     end
 
     scenario "unsuccessfully updates an item" do
