@@ -14,10 +14,10 @@ class Agreement < ActiveRecord::Base
   scope :active, -> { where(status: "active") }
   scope :inactive, -> { where(status: "inactive") }
 
-  monetize :service_charge_cents, allow_nil: true, numericality: {
-    greater_than_or_equal_to: 0,
-    less_than_or_equal_to: 100000
-  }
+  # monetize :service_charge_cents, allow_nil: true, numericality: {
+  #   greater_than_or_equal_to: 0,
+  #   less_than_or_equal_to: 100000
+  # }
 
   state_machine :status, initial: :potential do
     state :potential
