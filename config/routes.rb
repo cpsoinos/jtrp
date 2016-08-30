@@ -24,7 +24,7 @@ Rails.application.routes.draw do
     resources :items
   end
 
-  resources :photos, only: [:create, :destroy] do
+  resources :photos, only: [:create, :destroy, :update] do
     post '/batch_create', to: 'photos#batch_create', on: :collection
   end
 

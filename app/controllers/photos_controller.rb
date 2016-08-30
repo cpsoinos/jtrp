@@ -13,6 +13,16 @@ class PhotosController < ApplicationController
     end
   end
 
+  def update
+    @photo = Photo.find(params[:id])
+    if PhotoUpdater.new(@photo).update(photo_params)
+      flash = { notice: "Successfully set primary photo!" }
+    else
+      flash = { alert: "Unable to set primary photo" }
+    end
+    redirect_to edit_account_job_proposal_item_path(@photo.item.account, @photo.item.job, @photo.item.proposal, @photo.item.reload), flash
+  end
+
   def destroy
     @photo = Photo.find(params[:id])
     if @photo.destroy

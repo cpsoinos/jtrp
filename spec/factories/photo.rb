@@ -14,6 +14,10 @@ FactoryGirl.define do
     trait :listing do
       photo_type 'listing'
     end
+
+    trait :featured do
+      photo_type 'featured'
+    end
   end
 
 end
