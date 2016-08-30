@@ -19,6 +19,11 @@
     <div class="tab-content">
       <% @agreements.each do |agreement| %>
         <div role="tabpanel" class="tab-pane fade" id="<%= agreement.agreement_type %>">
+          <% if agreement.active? && agreement.items.any? { |i| i.potential? } %>
+            <div class="row hidden-print">
+              <%= link_to "Mark Items Active <i class='material-icons'>store</i>".html_safe, agreement_activate_items_path(agreement), class: "btn btn-raised btn-primary pull-right", method: :post %>
+            </div>
+          <% end %>
           <% if agreement.scanned_agreement.present? %>
             <iframe src="<%= agreement.scanned_agreement.scan_url %>" width="100%" style="border: none;" class="full-height"> </iframe>
           <% else %>

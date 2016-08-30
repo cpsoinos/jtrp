@@ -1,6 +1,6 @@
 class AgreementsController < ApplicationController
   before_filter :require_internal, except: [:show, :update]
-  before_filter :find_proposal, only: [:index, :create]
+  before_filter :find_proposal, only: [:index, :create, :send_email]
   before_filter :find_job, only: [:create]
   before_filter :find_account, only: [:create]
   before_filter :pull_intentions, only: :create
@@ -51,11 +51,17 @@ class AgreementsController < ApplicationController
   end
 
   def send_email
-    @agreements = Agreement.where(id: params[:ids])
+    @agreements = @proposal.agreements
     @agreements.each do |agreement|
       TransactionalEmailJob.perform_later(agreement, current_user, agreement.account.primary_contact, "send_agreement", params[:note])
     end
     redirect_to :back, notice: "Email sent to client!"
+  end
+
+  def activate_items
+    @agreement = Agreement.find(params[:agreement_id])
+    @agreement.items.map(&:mark_active)
+    redirect_to :back, notice: "Items are marked active!"
   end
 
   protected
