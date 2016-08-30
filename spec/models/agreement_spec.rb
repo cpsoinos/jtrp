@@ -78,6 +78,18 @@ describe Agreement do
       expect(agreement).to be_inactive
     end
 
+    it "does not auto-transition items to active when transitioning to active" do
+      item = create(:item, client_intention: "sell")
+      agreement = create(:agreement, proposal: item.proposal)
+      agreement.client_agreed = true
+      agreement.client_agreed_at = 3.minutes.ago
+      agreement.save
+      agreement.mark_active
+
+      expect(item).not_to be_active
+      expect(item).to be_potential
+    end
+
   end
 
 end

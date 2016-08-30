@@ -9,7 +9,7 @@
         <div class="modal-body">
 
           <div class="form-group label-floating">
-            <%= hidden_field_tag :ids, @agreements.pluck(:id) %>
+            <%= hidden_field_tag :proposal_id, @proposal.id %>
             <%= label_tag :note, "Add a note?", class: "control-label" %>
             <%= text_area_tag :note, nil, class: "form-control" %>
           </div>
