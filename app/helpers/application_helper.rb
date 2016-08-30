@@ -21,7 +21,7 @@ module ApplicationHelper
   def purchase_invoice_values(item)
     {
       "Account Item No."          =>  item.account_item_number,
-      "Amount"                    =>  humanized_money_with_symbol(item.purchase_price),
+      "Amount"                    =>  humanized_money_with_symbol(item.purchase_price)
     }
   end
 
