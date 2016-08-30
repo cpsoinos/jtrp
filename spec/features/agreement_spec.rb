@@ -233,6 +233,17 @@ feature "agreement" do
       Timecop.return
     end
 
+    scenario "client doesn't see 'Mark Items Active' button from show" do
+      allow(PdfGeneratorJob).to receive(:perform_later)
+      allow(InventorySyncJob).to receive(:perform_later)
+      agreement.update_attributes(client_agreed: true, client_agreed_at: 3.minutes.ago, date: 3.minutes.ago)
+      agreement.mark_active
+
+      visit agreement_path(agreement)
+
+      expect(page).not_to have_button("Mark Items Active")
+    end
+
   end
 
 end
