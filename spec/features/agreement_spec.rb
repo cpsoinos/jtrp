@@ -215,6 +215,12 @@ feature "agreement" do
       allow(InventorySync).to receive(:new).and_return(syncer)
     end
 
+    scenario "there is legal verbiage around the clickwrap" do
+      visit account_job_proposal_agreement_path(account, job, proposal, agreement)
+
+      expect(page).to have_content("By checking the box below and accepting this agreement, you signify your acceptance of our terms. You will receive a copy of the executed agreement by email upon accepting.")
+    end
+
     scenario "client agrees" do
       Timecop.freeze(Time.now)
       visit account_job_proposal_agreement_path(account, job, proposal, agreement)
