@@ -24,7 +24,7 @@ class Agreement < ActiveRecord::Base
     state :active
     state :inactive
 
-    after_transition potential: :active, do: [:mark_items_active, :mark_proposal_active, :set_agreement_date, :save_as_pdf, :notify_company]
+    after_transition potential: :active, do: [:mark_proposal_active, :set_agreement_date, :save_as_pdf, :notify_company]
     after_transition active: :inactive, do: :mark_proposal_inactive
 
     event :mark_active do

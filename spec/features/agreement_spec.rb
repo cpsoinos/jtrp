@@ -70,6 +70,57 @@ feature "agreement" do
         expect(agreement.reload).to be_active
       end
 
+      scenario "activates items from index", js: true do
+        allow(PdfGeneratorJob).to receive(:perform_later)
+        allow(InventorySyncJob).to receive(:perform_later)
+        agreement.update_attributes(client_agreed: true, client_agreed_at: 3.minutes.ago, date: 3.minutes.ago)
+        agreement.mark_active
+
+        visit account_job_proposal_agreements_path(account, job, proposal)
+        click_link("sell")
+        click_on("Mark Items Active")
+
+        expect(page).to have_content("Items are marked active!")
+        expect(item.reload).to be_active
+      end
+
+      scenario "activates items from show" do
+        allow(PdfGeneratorJob).to receive(:perform_later)
+        allow(InventorySyncJob).to receive(:perform_later)
+        agreement.update_attributes(client_agreed: true, client_agreed_at: 3.minutes.ago, date: 3.minutes.ago)
+        agreement.mark_active
+
+        visit agreement_path(agreement)
+        click_on("Mark Items Active")
+
+        expect(page).to have_content("Items are marked active!")
+        expect(item.reload).to be_active
+      end
+
+      scenario "can't try to activate items from index when items already active", js: true do
+        allow(PdfGeneratorJob).to receive(:perform_later)
+        allow(InventorySyncJob).to receive(:perform_later)
+        agreement.update_attributes(client_agreed: true, client_agreed_at: 3.minutes.ago, date: 3.minutes.ago)
+        agreement.mark_active
+        item.mark_active
+
+        visit account_job_proposal_agreements_path(account, job, proposal)
+        click_link("sell")
+
+        expect(page).not_to have_button("Mark Items Active")
+      end
+
+      scenario "can't try to activate items from show when items already active" do
+        allow(PdfGeneratorJob).to receive(:perform_later)
+        allow(InventorySyncJob).to receive(:perform_later)
+        agreement.update_attributes(client_agreed: true, client_agreed_at: 3.minutes.ago, date: 3.minutes.ago)
+        agreement.mark_active
+        item.mark_active
+        visit agreement_path(agreement)
+
+        expect(page).not_to have_button("Mark Items Active")
+      end
+
     end
 
     context "consign" do
@@ -122,6 +173,33 @@ feature "agreement" do
         expect(agreement).to be_active
       end
 
+      scenario "activates items from index", js: true do
+        allow(PdfGeneratorJob).to receive(:perform_later)
+        allow(InventorySyncJob).to receive(:perform_later)
+        agreement.update_attributes(client_agreed: true, client_agreed_at: 3.minutes.ago, date: 3.minutes.ago)
+        agreement.mark_active
+
+        visit account_job_proposal_agreements_path(account, job, proposal)
+        click_link("consign")
+        click_on("Mark Items Active")
+
+        expect(page).to have_content("Items are marked active!")
+        expect(item.reload).to be_active
+      end
+
+      scenario "can't try to activate items when items already active", js: true do
+        allow(PdfGeneratorJob).to receive(:perform_later)
+        allow(InventorySyncJob).to receive(:perform_later)
+        agreement.update_attributes(client_agreed: true, client_agreed_at: 3.minutes.ago, date: 3.minutes.ago)
+        agreement.mark_active
+        item.mark_active
+
+        visit account_job_proposal_agreements_path(account, job, proposal)
+        click_link("consign")
+
+        expect(page).not_to have_button("Mark Items Active")
+      end
+
     end
 
   end
@@ -135,6 +213,12 @@ feature "agreement" do
       allow(PdfGeneratorJob).to receive(:perform_later)
       allow(TransactionalEmailJob).to receive(:perform_later)
       allow(InventorySync).to receive(:new).and_return(syncer)
+    end
+
+    scenario "there is legal verbiage around the clickwrap" do
+      visit account_job_proposal_agreement_path(account, job, proposal, agreement)
+
+      expect(page).to have_content("By checking the box below and accepting this agreement, you signify your acceptance of our terms. You will receive a copy of the executed agreement by email upon accepting.")
     end
 
     scenario "client agrees" do

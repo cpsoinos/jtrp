@@ -79,6 +79,7 @@ Rails.application.routes.draw do
   resources :agreements do
     get '/agreements_list', to: 'agreements#agreements_list', as: 'agreements_list', on: :collection
     post '/send_email', to: 'agreements#send_email', as: 'send_email'
+    post '/activate_items', to: 'agreements#activate_items', as: "activate_items"
     resources :scanned_agreements, only: [:create, :update, :show, :destroy]
   end
 
