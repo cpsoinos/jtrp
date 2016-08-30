@@ -1,10 +1,12 @@
 <div class="row">
   <div class="col-xs-12 col-md-8 col-md-offset-2">
     <div class="well bs-component">
-      <% if @agreement.active? && @agreement.items.any? { |i| i.potential? } %>
-        <div class="row hidden-print">
-          <%= link_to "Mark Items Active <i class='material-icons'>store</i>".html_safe, agreement_activate_items_path(@agreement), class: "btn btn-raised btn-primary pull-right", method: :post %>
-        </div>
+      <% if current_user.try(:potential?) %>
+        <% if @agreement.active? && @agreement.items.any? { |i| i.potential? } %>
+          <div class="row hidden-print">
+            <%= link_to "Mark Items Active <i class='material-icons'>store</i>".html_safe, agreement_activate_items_path(@agreement), class: "btn btn-raised btn-primary pull-right", method: :post %>
+          </div>
+        <% end %>
       <% end %>
       <% if @agreement.scanned_agreement.present? %>
         <iframe src="<%= @agreement.scanned_agreement.scan_url %>" width="100%" style="border: none;" class="full-height"> </iframe>
