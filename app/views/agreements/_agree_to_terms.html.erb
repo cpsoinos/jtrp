@@ -3,6 +3,7 @@
   <%= render 'agreements/consignment_terms_modal', agreement: agreement %>
 
   <div class="form-group text-center">
+    By checking the box below and accepting this agreement, you signify your acceptance of our terms. You will receive a copy of the executed agreement by email upon accepting.
     <div class="checkbox">
       <label>
         <%= f.check_box :client_agreed, {id: "client-agree", required: true} %>
