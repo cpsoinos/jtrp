@@ -14,8 +14,19 @@
 
   <%= f.hidden_field :client_agreed_at, value: DateTime.now %>
 
-  <div class="row text-center">
+  <div class="row text-center hidden-print">
     <%= f.submit "I Accept", class: "btn btn-raised btn-primary", id: "submit-accept-agreement" %>
+  </div>
+
+  <div class="row visible-print large-top-margin no-break">
+    <span class="col-sm-5">
+      _______________________________________________________
+      <%= agreement.account.primary_contact.full_name %>
+    </span>
+    <span class="col-sm-2 col-sm-offset-1">
+      _____________
+      Date
+    </span>
   </div>
 
 <% end %>
