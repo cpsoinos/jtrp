@@ -12,4 +12,12 @@ $(".agreements").ready(function() {
     $("#paid-amount-total").html('$' + total);
   });
 
+  $('#paid-amount-total').bind("ajax:success", function() {
+    var checkAmountWithSymbol = $(this).html();
+    var checkAmount = Number(checkAmountWithSymbol.replace(/[^0-9\.]+/g,""));
+    var totalWithSymbol = $("#purchase-order-total").html();
+    var total = Number(totalWithSymbol.replace(/[^0-9\.]+/g,""));
+    $("#amount-due").html('$' + (total - checkAmount));
+  });
+
 })
