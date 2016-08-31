@@ -29,11 +29,11 @@
 
       <tr>
         <th class="text-right">Paid, ck. #<%= best_in_place agreement, :check_number, place_holder: "_____" %>:</th>
-        <td class="text-right panel-item-row" id="paid-amount-total"><%#= humanized_money_with_symbol(((items.sum(:purchase_price_cents) / 100) - agreement.service_charge_cents / 100) * -1).html_safe %></td>
+        <td class="text-right panel-item-row" id="paid-amount-total"><%= humanized_money_with_symbol(((items.sum(:purchase_price_cents) / 100) - agreement.service_charge_cents / 100) * -1).html_safe %></td>
       </tr>
       <tr>
         <th class="text-right">Balance due to client:</th>
-        <td class="text-right panel-item-row" id="amount-due"><%#= humanized_money_with_symbol().html_safe %></td>
+        <td class="text-right panel-item-row" id="amount-due"><%= humanized_money_with_symbol(0).html_safe %></td>
       </tr>
     </table>
   </span>
