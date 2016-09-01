@@ -39,11 +39,15 @@ describe Agreement do
 
     it "transitions 'potential' to 'active'" do
       agreement = create(:agreement)
-      expect(agreement.status).to eq("potential")
+      expect(agreement).to be_potential
+      expect(agreement.proposal).to be_potential
       agreement.client_agreed = true
       agreement.mark_active
 
       expect(agreement).to be_active
+      expect(agreement.proposal).to be_active
+      expect(agreement.proposal.job).to be_active
+      expect(agreement.proposal.account).to be_active
       expect(TransactionalEmailJob).to have_received(:perform_later).with(agreement, agreement.account.primary_contact, agreement.proposal.created_by, "agreement_active_notifier")
     end
 
