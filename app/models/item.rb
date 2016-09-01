@@ -13,6 +13,8 @@ class Item < ActiveRecord::Base
   has_many :children, class_name: "Item", foreign_key: "parent_item_id"
   belongs_to :parent_item, class_name: "Item", foreign_key: "parent_item_id"
 
+  before_create :record_original_description
+
   has_secure_token
 
   monetize :purchase_price_cents, allow_nil: true, numericality: {
@@ -220,6 +222,12 @@ class Item < ActiveRecord::Base
 
   def child?
     parent_item.present?
+  end
+
+  private
+
+  def record_original_description
+    self.original_description ||= self.description
   end
 
 end

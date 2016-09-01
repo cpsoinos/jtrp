@@ -154,4 +154,26 @@ describe Item do
 
   end
 
+  describe Item, "callbacks" do
+
+    it "records original description before create" do
+      item = Item.new(description: "some description", proposal: create(:proposal))
+      expect(item.original_description).to be(nil)
+
+      item.save
+
+      expect(item.original_description).to eq("some description")
+    end
+
+    it "doesn't change the original description when the description changes" do
+      item = create(:item, description: "some initial description")
+      expect(item.original_description).to eq("some initial description")
+
+      item.description = "a new description"
+      item.save
+      expect(item.reload.original_description).to eq("some initial description")
+    end
+
+  end
+
 end
