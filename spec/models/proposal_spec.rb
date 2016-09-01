@@ -37,21 +37,23 @@ describe Proposal do
 
     it "transitions 'potential' to 'active' when requirements met" do
       proposal = create(:proposal)
-      expect(proposal.status).to eq("potential")
+      expect(proposal).to be_potential
+      expect(proposal.job).to be_potential
       create(:agreement, :active, proposal: proposal)
       proposal.mark_active!
 
-      expect(proposal.status).to eq("active")
+      expect(proposal).to be_active
+      expect(proposal.job).to be_active
     end
 
     it "does not transition 'potential' to 'active' when requirements not met" do
       proposal = create(:proposal)
-      expect(proposal.status).to eq("potential")
+      expect(proposal).to be_potential
       proposal.mark_active
       proposal.reload
 
-      expect(proposal.status).not_to eq("active")
-      expect(proposal.status).to eq("potential")
+      expect(proposal).not_to be_active
+      expect(proposal).to be_potential
     end
 
     it "transitions 'active' to 'inactive' when requirements met" do
@@ -60,7 +62,7 @@ describe Proposal do
       proposal.agreements.first.update_attribute("status", "inactive")
       proposal.mark_inactive
 
-      expect(proposal.status).to eq("inactive")
+      expect(proposal).to be_inactive
     end
 
     it "does not transition 'active' to 'inactive' when requirements not met" do
@@ -68,8 +70,8 @@ describe Proposal do
       create(:item, :active, proposal: proposal, client_intention: "sell")
       proposal.mark_inactive
 
-      expect(proposal.status).not_to eq("inactive")
-      expect(proposal.status).to eq("active")
+      expect(proposal).not_to be_inactive
+      expect(proposal).to be_active
     end
 
   end
