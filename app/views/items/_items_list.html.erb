@@ -22,7 +22,7 @@
               </div>
             </td>
             <td class="td-name">
-              <%= link_to "#{item.description}", item_path(item) %>
+              <%= link_to (controller_name == "agreements" ? item.original_description : item.description), item_path(item) %>
               <% if current_user.try(:internal?) && (controller_name != "jobs" && controller_name != "agreements") %>
                 <br><small>from <%= link_to item.account.full_name, account_path(item.account) %></small>
               <% end %>
