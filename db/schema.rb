@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160828190937) do
+ActiveRecord::Schema.define(version: 20160901122033) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,15 +31,6 @@ ActiveRecord::Schema.define(version: 20160828190937) do
   end
 
   add_index "accounts", ["primary_contact_id"], name: "index_accounts_on_primary_contact_id", using: :btree
-
-  create_table "adobe_sign_accounts", force: :cascade do |t|
-    t.integer  "user_id"
-    t.string   "token"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "adobe_sign_accounts", ["user_id"], name: "index_adobe_sign_accounts_on_user_id", using: :btree
 
   create_table "agreements", force: :cascade do |t|
     t.integer  "proposal_id"
@@ -109,17 +100,6 @@ ActiveRecord::Schema.define(version: 20160828190937) do
 
   add_index "companies", ["primary_contact_id"], name: "index_companies_on_primary_contact_id", using: :btree
 
-  create_table "identities", force: :cascade do |t|
-    t.integer  "user_id"
-    t.string   "provider"
-    t.string   "uid"
-    t.string   "token"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "identities", ["user_id"], name: "index_identities_on_user_id", using: :btree
-
   create_table "item_spreadsheets", force: :cascade do |t|
     t.string "csv"
   end
@@ -155,6 +135,7 @@ ActiveRecord::Schema.define(version: 20160828190937) do
     t.string   "initial_description"
     t.integer  "parent_item_id"
     t.integer  "jtrp_number"
+    t.string   "original_description"
   end
 
   add_index "items", ["category_id"], name: "index_items_on_category_id", using: :btree
@@ -283,9 +264,7 @@ ActiveRecord::Schema.define(version: 20160828190937) do
     t.datetime "updated_at"
   end
 
-  add_foreign_key "adobe_sign_accounts", "users"
   add_foreign_key "agreements", "proposals"
-  add_foreign_key "identities", "users"
   add_foreign_key "items", "categories"
   add_foreign_key "items", "orders"
   add_foreign_key "jobs", "accounts"
