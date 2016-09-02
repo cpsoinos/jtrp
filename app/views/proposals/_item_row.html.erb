@@ -46,7 +46,9 @@
         </div>
 
         <div class="col-xs-12 col-sm-6 text-left">
-          <% if action_name == "show" %>
+          <% if action_name == "details" %>
+            <%= render "proposals/item_details_form", item: item %>
+          <% elsif action_name == "show" %>
             <%= render "proposals/offer_choice_details", item: item %>
           <% elsif action_name == "index" %>
             <%= render "agreements/offer_agreement_details", item: item %>

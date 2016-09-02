@@ -1,0 +1,66 @@
+<%= form_for item, class: "form-horizontal", remote: true do |f| %>
+
+  <div class="form-group">
+    <div class="checkbox">
+      <%= f.label :will_purchase, for: "item_#{item.id}_will_purchase" do %>
+        <%= f.check_box :will_purchase, id: "item_#{item.id}_will_purchase" %> Will purchase
+      <% end %>
+    </div>
+    <p class="help-block">Offer to purchase this item from the client account</p>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :purchase_price, class: "control-label" %>
+    <div class="input-group">
+      <span class="input-group-addon">$</span>
+      <%= f.number_field :purchase_price, class: "form-control text-field", step: 0.01 %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="checkbox">
+      <%= f.label :will_consign, for: "item_#{item.id}_will_consign" do %>
+        <%= f.check_box :will_consign, id: "item_#{item.id}_will_consign" %> Will consign
+      <% end %>
+    </div>
+    <p class="help-block">Offer to let the client account consign this item</p>
+  </div>
+
+  <div class="form-group label-floating">
+    <div class="input-group">
+      <%= f.label :consignment_rate, class: "control-label" %>
+      <%= f.number_field :consignment_rate, class: "form-control text-field", step: 1 %>
+      <span class="input-group-btn">
+        <button type="button" class="btn btn-fab btn-fab-mini">
+          %
+        </button>
+      </span>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :listing_price, class: "control-label" %>
+    <div class="input-group">
+      <span class="input-group-addon">$</span>
+      <%= f.number_field :listing_price, class: "form-control text-field", step: 0.01 %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :minimum_sale_price, class: "control-label" %>
+    <div class="input-group">
+      <span class="input-group-addon">$</span>
+      <%= f.number_field :minimum_sale_price, class: "form-control text-field" %>
+    </div>
+  </div>
+
+  <div class="form-group label-floating">
+    <%= f.label :notes, class: "control-label" %>
+    <%= f.text_field :notes, class: "form-control" %>
+  </div>
+
+  <div class="form-group pull-right">
+    <%= f.submit class: "btn btn-raised btn-primary" %>
+   </div>
+
+<% end %>
