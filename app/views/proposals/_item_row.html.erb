@@ -28,12 +28,12 @@
             <% if item.initial_photos.present? %>
               <% if controller_name == 'agreements' %>
                 <div class="col-xs-6 grid-item">
-                  <%= image_tag(item.featured_photo_url(:thumb), class: "img-rounded img-responsive img-raised img-featured") %>
+                  <%= image_tag(item.featured_photo_url(quality: "auto", fetch_format: :auto, effect: :improve), class: "img-rounded img-responsive img-raised img-featured") %>
                 </div>
               <% else %>
                 <% item.initial_photos.each do |photo| %>
                   <div class="col-xs-6 grid-item">
-                    <%= image_tag(photo.photo_url(:thumb), class: "img-rounded img-responsive img-raised img-featured") %>
+                    <%= image_tag(photo.photo_url(quality: "auto", fetch_format: :auto, effect: :improve), class: "img-rounded img-responsive img-raised img-featured") %>
                   </div>
                 <% end %>
               <% end %>

@@ -3,3 +3,5 @@ var modal = $("#<%= @item.id %>-task-modal")
 
 modal.modal('toggle');
 listItem.remove();
+
+toastr.success('<%= @message %>', 'Success!')

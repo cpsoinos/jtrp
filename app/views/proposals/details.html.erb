@@ -10,13 +10,13 @@
           This is where you can decide whether to offer to purchase or consign an item, set rates, and add notes.
         </div>
 
-        <div class="well bs-component">
-          <div class="row large-top-margin">
-            <% @items.order(:account_item_number).each do |item| %>
-              <% next unless item.persisted? %>
+        <div class="row large-top-margin">
+          <% @items.order(:account_item_number).each do |item| %>
+            <% next unless item.persisted? %>
+            <div class="card">
               <%= render 'proposals/item_row', item: item %>
-            <% end %>
-          </div>
+            </div>
+          <% end %>
         </div>
 
       </div>
