@@ -72,14 +72,11 @@
     <!-- Page Content -->
     <div id="page-content-wrapper">
       <div class="container-fluid">
-        <div class="row">
-
-          <% unless params[:print] %>
-            <%= render 'layouts/alerts', alert: alert, notice: notice %>
-          <% end %>
-
+        <% unless params[:print] %>
+          <%= render 'layouts/alerts', alert: alert, notice: notice %>
+        <% end %>
+        <div class="row extra-large-top-margin">
           <%= yield %>
-
         </div>
       </div>
     </div>
