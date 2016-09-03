@@ -54,14 +54,18 @@ class ApplicationController < ActionController::Base
   end
 
   def require_internal
-    unless current_user.present? && current_user.internal?
-      render status: :forbidden, text: "Forbidden fruit"
+    if current_user.present?
+      unless current_user.internal?
+        redirect_to root_path, alert: "Sorry, you don't have permission to access this page!"
+      end
+    else
+      redirect_to new_user_session_path, alert: "You must be logged in to access this page!"
     end
   end
 
   def require_internal_or_client
     unless current_user.present? && (current_user.internal? || current_user.account == @account)
-      render status: :forbidden, text: "Forbidden fruit"
+      redirect_to new_user_session_path, alert: "You must be logged in to access this page!"
     end
   end
 

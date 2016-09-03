@@ -1,0 +1,80 @@
+<%= form_for item, class: "form-horizontal", remote: true do |f| %>
+
+  <div class="row">
+    <div class="col-xs-6">
+      <div class="form-group">
+        <div class="checkbox">
+          <%= f.label :will_purchase, for: "item_#{item.id}_will_purchase" do %>
+            <%= f.check_box :will_purchase, id: "item_#{item.id}_will_purchase", data: {toggle: "collapse", target: "#purchase-price-#{item.id}", :'aria-expanded' => "false", :'aria-controls' => "purchase-price-#{item.id}"} %> Will purchase
+          <% end %>
+        </div>
+        <p class="help-block">Offer to purchase this item</p>
+      </div>
+    </div>
+
+    <div class="col-xs-6">
+      <div class="form-group">
+        <div class="checkbox">
+          <%= f.label :will_consign, for: "item_#{item.id}_will_consign" do %>
+            <%= f.check_box :will_consign, id: "item_#{item.id}_will_consign", data: {toggle: "collapse", target: "#consignment-rate-#{item.id}", :'aria-expanded' => "false", :'aria-controls' => "consignment-rate-#{item.id}"} %> Will consign
+          <% end %>
+        </div>
+        <p class="help-block">Offer to consign this item</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-6">
+      <div class="form-group collapse <%= 'in' if item.will_purchase? %>" id="purchase-price-<%= item.id %>">
+        <%= f.label :purchase_price, class: "control-label", style: "margin-left: 10px;" %>
+        <div class="input-group">
+          <span class="input-group-addon">$</span>
+          <%= f.number_field :purchase_price, class: "form-control text-field", step: 0.01 %>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xs-6">
+      <div class="form-group collapse <%= 'in' if item.will_consign? %>" id="consignment-rate-<%= item.id %>">
+        <%= f.label :consignment_rate, class: "control-label" %>
+        <div class="input-group">
+          <%= f.number_field :consignment_rate, class: "form-control text-field", step: 1 %>
+          <span class="input-group-addon">%</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-6">
+      <div class="form-group">
+        <%= f.label :listing_price, class: "control-label" %>
+        <div class="input-group">
+          <span class="input-group-addon">$</span>
+          <%= f.number_field :listing_price, class: "form-control text-field", step: 0.01 %>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xs-6">
+      <div class="form-group">
+        <%= f.label :minimum_sale_price, class: "control-label" %>
+        <div class="input-group">
+          <span class="input-group-addon">$</span>
+          <%= f.number_field :minimum_sale_price, class: "form-control text-field" %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group label-floating">
+    <%= f.label :notes, class: "control-label" %>
+    <%= f.text_field :notes, class: "form-control" %>
+  </div>
+
+  <div class="form-group pull-right">
+    <%= f.submit "Save", class: "btn btn-raised btn-primary" %>
+  </div>
+
+<% end %>

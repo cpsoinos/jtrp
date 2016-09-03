@@ -1,0 +1,12 @@
+<div class="hidden-print alert-fixed">
+  <% if alert %>
+    <div class="alert alert-dismissible alert-warning">
+      <p class="text-center"><%= alert %></p>
+    </div>
+  <% end %>
+  <% if notice %>
+    <div class="alert alert-dismissible alert-success">
+      <p class="text-center"><%= notice %></p>
+    </div>
+  <% end %>
+</div>

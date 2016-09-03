@@ -10,7 +10,7 @@ feature "edit a proposal" do
     scenario "visits edit proposal path" do
       visit edit_account_job_proposal_path(account, job, proposal)
 
-      expect(page).to have_content("Forbidden")
+      expect(page).to have_content("You must be logged in to access this page!")
     end
   end
 
@@ -57,7 +57,7 @@ feature "edit a proposal" do
         expect(page).to have_content("Will purchase")
         expect(page).to have_content("Offer to purchase this item")
         expect(page).to have_content("Will consign")
-        expect(page).to have_content("Offer to let the client account consign this item")
+        expect(page).to have_content("Offer to consign this item")
       end
 
       scenario "offers to purchase", js: true do
@@ -65,7 +65,7 @@ feature "edit a proposal" do
         expect(item.will_purchase?).to be_falsey
         find(:css, "#item_#{item.id}_will_purchase", visible: false).trigger("click")
         fill_in("item_purchase_price", with: 50.55)
-        click_on("Update Item")
+        click_on("Save")
         wait_for_ajax
         item.reload
 
@@ -81,7 +81,7 @@ feature "edit a proposal" do
         fill_in("item_listing_price", with: 88.89)
         fill_in("item_minimum_sale_price", with: 67.55)
 
-        click_on("Update Item")
+        click_on("Save")
         wait_for_ajax
         item.reload
 
@@ -89,6 +89,7 @@ feature "edit a proposal" do
         expect(item.consignment_rate).to eq(45)
         expect(item.listing_price_cents).to eq(8889)
         expect(item.minimum_sale_price_cents).to eq(6755)
+        expect(page).to have_content("Success!")
       end
 
       scenario "offers to both purchase and consign", js: true do
@@ -102,7 +103,7 @@ feature "edit a proposal" do
         fill_in("item_listing_price", with: 88.89)
         fill_in("item_minimum_sale_price", with: 67.55)
 
-        click_on("Update Item")
+        click_on("Save")
         wait_for_ajax
         item.reload
 
@@ -112,6 +113,7 @@ feature "edit a proposal" do
         expect(item.consignment_rate).to eq(45)
         expect(item.listing_price_cents).to eq(8889)
         expect(item.minimum_sale_price_cents).to eq(6755)
+        expect(page).to have_content("Success!")
       end
 
       scenario "views completed proposal" do

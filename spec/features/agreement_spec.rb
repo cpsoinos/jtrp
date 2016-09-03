@@ -19,7 +19,7 @@ feature "agreement" do
     scenario "visits consignment agreement path" do
       visit account_job_proposal_agreements_path(account, job, proposal)
 
-      expect(page).to have_content("Forbidden")
+      expect(page).to have_content("You must be logged in to access this page!")
     end
   end
 

@@ -3,7 +3,9 @@
 <head>
   <title>JTRP</title>
   <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700" media="all">
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto+Slab" media="all">
   <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons" media="all">
+  <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" media="all">
   <%= stylesheet_link_tag    'application', media: 'all' %>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" media="all">
   <%= javascript_include_tag 'application' %>
@@ -12,7 +14,9 @@
   <script src="https://js.pusher.com/3.1/pusher.min.js"></script>
   <script src="https://use.fontawesome.com/e2b3e9ea8e.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.5/validator.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Accept-CH" content="DPR, Viewport-Width, Width">
   <meta property="fb:app_id" content="<%= ENV['FACEBOOK_APP_ID'] %>">
   <%= Gon::Base.render_data %>
   <%= csrf_meta_tags %>
@@ -67,35 +71,18 @@
   <%= render 'layouts/navbar' unless params[:print] %>
 
   <div id="wrapper">
-
     <!-- Page Content -->
     <div id="page-content-wrapper">
       <div class="container-fluid">
-        <div class="row">
-          <% unless params[:print] %>
-            <div class="extra-large-top-margin hidden-print">
-              <% if alert %>
-                <div class="alert alert-dismissible alert-warning">
-                  <button type="button" class="close" data-dismiss="alert">×</button>
-                  <p><%= alert %></p>
-                </div>
-              <% end %>
-              <% if notice %>
-                <div class="alert alert-dismissible alert-success">
-                  <button type="button" class="close" data-dismiss="alert">×</button>
-                  <p><%= notice %></p>
-                </div>
-              <% end %>
-            </div>
-          <% end %>
-
+        <% unless params[:print] %>
+          <%= render 'layouts/alerts', alert: alert, notice: notice %>
+        <% end %>
+        <div class="row extra-large-top-margin">
           <%= yield %>
-
         </div>
       </div>
     </div>
     <!-- /#page-content-wrapper -->
-
   </div>
   <!-- #wrapper -->
 

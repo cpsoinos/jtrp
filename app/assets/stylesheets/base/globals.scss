@@ -19,6 +19,14 @@ div.navbar.navbar-default {
   margin-bottom: 0;
 }
 
+.alert-fixed {
+  position: fixed;
+	left: 0;
+	margin-top: 5em;
+  width: 100%;
+  z-index:9999;
+}
+
 .btn.btn-raised.btn-primary, .input-group-btn .btn.btn-raised.btn-primary, .btn.btn-fab.btn-primary, .input-group-btn .btn.btn-fab.btn-primary, .btn-group-raised .btn.btn-primary, .btn-group-raised .input-group-btn .btn.btn-primary {
   background-color: $brand-primary;
 }
@@ -104,4 +112,8 @@ h1, h3, h4 {
 
 .btn:not(.btn-raised).btn-primary, .input-group-btn .btn:not(.btn-raised).btn-primary {
   color: white;
+}
+
+.info {
+	padding: 0;
 }

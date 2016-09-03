@@ -25,7 +25,7 @@
         <div class="tab-content">
           <% @item.initial_photos.each do |photo| %>
             <div class="tab-pane large-top-margin" id="product-page<%= photo.id %>">
-              <%= image_tag(photo.photo_url(quality: "auto", fetch_format: :auto), class: "img-rounded img-responsive img-raised img-featured") %>
+              <%= image_tag(photo.photo_url(client_hints: true, quality: "auto", fetch_format: :auto, dpr: "auto", effect: :improve), class: "img-rounded img-responsive img-raised img-featured") %>
             </div>
           <% end %>
         </div>
@@ -85,7 +85,7 @@
               <h4>This item was created from this batch:</h4>
               <a href="<%= account_job_proposal_item_path(@item.account, @item.job, @item.proposal, @item.parent_item) %>">
                 <div class="card-image">
-                    <%= image_tag(@item.parent_item.featured_photo_url(quality: "auto", fetch_format: :auto), class: "img img-raised") %>
+                    <%= image_tag(@item.parent_item.featured_photo_url, class: "img img-raised") %>
                   <div class="ripple-container"></div>
                 </div>
               </a>

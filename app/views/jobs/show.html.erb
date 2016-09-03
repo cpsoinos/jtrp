@@ -1,8 +1,5 @@
 <div class="row">
   <div class="col-xs-10 col-xs-offset-1 text-center">
-    <span class="hidden-print">
-      <%= link_to "<i class='material-icons'>edit</i>".html_safe, edit_job_path(@job), class: "btn btn-fab btn-fab-mini btn-primary pull-right" %>
-    </span>
     <h1 class="company-title"><%= @job.name %></h1>
   </div>
 </div>
@@ -14,12 +11,12 @@
 </div>
 
 <div class="row section section-dark extra-large-top-margin">
-  <div class="col-xs-10 col-xs-offset-1 col-md-8 col-md-offset-2">
+  <div class="col-xs-10 col-xs-offset-1">
     <div class="row">
 
       <div class="col-xs-12 col-md-4">
         <div class="card card-blog">
-      		<div class="card-image">
+      		<div class="card-image hidden-sm">
             <%= image_tag(@job.maps_url, class: "img") %>
         		<div class="ripple-container"></div>
           </div>
@@ -38,31 +35,32 @@
 
       <div class="col-xs-12 col-md-4">
         <div class="card card-blog">
-
+          <div class="text-center">
+            <h2>Proposals</h2>
+          </div>
           <% @job.proposals.each do |proposal| %>
-            <div class="row vertical-align">
-              <div class="col-xs-8">
-                <a href="<%= account_job_proposal_path(@account, @job, proposal) %>">
-          				<div class="info info-horizontal">
-          					<div class="icon icon-info">
-          						<i class="material-icons">assignment</i>
-          					</div>
-          					<div class="description">
-          						<h3 class="info-title">Proposal <%= proposal.id %></h3>
-          						<p style="color: black;">
-          							<%= proposal.status %>
-          						</p>
-          					</div>
-                	</div>
-                </a>
-              </div>
-              <div class="col-xs-3">
-                <%= link_to "<i class='material-icons'>edit</i>".html_safe, edit_account_job_proposal_path(@account, @job, proposal), class: "btn btn-fab btn-fab-mini btn-primary" %>
-              </div>
-            </div>
+            <a href="<%= account_job_proposal_path(@account, @job, proposal) %>">
+      				<div class="info info-horizontal">
+                <div class="row">
+                  <div class="col-md-8 col-md-offset-1 col-sm-9">
+                    <div class="icon icon-info">
+                      <i class="material-icons">assignment</i>
+                    </div>
+                    <div class="description">
+                      <h3 class="info-title">Proposal <%= proposal.id %></h3>
+                      <p style="color: black;">
+                        <%= proposal.status %>
+                      </p>
+                    </div>
+                  </div>
+                  <br />
+                  <%= link_to "<i class='material-icons'>edit</i>".html_safe, edit_account_job_proposal_path(@account, @job, proposal), class: "btn btn-fab btn-fab-mini btn-primary" %>
+                </div>
+            	</div>
+            </a>
             <hr />
           <% end %>
-          <div class="row text-center bottom-margin">
+          <div class="row text-center top-margin bottom-margin">
             <%= link_to "<i class='material-icons'>add</i>".html_safe, account_job_proposals_path(@account, @job), method: "POST", class: "btn btn-fab btn-primary" %>
           </div>
         </div>
@@ -70,6 +68,9 @@
 
       <div class="col-xs-12 col-md-4">
         <div class="card card-blog">
+          <div class="text-center">
+            <h2>Agreements</h2>
+          </div>
           <% @job.agreements.each do |agreement| %>
             <a href="<%= account_job_proposal_agreements_path(@account, @job, agreement.proposal) %>">
       				<div class="info info-horizontal">

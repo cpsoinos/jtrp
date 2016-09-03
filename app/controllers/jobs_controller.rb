@@ -33,6 +33,14 @@ class JobsController < ApplicationController
     end
   end
 
+  def destroy
+    @job = Job.find(params[:id])
+    @account = @job.account
+    if @job.destroy
+      redirect_to account_path(@account), alert: "Job destroyed"
+    end
+  end
+
   protected
 
   def job_params

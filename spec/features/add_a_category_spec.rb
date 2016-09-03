@@ -79,7 +79,7 @@
 #     scenario "visits new category page" do
 #       visit new_category_path
 #
-#       expect(page).to have_content("Forbidden")
+#       expect(page).to have_content("You must be logged in to access this page!")
 #     end
 #
 #   end
@@ -99,7 +99,7 @@
 #     scenario "visits new category page" do
 #       visit new_category_path
 #
-#       expect(page).to have_content("Forbidden")
+#       expect(page).to have_content("You must be logged in to access this page!")
 #     end
 #
 #   end

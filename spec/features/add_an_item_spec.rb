@@ -13,8 +13,7 @@ feature "add an item" do
     scenario "visits add an item page" do
       visit new_category_item_path(category)
 
-      expect(page).not_to have_content(category.name)
-      expect(page).to have_content("Forbidden")
+      expect(page).to have_content("You must be logged in to access this page!")
     end
   end
 

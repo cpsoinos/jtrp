@@ -73,7 +73,10 @@ class ItemsController < ApplicationController
     @item = Item.find(params[:id])
     respond_to do |format|
       if ItemUpdater.new(@item).update(item_params) && !@item.errors.present?
-        format.js { render 'proposals/update_item_details' }
+        format.js do
+          @message = "#{@item.description} updated!"
+          render 'proposals/update_item_details'
+        end
         format.html do
           notice = 'Item was successfully updated.'
           if params[:redirect_url]
