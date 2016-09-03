@@ -13,12 +13,8 @@ class PhotoUploader < CarrierWave::Uploader::Base
     resize_to_fit(50, 50)
   end
 
-  version :enhanced do
-    cloudinary_transformation effect: "viesus_correct", sign_url: true
-  end
-
-  def default_url
-    ActionController::Base.helpers.asset_path("image_placeholder.jpg")
+  def default_public_id
+    ENV['CLOUDINARY_DEFAULT_IMAGE_ID']
   end
 
   def store_dir
