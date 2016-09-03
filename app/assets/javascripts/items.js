@@ -71,7 +71,8 @@ $(document).ready(function() {
   var $grid = $('.grid').masonry({
     columnWidth: '.grid-sizer',
     itemSelector: '.grid-item',
-    percentPosition: true
+    percentPosition: true,
+    stagger: 30
   });
   // layout Masonry after each image loads
   $grid.imagesLoaded().progress( function() {
