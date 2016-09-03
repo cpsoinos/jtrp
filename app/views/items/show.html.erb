@@ -2,7 +2,7 @@
 
 <div class="row">
   <div class="col-sm-12 text-center">
-    <h1 class="company-title"><%= @item.description %></h1>
+    <h1 class="company-title"><%= @item.description.titleize %></h1>
   </div>
 </div>
 
@@ -78,6 +78,9 @@
             <button type="button" class="btn btn-raised btn-notice btn-round" data-toggle="modal" data-target="#new-item-from-batch-modal">
               Create Item from this Batch <i class='material-icons'>content_copy</i>
             </button>
+            <% if @item.potential? %>
+              <%= link_to "Mark Active <i class='material-icons'>store</i>".html_safe, item_activate_path(@item), class: "btn btn-raised btn-info btn-round", method: :post %>
+            <% end %>
           <% end %>
 
           <% if current_user.try(:internal?) && @item.child? %>

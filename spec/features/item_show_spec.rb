@@ -13,11 +13,9 @@ feature "item show" do
     let(:job) { item.job }
     let(:account) { item.account }
 
-    before do
-      visit account_job_proposal_item_path(account, job, proposal, item)
-    end
-
     scenario "visits item show page" do
+      visit account_job_proposal_item_path(account, job, proposal, item)
+
       expect(page).to have_content(account.account_number)
       expect(page).to have_content(job.id)
       expect(page).to have_content(proposal.id)
@@ -26,6 +24,26 @@ feature "item show" do
       expect(page).to have_link("delete_forever".html_safe)
       expect(page).to have_link("edit")
       expect(page).to have_content("potential")
+    end
+
+    scenario "internal user successfully marks an item active" do
+      allow(InventorySyncJob).to receive(:perform_later)
+      item.update_attribute("client_intention", "sell")
+      agreement = create(:agreement, :active, proposal: proposal)
+      visit account_job_proposal_item_path(account, job, proposal, item)
+
+      click_link("Mark Active")
+      expect(page).to have_content("Item activated!")
+      expect(item.reload).to be_active
+    end
+
+    scenario "internal user unsuccessfully marks an item active" do
+      agreement = create(:agreement, proposal: proposal)
+      visit account_job_proposal_item_path(account, job, proposal, item)
+
+      click_link("Mark Active")
+      expect(page).to have_content("Could not activate item. Check that the agreement is active first.")
+      expect(item.reload).to be_potential
     end
 
   end

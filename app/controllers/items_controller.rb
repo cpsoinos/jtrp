@@ -96,6 +96,15 @@ class ItemsController < ApplicationController
     end
   end
 
+  def activate
+    @item = Item.find(params[:item_id])
+    if @item.mark_active
+      redirect_to :back, notice: "Item activated!"
+    else
+      redirect_to :back, alert: "Could not activate item. Check that the agreement is active first."
+    end
+  end
+
   def destroy
     @item = Item.find(params[:id])
     filter = @item.status
