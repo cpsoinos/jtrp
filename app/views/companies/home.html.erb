@@ -77,9 +77,11 @@
                 </div>
                 <% if @featured_photos.length > 1 %>
                   <% @featured_photos[1..-1].each do |photo| %>
-                    <div class="item">
-                      <%= image_tag(photo.photo_url(quality: "auto", fetch_format: :auto, effect: :improve), class: "img-rounded img-responsive img-raised") %>
-                    </div>
+                    <% cache photo do %>
+                      <div class="item">
+                        <%= image_tag(photo.photo_url(quality: "auto", fetch_format: :auto, effect: :improve), class: "img-rounded img-responsive img-raised") %>
+                      </div>
+                    <% end %>
                   <% end %>
                 <% end %>
               </div>
