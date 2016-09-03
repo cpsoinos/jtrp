@@ -27,7 +27,7 @@
           <a href="<%= category_path(subcategory) %>">
             <div class="card card-product">
               <div class="card-image">
-                <%= image_tag(subcategory.photo_url(quality: "auto", fetch_format: :auto), class: "img") %>
+                <%= image_tag(subcategory.photo_url(quality: "auto", fetch_format: :auto, width: "350", height: "270", crop: "fill"), class: "img") %>
               </div>
 
               <div class="content">
@@ -65,7 +65,7 @@
         <a href="<%= category_item_path(@category, item) %>">
           <div class="card card-product">
             <div class="card-image">
-              <%= image_tag(item.featured_photo_url, class: "img") %>
+              <%= image_tag(item.featured_photo_url(width: "350", height: "270", crop: "fill"), class: "img") %>
             </div>
 
             <div class="content">
