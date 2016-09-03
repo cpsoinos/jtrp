@@ -5,7 +5,7 @@ feature "add an account" do
   it "requires authentication" do
     visit new_account_path
 
-    expect(page).to have_content("You must be logged in to access this page")
+    expect(page).to have_content("You must be logged in to access this page!")
   end
 
   context "internal user" do
