@@ -54,8 +54,10 @@ class ApplicationController < ActionController::Base
   end
 
   def require_internal
-    if current_user.present? && !current_user.internal?
-      redirect_to root_path, alert: "Sorry, you don't have permission to access this page!"
+    if current_user.present?
+      unless current_user.internal?
+        redirect_to root_path, alert: "Sorry, you don't have permission to access this page!"
+      end
     else
       redirect_to new_user_session_path, alert: "You must be logged in to access this page!"
     end
