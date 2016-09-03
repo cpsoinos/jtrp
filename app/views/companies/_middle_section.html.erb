@@ -1,62 +1,47 @@
-		<div class="row">
-			<div class="col-md-4">
-				<h3 class="text-center">To Do</h3>
-        <%= render 'to_do_list' %>
+<div class="row">
+	<div class="col-md-4">
+		<h3 class="text-center">To Do</h3>
+    <%= render 'to_do_list' %>
+	</div>
+
+	<div class="col-md-4 text-center">
+		<h3>Featured Photos</h3>
+
+		<div class="fileinput fileinput-new text-center" data-provides="fileinput">
+			<div class="fileinput-new thumbnail img-raised">
+				<%= image_tag("image_placeholder.jpg") %>
 			</div>
+			<div class="fileinput-preview fileinput-exists thumbnail img-raised"></div>
+			<div>
+				<%= form_for @featured_photo do |f| %>
+					<span class="btn btn-raised btn-round btn-default btn-file">
+						<span class="fileinput-new">Select image</span>
+						<span class="fileinput-exists">Change</span>
 
-			<div class="col-md-4 text-center">
-				<h3>Featured Photos</h3>
-
-				<div class="fileinput fileinput-new text-center" data-provides="fileinput">
-					<div class="fileinput-new thumbnail img-raised">
-						<%= image_tag("image_placeholder.jpg") %>
-					</div>
-					<div class="fileinput-preview fileinput-exists thumbnail img-raised"></div>
-					<div>
-						<%= form_for @featured_photo do |f| %>
-							<span class="btn btn-raised btn-round btn-default btn-file">
-								<span class="fileinput-new">Select image</span>
-								<span class="fileinput-exists">Change</span>
-
-								<%= f.file_field :photo %>
-								<%= f.hidden_field :photo_cache %>
-								<%= f.hidden_field :photo_type, value: "featured" %>
-							</span>
-							<%= f.submit class: "fileinput-exists btn btn-raised btn-round btn-primary" %>
-							<a href="#pablo" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Remove</a>
-						</div>
-					<% end %>
-
+						<%= f.file_field :photo %>
+						<%= f.hidden_field :photo_cache %>
+						<%= f.hidden_field :photo_type, value: "featured" %>
+					</span>
+					<%= f.submit class: "fileinput-exists btn btn-raised btn-round btn-primary" %>
+					<a href="#pablo" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Remove</a>
 				</div>
+			<% end %>
 
-				<div class="hide">
-					<% if current_user.admin? %>
-						<div class="row" id="existing-item">
-							<div class="text-center"> - or -</div>
-						</div>
-						<%= render 'items/csv_upload_form', legend: "Upload a list of items:" %>
-					<% end %>
-				</div>
-
-
-				<!-- <div class="social-feed">
-					<div class="feed-line">
-						<i class="fa fa-twitter"></i>
-						<p>How to handle ethical disagreements with your clients.</p>
-					</div>
-					<div class="feed-line">
-						<i class="fa fa-twitter"></i>
-						<p>The tangible benefits of designing at 1x pixel density.</p>
-					</div>
-					<div class="feed-line">
-						<i class="fa fa-facebook-square"></i>
-						<p>A collection of 25 stunning sites that you can use for inspiration.</p>
-					</div>
-				</div> -->
-			</div>
-
-			<div class="col-md-4">
-				<h3 class="text-center">Item Distribution</h3>
-				<%= pie_chart Item.active.group(:client_intention).count, library: {backgroundColor: '#eee', pieHole: 0.5} %>
-			</div>
 		</div>
+
+		<div class="hide">
+			<% if current_user.admin? %>
+				<div class="row" id="existing-item">
+					<div class="text-center"> - or -</div>
+				</div>
+				<%= render 'items/csv_upload_form', legend: "Upload a list of items:" %>
+			<% end %>
+		</div>
+
+	</div>
+
+	<div class="col-md-4">
+		<h3 class="text-center">Item Distribution</h3>
+		<%= pie_chart Item.active.group(:client_intention).count, library: {backgroundColor: '#eee', pieHole: 0.5} %>
+	</div>
+</div>

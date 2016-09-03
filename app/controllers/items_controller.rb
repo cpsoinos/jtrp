@@ -8,7 +8,7 @@ class ItemsController < ApplicationController
   before_filter :meta_tags, only: :show
 
   def index
-    @items = ItemsPresenter.new(params).filter.order(:jtrp_number)
+    @items = ItemsPresenter.new(params).filter.order(:jtrp_number, :account_item_number)
     @intentions = @items.pluck(:client_intention).uniq
     intentions_map
     @filter = params[:status].try(:capitalize)
