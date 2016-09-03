@@ -46,7 +46,7 @@ def create_system_defaults
 end
 
 def create_default_photo
-  Photo.create(photo_type: 'default', photo: File.open(File.join(Rails.root, '/spec/fixtures/test.png')))
+  Photo.create(photo_type: 'default', photo: File.open(File.join(Rails.root, 'app/assets/images/No_Image_Available.png')))
 end
 
 create_company
