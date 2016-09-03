@@ -45,7 +45,12 @@ def create_system_defaults
   SystemInfo.create(last_account_number: 10)
 end
 
+def create_default_photo
+  Photo.create(photo_type: 'default', photo: File.open(File.join(Rails.root, '/spec/fixtures/test.png')))
+end
+
 create_company
 create_categories
 create_system_defaults
 create_default_accounts
+create_default_photo
