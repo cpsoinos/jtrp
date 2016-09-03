@@ -10,7 +10,7 @@ feature "edit a proposal" do
     scenario "visits edit proposal path" do
       visit edit_account_job_proposal_path(account, job, proposal)
 
-      expect(page).to have_content("Forbidden")
+      expect(page).to have_content("You must be logged in to access this page!")
     end
   end
 

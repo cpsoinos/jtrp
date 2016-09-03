@@ -32,7 +32,7 @@ feature "client show" do
     scenario "visits show page" do
       visit client_path(client)
 
-      expect(page).to have_content("Forbidden")
+      expect(page).to have_content("You must be logged in to access this page!")
     end
   end
 
