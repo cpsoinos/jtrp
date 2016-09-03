@@ -10,7 +10,7 @@
         <a href="<%= category_path(category) %>">
           <div class="card card-product">
             <div class="card-image">
-              <%= image_tag(category.photo_url(quality: "auto", fetch_format: :auto), class: "img") %>
+              <%= image_tag(category.photo_url(client_hints: true, quality: "auto", fetch_format: :auto, dpr: "auto", effect: :improve, width: "350", height: "270", crop: "fill")) %>
             </div>
 
             <div class="content">

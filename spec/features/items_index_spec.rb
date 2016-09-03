@@ -1,10 +1,10 @@
 feature "item index" do
 
   let(:user) { create(:internal_user) }
-  let!(:potential_items) { create_list(:item, 3, description: "connor") }
-  let!(:active_owned_items) { create_list(:item, 3, :active, description: "buddy") }
-  let!(:active_consigned_items) { create_list(:item, 3, :active, description: "vasha", client_intention: "consign") }
-  let!(:sold_items) { create_list(:item, 2, :sold, description: "katniss") }
+  let!(:potential_items) { create_list(:item, 3, description: "Connor") }
+  let!(:active_owned_items) { create_list(:item, 3, :active, description: "Buddy") }
+  let!(:active_consigned_items) { create_list(:item, 3, :active, description: "Vasha", client_intention: "consign") }
+  let!(:sold_items) { create_list(:item, 2, :sold, description: "Katniss") }
   let!(:all_items) { active_owned_items | active_consigned_items | sold_items | potential_items }
   let(:intentions) { ["consigned", "owned", "will donate", "will dump", "undecided"] }
 
@@ -48,11 +48,11 @@ feature "item index" do
 
       expect(page).to have_content("For Sale items have a signed purchase order and are actively for sale.")
       active_owned_items.each do |item|
-        expect(page).to have_link("buddy")
+        expect(page).to have_link("Buddy")
       end
-      expect(page).not_to have_link("vasha")
-      expect(page).not_to have_link("connor")
-      expect(page).not_to have_link("katniss")
+      expect(page).not_to have_link("Vasha")
+      expect(page).not_to have_link("Connor")
+      expect(page).not_to have_link("Katniss")
     end
 
   end
@@ -64,11 +64,11 @@ feature "item index" do
 
       expect(page).to have_content("Consigned items have a signed agreement and are actively on consignment.")
       active_owned_items.each do |item|
-        expect(page).to have_link("vasha")
+        expect(page).to have_link("Vasha")
       end
-      expect(page).not_to have_link("buddy")
-      expect(page).not_to have_link("connor")
-      expect(page).not_to have_link("katniss")
+      expect(page).not_to have_link("Buddy")
+      expect(page).not_to have_link("Connor")
+      expect(page).not_to have_link("Katniss")
     end
 
   end
@@ -87,11 +87,11 @@ feature "item index" do
 
       expect(page).to have_content("Sold items have been sold.")
       sold_items.each do |item|
-        expect(page).to have_link("katniss")
+        expect(page).to have_link("Katniss")
       end
-      expect(page).not_to have_link("vasha")
-      expect(page).not_to have_link("buddy")
-      expect(page).not_to have_link("connor")
+      expect(page).not_to have_link("Vasha")
+      expect(page).not_to have_link("Buddy")
+      expect(page).not_to have_link("Connor")
     end
 
   end
@@ -112,11 +112,11 @@ feature "item index" do
 
       expect(page).to have_content("Potential items have not yet been listed for sale or consigned.")
       potential_items.each do |item|
-        expect(page).to have_link("connor")
+        expect(page).to have_link("Connor")
       end
-      expect(page).not_to have_link("vasha")
-      expect(page).not_to have_link("buddy")
-      expect(page).not_to have_link("katniss")
+      expect(page).not_to have_link("Vasha")
+      expect(page).not_to have_link("Buddy")
+      expect(page).not_to have_link("Katniss")
     end
 
   end

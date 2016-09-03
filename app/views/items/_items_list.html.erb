@@ -18,11 +18,11 @@
           <tr class="no-break">
             <td class="text-center">
               <div class="img-container">
-                <%= link_to image_tag(item.featured_photo_url(:thumb), class: "img-rounded img-responsive img-raised"), item_path(item) %>
+                <%= link_to image_tag(item.featured_photo_url(client_hints: true, dpr: "auto", width: "120", height: "160", crop: "fill"), class: "img-rounded img-responsive img-raised"), item_path(item) %>
               </div>
             </td>
             <td class="td-name">
-              <%= link_to (controller_name == "agreements" ? item.original_description : item.description), item_path(item) %>
+              <%= link_to (controller_name == "agreements" ? item.original_description.titleize : item.description.titleize), item_path(item) %>
               <% if current_user.try(:internal?) && (controller_name != "jobs" && controller_name != "agreements") %>
                 <br><small>from <%= link_to item.account.full_name, account_path(item.account) %></small>
               <% end %>

@@ -1,49 +1,17 @@
 <div class="row">
   <div class="col-sm-12 text-center">
-    <span class="pull-right"><%= link_to "Edit", edit_client_path(@client), class: "btn btn-raised btn-primary" %></span>
     <h1 class="company-title"><%= @client.full_name %></h1>
   </div>
 </div>
 
-<div class="row grid">
-  <div class="grid-sizer col-xs-6 col-md-4"></div>
 
-  <div class="grid-item col-xs-6 col-md-4">
-    <div class="panel panel-primary text-center">
-      <div class="panel-body">
-        <h1><%= link_to @client.id, client_path(@client) %></h1>
-      </div>
-      <div class="panel-heading complement-primary">
-        <h3><%= link_to "<i class='material-icons'>person</i> Client Number".html_safe, client_path(@client) %></h3>
-      </div>
-    </div>
+<div class="row text-center">
+  <div class="col-md-8 col-md-offset-2 col-xs-12">
+    <%= render 'header_cards' %>
   </div>
-
-  <div class="grid-item col-xs-6 col-md-4">
-    <div class="panel panel-primary text-center">
-      <div class="panel-body">
-        <h1><%= link_to @account.id, account_path(@account) %></h1>
-      </div>
-      <div class="panel-heading complement-darker">
-        <h3><%= link_to "<i class='material-icons'>assignment_ind</i> Account Number".html_safe, account_path(@account) %></h3>
-      </div>
-    </div>
-  </div>
-
-  <div class="grid-item col-xs-6 col-md-4">
-    <div class="panel panel-primary text-center">
-      <div class="panel-body">
-        <h1><%= link_to @account.jobs.count, account_jobs_path(@account) %></h1>
-      </div>
-      <div class="panel-heading secondary-primary">
-        <h3><%= link_to "<i class='material-icons'>location_on</i> #{'Job'.pluralize(@account.jobs.count)}".html_safe, account_jobs_path(@account) %></h3>
-      </div>
-    </div>
-  </div>
-
 </div>
 
-<div class="row">
+<div class="row large-top-margin">
   <div class="col-xs-12 col-md-8 col-md-offset-2">
     <div class="well">
       <div class="row text-center vertical-align">
