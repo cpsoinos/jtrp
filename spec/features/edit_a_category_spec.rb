@@ -76,7 +76,7 @@ feature "edit a category" do
     scenario "visits edit category page" do
       visit edit_category_path(category)
 
-      expect(page).to have_content("Forbidden")
+      expect(page).to have_content("You must be logged in to access this page")
     end
 
   end
@@ -96,7 +96,7 @@ feature "edit a category" do
     scenario "visits edit category page" do
       visit edit_category_path(category)
 
-      expect(page).to have_content("Forbidden")
+      expect(page).to have_content("You must be logged in to access this page")
     end
 
   end

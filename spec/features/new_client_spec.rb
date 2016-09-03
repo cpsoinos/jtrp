@@ -5,7 +5,7 @@ feature "new client" do
   it "requires authentication" do
     visit new_client_path
 
-    expect(page).to have_content("Forbidden")
+    expect(page).to have_content("You must be logged in to access this page")
   end
 
   context "internal user" do

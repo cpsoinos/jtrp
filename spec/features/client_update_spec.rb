@@ -5,7 +5,7 @@ feature "update client" do
   it "requires authentication" do
     visit edit_client_path(client)
 
-    expect(page).to have_content("Forbidden")
+    expect(page).to have_content("You must be logged in to access this page")
   end
 
   context "internal user" do
