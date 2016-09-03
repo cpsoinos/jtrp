@@ -31,6 +31,7 @@ Rails.application.routes.draw do
   get '/batch_create', to: 'items#batch_create', as: 'items_batch_create'
   get '/csv_import', to: 'items#csv_import', as: 'items_csv_import'
   resources :items do
+    post '/activate', to: 'items#activate', as: 'activate'
     get '/tag', to: 'items#tag', as: 'tag'
     get '/tags', to: 'items#tags', on: :collection
   end
