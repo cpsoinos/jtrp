@@ -86,15 +86,14 @@ class Item < ActiveRecord::Base
     photos.listing
   end
 
-  def featured_photo_url(opts={})
-    opts.merge!({client_hints: true, quality: "auto", fetch_format: :auto, dpr: "auto", effect: :improve})
-    Rails.cache.fetch("#{cache_key}/featured_photo_url/#{opts.to_param}", expires_in: 2.weeks) do
+  def featured_photo
+    Rails.cache.fetch("#{cache_key}/featured_photo", expires_in: 2.weeks) do
       if listing_photos.present?
-        listing_photos.first.photo_url(opts)
+        listing_photos.first
       elsif initial_photos.present?
-        initial_photos.first.photo_url(opts)
+        initial_photos.first
       else
-        "thumb_No_Image_Available.png"
+        Photo.default_photo
       end
     end
   end

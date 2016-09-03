@@ -13,4 +13,8 @@ class Photo < ActiveRecord::Base
     ActionController::Base.helpers.asset_path("image_placeholder.jpg")
   end
 
+  def self.default_photo
+    Photo.find_by(photo_type: 'default')
+  end
+
 end

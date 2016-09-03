@@ -44,7 +44,7 @@ class ApplicationController < ActionController::Base
   end
 
   def find_categories
-    @categories = Category.primary
+    @categories = Category.primary.order(:name)
   end
 
   def find_categories_for_dropdown
@@ -84,7 +84,7 @@ class ApplicationController < ActionController::Base
       title:    @item.description.titleize,
       type:     'product',
       url:      item_url(@item),
-      image:    @item.featured_photo_url,
+      image:    @item.featured_photo.photo_url(client_hints: true, quality: "auto", fetch_format: :auto, dpr: "auto", effect: :improve),
     }
   end
 
