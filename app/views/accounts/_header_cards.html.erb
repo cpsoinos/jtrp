@@ -24,6 +24,16 @@
 				</div>
 			</a>
 		</div>
+	<% else %>
+		<div class="col-xs-12 col-sm-4">
+			<div class="info">
+				<div class="icon icon-warning">
+					<i class="material-icons">person</i>
+				</div>
+				<h1 class="info-title"><%= @account.full_name %></h1>
+				<p>Account Name</p>
+			</div>
+		</div>
 	<% end %>
 
 	<div class="col-xs-12 col-sm-4">
