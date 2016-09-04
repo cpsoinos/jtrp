@@ -120,9 +120,7 @@ $(document).ready(function() {
 
   $('.cloudinary-fileupload').bind('cloudinarydone', function(e, data) {
     $('.preview').append(
-      $.cloudinary.image(
-        data.result.public_id, { id: data.result.public_id, format: data.result.format, version: data.result.version, crop: 'fill' }
-      )
+      "<img src='" + data.result.secure_url + "' id=" + data.result.public_id + ">"
     ).append(
       '<a href="#" class="btn btn-fab btn-fab-mini btn-danger fileinput-exists delete_by_token pull-right" data-delete_token="' + data.result.delete_token + '" data-preview_id="' + data.result.public_id + '"><i class="material-icons">delete_forever</i></a>'
     );

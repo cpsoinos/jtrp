@@ -48,6 +48,21 @@ feature "item show" do
 
   end
 
+  context "inactive" do
+
+    let(:item) { create(:item, :inactive) }
+
+    scenario "internal user successfully marks an item active" do
+      allow(InventorySyncJob).to receive(:perform_later)
+      visit item_path(item)
+
+      click_link("Mark Active")
+      expect(page).to have_content("Item activated!")
+      expect(item.reload).to be_active
+    end
+
+  end
+
   context "active" do
 
     context "for sale" do
@@ -114,6 +129,15 @@ feature "item show" do
         expect(page).to have_content("$11.11")
         expect(page).to have_content("Min. Price:")
         expect(page).to have_content("$10.10")
+      end
+
+      scenario "internal user successfully marks an item inactive" do
+        allow(InventorySyncJob).to receive(:perform_later)
+        visit item_path(item)
+
+        click_link("Mark Inactive")
+        expect(page).to have_content("Item deactivated")
+        expect(item.reload).to be_inactive
       end
 
     end

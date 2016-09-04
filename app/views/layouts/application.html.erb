@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>JTRP</title>
   <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700" media="all">
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto+Slab" media="all">
   <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons" media="all">
@@ -11,7 +10,6 @@
   <%= javascript_include_tag 'application' %>
   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
   <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAPS_API_KEY'] %>&libraries=places,staticmap"></script>
-  <script src="https://unpkg.com/masonry-layout@4.1/dist/masonry.pkgd.min.js"></script>
   <script src="https://use.fontawesome.com/e2b3e9ea8e.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.5/validator.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
@@ -52,11 +50,12 @@
   <% end %>
   <!-- End Facebook Pixel Code -->
 
+  <%= cloudinary_js_config %>
   <%= metamagic %>
 </head>
 
 <body class="<%= controller_name %> <%= action_name %>">
-  <%= cloudinary_js_config %>
+  <% metamagic site: "My Site", title: [:title, :site], separator: " — " %>
 
   <!-- Facebook SDK -->
   <div id="fb-root"></div>

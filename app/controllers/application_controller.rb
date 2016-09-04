@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_filter :find_company
   before_filter :find_categories
+  before_filter :meta_tags
 
   def find_company
     @company ||= Company.find_by(name: "Just the Right Piece")
@@ -80,11 +81,12 @@ class ApplicationController < ActionController::Base
   end
 
   def og_meta_tags
+    return unless @item.present?
     {
       title:    @item.description.titleize,
       type:     'product',
       url:      item_url(@item),
-      image:    @item.featured_photo.photo_url(client_hints: true, quality: "auto", fetch_format: :auto, dpr: "auto", effect: :improve),
+      image:    @item.featured_photo.photo_url(client_hints: true, quality: "auto", fetch_format: :auto, width: :auto, dpr: "auto", effect: :improve),
     }
   end
 
