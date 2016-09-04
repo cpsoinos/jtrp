@@ -5,7 +5,6 @@ class ItemsController < ApplicationController
   before_filter :find_job, only: :tags
   before_filter :require_internal, except: [:index, :show, :update]
   before_filter :find_item, only: :show
-  before_filter :meta_tags, only: :show
 
   def index
     @items = ItemsPresenter.new(params).filter.order(:jtrp_number, :account_item_number)

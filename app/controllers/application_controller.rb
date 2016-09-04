@@ -74,9 +74,6 @@ class ApplicationController < ActionController::Base
     @meta_tags = {
       site: "Just the Right Piece",
       og: og_meta_tags
-      # title: 'Member Login',
-      # description: 'Member login page.',
-      # keywords: 'Site, Login, Members',
     }
   end
 
