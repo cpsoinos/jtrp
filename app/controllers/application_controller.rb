@@ -86,7 +86,7 @@ class ApplicationController < ActionController::Base
       title:    @item.description.titleize,
       type:     'product',
       url:      item_url(@item),
-      image:    @item.featured_photo.photo_url(client_hints: true, quality: "auto", fetch_format: :auto, dpr: "auto", effect: :improve),
+      image:    @item.featured_photo.photo_url(client_hints: true, quality: "auto", fetch_format: :auto, width: :auto, dpr: "auto", effect: :improve),
     }
   end
 
