@@ -55,6 +55,10 @@ gem 'readthis'
 gem 'hiredis'
 gem 'redis-browser'
 
+group :production, :staging do
+  gem 'scout_apm'
+end
+
 group :production, :staging, :local, :development do
   gem 'rails_12factor'
 end
