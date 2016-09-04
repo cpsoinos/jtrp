@@ -7,7 +7,7 @@
       <div class="row list-group-item vertical-align">
         <div class="col-xs-4">
           <a href="<%= item_path(item) %>">
-            <%= image_tag(item.featured_photo.photo_url(client_hints: true, quality: "auto", fetch_format: :auto, dpr: "auto", effect: :improve), class: "img-raised img-responsive", alt: "icon") %>
+            <%= image_tag(item.featured_photo.photo_url(client_hints: true, quality: "auto", fetch_format: :auto, width: :auto, dpr: "auto", effect: :improve), class: "img-raised img-responsive", alt: "icon") %>
           </a>
         </div>
         <div class="col-xs-6">
