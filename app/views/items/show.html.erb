@@ -78,8 +78,10 @@
             <button type="button" class="btn btn-raised btn-notice btn-round" data-toggle="modal" data-target="#new-item-from-batch-modal">
               Create Item from this Batch <i class='material-icons'>content_copy</i>
             </button>
-            <% if @item.potential? %>
+            <% if @item.potential? || @item.inactive? %>
               <%= link_to "Mark Active <i class='material-icons'>store</i>".html_safe, item_activate_path(@item), class: "btn btn-raised btn-info btn-round", method: :post %>
+            <% elsif @item.active? %>
+              <%= link_to "Mark Inactive <i class='material-icons'>remove_circle</i>".html_safe, item_deactivate_path(@item), class: "btn btn-raised btn-danger btn-round", method: :post %>
             <% end %>
           <% end %>
 
