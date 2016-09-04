@@ -1,5 +1,6 @@
 class CompaniesController < ApplicationController
   before_filter :require_internal, except: [:client_services, :consignment_policies, :service_rate_schedule, :agent_service_rate_schedule, :home]
+  before_filter :meta_tags
 
   def show
     @metrics = {
