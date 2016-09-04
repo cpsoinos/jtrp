@@ -28,6 +28,7 @@
 //= require flashcanvas
 //= require json2.min
 //= require jquery-readyselector
+//= require masonry.pkgd.min
 //= require imagesloaded.pkgd.min
 //= require components
 //= require jsapi
@@ -42,12 +43,12 @@
 
 $(document).ready(function() {
 
-  // Fade out flash messages after 5 sec
+  /* Fade out flash messages after 5 sec */
   $('.alert').delay(5000).fadeOut();
 
-  // Activating Best In Place
+  /* Activating Best In Place */
   jQuery(".best_in_place").best_in_place();
 
-  // Initialize material design javascripts
+  /*Initialize material design javascripts */
   $.material.init();
 });
