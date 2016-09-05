@@ -10,7 +10,7 @@ feature "item labels" do
       sign_in user
     end
 
-    scenario "clicks on 'Print Labels' link" do
+    scenario "clicks on 'Print Labels' link", skip: true do
       visit items_path
       click_link("Print Labels")
       convert_pdf_to_page
