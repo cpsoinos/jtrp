@@ -406,6 +406,7 @@ GEM
       oauth2 (~> 1.0)
       omniauth (~> 1.2)
     orm_adapter (0.5.0)
+    pdf-core (0.6.1)
     pdf-reader (1.4.0)
       Ascii85 (~> 1.0.0)
       afm (~> 0.2.1)
@@ -422,6 +423,11 @@ GEM
       capybara (~> 2.1)
       cliver (~> 0.3.1)
       websocket-driver (>= 0.2.0)
+    prawn (2.1.0)
+      pdf-core (~> 0.6.1)
+      ttfunk (~> 1.4.0)
+    prawn-labels (1.2.6)
+      prawn (>= 1.0.0, < 3.0.0)
     pry (0.10.3)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
@@ -700,6 +706,7 @@ DEPENDENCIES
   pg (~> 0.15)
   pg_search
   poltergeist
+  prawn-labels
   pry-byebug (~> 3.3.0)
   pry-coolline
   pry-rails

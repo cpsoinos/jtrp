@@ -40,6 +40,7 @@ class Item < ActiveRecord::Base
 
   scope :status, -> (status) { where(status: status) }
   scope :type, -> (type) { where(client_intention: type) }
+  scope :by_id, -> (id_param) { where(id: id_param) }
 
   scope :potential, -> { where(status: "potential") }
   scope :active, -> { where(status: "active") }
@@ -104,17 +105,18 @@ class Item < ActiveRecord::Base
     end
   end
 
-  def barcode(pdf=false)
+  def barcode
     require 'barby'
     require 'barby/barcode/code_128'
     require 'barby/outputter/cairo_outputter'
 
     barcode = Barby::Code128B.new(token)
-    barcode = Barby::CairoOutputter.new(barcode).to_svg(width: '160px')
-    if pdf
-      barcode = "data:image/svg+xml;base64,#{Base64.encode64(barcode)}"
-    end
+    blob = Barby::CairoOutputter.new(barcode).to_png
     barcode
+
+    file = Tempfile.new("item_#{id}_barcode.png")
+    File.open(file, 'wb') { |f| f.write blob }
+    file
   end
 
   def mark_agreement_inactive

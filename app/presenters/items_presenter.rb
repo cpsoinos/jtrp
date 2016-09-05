@@ -7,7 +7,7 @@ class ItemsPresenter
   end
 
   def filter
-    Item.includes(:photos, proposal: [job: [account: :primary_contact]]).filter(params.slice(:status, :type))
+    Item.includes(:photos, proposal: [job: [account: :primary_contact]]).filter(params.slice(:status, :type, :by_id))
   end
 
   def todo
