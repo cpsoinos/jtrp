@@ -105,7 +105,7 @@ class Item < ActiveRecord::Base
     end
   end
 
-  def barcode(pdf=false)
+  def barcode
     require 'barby'
     require 'barby/barcode/code_128'
     require 'barby/outputter/cairo_outputter'
