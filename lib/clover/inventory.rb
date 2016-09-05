@@ -8,7 +8,8 @@ module Clover
         name: item.description,
         cost: (item.purchase_price_cents || 0),
         price: item.listing_price_cents,
-        sku: item.id
+        sku: item.id,
+        alternateName: item.token
       }.to_json, headers) do |response, request, result|
         case response.code
         when 200
@@ -39,7 +40,8 @@ module Clover
         name: item.description,
         cost: (item.purchase_price_cents || 0),
         price: item.listing_price_cents,
-        sku: item.id
+        sku: item.id,
+        alternateName: item.token
       }.to_json, headers) do |response, request, result|
         case response.code
         when 200
