@@ -40,6 +40,7 @@ class Item < ActiveRecord::Base
 
   scope :status, -> (status) { where(status: status) }
   scope :type, -> (type) { where(client_intention: type) }
+  scope :by_id, -> (id_param) { where(id: id_param) }
 
   scope :potential, -> { where(status: "potential") }
   scope :active, -> { where(status: "active") }

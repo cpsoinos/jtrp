@@ -4,7 +4,6 @@ class ItemsController < ApplicationController
   before_filter :find_clients, only: [:new, :edit]
   before_filter :find_categories, only: [:new, :edit, :show, :index]
   before_filter :find_proposal, only: [:create, :batch_create]
-  before_filter :find_job, only: :tags
   before_filter :require_internal, except: [:index, :show, :update]
   before_filter :find_item, only: :show
 
@@ -134,11 +133,10 @@ class ItemsController < ApplicationController
   end
 
   def labels
-    @proposal = Proposal.find(params[:proposal_id])
-    @items = @proposal.items
+    @items = ItemsPresenter.new(params).filter
     labels = LabelGenerator.new(@items).generate
 
-    send_data labels, filename: "#{@proposal.account.full_name}_proposal_#{@proposal.id}_labels.pdf", type: "application/pdf", disposition: "inline"
+    send_data labels, filename: "Item Labels", type: "application/pdf", disposition: "inline"
   end
 
   protected
