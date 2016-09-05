@@ -54,6 +54,7 @@ gem 'newrelic_rpm'
 gem 'readthis'
 gem 'hiredis'
 gem 'redis-browser'
+gem 'prawn-labels'
 
 group :production, :staging do
   gem 'scout_apm'

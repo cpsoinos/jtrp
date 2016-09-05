@@ -33,8 +33,7 @@ Rails.application.routes.draw do
   resources :items do
     post '/activate', to: 'items#activate', as: 'activate'
     post '/deactivate', to: 'items#deactivate', as: 'deactivate'
-    get '/tag', to: 'items#tag', as: 'tag'
-    get '/tags', to: 'items#tags', on: :collection
+    get '/labels', to: 'items#labels', on: :collection
   end
 
   resources :accounts do
@@ -72,11 +71,6 @@ Rails.application.routes.draw do
   end
   post '/create_client', to: 'proposals#create_client'
   put '/proposals/:proposal_id/add_existing_item', to: 'proposals#add_existing_item'
-
-  resources :purchase_orders do
-    resources :items
-  end
-  put '/purchase_orders/:purchase_order_id/add_existing_item', to: 'purchase_orders#add_existing_item'
 
   resources :agreements do
     get '/agreements_list', to: 'agreements#agreements_list', as: 'agreements_list', on: :collection

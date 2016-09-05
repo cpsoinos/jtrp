@@ -2,7 +2,7 @@ require 'capybara/rspec'
 require 'factory_girl_rails'
 require 'rails_helper'
 require 'helpers/user_helper.rb'
-require 'helpers/tag_helper.rb'
+require 'helpers/label_helper.rb'
 require 'coveralls'
 Coveralls.wear!
 require 'email_spec'
