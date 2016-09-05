@@ -1,3 +1,5 @@
+require 'prawn/labels'
+
 class ItemsController < ApplicationController
   before_filter :find_clients, only: [:new, :edit]
   before_filter :find_categories, only: [:new, :edit, :show, :index]
@@ -129,6 +131,14 @@ class ItemsController < ApplicationController
     else
       redirect_to :back
     end
+  end
+
+  def labels
+    @proposal = Proposal.find(params[:proposal_id])
+    @items = @proposal.items
+    labels = LabelGenerator.new(@items).generate
+
+    send_data labels, filename: "labels.pdf", type: "application/pdf", disposition: "inline"
   end
 
   def tag

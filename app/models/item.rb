@@ -107,14 +107,21 @@ class Item < ActiveRecord::Base
   def barcode(pdf=false)
     require 'barby'
     require 'barby/barcode/code_128'
+    # require 'barby/outputter/png_outputter'
     require 'barby/outputter/cairo_outputter'
+    # require 'barby/outputter/prawn_outputter'
+    # require 'barby/outputter/chunky_png_outputter'
 
-    barcode = Barby::Code128B.new(token)
-    barcode = Barby::CairoOutputter.new(barcode).to_svg(width: '160px')
-    if pdf
-      barcode = "data:image/svg+xml;base64,#{Base64.encode64(barcode)}"
-    end
+    barcode = Barby::Code128B.new(remote_id)
+    blob = Barby::CairoOutputter.new(barcode).to_png
+    # barcode = "data:image/png+xml;base64,#{Base64.encode64(barcode)}"
     barcode
+
+    file = Tempfile.new("item_#{id}_barcode.png")
+    File.open(file, 'wb') { |f| f.write blob }
+    file
+    #Convenience method
+
   end
 
   def mark_agreement_inactive

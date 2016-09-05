@@ -6,6 +6,17 @@
       <div class="row form-row">
         <div class="text-center">
           <div class="col-xs-12 col-md-3 form-label">
+            <%= f.label :logo, class: "control-label" %>
+          </div>
+          <div class="col-xs-12 col-md-9 text-left">
+            <%= f.file_field :logo, class: "form-control" %>
+          </div>
+        </div>
+      </div>
+
+      <div class="row form-row">
+        <div class="text-center">
+          <div class="col-xs-12 col-md-3 form-label">
             <%= f.label :slogan, class: "control-label" %>
           </div>
           <div class="col-xs-12 col-md-9 text-left">

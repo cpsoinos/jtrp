@@ -64,7 +64,9 @@ Rails.application.routes.draw do
   resources :users_admin, controller: "users"
 
   resources :proposals do
-    resources :items
+    resources :items do
+      get '/labels', to: 'items#labels', on: :collection
+    end
     resources :agreements
     get '/details', to: 'proposals#details', as: "details"
     get '/response_form', to: 'proposals#response_form'
