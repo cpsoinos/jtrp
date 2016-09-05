@@ -21,7 +21,6 @@ feature "item labels" do
         expect(page).to have_content("SKU:")
         expect(page).to have_content("Item No.:")
         expect(page).to have_content("JTRP No.:")
-        # expect(page).to have_image(item.barcode)
       end
     end
 
