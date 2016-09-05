@@ -11,6 +11,7 @@ feature "item labels" do
     end
 
     scenario "clicks on 'Print Labels' link" do
+      require 'open-uri'
       visit items_path
       click_link("Print Labels")
       convert_pdf_to_page
