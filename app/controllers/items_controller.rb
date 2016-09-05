@@ -138,27 +138,7 @@ class ItemsController < ApplicationController
     @items = @proposal.items
     labels = LabelGenerator.new(@items).generate
 
-    send_data labels, filename: "labels.pdf", type: "application/pdf", disposition: "inline"
-  end
-
-  def tag
-    @item = Item.find(params[:item_id])
-    respond_to do |format|
-      format.html
-      format.pdf do
-        render pdf: "tag"
-      end
-    end
-  end
-
-  def tags
-    @items = @job.items.filter(status: params[:status])
-    respond_to do |format|
-      format.html
-      format.pdf do
-        render pdf: "tags", margin: { top: 5, bottom: 0, right: 5 }
-      end
-    end
+    send_data labels, filename: "#{@proposal.account.full_name}_proposal_#{@proposal.id}_labels.pdf", type: "application/pdf", disposition: "inline"
   end
 
   protected

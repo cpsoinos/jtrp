@@ -13,10 +13,3 @@ Prawn::Labels.types = {
     "row_gutter" => 12
   }
 }
-
-# Prawn::Document.font_families.update({
-#   "Roboto" => {
-#     bold:        "/app/assets/fonts/RobotoSlab-Bold.ttf",
-#     normal:      "/app/assets/fonts/RobotoSlab-Regular.ttf"
-#   }
-# })

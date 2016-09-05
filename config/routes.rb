@@ -33,8 +33,7 @@ Rails.application.routes.draw do
   resources :items do
     post '/activate', to: 'items#activate', as: 'activate'
     post '/deactivate', to: 'items#deactivate', as: 'deactivate'
-    get '/tag', to: 'items#tag', as: 'tag'
-    get '/tags', to: 'items#tags', on: :collection
+    get '/labels', to: 'items#labels', on: :collection
   end
 
   resources :accounts do
@@ -64,9 +63,7 @@ Rails.application.routes.draw do
   resources :users_admin, controller: "users"
 
   resources :proposals do
-    resources :items do
-      get '/labels', to: 'items#labels', on: :collection
-    end
+    resources :items
     resources :agreements
     get '/details', to: 'proposals#details', as: "details"
     get '/response_form', to: 'proposals#response_form'

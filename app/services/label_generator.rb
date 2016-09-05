@@ -23,8 +23,4 @@ class LabelGenerator
     end
   end
 
-  private
-
-
-
 end
