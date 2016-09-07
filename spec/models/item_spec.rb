@@ -86,10 +86,18 @@ describe Item do
 
     it "syncs to clover when transitioning 'potential' to 'active'" do
       proposal = create(:proposal, :active)
-      item = create(:item, proposal: proposal, client_intention: "sell")
+      item = create(:item, proposal: proposal, client_intention: "sell", listing_price_cents: 5000)
       item.mark_active!
 
       expect(syncer).to have_received(:remote_create)
+    end
+
+    it "does not sync to clover when no listing price" do
+      proposal = create(:proposal, :active)
+      item = create(:item, proposal: proposal, client_intention: "sell")
+      item.mark_active!
+
+      expect(syncer).not_to have_received(:remote_create)
     end
 
     it "does not transition 'potential' to 'active' when requirements not met" do
@@ -103,7 +111,7 @@ describe Item do
     end
 
     it "transitions 'active' to 'sold' when requirements met" do
-      item = create(:item, :active, client_intention: "sell", remote_id: "ABC123")
+      item = create(:item, :active, client_intention: "sell", remote_id: "ABC123", listing_price_cents: 5000)
       item.mark_sold
 
       expect(item).to be_sold
@@ -121,7 +129,7 @@ describe Item do
     end
 
     it "transitions to 'inactive'" do
-      item = create(:item, :active, remote_id: "ABC123")
+      item = create(:item, :active, remote_id: "ABC123", listing_price_cents: 5000)
       item.mark_inactive!
 
       expect(item).not_to be_active
