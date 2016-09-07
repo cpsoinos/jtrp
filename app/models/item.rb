@@ -147,6 +147,7 @@ class Item < ActiveRecord::Base
   end
 
   def sync_inventory
+    return if self.listing_price_cents.nil?
     InventorySyncJob.perform_later(self)
   end
 
