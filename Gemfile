@@ -58,7 +58,7 @@ gem 'redis-browser'
 gem 'prawn-labels'
 
 group :production, :staging do
-  gem 'scout_apm'
+  gem 'scout_apm', '~> 3.0.x'
 end
 
 group :production, :staging, :local, :development do
