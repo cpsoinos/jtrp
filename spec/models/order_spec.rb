@@ -20,6 +20,16 @@ describe Order do
       expect(order.amount_cents).to eq(1234)
     end
 
+    it "calculates thirty day revenue" do
+      orders = create_list(:order, 3, created_at: 5.days.ago, amount_cents: 5000)
+      expect(Order.thirty_day_revenue).to eq(150)
+    end
+
+    it "does not include older orders in thirty day revenue" do
+      create(:order, amount_cents: 5000, created_at: 40.days.ago)
+      orders = create_list(:order, 3, created_at: 5.days.ago, amount_cents: 5000)
+      expect(Order.thirty_day_revenue).to eq(150)
+    end
 
   end
 

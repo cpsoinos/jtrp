@@ -12,6 +12,10 @@ class Order < ActiveRecord::Base
     mark_items_sold if remote_order_locked?
   end
 
+  def self.thirty_day_revenue
+    Order.where(created_at: 30.days.ago..DateTime.now).sum(:amount_cents) / 100
+  end
+
   private
 
   def remote_order
