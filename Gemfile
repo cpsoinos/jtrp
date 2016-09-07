@@ -36,6 +36,7 @@ gem 'chartkick'
 gem 'sweet-alert-confirm'
 gem 'jquery-fileupload-rails'
 gem 'sidekiq'
+gem 'activejob-traffic_control'
 gem 'sinatra', :require => nil
 gem 'pusher'
 gem 'puma'

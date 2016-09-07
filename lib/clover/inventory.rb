@@ -6,7 +6,6 @@ module Clover
     def self.create(item)
       RestClient.post("#{base_url}/items", {
         name: item.description,
-        cost: (item.purchase_price_cents || 0),
         price: item.listing_price_cents,
         sku: item.id,
         alternateName: item.token
@@ -17,7 +16,7 @@ module Clover
           item.remote_id = inventory_item.id
           item.save
         else
-          raise "unable to create inventory item - #{result.to_s}"
+          raise 'unable to create inventory item - ' + JSON.parse(response)['message']
         end
       end
     end
@@ -30,7 +29,7 @@ module Clover
         when 404
           nil
         else
-          raise 'unable to find item - ' + result.to_s
+          raise 'unable to find item - ' + JSON.parse(response)['message']
         end
       end
     end
@@ -38,7 +37,6 @@ module Clover
     def self.update(item)
       RestClient.post("#{base_url}/items/#{item.remote_id}", {
         name: item.description,
-        cost: (item.purchase_price_cents || 0),
         price: item.listing_price_cents,
         sku: item.id,
         alternateName: item.token
@@ -49,7 +47,7 @@ module Clover
           item.remote_id ||= inventory_item.id
           item.save
         else
-          raise 'unable to find item - ' + result.to_s
+          raise 'unable to find item - ' + JSON.parse(response)['message']
         end
       end
     end
@@ -60,7 +58,7 @@ module Clover
         when 200
           DeepStruct.wrap(JSON.parse(response)["elements"])
         else
-          raise 'unable to get all inventory items - ' + result.to_s
+          raise 'unable to get all inventory items - ' + JSON.parse(response)['message']
         end
       end
     end
@@ -71,7 +69,7 @@ module Clover
         when 200
           ItemUpdater.new(item).update(remote_id: nil)
         else
-          raise 'unable to delete item - ' + result.to_s
+          raise 'unable to delete item - ' + JSON.parse(response)['message']
         end
       end
     end
