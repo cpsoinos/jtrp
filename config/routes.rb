@@ -50,6 +50,7 @@ Rails.application.routes.draw do
         resources :items
       end
     end
+    resources :statements, only: [:index, :show]
   end
 
   resources :clients

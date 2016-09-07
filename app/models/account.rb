@@ -9,6 +9,8 @@ class Account < ActiveRecord::Base
   has_many :jobs, dependent: :destroy
   has_many :proposals, through: :jobs
   has_many :items, through: :proposals
+  has_many :agreements, through: :proposals
+  has_many :statements, through: :agreements
   belongs_to :created_by, class_name: "InternalUser", foreign_key: "created_by_id"
   belongs_to :updated_by, class_name: "InternalUser", foreign_key: "updated_by_id"
 

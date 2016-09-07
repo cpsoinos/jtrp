@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160906130010) do
+ActiveRecord::Schema.define(version: 20160907112052) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -213,6 +213,11 @@ ActiveRecord::Schema.define(version: 20160906130010) do
     t.datetime "date"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "balance_cents"
+    t.string   "balance_currency", default: "USD", null: false
+    t.integer  "check_number"
+    t.string   "pdf"
+    t.string   "status"
   end
 
   add_index "statements", ["agreement_id"], name: "index_statements_on_agreement_id", using: :btree
