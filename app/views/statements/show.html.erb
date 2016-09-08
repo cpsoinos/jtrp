@@ -6,8 +6,33 @@
         <iframe src="<%= @statement.pdf_url %>" width="100%" style="border: none;" class="full-height"> </iframe>
       <% else %>
         <%= render 'proposals/header', form_name: "Consignment Sales" %>
-        <%= render 'items/items_list', items: @statement.items, headers: statement_headers, context: "consignment_statement" %>
+        <%= render 'items_list', items: @statement.items %>
       <% end %>
+
+      <div class="row">
+        <div class="col-xs-6 col-xs-offset-6 col-sm-4 col-sm-offset-8">
+          <table class="pull-right nested-statement-table">
+            <tr>
+              <th>Total Sales</th>
+              <td class="text-right">
+                <%= humanized_money_with_symbol(@statement.items.sum(:sale_price_cents) / 100) %>
+              </td>
+            </tr>
+            <tr>
+              <th>Total Consignment Fees</th>
+              <td class="text-right">
+                <%= humanized_money_with_symbol((@statement.items.map { |i| (i.sale_price_cents / 100) * i.consignment_rate }.sum) ) %>
+              </td>
+            </tr>
+            <tr>
+              <th>Due to Consignor from Sales</th>
+              <td class="text-right">
+                <%= humanized_money_with_symbol(@statement.items.sum(:sale_price_cents) / 100) %>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
 
     </div>
   </div>
