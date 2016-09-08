@@ -54,7 +54,7 @@
                   <br />
                   <br />
                   <div class="text-left hidden-print">
-                    <%= render 'items/mark_sold_modal', item: item, cached: true, redirect_url: request.original_url %>
+                    <%= render 'items/mark_sold_modal', item: item, redirect_url: request.original_url %>
                   </div>
                   <button type="button" class="btn btn-raised btn-success btn-round hidden-print" data-toggle="modal" data-target="#<%= item.id %>-mark-sold-modal">
                     Mark as Sold <i class='material-icons'>done</i>

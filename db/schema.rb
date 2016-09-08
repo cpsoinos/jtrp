@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160901122033) do
+ActiveRecord::Schema.define(version: 20160908191121) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -138,6 +138,7 @@ ActiveRecord::Schema.define(version: 20160901122033) do
     t.string   "original_description"
   end
 
+  add_index "items", ["account_item_number"], name: "index_items_on_account_item_number", using: :btree
   add_index "items", ["category_id"], name: "index_items_on_category_id", using: :btree
   add_index "items", ["client_intention"], name: "index_items_on_client_intention", using: :btree
   add_index "items", ["order_id"], name: "index_items_on_order_id", using: :btree
@@ -208,6 +209,20 @@ ActiveRecord::Schema.define(version: 20160901122033) do
 
   add_index "scanned_agreements", ["agreement_id"], name: "index_scanned_agreements_on_agreement_id", using: :btree
 
+  create_table "statements", force: :cascade do |t|
+    t.integer  "agreement_id"
+    t.datetime "date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "balance_cents"
+    t.string   "balance_currency", default: "USD", null: false
+    t.integer  "check_number"
+    t.string   "pdf"
+    t.string   "status"
+  end
+
+  add_index "statements", ["agreement_id"], name: "index_statements_on_agreement_id", using: :btree
+
   create_table "system_infos", force: :cascade do |t|
     t.integer "last_account_number", default: 10
   end
@@ -271,5 +286,6 @@ ActiveRecord::Schema.define(version: 20160901122033) do
   add_foreign_key "photos", "items"
   add_foreign_key "photos", "proposals"
   add_foreign_key "scanned_agreements", "agreements"
+  add_foreign_key "statements", "agreements"
   add_foreign_key "users", "accounts"
 end
