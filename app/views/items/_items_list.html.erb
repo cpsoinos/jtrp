@@ -2,7 +2,7 @@
 
   <% if current_user.try(:internal?) %>
     <div class="text-right">
-      <%= link_to "Print Labels", labels_items_path(by_id: items.pluck(:id)), class: "btn btn-info btn-raised btn-round" %>
+      <%= link_to "Print Labels", labels_items_path(by_id: items.map(&:id)), class: "btn btn-info btn-raised btn-round" %>
     </div>
   <% end %>
 

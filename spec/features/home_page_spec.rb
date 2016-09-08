@@ -57,12 +57,6 @@ feature "home page" do
       end
 
       expect(page).to have_link("Accounts")
-      within("#accounts") do
-        expect(page).to have_link("Potential")
-        expect(page).to have_link("Active")
-        expect(page).to have_link("Inactive")
-        expect(page).to have_link("All Accounts")
-      end
 
       expect(page).to have_link("Jobs")
       within("#jobs") do
@@ -151,35 +145,6 @@ feature "home page" do
           end
 
           expect(page).to have_content("Sold items have been sold.")
-        end
-      end
-
-      context "accounts" do
-        scenario "potential" do
-          visit root_path
-          within('#accounts') do
-            click_link("Potential")
-          end
-
-          expect(page).to have_content("Potential accounts have not yet signed an agreement.")
-        end
-
-        scenario "active" do
-          visit root_path
-          within('#accounts') do
-            click_link("Active")
-          end
-
-          expect(page).to have_content("Active accounts have an active job.")
-        end
-
-        scenario "inactive" do
-          visit root_path
-          within('#accounts') do
-            click_link("Inactive")
-          end
-
-          expect(page).to have_content("Inactive accounts have completed agreements or service orders.")
         end
       end
 

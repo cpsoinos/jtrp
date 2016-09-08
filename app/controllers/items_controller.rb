@@ -8,8 +8,8 @@ class ItemsController < ApplicationController
   before_filter :find_item, only: :show
 
   def index
-    @items = ItemsPresenter.new(params).filter.order(:jtrp_number, :account_item_number)
-    @intentions = @items.pluck(:client_intention).uniq
+    @items = ItemsPresenter.new(params).filter.order(:jtrp_number, :account_item_number).group_by { |i| i.client_intention }
+    @intentions = @items.keys
     intentions_map
     @filter = params[:status].try(:capitalize)
     @type = params[:type]
