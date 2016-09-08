@@ -14,6 +14,25 @@ module ApplicationHelper
     }
   end
 
+  def statement_headers
+    ["Account Item No.", "Starting Asking Price", "Starting Min. Price", "Consignment Rate", "Date Sold", "Date Consigned", "Days Consigned", "Sale Price", "Consignment Fee", "Due to Consignor"]
+  end
+
+  def statement_values(item)
+    {
+      "Account Item No."          =>  item.account_item_number,
+      "Starting Asking Price"     =>  humanized_money_with_symbol(item.listing_price),
+      "Starting Min. Price"       =>  humanized_money_with_symbol(item.minimum_sale_price),
+      "Consignment Rate"          =>  "#{item.consignment_rate}%",
+      "Date Sold"                 =>  item.sold_at.strftime('%-m/%-d/%y'),
+      "Date Consigned"            =>  item.listed_at.strftime('%-m/%-d/%y'),
+      "Days Consigned"            =>  distance_of_time_in_words(item.listed_at, item.sold_at),
+      "Sale Price"                =>  humanized_money_with_symbol(item.sale_price),
+      "Consignment Fee"           =>  humanized_money_with_symbol((item.sale_price * item.consignment_rate) / 100),
+      "Due to Consignor"          =>  humanized_money_with_symbol((item.sale_price - (item.sale_price * (1 - item.consignment_rate))) / 100)
+    }
+  end
+
   def purchase_invoice_headers
     ["Account Item No.", "Amount"]
   end

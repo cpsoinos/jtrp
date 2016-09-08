@@ -7,6 +7,7 @@ class StatementsController < ApplicationController
 
   def show
     @statement = Statement.find(params[:id])
+    @client = @account.client
   end
 
 end

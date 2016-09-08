@@ -22,7 +22,7 @@ class Statement < ActiveRecord::Base
   delegate :account, to: :agreement
 
   def items
-    agreement.items.consigned.sold.where(sold_at: 1.month.ago..Date.today)
+    agreement.items.sold.where(sold_at: 1.month.ago..Date.today)
   end
 
 end

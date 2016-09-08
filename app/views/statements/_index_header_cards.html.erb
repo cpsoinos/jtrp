@@ -1,26 +1,22 @@
 <div class="row text-center">
 	<div class="col-xs-12 col-md-3 col-md-offset-3">
-		<a href="<%= accounts_path(status: 'potential') %>">
-			<div class="info">
-				<div class="icon icon-info">
-					<i class="material-icons">account_balance_wallet</i>
-				</div>
-				<h1 class="info-title"><%= Statement.unpaid.count %></h1>
-				<p>Unpaid Statements</p>
+		<div class="info">
+			<div class="icon icon-info">
+				<i class="material-icons">account_balance_wallet</i>
 			</div>
-		</a>
+			<h1 class="info-title"><%= @account.statements.unpaid.count %></h1>
+			<p>Unpaid Statements</p>
+		</div>
 	</div>
 
 	<div class="col-xs-12 col-md-3">
-		<a href="<%= accounts_path(status: 'active') %>">
-			<div class="info">
-				<div class="icon icon-primary">
-					<i class="material-icons">account_balance_wallet</i>
-				</div>
-				<h1 class="info-title"><%= Statement.paid.count %></h1>
-				<p>Paid Statements</p>
+		<div class="info">
+			<div class="icon icon-primary">
+				<i class="material-icons">account_balance_wallet</i>
 			</div>
-		</a>
+			<h1 class="info-title"><%= @account.statements.paid.count %></h1>
+			<p>Paid Statements</p>
+		</div>
 	</div>
 
 </div>
