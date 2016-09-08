@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160908191121) do
+ActiveRecord::Schema.define(version: 20160908191905) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -143,7 +143,10 @@ ActiveRecord::Schema.define(version: 20160908191121) do
   add_index "items", ["client_intention"], name: "index_items_on_client_intention", using: :btree
   add_index "items", ["order_id"], name: "index_items_on_order_id", using: :btree
   add_index "items", ["proposal_id"], name: "index_items_on_proposal_id", using: :btree
+  add_index "items", ["status", "account_item_number", "jtrp_number"], name: "index_items_on_status_and_account_item_number_and_jtrp_number", using: :btree
+  add_index "items", ["status", "account_item_number"], name: "index_items_on_status_and_account_item_number", using: :btree
   add_index "items", ["status", "client_intention"], name: "index_items_on_status_and_client_intention", using: :btree
+  add_index "items", ["status", "jtrp_number"], name: "index_items_on_status_and_jtrp_number", using: :btree
   add_index "items", ["status"], name: "index_items_on_status", using: :btree
 
   create_table "jobs", force: :cascade do |t|
