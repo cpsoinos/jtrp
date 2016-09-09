@@ -39,7 +39,7 @@
                 <br />
               <% end %>
               <% unless account.inactive? %>
-                <%= link_to "Deactivate", account_deactivate_path(account), class: "btn btn-round btn-raised btn-primary", method: :post %>
+                <%= link_to "Deactivate", account_deactivate_path(account), class: "btn btn-round btn-raised btn-warning", method: :post %>
               <% end %>
             </td>
           </tr>
