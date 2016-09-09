@@ -53,6 +53,7 @@
     <div class="large-top-margin">
       <div class="tab-content">
         <% if current_user.try(:internal?) %>
+          <%= render 'items/mark_sold_modal', redirect_url: request.original_url %>
           <% @intentions.each do |intention| %>
             <div role="tabpanel" class="tab-pane fade" id="<%= intention %>">
               <%= render "items_list", headers: general_headers, context: "general", items: @items[intention] %>
