@@ -31,12 +31,15 @@ class Account < ActiveRecord::Base
     state :active
     state :inactive
 
+    after_transition potential: :inactive, do: :deactivate_items
+
     event :mark_active do
       transition potential: :active, if: lambda { |account| account.meets_requirements_active? }
     end
 
     event :mark_inactive do
       transition active: :inactive, if: lambda { |account| account.meets_requirements_inactive? }
+      transition potential: :inactive
     end
 
   end
@@ -110,6 +113,13 @@ class Account < ActiveRecord::Base
 
   def increment_system_info
     SystemInfo.first.increment!(:last_account_number)
+  end
+
+  def deactivate_items
+    items.each do |item|
+      next if item.owned?
+      item.mark_inactive
+    end
   end
 
 end

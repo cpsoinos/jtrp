@@ -33,11 +33,15 @@
             <td class="text-center">
               <%= account.items.count %>
             </td>
-            <% if account.agreements.by_type("consign").present? %>
-              <td class="text-center">
+            <td class="text-center">
+              <% if account.agreements.by_type("consign").present? %>
                 <%= link_to "View Statements", account_statements_path(account), class: "btn btn-round btn-raised btn-primary" %>
-              </td>
-            <% end %>
+                <br />
+              <% end %>
+              <% unless account.inactive? %>
+                <%= link_to "Deactivate", account_deactivate_path(account), class: "btn btn-round btn-raised btn-primary", method: :post %>
+              <% end %>
+            </td>
           </tr>
         <% end %>
       </tbody>
