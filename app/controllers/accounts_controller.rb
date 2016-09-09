@@ -50,6 +50,15 @@ class AccountsController < ApplicationController
     end
   end
 
+  def deactivate
+    @account = Account.find(params[:account_id])
+    if @account.mark_inactive
+      redirect_to :back, notice: "Account deactivated"
+    else
+      redirect_to :back, alert: "Could not deactivate account."
+    end
+  end
+
   protected
 
   def account_params
