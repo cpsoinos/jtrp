@@ -54,7 +54,8 @@ class PdfGenerator
           file.class.class_eval { attr_accessor :original_filename, :content_type }
           file.original_filename = "#{account.full_name}_#{object.class.name}_#{object.id}.pdf"
           file.content_type = "application/pdf"
-          object.create_scanned_agreement(agreement: object, scan: file)
+          object.create_scanned_agreement(agreement: object, scan: file) if object.is_a?(Agreement)
+          object.create_statement_pdf(statement: object, pdf: file) if object.is_a?(Statement)
           # File.open("/tmp/#{account.full_name}_#{object.class.name}_#{object.id}.pdf", "wb") do |file|
           #   file.write(doc_response)
           # end

@@ -50,6 +50,9 @@ Rails.application.routes.draw do
         resources :items
       end
     end
+    resources :statements, only: [:index, :show] do
+      post '/send_email', to: 'statements#send_email', as: 'send_email'
+    end
   end
 
   resources :clients

@@ -3,6 +3,7 @@ class Agreement < ActiveRecord::Base
 
   belongs_to :proposal
   has_one :scanned_agreement
+  has_many :statements
 
   validates :agreement_type, presence: true
   validates :proposal, presence: true
