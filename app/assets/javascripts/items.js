@@ -150,10 +150,7 @@ $(document).ready(function() {
 
   $("select").imagepicker();
 
-});
-
-
-$(".items.show").ready(function() {
   $('#sale-date').datepicker({
   });
-})
+
+});
