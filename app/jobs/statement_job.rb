@@ -17,7 +17,7 @@ class StatementJob < ActiveJob::Base
       if statement.balance_cents == 0
         statement.pay
       end
-      save_as_pdf(statement)
+      # save_as_pdf(statement)
     end
   end
 
