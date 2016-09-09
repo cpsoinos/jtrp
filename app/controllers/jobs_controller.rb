@@ -10,7 +10,7 @@ class JobsController < ApplicationController
   end
 
   def show
-    @job = Job.find(params[:id])
+    @job = Job.includes(proposals: {items: :photos}).find(params[:id])
     @account = @job.account
   end
 

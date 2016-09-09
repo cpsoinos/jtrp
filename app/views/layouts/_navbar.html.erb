@@ -48,16 +48,7 @@
               <li><%= link_to "All Items", items_path%></li>
             </ul>
           </li>
-          <li class="dropdown">
-            <a href="<%= client_services_path %>" data-target="#" class="dropdown-toggle" data-toggle="dropdown"><i class='material-icons'>assignment_ind</i> Accounts <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu" id="accounts">
-              <li><%= link_to "Potential", accounts_path(status: 'potential') %></li>
-              <li><%= link_to "Active", accounts_path(status: 'active') %></li>
-              <li><%= link_to "Inactive", accounts_path(status: 'inactive') %></li>
-              <li><%= link_to "All Accounts", accounts_path %></li>
-            </ul>
-          </li>
+          <li><%= link_to "<i class='material-icons'>assignment_ind</i> Accounts".html_safe, accounts_path %></li>
           <li class="dropdown">
             <a href="<%= client_services_path %>" data-target="#" class="dropdown-toggle" data-toggle="dropdown"><i class='material-icons'>place</i> Jobs <b class="caret"></b>
             </a>

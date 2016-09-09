@@ -2,8 +2,7 @@ class AccountsController < ApplicationController
   before_filter :require_internal
 
   def index
-    @accounts = AccountsPresenter.new(params).filter
-    @filter = params[:status]
+    @accounts = Account.includes(:primary_contact).all.order(:account_number)
     @yard_sale = Account.yard_sale
     @estate_sale = Account.estate_sale
   end

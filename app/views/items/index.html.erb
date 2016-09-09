@@ -1,3 +1,6 @@
+<% meta @meta_tags %>
+<% meta title: "Items - #{@company.name}" %>
+
 <div class="row">
   <div class="col-sm-12 text-center">
     <h1 class="company-title">Items</h1>
@@ -52,13 +55,13 @@
         <% if current_user.try(:internal?) %>
           <% @intentions.each do |intention| %>
             <div role="tabpanel" class="tab-pane fade" id="<%= intention %>">
-              <%= render "items_list", headers: general_headers, context: "general", items: @items.where(client_intention: intention), cached: true %>
+              <%= render "items_list", headers: general_headers, context: "general", items: @items[intention] %>
             </div>
           <% end %>
         <% else %>
           <% @categories.each do |category| %>
             <div role="tabpanel" class="tab-pane fade" id="<%= category.name %>">
-              <%= render "items_list", headers: general_headers, context: "general", items: category.items.active, cached: true %>
+              <%= render "items_list", headers: general_headers, context: "general", items: category.items.active %>
             </div>
           <% end %>
         <% end %>
