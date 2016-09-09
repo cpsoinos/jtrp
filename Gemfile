@@ -59,6 +59,7 @@ gem 'prawn-labels'
 
 group :production, :staging do
   gem 'rollbar'
+  gem 'oj', '~> 2.12.14'
   gem 'scout_apm', '~> 3.0.x'
 end
 
