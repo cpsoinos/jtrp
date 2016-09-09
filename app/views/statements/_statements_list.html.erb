@@ -1,0 +1,39 @@
+<div class="row">
+
+  <div class="table-responsive">
+    <table class="table table-shopping">
+      <thead>
+        <tr>
+          <th class="text-center"></th>
+          <th class="text-center">Date</th>
+          <th class="text-center">Agreement No.</th>
+          <th class="text-center">Balance</th>
+          <th class="text-center">Paid?</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% statements.each do |statement| %>
+          <tr>
+            <td class="text-center">
+              <%= link_to "<i class='material-icons md-36'>account_balance_wallet</i> Consignment Statement".html_safe, account_statement_path(@account, statement) %>
+            </td>
+            <td class="text-center">
+              <%= statement.date.strftime('%-m/%-d/%y') %>
+            </td>
+            <td class="text-center">
+              <%= link_to statement.agreement_id, agreement_path(statement.agreement) %>
+            </td>
+            <td class="text-center">
+              <%= humanized_money_with_symbol(statement.balance) %>
+            </td>
+            <td class="text-center">
+              <%= statement.status %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+</div>

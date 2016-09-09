@@ -77,7 +77,7 @@
         <% unless params[:print] %>
           <%= render 'layouts/alerts', alert: alert, notice: notice %>
         <% end %>
-        <div class="row extra-large-top-margin">
+        <div class="row <%= 'extra-large-top-margin' unless params[:print] %>">
           <%= yield %>
         </div>
       </div>

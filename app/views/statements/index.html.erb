@@ -1,0 +1,17 @@
+<% meta @meta_tags %>
+<% meta title: "Consignment Statements - #{@company.name}" %>
+
+<div class="row">
+  <div class="col-sm-12 text-center">
+    <h1 class="company-title">Statements</h1>
+    <h4>for <%= @account.full_name %></h4>
+  </div>
+</div>
+
+<%= render 'index_header_cards' %>
+
+<div class="row large-top-margin">
+  <div class="col-xs-10 col-xs-offset-1 col-md-8 col-md-offset-2">
+    <%= render "statements_list", statements: @statements.unpaid %>
+  </div>
+</div>

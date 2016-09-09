@@ -33,11 +33,11 @@
             <td class="text-center">
               <%= account.items.count %>
             </td>
-            <!-- <td class="td-actions">
-              <button type="button" rel="tooltip" data-placement="left" title="" class="btn btn-simple" data-original-title="Remove account">
-                  <i class="material-icons">close</i>
-              </button>
-            </td> -->
+            <% if account.agreements.by_type("consign").present? %>
+              <td class="text-center">
+                <%= link_to "View Statements", account_statements_path(account), class: "btn btn-round btn-raised btn-primary" %>
+              </td>
+            <% end %>
           </tr>
         <% end %>
       </tbody>
