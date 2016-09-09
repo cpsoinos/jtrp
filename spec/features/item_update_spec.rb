@@ -20,8 +20,8 @@ feature "update an item" do
     scenario "visits edit item path" do
       visit item_path(item)
 
-      expect(page).to have_content(item.description)
-      expect(page).to have_content(item.description)
+      expect(page).to have_field("Description")
+      expect(page).to have_field("sale-date")
     end
 
     scenario "successfully updates an item" do
