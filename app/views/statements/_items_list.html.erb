@@ -3,87 +3,79 @@
 
 <div class="row">
 
-  <% if current_user.try(:internal?) %>
-    <div class="text-right">
-      <%= link_to "Print Labels", labels_items_path(by_id: items.pluck(:id)), class: "btn btn-info btn-raised btn-round" %>
-    </div>
-  <% end %>
-
-  <div class="table-responsive">
+  <div class="table-responsive large-top-margin">
     <table class="table table-shopping">
-
-      <thead>
-        <tr>
-          <th class="text-center"></th>
-          <th class="text-center">Item</th>
-          <th class="text-center"></th>
-          <th class="text-center"></th>
-          <th class="text-center"></th>
-        </tr>
-      </thead>
 
       <tbody>
         <% items.each do |item| %>
           <tr class="no-break">
+
             <td class="text-center">
               <div class="img-container">
                 <%= link_to image_tag(item.featured_photo.photo_url(client_hints: true, quality: "auto", fetch_format: :auto, dpr: "auto", effect: :improve, width: "120", height: "160", crop: "fill"), class: "img-rounded img-responsive img-raised"), item_path(item) %>
               </div>
             </td>
-            <td class="td-name">
-              <%= link_to item.original_description.titleize, item_path(item) %>
-            </td>
 
             <td>
-              <table class="nested-statement-table">
-                <tr>
-                  <td>Starting Asking Price</td>
-                  <td><%= humanized_money_with_symbol(item.listing_price) %></td>
+              <table>
+                <tr class="text-center">
+                  <th colspan="3">
+                    <h4><%= link_to "Item No. #{item.account_item_number}: #{item.original_description}" %></h4>
+                  </th>
                 </tr>
-                <tr>
-                  <td>Min. Sale Price</td>
-                  <td><%= humanized_money_with_symbol(item.minimum_sale_price) %></td>
-                </tr>
-                <tr>
-                  <td>Consignment Rate</td>
-                  <td><%= item.consignment_rate %>%</td>
-                </tr>
+                <td>
+                  <table class="nested-statement-table">
+                    <tr>
+                      <td class="statement-data">Starting Asking Price:</td>
+                      <td class="statement-data"><%= humanized_money_with_symbol(item.listing_price) %></td>
+                    </tr>
+                    <tr>
+                      <td class="statement-data">Min. Sale Price:</td>
+                      <td class="statement-data"><%= humanized_money_with_symbol(item.minimum_sale_price) %></td>
+                    </tr>
+                    <tr>
+                      <td class="statement-data">Consignment Rate:</td>
+                      <td class="statement-data"><%= item.consignment_rate %>%</td>
+                    </tr>
+                  </table>
+                </td>
+
+                <td>
+                  <table class="nested-statement-table">
+                    <tr>
+                      <td class="statement-data">Date Sold:</td>
+                      <td class="statement-data"><%= item.sold_at.strftime('%-m/%-d/%y') %></td>
+                    </tr>
+                    <tr>
+                      <td class="statement-data">Date Consigned:</td>
+                      <td class="statement-data"><%= item.listed_at.strftime('%-m/%-d/%y') %></td>
+                    </tr>
+                    <tr>
+                      <td class="statement-data">Days Consigned:</td>
+                      <td class="statement-data"><%= (item.sold_at.to_date - item.listed_at.to_date).to_i %></td>
+                    </tr>
+                  </table>
+                </td>
+
+                <td>
+                  <table class="nested-statement-table">
+                    <tr>
+                      <td class="statement-data">Sale Price:</td>
+                      <td class="statement-data"><%= humanized_money_with_symbol(item.sale_price) %></td>
+                    </tr>
+                    <tr>
+                      <td class="statement-data">Consignment Fee:</td>
+                      <td class="statement-data"><%= humanized_money_with_symbol((item.sale_price * item.consignment_rate) / 100) %></td>
+                    </tr>
+                    <tr>
+                      <th class="statement-data">Due to Consignor:</td>
+                      <th class="statement-data text-right"><%= humanized_money_with_symbol((item.sale_price - (item.sale_price * (1 - item.consignment_rate))) / 100) %></td>
+                    </tr>
+                  </table>
+                </td>
               </table>
             </td>
 
-            <td>
-              <table class="nested-statement-table">
-                <tr>
-                  <td>Date Sold</td>
-                  <td><%= item.sold_at.strftime('%-m/%-d/%y') %></td>
-                </tr>
-                <tr>
-                  <td>Date Consigned</td>
-                  <td><%= item.listed_at.strftime('%-m/%-d/%y') %></td>
-                </tr>
-                <tr>
-                  <td>Days Consigned</td>
-                  <td><%= (item.sold_at.to_date - item.listed_at.to_date).to_i %></td>
-                </tr>
-              </table>
-            </td>
-
-            <td>
-              <table class="nested-statement-table">
-                <tr>
-                  <td>Sale Price</td>
-                  <td><%= humanized_money_with_symbol(item.sale_price) %></td>
-                </tr>
-                <tr>
-                  <td>Consignment Fee</td>
-                  <td><%= humanized_money_with_symbol((item.sale_price * item.consignment_rate) / 100) %></td>
-                </tr>
-                <tr>
-                  <td>Due to Consignor</td>
-                  <td><%= humanized_money_with_symbol((item.sale_price - (item.sale_price * (1 - item.consignment_rate))) / 100) %></td>
-                </tr>
-              </table>
-            </td>
 
           </tr>
         <% end %>

@@ -17,7 +17,12 @@ class StatementJob < ActiveJob::Base
       if statement.balance_cents == 0
         statement.pay
       end
+      save_as_pdf(statement)
     end
+  end
+
+  def save_as_pdf(statement)
+    PdfGenerator.new(statement).render_pdf
   end
 
 end

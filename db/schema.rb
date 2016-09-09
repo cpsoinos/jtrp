@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160907112052) do
+ActiveRecord::Schema.define(version: 20160909000714) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -138,11 +138,15 @@ ActiveRecord::Schema.define(version: 20160907112052) do
     t.string   "original_description"
   end
 
+  add_index "items", ["account_item_number"], name: "index_items_on_account_item_number", using: :btree
   add_index "items", ["category_id"], name: "index_items_on_category_id", using: :btree
   add_index "items", ["client_intention"], name: "index_items_on_client_intention", using: :btree
   add_index "items", ["order_id"], name: "index_items_on_order_id", using: :btree
   add_index "items", ["proposal_id"], name: "index_items_on_proposal_id", using: :btree
+  add_index "items", ["status", "account_item_number", "jtrp_number"], name: "index_items_on_status_and_account_item_number_and_jtrp_number", using: :btree
+  add_index "items", ["status", "account_item_number"], name: "index_items_on_status_and_account_item_number", using: :btree
   add_index "items", ["status", "client_intention"], name: "index_items_on_status_and_client_intention", using: :btree
+  add_index "items", ["status", "jtrp_number"], name: "index_items_on_status_and_jtrp_number", using: :btree
   add_index "items", ["status"], name: "index_items_on_status", using: :btree
 
   create_table "jobs", force: :cascade do |t|
@@ -208,6 +212,15 @@ ActiveRecord::Schema.define(version: 20160907112052) do
 
   add_index "scanned_agreements", ["agreement_id"], name: "index_scanned_agreements_on_agreement_id", using: :btree
 
+  create_table "statement_pdfs", force: :cascade do |t|
+    t.integer  "statement_id"
+    t.string   "pdf"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "statement_pdfs", ["statement_id"], name: "index_statement_pdfs_on_statement_id", using: :btree
+
   create_table "statements", force: :cascade do |t|
     t.integer  "agreement_id"
     t.datetime "date"
@@ -216,7 +229,6 @@ ActiveRecord::Schema.define(version: 20160907112052) do
     t.integer  "balance_cents"
     t.string   "balance_currency", default: "USD", null: false
     t.integer  "check_number"
-    t.string   "pdf"
     t.string   "status"
   end
 
@@ -285,6 +297,7 @@ ActiveRecord::Schema.define(version: 20160907112052) do
   add_foreign_key "photos", "items"
   add_foreign_key "photos", "proposals"
   add_foreign_key "scanned_agreements", "agreements"
+  add_foreign_key "statement_pdfs", "statements"
   add_foreign_key "statements", "agreements"
   add_foreign_key "users", "accounts"
 end
