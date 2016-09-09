@@ -530,6 +530,8 @@ GEM
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 3.0)
       netrc (~> 0.7)
+    rollbar (2.12.0)
+      multi_json
     rspec (3.4.0)
       rspec-core (~> 3.4.0)
       rspec-expectations (~> 3.4.0)
@@ -733,6 +735,7 @@ DEPENDENCIES
   readthis
   redis-browser
   remotipart (~> 1.2)
+  rollbar
   rspec-rails (~> 3.0)
   rspec-sidekiq
   rubyzip
