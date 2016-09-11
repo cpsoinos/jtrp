@@ -151,6 +151,18 @@ $(document).ready(function() {
   $("select").imagepicker();
 
   $('#sale-date').datepicker({
+    zIndexOffset: '9999'
   });
+
+  // Dynamically create mark-sold-modals
+  $("#mark-sold-modal").on('shown.bs.modal', function (event) {
+    var button = $(event.relatedTarget) // Button that triggered the modal
+    var itemDescription = button.data('itemDescription') // Extract info from data-* attributes
+    var itemId = button.data('itemId') // Extract info from data-* attributes
+    var modal = $(this)
+    modal.find('form').attr('action', ('/items/' + itemId));
+    modal.find('.modal-title').text(itemDescription);
+  })
+
 
 });

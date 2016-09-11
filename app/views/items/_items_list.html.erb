@@ -55,10 +55,7 @@
                 <% if item.active? %>
                   <br />
                   <br />
-                  <div class="text-left hidden-print">
-                    <%= render 'items/mark_sold_modal', item: item, redirect_url: request.original_url %>
-                  </div>
-                  <button type="button" class="btn btn-raised btn-success btn-round hidden-print" data-toggle="modal" data-target="#<%= item.id %>-mark-sold-modal">
+                  <button type="button" class="btn btn-raised btn-success btn-round hidden-print" data-toggle="modal" data-target="#mark-sold-modal" data-item-id="<%= item.id %>" data-item-description="<%= item.description %>">
                     Mark as Sold <i class='material-icons'>done</i>
                   </button>
                 <% end %>

@@ -30,6 +30,12 @@ class Order < ActiveRecord::Base
     end
   end
 
+  def remote_item_ids_from_line_items
+    line_items.map do |element|
+      element.item.id
+    end
+  end
+
   def update_order
     self.amount_cents = remote_order.total
     self.created_at = format_time(remote_order.createdTime)
@@ -40,7 +46,7 @@ class Order < ActiveRecord::Base
   def add_items_to_order
     return unless line_items.present?
     remote_item_ids = line_items.map(&:id)
-    items = Item.where(remote_id: remote_item_ids)
+    items = Item.where(remote_id: remote_item_ids_from_line_items)
     items.update_all(order_id: id)
   end
 

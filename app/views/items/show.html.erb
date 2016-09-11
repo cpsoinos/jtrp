@@ -72,7 +72,7 @@
               <% end %>
             </ul>
             <% unless @item.sold? %>
-              <button type="button" class="btn btn-raised btn-primary btn-round" data-toggle="modal" data-target="#<%= @item.id %>-mark-sold-modal">
+              <button type="button" class="btn btn-raised btn-primary btn-round" data-toggle="modal" data-target="#mark-sold-modal" data-item-id="<%= @item.id %>" data-item-description="<%= @item.description %>">
                 Mark as Sold <i class='material-icons'>done</i>
               </button>
             <% end %>

@@ -27,6 +27,9 @@
           <div role="tabpanel" class="tab-pane fade" id="<%= key %>">
             <% case key %>
             <% when "item" %>
+              <% if current_user.try(:internal?) %>
+                <%= render 'items/mark_sold_modal', redirect_url: request.original_url %>
+              <% end %>
               <%= render "items/items_list", items: values, headers: general_headers, context: "general" %>
             <% when "account" %>
               <%= render "accounts/accounts_list", accounts: values %>
