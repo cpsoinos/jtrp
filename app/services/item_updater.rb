@@ -54,7 +54,6 @@ class ItemUpdater
   end
 
   def process_sold_at
-    binding.pry
     if attrs[:sold_at].present?
       formatted_date = attrs[:sold_at].split("/")
       attrs[:sold_at] = "#{formatted_date[1]}/#{formatted_date[0]}/#{formatted_date[2]}"
