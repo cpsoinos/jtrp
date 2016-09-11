@@ -7,9 +7,13 @@ describe Order do
     let(:order) { create(:order) }
     let(:webhook) { create(:webhook) }
     let(:remote_order) { double("remote_order") }
+    let(:line_items) { double("line_items") }
+    let(:elements) { DeepStruct.wrap([{item: {id: "1234"}, name: "some name"}, {name: "Manual Transaction"}]) }
 
     before do
       allow(Clover::Order).to receive(:find).with(order).and_return(remote_order)
+      allow(remote_order).to receive(:lineItems).and_return(line_items)
+      allow(line_items).to receive(:elements).and_return(elements)
       allow(remote_order).to receive(:total).and_return(1234)
       allow(remote_order).to receive(:createdTime).and_return(4567)
       allow(remote_order).to receive(:modifiedTime).and_return(8963)
