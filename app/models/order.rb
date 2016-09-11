@@ -24,20 +24,16 @@ class Order < ActiveRecord::Base
 
   def line_items
     if remote_order.try(:lineItems)
-      Clover::LineItem.find(self)
+      remote_order.lineItems.elements
     else
       []
     end
   end
 
   def remote_item_ids_from_line_items
-    line_items.elements.map do |element|
+    line_items.map do |element|
       element.item.id
     end
-  end
-
-  def items_from_remote_ids
-    Item.where(remote_id: remote_item_ids_from_line_items)
   end
 
   def update_order
@@ -49,7 +45,9 @@ class Order < ActiveRecord::Base
 
   def add_items_to_order
     return unless line_items.present?
-    items_from_remote_ids.update_all(order_id: id)
+    remote_item_ids = line_items.map(&:id)
+    items = Item.where(remote_id: remote_item_ids_from_line_items)
+    items.update_all(order_id: id)
   end
 
   def remote_order_open?
