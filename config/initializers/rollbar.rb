@@ -9,6 +9,15 @@ Rollbar.configure do |config|
     config.enabled = false
   end
 
+  config.js_enabled = true
+  config.js_options = {
+    accessToken: ENV['ROLLBAR_ACCESS_TOKEN'],
+    captureUncaught: true,
+    payload: {
+      environment: ENV['ROLLBAR_ENV'] || Rails.env
+    }
+  }
+
   # By default, Rollbar will try to call the `current_user` controller method
   # to fetch the logged-in user object, and then call that object's `id`,
   # `username`, and `email` methods to fetch those properties. To customize:
@@ -44,7 +53,7 @@ Rollbar.configure do |config|
   # config.use_sucker_punch
 
   # Enable delayed reporting (using Sidekiq)
-  # config.use_sidekiq
+  config.use_sidekiq
   # You can supply custom Sidekiq options:
   # config.use_sidekiq 'queue' => 'default'
 
