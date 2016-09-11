@@ -128,6 +128,13 @@ describe Item do
       expect(item).to be_active
     end
 
+    it "transitions 'inactive' to 'sold'" do
+      item = create(:item, :inactive)
+      item.mark_sold
+
+      expect(item).to be_sold
+    end
+
     it "transitions to 'inactive'" do
       item = create(:item, :active, remote_id: "ABC123", listing_price_cents: 5000)
       item.mark_inactive!
