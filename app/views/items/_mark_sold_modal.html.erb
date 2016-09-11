@@ -1,7 +1,7 @@
-<div class="modal fade" tabindex="-1" role="dialog" id="<%= item.id %>-mark-sold-modal">
+<div class="modal fade" tabindex="-1" role="dialog" id="mark-sold-modal">
   <div class="modal-dialog">
-    <%= form_for item do |f| %>
-    
+    <%= form_tag '', method: :put do %>
+
       <% if local_assigns[:redirect_url] %>
         <%= hidden_field_tag :redirect_url, redirect_url %>
       <% end %>
@@ -9,29 +9,33 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title"><%= item.description %></h4>
+          <h4 class="modal-title">Item Description</h4>
         </div>
         <div class="modal-body">
 
-          <div class="form-group">
-            <%= f.label :sale_price, class: "control-label" %>
-            <div class="input-group">
-              <span class="input-group-addon">$</span>
-              <%= f.number_field :sale_price, class: "form-control text-field", step: 0.01 %>
+          <div class="row">
+            <div class="col-xs-12 col-md-6">
+              <div class="form-group">
+                <%= label_tag :sale_price, nil, class: "control-label" %>
+                <div class="input-group">
+                  <span class="input-group-addon">$</span>
+                  <%= number_field_tag "item[sale_price]", nil, class: "form-control text-field", step: 0.01 %>
+                </div>
+              </div>
             </div>
-          </div>
-
-          <div class="form-group">
-            <%= f.label :sold_at, class: "control-label" %>
-            <div class="input-group">
-              <%= f.text_field :sold_at, id: "sale-date" %>
+            <div class="col-xs-12 col-md-6">
+              <div class="form-group">
+                <%= label_tag :sold_at, nil, class: "control-label" %>
+                <div class="input-group">
+                  <%= text_field_tag "item[sold_at]", nil, id: "sale-date", data: {provide: "datepicker"} %>
+                </div>
+              </div>
             </div>
           </div>
 
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <%= f.submit class: "btn btn-raised btn-primary" %>
+          <%= submit_tag "Update Item", class: "btn btn-raised btn-primary" %>
         </div>
       </div><!-- /.modal-content -->
     <% end %>
