@@ -58,6 +58,10 @@ gem 'redis-browser'
 gem 'prawn-labels'
 gem 'rollbar'
 gem 'oj', '~> 2.12.14'
+gem 'analytics-ruby', require: 'segment'
+gem 'indefinite_article'
+gem 'activerecord-userstamp'
+gem 'paranoia', '~> 2.0'
 
 group :production, :staging do
   gem 'scout_apm', '~> 3.0.x'
@@ -82,6 +86,7 @@ group :development, :test, :local do
   gem 'guard-rspec', require: false
   gem 'terminal-notifier-guard'
   gem 'selenium-webdriver'
+  gem 'parallel_tests'
 end
 
 group :development, :local do

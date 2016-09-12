@@ -1,9 +1,18 @@
 class User < ActiveRecord::Base
+  include Trackable
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable,
          :omniauthable, omniauth_providers: [:clover]
+
+  model_stamper
+  stampable
+
+  acts_as_paranoid
+
+  after_create :track_creation
+  after_update :track_update
 
   attr_accessor :skip_password_validation  # virtual attribute to skip password validation while saving
 

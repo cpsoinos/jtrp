@@ -1,5 +1,12 @@
 class Agreement < ActiveRecord::Base
   include Filterable
+  include Trackable
+
+  stampable
+  acts_as_paranoid
+
+  after_create :track_creation
+  after_update :track_update
 
   belongs_to :proposal
   has_one :scanned_agreement

@@ -2,6 +2,8 @@ class Job < ActiveRecord::Base
   include Filterable
   include PgSearch
 
+  acts_as_paranoid
+
   multisearchable against: [:address_1, :city, :state, :zip, :status]
 
   belongs_to :account

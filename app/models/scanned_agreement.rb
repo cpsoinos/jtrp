@@ -2,6 +2,8 @@ class ScannedAgreement < ActiveRecord::Base
   belongs_to :agreement
   mount_uploader :scan, ScannedAgreementUploader
 
+  acts_as_paranoid
+
   validates :agreement, presence: true
   validates :scan, presence: true
 

@@ -1,4 +1,11 @@
 class Proposal < ActiveRecord::Base
+  include Trackable
+
+  acts_as_paranoid
+
+  after_create :track_creation
+  after_update :track_update
+
   belongs_to :job
   belongs_to :created_by, class_name: "User"
   has_many :items, dependent: :destroy

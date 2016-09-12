@@ -2,6 +2,8 @@ class Statement < ActiveRecord::Base
   belongs_to :agreement
   has_one :statement_pdf
 
+  acts_as_paranoid
+
   monetize :balance_cents, allow_nil: true, numericality: {
     greater_than_or_equal_to: 0,
     less_than_or_equal_to: 100000

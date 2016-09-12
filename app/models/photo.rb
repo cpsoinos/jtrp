@@ -3,6 +3,8 @@ class Photo < ActiveRecord::Base
   belongs_to :proposal
   mount_uploader :photo, PhotoUploader
 
+  acts_as_paranoid
+
   validates :photo_type, presence: true
 
   scope :initial, -> { where(photo_type: 'initial') }

@@ -1,0 +1,28 @@
+class AddIndexesToTablesWithParanoia < ActiveRecord::Migration
+  def change
+    add_index :accounts, [:deleted_at, :primary_contact_id]
+    add_index :agreements, [:deleted_at, :proposal_id]
+    add_index :categories, [:deleted_at, :parent_id]
+    add_index :companies, [:deleted_at, :primary_contact_id]
+    add_index :items, [:deleted_at, :account_item_number]
+    add_index :items, [:deleted_at, :category_id]
+    add_index :items, [:deleted_at, :client_intention]
+    add_index :items, [:deleted_at, :order_id]
+    add_index :items, [:deleted_at, :proposal_id]
+    add_index :items, [:deleted_at, :status, :account_item_number]
+    add_index :items, [:deleted_at, :status, :client_intention]
+    add_index :items, [:deleted_at, :status, :jtrp_number]
+    add_index :items, [:deleted_at, :status]
+    add_index :jobs, [:deleted_at, :account_id]
+    add_index :photos, [:deleted_at, :item_id, :photo_type]
+    add_index :photos, [:deleted_at, :item_id]
+    add_index :photos, [:deleted_at, :proposal_id]
+    add_index :proposals, [:deleted_at, :job_id]
+    add_index :scanned_agreements, [:deleted_at, :agreement_id]
+    add_index :statement_pdfs, [:deleted_at, :statement_id]
+    add_index :statements, [:deleted_at, :agreement_id]
+    add_index :users, [:deleted_at, :account_id]
+    add_index :users, [:deleted_at, :email]
+    add_index :users, [:deleted_at, :reset_password_token]
+  end
+end

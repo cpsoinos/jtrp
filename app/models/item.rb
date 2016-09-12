@@ -1,6 +1,10 @@
 class Item < ActiveRecord::Base
   include Filterable
   include PgSearch
+  include Trackable
+
+  stampable
+  acts_as_paranoid
 
   multisearchable against: [:description, :original_description, :status, :client_intention, :will_consign, :will_purchase]
   paginates_per 10
@@ -14,6 +18,8 @@ class Item < ActiveRecord::Base
   belongs_to :parent_item, class_name: "Item", foreign_key: "parent_item_id"
 
   before_create :record_original_description
+  after_create :track_creation
+  after_update :track_update
 
   has_secure_token
 

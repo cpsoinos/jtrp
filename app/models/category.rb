@@ -4,6 +4,8 @@ class Category < ActiveRecord::Base
   belongs_to :parent, class_name: "Category"
   mount_uploader :photo, PhotoUploader
 
+  acts_as_paranoid
+
   validates :name, presence: true, uniqueness: true
 
   scope :primary, -> { where(parent: nil) }

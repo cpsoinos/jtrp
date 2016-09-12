@@ -2,6 +2,8 @@ class StatementPdf < ActiveRecord::Base
   belongs_to :statement
   mount_uploader :pdf, ScannedAgreementUploader
 
+  acts_as_paranoid
+
   validates :statement, presence: true
   validates :pdf, presence: true
 
