@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).on('turbolinks:load', function() {
   $("#user_role").change(function() {
     if(this.checked) {
       $(".modal").modal();

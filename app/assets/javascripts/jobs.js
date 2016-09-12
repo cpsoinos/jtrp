@@ -1,4 +1,4 @@
-$(".jobs.new").ready(function() {
+$(".jobs.new").on('turbolinks:load', function() {
 
   if (gon.accounts !== undefined) {
     var accountData = JSON.parse(gon.accounts)

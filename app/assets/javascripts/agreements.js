@@ -1,7 +1,4 @@
-$(".agreements").ready(function() {
-
-  var $tab = $($("a[role='tab']")[0])
-  $tab.tab("show");
+$(".agreements").on('turbolinks:load', function() {
 
   $('.purchase-order-service-charge').bind("ajax:success", function() {
     var serviceChargeWithSymbol = $(this).html();
