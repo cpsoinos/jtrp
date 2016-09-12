@@ -1,10 +1,9 @@
-$(".jobs.new").on('turbolinks:load', function() {
+$(document).on('turbolinks:load', function() {
 
   if (gon.accounts !== undefined) {
     var accountData = JSON.parse(gon.accounts)
     slickifyDropdown($(".accounts-dropdown"), accountData);
   };
-
 
   $("#account-selector-button").click(function() {
     $("#account-selector").toggleClass('hidden');
