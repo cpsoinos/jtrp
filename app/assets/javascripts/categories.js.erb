@@ -1,4 +1,4 @@
-$(".categories.index").ready(function() {
+$(".categories.index").on('turbolinks:load', function() {
 
   var feed = new Instafeed({
     get: 'user',

@@ -19,10 +19,7 @@ class PdfGenerator
       document_url:     object.object_url,
       name:             "#{account.full_name}_#{object.class.name}_#{object.id}.pdf",
       document_type:    "pdf",
-      javascript:       true,
-      # prince_options: {
-      #   media: "screen"
-      # }
+      javascript:       true
     )
   end
 
@@ -31,17 +28,12 @@ class PdfGenerator
 
     begin
 
-      # https://docraptor.com/documentation/api#api_general
       create_response = $docraptor.create_async_doc(
         test:             (Rails.env == 'production' ? false : true),
         document_url:     "#{object.object_url}?print=true",
         name:             "#{account.full_name}_#{object.class.name}_#{object.id}.pdf",
         document_type:    "pdf",
-        javascript:       true,
-        # prince_options: {
-        #   media: "screen",                                            # use screen styles instead of print styles
-        #   baseurl: "http://hello.com",                                # pretend URL when using document_content
-        # },
+        javascript:       true
       )
 
       loop do
@@ -56,9 +48,6 @@ class PdfGenerator
           file.content_type = "application/pdf"
           object.create_scanned_agreement(agreement: object, scan: file) if object.is_a?(Agreement)
           object.create_statement_pdf(statement: object, pdf: file) if object.is_a?(Statement)
-          # File.open("/tmp/#{account.full_name}_#{object.class.name}_#{object.id}.pdf", "wb") do |file|
-          #   file.write(doc_response)
-          # end
           puts "Wrote PDF to /tmp/#{account.full_name}_#{object.class.name}_#{object.id}.pdf"
           break
         when "failed"

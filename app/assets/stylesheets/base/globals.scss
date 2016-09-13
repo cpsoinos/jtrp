@@ -1,3 +1,8 @@
+@font-face {
+  font-family: 'Bradley Hand';
+  src: font-url('bradley-hand-bold.ttf');
+}
+
 @media all {
 	.page-break	{ display: none; }
 }
@@ -40,7 +45,7 @@ div.navbar.navbar-default {
 }
 
 .navbar-brand {
-  font-family: "bradley hand";
+  font-family: "Bradley Hand";
 }
 
 .panel, .panel-heading, body .container .well, body .container-fluid .well, body .container .jumbotron, body .container-fluid .jumbotron {
