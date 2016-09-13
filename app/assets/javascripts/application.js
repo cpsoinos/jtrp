@@ -11,6 +11,7 @@
 // about supported directives.
 //
 //= require jquery
+//= require jquery.turbolinks
 //= require jquery_ujs
 //= require bootsy
 //= require jquery.remotipart
@@ -40,15 +41,4 @@
 //= require cloudinary
 //= require image-picker
 //= require_tree .
-
-$(document).ready(function() {
-
-  /* Fade out flash messages after 5 sec */
-  $('.alert').delay(5000).fadeOut();
-
-  /* Activating Best In Place */
-  jQuery(".best_in_place").best_in_place();
-
-  /*Initialize material design javascripts */
-  $.material.init();
-});
+//= require turbolinks

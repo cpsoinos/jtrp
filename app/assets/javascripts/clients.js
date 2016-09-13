@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).on('turbolinks:load', function() {
 
   $("#new-client-button").click(function() {
     $("#new-client-form").toggleClass('hidden');

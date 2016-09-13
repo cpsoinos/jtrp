@@ -1,8 +1,5 @@
-$(".agreements").ready(function() {
-
-  var $tab = $($("a[role='tab']")[0])
-  $tab.tab("show");
-
+$(document).on('turbolinks:load', function() {
+  
   $('.purchase-order-service-charge').bind("ajax:success", function() {
     var serviceChargeWithSymbol = $(this).html();
     var serviceCharge = Number(serviceChargeWithSymbol.replace(/[^0-9\.]+/g,""));

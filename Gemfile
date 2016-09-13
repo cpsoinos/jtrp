@@ -11,6 +11,8 @@ gem 'jquery-rails'
 gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
+gem 'turbolinks'
+gem 'jquery-turbolinks'
 gem 'dotenv-rails', require: 'dotenv/rails-now'
 gem 'devise'
 gem 'carrierwave'

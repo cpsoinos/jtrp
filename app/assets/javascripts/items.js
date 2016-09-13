@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).on('turbolinks:load', function() {
 
   $("#add-existing-item-button").click(function() {
     var itemId = $(".dd-selected-value")[0].value
@@ -117,7 +117,6 @@ $(document).ready(function() {
     }
   });
 
-
   $('.cloudinary-fileupload').bind('cloudinarydone', function(e, data) {
     $('.preview').append(
       "<img src='" + data.result.secure_url + "' id=" + data.result.public_id + ">"
@@ -145,9 +144,6 @@ $(document).ready(function() {
     $('.progress_bar').css('width', Math.round((data.loaded * 100.0) / data.total) + '%');
   });
 
-  var $tab = $($("a[role='tab']")[0])
-  $tab.tab("show");
-
   $("select").imagepicker();
 
   $('#sale-date').datepicker({
@@ -163,6 +159,5 @@ $(document).ready(function() {
     modal.find('form').attr('action', ('/items/' + itemId));
     modal.find('.modal-title').text(itemDescription);
   })
-
 
 });
