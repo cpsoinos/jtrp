@@ -8,7 +8,7 @@ class Item < ActiveRecord::Base
   has_many :photos, dependent: :destroy
   accepts_nested_attributes_for :photos
   belongs_to :category
-  belongs_to :proposal
+  belongs_to :proposal, counter_cache: true
   belongs_to :order
   has_many :children, class_name: "Item", foreign_key: "parent_item_id"
   belongs_to :parent_item, class_name: "Item", foreign_key: "parent_item_id"
