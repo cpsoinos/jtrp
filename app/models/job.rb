@@ -4,7 +4,7 @@ class Job < ActiveRecord::Base
 
   multisearchable against: [:address_1, :city, :state, :zip, :status]
 
-  belongs_to :account
+  belongs_to :account, counter_cache: true
   has_many :proposals, dependent: :destroy
   has_many :items, through: :proposals
   has_many :agreements, through: :proposals

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160909000714) do
+ActiveRecord::Schema.define(version: 20160914220426) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,8 +28,12 @@ ActiveRecord::Schema.define(version: 20160909000714) do
     t.integer  "primary_contact_id"
     t.string   "status",             default: "potential", null: false
     t.integer  "last_item_number",   default: 0
+    t.datetime "deleted_at"
+    t.integer  "jobs_count"
   end
 
+  add_index "accounts", ["deleted_at", "primary_contact_id"], name: "index_accounts_on_deleted_at_and_primary_contact_id", using: :btree
+  add_index "accounts", ["deleted_at"], name: "index_accounts_on_deleted_at", using: :btree
   add_index "accounts", ["primary_contact_id"], name: "index_accounts_on_primary_contact_id", using: :btree
 
   create_table "agreements", force: :cascade do |t|
@@ -46,8 +50,14 @@ ActiveRecord::Schema.define(version: 20160909000714) do
     t.datetime "updated_at"
     t.integer  "service_charge_cents",    default: 0,     null: false
     t.string   "service_charge_currency", default: "USD", null: false
+    t.integer  "created_by_id"
+    t.integer  "updated_by_id"
+    t.integer  "deleted_by_id"
+    t.datetime "deleted_at"
   end
 
+  add_index "agreements", ["deleted_at", "proposal_id"], name: "index_agreements_on_deleted_at_and_proposal_id", using: :btree
+  add_index "agreements", ["deleted_at"], name: "index_agreements_on_deleted_at", using: :btree
   add_index "agreements", ["proposal_id"], name: "index_agreements_on_proposal_id", using: :btree
 
   create_table "archives", force: :cascade do |t|
@@ -69,36 +79,59 @@ ActiveRecord::Schema.define(version: 20160909000714) do
   end
 
   create_table "categories", force: :cascade do |t|
-    t.string   "name",       null: false
+    t.string   "name",          null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "parent_id"
     t.string   "photo"
+    t.integer  "created_by_id"
+    t.integer  "updated_by_id"
+    t.integer  "deleted_by_id"
+    t.datetime "deleted_at"
   end
 
+  add_index "categories", ["deleted_at", "parent_id"], name: "index_categories_on_deleted_at_and_parent_id", using: :btree
+  add_index "categories", ["deleted_at"], name: "index_categories_on_deleted_at", using: :btree
   add_index "categories", ["parent_id"], name: "index_categories_on_parent_id", using: :btree
 
   create_table "companies", force: :cascade do |t|
-    t.string  "name",                        null: false
-    t.string  "slogan"
-    t.text    "description"
-    t.string  "address_1"
-    t.string  "address_2"
-    t.string  "city"
-    t.string  "state"
-    t.string  "zip"
-    t.string  "phone"
-    t.string  "phone_ext"
-    t.string  "website"
-    t.string  "logo"
-    t.text    "consignment_policies"
-    t.text    "service_rate_schedule"
-    t.text    "agent_service_rate_schedule"
-    t.string  "email"
-    t.integer "primary_contact_id"
+    t.string   "name",                        null: false
+    t.string   "slogan"
+    t.text     "description"
+    t.string   "address_1"
+    t.string   "address_2"
+    t.string   "city"
+    t.string   "state"
+    t.string   "zip"
+    t.string   "phone"
+    t.string   "phone_ext"
+    t.string   "website"
+    t.string   "logo"
+    t.text     "consignment_policies"
+    t.text     "service_rate_schedule"
+    t.text     "agent_service_rate_schedule"
+    t.string   "email"
+    t.integer  "primary_contact_id"
+    t.integer  "created_by_id"
+    t.integer  "updated_by_id"
+    t.integer  "deleted_by_id"
+    t.datetime "deleted_at"
   end
 
+  add_index "companies", ["deleted_at", "primary_contact_id"], name: "index_companies_on_deleted_at_and_primary_contact_id", using: :btree
+  add_index "companies", ["deleted_at"], name: "index_companies_on_deleted_at", using: :btree
   add_index "companies", ["primary_contact_id"], name: "index_companies_on_primary_contact_id", using: :btree
+
+  create_table "events", force: :cascade do |t|
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "object_id"
+    t.string   "object_type"
+    t.string   "verb"
+  end
+
+  add_index "events", ["user_id"], name: "index_events_on_user_id", using: :btree
 
   create_table "item_spreadsheets", force: :cascade do |t|
     t.string "csv"
@@ -136,11 +169,25 @@ ActiveRecord::Schema.define(version: 20160909000714) do
     t.integer  "parent_item_id"
     t.integer  "jtrp_number"
     t.string   "original_description"
+    t.integer  "created_by_id"
+    t.integer  "updated_by_id"
+    t.integer  "deleted_by_id"
+    t.datetime "deleted_at"
   end
 
   add_index "items", ["account_item_number"], name: "index_items_on_account_item_number", using: :btree
   add_index "items", ["category_id"], name: "index_items_on_category_id", using: :btree
   add_index "items", ["client_intention"], name: "index_items_on_client_intention", using: :btree
+  add_index "items", ["deleted_at", "account_item_number"], name: "index_items_on_deleted_at_and_account_item_number", using: :btree
+  add_index "items", ["deleted_at", "category_id"], name: "index_items_on_deleted_at_and_category_id", using: :btree
+  add_index "items", ["deleted_at", "client_intention"], name: "index_items_on_deleted_at_and_client_intention", using: :btree
+  add_index "items", ["deleted_at", "order_id"], name: "index_items_on_deleted_at_and_order_id", using: :btree
+  add_index "items", ["deleted_at", "proposal_id"], name: "index_items_on_deleted_at_and_proposal_id", using: :btree
+  add_index "items", ["deleted_at", "status", "account_item_number"], name: "index_items_on_deleted_at_and_status_and_account_item_number", using: :btree
+  add_index "items", ["deleted_at", "status", "client_intention"], name: "index_items_on_deleted_at_and_status_and_client_intention", using: :btree
+  add_index "items", ["deleted_at", "status", "jtrp_number"], name: "index_items_on_deleted_at_and_status_and_jtrp_number", using: :btree
+  add_index "items", ["deleted_at", "status"], name: "index_items_on_deleted_at_and_status", using: :btree
+  add_index "items", ["deleted_at"], name: "index_items_on_deleted_at", using: :btree
   add_index "items", ["order_id"], name: "index_items_on_order_id", using: :btree
   add_index "items", ["proposal_id"], name: "index_items_on_proposal_id", using: :btree
   add_index "items", ["status", "account_item_number", "jtrp_number"], name: "index_items_on_status_and_account_item_number_and_jtrp_number", using: :btree
@@ -150,16 +197,22 @@ ActiveRecord::Schema.define(version: 20160909000714) do
   add_index "items", ["status"], name: "index_items_on_status", using: :btree
 
   create_table "jobs", force: :cascade do |t|
-    t.integer "account_id"
-    t.string  "address_1"
-    t.string  "address_2"
-    t.string  "city"
-    t.string  "state"
-    t.string  "zip"
-    t.string  "status",     default: "potential", null: false
+    t.integer  "account_id"
+    t.string   "address_1"
+    t.string   "address_2"
+    t.string   "city"
+    t.string   "state"
+    t.string   "zip"
+    t.string   "status",        default: "potential", null: false
+    t.integer  "created_by_id"
+    t.integer  "updated_by_id"
+    t.integer  "deleted_by_id"
+    t.datetime "deleted_at"
   end
 
   add_index "jobs", ["account_id"], name: "index_jobs_on_account_id", using: :btree
+  add_index "jobs", ["deleted_at", "account_id"], name: "index_jobs_on_deleted_at_and_account_id", using: :btree
+  add_index "jobs", ["deleted_at"], name: "index_jobs_on_deleted_at", using: :btree
 
   create_table "orders", force: :cascade do |t|
     t.string   "remote_id"
@@ -186,8 +239,13 @@ ActiveRecord::Schema.define(version: 20160909000714) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "proposal_id"
+    t.datetime "deleted_at"
   end
 
+  add_index "photos", ["deleted_at", "item_id", "photo_type"], name: "index_photos_on_deleted_at_and_item_id_and_photo_type", using: :btree
+  add_index "photos", ["deleted_at", "item_id"], name: "index_photos_on_deleted_at_and_item_id", using: :btree
+  add_index "photos", ["deleted_at", "proposal_id"], name: "index_photos_on_deleted_at_and_proposal_id", using: :btree
+  add_index "photos", ["deleted_at"], name: "index_photos_on_deleted_at", using: :btree
   add_index "photos", ["item_id", "photo_type"], name: "index_photos_on_item_id_and_photo_type", using: :btree
   add_index "photos", ["item_id"], name: "index_photos_on_item_id", using: :btree
   add_index "photos", ["photo_type"], name: "index_photos_on_photo_type", using: :btree
@@ -199,8 +257,14 @@ ActiveRecord::Schema.define(version: 20160909000714) do
     t.datetime "updated_at"
     t.string   "status"
     t.integer  "job_id",        null: false
+    t.integer  "updated_by_id"
+    t.integer  "deleted_by_id"
+    t.datetime "deleted_at"
+    t.integer  "items_count"
   end
 
+  add_index "proposals", ["deleted_at", "job_id"], name: "index_proposals_on_deleted_at_and_job_id", using: :btree
+  add_index "proposals", ["deleted_at"], name: "index_proposals_on_deleted_at", using: :btree
   add_index "proposals", ["job_id"], name: "index_proposals_on_job_id", using: :btree
 
   create_table "scanned_agreements", force: :cascade do |t|
@@ -208,17 +272,23 @@ ActiveRecord::Schema.define(version: 20160909000714) do
     t.string   "scan",         null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.datetime "deleted_at"
   end
 
   add_index "scanned_agreements", ["agreement_id"], name: "index_scanned_agreements_on_agreement_id", using: :btree
+  add_index "scanned_agreements", ["deleted_at", "agreement_id"], name: "index_scanned_agreements_on_deleted_at_and_agreement_id", using: :btree
+  add_index "scanned_agreements", ["deleted_at"], name: "index_scanned_agreements_on_deleted_at", using: :btree
 
   create_table "statement_pdfs", force: :cascade do |t|
     t.integer  "statement_id"
     t.string   "pdf"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.datetime "deleted_at"
   end
 
+  add_index "statement_pdfs", ["deleted_at", "statement_id"], name: "index_statement_pdfs_on_deleted_at_and_statement_id", using: :btree
+  add_index "statement_pdfs", ["deleted_at"], name: "index_statement_pdfs_on_deleted_at", using: :btree
   add_index "statement_pdfs", ["statement_id"], name: "index_statement_pdfs_on_statement_id", using: :btree
 
   create_table "statements", force: :cascade do |t|
@@ -230,9 +300,12 @@ ActiveRecord::Schema.define(version: 20160909000714) do
     t.string   "balance_currency", default: "USD", null: false
     t.integer  "check_number"
     t.string   "status"
+    t.datetime "deleted_at"
   end
 
   add_index "statements", ["agreement_id"], name: "index_statements_on_agreement_id", using: :btree
+  add_index "statements", ["deleted_at", "agreement_id"], name: "index_statements_on_deleted_at_and_agreement_id", using: :btree
+  add_index "statements", ["deleted_at"], name: "index_statements_on_deleted_at", using: :btree
 
   create_table "system_infos", force: :cascade do |t|
     t.integer "last_account_number", default: 10
@@ -277,9 +350,17 @@ ActiveRecord::Schema.define(version: 20160909000714) do
     t.string   "provider"
     t.string   "uid"
     t.string   "clover_token"
+    t.integer  "created_by_id"
+    t.integer  "updated_by_id"
+    t.integer  "deleted_by_id"
+    t.datetime "deleted_at"
   end
 
   add_index "users", ["account_id"], name: "index_users_on_account_id", using: :btree
+  add_index "users", ["deleted_at", "account_id"], name: "index_users_on_deleted_at_and_account_id", using: :btree
+  add_index "users", ["deleted_at", "email"], name: "index_users_on_deleted_at_and_email", using: :btree
+  add_index "users", ["deleted_at", "reset_password_token"], name: "index_users_on_deleted_at_and_reset_password_token", using: :btree
+  add_index "users", ["deleted_at"], name: "index_users_on_deleted_at", using: :btree
   add_index "users", ["email"], name: "index_users_on_email", using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
@@ -291,6 +372,7 @@ ActiveRecord::Schema.define(version: 20160909000714) do
   end
 
   add_foreign_key "agreements", "proposals"
+  add_foreign_key "events", "users"
   add_foreign_key "items", "categories"
   add_foreign_key "items", "orders"
   add_foreign_key "jobs", "accounts"
