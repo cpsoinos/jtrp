@@ -9,20 +9,7 @@
             <%= f.label :logo, class: "control-label" %>
           </div>
           <div class="col-xs-12 col-md-9 text-left">
-            <div class="fileinput fileinput-new text-center" data-provides="fileinput">
-
-              <span class="btn-file" style="display: inline-block;">
-                <div class="thumbnail img-raised">
-                  <%= image_tag("image_placeholder.jpg") %>
-                </div>
-                <%= cl_image_upload_tag(:logo, return_delete_token: true) %>
-              </span>
-
-              <div class="progressbar fileupload-progressbar">
-                <div style="width:0%;"></div>
-              </div>
-              <span class="status"></span>
-            </div>
+            <%= f.file_field :logo, class: "form-control" %>
           </div>
         </div>
       </div>
