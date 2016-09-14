@@ -2,7 +2,8 @@
 .nav-pills > li.active > a:hover,
 .nav-pills > li.active > a:focus {
   color: #fff;
-  background-color: $brand-primary;
+  background: none;
+  // background-color: $brand-primary;
 }
 
 .agreement-card {
