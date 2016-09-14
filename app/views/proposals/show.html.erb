@@ -18,7 +18,7 @@
     <%= render 'header', form_name: "Proposal" %>
     <%= render 'disclaimer' %>
 
-    <% @proposal.items.each do |item| %>
+    <% @items.each do |item| %>
       <%= render 'item_row', item: item %>
     <% end %>
 
