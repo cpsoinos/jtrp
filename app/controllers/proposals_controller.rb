@@ -68,7 +68,7 @@ class ProposalsController < ApplicationController
 
   def details
     @proposal = Proposal.find(params[:proposal_id])
-    @items = @proposal.items
+    @items = @proposal.items.order(:account_item_number)
   end
 
   protected

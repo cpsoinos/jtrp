@@ -1,32 +1,41 @@
 <div class="row">
   <div class="col-sm-12 text-center">
     <h1 class="company-title">Jobs</h1>
-    <h4>Showing <%= @filter.present? ? @filter : "all" %> jobs</h4>
   </div>
 </div>
-
-<%= render 'index_header_cards' %>
 
 <div class="row">
   <div class="col-md-8 col-md-offset-2 col-xs-12">
     <div class="row">
-      <ul class="nav nav-pills nav-pills-icons nav-pills-primary text-center" role="tablist">
+      <ul class="nav nav-pills nav-pills-icons nav-pills-primary text-center justify-list" role="tablist">
         <li class="">
           <a href="#potential" aria-controls="potential" role="tab" data-toggle="tab" aria-expanded="false">
-            <i class="material-icons info">av_timer</i>
-            <h5>Potential</h5>
+            <div class="info">
+              <span class="icon icon-info tab-icon">
+                <i class="material-icons">location_on</i>
+              </span>
+              <h3>Potential</h3>
+            </div>
           </a>
         </li>
         <li class="">
           <a href="#active" aria-controls="active" role="tab" data-toggle="tab" aria-expanded="false">
-            <i class="material-icons primary">av_timer</i>
-            <h5>Active</h5>
+            <div class="info">
+              <span class="icon icon-primary tab-icon">
+                <i class="material-icons">location_on</i>
+              </span>
+              <h3>Active</h3>
+            </div>
           </a>
         </li>
         <li class="">
           <a href="#completed" aria-controls="completed" role="tab" data-toggle="tab" aria-expanded="false">
-            <i class="material-icons warning">av_timer</i>
-            <h5>Inactive</h5>
+            <div class="info">
+              <span class="icon icon-warning tab-icon">
+                <i class="material-icons">location_on</i>
+              </span>
+              <h3>Inactive</h3>
+            </div>
           </a>
         </li>
       </ul>

@@ -59,12 +59,6 @@ feature "home page" do
       expect(page).to have_link("Accounts")
 
       expect(page).to have_link("Jobs")
-      within("#jobs") do
-        expect(page).to have_link("Potential")
-        expect(page).to have_link("Active")
-        expect(page).to have_link("Complete")
-        expect(page).to have_link("All Jobs")
-      end
     end
 
     it "has information panels" do
@@ -117,65 +111,35 @@ feature "home page" do
       end
     end
 
-    context "clicks links" do
+    context "clicks items links" do
 
-      context "items" do
-        scenario "potential" do
-          visit root_path
-          within('#items') do
-            click_link("Potential")
-          end
-
-          expect(page).to have_content("Potential items have not yet been listed for sale or consigned.")
+      scenario "potential" do
+        visit root_path
+        within('#items') do
+          click_link("Potential")
         end
 
-        scenario "active" do
-          visit root_path
-          within('#items') do
-            click_link("Active")
-          end
-
-          expect(page).to have_content("Active items are actively for sale or on consignment.")
-        end
-
-        scenario "sold" do
-          visit root_path
-          within('#items') do
-            click_link("Sold")
-          end
-
-          expect(page).to have_content("Sold items have been sold.")
-        end
+        expect(page).to have_content("Potential items have not yet been listed for sale or consigned.")
       end
 
-      context "jobs" do
-        scenario "potential" do
-          visit root_path
-          within('#jobs') do
-            click_link("Potential")
-          end
-
-          expect(page).to have_content("Showing potential jobs")
+      scenario "active" do
+        visit root_path
+        within('#items') do
+          click_link("Active")
         end
 
-        scenario "active" do
-          visit root_path
-          within('#jobs') do
-            click_link("Active")
-          end
-
-          expect(page).to have_content("Showing active jobs")
-        end
-
-        scenario "inactive" do
-          visit root_path
-          within('#jobs') do
-            click_link("Completed")
-          end
-
-          expect(page).to have_content("Showing completed jobs")
-        end
+        expect(page).to have_content("Active items are actively for sale or on consignment.")
       end
+
+      scenario "sold" do
+        visit root_path
+        within('#items') do
+          click_link("Sold")
+        end
+
+        expect(page).to have_content("Sold items have been sold.")
+      end
+
     end
 
     context "home page" do
