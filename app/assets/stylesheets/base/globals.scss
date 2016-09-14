@@ -126,3 +126,12 @@ h1, h3, h4 {
 .info {
 	padding: 0;
 }
+
+.justify-list {
+  display: flex;
+  justify-content: space-between;
+}
+
+.tab-icon {
+  margin-bottom: -30px;
+}
