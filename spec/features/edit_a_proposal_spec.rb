@@ -20,33 +20,6 @@ feature "edit a proposal" do
       sign_in user
     end
 
-    # scenario "successfully adds an item", js: true do
-    #   Capybara.ignore_hidden_elements = false
-    #   visit edit_account_job_proposal_path(account, job, proposal)
-    #
-    #   fill_in("item_description", with: "Chair")
-    #   attach_file('file', File.join(Rails.root, '/spec/fixtures/test.png'))
-    #   click_on("Create Item")
-    #
-    #   expect(page).to have_content("Chair")
-    #   expect(page).to have_css("img[src*='.jpg']")
-    #   Capybara.ignore_hidden_elements = true
-    # end
-    #
-    # scenario "removes an item", js: true do
-    #   item = create(:item, proposal: proposal)
-    #   visit edit_account_job_proposal_path(account, job, proposal)
-    #
-    #   expect(page).to have_content(item.description)
-    #
-    #   click_on("delete_forever")
-    #   sleep(1)
-    #   click_on("Yes, I'm sure")
-    #   wait_for_ajax
-    #
-    #   expect(page).not_to have_content(item.description)
-    # end
-
     context "item details" do
       let!(:item) { create(:item, proposal: proposal) }
 

@@ -28,7 +28,7 @@ class AgreementsController < ApplicationController
   end
 
   def create
-    @client = @proposal.client
+    @client = @account.primary_contact
     @agreements = AgreementCreator.new(current_user).create(@proposal)
     redirect_to account_job_proposal_agreements_path(@account, @job, @proposal)
   end
