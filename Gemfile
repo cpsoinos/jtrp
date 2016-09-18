@@ -60,9 +60,9 @@ gem 'redis-browser'
 gem 'prawn-labels'
 gem 'rollbar'
 gem 'oj', '~> 2.12.14'
-gem 'tunemygc'
 
 group :production, :staging do
+  gem 'tunemygc'
   gem 'scout_apm', '~> 3.0.x'
 end
 
