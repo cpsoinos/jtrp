@@ -1,6 +1,7 @@
 class Statement < ActiveRecord::Base
   belongs_to :agreement
   has_one :statement_pdf
+  has_one :account, through: :agreement
 
   monetize :balance_cents, allow_nil: true, numericality: {
     greater_than_or_equal_to: 0,
@@ -19,8 +20,6 @@ class Statement < ActiveRecord::Base
     end
 
   end
-
-  delegate :account, to: :agreement
 
   def items
     agreement.items.sold.where(sold_at: 1.month.ago..Date.today).order(:sold_at)

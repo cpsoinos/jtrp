@@ -62,6 +62,7 @@ gem 'rollbar'
 gem 'oj', '~> 2.12.14'
 
 group :production, :staging do
+  gem 'tunemygc'
   gem 'scout_apm', '~> 3.0.x'
 end
 

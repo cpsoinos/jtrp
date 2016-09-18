@@ -12,6 +12,8 @@ class Item < ActiveRecord::Base
   belongs_to :order
   has_many :children, class_name: "Item", foreign_key: "parent_item_id"
   belongs_to :parent_item, class_name: "Item", foreign_key: "parent_item_id"
+  has_one :job, through: :proposal
+  has_one :account, through: :job
 
   before_create :record_original_description
 
@@ -33,8 +35,6 @@ class Item < ActiveRecord::Base
     greater_than_or_equal_to: 0,
     less_than_or_equal_to: 100000
   }
-
-  delegate :job, :account, to: :proposal
 
   validates :description, :proposal, presence: true
 
