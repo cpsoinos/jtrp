@@ -131,6 +131,7 @@ ActiveRecord::Schema.define(version: 20160918221603) do
     t.string   "amount_currency", default: "USD", null: false
     t.string   "name"
     t.string   "remote_id"
+    t.boolean  "applied",         default: false
   end
 
   add_index "discounts", ["item_id"], name: "index_discounts_on_item_id", using: :btree

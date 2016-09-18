@@ -7,6 +7,7 @@ class CreateDiscounts < ActiveRecord::Migration
       t.monetize :amount, amount: { null: true, default: nil }
       t.string :name
       t.string :remote_id
+      t.boolean :applied, default: false
     end
   end
 end

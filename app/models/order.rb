@@ -34,7 +34,7 @@ class Order < ActiveRecord::Base
   def remote_item_ids_from_line_items
     line_items.map do |element|
       next if element.name == "Manual Transaction"
-      { id: element.item.id, price: element.price, discount: element.discounts.sum { |d| d.amount } }
+      element.item.id
     end.compact
   end
 
@@ -62,7 +62,7 @@ class Order < ActiveRecord::Base
 
   def mark_items_sold
     # check for discount
-    if amount_cents != items.sum(:sale_price_cents)
+    if amount_cents != items.sum(:listing_price_cents)
       retrieve_discounts
       self.reload.discounts.each do |discount|
         discount.apply_to_item
