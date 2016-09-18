@@ -23,7 +23,11 @@ class Order < ActiveRecord::Base
   end
 
   def line_items
-    remote_order.lineItems.elements
+    if remote_order.respond_to?(:lineItems)
+      remote_order.lineItems.elements
+    else
+      []
+    end
   end
 
   def remote_item_ids_from_line_items
@@ -34,6 +38,7 @@ class Order < ActiveRecord::Base
   end
 
   def update_order
+    return unless remote_order
     self.amount_cents = remote_order.total
     self.created_at = format_time(remote_order.createdTime)
     self.updated_at = format_time(remote_order.modifiedTime)
@@ -41,7 +46,7 @@ class Order < ActiveRecord::Base
   end
 
   def add_items_to_order
-    return unless line_items.present?
+    return unless (remote_order && line_items.present?)
     items = Item.where(remote_id: remote_item_ids_from_line_items)
     items.update_all(order_id: id)
   end
