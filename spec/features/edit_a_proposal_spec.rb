@@ -52,6 +52,7 @@ feature "edit a proposal" do
 
       scenario "arrives at details path" do
         visit account_job_proposal_sort_items_path(account, job, proposal)
+        save_and_open_page
         click_link("Step 3: Item Details")
 
         expect(page).to have_content("Will purchase")

@@ -5,7 +5,7 @@ class Proposal < ActiveRecord::Base
   has_many :agreements, dependent: :destroy
   has_many :photos
   has_one :account, through: :job
-  has_one :client, through: :account
+  has_one :primary_contact, through: :account
 
   validates :job, presence: true
   validates :created_by, presence: true
