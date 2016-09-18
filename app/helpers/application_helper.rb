@@ -51,4 +51,21 @@ module ApplicationHelper
     end
   end
 
+  def meta_tags
+    {
+      site: "Just the Right Piece",
+      og: og_meta_tags
+    }
+  end
+
+  def og_meta_tags
+    return unless @item.present?
+    {
+      title:    @item.description.titleize,
+      type:     'product',
+      url:      item_url(@item),
+      image:    @item.photos.map { |photo| photo.photo_url(client_hints: true, quality: "auto", fetch_format: :auto, dpr: "auto", effect: :improve) }
+    }
+  end
+
 end

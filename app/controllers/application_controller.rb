@@ -4,7 +4,6 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_filter :find_company
   before_filter :find_categories
-  before_filter :meta_tags
 
   def find_company
     @company ||= Company.find_by(name: "Just the Right Piece")
@@ -68,23 +67,6 @@ class ApplicationController < ActionController::Base
     unless current_user.present? && (current_user.internal? || current_user.account == @account)
       redirect_to new_user_session_path, alert: "You must be logged in to access this page!"
     end
-  end
-
-  def meta_tags
-    @meta_tags = {
-      site: "Just the Right Piece",
-      og: og_meta_tags
-    }
-  end
-
-  def og_meta_tags
-    return unless @item.present?
-    {
-      title:    @item.description.titleize,
-      type:     'product',
-      url:      item_url(@item),
-      image:    @item.featured_photo.photo_url(client_hints: true, quality: "auto", fetch_format: :auto, width: :auto, dpr: "auto", effect: :improve),
-    }
   end
 
 end
