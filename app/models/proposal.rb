@@ -4,8 +4,8 @@ class Proposal < ActiveRecord::Base
   has_many :items, dependent: :destroy
   has_many :agreements, dependent: :destroy
   has_many :photos
-
-  delegate :account, to: :job
+  has_one :account, through: :job
+  has_one :client, through: :account
 
   validates :job, presence: true
   validates :created_by, presence: true
@@ -30,8 +30,6 @@ class Proposal < ActiveRecord::Base
       transition active: :inactive, if: lambda { |proposal| proposal.meets_requirements_inactive? }
     end
   end
-
-  delegate :client, to: :account
 
   def meets_requirements_active?
     agreements.active.present?

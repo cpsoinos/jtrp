@@ -11,7 +11,7 @@ class ItemsPresenter
   end
 
   def todo
-    Item.where(id: (no_listing_price | no_sale_price))
+    Item.includes(proposal: {job: {account: :primary_contact}}).where(id: (no_listing_price | no_sale_price))
   end
 
   private

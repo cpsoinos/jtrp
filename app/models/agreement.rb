@@ -4,6 +4,8 @@ class Agreement < ActiveRecord::Base
   belongs_to :proposal
   has_one :scanned_agreement
   has_many :statements
+  has_one :job, through: :proposal
+  has_one :account, through: :job
 
   validates :agreement_type, presence: true
   validates :proposal, presence: true
@@ -37,9 +39,6 @@ class Agreement < ActiveRecord::Base
     end
 
   end
-
-  delegate :account, to: :proposal
-  delegate :job, to: :proposal
 
   def items
     proposal.items.where(client_intention: agreement_type)
