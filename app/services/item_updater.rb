@@ -44,7 +44,7 @@ class ItemUpdater
   def process_sale
     if (attrs[:sale_price].present? || attrs[:sale_price_cents].present?) && !item.sold?
       process_sold_at
-      item.mark_sold!
+      item.mark_sold unless item.sold?
     end
   end
 
