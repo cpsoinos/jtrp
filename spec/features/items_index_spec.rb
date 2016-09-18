@@ -5,6 +5,7 @@ feature "item index" do
   let!(:active_owned_items) { create_list(:item, 3, :active, description: "Buddy") }
   let!(:active_consigned_items) { create_list(:item, 3, :active, description: "Vasha", client_intention: "consign") }
   let!(:sold_items) { create_list(:item, 2, :sold, description: "Katniss") }
+  let!(:inactive_items) { create_list(:item, 4, :inactive) }
   let!(:all_items) { active_owned_items | active_consigned_items | sold_items | potential_items }
   let(:intentions) { ["consigned", "owned", "will donate", "will dump", "undecided"] }
 
@@ -90,6 +91,30 @@ feature "item index" do
         expect(page).to have_link("Katniss")
       end
       expect(page).not_to have_link("Vasha")
+      expect(page).not_to have_link("Buddy")
+      expect(page).not_to have_link("Connor")
+    end
+
+  end
+
+  context "inactive items" do
+
+    scenario "visits item list from home page" do
+      visit root_path
+      click_link("Inactive")
+
+      expect(page).to have_content("Inactive items have been deactivated.")
+    end
+
+    scenario "visits item list" do
+      visit items_path(status: 'inactive')
+
+      expect(page).to have_content("Inactive items have been deactivated.")
+      inactive_items.each do |item|
+        expect(page).to have_link(item.description.titleize)
+      end
+      expect(page).not_to have_link("Vasha")
+      expect(page).not_to have_link("Katniss")
       expect(page).not_to have_link("Buddy")
       expect(page).not_to have_link("Connor")
     end

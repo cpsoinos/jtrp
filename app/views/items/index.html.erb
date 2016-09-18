@@ -18,6 +18,8 @@
         <% end %>
       <% when "Sold" %>
         <h4><%= @filter %> items have been sold.</h4>
+      <% when "Inactive" %>
+        <h4><%= @filter %> items have been deactivated.</h4>
       <% end %>
     <% end %>
   </div>
