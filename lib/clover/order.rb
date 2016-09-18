@@ -4,7 +4,7 @@ module Clover
   class Order < Clover::CloverBase
 
     def self.find(order)
-      RestClient.get("#{base_url}/orders/#{order.remote_id}?expand=lineItems", headers) do |response, request, result|
+      RestClient.get("#{base_url}/orders/#{order.remote_id}?expand=lineItems,discounts", headers) do |response, request, result|
         case response.code
         when 200
           DeepStruct.wrap(JSON.parse(response))
@@ -17,7 +17,7 @@ module Clover
     end
 
     def self.all
-      RestClient.get("#{base_url}/orders?expand=lineItems", headers) do |response, request, result|
+      RestClient.get("#{base_url}/orders?expand=lineItems,discounts", headers) do |response, request, result|
         case response.code
         when 200
           DeepStruct.wrap(JSON.parse(response)["elements"])

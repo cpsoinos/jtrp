@@ -1,5 +1,6 @@
 class Order < ActiveRecord::Base
   has_many :items
+  has_many :discounts
 
   monetize :amount_cents, allow_nil: true, numericality: {
     greater_than_or_equal_to: 0,
@@ -33,7 +34,7 @@ class Order < ActiveRecord::Base
   def remote_item_ids_from_line_items
     line_items.map do |element|
       next if element.name == "Manual Transaction"
-      element.item.id
+      { id: element.item.id, price: element.price, discount: element.discounts.sum { |d| d.amount } }
     end.compact
   end
 
@@ -60,12 +61,32 @@ class Order < ActiveRecord::Base
   end
 
   def mark_items_sold
-    items.map(&:mark_sold)
+    # check for discount
+    if amount_cents != items.sum(:sale_price_cents)
+      retrieve_discounts
+      self.reload.discounts.each do |discount|
+        discount.apply_to_item
+      end
+    else
+      items.map(&:mark_sold)
+    end
   end
 
   def format_time(time)
     nil unless time
     Time.at(time/1000)
+  end
+
+  def retrieve_discounts
+    remote_discounts ||= Clover::Discount.find(self).elements.map { |e| e }
+    remote_discounts.map do |line_item|
+      self.discounts.find_or_create_by(
+        remote_id: line_item.discounts.elements.first.id,
+        item: self.items.find_by(remote_id: line_item.item.id),
+        name: line_item.discounts.elements.first.name,
+        amount_cents: line_item.discounts.elements.first.amount
+      )
+    end
   end
 
 end

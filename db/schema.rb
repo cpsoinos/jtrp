@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160914220426) do
+ActiveRecord::Schema.define(version: 20160918221603) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -121,6 +121,20 @@ ActiveRecord::Schema.define(version: 20160914220426) do
   add_index "companies", ["deleted_at", "primary_contact_id"], name: "index_companies_on_deleted_at_and_primary_contact_id", using: :btree
   add_index "companies", ["deleted_at"], name: "index_companies_on_deleted_at", using: :btree
   add_index "companies", ["primary_contact_id"], name: "index_companies_on_primary_contact_id", using: :btree
+
+  create_table "discounts", force: :cascade do |t|
+    t.integer  "order_id"
+    t.integer  "item_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "amount_cents"
+    t.string   "amount_currency", default: "USD", null: false
+    t.string   "name"
+    t.string   "remote_id"
+  end
+
+  add_index "discounts", ["item_id"], name: "index_discounts_on_item_id", using: :btree
+  add_index "discounts", ["order_id"], name: "index_discounts_on_order_id", using: :btree
 
   create_table "events", force: :cascade do |t|
     t.integer  "user_id"
@@ -372,6 +386,8 @@ ActiveRecord::Schema.define(version: 20160914220426) do
   end
 
   add_foreign_key "agreements", "proposals"
+  add_foreign_key "discounts", "items"
+  add_foreign_key "discounts", "orders"
   add_foreign_key "events", "users"
   add_foreign_key "items", "categories"
   add_foreign_key "items", "orders"
