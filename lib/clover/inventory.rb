@@ -65,8 +65,7 @@ module Clover
 
     def self.delete(item)
       RestClient.delete("#{base_url}/items/#{item.remote_id}", headers) do |response, request, result|
-        case response.code
-        when 200
+        if [200, 400].include?(response.code)
           ItemUpdater.new(item).update(remote_id: nil)
         else
           raise 'unable to delete item - ' + JSON.parse(response)['message']
