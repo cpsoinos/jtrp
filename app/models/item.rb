@@ -10,6 +10,7 @@ class Item < ActiveRecord::Base
   belongs_to :category
   belongs_to :proposal, counter_cache: true
   belongs_to :order
+  has_many :discounts
   has_many :children, class_name: "Item", foreign_key: "parent_item_id"
   belongs_to :parent_item, class_name: "Item", foreign_key: "parent_item_id"
   has_one :job, through: :proposal

@@ -24,6 +24,11 @@ describe Order do
       expect(order.amount_cents).to eq(1234)
     end
 
+    it "does not fail if remote order not found" do
+      allow(Clover::Order).to receive(:find).with(order).and_return(nil)
+      expect{order.process_webhook}.not_to raise_error
+    end
+
     it "calculates thirty day revenue" do
       orders = create_list(:order, 3, created_at: 5.days.ago, amount_cents: 5000)
       expect(Order.thirty_day_revenue).to eq(150)

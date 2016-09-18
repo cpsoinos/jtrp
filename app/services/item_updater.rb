@@ -42,7 +42,7 @@ class ItemUpdater
   end
 
   def process_sale
-    if attrs[:sale_price].present? && !item.sold?
+    if (attrs[:sale_price].present? || attrs[:sale_price_cents].present?) && !item.sold?
       process_sold_at
       item.mark_sold!
     end
@@ -55,11 +55,15 @@ class ItemUpdater
 
   def process_sold_at
     if attrs[:sold_at].present?
-      formatted_date = attrs[:sold_at].split("/")
-      attrs[:sold_at] = "#{formatted_date[1]}/#{formatted_date[0]}/#{formatted_date[2]}"
+      format_date if attrs[:sold_at].is_a?(String)
     else
       attrs[:sold_at] = DateTime.now
     end
+  end
+
+  def format_date
+    formatted_date = attrs[:sold_at].split("/")
+    attrs[:sold_at] = "#{formatted_date[1]}/#{formatted_date[0]}/#{formatted_date[2]}"
   end
 
 end
