@@ -26,6 +26,8 @@ class User < ActiveRecord::Base
   scope :active, -> { where(status: "active") }
   scope :inactive, -> { where(status: "inactive") }
 
+  after_create :assign_avatar
+
   def self.from_omniauth(auth)
     oauth_user = where(email: auth.info.email).first_or_create do |user|
       user.email = auth.info.email
@@ -59,6 +61,18 @@ class User < ActiveRecord::Base
 
   def full_address
     "#{address_1}#{address_2.present? ? (', ' + address_2) : ''}, #{city}, #{state} #{zip}"
+  end
+
+  private
+
+  def assign_avatar
+    return if Rails.env.test?
+    person = FullContact.person(email: email)
+    if person.try(:photos).present?
+      self.remote_avatar_url = person.photos.first.try(:url)
+      self.save
+    end
+  rescue FullContact::NotFound
   end
 
   protected
