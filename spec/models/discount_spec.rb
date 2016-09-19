@@ -18,4 +18,11 @@ describe Discount do
     expect(discount.applied?).to be(true)
   end
 
+  it "calculates the discount when percent-based" do
+    percent_discount = create(:discount, :percent_based)
+    other_item = percent_discount.item
+
+    expect(percent_discount.calculate_discount).to eq(-450)
+  end
+
 end

@@ -14,6 +14,11 @@ FactoryGirl.define do
       applied true
     end
 
+    trait :percent_based do
+      amount_cents nil
+      percentage 10
+    end
+
   end
 
 end
