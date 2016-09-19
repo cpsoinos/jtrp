@@ -17,7 +17,7 @@
           <tr>
             <td class="text-center">
               <div class="img-container">
-                <%= link_to image_tag(account.avatar, class: "img-rounded img-responsive img-raised"), account_path(account) %>
+                <%= link_to image_tag(account.avatar_url(client_hints: true, quality: "auto", fetch_format: :auto, dpr: "auto", effect: :improve, width: "120", height: "160", crop: "fill"), class: "img-rounded img-responsive img-raised"), account_path(account) %>
               </div>
             </td>
             <td class="td-name">
