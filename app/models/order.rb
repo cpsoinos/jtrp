@@ -84,7 +84,8 @@ class Order < ActiveRecord::Base
         remote_id: line_item.discounts.elements.first.id,
         item: self.items.find_by(remote_id: line_item.item.id),
         name: line_item.discounts.elements.first.name,
-        amount_cents: line_item.discounts.elements.first.amount
+        amount_cents: line_item.discounts.elements.first.try(:amount),
+        percentage: line_item.discounts.elements.first.try(:percentage)
       )
     end
   end
