@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160919000134) do
+ActiveRecord::Schema.define(version: 20160919015209) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -132,7 +132,7 @@ ActiveRecord::Schema.define(version: 20160919000134) do
     t.string   "name"
     t.string   "remote_id"
     t.boolean  "applied",         default: false
-    t.integer  "percentage"
+    t.decimal  "percentage"
   end
 
   add_index "discounts", ["item_id"], name: "index_discounts_on_item_id", using: :btree

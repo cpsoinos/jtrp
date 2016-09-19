@@ -4,7 +4,7 @@
       <div class="col-xs-6 col-sm-4 col-md-3">
         <div class="well agreement-card">
           <p>
-            <%= link_to "<i class='material-icons'>assignment_ind</i> #{agreement.proposal.primary_contact.full_name}".html_safe, client_path(agreement.proposal.primary_contact) %>
+            <%= link_to "<i class='material-icons'>assignment_ind</i> #{agreement.proposal.account.full_name}".html_safe, client_path(agreement.proposal.primary_contact) %>
           </p>
           <p>
             <%= link_to "<i class='material-icons'>assignment_turned_in</i> Proposal No. #{agreement.proposal.id}".html_safe, account_job_proposal_path(agreement.account, agreement.job, agreement.proposal) %>
