@@ -79,7 +79,7 @@ class Account < ActiveRecord::Base
 
   def avatar
     if primary_contact.present? && primary_contact.avatar.present?
-      primary_contact.avatar
+      primary_contact.avatar_url(client_hints: true, quality: "auto", fetch_format: :auto, dpr: "auto", effect: :improve, crop: "fill")
     else
       ActionController::Base.helpers.asset_path("thumb_default_avatar.png")
     end
