@@ -66,6 +66,7 @@ class User < ActiveRecord::Base
   private
 
   def assign_avatar
+    return if Rails.env.test?
     person = FullContact.person(email: email)
     if person.try(:photos).present?
       self.remote_avatar_url = person.photos.first.try(:url)

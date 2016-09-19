@@ -30,7 +30,6 @@ RSpec.configure do |config|
 
   config.before(:each) do
     Rails.application.load_seed # loading seeds
-    allow(FullContact).to receive(:person).and_return(nil)
   end
 
   config.expect_with :rspec do |expectations|
