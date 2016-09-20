@@ -2,13 +2,18 @@ class Account < ActiveRecord::Base
   include Filterable
   include PgSearch
 
+  self.inheritance_column = :type
+  def self.types
+    %w(Owner Customer)
+  end
+
   multisearchable against: [:account_number, :full_name, :status]
 
   has_many :clients
   belongs_to :primary_contact, class_name: "Client", foreign_key: "primary_contact_id"
   has_many :jobs, dependent: :destroy
   has_many :proposals, through: :jobs
-  has_many :items, through: :proposals
+  has_many :items, -> { where.not(client_intention: 'sell', status: ['active', 'sold', 'inactive']) }, through: :proposals
   has_many :agreements, through: :proposals
   has_many :statements, through: :agreements
   belongs_to :created_by, class_name: "InternalUser", foreign_key: "created_by_id"
@@ -16,8 +21,12 @@ class Account < ActiveRecord::Base
 
   validates :account_number, uniqueness: true
   validates :status, presence: true
+  validates :type, presence: true
 
   scope :status, -> (status) { where(status: status) }
+
+  scope :owner, -> { where(type: "Owner") }
+  scope :customer, -> { where(type: "Customer") }
 
   scope :potential, -> { where(status: "potential") }
   scope :active, -> { where(status: "active") }
@@ -123,3 +132,5 @@ class Account < ActiveRecord::Base
   end
 
 end
+
+class Customer < Account; end
