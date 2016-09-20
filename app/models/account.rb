@@ -5,7 +5,7 @@ class Account < ActiveRecord::Base
   multisearchable against: [:account_number, :full_name, :status]
 
   has_many :clients
-  belongs_to :primary_contact, class_name: "Client", foreign_key: "primary_contact_id"
+  belongs_to :primary_contact, class_name: "User", foreign_key: "primary_contact_id"
   has_many :jobs, dependent: :destroy
   has_many :proposals, through: :jobs
   has_many :items, through: :proposals
