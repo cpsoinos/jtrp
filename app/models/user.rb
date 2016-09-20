@@ -73,6 +73,7 @@ class User < ActiveRecord::Base
       self.save
     end
   rescue FullContact::NotFound
+  rescue FullContact::Invalid
   end
 
   protected
