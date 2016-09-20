@@ -18,7 +18,7 @@
 
         <div class="col-md-4 hidden-xs">
           <% if @client.avatar.present? %>
-            <%= image_tag(@client.avatar_url(client_hints: true, quality: "auto", fetch_format: :auto, dpr: "auto", effect: :improve, width: "120", height: "160", crop: "fill"), class: "thumb", alt: "Client Avatar") %>
+            <%= image_tag(@client.avatar_url(client_hints: true, quality: "auto", fetch_format: :auto, dpr: "auto"), class: "thumb", alt: "Client Avatar") %>
           <% else %>
             <%= image_tag("thumb_default_avatar.png", class: "thumb", alt: "Client Avatar") %>
           <% end %>
