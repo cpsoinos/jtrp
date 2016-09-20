@@ -53,23 +53,23 @@
       </tr>
       <tr>
         <td>name:</td>
-        <td><%= @client.full_name %></td>
+        <td><%= @account.try(:full_name) %></td>
       </tr>
       <tr>
         <td>service address:</td>
-        <td><%= @client.full_address %></td>
+        <td><%= @job.full_address %></td>
       </tr>
       <tr>
         <td>mailing address:</td>
-        <td><%= @client.full_address %></td>
+        <td><%= @account.try(:full_address) %></td>
       </tr>
       <tr>
         <td>phone:</td>
-        <td><%= number_to_phone(@client.phone) %></td>
+        <td><%= number_to_phone(@account.try(:phone)) %></td>
       </tr>
       <tr>
         <td>email:</td>
-        <td><%= @client.email %></td>
+        <td><%= @account.try(:email) %></td>
       </tr>
     </table>
   </div>
