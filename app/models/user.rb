@@ -85,5 +85,9 @@ class User < ActiveRecord::Base
 
 end
 
+####################################
+# single table inheritance classes #
+####################################
+
 class Admin < User; end
 class Guest < User; end

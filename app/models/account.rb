@@ -4,7 +4,7 @@ class Account < ActiveRecord::Base
 
   self.inheritance_column = :type
   def self.types
-    %w(Owner Customer)
+    %w(OwnerAccount ClientAccount)
   end
 
   multisearchable against: [:account_number, :full_name, :status]
@@ -13,7 +13,7 @@ class Account < ActiveRecord::Base
   belongs_to :primary_contact, class_name: "User", foreign_key: "primary_contact_id"
   has_many :jobs, dependent: :destroy
   has_many :proposals, through: :jobs
-  has_many :items, -> { where.not(client_intention: 'sell', status: ['active', 'sold', 'inactive']) }, through: :proposals
+  has_many :items, through: :proposals
   has_many :agreements, through: :proposals
   has_many :statements, through: :agreements
   belongs_to :created_by, class_name: "InternalUser", foreign_key: "created_by_id"
@@ -133,4 +133,24 @@ class Account < ActiveRecord::Base
 
 end
 
-class Customer < Account; end
+####################################
+# single table inheritance classes #
+####################################
+
+class OwnerAccount < Account
+
+  def self.model_name
+    Account.model_name
+  end
+
+  def items
+    Item.owned
+  end
+
+end
+
+class ClientAccount < Account
+  def self.model_name
+    Account.model_name
+  end
+end
