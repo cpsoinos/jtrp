@@ -2,10 +2,15 @@ class Account < ActiveRecord::Base
   include Filterable
   include PgSearch
 
+  self.inheritance_column = :type
+  def self.types
+    %w(OwnerAccount ClientAccount)
+  end
+
   multisearchable against: [:account_number, :full_name, :status]
 
   has_many :clients
-  belongs_to :primary_contact, class_name: "Client", foreign_key: "primary_contact_id"
+  belongs_to :primary_contact, class_name: "User", foreign_key: "primary_contact_id"
   has_many :jobs, dependent: :destroy
   has_many :proposals, through: :jobs
   has_many :items, through: :proposals
@@ -16,8 +21,12 @@ class Account < ActiveRecord::Base
 
   validates :account_number, uniqueness: true
   validates :status, presence: true
+  validates :type, presence: true
 
   scope :status, -> (status) { where(status: status) }
+
+  scope :owner, -> { where(type: "Owner") }
+  scope :customer, -> { where(type: "Customer") }
 
   scope :potential, -> { where(status: "potential") }
   scope :active, -> { where(status: "active") }
@@ -79,7 +88,7 @@ class Account < ActiveRecord::Base
 
   def avatar
     if primary_contact.present? && primary_contact.avatar.present?
-      primary_contact.avatar_url(client_hints: true, quality: "auto", fetch_format: :auto, dpr: "auto", effect: :improve, crop: "fill")
+      primary_contact.avatar_url(client_hints: true, quality: "auto", fetch_format: :auto, dpr: "auto")
     else
       ActionController::Base.helpers.asset_path("thumb_default_avatar.png")
     end
@@ -122,4 +131,26 @@ class Account < ActiveRecord::Base
     end
   end
 
+end
+
+####################################
+# single table inheritance classes #
+####################################
+
+class OwnerAccount < Account
+
+  def self.model_name
+    Account.model_name
+  end
+
+  def items
+    Item.owned
+  end
+
+end
+
+class ClientAccount < Account
+  def self.model_name
+    Account.model_name
+  end
 end

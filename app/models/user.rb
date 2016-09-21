@@ -73,6 +73,7 @@ class User < ActiveRecord::Base
       self.save
     end
   rescue FullContact::NotFound
+  rescue FullContact::Invalid
   end
 
   protected
@@ -83,6 +84,10 @@ class User < ActiveRecord::Base
   end
 
 end
+
+####################################
+# single table inheritance classes #
+####################################
 
 class Admin < User; end
 class Guest < User; end

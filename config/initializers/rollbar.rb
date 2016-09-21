@@ -11,7 +11,7 @@ Rollbar.configure do |config|
 
   config.js_enabled = true
   config.js_options = {
-    accessToken: ENV['ROLLBAR_ACCESS_TOKEN'],
+    accessToken: ENV['ROLLBAR_CLIENT_ACCESS_TOKEN'],
     captureUncaught: true,
     payload: {
       environment: ENV['ROLLBAR_ENV'] || Rails.env

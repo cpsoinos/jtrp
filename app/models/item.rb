@@ -47,7 +47,7 @@ class Item < ActiveRecord::Base
   scope :active, -> { where(status: "active") }
   scope :sold, -> { where(status: "sold") }
   scope :unsold, -> { where.not(status: "sold") }
-  scope :owned, -> { where(status: "active", client_intention: "sell") }
+  scope :owned, -> { where(status: ["active", "sold"], client_intention: "sell") }
   scope :consigned, -> { where(status: "active", client_intention: "consign") }
   scope :for_sale, -> { active.where(client_intention: ['sell', 'consign']) }
 

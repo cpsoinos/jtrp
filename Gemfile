@@ -61,6 +61,7 @@ gem 'prawn-labels'
 gem 'rollbar'
 gem 'oj', '~> 2.12.14'
 gem 'fullcontact'
+gem 'puma_worker_killer'
 
 group :production, :staging do
   gem 'tunemygc'

@@ -93,7 +93,6 @@ feature "sign up" do
     end
 
     scenario "does not agree to policies", js: true do
-      pending("turbolinks spec?")
       Company.find_or_create_by(name: "Just the Right Piece")
       visit new_user_registration_path
       fill_in("user_email", with: "sally@seashell.com")
