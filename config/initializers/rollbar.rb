@@ -5,13 +5,13 @@ Rollbar.configure do |config|
   config.access_token = ENV['ROLLBAR_ACCESS_TOKEN']
 
   # Here we'll disable in 'test':
-  if Rails.env.in? ["test", "development", "local"]
-    config.enabled = false
-  end
+  # if Rails.env.in? ["test", "development", "local"]
+  #   config.enabled = false
+  # end
 
   config.js_enabled = true
   config.js_options = {
-    accessToken: ENV['ROLLBAR_ACCESS_TOKEN'],
+    accessToken: ENV['ROLLBAR_CLIENT_ACCESS_TOKEN'],
     captureUncaught: true,
     payload: {
       environment: ENV['ROLLBAR_ENV'] || Rails.env
