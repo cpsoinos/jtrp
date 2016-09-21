@@ -2,6 +2,11 @@ class Account < ActiveRecord::Base
   include Filterable
   include PgSearch
 
+  self.inheritance_column = :type
+  def self.types
+    %w(OwnerAccount ClientAccount)
+  end
+
   multisearchable against: [:account_number, :full_name, :status]
 
   has_many :clients
@@ -16,8 +21,12 @@ class Account < ActiveRecord::Base
 
   validates :account_number, uniqueness: true
   validates :status, presence: true
+  validates :type, presence: true
 
   scope :status, -> (status) { where(status: status) }
+
+  scope :owner, -> { where(type: "Owner") }
+  scope :customer, -> { where(type: "Customer") }
 
   scope :potential, -> { where(status: "potential") }
   scope :active, -> { where(status: "active") }
@@ -122,4 +131,26 @@ class Account < ActiveRecord::Base
     end
   end
 
+end
+
+####################################
+# single table inheritance classes #
+####################################
+
+class OwnerAccount < Account
+
+  def self.model_name
+    Account.model_name
+  end
+
+  def items
+    Item.owned
+  end
+
+end
+
+class ClientAccount < Account
+  def self.model_name
+    Account.model_name
+  end
 end

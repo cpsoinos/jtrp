@@ -109,4 +109,9 @@ describe Account do
     expect(estate_sale.estate_sale?).to be(true)
   end
 
+  it "OwnerAccount" do
+    account = build_stubbed(:owner_account)
+    expect(account.model_name).to eq("Account")
+  end
+
 end

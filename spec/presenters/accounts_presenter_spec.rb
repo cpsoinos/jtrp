@@ -1,8 +1,8 @@
 describe AccountsPresenter do
 
-  let(:potential_accounts) { [Account.yard_sale, Account.estate_sale] | create_list(:account, 3) }
-  let(:active_accounts) { create_list(:account, 3, :active) }
-  let(:inactive_accounts) { create_list(:account, 2, :inactive) }
+  let(:potential_accounts) { [Account.yard_sale, Account.estate_sale] | create_list(:client_account, 3) }
+  let(:active_accounts) { create_list(:client_account, 3, :active) }
+  let(:inactive_accounts) { create_list(:client_account, 2, :inactive) }
 
   it 'can be instantiated' do
     expect(AccountsPresenter.new).to be_an_instance_of(AccountsPresenter)

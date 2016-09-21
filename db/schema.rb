@@ -11,13 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160919015209) do
+ActiveRecord::Schema.define(version: 20160920225652) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "accounts", force: :cascade do |t|
-    t.integer  "account_number",                           null: false
+    t.integer  "account_number",                               null: false
     t.boolean  "is_company",         default: false
     t.string   "company_name"
     t.integer  "created_by_id"
@@ -26,10 +26,11 @@ ActiveRecord::Schema.define(version: 20160919015209) do
     t.datetime "updated_at"
     t.text     "notes"
     t.integer  "primary_contact_id"
-    t.string   "status",             default: "potential", null: false
+    t.string   "status",             default: "potential",     null: false
     t.integer  "last_item_number",   default: 0
     t.datetime "deleted_at"
     t.integer  "jobs_count"
+    t.string   "type",               default: "ClientAccount", null: false
   end
 
   add_index "accounts", ["deleted_at", "primary_contact_id"], name: "index_accounts_on_deleted_at_and_primary_contact_id", using: :btree
