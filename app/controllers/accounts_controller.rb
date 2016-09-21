@@ -7,6 +7,7 @@ class AccountsController < ApplicationController
 
   def show
     @account = Account.find(params[:id])
+    @items = @account.items.page(params[:page])
   end
 
   def new

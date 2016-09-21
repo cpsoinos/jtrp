@@ -43,7 +43,11 @@ describe Item do
     end
 
     it "owned" do
-      expect(Item.owned.count).to eq(7)
+      expect(Item.owned.count).to eq(3)
+    end
+
+    it "jtrp" do
+      expect(Item.jtrp.count).to eq(7)
     end
 
     it "consigned" do

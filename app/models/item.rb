@@ -3,7 +3,7 @@ class Item < ActiveRecord::Base
   include PgSearch
 
   multisearchable against: [:description, :original_description, :status, :client_intention, :will_consign, :will_purchase]
-  paginates_per 10
+  paginates_per 50
 
   has_many :photos, dependent: :destroy
   accepts_nested_attributes_for :photos
@@ -47,7 +47,8 @@ class Item < ActiveRecord::Base
   scope :active, -> { where(status: "active") }
   scope :sold, -> { where(status: "sold") }
   scope :unsold, -> { where.not(status: "sold") }
-  scope :owned, -> { where(status: ["active", "sold"], client_intention: "sell") }
+  scope :owned, -> { where(status: "active", client_intention: "sell") }
+  scope :jtrp, -> { where(status: ["active", "sold"], client_intention: "sell") }
   scope :consigned, -> { where(status: "active", client_intention: "consign") }
   scope :for_sale, -> { active.where(client_intention: ['sell', 'consign']) }
 

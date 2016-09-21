@@ -144,7 +144,7 @@ class OwnerAccount < Account
   end
 
   def items
-    Item.owned
+    Item.jtrp
   end
 
 end
