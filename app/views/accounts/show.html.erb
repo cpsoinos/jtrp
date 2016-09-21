@@ -33,38 +33,39 @@
   </div>
 </div>
 
-<div class="row extra-large-top-margin">
-  <%= render 'items/mark_sold_modal', redirect_url: request.original_url %>
+<% if @account.is_a? OwnerAccount %>
 
-  <div class="row">
-		<div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2">
-			<ul class="nav nav-pills nav-pills-icons nav-pills-primary text-center justify-list">
-			  <li class="active"><a href="#pill1" data-toggle="tab" aria-expanded="true">All</a></li>
-			  <li class=""><a href="#pill2" data-toggle="tab" aria-expanded="false">Potential</a></li>
-			  <li class=""><a href="#pill3" data-toggle="tab" aria-expanded="false">Owned</a></li>
-        <li class=""><a href="#pill4" data-toggle="tab" aria-expanded="false">Consigned</a></li>
-			  <li class=""><a href="#pill5" data-toggle="tab" aria-expanded="false">Sold</a></li>
-			</ul>
-    </div>
-    <div class="col-xs-10 col-xs-offset-1">
-      <div class="tab-content tab-space">
-				<div class="tab-pane active grid" id="pill1">
-          <%= render 'items/items_list', headers: general_headers, context: "general", items: @account.items.order(:jtrp_number, :account_item_number) %>
-				</div>
-				<div class="tab-pane grid" id="pill2">
-          <%= render 'items/items_list', headers: general_headers, context: "general", items: @account.items.potential.order(:jtrp_number, :account_item_number) %>
-				</div>
-				<div class="tab-pane grid" id="pill3">
-          <%= render 'items/items_list', headers: general_headers, context: "general", items: @account.items.owned.order(:jtrp_number, :account_item_number) %>
-				</div>
-				<div class="tab-pane grid" id="pill4">
-          <%= render 'items/items_list', headers: general_headers, context: "general", items: @account.items.consigned.order(:jtrp_number, :account_item_number) %>
-				</div>
-				<div class="tab-pane grid" id="pill5">
-          <%= render 'items/items_list', headers: general_headers, context: "general", items: @account.items.sold.order(:jtrp_number, :account_item_number) %>
-				</div>
-			</div>
-		</div>
-	</div>
+  <div class="row extra-large-top-margin">
+    <%= render 'items/mark_sold_modal', redirect_url: request.original_url %>
 
-</div>
+    <div class="row">
+  		<div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2">
+  			<ul class="nav nav-pills nav-pills-icons nav-pills-primary text-center justify-list">
+  			  <li class="active"><a href="#pill1" data-toggle="tab" aria-expanded="true">All</a></li>
+  			  <li class=""><a href="#pill2" data-toggle="tab" aria-expanded="false">Potential</a></li>
+  			  <li class=""><a href="#pill3" data-toggle="tab" aria-expanded="false">Owned</a></li>
+  			  <li class=""><a href="#pill5" data-toggle="tab" aria-expanded="false">Sold</a></li>
+  			</ul>
+      </div>
+      <div class="col-xs-10 col-xs-offset-1">
+        <div class="tab-content tab-space">
+  				<div class="tab-pane active grid" id="pill1">
+            <%= render 'items/items_list', headers: general_headers, context: "general", items: @items.order(:jtrp_number, :account_item_number) %>
+  				</div>
+  				<div class="tab-pane grid" id="pill2">
+            <%= render 'items/items_list', headers: general_headers, context: "general", items: @items.potential.order(:jtrp_number, :account_item_number) %>
+  				</div>
+  				<div class="tab-pane grid" id="pill3">
+            <%= render 'items/items_list', headers: general_headers, context: "general", items: @items.owned.order(:jtrp_number, :account_item_number) %>
+  				</div>
+  				<div class="tab-pane grid" id="pill5">
+            <%= render 'items/items_list', headers: general_headers, context: "general", items: @items.sold.order(:jtrp_number, :account_item_number) %>
+  				</div>
+  			</div>
+  		</div>
+  	</div>
+
+  </div>
+
+
+<% end %>

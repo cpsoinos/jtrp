@@ -68,4 +68,12 @@
     </table>
   </div>
 
+  <% if @account && @account.is_a?(OwnerAccount) %>
+
+    <div class="text-center">
+      <%= paginate @items, html: {class: "pagination pagination-primary"} %>
+    </div>
+
+  <% end %>
+
 </div>
