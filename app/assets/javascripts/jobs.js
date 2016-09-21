@@ -1,7 +1,6 @@
 $(document).on('turbolinks:load', function() {
 
   if (gon.accounts !== undefined) {
-    debugger
     var accountData = JSON.parse(gon.accounts)
     slickifyDropdown($(".accounts-dropdown"), accountData);
   };
