@@ -21,19 +21,21 @@ $(document).on('turbolinks:load', function() {
 })
 
 var slickifyDropdown = function(selector, objects) {
-  var objectName = $(selector)[0].dataset.className
-  selector.ddslick({
-    data: objects,
-    imagePosition: "left",
-    width: '100%',
-    selectText: "Select " + objectName,
-    onSelected: function(data) {
-      if (objectName === "Account") {
-        $("#new-account-job-button").html("<a href='/accounts/" + data.selectedData.value + "/jobs/new' class='btn btn-raised btn-primary'>Next</a>");
-      } else if (objectName === "Job") {
-        $("#job_id")[0].value = (data.selectedData.value);
-        $("#new-account-job-proposal-button").toggleClass('hidden');
+  if ($(selector)[0] !== undefined) {
+    var objectName = $(selector)[0].dataset.className
+    selector.ddslick({
+      data: objects,
+      imagePosition: "left",
+      width: '100%',
+      selectText: "Select " + objectName,
+      onSelected: function(data) {
+        if (objectName === "Account") {
+          $("#new-account-job-button").html("<a href='/accounts/" + data.selectedData.value + "/jobs/new' class='btn btn-raised btn-primary'>Next</a>");
+        } else if (objectName === "Job") {
+          $("#job_id")[0].value = (data.selectedData.value);
+          $("#new-account-job-proposal-button").toggleClass('hidden');
+        }
       }
-    }
-  });
+    });
+  }
 }
