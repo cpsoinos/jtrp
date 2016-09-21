@@ -300,6 +300,7 @@ GEM
       faraday (~> 0.9.0)
       faraday_middleware (>= 0.9)
       hashie (>= 2.0, < 4.0)
+    get_process_mem (0.2.1)
     globalid (0.3.6)
       activesupport (>= 4.1.0)
     gon (6.0.1)
@@ -456,6 +457,9 @@ GEM
     pry-rails (0.3.4)
       pry (>= 0.9.10)
     puma (3.4.0)
+    puma_worker_killer (0.0.6)
+      get_process_mem (~> 0.2)
+      puma (>= 2.7, < 4)
     pusher (1.1.0)
       httpclient (~> 2.7)
       multi_json (~> 1.0)
@@ -741,6 +745,7 @@ DEPENDENCIES
   pry-coolline
   pry-rails
   puma
+  puma_worker_killer
   pusher
   rails (= 4.2.5.2)
   rails-assets-classnames!
