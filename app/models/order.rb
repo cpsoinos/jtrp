@@ -80,6 +80,7 @@ class Order < ActiveRecord::Base
   def retrieve_discounts
     remote_discounts ||= Clover::Discount.find(self).elements.map { |e| e }
     remote_discounts.map do |line_item|
+      next unless line_item.respond_to?(:discounts)
       self.discounts.find_or_create_by(
         remote_id: line_item.discounts.elements.first.id,
         item: self.items.find_by(remote_id: line_item.item.id),
