@@ -68,7 +68,7 @@
     </table>
   </div>
 
-  <% if @account && @account.is_a?(OwnerAccount) %>
+  <% if @account && @account.is_a?(OwnerAccount) && !controller_name.in?(['proposals', 'agreements']) %>
 
     <div class="text-center">
       <%= paginate @items, html: {class: "pagination pagination-primary"} %>
