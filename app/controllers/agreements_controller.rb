@@ -20,6 +20,7 @@ class AgreementsController < ApplicationController
     @account = @agreement.proposal.job.account
     @client = @account.primary_contact
     @agreements = [@agreement]
+    @items = @agreement.items
   end
 
   def agreements_list

@@ -11,7 +11,7 @@
       <% if @agreement.scanned_agreement.present? %>
         <iframe src="<%= @agreement.scanned_agreement.scan_url %>" width="100%" style="border: none;" class="full-height"> </iframe>
       <% else %>
-        <%= render "agreements/#{@agreement.agreement_type}", items: @agreement.items, agreement: @agreement %>
+        <%= render "agreements/#{@agreement.agreement_type}", items: @items, agreement: @agreement %>
       <% end %>
 
       <%= render 'agreements/terms_form', agreement: @agreement, account: @account %>
