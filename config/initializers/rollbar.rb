@@ -9,12 +9,21 @@ Rollbar.configure do |config|
     config.enabled = false
   end
 
-  config.js_enabled = true
+  config.js_enabled = false
   config.js_options = {
     accessToken: ENV['ROLLBAR_CLIENT_ACCESS_TOKEN'],
     captureUncaught: true,
     payload: {
-      environment: ENV['ROLLBAR_ENV'] || Rails.env
+      environment: ENV['ROLLBAR_ENV'] || Rails.env,
+      client: {
+      javascript: {
+        source_map_enabled: true,
+        # code_version: "some version string, such as a version number or git sha",
+        # Optionally have Rollbar guess which frames the error was thrown from
+        # when the browser does not provide line and column numbers.
+        guess_uncaught_frames: true
+      }
+    }
     }
   }
 
