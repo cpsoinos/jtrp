@@ -7,7 +7,7 @@ class AgreementsPresenter
   end
 
   def filter
-    Agreement.filter(params.slice(:status))
+    Agreement.includes(:proposal, :job, :account, {proposal: [:account, :primary_contact]}).filter(params.slice(:status))
   end
 
 end

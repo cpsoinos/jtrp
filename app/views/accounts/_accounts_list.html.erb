@@ -34,7 +34,7 @@
               <%= account.items.count %>
             </td>
             <td class="text-center">
-              <% if account.agreements.by_type("consign").present? %>
+              <% if account.consignment_account? %>
                 <%= link_to "View Statements", account_statements_path(account), class: "btn btn-round btn-raised btn-primary" %>
                 <br />
               <% end %>
