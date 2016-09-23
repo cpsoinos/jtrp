@@ -6,6 +6,8 @@ class Discount < ActiveRecord::Base
     less_than_or_equal_to: 0
   }
 
+  validates_presence_of :item, :order
+
   def apply_to_item
     return if applied?
     # this will handle marking as sold in addition to applying discount
