@@ -4,8 +4,8 @@ feature "proposal response" do
   let(:proposal) { create(:proposal, created_by: user) }
   let(:job) { proposal.job }
   let(:account) { job.account }
-  let!(:items) { create_list(:item, 5, proposal: proposal) }
-  let!(:intentions) { %w(sell consign donate dump nothing) }
+  let!(:items) { create_list(:item, 3, proposal: proposal) }
+  let!(:intentions) { %w(sell consign nothing) }
 
   before do
     allow(TransactionalEmailJob).to receive(:perform_later)
