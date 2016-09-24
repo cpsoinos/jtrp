@@ -25,6 +25,11 @@
             </div>
           <% end %>
           <% if agreement.scanned_agreement.present? %>
+            <% if current_user.try(:internal?) %>
+              <div class="text-right">
+                <%= link_to "Print Labels", labels_items_path(by_id: agreement.items.map(&:id)), class: "btn btn-info btn-raised btn-round", target: "blank" %>
+              </div>
+            <% end %>
             <iframe src="<%= agreement.scanned_agreement.scan_url %>" width="100%" style="border: none;" class="full-height"> </iframe>
           <% else %>
             <%= render "#{agreement.agreement_type}", items: @items.where(client_intention: agreement.agreement_type), agreement: agreement %>
