@@ -70,6 +70,7 @@ class Order < ActiveRecord::Base
       end
     else
       items.map do |item|
+        next if item.discount.present?
         ItemUpdater.new(item).update(sale_price_cents: item.listing_price_cents, sold_at: self.created_at)
       end
     end
