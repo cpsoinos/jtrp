@@ -6,7 +6,7 @@ class Discount < ActiveRecord::Base
     less_than_or_equal_to: 0
   }
 
-  validates_presence_of :item, :order
+  validates_presence_of :order, :item
 
   def apply_to_item
     return if applied?

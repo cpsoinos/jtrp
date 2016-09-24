@@ -61,15 +61,15 @@ class Order < ActiveRecord::Base
   end
 
   def mark_items_sold
+    return unless items.present?
     # check for discount
     if amount_cents != items.sum(:listing_price_cents)
       retrieve_discounts
       self.reload.discounts.each do |discount|
         discount.apply_to_item
       end
-    else
-      items.map(&:mark_sold)
     end
+    items.map(&:mark_sold)
   end
 
   def format_time(time)
@@ -81,7 +81,7 @@ class Order < ActiveRecord::Base
     remote_discounts ||= Clover::Discount.find(self).elements.map { |e| e }
     remote_discounts.map do |line_item|
       next unless line_item.respond_to?(:discounts)
-      self.discounts.find_or_create_by(
+      self.discounts.find_or_create_by!(
         remote_id: line_item.discounts.elements.first.id,
         item: self.items.find_by(remote_id: line_item.item.id),
         name: line_item.discounts.elements.first.name,
