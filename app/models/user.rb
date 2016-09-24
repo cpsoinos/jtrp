@@ -63,6 +63,10 @@ class User < ActiveRecord::Base
     "#{address_1}#{address_2.present? ? (', ' + address_2) : ''}, #{city}, #{state} #{zip}"
   end
 
+  def address_string
+    GeolocationService.new(self).location_string
+  end
+
   private
 
   def assign_avatar
