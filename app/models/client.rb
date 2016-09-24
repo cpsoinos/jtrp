@@ -9,10 +9,6 @@ class Client < User
 
   after_create :verify_account
 
-  def address_string
-    GeolocationService.new(self).location_string
-  end
-
   private
 
   def verify_account
