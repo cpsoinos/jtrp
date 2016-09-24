@@ -68,11 +68,10 @@ class Order < ActiveRecord::Base
       self.reload.discounts.each do |discount|
         discount.apply_to_item
       end
-    else
-      items.map do |item|
-        next if item.discount.present?
-        ItemUpdater.new(item).update(sale_price_cents: item.listing_price_cents, sold_at: self.created_at)
-      end
+    end
+    items.map do |item|
+      next if item.sold? && item.sale_price_cents.present? && item.sold_at.present?
+      ItemUpdater.new(item).update(sale_price_cents: item.listing_price_cents, sold_at: self.created_at)
     end
   end
 
