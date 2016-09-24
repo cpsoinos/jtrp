@@ -93,12 +93,18 @@ class Order < ActiveRecord::Base
       next unless line_item.respond_to?(:discounts)
       self.discounts.find_or_create_by!(
         remote_id: line_item.discounts.elements.first.id,
-        item: self.items.find_by(remote_id: line_item.item.id),
+        item: discount_item(line_item),
         name: line_item.discounts.elements.first.name,
         amount_cents: line_item.discounts.elements.first.try(:amount),
         percentage: line_item.discounts.elements.first.try(:percentage)
       )
     end.compact
+  end
+
+  def discount_item(line_item)
+    item = self.items.find_by(remote_id: line_item.item.id)
+    item ||= self.items.find_by(description: line_item.name)
+    item
   end
 
 end
