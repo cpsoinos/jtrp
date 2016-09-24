@@ -52,28 +52,6 @@ describe Agreement do
       expect(TransactionalEmailJob).to have_received(:perform_later).with(agreement, agreement.account.primary_contact, agreement.proposal.created_by, "agreement_active_notifier")
     end
 
-    context "consign" do
-      it "transitions 'potential' to 'active'" do
-        agreement = create(:agreement)
-        expect(agreement).to be_potential
-        agreement.manager_agreed = true
-        agreement.client_agreed = true
-        agreement.mark_active!
-
-        expect(agreement).to be_active
-      end
-
-      it "does not transition 'potential' to 'active' without a manager signature", skip: "only client signature required" do
-        agreement = create(:agreement, :consign)
-        expect(agreement).to be_potential
-        agreement.client_agreed = true
-        agreement.mark_active
-
-        expect(agreement).not_to be_active
-        expect(agreement).to be_potential
-      end
-    end
-
     it "transitions 'active' to 'inactive'" do
       item = create(:item, :active, client_intention: "sell")
       agreement = item.agreement
@@ -95,6 +73,18 @@ describe Agreement do
       expect(item).to be_potential
     end
 
+  end
+
+  it "writes to cache after save" do
+    agreement = build(:agreement)
+    expect(agreement).to receive(:update_cache)
+    agreement.save
+  end
+
+  it "deletes cache after destroy" do
+    agreement = create(:agreement)
+    expect(agreement).to receive(:delete_cache)
+    agreement.destroy
   end
 
 end

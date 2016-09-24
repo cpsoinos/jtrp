@@ -102,7 +102,7 @@ class Item < ActiveRecord::Base
   end
 
   def agreement
-    Rails.cache.fetch("#{cache_key}/agreement", expires_in: 1.month) do
+    Rails.cache.fetch("#{proposal.cache_key}/#{client_intention}_agreement") do
       if proposal
         proposal.agreements.find_by(agreement_type: client_intention)
       end
