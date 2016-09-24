@@ -91,7 +91,7 @@ class Order < ActiveRecord::Base
         amount_cents: line_item.discounts.elements.first.try(:amount),
         percentage: line_item.discounts.elements.first.try(:percentage)
       )
-    end
+    end.compact
   end
 
 end
