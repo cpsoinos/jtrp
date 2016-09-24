@@ -68,8 +68,11 @@ class Order < ActiveRecord::Base
       self.reload.discounts.each do |discount|
         discount.apply_to_item
       end
+    else
+      items.map do |item|
+        ItemUpdater.new(item).update(sale_price_cents: item.listing_price_cents, sold_at: self.created_at)
+      end
     end
-    items.map(&:mark_sold)
   end
 
   def format_time(time)
