@@ -11,6 +11,7 @@ describe Order do
     let(:elements) { DeepStruct.wrap([{item: {id: "1234"}, name: "some name"}, {name: "Manual Transaction"}]) }
 
     before do
+      allow(Clover::Inventory).to receive(:delete)
       allow(Clover::Order).to receive(:find).with(order).and_return(remote_order)
       allow(remote_order).to receive(:lineItems).and_return(line_items)
       allow(line_items).to receive(:elements).and_return(elements)

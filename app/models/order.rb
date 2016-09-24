@@ -61,6 +61,7 @@ class Order < ActiveRecord::Base
   end
 
   def mark_items_sold
+    return unless items.present?
     # check for discount
     if amount_cents != items.sum(:listing_price_cents)
       retrieve_discounts
