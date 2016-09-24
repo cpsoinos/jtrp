@@ -41,7 +41,7 @@ class Order < ActiveRecord::Base
   def descriptions_from_line_items
     line_items.map do |element|
       next if element.name == "Manual Transaction"
-      element.item.name
+      element.name
     end.compact
   end
 
@@ -56,7 +56,7 @@ class Order < ActiveRecord::Base
   def add_items_to_order
     return unless (remote_order && line_items.present?)
     items = (Item.where(remote_id: remote_item_ids_from_line_items) | Item.where(description: descriptions_from_line_items))
-    items.update_all(order_id: id)
+    self.items << items
   end
 
   def remote_order_open?

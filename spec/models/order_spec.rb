@@ -58,6 +58,7 @@ describe Order do
             item: {
               id: order.items.first.remote_id
             },
+            name: order.items.first.description,
             discounts: {
               elements: [
                 {
@@ -72,6 +73,7 @@ describe Order do
             item: {
               id: order.items.second.remote_id
             },
+            name: order.items.second.description,
             discounts: {
               elements: [
                 {
@@ -86,6 +88,7 @@ describe Order do
             item: {
               id: order.items.third.remote_id
             },
+            name: order.items.third.description,
             discounts: {
               elements: [
                 {
