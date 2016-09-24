@@ -91,6 +91,7 @@ feature "item show" do
       end
 
       scenario "marks as sold", js: true do
+        allow(Clover::Inventory).to receive(:delete)
         click_button("Mark as Sold")
         expect(page).to have_field("item[sale_price]")
         expect(page).to have_field("item[sold_at]")
