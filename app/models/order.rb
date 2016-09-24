@@ -38,6 +38,13 @@ class Order < ActiveRecord::Base
     end.compact
   end
 
+  def descriptions_from_line_items
+    line_items.map do |element|
+      next if element.name == "Manual Transaction"
+      element.item.name
+    end.compact
+  end
+
   def update_order
     return unless remote_order
     self.amount_cents = remote_order.total
@@ -48,7 +55,7 @@ class Order < ActiveRecord::Base
 
   def add_items_to_order
     return unless (remote_order && line_items.present?)
-    items = Item.where(remote_id: remote_item_ids_from_line_items)
+    items = (Item.where(remote_id: remote_item_ids_from_line_items) | Item.where(description: descriptions_from_line_items))
     items.update_all(order_id: id)
   end
 
