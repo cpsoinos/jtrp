@@ -125,8 +125,10 @@ describe Item do
 
     it "does not transition 'active' to 'sold' when requirements not met" do
       item = create(:item, :active, client_intention: "sell")
-      item.agreement.update_attribute("status", "potential")
-      item.mark_sold
+      agreement = item.agreement
+      agreement.status = "potential"
+      agreement.save
+      item.reload.mark_sold
 
       expect(item).not_to be_sold
       expect(item).to be_active

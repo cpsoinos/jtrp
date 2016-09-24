@@ -7,11 +7,11 @@ class ItemsPresenter
   end
 
   def filter
-    Item.includes(:photos, proposal: [job: [account: :primary_contact]]).filter(params.slice(:status, :type, :by_id))
+    Item.includes(:account, :job).filter(params.slice(:status, :type, :by_id))
   end
 
   def todo
-    Item.includes(proposal: {job: {account: :primary_contact}}).where(id: (no_listing_price | no_sale_price))
+    Item.includes(:account, proposal: {job: {account: :primary_contact}}).where(id: (no_listing_price | no_sale_price))
   end
 
   private

@@ -7,6 +7,9 @@ class Agreement < ActiveRecord::Base
   has_one :job, through: :proposal
   has_one :account, through: :job
 
+  after_save :update_cache
+  after_destroy :delete_cache
+
   validates :agreement_type, presence: true
   validates :proposal, presence: true
 
@@ -90,6 +93,16 @@ class Agreement < ActiveRecord::Base
   def notify_company
     return unless self.active?
     TransactionalEmailJob.perform_later(self, account.primary_contact, proposal.created_by, "agreement_active_notifier")
+  end
+
+  private
+
+  def update_cache
+    Rails.cache.write("#{proposal.cache_key}/#{agreement_type}_agreement", self)
+  end
+
+  def delete_cache
+    Rails.cache.delete("#{proposal.cache_key}/#{agreement_type}_agreement")
   end
 
 end

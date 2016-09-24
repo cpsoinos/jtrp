@@ -53,6 +53,10 @@ class Job < ActiveRecord::Base
     account.mark_inactive
   end
 
+  def items_count
+    proposals.sum(:items_count)
+  end
+
   def maps_url
     GeolocationService.new(self).static_map_url || ""
   end

@@ -50,4 +50,6 @@ Rails.application.configure do
     redis: { url: "#{ENV['REDIS_URL']}/2", driver: :hiredis },
     refresh: true
   }
+  Bullet.enable = true
+  Bullet.rails_logger = true
 end

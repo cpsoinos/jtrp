@@ -70,6 +70,9 @@ GEM
       mini_magick (~> 4.0)
       remotipart (~> 1.2)
     builder (3.2.2)
+    bullet (5.4.0)
+      activesupport (>= 3.0.0)
+      uniform_notifier (~> 1.10.0)
     byebug (8.2.5)
     cairo (1.15.2)
       pkg-config (>= 1.1.5)
@@ -667,6 +670,7 @@ GEM
       unf_ext
     unf_ext (0.0.7.2)
     unicode_utils (1.4.0)
+    uniform_notifier (1.10.0)
     uuidtools (2.1.5)
     warden (1.2.6)
       rack (>= 1.0)
@@ -698,6 +702,7 @@ DEPENDENCIES
   best_in_place (= 3.0.3)
   better_errors
   bootsy
+  bullet
   bundler (>= 1.8.4)
   cairo
   capybara
