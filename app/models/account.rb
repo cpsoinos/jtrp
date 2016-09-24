@@ -67,12 +67,14 @@ class Account < ActiveRecord::Base
   end
 
   def full_name
-    if company_name.present?
-      company_name
-    elsif primary_contact.present?
-      primary_contact.full_name
-    else
-      "No Name Provided"
+    Rails.cache.fetch("#{cache_key}/full_name", expires_in: 2.weeks) do
+      if company_name.present?
+        company_name
+      elsif primary_contact.present?
+        primary_contact.full_name
+      else
+        "No Name Provided"
+      end
     end
   end
 
@@ -112,6 +114,12 @@ class Account < ActiveRecord::Base
 
   def estate_sale?
     account_number == 2 && company_name == "Estate Sale"
+  end
+
+  def consignment_account?
+    Rails.cache.fetch("#{cache_key}/consignment?", expires_in: 2.days) do
+      agreements.by_type('consign').present?
+    end
   end
 
   private
