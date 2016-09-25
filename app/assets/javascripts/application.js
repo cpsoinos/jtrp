@@ -40,5 +40,6 @@
 //= require instafeed.min
 //= require cloudinary
 //= require image-picker
+//= require jquery.tablesorter.min
 //= require_tree .
 //= require turbolinks

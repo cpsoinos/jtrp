@@ -135,3 +135,9 @@ h1, h3, h4 {
 .tab-icon {
   margin-bottom: -30px;
 }
+
+.tablesorter th {
+  &:hover {
+    cursor: pointer;
+  }
+}
