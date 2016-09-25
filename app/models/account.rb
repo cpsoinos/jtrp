@@ -13,7 +13,7 @@ class Account < ActiveRecord::Base
   multisearchable against: [:account_number, :full_name, :status]
 
   has_many :clients
-  belongs_to :primary_contact, class_name: "User", foreign_key: "primary_contact_id"
+  belongs_to :primary_contact, class_name: "User", foreign_key: "primary_contact_id", touch: true
   has_many :jobs, dependent: :destroy
   has_many :proposals, through: :jobs
   has_many :items, through: :proposals
@@ -74,7 +74,7 @@ class Account < ActiveRecord::Base
   end
 
   def full_name
-    Rails.cache.fetch("#{cache_key}/full_name", expires_in: 2.weeks) do
+    Rails.cache.fetch("#{cache_key}/full_name") do
       if company_name.present?
         company_name
       elsif primary_contact.present?
@@ -124,7 +124,7 @@ class Account < ActiveRecord::Base
   end
 
   def consignment_account?
-    Rails.cache.fetch("#{cache_key}/consignment?", expires_in: 2.days) do
+    Rails.cache.fetch("#{cache_key}/consignment?") do
       agreements.by_type('consign').present?
     end
   end

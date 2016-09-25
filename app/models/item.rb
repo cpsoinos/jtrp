@@ -10,12 +10,12 @@ class Item < ActiveRecord::Base
 
   has_many :photos, dependent: :destroy
   accepts_nested_attributes_for :photos
-  belongs_to :category
-  belongs_to :proposal, counter_cache: true
+  belongs_to :category, touch: true
+  belongs_to :proposal, counter_cache: true, touch: true
   belongs_to :order
   has_many :discounts
   has_many :children, class_name: "Item", foreign_key: "parent_item_id"
-  belongs_to :parent_item, class_name: "Item", foreign_key: "parent_item_id"
+  belongs_to :parent_item, class_name: "Item", foreign_key: "parent_item_id", touch: true
   has_one :job, through: :proposal
   has_one :account, through: :job
 
@@ -93,7 +93,7 @@ class Item < ActiveRecord::Base
   end
 
   def featured_photo
-    Rails.cache.fetch("#{cache_key}/featured_photo", expires_in: 2.weeks) do
+    Rails.cache.fetch("#{cache_key}/featured_photo") do
       if listing_photos.present?
         listing_photos.first
       elsif initial_photos.present?
