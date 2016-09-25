@@ -19,7 +19,9 @@
     <%= render 'disclaimer' %>
 
     <% @items.each do |item| %>
-      <%= render 'item_row', item: item %>
+      <% cache [@proposal, action_name, item] do %>
+        <%= render 'item_row', collection: @items, cached: true, item: item %>
+      <% end %>
     <% end %>
 
     <% if current_user.try(:internal?) %>
