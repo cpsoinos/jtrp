@@ -75,12 +75,6 @@ describe Agreement do
 
   end
 
-  it "writes to cache after save" do
-    agreement = build(:agreement)
-    expect(agreement).to receive(:update_cache)
-    agreement.save
-  end
-
   it "deletes cache after destroy" do
     agreement = create(:agreement)
     expect(agreement).to receive(:delete_cache)
