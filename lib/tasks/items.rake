@@ -19,4 +19,22 @@ namespace :items do
     puts "finished backfilling #{count} items with original descriptions"
   end
 
+  task :reformat_sold_at_dates => :environment do |task|
+
+    puts "begin formatting dates of applicable sold items"
+
+    items = Item.where("sold_at < '#{1.year.ago}'")
+    count = items.count
+
+    bar = RakeProgressbar.new(count)
+
+    items.each do |item|
+      extracted_original_sale_date = item.sold_at.to_s.split(" ").first.split("-")
+      reformatted_sale_date = "#{extracted_original_sale_date[1]}/#{extracted_original_sale_date[0][-2..-1]}/20#{extracted_original_sale_date[2]}"
+      item.sold_at = DateTime.strptime(reformatted_sale_date, '%m/%d/%Y')
+      item.save
+    end
+
+  end
+
 end

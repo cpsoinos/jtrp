@@ -66,4 +66,12 @@ describe ItemUpdater do
     expect(active_item.status).to eq("sold")
   end
 
+  it "processes sale date" do
+    sold_item = create(:item, :sold)
+    ItemUpdater.new(sold_item).update(sold_at: "5/4/16")
+
+    expect(sold_item.sold_at.strftime('%-m/%-d/%y')).not_to eq("4/5/16")
+    expect(sold_item.sold_at.strftime('%-m/%-d/%y')).to eq("5/4/16")
+  end
+
 end
