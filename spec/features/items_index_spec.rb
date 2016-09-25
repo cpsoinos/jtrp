@@ -7,7 +7,7 @@ feature "item index" do
   let!(:sold_items) { create_list(:item, 2, :sold, description: "Katniss") }
   let!(:inactive_items) { create_list(:item, 4, :inactive) }
   let!(:all_items) { active_owned_items | active_consigned_items | sold_items | potential_items }
-  let(:intentions) { ["consigned", "owned", "will donate", "will dump", "undecided"] }
+  let(:intentions) { ["consigned", "owned", "undecided"] }
 
   before do
     sign_in user
@@ -29,14 +29,31 @@ feature "item index" do
     scenario "visits item list" do
       Item.first.update_attribute("client_intention", "sell")
       Item.second.update_attribute("client_intention", "consign")
-      Item.third.update_attribute("client_intention", "donate")
-      Item.fourth.update_attribute("client_intention", "dump")
       visit items_path
 
       expect(page).to have_content("All Items")
       intentions.each do |intention|
         next if intention == "undecided"
         expect(page).to have_link(intention)
+      end
+    end
+
+    scenario "general headers and values" do
+      visit items_path
+
+      expect(page).to have_content("Account Item No.")
+      expect(page).to have_content("JTRP No.")
+      expect(page).to have_content("Consignment Rate")
+      expect(page).to have_content("Listing Price")
+      expect(page).to have_content("Min. Sale Price")
+      expect(page).to have_content("Sale Date")
+      expect(page).to have_content("Sale Price")
+
+      Item.all.each do |item|
+        expect(page).to have_content(item.id)
+        expect(page).to have_content(item.account_item_number)
+        expect(page).to have_content(ActionController::Base.helpers.humanized_money_with_symbol(item.listing_price))
+        expect(page).to have_content(ActionController::Base.helpers.humanized_money_with_symbol(item.minimum_sale_price))
       end
     end
 
