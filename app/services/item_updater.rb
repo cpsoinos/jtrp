@@ -63,7 +63,7 @@ class ItemUpdater
 
   def format_date
     formatted_date = attrs[:sold_at].split("/")
-    attrs[:sold_at] = "#{formatted_date[1]}/#{formatted_date[0]}/#{formatted_date[2]}"
+    attrs[:sold_at] = "#{formatted_date[1]}/#{formatted_date[0]}/20#{formatted_date[2]}"
   end
 
 end
