@@ -55,11 +55,7 @@ class ItemUpdater
   end
 
   def process_sold_at
-    if attrs[:sold_at].present?
-      format_date if attrs[:sold_at].is_a?(String)
-    else
-      attrs[:sold_at] = DateTime.now
-    end
+    attrs[:sold_at] ||= DateTime.now
   end
 
   def format_date
