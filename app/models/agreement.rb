@@ -1,7 +1,4 @@
 class Agreement < ActiveRecord::Base
-  extend FriendlyId
-  friendly_id :short_name, use: [:slugged, :finders, :history]
-
   include Filterable
 
   belongs_to :proposal

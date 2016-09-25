@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160925171635) do
+ActiveRecord::Schema.define(version: 20160925172724) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -57,13 +57,11 @@ ActiveRecord::Schema.define(version: 20160925171635) do
     t.integer  "updated_by_id"
     t.integer  "deleted_by_id"
     t.datetime "deleted_at"
-    t.string   "slug"
   end
 
   add_index "agreements", ["deleted_at", "proposal_id"], name: "index_agreements_on_deleted_at_and_proposal_id", using: :btree
   add_index "agreements", ["deleted_at"], name: "index_agreements_on_deleted_at", using: :btree
   add_index "agreements", ["proposal_id"], name: "index_agreements_on_proposal_id", using: :btree
-  add_index "agreements", ["slug"], name: "index_agreements_on_slug", using: :btree
 
   create_table "archives", force: :cascade do |t|
     t.string "archive"
