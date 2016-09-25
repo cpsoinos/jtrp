@@ -9,6 +9,7 @@ class ItemUpdater
   def update(attrs)
     @attrs = attrs
     process_photos
+    format_date if attrs[:sold_at]
     process_sale
     if item.update(attrs)
       sync_inventory
@@ -54,16 +55,13 @@ class ItemUpdater
   end
 
   def process_sold_at
-    if attrs[:sold_at].present?
-      format_date if attrs[:sold_at].is_a?(String)
-    else
-      attrs[:sold_at] = DateTime.now
-    end
+    attrs[:sold_at] ||= DateTime.now
   end
 
   def format_date
-    formatted_date = attrs[:sold_at].split("/")
-    attrs[:sold_at] = "#{formatted_date[1]}/#{formatted_date[0]}/#{formatted_date[2]}"
+    if attrs[:sold_at].present? && attrs[:sold_at].is_a?(String)
+      attrs[:sold_at] = DateTime.strptime(attrs[:sold_at], '%m/%d/%Y')
+    end
   end
 
 end
