@@ -109,7 +109,7 @@
           <div class="form-group">
             <%= f.label :sold_at, class: "control-label" %>
             <div class="input-group">
-              <%= f.text_field :sold_at, id: "sale-date" %>
+              <%= f.text_field :sold_at, id: "sale-date", value: @item.try(:sold_at).try(:strftime, '%-m/%-d/%y') %>
             </div>
           </div>
         </div>

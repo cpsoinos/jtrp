@@ -9,6 +9,7 @@ class ItemUpdater
   def update(attrs)
     @attrs = attrs
     process_photos
+    format_date if attrs[:sold_at]
     process_sale
     if item.update(attrs)
       sync_inventory
@@ -62,8 +63,7 @@ class ItemUpdater
   end
 
   def format_date
-    formatted_date = attrs[:sold_at].split("/")
-    attrs[:sold_at] = "#{formatted_date[1]}/#{formatted_date[0]}/20#{formatted_date[2]}"
+    attrs[:sold_at] = DateTime.strptime(attrs[:sold_at], '%m/%d/%Y')
   end
 
 end

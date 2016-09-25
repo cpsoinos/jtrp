@@ -66,10 +66,12 @@
                 <li>at <%= @item.consignment_rate %>%</li>
               <% end %>
               <li>Min. Price: <%= humanized_money_with_symbol(@item.minimum_sale_price) %></li>
-              <li><%= @item.status.titleize %></li>
-              <% if @item.sold? %>
-                <li>for <%= humanized_money_with_symbol(@item.sale_price) %></li>
-              <% end %>
+              <li>
+                <%= @item.status.titleize %>
+                <% if @item.sold? %>
+                  for <%= humanized_money_with_symbol(@item.sale_price) %> on <%= @item.sold_at.strftime('%-m/%-d/%y') %>
+                <% end %>
+              </li>
             </ul>
             <% unless @item.sold? %>
               <button type="button" class="btn btn-raised btn-primary btn-round" data-toggle="modal" data-target="#mark-sold-modal" data-item-id="<%= @item.id %>" data-item-description="<%= @item.description %>">
