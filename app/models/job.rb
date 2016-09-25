@@ -1,4 +1,7 @@
 class Job < ActiveRecord::Base
+  extend FriendlyId
+  friendly_id :address_1, use: [:slugged, :finders, :history]
+
   include Filterable
   include PgSearch
 

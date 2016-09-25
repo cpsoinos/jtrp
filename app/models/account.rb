@@ -1,4 +1,7 @@
 class Account < ActiveRecord::Base
+  extend FriendlyId
+  friendly_id :short_name, use: [:slugged, :finders, :history]
+
   include Filterable
   include PgSearch
 

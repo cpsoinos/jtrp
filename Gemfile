@@ -62,6 +62,7 @@ gem 'rollbar'
 gem 'oj', '~> 2.12.14'
 gem 'fullcontact'
 gem 'puma_worker_killer'
+gem 'friendly_id', '~> 5.1.0'
 
 group :production, :staging do
   gem 'tunemygc'

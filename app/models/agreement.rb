@@ -43,6 +43,10 @@ class Agreement < ActiveRecord::Base
 
   end
 
+  def short_name
+    "#{account.short_name} #{agreement_type}"
+  end
+
   def items
     proposal.items.where(client_intention: agreement_type)
   end
