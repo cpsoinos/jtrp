@@ -41,6 +41,9 @@
               <% unless account.inactive? %>
                 <%= link_to "Deactivate", account_deactivate_path(account), class: "btn btn-round btn-raised btn-warning", method: :post %>
               <% end %>
+              <% if account.inactive? %>
+                <%= link_to "Reactivate", account_reactivate_path(account), class: "btn btn-round btn-raised btn-info", method: :post %>
+              <% end %>
             </td>
           </tr>
         <% end %>

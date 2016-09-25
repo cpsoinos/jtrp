@@ -54,6 +54,7 @@ Rails.application.routes.draw do
       post '/send_email', to: 'statements#send_email', as: 'send_email'
     end
     post '/deactivate', to: 'accounts#deactivate', as: 'deactivate'
+    post '/reactivate', to: 'accounts#reactivate', as: 'reactivate'
   end
 
   resources :clients
