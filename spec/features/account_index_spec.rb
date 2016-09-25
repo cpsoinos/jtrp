@@ -22,6 +22,15 @@ feature "account index" do
       expect(Account.inactive.count).to eq(1)
     end
 
+    scenario "reactivates an account" do
+      create(:account, :inactive)
+      visit accounts_path
+      click_link("Reactivate", match: :first)
+
+      expect(page).to have_content("Account reactivated")
+      expect(Account.inactive.count).to eq(0)
+    end
+
   end
 
 end

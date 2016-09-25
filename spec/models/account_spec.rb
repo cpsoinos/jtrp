@@ -59,6 +59,13 @@ describe Account do
       expect(item.reload).to be_inactive
     end
 
+    it "transitions 'inactive' to 'active'" do
+      account = create(:account, :inactive)
+      account.reactivate!
+
+      expect(account).to be_active
+    end
+
   end
 
   it "primary_contact" do

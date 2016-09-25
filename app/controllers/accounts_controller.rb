@@ -58,6 +58,15 @@ class AccountsController < ApplicationController
     end
   end
 
+  def reactivate
+    @account = Account.find(params[:account_id])
+    if @account.reactivate
+      redirect_to :back, notice: "Account reactivated"
+    else
+      redirect_to :back, alert: "Could not reactivate account."
+    end
+  end
+
   protected
 
   def account_params

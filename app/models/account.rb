@@ -51,6 +51,10 @@ class Account < ActiveRecord::Base
       transition potential: :inactive
     end
 
+    event :reactivate do
+      transition inactive: :active
+    end
+
   end
 
   alias :client :primary_contact
