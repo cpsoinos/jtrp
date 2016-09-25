@@ -59,7 +59,9 @@ class ItemUpdater
   end
 
   def format_date
-    attrs[:sold_at] = DateTime.strptime(attrs[:sold_at], '%m/%d/%Y')
+    if attrs[:sold_at].present? && attrs[:sold_at].is_a?(String)
+      attrs[:sold_at] = DateTime.strptime(attrs[:sold_at], '%m/%d/%Y')
+    end
   end
 
 end
