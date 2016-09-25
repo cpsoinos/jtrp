@@ -11,7 +11,7 @@ module Clover
         when 404
           nil
         else
-          raise 'unable to find order - ' + JSON.parse(response)['message'].join('; ')
+          raise 'unable to find order - ' + JSON.parse(response)['message'] + ', order: ' + order.id
         end
       end
     end
@@ -22,7 +22,7 @@ module Clover
         when 200
           DeepStruct.wrap(JSON.parse(response)["elements"])
         else
-          raise 'unable to get all inventory orders - ' + JSON.parse(response)['message'].join('; ')
+          raise 'unable to get all inventory orders - ' + JSON.parse(response)['message']
         end
       end
     end
