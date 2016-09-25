@@ -7,7 +7,6 @@ class Agreement < ActiveRecord::Base
   has_one :job, through: :proposal
   has_one :account, through: :job
 
-  after_save :update_cache
   after_destroy :delete_cache
 
   validates :agreement_type, presence: true
@@ -48,7 +47,7 @@ class Agreement < ActiveRecord::Base
   end
 
   def items
-    proposal.items.where(client_intention: agreement_type)
+    proposal.items.includes(:account, :job).where(client_intention: agreement_type)
   end
 
   def mark_items_active

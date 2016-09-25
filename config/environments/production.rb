@@ -77,6 +77,11 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
+  Readthis.serializers << Oj
+  # Freeze the serializers to ensure they aren't changed at runtime.
+  Readthis.serializers.freeze!
+  Readthis::Cache.new(marshal: Oj)
+
   config.cache_store = :readthis_store, {
     expires_in: 2.weeks.to_i,
     compress: true,

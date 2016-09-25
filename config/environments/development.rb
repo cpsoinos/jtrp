@@ -42,6 +42,11 @@ Rails.application.configure do
   # config.action_view.raise_on_missing_translations = true
   config.web_console.development_only = false
 
+  Readthis.serializers << Oj
+  # Freeze the serializers to ensure they aren't changed at runtime.
+  Readthis.serializers.freeze!
+  Readthis::Cache.new(marshal: Oj)
+
   config.cache_store = :readthis_store, {
     expires_in: 2.weeks.to_i,
     compress: true,
