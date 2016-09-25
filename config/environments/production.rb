@@ -87,7 +87,7 @@ Rails.application.configure do
     compress: true,
     compression_threshold: 2.kilobytes,
     namespace: 'cache',
-    redis: { url: "#{ENV['REDIS_URL']}/2", driver: :hiredis },
+    redis: { url: "#{ENV['REDISCLOUD_URL']}", driver: :hiredis },
     refresh: true
   }
 end
