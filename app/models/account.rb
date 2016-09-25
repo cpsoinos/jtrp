@@ -1,4 +1,7 @@
 class Account < ActiveRecord::Base
+  extend FriendlyId
+  friendly_id :short_name, use: [:slugged, :finders, :history]
+
   include Filterable
   include PgSearch
 
@@ -49,6 +52,10 @@ class Account < ActiveRecord::Base
     event :mark_inactive do
       transition active: :inactive, if: lambda { |account| account.meets_requirements_inactive? }
       transition potential: :inactive
+    end
+
+    event :reactivate do
+      transition inactive: :active
     end
 
   end

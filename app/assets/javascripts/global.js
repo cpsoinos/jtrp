@@ -11,9 +11,7 @@ $(document).on('turbolinks:load', function() {
 
   var $tab = $($("a[role='tab']")[0])
   $tab.tab("show");
+
+  $(".tablesorter").tablesorter( { sortList: [[1,0]] } );
+
 });
-// 
-// $(document).on('turbolinks:load', function() {
-//   var $tab = $($("a[role='tab']")[0])
-//   $tab.tab("show");
-// });

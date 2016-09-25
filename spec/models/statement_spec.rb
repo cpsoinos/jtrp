@@ -63,7 +63,7 @@ describe Statement do
   it "object_url" do
     statement = create(:statement)
 
-    expect(statement.object_url).to eq("#{ENV['HOST']}/accounts/#{statement.account.id}/statements/#{statement.id}")
+    expect(statement.object_url).to eq("#{ENV['HOST']}/accounts/#{statement.account.slug}/statements/#{statement.id}")
   end
 
 end

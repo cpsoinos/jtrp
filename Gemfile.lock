@@ -299,6 +299,8 @@ GEM
       fog-core
       nokogiri (~> 1.5, >= 1.5.11)
     formatador (0.2.5)
+    friendly_id (5.1.0)
+      activerecord (>= 4.0.0)
     fullcontact (0.15.0)
       faraday (~> 0.9.0)
       faraday_middleware (>= 0.9)
@@ -724,6 +726,7 @@ DEPENDENCIES
   factory_girl_rails
   faker
   fog
+  friendly_id (~> 5.1.0)
   fullcontact
   gon
   guard-rspec

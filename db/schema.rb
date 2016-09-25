@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160920225652) do
+ActiveRecord::Schema.define(version: 20160925172724) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,11 +31,13 @@ ActiveRecord::Schema.define(version: 20160920225652) do
     t.datetime "deleted_at"
     t.integer  "jobs_count"
     t.string   "type",               default: "ClientAccount", null: false
+    t.string   "slug"
   end
 
   add_index "accounts", ["deleted_at", "primary_contact_id"], name: "index_accounts_on_deleted_at_and_primary_contact_id", using: :btree
   add_index "accounts", ["deleted_at"], name: "index_accounts_on_deleted_at", using: :btree
   add_index "accounts", ["primary_contact_id"], name: "index_accounts_on_primary_contact_id", using: :btree
+  add_index "accounts", ["slug"], name: "index_accounts_on_slug", using: :btree
 
   create_table "agreements", force: :cascade do |t|
     t.integer  "proposal_id"
@@ -89,11 +91,13 @@ ActiveRecord::Schema.define(version: 20160920225652) do
     t.integer  "updated_by_id"
     t.integer  "deleted_by_id"
     t.datetime "deleted_at"
+    t.string   "slug"
   end
 
   add_index "categories", ["deleted_at", "parent_id"], name: "index_categories_on_deleted_at_and_parent_id", using: :btree
   add_index "categories", ["deleted_at"], name: "index_categories_on_deleted_at", using: :btree
   add_index "categories", ["parent_id"], name: "index_categories_on_parent_id", using: :btree
+  add_index "categories", ["slug"], name: "index_categories_on_slug", using: :btree
 
   create_table "companies", force: :cascade do |t|
     t.string   "name",                        null: false
@@ -117,11 +121,13 @@ ActiveRecord::Schema.define(version: 20160920225652) do
     t.integer  "updated_by_id"
     t.integer  "deleted_by_id"
     t.datetime "deleted_at"
+    t.string   "slug"
   end
 
   add_index "companies", ["deleted_at", "primary_contact_id"], name: "index_companies_on_deleted_at_and_primary_contact_id", using: :btree
   add_index "companies", ["deleted_at"], name: "index_companies_on_deleted_at", using: :btree
   add_index "companies", ["primary_contact_id"], name: "index_companies_on_primary_contact_id", using: :btree
+  add_index "companies", ["slug"], name: "index_companies_on_slug", using: :btree
 
   create_table "discounts", force: :cascade do |t|
     t.integer  "order_id"
@@ -149,6 +155,19 @@ ActiveRecord::Schema.define(version: 20160920225652) do
   end
 
   add_index "events", ["user_id"], name: "index_events_on_user_id", using: :btree
+
+  create_table "friendly_id_slugs", force: :cascade do |t|
+    t.string   "slug",                      null: false
+    t.integer  "sluggable_id",              null: false
+    t.string   "sluggable_type", limit: 50
+    t.string   "scope"
+    t.datetime "created_at"
+  end
+
+  add_index "friendly_id_slugs", ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true, using: :btree
+  add_index "friendly_id_slugs", ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type", using: :btree
+  add_index "friendly_id_slugs", ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id", using: :btree
+  add_index "friendly_id_slugs", ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type", using: :btree
 
   create_table "item_spreadsheets", force: :cascade do |t|
     t.string "csv"
@@ -190,6 +209,7 @@ ActiveRecord::Schema.define(version: 20160920225652) do
     t.integer  "updated_by_id"
     t.integer  "deleted_by_id"
     t.datetime "deleted_at"
+    t.string   "slug"
   end
 
   add_index "items", ["account_item_number"], name: "index_items_on_account_item_number", using: :btree
@@ -207,6 +227,7 @@ ActiveRecord::Schema.define(version: 20160920225652) do
   add_index "items", ["deleted_at"], name: "index_items_on_deleted_at", using: :btree
   add_index "items", ["order_id"], name: "index_items_on_order_id", using: :btree
   add_index "items", ["proposal_id"], name: "index_items_on_proposal_id", using: :btree
+  add_index "items", ["slug"], name: "index_items_on_slug", using: :btree
   add_index "items", ["status", "account_item_number", "jtrp_number"], name: "index_items_on_status_and_account_item_number_and_jtrp_number", using: :btree
   add_index "items", ["status", "account_item_number"], name: "index_items_on_status_and_account_item_number", using: :btree
   add_index "items", ["status", "client_intention"], name: "index_items_on_status_and_client_intention", using: :btree
@@ -225,11 +246,13 @@ ActiveRecord::Schema.define(version: 20160920225652) do
     t.integer  "updated_by_id"
     t.integer  "deleted_by_id"
     t.datetime "deleted_at"
+    t.string   "slug"
   end
 
   add_index "jobs", ["account_id"], name: "index_jobs_on_account_id", using: :btree
   add_index "jobs", ["deleted_at", "account_id"], name: "index_jobs_on_deleted_at_and_account_id", using: :btree
   add_index "jobs", ["deleted_at"], name: "index_jobs_on_deleted_at", using: :btree
+  add_index "jobs", ["slug"], name: "index_jobs_on_slug", using: :btree
 
   create_table "orders", force: :cascade do |t|
     t.string   "remote_id"
@@ -371,6 +394,7 @@ ActiveRecord::Schema.define(version: 20160920225652) do
     t.integer  "updated_by_id"
     t.integer  "deleted_by_id"
     t.datetime "deleted_at"
+    t.string   "slug"
   end
 
   add_index "users", ["account_id"], name: "index_users_on_account_id", using: :btree
@@ -380,6 +404,7 @@ ActiveRecord::Schema.define(version: 20160920225652) do
   add_index "users", ["deleted_at"], name: "index_users_on_deleted_at", using: :btree
   add_index "users", ["email"], name: "index_users_on_email", using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+  add_index "users", ["slug"], name: "index_users_on_slug", using: :btree
 
   create_table "webhooks", force: :cascade do |t|
     t.string   "integration"

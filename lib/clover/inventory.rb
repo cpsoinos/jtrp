@@ -16,7 +16,7 @@ module Clover
           item.remote_id = inventory_item.id
           item.save
         else
-          raise 'unable to create inventory item - ' + JSON.parse(response)['message'] + 'item id:' + item.id
+          raise 'unable to create inventory item - ' + JSON.parse(response)['message'] + ', item id:' + item.id
         end
       end
     end
@@ -29,7 +29,7 @@ module Clover
         when 404
           nil
         else
-          raise 'unable to find item - ' + JSON.parse(response)['message'] + 'item id:' + item.id
+          raise 'unable to find item - ' + JSON.parse(response)['message'] + ', item id:' + item.id
         end
       end
     end
@@ -47,7 +47,7 @@ module Clover
           item.remote_id ||= inventory_item.id
           item.save
         else
-          raise 'unable to find item - ' + JSON.parse(response)['message'] + 'item id:' + item.id
+          raise 'unable to find item - ' + JSON.parse(response)['message'] + ', item id:' + item.id
         end
       end
     end
@@ -58,7 +58,7 @@ module Clover
         when 200
           DeepStruct.wrap(JSON.parse(response)["elements"])
         else
-          raise 'unable to get all inventory items - ' + JSON.parse(response)['message'] + 'item id:' + item.id
+          raise 'unable to get all inventory items - ' + JSON.parse(response)['message']
         end
       end
     end
@@ -68,7 +68,7 @@ module Clover
         if [200, 400].include?(response.code)
           ItemUpdater.new(item).update(remote_id: nil)
         else
-          raise 'unable to delete item - ' + JSON.parse(response)['message'] + 'item id:' + item.id
+          raise 'unable to delete item - ' + JSON.parse(response)['message'] + ', item id:' + item.id
         end
       end
     end

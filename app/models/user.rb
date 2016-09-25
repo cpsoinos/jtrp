@@ -5,6 +5,9 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable,
          :omniauthable, omniauth_providers: [:clover]
 
+  extend FriendlyId
+  friendly_id :email, use: [:slugged, :finders, :history]
+
   attr_accessor :skip_password_validation  # virtual attribute to skip password validation while saving
 
   self.inheritance_column = :role
