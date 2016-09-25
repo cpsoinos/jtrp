@@ -7,6 +7,9 @@ class CategoriesController < ApplicationController
 
   def show
     @category = Category.find(params[:id])
+    if request.path != category_path(@category)
+      redirect_to @category, status: :moved_permanently
+    end
   end
 
   def new

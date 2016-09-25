@@ -1,4 +1,7 @@
 class Agreement < ActiveRecord::Base
+  extend FriendlyId
+  friendly_id :short_name, use: [:slugged, :finders, :history]
+
   include Filterable
 
   belongs_to :proposal
@@ -41,6 +44,10 @@ class Agreement < ActiveRecord::Base
       transition active: :inactive, if: lambda { |agreement| agreement.meets_requirements_inactive? }
     end
 
+  end
+
+  def short_name
+    "#{account.short_name} #{agreement_type}"
   end
 
   def items
