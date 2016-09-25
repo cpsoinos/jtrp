@@ -21,48 +21,50 @@
 
       <tbody>
         <% items.each do |item| %>
-          <tr class="no-break">
-            <td class="text-center">
-              <div class="img-container">
-                <%= link_to image_tag(item.featured_photo.photo_url(client_hints: true, quality: "auto", fetch_format: :auto, dpr: "auto", effect: :improve, width: "120", height: "160", crop: "fill"), class: "img-rounded img-responsive img-raised"), item_path(item) %>
-              </div>
-            </td>
-            <td class="td-name">
-              <%= link_to (controller_name == "agreements" ? item.original_description.titleize : item.description.titleize), item_path(item) %>
-              <% if current_user.try(:internal?) && (controller_name != "jobs" && controller_name != "agreements") %>
-                <br><small>from: <%= link_to item.account.full_name, account_path(item.account) %></small>
-                <br><small>SKU: <%= item.id %></small>
+          <% cache [item, context] do %>
+            <tr class="no-break">
+              <td class="text-center">
+                <div class="img-container">
+                  <%= link_to image_tag(item.featured_photo.photo_url(client_hints: true, quality: "auto", fetch_format: :auto, dpr: "auto", effect: :improve, width: "120", height: "160", crop: "fill"), class: "img-rounded img-responsive img-raised"), item_path(item) %>
+                </div>
+              </td>
+              <td class="td-name">
+                <%= link_to (controller_name == "agreements" ? item.original_description.titleize : item.description.titleize), item_path(item) %>
+                <% if current_user.try(:internal?) && (controller_name != "jobs" && controller_name != "agreements") %>
+                  <br><small>from: <%= link_to item.account.full_name, account_path(item.account) %></small>
+                  <br><small>SKU: <%= item.id %></small>
+                <% end %>
+              </td>
+
+              <% headers.each do |header| %>
+                <td class="text-center hidden-xs">
+                  <% case context %>
+                  <% when "purchase_invoice" %>
+                    <%= purchase_invoice_values(item)[header] %>
+                  <% when "consignment_agreement" %>
+                    <%= consignment_values(item)[header] %>
+                  <% when "consignment_statement" %>
+                    <%= statement_values(item)[header] %>
+                  <% when "general" %>
+                    <%= general_values(item)[header] %>
+                  <% end %>
+                </td>
               <% end %>
-            </td>
 
-            <% headers.each do |header| %>
-              <td class="text-center hidden-xs">
-                <% case context %>
-                <% when "purchase_invoice" %>
-                  <%= purchase_invoice_values(item)[header] %>
-                <% when "consignment_agreement" %>
-                  <%= consignment_values(item)[header] %>
-                <% when "consignment_statement" %>
-                  <%= statement_values(item)[header] %>
-                <% when "general" %>
-                  <%= general_values(item)[header] %>
-                <% end %>
-              </td>
-            <% end %>
-
-            <% if current_user.try(:internal?) %>
-              <td class="td-actions text-center">
-                <%= link_to "<i class='material-icons'>edit</i>".html_safe, edit_account_job_proposal_item_path(item.account, item.job, item.proposal, item, redirect_url: request.original_url), class: "btn btn-fab btn-fab-mini btn-primary hidden-print" %>
-                <% if item.active? %>
-                  <br />
-                  <br />
-                  <button type="button" class="btn btn-raised btn-success btn-round hidden-print" data-toggle="modal" data-target="#mark-sold-modal" data-item-id="<%= item.id %>" data-item-description="<%= item.description %>">
-                    Mark as Sold <i class='material-icons'>done</i>
-                  </button>
-                <% end %>
-              </td>
-            <% end %>
-          </tr>
+              <% if current_user.try(:internal?) %>
+                <td class="td-actions text-center">
+                  <%= link_to "<i class='material-icons'>edit</i>".html_safe, edit_account_job_proposal_item_path(item.account, item.job, item.proposal, item, redirect_url: request.original_url), class: "btn btn-fab btn-fab-mini btn-primary hidden-print" %>
+                  <% if item.active? %>
+                    <br />
+                    <br />
+                    <button type="button" class="btn btn-raised btn-success btn-round hidden-print" data-toggle="modal" data-target="#mark-sold-modal" data-item-id="<%= item.id %>" data-item-description="<%= item.description %>">
+                      Mark as Sold <i class='material-icons'>done</i>
+                    </button>
+                  <% end %>
+                </td>
+              <% end %>
+            </tr>
+          <% end %>
         <% end %>
       </tbody>
 

@@ -1,5 +1,5 @@
 class Proposal < ActiveRecord::Base
-  belongs_to :job
+  belongs_to :job, touch: true
   belongs_to :created_by, class_name: "User"
   has_many :items, dependent: :destroy
   has_many :agreements, dependent: :destroy

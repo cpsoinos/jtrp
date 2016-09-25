@@ -14,38 +14,40 @@
       </thead>
       <tbody>
         <% accounts.each do |account| %>
-          <tr>
-            <td class="text-center">
-              <div class="img-container">
-                <%= link_to image_tag(account.avatar, class: "img-rounded img-responsive img-raised"), account_path(account) %>
-              </div>
-            </td>
-            <td class="td-name">
-              <%= link_to account.full_name, account_path(account) %>
-              <br><small>Primary Contact: <%= account.primary_contact ? link_to(account.primary_contact.full_name, client_path(account.primary_contact)) : '' %></small>
-            </td>
-            <td class="text-center">
-              <%= account.account_number %>
-            </td>
-            <td class="text-center">
-              <%= account.jobs_count %>
-            </td>
-            <td class="text-center">
-              <%= account.items.count %>
-            </td>
-            <td class="text-center">
-              <% if account.consignment_account? %>
-                <%= link_to "View Statements", account_statements_path(account), class: "btn btn-round btn-raised btn-primary" %>
-                <br />
-              <% end %>
-              <% unless account.inactive? %>
-                <%= link_to "Deactivate", account_deactivate_path(account), class: "btn btn-round btn-raised btn-warning", method: :post %>
-              <% end %>
-              <% if account.inactive? %>
-                <%= link_to "Reactivate", account_reactivate_path(account), class: "btn btn-round btn-raised btn-info", method: :post %>
-              <% end %>
-            </td>
-          </tr>
+          <% cache account do %>
+            <tr>
+              <td class="text-center">
+                <div class="img-container">
+                  <%= link_to image_tag(account.avatar, class: "img-rounded img-responsive img-raised"), account_path(account) %>
+                </div>
+              </td>
+              <td class="td-name">
+                <%= link_to account.full_name, account_path(account) %>
+                <br><small>Primary Contact: <%= account.primary_contact ? link_to(account.primary_contact.full_name, client_path(account.primary_contact)) : '' %></small>
+              </td>
+              <td class="text-center">
+                <%= account.account_number %>
+              </td>
+              <td class="text-center">
+                <%= account.jobs_count %>
+              </td>
+              <td class="text-center">
+                <%= account.items.count %>
+              </td>
+              <td class="text-center">
+                <% if account.consignment_account? %>
+                  <%= link_to "View Statements", account_statements_path(account), class: "btn btn-round btn-raised btn-primary" %>
+                  <br />
+                <% end %>
+                <% unless account.inactive? %>
+                  <%= link_to "Deactivate", account_deactivate_path(account), class: "btn btn-round btn-raised btn-warning", method: :post %>
+                <% end %>
+                <% if account.inactive? %>
+                  <%= link_to "Reactivate", account_reactivate_path(account), class: "btn btn-round btn-raised btn-info", method: :post %>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
         <% end %>
       </tbody>
     </table>

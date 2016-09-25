@@ -1,7 +1,7 @@
 class Agreement < ActiveRecord::Base
   include Filterable
 
-  belongs_to :proposal
+  belongs_to :proposal, touch: true
   has_one :scanned_agreement
   has_many :statements
   has_one :job, through: :proposal

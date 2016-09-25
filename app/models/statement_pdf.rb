@@ -1,5 +1,5 @@
 class StatementPdf < ActiveRecord::Base
-  belongs_to :statement
+  belongs_to :statement, touch: true
   mount_uploader :pdf, ScannedAgreementUploader
 
   validates :statement, presence: true

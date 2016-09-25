@@ -1,6 +1,6 @@
 class Photo < ActiveRecord::Base
   belongs_to :item, touch: true
-  belongs_to :proposal
+  belongs_to :proposal, touch: true
   mount_uploader :photo, PhotoUploader
 
   validates :photo_type, presence: true
