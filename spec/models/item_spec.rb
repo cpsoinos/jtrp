@@ -119,7 +119,7 @@ describe Item do
       item.mark_sold
 
       expect(item).to be_sold
-      expect(item.agreement).to be_inactive
+      expect(item.agreement.reload).to be_inactive
       expect(syncer).to have_received(:remote_destroy)
     end
 
