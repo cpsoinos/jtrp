@@ -1,30 +1,31 @@
 <div class="list-group">
 
   <% @items.each do |item| %>
-    <%= render 'items/to_do_task', item: item, task_field: item.task[:task_field] %>
-    <div id="to-do-list-item-<%= item.id %>">
+    <% cache item do %>
+      <%= render 'items/to_do_task', collection: @items, cached: true, item: item, task_field: item.task[:task_field] %>
+      <div id="to-do-list-item-<%= item.id %>">
 
-      <div class="row list-group-item vertical-align">
-        <div class="col-xs-4">
-          <a href="<%= item_path(item) %>">
-            <%= image_tag(item.featured_photo.photo_url(client_hints: true, quality: "auto", fetch_format: :auto, width: :auto, dpr: "auto", effect: :improve), class: "img-raised img-responsive", alt: "icon") %>
-          </a>
+        <div class="row list-group-item vertical-align">
+          <div class="col-xs-4">
+            <a href="<%= item_path(item) %>">
+              <%= image_tag(item.featured_photo.photo_url(client_hints: true, quality: "auto", fetch_format: :auto, width: :auto, dpr: "auto", effect: :improve), class: "img-raised img-responsive", alt: "icon") %>
+            </a>
+          </div>
+          <div class="col-xs-6">
+            <h4 class="list-group-item-heading"><%= item.task[:name] %></h4>
+            <p class="list-group-item-text"><%= link_to item.description, item_path(item) %> <%= item.task[:description] %></p>
+          </div>
+          <div class="col-xs-2">
+            <button type="button" class="btn btn-fab btn-fab-mini btn-primary" data-toggle="modal" data-target="#<%= item.id %>-task-modal">
+              <i class='material-icons'>done</i>
+            </button>
+          </div>
         </div>
-        <div class="col-xs-6">
-          <h4 class="list-group-item-heading"><%= item.task[:name] %></h4>
-          <p class="list-group-item-text"><%= link_to item.description, item_path(item) %> <%= item.task[:description] %></p>
-        </div>
-        <div class="col-xs-2">
-          <button type="button" class="btn btn-fab btn-fab-mini btn-primary" data-toggle="modal" data-target="#<%= item.id %>-task-modal">
-            <i class='material-icons'>done</i>
-          </button>
-        </div>
+
+        <div class="list-group-separator"></div>
+
       </div>
-
-      <div class="list-group-separator"></div>
-
-    </div>
-
+    <% end %>
   <% end %>
 
   <div class="text-center">

@@ -13,27 +13,24 @@
       </thead>
       <tbody>
         <% jobs.each do |job| %>
-          <tr>
-            <td class="text-center">
-              <div class="img-container">
-                <%= link_to image_tag(job.maps_url, class: "img-rounded img-responsive img-raised"), account_job_path(job.account, job) %>
-              </div>
-            </td>
-            <td class="td-name">
-              <%= link_to job.name, account_job_path(job.account, job) %>
-            </td>
-            <td class="text-center">
-              <%= job.account.account_number %>
-            </td>
-            <td class="text-center">
-              <%= job.items_count %>
-            </td>
-            <!-- <td class="td-actions">
-              <button type="button" rel="tooltip" data-placement="left" title="" class="btn btn-simple" data-original-title="Remove account">
-                  <i class="material-icons">close</i>
-              </button>
-            </td> -->
-          </tr>
+          <% cache job do %>
+            <tr>
+              <td class="text-center">
+                <div class="img-container">
+                  <%= link_to image_tag(job.maps_url, class: "img-rounded img-responsive img-raised"), account_job_path(job.account, job) %>
+                </div>
+              </td>
+              <td class="td-name">
+                <%= link_to job.name, account_job_path(job.account, job) %>
+              </td>
+              <td class="text-center">
+                <%= job.account.account_number %>
+              </td>
+              <td class="text-center">
+                <%= job.items_count %>
+              </td>
+            </tr>
+          <% end %>
         <% end %>
       </tbody>
     </table>

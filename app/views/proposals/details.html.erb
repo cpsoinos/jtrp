@@ -12,10 +12,12 @@
 
         <div class="row large-top-margin">
           <% @items.order(:account_item_number).each do |item| %>
-            <% next unless item.persisted? %>
-            <div class="card">
-              <%= render 'proposals/item_row', item: item %>
-            </div>
+            <% cache [@proposal, item] do %>
+              <% next unless item.persisted? %>
+              <div class="card">
+                <%= render 'proposals/item_row', collection: @items, cached: true, item: item %>
+              </div>
+            <% end %>
           <% end %>
         </div>
 

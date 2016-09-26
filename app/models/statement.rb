@@ -1,5 +1,5 @@
 class Statement < ActiveRecord::Base
-  belongs_to :agreement
+  belongs_to :agreement, touch: true
   has_one :statement_pdf
   has_one :account, through: :agreement
 

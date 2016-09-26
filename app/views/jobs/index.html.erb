@@ -45,13 +45,13 @@
     <div class="large-top-margin">
       <div class="tab-content">
         <div role="tabpanel" class="tab-pane fade" id="potential">
-          <%= render "jobs_list", jobs: Job.potential %>
+          <%= render "jobs_list", jobs: @jobs.potential %>
         </div>
         <div role="tabpanel" class="tab-pane fade" id="active">
-          <%= render "jobs_list", jobs: Job.active %>
+          <%= render "jobs_list", jobs: @jobs.active %>
         </div>
         <div role="tabpanel" class="tab-pane fade" id="completed">
-          <%= render "jobs_list", jobs: Job.completed %>
+          <%= render "jobs_list", jobs: @jobs.completed %>
         </div>
       </div>
     </div>
