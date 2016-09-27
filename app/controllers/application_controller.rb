@@ -104,7 +104,10 @@ class ApplicationController < ActionController::Base
     return unless @item.present?
     {
       category: @item.category.name,
-      price:    ActionController::Base.helpers.humanized_money_with_symbol(@item.listing_price)
+      price: {
+        amount: @item.listing_price,
+        currency: "USD"
+      }
     }
   end
 
