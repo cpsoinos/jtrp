@@ -1,5 +1,6 @@
-<% meta @meta_tags %>
-<% meta title: "#{@item.description.titleize} - #{@account.try(:full_name)}" %>
+<% meta og: @meta_tags[:og] %>
+<% meta twitter: @meta_tags[:twitter] %>
+<% meta title: "#{@item.description.titleize} - #{@company.name}" %>
 
 <div class="row">
   <div class="col-sm-12 text-center">

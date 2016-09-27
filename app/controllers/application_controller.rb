@@ -73,17 +73,49 @@ class ApplicationController < ActionController::Base
   def meta_tags
     @meta_tags = {
       site: "Just the Right Piece",
-      og: og_meta_tags
+      og: og_meta_tags,
+      twitter: twitter_meta_tags,
+      fb: facebook_meta_tags,
+      product: product_meta_tags
     }
   end
 
   def og_meta_tags
     return unless @item.present?
     {
-      title:    @item.description.titleize,
-      type:     'product',
-      url:      item_url(@item),
-      image:    @item.featured_photo.photo_url(client_hints: true, quality: "auto", fetch_format: :auto, width: :auto, dpr: "auto", effect: :improve),
+      title:       "Found at #{@company.name}",
+      description: "#{@item.description.titleize} - #{ActionController::Base.helpers.humanized_money_with_symbol(@item.listing_price)}",
+      type:        'product',
+      url:         item_url(@item),
+      image:       @item.featured_photo.photo_url(client_hints: true, quality: "auto", fetch_format: :auto, width: :auto, dpr: "auto", effect: :improve),
+      site_name:   @company.name,
+      see_also:    (category_url(@item.try(:category)) if @item.category.present?)
+    }
+  end
+
+  def facebook_meta_tags
+    {
+      admins: '1499856343665394',
+      app_id: ENV['FACEBOOK_APP_ID']
+    }
+  end
+
+  def product_meta_tags
+    return unless @item.present?
+    {
+      category: @item.category.name,
+      price:    ActionController::Base.helpers.humanized_money_with_symbol(@item.listing_price)
+    }
+  end
+
+  def twitter_meta_tags
+    return unless @item.present?
+    {
+      card: "summary_large_image",
+      site: "@JtRP_furniture",
+      title: "Found at #{@company.name}",
+      description: "#{@item.description.titleize} - #{ActionController::Base.helpers.humanized_money_with_symbol(@item.listing_price)}",
+      image: @item.featured_photo.photo_url(client_hints: true, quality: "auto", fetch_format: :auto, width: :auto, dpr: "auto", effect: :improve)
     }
   end
 
