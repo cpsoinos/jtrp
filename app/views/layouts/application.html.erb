@@ -26,7 +26,7 @@
 
   <!-- Google Tag Manager trigger for Turbolinks -->
   <script type="text/javascript">
-    $(document).on('turbolinks:load', function(){
+    $(document).on('page:change', function(){
       var url = window.location.href;
 
       dataLayer.push({
@@ -43,16 +43,13 @@
   j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
   })(window,document,'script','dataLayer','<%= ENV["GOOGLE_TAG_MANAGER_ID"] %>');</script>
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=<%= ENV["GOOGLE_TAG_MANAGER_ID"] %>"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <!-- End Google Tag Manager -->
 
 </head>
 
 <body class="<%= controller_name %> <%= action_name %>">
-
-  <!-- Google Tag Manager (noscript) -->
-  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=<%= ENV["GOOGLE_TAG_MANAGER_ID"] %>"
-  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-  <!-- End Google Tag Manager (noscript) -->
 
   <% meta site: "Just the Right Piece", title: [:title, :site], separator: " — " %>
 
