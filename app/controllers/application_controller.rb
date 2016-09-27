@@ -103,7 +103,7 @@ class ApplicationController < ActionController::Base
   def product_meta_tags
     return unless @item.present?
     {
-      category: @item.category.name,
+      category: @item.try(:category).try(:name),
       price: {
         amount: @item.listing_price,
         currency: "USD"
