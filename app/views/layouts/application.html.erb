@@ -41,14 +41,13 @@
 
   <%= cloudinary_js_config %>
   <%= metamagic %>
+  <%#= render 'layouts/google_analytics' %>
+  <%= render 'layouts/google_tag_manager' %>
 </head>
 
 <body class="<%= controller_name %> <%= action_name %>">
 
   <% meta site: "Just the Right Piece", title: [:title, :site], separator: " — " %>
-
-  <%= render 'layouts/google_analytics' %>
-  <%= render 'layouts/google_tag_manager' %>
 
   <!-- Facebook SDK -->
   <div id="fb-root"></div>
