@@ -1,5 +1,6 @@
 $ ->
   loadFacebookSDK()
+  FB.AppEvents.activateApp()
   bindFacebookEvents() unless window.fbEventsBound
 
 bindFacebookEvents = ->
