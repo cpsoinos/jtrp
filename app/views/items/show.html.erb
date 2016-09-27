@@ -29,7 +29,7 @@
           <% @item.initial_photos.each do |photo| %>
             <% cache photo do %>
               <div class="tab-pane large-top-margin" id="product-page<%= photo.id %>">
-                <%= image_tag(photo.photo_url(client_hints: true, quality: "auto", width: :auto, fetch_format: :auto, dpr: "auto", effect: :improve), class: "img-rounded img-responsive img-raised img-featured") %>
+                <%= image_tag(photo.photo_url(effect: "improve", width: 1200, crop: "lfill"), class: "img-rounded img-responsive img-raised img-featured") %>
               </div>
             <% end %>
           <% end %>
