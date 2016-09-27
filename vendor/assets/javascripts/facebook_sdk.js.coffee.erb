@@ -1,6 +1,5 @@
 $ ->
   loadFacebookSDK()
-  FB.AppEvents.activateApp()
   bindFacebookEvents() unless window.fbEventsBound
 
 bindFacebookEvents = ->
@@ -25,7 +24,7 @@ restoreFacebookRoot = ->
 
 loadFacebookSDK = ->
   window.fbAsyncInit = initializeFacebookSDK
-  $.getScript("//connect.facebook.net/en_US/sdk.js")
+  $.getScript("//connect.facebook.net/en_US/all.js#xfbml=1")
 
 initializeFacebookSDK = ->
   FB.init
