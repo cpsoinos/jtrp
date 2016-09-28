@@ -40,6 +40,7 @@
 //= require instafeed.min
 //= require cloudinary
 //= require image-picker
+//= require bootstrap-validator
 //= require jquery.tablesorter.min
 //= require facebook_sdk
 //= require google_analytics

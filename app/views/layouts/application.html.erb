@@ -9,11 +9,11 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" media="all">
   <%#= render 'layouts/rollbar' %>
   <%= javascript_include_tag 'application' %>
-  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAPS_API_KEY'] %>&libraries=places,staticmap"></script>
-  <script src="https://use.fontawesome.com/e2b3e9ea8e.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.5/validator.min.js"></script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js" async></script>
+  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAPS_API_KEY'] %>&libraries=places,staticmap" async></script>
+  <script src="https://use.fontawesome.com/e2b3e9ea8e.js" async></script>
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.5/validator.min.js" async></script> -->
+  <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" async></script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="Accept-CH" content="DPR, Viewport-Width, Width">
   <meta property="fb:app_id" content="<%= ENV['FACEBOOK_APP_ID'] %>">
