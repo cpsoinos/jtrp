@@ -1,6 +1,6 @@
 .background-image {
   transform: translate3d(0px, 0px, 0px);
-  background: image-url('facebook_banner.jpg');
+  background: cloudinary-url('facebook_banner.jpg', $fetch_format: 'auto', $quality: 'auto');
   margin-top: -8em;
   background-size: cover;
 
