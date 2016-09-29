@@ -14,7 +14,9 @@
         <%= render "agreements/#{@agreement.agreement_type}", items: @items, agreement: @agreement %>
       <% end %>
 
-      <%= render 'agreements/terms_form', agreement: @agreement, account: @account %>
+      <% unless params[:print] %>
+        <%= render 'agreements/terms_form', agreement: @agreement, account: @account %>
+      <% end %>
 
       <% if current_user.try(:internal?) %>
         <%= render 'scanned_upload_form', agreement: @agreement %>
