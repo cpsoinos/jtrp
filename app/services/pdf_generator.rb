@@ -53,17 +53,13 @@ class PdfGenerator
         when "failed"
           puts "FAILED"
           puts status_response
+          raise StandardError
           break
         else
           sleep 1
         end
       end
 
-    rescue DocRaptor::ApiError => error
-      puts "#{error.class}: #{error.message}"
-      puts error.code          # HTTP response code
-      puts error.response_body # HTTP response body
-      puts error.backtrace[0..3].join("\n")
     end
   end
 
