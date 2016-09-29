@@ -4,7 +4,7 @@ class ItemsController < ApplicationController
   before_filter :find_clients, only: [:new, :edit]
   before_filter :find_categories, only: [:new, :edit, :show, :index]
   before_filter :find_proposal, only: [:create, :batch_create]
-  before_filter :require_internal, except: [:index, :show, :update]
+  before_filter :require_internal, except: [:show, :update]
   before_filter :find_item, only: :show
   before_filter :meta_tags, only: :show
 
