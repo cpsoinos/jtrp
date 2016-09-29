@@ -53,6 +53,7 @@ class PdfGenerator
         when "failed"
           puts "FAILED"
           puts status_response
+          raise StandardError
           break
         else
           sleep 1
