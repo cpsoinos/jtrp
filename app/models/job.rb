@@ -1,4 +1,6 @@
 class Job < ActiveRecord::Base
+  audited associated_with: :account
+  
   extend FriendlyId
   friendly_id :address_1, use: [:slugged, :finders, :history]
 

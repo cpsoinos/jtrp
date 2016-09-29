@@ -1,4 +1,6 @@
 class Statement < ActiveRecord::Base
+  audited associated_with: :agreement
+
   belongs_to :agreement, touch: true
   has_one :statement_pdf
   has_one :account, through: :agreement

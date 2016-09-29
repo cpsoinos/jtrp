@@ -1,4 +1,6 @@
 class Proposal < ActiveRecord::Base
+  audited associated_with: :job
+
   belongs_to :job, touch: true
   belongs_to :created_by, class_name: "User"
   has_many :items, dependent: :destroy

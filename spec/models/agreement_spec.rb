@@ -1,5 +1,6 @@
 describe Agreement do
 
+  it { should be_audited.associated_with(:proposal) }
   it { should belong_to(:proposal) }
   it { should have_one(:scanned_agreement) }
   it { should have_many(:statements) }

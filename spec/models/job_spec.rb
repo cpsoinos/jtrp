@@ -1,5 +1,6 @@
 describe Job do
 
+  it { should be_audited.associated_with(:account) }
   it { should belong_to(:account) }
   it { should have_many(:proposals) }
   it { should have_many(:items).through(:proposals) }
