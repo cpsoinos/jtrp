@@ -59,6 +59,7 @@ class PdfGenerator
         end
       end
 
+    end
   end
 
 end
