@@ -1,4 +1,6 @@
 class StatementPdf < ActiveRecord::Base
+  audited associated_with: :statement
+
   belongs_to :statement, touch: true
   mount_uploader :pdf, ScannedAgreementUploader
 

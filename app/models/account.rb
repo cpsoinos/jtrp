@@ -1,4 +1,6 @@
 class Account < ActiveRecord::Base
+  audited
+  
   extend FriendlyId
   friendly_id :short_name, use: [:slugged, :finders, :history]
 

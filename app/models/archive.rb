@@ -1,4 +1,6 @@
 class Archive < ActiveRecord::Base
+  audited
+  
   mount_uploader :archive, ArchiveUploader
 
   def save_and_process_items(proposal)
