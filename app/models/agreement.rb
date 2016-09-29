@@ -1,4 +1,6 @@
 class Agreement < ActiveRecord::Base
+  audited associated_with: :proposal
+  
   include Filterable
 
   belongs_to :proposal, touch: true

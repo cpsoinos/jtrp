@@ -1,4 +1,6 @@
 class ScannedAgreement < ActiveRecord::Base
+  audited associated_with: :agreement
+
   belongs_to :agreement, touch: true
   mount_uploader :scan, ScannedAgreementUploader
 

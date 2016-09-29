@@ -1,4 +1,6 @@
 class Company < ActiveRecord::Base
+  audited
+  
   extend FriendlyId
   friendly_id :name, use: [:slugged, :finders, :history]
 

@@ -1,5 +1,6 @@
 describe Proposal do
 
+  it { should be_audited.associated_with(:job) }
   it { should belong_to(:job) }
   it { should belong_to(:created_by) }
   it { should have_many(:items) }

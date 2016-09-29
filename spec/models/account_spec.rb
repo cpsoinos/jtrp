@@ -1,5 +1,6 @@
 describe Account do
 
+  it { should be_audited }
   it { should have_many(:clients) }
   it { should belong_to(:primary_contact) }
   it { should have_many(:jobs) }

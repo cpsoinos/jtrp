@@ -1,5 +1,6 @@
 describe Statement do
 
+  it { should be_audited.associated_with(:agreement) }
   it { should belong_to(:agreement) }
 
   describe "state machine" do

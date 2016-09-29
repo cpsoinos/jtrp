@@ -1,5 +1,6 @@
 describe ScannedAgreement do
 
+  it { should be_audited.associated_with(:agreement) }
   it { should belong_to(:agreement) }
   it { should validate_presence_of(:agreement) }
   it { should validate_presence_of(:scan) }

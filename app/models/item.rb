@@ -1,4 +1,6 @@
 class Item < ActiveRecord::Base
+  audited associated_with: :proposal
+
   extend FriendlyId
   friendly_id :description, use: [:slugged, :finders, :history]
 
