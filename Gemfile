@@ -64,6 +64,8 @@ gem 'fullcontact'
 gem 'puma_worker_killer'
 gem 'friendly_id', '~> 5.1.0'
 gem 'audited', '~> 4.3'
+gem 'stream-ruby'
+gem 'indefinite_article'
 
 group :production, :staging do
   gem 'tunemygc'

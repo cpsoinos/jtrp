@@ -339,8 +339,13 @@ GEM
     htmlentities (4.3.4)
     http-cookie (1.0.2)
       domain_name (~> 0.5)
+    http_signatures (0.2.2)
+    httparty (0.14.0)
+      multi_xml (>= 0.5.2)
     httpclient (2.8.0)
     i18n (0.7.0)
+    indefinite_article (0.2.4)
+      activesupport
     inflecto (0.0.2)
     ipaddress (0.8.3)
     jbuilder (2.4.1)
@@ -646,6 +651,9 @@ GEM
     state_machines-activerecord (0.3.0)
       activerecord (~> 4.1)
       state_machines-activemodel (>= 0.3.0)
+    stream-ruby (2.2.5)
+      http_signatures (~> 0)
+      httparty (~> 0)
     suo (0.3.1)
       dalli
       msgpack
@@ -738,6 +746,7 @@ DEPENDENCIES
   guard-rspec
   has_secure_token
   hiredis
+  indefinite_article
   jbuilder (~> 2.0)
   jquery-fileupload-rails
   jquery-rails
@@ -787,6 +796,7 @@ DEPENDENCIES
   spring
   state_machines
   state_machines-activerecord
+  stream-ruby
   sweet-alert-confirm
   terminal-notifier-guard
   timecop

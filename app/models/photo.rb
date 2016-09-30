@@ -1,6 +1,4 @@
 class Photo < ActiveRecord::Base
-  audited associated_with: :item
-
   belongs_to :item, touch: true
   belongs_to :proposal, touch: true
   mount_uploader :photo, PhotoUploader

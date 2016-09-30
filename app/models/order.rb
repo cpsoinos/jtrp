@@ -1,6 +1,4 @@
 class Order < ActiveRecord::Base
-  audited
-  
   has_many :items
   has_many :discounts
 

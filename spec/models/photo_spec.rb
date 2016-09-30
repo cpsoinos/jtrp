@@ -1,7 +1,5 @@
 describe Photo do
 
-  it { should be_audited.associated_with(:item) }
-
   it { should belong_to(:item) }
   it { should belong_to(:proposal) }
   it { should validate_presence_of(:photo_type) }

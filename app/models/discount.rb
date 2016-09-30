@@ -1,6 +1,4 @@
 class Discount < ActiveRecord::Base
-  audited associated_with: :item
-
   belongs_to :item
   belongs_to :order
 

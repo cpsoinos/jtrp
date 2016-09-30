@@ -1,6 +1,4 @@
 class ItemSpreadsheet < ActiveRecord::Base
-  audited
-  
   mount_uploader :csv, CsvUploader
 
   def save_and_process_items(user)
