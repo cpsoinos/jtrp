@@ -45,11 +45,11 @@
                     </tr>
                     <tr>
                       <td class="statement-data">Date Consigned:</td>
-                      <td class="statement-data"><%= item.listed_at.strftime('%-m/%-d/%y') %></td>
+                      <td class="statement-data"><%= item.try(:listed_at).try(:strftime, '%-m/%-d/%y') %></td>
                     </tr>
                     <tr>
                       <td class="statement-data">Days Consigned:</td>
-                      <td class="statement-data"><%= (item.sold_at.to_date - item.listed_at.to_date).to_i %></td>
+                      <td class="statement-data"><%= item.listed_at.present? ? (item.sold_at.to_date - item.listed_at.to_date).to_i : "n/a" %></td>
                     </tr>
                   </table>
                 </td>
