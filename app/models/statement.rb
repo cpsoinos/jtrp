@@ -5,11 +5,6 @@ class Statement < ActiveRecord::Base
   has_one :statement_pdf
   has_one :account, through: :agreement
 
-  monetize :balance_cents, allow_nil: true, numericality: {
-    greater_than_or_equal_to: 0,
-    less_than_or_equal_to: 100000
-  }
-
   scope :unpaid, -> { where(status: "unpaid") }
   scope :paid, -> { where(status: "paid") }
 
@@ -25,6 +20,12 @@ class Statement < ActiveRecord::Base
 
   def items
     agreement.items.sold.where(sold_at: starting_date..ending_date).order(:sold_at)
+  end
+
+  def total_sales
+    items.map do |item|
+      (item.sale_price_cents / 100)
+    end.sum
   end
 
   def total_consignment_fee

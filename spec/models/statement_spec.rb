@@ -68,6 +68,10 @@ describe Statement do
       expect(statement.amount_due_to_client).to eq(117.5)
     end
 
+    it "calculates the total sales for the month" do
+      expect(statement.total_sales).to eq(250)
+    end
+
   end
 
   it "object_url" do

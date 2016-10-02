@@ -25,7 +25,7 @@
               <%= link_to statement.agreement_id, agreement_path(statement.agreement) %>
             </td>
             <td class="text-center">
-              <%= humanized_money_with_symbol(statement.balance) %>
+              <%= humanized_money_with_symbol(statement.amount_due_to_client) %>
             </td>
             <td class="text-center">
               <%= statement.status %>
