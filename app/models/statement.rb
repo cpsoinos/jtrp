@@ -24,7 +24,7 @@ class Statement < ActiveRecord::Base
   end
 
   def items
-    agreement.items.sold.where(sold_at: 1.month.ago..Date.today).order(:sold_at)
+    agreement.items.sold.where(sold_at: starting_date..ending_date).order(:sold_at)
   end
 
   def total_consignment_fee
@@ -39,6 +39,16 @@ class Statement < ActiveRecord::Base
 
   def object_url
     Rails.application.routes.url_helpers.account_statement_url(account, self, host: ENV['HOST'])
+  end
+
+  private
+
+  def starting_date
+    created_at.last_month.beginning_of_month
+  end
+
+  def ending_date
+    created_at.last_month.end_of_month
   end
 
 end
