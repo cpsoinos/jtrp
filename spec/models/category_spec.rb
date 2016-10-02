@@ -1,5 +1,7 @@
 describe Category do
 
+  it_should_behave_like Streamable
+
   it { should have_many(:items) }
   it { should have_many(:subcategories) }
   it { should belong_to(:parent) }

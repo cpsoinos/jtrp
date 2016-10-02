@@ -1,5 +1,7 @@
 describe Account do
 
+  it_should_behave_like Streamable
+
   it { should be_audited }
   it { should have_many(:clients) }
   it { should belong_to(:primary_contact) }

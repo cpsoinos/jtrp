@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby "2.3.0"
+ruby "2.3.1"
 gem 'bundler', '>= 1.8.4'
 gem 'rails', '4.2.5.2'
 gem 'pg', '~> 0.15'
@@ -113,4 +113,5 @@ group :test do
   gem 'coveralls', require: false
   gem 'pdf-reader'
   gem 'timecop'
+  gem 'vcr'
 end

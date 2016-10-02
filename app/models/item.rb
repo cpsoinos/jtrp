@@ -1,11 +1,13 @@
 class Item < ActiveRecord::Base
   audited associated_with: :proposal
+  include Streamable
 
   extend FriendlyId
   friendly_id :description, use: [:slugged, :finders, :history]
 
   include Filterable
   include PgSearch
+  include
 
   multisearchable against: [:description, :original_description, :status, :client_intention, :will_consign, :will_purchase]
   paginates_per 50

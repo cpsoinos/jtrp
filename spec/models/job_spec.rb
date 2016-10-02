@@ -1,5 +1,7 @@
 describe Job do
 
+  it_should_behave_like Streamable
+
   it { should be_audited.associated_with(:account) }
   it { should belong_to(:account) }
   it { should have_many(:proposals) }

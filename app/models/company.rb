@@ -1,10 +1,12 @@
 class Company < ActiveRecord::Base
   audited
-  
+
   extend FriendlyId
   friendly_id :name, use: [:slugged, :finders, :history]
 
   include Bootsy::Container
+  include Streamable
+
   mount_uploader :logo, PhotoUploader
 
   has_many :internal_users

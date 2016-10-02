@@ -1,6 +1,7 @@
 class Category < ActiveRecord::Base
   audited
-  
+  include Streamable
+
   extend FriendlyId
   friendly_id :name, use: [:slugged, :finders, :history]
 

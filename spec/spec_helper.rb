@@ -11,6 +11,8 @@ require 'money-rails/test_helpers'
 require 'best_in_place/test_helpers'
 require 'audited-rspec.rb'
 
+Dir["./spec/models/concerns/*.rb"].sort.each { |f| require f}
+
 Shoulda::Matchers.configure do |config|
   config.integrate do |with|
     with.test_framework :rspec
@@ -31,6 +33,7 @@ RSpec.configure do |config|
   end
 
   config.before(:each) do
+    allow_any_instance_of(ActivityFeedService).to receive(:post).and_return(true)
     Rails.application.load_seed # loading seeds
   end
 

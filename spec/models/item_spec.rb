@@ -1,5 +1,7 @@
 describe Item do
 
+  it_should_behave_like Streamable
+  
   it { should be_audited.associated_with(:proposal) }
   it { should belong_to(:category) }
   it { should belong_to(:proposal) }

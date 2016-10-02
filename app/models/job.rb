@@ -1,5 +1,6 @@
 class Job < ActiveRecord::Base
   audited associated_with: :account
+  include Streamable
   
   extend FriendlyId
   friendly_id :address_1, use: [:slugged, :finders, :history]

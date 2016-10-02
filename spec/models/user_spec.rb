@@ -1,5 +1,7 @@
 describe User do
 
+  it_should_behave_like Streamable
+
   it { should validate_presence_of(:email) }
   it { should validate_presence_of(:status) }
 

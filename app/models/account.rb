@@ -1,6 +1,7 @@
 class Account < ActiveRecord::Base
   audited
-  
+  include Streamable
+
   extend FriendlyId
   friendly_id :short_name, use: [:slugged, :finders, :history]
 

@@ -1,46 +1,58 @@
-class Audit < ActiveRecord::Base
+class Audited::Audit < ActiveRecord::Base
+  include ActionView::Helpers::UrlHelper
 
-  belongs_to :auditable, polymorphic: true
-  belongs_to :user
-
-  after_create :record_activity
-
-  private
-
-  def record_activity
-    "#{user.try(:full_name)} #{action}ed #{auditable_type.downcase.with_indefinite_article}: #{ActionController::Base.helpers.link_to(name_map(auditable), link_map(auditable))}"
+  def name_map
+    case auditable_type
+    when "Account"
+      auditable.full_name
+    when "Agreement"
+      auditable.short_name
+    when "Category"
+      auditable.name
+    when "Company"
+      auditable.name
+    when "Item"
+      auditable.description.titleize
+    when "Job"
+      auditable.name
+    when "Proposal"
+      auditable.account.full_name
+    when "ScannedAgreement"
+      auditable.agreement.account.full_name
+    when "Statement"
+      auditable.agreement.account.full_name
+    when "StatementPdf"
+      auditable.statement.agreement.account.full_name
+    when "User"
+      user.full_name
+    end
   end
 
-  def name_map(object)
-    {
-      account: object.full_name,
-      agreement: object.short_name,
-      category: object.name,
-      company: object.name,
-      item: object.description.titleize,
-      job: object.name,
-      proposal: object.account.full_name,
-      scanned_agreement: object.agreement.account.full_name,
-      statement: object.agreement.account.full_name,
-      statement_pdf: object.statement.agreement.account.full_name,
-      user: user.full_name
-    }
-  end
-
-  def link_map(object)
-    {
-      account: account_url(object),
-      agreement: agreement_url(object),
-      category: category_url(object),
-      company: landing_page_url,
-      item: item_url(object),
-      job: account_job_url(object.account, object),
-      proposal: account_job_proposal_url(object.account, object.job, object),
-      scanned_agreement: agreement_url(object.agreement),
-      statement: statement_url(object),
-      statement_pdf: statement_url(object),
-      user: user_url(object)
-    }
+  def link_map
+    case auditable_type
+    when "Account"
+      Rails.application.routes.url_helpers.account_url(auditable, host: ENV['HOST'])
+    when "Agreement"
+      Rails.application.routes.url_helpers.agreement_url(auditable, host: ENV['HOST'])
+    when "Category"
+      Rails.application.routes.url_helpers.category_url(auditable, host: ENV['HOST'])
+    when "Company"
+      Rails.application.routes.url_helpers.landing_page_url
+    when "Item"
+      Rails.application.routes.url_helpers.item_url(auditable, host: ENV['HOST'])
+    when "Job"
+      Rails.application.routes.url_helpers.account_job_url(auditable.account, auditable, host: ENV['HOST'])
+    when "Proposal"
+      Rails.application.routes.url_helpers.account_job_proposal_url(auditable.account, auditable.job, auditable, host: ENV['HOST'])
+    when "ScannedAgreement"
+      Rails.application.routes.url_helpers.agreement_url(auditable.agreement, host: ENV['HOST'])
+    when "Statement"
+      Rails.application.routes.url_helpers.statement_url(auditable, host: ENV['HOST'])
+    when "StatementPdf"
+      Rails.application.routes.url_helpers.statement_url(auditable, host: ENV['HOST'])
+    when "User"
+      Rails.application.routes.url_helpers.user_url(auditable, host: ENV['HOST'])
+    end
   end
 
 end

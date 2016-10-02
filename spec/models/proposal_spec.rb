@@ -1,5 +1,7 @@
 describe Proposal do
 
+  it_should_behave_like Streamable
+
   it { should be_audited.associated_with(:job) }
   it { should belong_to(:job) }
   it { should belong_to(:created_by) }

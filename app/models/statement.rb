@@ -1,5 +1,6 @@
 class Statement < ActiveRecord::Base
   audited associated_with: :agreement
+  include Streamable
 
   belongs_to :agreement, touch: true
   has_one :statement_pdf

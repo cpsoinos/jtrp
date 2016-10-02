@@ -1,5 +1,6 @@
 class Proposal < ActiveRecord::Base
   audited associated_with: :job
+  include Streamable
 
   belongs_to :job, touch: true
   belongs_to :created_by, class_name: "User"

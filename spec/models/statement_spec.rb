@@ -1,5 +1,7 @@
 describe Statement do
 
+  it_should_behave_like Streamable
+
   it { should be_audited.associated_with(:agreement) }
   it { should belong_to(:agreement) }
 

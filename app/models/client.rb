@@ -1,4 +1,5 @@
 class Client < User
+  include Streamable
   include PgSearch
 
   multisearchable against: [:first_name, :last_name, :email, :full_name, :address_1, :city, :state, :zip, :status]
