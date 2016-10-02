@@ -8,7 +8,9 @@ class StatementJob < ActiveJob::Base
   private
 
   def agreements
-    @_agreements ||= Agreement.active.by_type("consign")
+    @_agreements ||= begin
+      Item.sold.where(client_intention: "consign", sold_at: DateTime.now.last_month.beginning_of_month..DateTime.now.last_month.end_of_month).map(&:agreement)
+    end
   end
 
   def generate_statements
