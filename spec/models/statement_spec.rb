@@ -25,6 +25,7 @@ describe Statement do
     let(:statement) { create(:statement, agreement: agreement) }
 
     before do
+      Timecop.freeze("October 1, 2016")
       day_incrementer = 1
       items.map do |item|
         item.sold_at = day_incrementer.days.ago
@@ -33,8 +34,16 @@ describe Statement do
       end
     end
 
+    after do
+      Timecop.return
+    end
+
     it "returns items from the agreement sold within the past month" do
-      expect(statement.items).to eq(items.sort_by(&:sold_at))
+      statement.items.each do |item|
+        expect(item.in?(items)).to be(true)
+        expect(item.sold_at > statement.send(:starting_date)).to be(true)
+        expect(item.sold_at < statement.send(:ending_date)).to be(true)
+      end
     end
 
     it "does not include items from the agreement sold more than a month ago" do
@@ -57,6 +66,10 @@ describe Statement do
     it "calculates the total amount due to client when consignment rates aren't consistent" do
       items.last.update_attribute("consignment_rate", 65)
       expect(statement.amount_due_to_client).to eq(117.5)
+    end
+
+    it "calculates the total sales for the month" do
+      expect(statement.total_sales).to eq(250)
     end
 
   end
