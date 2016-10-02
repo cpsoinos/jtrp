@@ -14,7 +14,7 @@ class StatementJob < ActiveJob::Base
   def generate_statements
     agreements.each do |agreement|
       statement = StatementCreator.new(agreement).create
-      if statement.balance_cents == 0
+      if statement.amount_due_to_client == 0
         statement.pay
       end
       # save_as_pdf(statement)
