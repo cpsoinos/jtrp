@@ -9,7 +9,7 @@ class StatementJob < ActiveJob::Base
 
   def agreements
     @_agreements ||= begin
-      Item.sold.where(client_intention: "consign", sold_at: DateTime.now.last_month.beginning_of_month..DateTime.now.last_month.end_of_month).map(&:agreement)
+      Item.sold.where(client_intention: "consign", sold_at: DateTime.now.last_month.beginning_of_month..DateTime.now.last_month.end_of_month).map(&:agreement).uniq
     end
   end
 
