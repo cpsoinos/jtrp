@@ -474,6 +474,7 @@ GEM
       pusher-signature (~> 0.1.8)
     pusher-signature (0.1.8)
     rack (1.6.4)
+    rack-cors (0.4.0)
     rack-protection (1.5.3)
       rack
     rack-test (0.6.3)
@@ -761,6 +762,7 @@ DEPENDENCIES
   puma
   puma_worker_killer
   pusher
+  rack-cors
   rails (= 4.2.5.2)
   rails-assets-classnames!
   rails-assets-image-picker!
