@@ -1,0 +1,10 @@
+<a class="houzz-share-button"
+   data-url="<%= item_url(item) %>"
+   data-hzid="ENV['HOUZZ_ID']"
+   data-title="<%= item.description.titleize %>"
+   data-img="<%= item.featured_photo.photo_url(client_hints: true, quality: 'auto', fetch_format: :auto, width: :auto, dpr: 'auto', effect: :improve) %>"
+   data-desc="Find items like this and more at justtherightpiece.furniture!"
+   data-category="<%= item.category.name %>"
+   data-showcount="1"
+   href="https://www.houzz.com">Houzz</a>
+<script>(function(d,s,id){if(!d.getElementById(id)){var js=d.createElement(s);js.id=id;js.async=true;js.src="//platform.houzz.com/js/widgets.js?"+(new Date().getTime());var ss=d.getElementsByTagName(s)[0];ss.parentNode.insertBefore(js,ss);}})(document,"script","houzzwidget-js");</script>
