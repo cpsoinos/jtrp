@@ -2,6 +2,9 @@ require 'sidekiq/web'
 
 Rails.application.routes.draw do
 
+  match '*path', via: :all, to: 'errors#not_found',
+    constraints: CloudfrontConstraint.new
+
   authenticate :user, lambda { |u| u.admin? } do
     mount Sidekiq::Web => '/sidekiq'
     mount RedisBrowser::Web => '/redis_browser'
