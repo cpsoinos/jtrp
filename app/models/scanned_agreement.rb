@@ -7,7 +7,7 @@ class ScannedAgreement < ActiveRecord::Base
   validates :agreement, presence: true
   validates :scan, presence: true
 
-  after_create :mark_agreement_active, :deliver_to_client
+  after_create :mark_agreement_active#, :deliver_to_client
 
   def object_url
     scan.file.public_url
