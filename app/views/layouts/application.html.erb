@@ -21,6 +21,7 @@
   <%= render 'favicon' %>
   <%= cloudinary_js_config %>
   <%= metamagic %>
+  <meta name="p:domain_verify" content="<%= ENV['PINTEREST_ID'] %>"/>
 </head>
 
 <body class="<%= controller_name %> <%= action_name %>">
