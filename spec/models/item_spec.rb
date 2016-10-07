@@ -179,10 +179,12 @@ describe Item do
       now = DateTime.now
       Timecop.freeze(now)
       item = create(:item, :active, client_intention: "consign", listed_at: 91.days.ago)
+      item.proposal.agreements.first.update_attribute("agreement_type", "consign")
       Timecop.return
       item.mark_expired
 
-      expect(item.reload).to be_expired
+      expect(item).to be_expired
+      expect(item.agreement).to be_inactive
     end
 
     it "does not transition 'active' to 'expired' when requriements not met" do
