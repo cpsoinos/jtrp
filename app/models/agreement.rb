@@ -1,9 +1,10 @@
 class Agreement < ActiveRecord::Base
   audited associated_with: :proposal
-  
+
   include Filterable
 
   belongs_to :proposal, touch: true
+  has_many :items, -> (instance) { where(items: {client_intention: instance.agreement_type}) }, through: :proposal
   has_one :scanned_agreement
   has_many :statements
   has_one :job, through: :proposal
@@ -46,10 +47,6 @@ class Agreement < ActiveRecord::Base
 
   def short_name
     "#{account.short_name} #{agreement_type}"
-  end
-
-  def items
-    proposal.items.includes(:account, :job).where(client_intention: agreement_type)
   end
 
   def mark_items_active

@@ -2,6 +2,7 @@ describe Agreement do
 
   it { should be_audited.associated_with(:proposal) }
   it { should belong_to(:proposal) }
+  it { should have_many(:items).through(:proposal) }
   it { should have_one(:scanned_agreement) }
   it { should have_many(:statements) }
   it { should validate_presence_of(:proposal) }
@@ -10,6 +11,33 @@ describe Agreement do
   before do
     allow(PdfGeneratorJob).to receive(:perform_later)
     allow(TransactionalEmailJob).to receive(:perform_later)
+  end
+
+  describe "items" do
+    let!(:agreement) { create(:agreement, :consign, :active) }
+    let!(:proposal) { agreement.proposal }
+    let!(:owned_items) { create_list(:item, 3, :owned, proposal: proposal) }
+    let!(:consigned_items) { create_list(:item, 3, :consigned, proposal: proposal) }
+    let!(:expired_items) { create_list(:item, 3, :expired, proposal: proposal) }
+
+    it "has items that match its agreement_type" do
+      consigned_items.each do |item|
+        expect(item).to be_in(agreement.items)
+      end
+    end
+
+    it "does not have items that do not match its agreement_type" do
+      owned_items.each do |item|
+        expect(item).not_to be_in(agreement.items)
+      end
+    end
+
+    it "includes expired items" do
+      expired_items.each do |item|
+        expect(item).to be_in(agreement.items)
+      end
+    end
+
   end
 
   describe "scopes" do

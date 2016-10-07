@@ -15,11 +15,10 @@ class Statement < ActiveRecord::Base
     event :pay do
       transition unpaid: :paid
     end
-
   end
 
   def items
-    agreement.items.sold.where(sold_at: starting_date..ending_date).order(:sold_at)
+    agreement.items.sold.where(sold_at: starting_date..ending_date).where.not("listed_at < ?", 90.days.ago).order(:sold_at)
   end
 
   def total_sales
@@ -41,8 +40,6 @@ class Statement < ActiveRecord::Base
   def object_url
     Rails.application.routes.url_helpers.account_statement_url(account, self, host: ENV['HOST'])
   end
-
-  private
 
   def starting_date
     created_at.last_month.beginning_of_month
