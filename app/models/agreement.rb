@@ -67,7 +67,7 @@ class Agreement < ActiveRecord::Base
   end
 
   def meets_requirements_active?
-      client_signed?
+    client_signed?
   end
 
   def meets_requirements_inactive?
