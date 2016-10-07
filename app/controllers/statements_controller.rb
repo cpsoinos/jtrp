@@ -10,6 +10,7 @@ class StatementsController < ApplicationController
   def show
     @statement = Statement.find(params[:id])
     @client = @account.client
+    @job = @statement.job
   end
 
   def send_email

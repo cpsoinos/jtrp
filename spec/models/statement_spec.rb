@@ -2,6 +2,8 @@ describe Statement do
 
   it { should be_audited.associated_with(:agreement) }
   it { should belong_to(:agreement) }
+  it { should have_one(:account).through(:agreement) }
+  it { should have_one(:job).through(:agreement) }
 
   describe "state machine" do
 

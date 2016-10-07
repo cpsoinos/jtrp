@@ -1,6 +1,6 @@
 class Job < ActiveRecord::Base
   audited associated_with: :account
-  
+
   extend FriendlyId
   friendly_id :address_1, use: [:slugged, :finders, :history]
 
@@ -46,6 +46,10 @@ class Job < ActiveRecord::Base
 
   def meets_requirements_completed?
     proposals.present? && proposals.inactive.count == proposals.count
+  end
+
+  def full_address
+    "#{address_1}#{address_2.present? ? (', ' + address_2) : ''}, #{city}, #{state} #{zip}"
   end
 
   def mark_account_active

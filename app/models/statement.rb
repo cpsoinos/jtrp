@@ -4,6 +4,7 @@ class Statement < ActiveRecord::Base
   belongs_to :agreement, touch: true
   has_one :statement_pdf
   has_one :account, through: :agreement
+  has_one :job, through: :agreement
 
   scope :unpaid, -> { where(status: "unpaid") }
   scope :paid, -> { where(status: "paid") }
