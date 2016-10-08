@@ -9,21 +9,37 @@ describe AccountsPresenter do
   end
 
   it 'returns accounts' do
-    expect(AccountsPresenter.new.filter).to eq(Account.all.order(:account_number))
+    presenter = AccountsPresenter.new.filter
+    
+    presenter.each do |account|
+      expect(account).to be_in(Account.all)
+    end
   end
 
   context 'filters' do
 
     it 'returns potential accounts' do
-      expect(AccountsPresenter.new(status: 'potential').filter).to eq(potential_accounts)
+      presenter = AccountsPresenter.new(status: 'potential').filter
+
+      presenter.each do |account|
+        expect(account).to be_in(potential_accounts)
+      end
     end
 
     it 'returns active accounts' do
-      expect(AccountsPresenter.new(status: 'active').filter).to eq(active_accounts)
+      presenter = AccountsPresenter.new(status: 'active').filter
+
+      presenter.each do |account|
+        expect(account).to be_in(active_accounts)
+      end
     end
 
     it 'returns inactive accounts' do
-      expect(AccountsPresenter.new(status: 'inactive').filter).to eq(inactive_accounts)
+      presenter = AccountsPresenter.new(status: 'inactive').filter
+
+      presenter.each do |account|
+        expect(account).to be_in(inactive_accounts)
+      end
     end
 
   end

@@ -13,7 +13,7 @@ feature "client show" do
       visit client_path(client)
 
       expect(page).to have_link(client.id)
-      expect(page).to have_link(client.account.account_number)
+      expect(page).to have_link(client.account.id)
       expect(page).to have_content(client.full_name)
       expect(page).to have_content(client.email)
       expect(page).to have_content(client.address_1)
