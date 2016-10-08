@@ -58,7 +58,7 @@ class Agreement < ActiveRecord::Base
   end
 
   def mark_proposal_inactive
-    proposal.mark_inactive!
+    proposal.mark_inactive
   end
 
   def set_agreement_date

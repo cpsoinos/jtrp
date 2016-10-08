@@ -67,7 +67,7 @@ class AgreementsController < ApplicationController
 
   def expire_items
     @agreement = Agreement.find(params[:agreement_id])
-    ItemExpirerJob.perform_later(@agreement.items)
+    ItemExpirerJob.perform_later(@agreement.items.pluck(:id))
     redirect_to :back, notice: "Items have been queued to be expired! They will appear under the JTRP account shortly."
   end
 
