@@ -7,7 +7,7 @@ class Item < ActiveRecord::Base
   include Filterable
   include PgSearch
 
-  multisearchable against: [:description, :original_description, :status, :client_intention, :will_consign, :will_purchase]
+  multisearchable against: [:id, :account_item_number, :description, :original_description, :category_name, :account_name, :job_name]
   paginates_per 50
 
   has_many :photos, dependent: :destroy
@@ -248,6 +248,18 @@ class Item < ActiveRecord::Base
 
   def child?
     parent_item.present?
+  end
+
+  def category_name
+    category.name
+  end
+
+  def account_name
+    account.full_name
+  end
+
+  def job_name
+    job.name
   end
 
   private
