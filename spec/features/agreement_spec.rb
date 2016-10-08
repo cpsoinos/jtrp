@@ -210,6 +210,67 @@ feature "agreement" do
         expect(page).not_to have_button("Mark Items Active")
       end
 
+      scenario "expires items from index" do
+        allow(PdfGeneratorJob).to receive(:perform_later)
+        allow(InventorySyncJob).to receive(:perform_later)
+        allow(ItemExpirerJob).to receive(:perform_later)
+        agreement.update_attributes(client_agreed: true, client_agreed_at: 91.days.ago, date: 91.days.ago)
+        agreement.mark_active
+        item.mark_active
+        item.update_attribute("listed_at", 91.days.ago)
+
+        visit account_job_proposal_agreements_path(account, job, proposal)
+        click_on("Mark Items Expired")
+
+        expect(ItemExpirerJob).to have_received(:perform_later)
+        expect(page).to have_content("Items have been queued to be expired! They will appear under the JTRP account shortly.")
+      end
+
+      scenario "expires items from show" do
+        allow(PdfGeneratorJob).to receive(:perform_later)
+        allow(InventorySyncJob).to receive(:perform_later)
+        allow(ItemExpirerJob).to receive(:perform_later)
+        agreement.update_attributes(client_agreed: true, client_agreed_at: 91.days.ago, date: 91.days.ago)
+        agreement.mark_active
+        item.mark_active
+        item.update_attribute("listed_at", 91.days.ago)
+
+        visit agreement_path(agreement)
+        click_on("Mark Items Expired")
+
+        expect(ItemExpirerJob).to have_received(:perform_later)
+        expect(page).to have_content("Items have been queued to be expired! They will appear under the JTRP account shortly.")
+      end
+
+      scenario "can't try to expire items from index when items already expired", js: true do
+        allow(PdfGeneratorJob).to receive(:perform_later)
+        allow(InventorySyncJob).to receive(:perform_later)
+        allow(ItemExpirerJob).to receive(:perform_later)
+        agreement.update_attributes(client_agreed: true, client_agreed_at: 91.days.ago, date: 91.days.ago)
+        agreement.mark_active
+        item.mark_active
+        item.update_attribute("listed_at", 91.days.ago)
+        item.mark_expired
+
+        visit account_job_proposal_agreements_path(account, job, proposal)
+
+        expect(page).not_to have_button("Mark Items Expired")
+      end
+
+      scenario "can't try to expire items from show when items already expired" do
+        allow(PdfGeneratorJob).to receive(:perform_later)
+        allow(InventorySyncJob).to receive(:perform_later)
+        allow(ItemExpirerJob).to receive(:perform_later)
+        agreement.update_attributes(client_agreed: true, client_agreed_at: 91.days.ago, date: 91.days.ago)
+        agreement.mark_active
+        item.mark_active
+        item.update_attribute("listed_at", 91.days.ago)
+        item.mark_expired
+        visit agreement_path(agreement)
+
+        expect(page).not_to have_button("Mark Items Expired")
+      end
+
     end
 
   end

@@ -12,6 +12,7 @@ FactoryGirl.define do
       status "active"
       association :proposal, :active
       sequence(:remote_id) { |n| "#{Faker::Number.number(10)}#{n}" }
+      listed_at 10.days.ago
     end
 
     trait :inactive do
@@ -22,18 +23,28 @@ FactoryGirl.define do
     trait :sold do
       status "sold"
       association :proposal, :inactive
+      listed_at 10.days.ago
     end
 
     trait :owned do
       status "active"
       association :proposal, :active
       client_intention "sell"
+      listed_at 10.days.ago
     end
 
     trait :consigned do
       status "active"
       association :proposal, :active
       client_intention "consign"
+      listed_at 10.days.ago
+    end
+
+    trait :expired do
+      status "expired"
+      association :proposal, :active
+      client_intention "consign"
+      listed_at 91.days.ago
     end
 
     trait :with_initial_photo do

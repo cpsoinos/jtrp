@@ -20,6 +20,7 @@ describe Item do
       create_list(:item, 2)
       create_list(:item, 3, :active)
       create_list(:item, 4, :sold)
+      create_list(:item, 2, :expired)
     end
 
     it "potential" do
@@ -44,11 +45,11 @@ describe Item do
     end
 
     it "owned" do
-      expect(Item.owned.count).to eq(3)
+      expect(Item.owned.count).to eq(5)
     end
 
     it "jtrp" do
-      expect(Item.jtrp.count).to eq(7)
+      expect(Item.jtrp.count).to eq(9)
     end
 
     it "consigned" do
@@ -61,7 +62,7 @@ describe Item do
       create(:item, :active, client_intention: "consign")
       create(:item, :active, client_intention: "sell")
 
-      expect(Item.for_sale.count).to eq(5)
+      expect(Item.for_sale.count).to eq(7)
     end
 
   end
@@ -172,6 +173,30 @@ describe Item do
       item.reload
 
       expect(item.sold_at).to be_within(1.second).of(now)
+    end
+
+    it "transitions 'active' to 'expired'" do
+      now = DateTime.now
+      Timecop.freeze(now)
+      item = create(:item, :active, client_intention: "consign", listed_at: 91.days.ago)
+      item.proposal.agreements.first.update_attribute("agreement_type", "consign")
+      Timecop.return
+      item.mark_expired
+
+      expect(item).to be_expired
+      expect(item.agreement).to be_inactive
+    end
+
+    it "does not transition 'active' to 'expired' when requriements not met" do
+      now = DateTime.now
+      Timecop.freeze(now)
+      item = create(:item, :active, client_intention: "consign", listed_at: 89.days.ago)
+      Timecop.return
+      item.mark_expired
+      item.reload
+
+      expect(item).not_to be_expired
+      expect(item).to be_active
     end
 
   end

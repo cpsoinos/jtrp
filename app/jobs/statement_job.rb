@@ -1,5 +1,5 @@
 class StatementJob < ActiveJob::Base
-  queue_as :default
+  queue_as :cron
 
   def perform
     generate_statements
