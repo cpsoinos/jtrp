@@ -251,15 +251,15 @@ class Item < ActiveRecord::Base
   end
 
   def category_name
-    category.name
+    category.try(:name)
   end
 
   def account_name
-    account.full_name
+    account.try(:full_name)
   end
 
   def job_name
-    job.name
+    job.try(:name)
   end
 
   private
