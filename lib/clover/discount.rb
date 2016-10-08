@@ -11,7 +11,10 @@ module Clover
         when 404
           nil
         else
-          raise 'unable to find order - ' + JSON.parse(response)['message'] + ', order: ' + order.id
+          raise CloverError
+        rescue Exception => e
+          Rollbar.error(e, order_id: order.id, error: JSON.parse(response))
+          raise e
         end
       end
     end

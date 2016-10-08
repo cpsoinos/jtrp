@@ -16,9 +16,12 @@ module Clover
           item.remote_id = inventory_item.id
           item.save
         else
-          raise "unable to create inventory item: #{JSON.parse(response)['message']}, item id: #{item.id}"
+          raise CloverError
         end
       end
+    rescue Exception => e
+      Rollbar.error(e, item_id: item.id, error: JSON.parse(response))
+      raise e
     end
 
     def self.find(item)
@@ -29,7 +32,10 @@ module Clover
         when 404
           nil
         else
-          raise "unable to find item: #{JSON.parse(response)['message']}, item id: #{item.id}"
+          raise CloverError
+        rescue Exception => e
+          Rollbar.error(e, item_id: item.id, error: JSON.parse(response))
+          raise e
         end
       end
     end
@@ -46,8 +52,15 @@ module Clover
           inventory_item = DeepStruct.wrap(JSON.parse(response))
           item.remote_id ||= inventory_item.id
           item.save
+        when 404
+          item.remote_id = nil
+          item.save
+          item.sync_inventory
         else
-          raise "unable to find item: #{JSON.parse(response)['message']}, item id: #{item.id}"
+          raise CloverError
+        rescue Exception => e
+          Rollbar.error(e, item_id: item.id, error: JSON.parse(response))
+          raise e
         end
       end
     end
@@ -58,7 +71,10 @@ module Clover
         when 200
           DeepStruct.wrap(JSON.parse(response)["elements"])
         else
-          raise "unable to get all inventory items: #{JSON.parse(response)['message']}"
+          raise CloverError
+        rescue Exception => e
+          Rollbar.error(e, error: JSON.parse(response))
+          raise e
         end
       end
     end
@@ -68,7 +84,10 @@ module Clover
         if [200, 400].include?(response.code)
           ItemUpdater.new(item).update(remote_id: nil)
         else
-          raise "unable to delete item: #{JSON.parse(response)['message']}, item id: #{item.id}"
+          raise CloverError
+        rescue Exception => e
+          Rollbar.error(e, item_id: item.id, error: JSON.parse(response))
+          raise e
         end
       end
     end
