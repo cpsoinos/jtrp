@@ -37,4 +37,21 @@ namespace :items do
 
   end
 
+  task :full_inventory_sync => :environment do |task|
+    puts "beginning full inventory sync with Clover"
+    items = Item.all
+    count = items.count
+
+    bar = RakeProgressbar.new(count)
+
+    items.each do |item|
+      item.sync_inventory
+      bar.inc
+    end
+
+    bar.finished
+
+    puts "created async jobs to sync all #{count} items"
+  end
+
 end
