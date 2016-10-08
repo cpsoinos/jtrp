@@ -1,9 +1,10 @@
 class Agreement < ActiveRecord::Base
   audited associated_with: :proposal
-  
+
   include Filterable
 
   belongs_to :proposal, touch: true
+  has_many :items, -> (instance) { where(items: {client_intention: instance.agreement_type}) }, through: :proposal
   has_one :scanned_agreement
   has_many :statements
   has_one :job, through: :proposal
@@ -48,10 +49,6 @@ class Agreement < ActiveRecord::Base
     "#{account.short_name} #{agreement_type}"
   end
 
-  def items
-    proposal.items.includes(:account, :job).where(client_intention: agreement_type)
-  end
-
   def mark_items_active
     items.map(&:mark_active)
   end
@@ -61,7 +58,7 @@ class Agreement < ActiveRecord::Base
   end
 
   def mark_proposal_inactive
-    proposal.mark_inactive!
+    proposal.mark_inactive
   end
 
   def set_agreement_date
@@ -70,7 +67,7 @@ class Agreement < ActiveRecord::Base
   end
 
   def meets_requirements_active?
-      client_signed?
+    client_signed?
   end
 
   def meets_requirements_inactive?

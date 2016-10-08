@@ -22,6 +22,7 @@ describe Statement do
     let(:agreement) { create(:agreement, :active, :consign) }
     let(:items) { create_list(:item, 5, :sold, sale_price_cents: 5000, client_intention: 'consign', proposal: agreement.proposal) }
     let(:older_item) { create(:item, :sold, sale_price_cents: 7000, client_intention: 'consign', proposal: agreement.proposal, sold_at: 45.days.ago) }
+    let(:expired_item) { create(:item, :sold, proposal: agreement.proposal, listed_at: 91.days.ago) }
     let(:statement) { create(:statement, agreement: agreement) }
 
     before do
@@ -48,6 +49,10 @@ describe Statement do
 
     it "does not include items from the agreement sold more than a month ago" do
       expect(statement.items).not_to include(older_item)
+    end
+
+    it "does not include expired items" do
+      expect(statement.items).not_to include(expired_item)
     end
 
     it "calculates the total consignment fee" do

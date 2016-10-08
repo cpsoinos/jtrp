@@ -107,6 +107,7 @@
 			  <li class=""><a href="#pill3" data-toggle="tab" aria-expanded="false">Owned</a></li>
 			  <li class=""><a href="#pill4" data-toggle="tab" aria-expanded="false">Consigned</a></li>
 			  <li class=""><a href="#pill5" data-toggle="tab" aria-expanded="false">Sold</a></li>
+			  <li class=""><a href="#pill6" data-toggle="tab" aria-expanded="false">Expired</a></li>
 			</ul>
     </div>
     <div class="col-xs-10 col-xs-offset-1">
@@ -125,6 +126,9 @@
 				</div>
 				<div class="tab-pane grid" id="pill5">
           <%= render 'items/items_list', headers: general_headers, context: "general", items: @items.sold.order(:account_item_number) %>
+				</div>
+				<div class="tab-pane grid" id="pill6">
+          <%= render 'items/items_list', headers: general_headers, context: "general", items: @items.expired.order(:account_item_number) %>
 				</div>
 			</div>
 		</div>
