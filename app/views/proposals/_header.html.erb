@@ -34,7 +34,7 @@
         </tr>
       <% elsif @statement.present? %>
         <td class="text-left">Date</td>
-        <td><%= @statement.date.strftime("%B %d, %Y") %></td>
+        <td><%= @statement.date.last_month.strftime("%B, %Y") %></td>
       <% end %>
       <tr>
         <td class="text-left">Account #</td>
