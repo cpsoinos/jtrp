@@ -1,6 +1,6 @@
 class Job < ActiveRecord::Base
   audited associated_with: :account
-  
+
   extend FriendlyId
   friendly_id :address_1, use: [:slugged, :finders, :history]
 
@@ -15,6 +15,9 @@ class Job < ActiveRecord::Base
   has_many :agreements, through: :proposals
 
   validates :account, presence: true
+  validates :address_1, presence: true
+  validates :city, presence: true
+  validates :state, presence: true
 
   scope :account_id, -> (account_id) { where(account_id: account_id) }
   scope :status, -> (status) { where(status: status) }
