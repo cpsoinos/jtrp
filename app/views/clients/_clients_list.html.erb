@@ -23,7 +23,7 @@
               <%= link_to client.full_name, account_client_path(client.account, client) %>
             </td>
             <td class="text-center">
-              <%= link_to client.account.account_number, account_path(client.account) %>
+              <%= link_to client.account.id, account_path(client.account) %>
             </td>
             <td class="text-center">
               <%= client.account.items.count %>

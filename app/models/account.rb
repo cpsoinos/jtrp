@@ -1,6 +1,6 @@
 class Account < ActiveRecord::Base
   audited
-  
+
   extend FriendlyId
   friendly_id :short_name, use: [:slugged, :finders, :history]
 
@@ -12,7 +12,7 @@ class Account < ActiveRecord::Base
     %w(OwnerAccount ClientAccount)
   end
 
-  multisearchable against: [:account_number, :full_name, :status]
+  multisearchable against: [:full_name, :status]
 
   has_many :clients
   belongs_to :primary_contact, class_name: "User", foreign_key: "primary_contact_id", touch: true
@@ -24,7 +24,6 @@ class Account < ActiveRecord::Base
   belongs_to :created_by, class_name: "InternalUser", foreign_key: "created_by_id"
   belongs_to :updated_by, class_name: "InternalUser", foreign_key: "updated_by_id"
 
-  validates :account_number, uniqueness: true
   validates :status, presence: true
   validates :type, presence: true
 
@@ -36,9 +35,6 @@ class Account < ActiveRecord::Base
   scope :potential, -> { where(status: "potential") }
   scope :active, -> { where(status: "active") }
   scope :inactive, -> { where(status: "inactive") }
-
-  before_create :set_account_number
-  after_create :increment_system_info
 
   state_machine :status, initial: :potential do
     state :potential
@@ -68,11 +64,11 @@ class Account < ActiveRecord::Base
   delegate :email, to: :primary_contact
 
   def self.yard_sale
-    Account.find_by(account_number: 1)
+    Account.find_by(company_name: 'Yard Sale')
   end
 
   def self.estate_sale
-    Account.find_by(account_number: 2)
+    Account.find_by(company_name: 'Estate Sale')
   end
 
   def full_name
@@ -118,11 +114,11 @@ class Account < ActiveRecord::Base
   end
 
   def yard_sale?
-    account_number == 1 && company_name == "Yard Sale"
+    company_name == "Yard Sale"
   end
 
   def estate_sale?
-    account_number == 2 && company_name == "Estate Sale"
+    company_name == "Estate Sale"
   end
 
   def consignment_account?
@@ -132,14 +128,6 @@ class Account < ActiveRecord::Base
   end
 
   private
-
-  def set_account_number
-    self.account_number = SystemInfo.first.last_account_number
-  end
-
-  def increment_system_info
-    SystemInfo.first.increment!(:last_account_number)
-  end
 
   def deactivate_items
     items.each do |item|

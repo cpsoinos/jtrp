@@ -19,7 +19,7 @@
               <%= link_to "<i class='material-icons md-36'>account_balance_wallet</i> Consignment Statement".html_safe, account_statement_path(@account, statement) %>
             </td>
             <td class="text-center">
-              <%= statement.date.strftime('%-m/%-d/%y') %>
+              <%= statement.date.last_month.strftime("%B, %Y") %>
             </td>
             <td class="text-center">
               <%= link_to statement.agreement_id, agreement_path(statement.agreement) %>

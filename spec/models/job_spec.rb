@@ -7,6 +7,9 @@ describe Job do
   it { should have_many(:agreements).through(:proposals) }
 
   it { should validate_presence_of(:account) }
+  it { should validate_presence_of(:address_1) }
+  it { should validate_presence_of(:city) }
+  it { should validate_presence_of(:state) }
 
   describe Job, "state_machine" do
 
