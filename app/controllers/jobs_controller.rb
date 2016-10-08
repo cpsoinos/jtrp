@@ -1,7 +1,7 @@
 class JobsController < ApplicationController
   before_filter :require_internal
   before_filter :find_accounts, only: :new
-  before_filter :find_account, only: :create
+  before_filter :find_account, only: [:create, :edit, :update]
 
   def index
     @jobs = JobsPresenter.new(params).filter
@@ -29,7 +29,22 @@ class JobsController < ApplicationController
       flash[:notice] = "Job created"
       redirect_to account_job_path(@job.account, @job)
     else
-      flash[:warning] = "Job could not be saved"
+      flash[:alert] = "Job could not be saved"
+      redirect_to :back
+    end
+  end
+
+  def edit
+    @job = Job.find(params[:id])
+  end
+
+  def update
+    @job = Job.find(params[:id])
+    if @job.update(job_params)
+      flash[:notice] = "Job updated"
+      redirect_to account_job_path(@account, @job)
+    else
+      flash[:alert] = "Job could not be saved: #{@job.errors.full_messages.uniq.join}"
       redirect_to :back
     end
   end
