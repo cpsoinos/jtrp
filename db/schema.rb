@@ -11,13 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161002203310) do
+ActiveRecord::Schema.define(version: 20161008222022) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "accounts", force: :cascade do |t|
-    t.integer  "account_number",                               null: false
+    t.integer  "account_number"
     t.boolean  "is_company",         default: false
     t.string   "company_name"
     t.integer  "created_by_id"
