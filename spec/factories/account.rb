@@ -3,7 +3,6 @@ require 'factory_girl'
 FactoryGirl.define do
 
   factory :account, class: Account do
-    sequence(:account_number) { |n| 11 + n }
     is_company false
     type "ClientAccount"
 
@@ -29,14 +28,12 @@ FactoryGirl.define do
 
     trait :yard_sale do
       status "active"
-      account_number 1
       is_company true
       company_name "Yard Sale"
     end
 
     trait :estate_sale do
       status "active"
-      account_number 2
       is_company true
       company_name "Estate Sale"
     end

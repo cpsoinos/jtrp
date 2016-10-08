@@ -9,7 +9,7 @@ feature "statement" do
   context "internal user" do
 
     before do
-      Timecop.freeze
+      Timecop.freeze("October 1, 2016")
       day_incrementer = 1
       items.map do |item|
         item.sold_at = day_incrementer.days.ago
@@ -32,6 +32,7 @@ feature "statement" do
       expect(page).to have_content("Unpaid Statements")
       expect(page).to have_content("Paid Statements")
       expect(page).to have_content("Date")
+      expect(page).to have_content("September, 2016")
       expect(page).to have_content("Agreement No.")
       expect(page).to have_content(agreement.id)
       expect(page).to have_link(agreement.id)
@@ -47,6 +48,8 @@ feature "statement" do
       click_link("Consignment Statement")
 
       expect(page).to have_content("Consignment Sales")
+      expect(page).to have_content("September, 2016")
+      expect(page).to have_content("Account # #{statement.account.id}")
       statement.items.each do |item|
         expect(page).to have_link("Item No. #{item.account_item_number}: #{item.original_description}")
         expect(page).to have_content("Starting Asking Price: #{ActionController::Base.helpers.humanized_money_with_symbol(item.listing_price)}")

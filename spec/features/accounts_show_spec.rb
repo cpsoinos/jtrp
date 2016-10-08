@@ -13,7 +13,7 @@ feature "account show" do
       visit account_path(account)
 
       expect(page).to have_content("Account Number")
-      expect(page).to have_content(account.account_number)
+      expect(page).to have_content(account.id)
       expect(page).to have_content("No Name Provided")
       expect(page).to have_content("Status")
       expect(page).to have_content("Potential")
@@ -24,7 +24,7 @@ feature "account show" do
       visit account_path(account)
 
       expect(page).to have_content("Account Number")
-      expect(page).to have_content(account.account_number)
+      expect(page).to have_content(account.id)
       expect(page).to have_content("Primary Contact")
       expect(page).to have_content(account.primary_contact.full_name)
       expect(page).to have_content("Status")
@@ -40,7 +40,7 @@ feature "account show" do
         visit account_path(account)
 
         expect(page).to have_content("Account Number")
-        expect(page).to have_content(account.account_number)
+        expect(page).to have_content(account.id)
         expect(page).to have_content("Account Name")
         expect(page).to have_content("JTRP")
         expect(page).to have_content("Status")

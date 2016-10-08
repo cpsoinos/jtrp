@@ -16,7 +16,7 @@ feature "item show" do
     scenario "visits item show page" do
       visit account_job_proposal_item_path(account, job, proposal, item)
 
-      expect(page).to have_content(account.account_number)
+      expect(page).to have_content(account.id)
       expect(page).to have_content(job.id)
       expect(page).to have_content(proposal.id)
       expect(page).to have_content(item.account_item_number)
@@ -77,7 +77,7 @@ feature "item show" do
       end
 
       scenario "visits item show page" do
-        expect(page).to have_content(account.account_number)
+        expect(page).to have_content(account.id)
         expect(page).to have_content(job.id)
         expect(page).to have_content(proposal.id)
         expect(page).to have_content(item.account_item_number)
@@ -118,7 +118,7 @@ feature "item show" do
       end
 
       scenario "visits item show page" do
-        expect(page).to have_content(account.account_number)
+        expect(page).to have_content(account.id)
         expect(page).to have_content(job.id)
         expect(page).to have_content(proposal.id)
         expect(page).to have_content(item.account_item_number)
