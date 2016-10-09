@@ -12,11 +12,11 @@ module Clover
           nil
         else
           raise CloverError
-        rescue Exception => e
-          Rollbar.error(e, order_id: order.id, error: JSON.parse(response))
-          raise e
         end
       end
+    rescue CloverError => e
+      Rollbar.error(e, order_id: order.id, error: JSON.parse(response))
+      raise e
     end
 
   end

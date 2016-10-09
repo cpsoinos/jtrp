@@ -19,7 +19,7 @@ module Clover
           raise CloverError
         end
       end
-    rescue Exception => e
+    rescue CloverError => e
       Rollbar.error(e, item_id: item.id, error: JSON.parse(response))
       raise e
     end
@@ -33,11 +33,11 @@ module Clover
           nil
         else
           raise CloverError
-        rescue Exception => e
-          Rollbar.error(e, item_id: item.id, error: JSON.parse(response))
-          raise e
         end
       end
+    rescue CloverError => e
+      Rollbar.error(e, item_id: item.id, error: JSON.parse(response))
+      raise e
     end
 
     def self.update(item)
@@ -58,11 +58,11 @@ module Clover
           item.sync_inventory
         else
           raise CloverError
-        rescue Exception => e
-          Rollbar.error(e, item_id: item.id, error: JSON.parse(response))
-          raise e
         end
       end
+    rescue CloverError => e
+      Rollbar.error(e, item_id: item.id, error: JSON.parse(response))
+      raise e
     end
 
     def self.all
@@ -72,11 +72,11 @@ module Clover
           DeepStruct.wrap(JSON.parse(response)["elements"])
         else
           raise CloverError
-        rescue Exception => e
-          Rollbar.error(e, error: JSON.parse(response))
-          raise e
         end
       end
+    rescue CloverError => e
+      Rollbar.error(e, error: JSON.parse(response))
+      raise e
     end
 
     def self.delete(item)
@@ -85,11 +85,11 @@ module Clover
           ItemUpdater.new(item).update(remote_id: nil)
         else
           raise CloverError
-        rescue Exception => e
-          Rollbar.error(e, item_id: item.id, error: JSON.parse(response))
-          raise e
         end
       end
+    rescue CloverError => e
+      Rollbar.error(e, item_id: item.id, error: JSON.parse(response))
+      raise e
     end
 
   end

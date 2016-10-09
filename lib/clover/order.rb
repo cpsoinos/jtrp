@@ -12,11 +12,11 @@ module Clover
           nil
         else
           raise CloverError
-        rescue CloverError => e
-          Rollbar.error(e, item_id: item.id, error: JSON.parse(response))
-          raise e
         end
       end
+    rescue CloverError => e
+      Rollbar.error(e, item_id: item.id, error: JSON.parse(response))
+      raise e
     end
 
     def self.all
@@ -26,11 +26,11 @@ module Clover
           DeepStruct.wrap(JSON.parse(response)["elements"])
         else
           raise CloverError
-        rescue CloverError => e
-          Rollbar.error(e, error: JSON.parse(response))
-          raise e
         end
       end
+    rescue CloverError => e
+      Rollbar.error(e, error: JSON.parse(response))
+      raise e
     end
 
   end
