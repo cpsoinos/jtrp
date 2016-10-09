@@ -22,6 +22,7 @@ describe PhotoCreator do
 
   before do
     CarrierWave::Uploader::Base.any_instance.stub(:store!)
+    CarrierWave::Uploader::Base.any_instance.stub(:download!)
   end
 
   it "can be instantiated" do
@@ -41,7 +42,7 @@ describe PhotoCreator do
 
     expect {
       creator.create_multiple(params)
-    }.not_to raise_error(NoMethodError)
+    }.not_to raise_error
   end
 
   it "does not create photos if photo attrs nil" do
