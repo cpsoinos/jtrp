@@ -11,26 +11,7 @@
 
       <div class="row">
         <div class="col-xs-6 col-xs-offset-6 col-sm-4 col-sm-offset-8">
-          <table class="pull-right nested-statement-table">
-            <tr>
-              <th class="text-right">Total Sales</th>
-              <td class="text-right statement-data">
-                <%= humanized_money_with_symbol(@statement.items.sum(:sale_price_cents) / 100) %>
-              </td>
-            </tr>
-            <tr>
-              <th class="text-right">Total Fees</th>
-              <td class="text-right statement-data">
-                <%= humanized_money_with_symbol(@statement.total_consignment_fee) %>
-              </td>
-            </tr>
-            <tr>
-              <th class="text-right">Due to Consignor</th>
-              <th class="text-right statement-data">
-                <%= humanized_money_with_symbol(@statement.amount_due_to_client) %>
-              </th>
-            </tr>
-          </table>
+          <%= render 'summary', statement: statement %>
         </div>
       </div>
 

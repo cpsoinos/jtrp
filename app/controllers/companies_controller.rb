@@ -3,13 +3,14 @@ class CompaniesController < ApplicationController
   before_filter :meta_tags
 
   def show
+    build_todos
     @metrics = {
       owned_count: Item.owned.count,
       consigned_count: Item.consigned.count,
       thirty_day_revenue: Order.thirty_day_revenue,
       owed_to_consignors: Item.consigned.sold.where("items.sold_at >= ?", 30.days.ago).sum(:sale_price_cents) / 2
     }
-    @items = ItemsPresenter.new.todo.page(params[:page])
+    # @items = ItemsPresenter.new.todo.page(params[:page])
     @featured_photo = Photo.new(photo_type: 'featured_photo')
 
     if current_user.admin?
@@ -52,6 +53,12 @@ class CompaniesController < ApplicationController
 
   def company_params
     params.require(:company).permit([:slogan, :address_1, :address_2, :city, :state, :zip, :phone, :phone_ext, :website, :logo, :description, :consignment_policies, :service_rate_schedule, :agent_service_rate_schedule, :bootsy_image_gallery_id])
+  end
+
+  def build_todos
+    @items = ItemsPresenter.new.todo.page(params[:page])
+    @statements = StatementsPresenter.new.todo
+    @todos = @statements | @items
   end
 
 end

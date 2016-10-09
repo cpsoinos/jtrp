@@ -35,10 +35,15 @@ describe ItemsPresenter do
   end
 
   it 'todo' do
-    pending('fixing this test')
-    to_do_items = create_list(:item, 2, :active, listing_price: nil)
+    sold_with_price = Item.sold.last
+    sold_with_price.update_attributes(sold_at: DateTime.now, sale_price_cents: 1234)
+    items = ItemsPresenter.new.todo
 
-    expect(ItemsPresenter.new.todo).to eq(to_do_items)
+    items.each do |item|
+      expect(item).to be_in(potential_items | active_items | sold_items.except(sold_with_price))
+    end
+
+    expect(sold_with_price).not_to be_in(items)
   end
 
 end

@@ -85,4 +85,20 @@ describe Statement do
     expect(statement.object_url).to eq("#{ENV['HOST']}/accounts/#{statement.account.slug}/statements/#{statement.id}")
   end
 
+  context "unpaid" do
+    it "task" do
+      statement = create(:statement)
+
+      expect(statement.task).to eq({ name: "pay statement", description: "needs to be paid and sent to the client" })
+    end
+  end
+
+  context "paid" do
+    it "task" do
+      statement = create(:statement, :paid, check_number: nil)
+
+      expect(statement.task).to eq({ name: "record check number", description: "needs a check number recorded", task_field: :check_number })
+    end
+  end
+
 end
