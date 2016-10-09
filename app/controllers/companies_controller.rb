@@ -10,7 +10,6 @@ class CompaniesController < ApplicationController
       thirty_day_revenue: Order.thirty_day_revenue,
       owed_to_consignors: Item.consigned.sold.where("items.sold_at >= ?", 30.days.ago).sum(:sale_price_cents) / 2
     }
-    # @items = ItemsPresenter.new.todo.page(params[:page])
     @featured_photo = Photo.new(photo_type: 'featured_photo')
 
     if current_user.admin?
