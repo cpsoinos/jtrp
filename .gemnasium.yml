@@ -1,2 +1,5 @@
-project_slug: cpsoinos/jtrp
-test_suite: "rspec spec"
+project_slug: ENV['GEMNASIUM_PROJECT_SLUG']
+project_name: jtrp
+project_branch: dev
+token: ENV['GEMNASIUM_TOKEN']
+testsuite: ENV['GEMNASIUM_TESTSUITE']
