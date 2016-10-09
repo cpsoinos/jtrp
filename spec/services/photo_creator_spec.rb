@@ -20,6 +20,10 @@ describe PhotoCreator do
     }.symbolize_keys!
   end
 
+  before do
+    CarrierWave::Uploader::Base.any_instance.stub(:store!)
+  end
+
   it "can be instantiated" do
     expect(creator).to be_an_instance_of(PhotoCreator)
   end
