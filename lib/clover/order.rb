@@ -11,9 +11,12 @@ module Clover
         when 404
           nil
         else
-          raise 'unable to find order - ' + JSON.parse(response)['message'] + ', order: ' + order.id
+          raise CloverError
         end
       end
+    rescue CloverError => e
+      Rollbar.error(e, item_id: item.id, error: JSON.parse(response))
+      raise e
     end
 
     def self.all
@@ -22,9 +25,12 @@ module Clover
         when 200
           DeepStruct.wrap(JSON.parse(response)["elements"])
         else
-          raise 'unable to get all inventory orders - ' + JSON.parse(response)['message']
+          raise CloverError
         end
       end
+    rescue CloverError => e
+      Rollbar.error(e, error: JSON.parse(response))
+      raise e
     end
 
   end

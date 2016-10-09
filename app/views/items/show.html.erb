@@ -73,7 +73,7 @@
               <li>
                 <%= @item.status.titleize %>
                 <% if @item.sold? %>
-                  for <%= humanized_money_with_symbol(@item.sale_price) %> on <%= @item.sold_at.strftime('%-m/%-d/%y') %>
+                  for <%= humanized_money_with_symbol(@item.sale_price) %> <%= @item.sold_at.present? ? "on #{@item.sold_at.strftime('%-m/%-d/%y')}" : '' %>
                 <% end %>
               </li>
             </ul>

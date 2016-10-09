@@ -143,6 +143,30 @@ feature "item show" do
 
     end
 
+    context "sold" do
+      let(:item) { create(:item, :sold, listing_price_cents: 1111, sale_price_cents: 1111) }
+      let(:proposal) { item.proposal }
+      let(:job) { item.job }
+      let(:agreement) { item.agreement }
+      let(:account) { item.account }
+
+      scenario "item has no sale date" do
+        visit account_job_proposal_item_path(account, job, proposal, item)
+
+        expect(page).to have_content("Sold for $11.11")
+        expect(page).not_to have_content("Sold for $11.11 on")
+      end
+
+      scenario "item has a sale date" do
+        Timecop.freeze("October 10, 2016")
+        item.update_attribute("sold_at", DateTime.now)
+        visit account_job_proposal_item_path(account, job, proposal, item)
+
+        expect(page).to have_content("Sold for $11.11 on 10/10/16")
+        Timecop.return
+      end
+    end
+
   end
 
 end
