@@ -92,7 +92,7 @@ feature "home page" do
 
       scenario "closes a to do list modal without completing", js: true do
         first(:button, "done").click
-        click_button("Close")
+        click_button("×")
         wait_for_ajax
 
         expect(page).to have_field("Listing price", visible: false)
