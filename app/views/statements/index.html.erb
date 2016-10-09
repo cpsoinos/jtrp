@@ -9,8 +9,19 @@
 
 <%= render 'index_header_cards' %>
 
-<div class="row large-top-margin">
+<div class="row">
   <div class="col-xs-10 col-xs-offset-1 col-md-8 col-md-offset-2">
-    <%= render "statements_list", statements: @statements.unpaid %>
+
+    <div class="large-top-margin">
+      <div class="tab-content">
+        <div role="tabpanel" class="tab-pane fade" id="unpaid">
+          <%= render "statements_list", statements: @statements.unpaid %>
+        </div>
+        <div role="tabpanel" class="tab-pane fade" id="paid">
+          <%= render "statements_list", statements: @statements.paid %>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>
