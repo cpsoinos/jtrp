@@ -1,0 +1,7 @@
+var listItem = $("#to-do-list-statement-<%= @statement.id %>")
+var modal = $("#statement-<%= @statement.id %>-task-modal")
+
+modal.modal('toggle');
+listItem.remove();
+
+toastr.success('<%= @message %>', 'Success!')

@@ -1,10 +1,13 @@
 class Statement < ActiveRecord::Base
   audited associated_with: :agreement
 
+  include Filterable
+
   belongs_to :agreement, touch: true
   has_one :statement_pdf
   has_one :account, through: :agreement
 
+  scope :status, -> (status) { where(status: status) }
   scope :unpaid, -> { where(status: "unpaid") }
   scope :paid, -> { where(status: "paid") }
 
@@ -47,6 +50,16 @@ class Statement < ActiveRecord::Base
 
   def ending_date
     created_at.last_month.end_of_month
+  end
+
+  def task
+    if unpaid?
+      { name: "pay statement", description: "needs to be paid and sent to the client" }
+    elsif paid?
+      if check_number.nil?
+        { name: "record check number", description: "needs a check number recorded", task_field: :check_number }
+      end
+    end
   end
 
 end

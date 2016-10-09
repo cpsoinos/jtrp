@@ -15,30 +15,55 @@ describe ItemsPresenter do
   end
 
   it 'returns items' do
-    expect(ItemsPresenter.new.filter).to eq(Item.all)
+    items = ItemsPresenter.new.filter
+
+    expect(items.count).to eq(Item.count)
+    items.each do |item|
+      expect(item).to be_in(Item.all)
+    end
   end
 
   context 'filters' do
 
     it 'returns potential items' do
-      expect(ItemsPresenter.new(status: 'potential').filter).to eq(potential_items)
+      items = ItemsPresenter.new(status: 'potential').filter
+
+      expect(items.count).to eq(potential_items.count)
+      items.each do |item|
+        expect(item).to be_in(potential_items)
+      end
     end
 
     it 'returns active items' do
-      expect(ItemsPresenter.new(status: 'active').filter).to eq(active_items)
+      items = ItemsPresenter.new(status: 'active').filter
+
+      expect(items.count).to eq(active_items.count)
+      items.each do |item|
+        expect(item).to be_in(active_items)
+      end
     end
 
     it 'returns sold items' do
-      expect(ItemsPresenter.new(status: 'sold').filter).to eq(sold_items)
+      items = ItemsPresenter.new(status: 'sold').filter
+
+      expect(items.count).to eq(sold_items.count)
+      items.each do |item|
+        expect(item).to be_in(sold_items)
+      end
     end
 
   end
 
   it 'todo' do
-    pending('fixing this test')
-    to_do_items = create_list(:item, 2, :active, listing_price: nil)
+    sold_with_price = Item.sold.last
+    sold_with_price.update_attributes(sold_at: DateTime.now, sale_price_cents: 1234)
+    items = ItemsPresenter.new.todo
 
-    expect(ItemsPresenter.new.todo).to eq(to_do_items)
+    items.each do |item|
+      expect(item).to be_in(potential_items | active_items | sold_items.except(sold_with_price))
+    end
+
+    expect(sold_with_price).not_to be_in(items)
   end
 
 end
