@@ -29,8 +29,8 @@ feature "statement" do
 
       expect(page).to have_content("Statements")
       expect(page).to have_content("for #{agreement.account.full_name}")
-      expect(page).to have_content("Unpaid Statements")
-      expect(page).to have_content("Paid Statements")
+      expect(page).to have_content("Unpaid")
+      expect(page).to have_content("Paid")
       expect(page).to have_content("Date")
       expect(page).to have_content("September, 2016")
       expect(page).to have_content("Agreement No.")

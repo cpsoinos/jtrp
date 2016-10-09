@@ -1,8 +1,8 @@
 describe JobsPresenter do
 
-  let(:potential_jobs) { create_list(:job, 3) }
-  let(:active_jobs) { create_list(:job, 3, :active) }
-  let(:completed_jobs) { create_list(:job, 2, :completed) }
+  let!(:potential_jobs) { create_list(:job, 3) }
+  let!(:active_jobs) { create_list(:job, 3, :active) }
+  let!(:completed_jobs) { create_list(:job, 2, :completed) }
 
   it 'can be instantiated' do
     expect(JobsPresenter.new).to be_an_instance_of(JobsPresenter)
@@ -15,15 +15,30 @@ describe JobsPresenter do
   context 'filters' do
 
     it 'returns potential jobs' do
-      expect(JobsPresenter.new(status: 'potential').filter).to eq(potential_jobs)
+      jobs = JobsPresenter.new(status: 'potential').filter
+
+      expect(jobs.count).to eq(potential_jobs.count)
+      jobs.each do |job|
+        expect(job).to be_in(potential_jobs)
+      end
     end
 
     it 'returns active jobs' do
-      expect(JobsPresenter.new(status: 'active').filter).to eq(active_jobs)
+      jobs = JobsPresenter.new(status: 'active').filter
+
+      expect(jobs.count).to eq(active_jobs.count)
+      jobs.each do |job|
+        expect(job).to be_in(active_jobs)
+      end
     end
 
     it 'returns completed jobs' do
-      expect(JobsPresenter.new(status: 'completed').filter).to eq(completed_jobs)
+      jobs = JobsPresenter.new(status: 'completed').filter
+
+      expect(jobs.count).to eq(completed_jobs.count)
+      jobs.each do |job|
+        expect(job).to be_in(completed_jobs)
+      end
     end
 
   end
