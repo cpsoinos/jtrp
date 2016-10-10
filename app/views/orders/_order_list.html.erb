@@ -1,0 +1,49 @@
+<table>
+  <% orders.each do |order| %>
+    <tr>
+      <th>ID:</th>
+      <td><%= order.remote_id %></td>
+      <th>Time</th>
+      <td><%= order.created_at.strftime("%l:%M") %></td>
+    </tr>
+    <tr></tr>
+
+    <tr>
+      <th>SKU</th>
+      <th>Account</th>
+      <th>Description</th>
+      <th>Discounts</th>
+      <th>Amount</th>
+    </tr>
+
+    <br />
+
+    <% if order.items.present? %>
+      <% order.items.each do |item| %>
+        <tr>
+          <td><%= item.id %></td>
+          <td><%= item.account.try(:primary_contact).try(:last_name) %></td>
+          <td><%= item.description.titleize %></td>
+          <td><%= item.discounts.present? ? humanized_money_with_symbol(item.discounts.first.amount) : "n/a" %></td>
+          <td><%= humanized_money_with_symbol(item.sale_price) %></td>
+        </tr>
+        <br />
+      <% end %>
+    <% end %>
+
+    <tr style="text-align: right;">
+      <th colspan="5">Total</th>
+      <td><%= humanized_money_with_symbol(order.amount) %></td>
+    </tr>
+
+    <hr />
+
+  <% end %>
+</table>
+
+<br />
+<br />
+
+<div style="text-align: right;">
+  <b>Total Sales:</b> <%= humanized_money_with_symbol(orders.sum(:amount_cents) / 100) %>
+</div>
