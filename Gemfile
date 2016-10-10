@@ -52,7 +52,11 @@ gem 'pry-rails'
 gem 'pry-coolline'
 gem 'pry-byebug', '~> 3.3.0'
 gem 'docraptor'
+gem 'sendgrid'
 gem 'sendgrid-ruby'
+gem 'nokogiri'
+gem 'premailer-rails'
+gem 'actionmailer_inline_css'
 gem 'newrelic_rpm'
 gem 'readthis'
 gem 'hiredis'
@@ -97,6 +101,7 @@ group :development, :local do
   gem 'spring'
   gem 'rails_real_favicon'
   gem 'bullet'
+  gem 'letter_opener_web', '~> 1.2.0'
 end
 
 group :test do

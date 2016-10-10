@@ -1,0 +1,45 @@
+<div class="row large-top-margin">
+  <div class="col-xs-10 col-xs-offset-1">
+    <p>Hi <%= @user.first_name %>,</p>
+
+    <p>
+      Here is your sales summary for the day:
+    </p>
+
+    <h4>Orders</h4>
+    <% @orders.each do |order| %>
+
+      <div class="row">
+        <div class="col-xs-4">
+          Clover Order #<%= order.remote_id %>
+        </div>
+        <div class="col-xs-4 col-xs-offset-4 text-right">
+          Time: <%= order.created_at.strftime("%l:%M") %>
+        </div>
+      </div>
+
+      <%= render 'items/items_list', headers: summary_headers, context: "summary", items: order.items %>
+
+      <div class="pull-right">
+        <table>
+          <tr>
+            <th>Total</th>
+            <td><%= humanized_money_with_symbol(order.amount) %></td>
+          </tr>
+        </table>
+      </div>
+
+      <br />
+      <hr />
+      <br />
+
+    <% end %>
+
+    <div class="row">
+      <div style="text-align: right;">
+        <b>Total Sales:</b> <%= humanized_money_with_symbol(@orders.sum(:amount_cents) / 100) %>
+      </div>
+    </div>
+
+  </div>
+</div>

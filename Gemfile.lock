@@ -10,6 +10,10 @@ GEM
       activejob (= 4.2.5.2)
       mail (~> 2.5, >= 2.5.4)
       rails-dom-testing (~> 1.0, >= 1.0.5)
+    actionmailer_inline_css (1.5.3)
+      actionmailer (>= 3.0.0)
+      nokogiri (>= 1.4.4)
+      premailer (>= 1.7.1)
     actionpack (4.2.5.2)
       actionview (= 4.2.5.2)
       activesupport (= 4.2.5.2)
@@ -127,6 +131,8 @@ GEM
       thor (~> 0.19.1)
     crack (0.4.3)
       safe_yaml (~> 1.0.0)
+    css_parser (1.4.5)
+      addressable
     dalli (2.7.6)
     database_cleaner (1.5.1)
     debug_inspector (0.0.2)
@@ -364,6 +370,11 @@ GEM
       activesupport (>= 3.0.0)
     launchy (2.4.3)
       addressable (~> 2.3)
+    letter_opener (1.4.1)
+      launchy (~> 2.2)
+    letter_opener_web (1.2.3)
+      letter_opener (~> 1.0)
+      rails (>= 3.2)
     listen (3.0.6)
       rb-fsevent (>= 0.9.3)
       rb-inotify (>= 0.9.7)
@@ -453,6 +464,12 @@ GEM
       ttfunk (~> 1.4.0)
     prawn-labels (1.2.6)
       prawn (>= 1.0.0, < 3.0.0)
+    premailer (1.8.7)
+      css_parser (>= 1.4.5)
+      htmlentities (>= 4.0.0)
+    premailer-rails (1.9.4)
+      actionmailer (>= 3, < 6)
+      premailer (~> 1.7, >= 1.7.9)
     pry (0.10.3)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
@@ -600,6 +617,8 @@ GEM
       childprocess (~> 0.5)
       rubyzip (~> 1.0)
       websocket (~> 1.0)
+    sendgrid (1.2.4)
+      json
     sendgrid-ruby (4.0.2)
       ruby_http_client (~> 3.0.0)
     sextant (0.2.4)
@@ -705,6 +724,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  actionmailer_inline_css
   activejob-traffic_control
   amoeba
   audited (~> 4.3)
@@ -746,10 +766,12 @@ DEPENDENCIES
   jquery-turbolinks
   kaminari
   launchy
+  letter_opener_web (~> 1.2.0)
   metamagic
   mini_magick
   money-rails
   newrelic_rpm
+  nokogiri
   oj (~> 2.12.14)
   omniauth-clover
   pdf-reader
@@ -757,6 +779,7 @@ DEPENDENCIES
   pg_search
   poltergeist
   prawn-labels
+  premailer-rails
   pry-byebug (~> 3.3.0)
   pry-coolline
   pry-rails
@@ -782,6 +805,7 @@ DEPENDENCIES
   scout_apm (~> 3.0.x)
   sdoc (~> 0.4.0)
   selenium-webdriver
+  sendgrid
   sendgrid-ruby
   sextant
   shoulda-matchers
