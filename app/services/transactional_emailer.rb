@@ -38,7 +38,6 @@ class TransactionalEmailer
       'agreement'                  => 'faae793c-7bf3-4f09-94c3-d0dda1c87fda',
       'send_agreement'             => '53c7255e-09fe-43b6-9f5d-07b3d9001240',
       'agreement_active_notifier'  => 'a44c4a4e-a852-4250-bd24-026c74da4ca8',
-      'daily_sales_digest'         => '479b80c5-42c2-4aa1-ba25-d2785f4b7163'
     }
   end
 
