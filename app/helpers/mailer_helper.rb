@@ -1,7 +1,7 @@
 module MailerHelper
 
   def current_user
-    @current_user = nil
+    @current_user ||= nil
   end
 
   def controller_name

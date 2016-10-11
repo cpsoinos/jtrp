@@ -11,8 +11,7 @@ class Notifier < ApplicationMailer
   def send_daily_summary_email(user)
     @company = Company.jtrp
     @user = user
-    # @orders = Order.where(created_at: DateTime.now.beginning_of_day..DateTime.now)
-    @orders = Order.where(created_at: 1.day.ago..DateTime.now)
+    @orders = Order.where(created_at: DateTime.now.beginning_of_day..DateTime.now)
     mail(to: @user.email, subject: 'Daily Sales Summary')
   end
 end

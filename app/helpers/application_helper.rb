@@ -52,15 +52,16 @@ module ApplicationHelper
   end
 
   def summary_headers
-    ["SKU", "Account", "Discounts", "Amount"]
+    ["SKU", "Account", "Amount"]
   end
 
   def summary_values(item)
     {
       "SKU" => item.id,
       "Account" => (item.client_intention == "consign" ? item.account.short_name : "JTRP"),
-      "Discounts" => item.discounts.present? ? humanized_money_with_symbol(item.discounts.first.amount) : "n/a",
-      "Amount" => humanized_money_with_symbol(item.sale_price)
+      "Amount" => "#{humanized_money_with_symbol(item.listing_price)}<br>
+                  <i>#{item.discounts.present? ? humanized_money_with_symbol(item.discounts.first.amount) : ''}</i><br>
+                  <b>#{humanized_money_with_symbol(item.sale_price)}</b>".html_safe
     }
   end
 
