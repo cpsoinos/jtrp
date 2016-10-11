@@ -1,6 +1,5 @@
 class Notifier < ApplicationMailer
   helper :application
-  helper :mailer
   include SendGrid
 
   default from: 'notifications@justtherightpiece.furniture'
