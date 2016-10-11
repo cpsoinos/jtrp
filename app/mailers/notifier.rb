@@ -7,7 +7,6 @@ class Notifier < ApplicationMailer
   sendgrid_category :use_subject_lines
   sendgrid_enable :ganalytics, :opentrack
 
-  # send a signup email to the user, pass in the user object that   contains the user's email address
   def send_daily_summary_email(user)
     @company = Company.jtrp
     @user = user
