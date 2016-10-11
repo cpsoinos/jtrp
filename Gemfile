@@ -68,6 +68,7 @@ gem 'friendly_id', '~> 5.1.0'
 gem 'audited', '~> 4.3'
 gem 'rack-cors'
 gem 'where-or'
+gem 'lob'
 
 group :production, :staging do
   gem 'tunemygc'
