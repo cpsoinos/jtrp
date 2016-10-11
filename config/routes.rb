@@ -10,6 +10,10 @@ Rails.application.routes.draw do
     mount RedisBrowser::Web => '/redis_browser'
   end
 
+  if Rails.env.development?
+    mount LetterOpenerWeb::Engine, at: "/devel/emails"
+  end
+
   mount Bootsy::Engine => '/bootsy', as: 'bootsy'
   devise_for :users, controllers: { registrations: 'registrations', omniauth_callbacks: 'users/omniauth_callbacks' }
   root 'passthrough#index'

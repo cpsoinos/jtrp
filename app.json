@@ -1,0 +1,159 @@
+{
+  "name": "jtrp",
+  "scripts": {
+    "postdeploy": "rake emails:scrub"
+  },
+  "env": {
+    "AWS_ACCESS_KEY_ID": {
+      "required": true
+    },
+    "AWS_SECRET_ACCESS_KEY": {
+      "required": true
+    },
+    "CLOUDINARY_API_KEY": {
+      "required": true
+    },
+    "CLOUDINARY_API_SECRET": {
+      "required": true
+    },
+    "CLOUDINARY_CLOUD_NAME": {
+      "required": true
+    },
+    "CLOUDINARY_DEFAULT_IMAGE_ID": {
+      "required": true
+    },
+    "CLOVER_API_TOKEN": {
+      "required": true
+    },
+    "CLOVER_API_URL": {
+      "required": true
+    },
+    "CLOVER_APP_ID": {
+      "required": true
+    },
+    "CLOVER_APP_SECRET": {
+      "required": true
+    },
+    "CLOVER_MERCHANT_ID": {
+      "required": true
+    },
+    "CLOVER_URL": {
+      "required": true
+    },
+    "DEPLOY_TASKS": {
+      "required": true
+    },
+    "DOCRAPTOR_API_KEY": {
+      "required": true
+    },
+    "FACEBOOK_APP_ID": {
+      "required": true
+    },
+    "FACEBOOK_APP_SECRET": {
+      "required": true
+    },
+    "FACEBOOK_PIXEL_ID": {
+      "required": true
+    },
+    "FOG_DIRECTORY": {
+      "required": true
+    },
+    "FULLCONTACT_API_KEY": {
+      "required": true
+    },
+    "GOOGLE_ANALYTICS_ID": {
+      "required": true
+    },
+    "GOOGLE_MAPS_API_KEY": {
+      "required": true
+    },
+    "GOOGLE_TAG_MANAGER_ID": {
+      "required": true
+    },
+    "HEROKU_APP_ID": {
+      "required": true
+    },
+    "HEROKU_APP_NAME": {
+      "required": true
+    },
+    "HEROKU_RELEASE_CREATED_AT": {
+      "required": true
+    },
+    "HEROKU_RELEASE_VERSION": {
+      "required": true
+    },
+    "HEROKU_SLUG_COMMIT": {
+      "required": true
+    },
+    "HEROKU_SLUG_DESCRIPTION": {
+      "required": true
+    },
+    "HOST": {
+      "required": true
+    },
+    "HOUZZ_ID": {
+      "required": true
+    },
+    "LANG": {
+      "required": true
+    },
+    "PINTEREST_ID": {
+      "required": true
+    },
+    "RACK_ENV": {
+      "required": true
+    },
+    "RAILS_ENV": {
+      "required": true
+    },
+    "RAILS_SERVE_STATIC_FILES": {
+      "required": true
+    },
+    "REDIS_PROVIDER": {
+      "required": true
+    },
+    "ROLLBAR_CLIENT_ACCESS_TOKEN": {
+      "required": true
+    },
+    "SECRET_KEY_BASE": {
+      "required": true
+    },
+    "SENDGRID_API_KEY": {
+      "required": true
+    },
+    "WEB_CONCURRENCY": {
+      "required": true
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1
+    },
+    "worker": {
+      "quantity": 1
+    }
+  },
+  "addons": [
+    "flydata",
+    "newrelic",
+    "papertrail",
+    "heroku-postgresql",
+    "heroku-postgresql",
+    "process-scheduler",
+    "rediscloud",
+    "heroku-redis",
+    "rollbar",
+    "scheduler",
+    "scout",
+    "sslfasttrack",
+    "tunemygc"
+  ],
+  "buildpacks": [
+    {
+      "url": "heroku/ruby"
+    },
+    {
+      "url": "https://github.com/gunpowderlabs/buildpack-ruby-rake-deploy-tasks"
+    }
+  ]
+}

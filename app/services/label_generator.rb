@@ -29,7 +29,7 @@ class LabelGenerator
   private
 
   def logo
-    @_logo ||= open(Company.first.logo.url(quality: "auto", fetch_format: :auto, width: 50, crop: "scale"))
+    @_logo ||= open(Company.jtrp.logo.url(quality: "auto", fetch_format: :auto, width: 50, crop: "scale"))
   end
 
 end
