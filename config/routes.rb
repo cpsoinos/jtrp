@@ -60,6 +60,7 @@ Rails.application.routes.draw do
     resources :statements, only: [:index, :show, :update] do
       post '/send_email', to: 'statements#send_email', as: 'send_email'
     end
+    resources :letters, only: [:index, :show]
     post '/deactivate', to: 'accounts#deactivate', as: 'deactivate'
     post '/reactivate', to: 'accounts#reactivate', as: 'reactivate'
   end

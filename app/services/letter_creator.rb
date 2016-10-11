@@ -6,7 +6,7 @@ class LetterCreator
     @accounts = accounts
   end
 
-  def create
+  def create_letters
     accounts.each do |account|
       account.letters.create
     end

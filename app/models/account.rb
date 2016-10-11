@@ -61,7 +61,15 @@ class Account < ActiveRecord::Base
 
   alias :client :primary_contact
   delegate :full_address, to: :primary_contact
+  delegate :first_name, to: :primary_contact
+  delegate :last_name, to: :primary_contact
+  delegate :address_1, to: :primary_contact
+  delegate :address_2, to: :primary_contact
+  delegate :city, to: :primary_contact
+  delegate :state, to: :primary_contact
+  delegate :zip, to: :primary_contact
   delegate :phone, to: :primary_contact
+  delegate :phone_ext, to: :primary_contact
   delegate :email, to: :primary_contact
 
   def self.yard_sale
