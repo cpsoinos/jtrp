@@ -5,8 +5,14 @@ describe Agreement do
   it { should have_many(:items).through(:proposal) }
   it { should have_one(:scanned_agreement) }
   it { should have_many(:statements) }
-  it { should validate_presence_of(:proposal) }
-  it { should validate_presence_of(:agreement_type) }
+
+  describe "validations" do
+    subject { build(:agreement) }
+    it { should validate_uniqueness_of(:token) }
+    it { should validate_presence_of(:token) }
+    it { should validate_presence_of(:proposal) }
+    it { should validate_presence_of(:agreement_type) }
+  end
 
   before do
     allow(PdfGeneratorJob).to receive(:perform_later)
