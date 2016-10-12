@@ -25,8 +25,8 @@ class ProposalsController < ApplicationController
   end
 
   def show
-    # require_internal_or_client
     @proposal = Proposal.find(params[:id])
+    require_token
     @client = @account.primary_contact
     @items = @proposal.items.order(:account_item_number)
     respond_to do |format|
@@ -86,6 +86,14 @@ class ProposalsController < ApplicationController
         imageSrc: job.maps_url
       }
     end.to_json
+  end
+
+  private
+
+  def require_token
+    unless params[:token] == @proposal.token
+      require_internal
+    end
   end
 
 end

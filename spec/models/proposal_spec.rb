@@ -6,8 +6,13 @@ describe Proposal do
   it { should have_many(:items) }
   it { should have_many(:agreements) }
 
-  it { should validate_presence_of(:job) }
-  it { should validate_presence_of(:created_by) }
+  describe "validations" do
+    subject { build(:proposal) }
+    it { should validate_uniqueness_of(:token) }
+    it { should validate_presence_of(:token) }
+    it { should validate_presence_of(:job) }
+    it { should validate_presence_of(:created_by) }
+  end
 
   describe "scopes" do
 
