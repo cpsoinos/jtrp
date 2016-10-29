@@ -15,7 +15,6 @@ class Agreement < ActiveRecord::Base
 
   validates :agreement_type, presence: true
   validates :proposal, presence: true
-  validates :token, presence: true, uniqueness: true
 
   scope :status, -> (status) { where(status: status) }
   scope :by_type, -> (type) { where(agreement_type: type) }

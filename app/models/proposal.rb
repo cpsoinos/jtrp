@@ -12,7 +12,6 @@ class Proposal < ActiveRecord::Base
 
   validates :job, presence: true
   validates :created_by, presence: true
-  validates :token, presence: true, uniqueness: true
 
   scope :potential, -> { where(status: "potential") }
   scope :active, -> { where(status: "active") }

@@ -7,9 +7,6 @@ describe Agreement do
   it { should have_many(:statements) }
 
   describe "validations" do
-    subject { build(:agreement) }
-    it { should validate_uniqueness_of(:token) }
-    it { should validate_presence_of(:token) }
     it { should validate_presence_of(:proposal) }
     it { should validate_presence_of(:agreement_type) }
   end
