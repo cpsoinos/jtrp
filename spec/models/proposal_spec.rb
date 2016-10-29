@@ -6,8 +6,10 @@ describe Proposal do
   it { should have_many(:items) }
   it { should have_many(:agreements) }
 
-  it { should validate_presence_of(:job) }
-  it { should validate_presence_of(:created_by) }
+  describe "validations" do
+    it { should validate_presence_of(:job) }
+    it { should validate_presence_of(:created_by) }
+  end
 
   describe "scopes" do
 

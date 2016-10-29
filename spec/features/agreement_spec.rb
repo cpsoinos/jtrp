@@ -286,15 +286,28 @@ feature "agreement" do
       allow(InventorySync).to receive(:new).and_return(syncer)
     end
 
-    scenario "there is legal verbiage around the clickwrap" do
+    scenario "token not present" do
       visit account_job_proposal_agreement_path(account, job, proposal, agreement)
+
+      expect(page).to have_content("You must be logged in to access this page!")
+    end
+
+    scenario "prior to introducing tokens" do
+      agreement.update_attribute("created_at", DateTime.parse("October 1, 2016"))
+      visit account_job_proposal_agreement_path(account, job, proposal, agreement)
+
+      expect(page).not_to have_content("You must be logged in to access this page!")
+    end
+
+    scenario "there is legal verbiage around the clickwrap" do
+      visit account_job_proposal_agreement_path(account, job, proposal, agreement, token: agreement.token)
 
       expect(page).to have_content("By checking the box below and accepting this agreement, you signify your acceptance of our terms. You will receive a copy of the executed agreement by email upon accepting.")
     end
 
     scenario "client agrees" do
       Timecop.freeze(Time.now)
-      visit account_job_proposal_agreement_path(account, job, proposal, agreement)
+      visit account_job_proposal_agreement_path(account, job, proposal, agreement, token: agreement.token)
       first('input[name="agreement[client_agreed]"]', visible: :false).set(true)
       click_button("I Accept")
       agreement.reload
@@ -310,7 +323,7 @@ feature "agreement" do
       agreement.update_attributes(client_agreed: true, client_agreed_at: 3.minutes.ago, date: 3.minutes.ago)
       agreement.mark_active
 
-      visit agreement_path(agreement)
+      visit agreement_path(agreement, token: agreement.token)
 
       expect(page).not_to have_button("Mark Items Active")
     end
