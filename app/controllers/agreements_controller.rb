@@ -15,6 +15,7 @@ class AgreementsController < ApplicationController
 
   def show
     @agreement = Agreement.find(params[:id])
+    require_token; return if performed?
     @proposal = @agreement.proposal
     @job = @proposal.job
     @account = @agreement.proposal.job.account
@@ -79,6 +80,14 @@ class AgreementsController < ApplicationController
 
   def pull_intentions
     @intentions = @proposal.items.pluck(:client_intention).uniq
+  end
+
+  private
+
+  def require_token
+    unless (params[:token] == @agreement.token) || (@agreement.created_at < DateTime.parse("October 29, 2016"))
+      require_internal
+    end
   end
 
 end

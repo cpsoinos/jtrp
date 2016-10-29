@@ -1,5 +1,6 @@
 class Agreement < ActiveRecord::Base
   audited associated_with: :proposal
+  has_secure_token
 
   include Filterable
 
@@ -83,7 +84,7 @@ class Agreement < ActiveRecord::Base
   end
 
   def object_url
-    Rails.application.routes.url_helpers.agreement_url(self, host: ENV['HOST'])
+    Rails.application.routes.url_helpers.agreement_url(self, token: token, host: ENV['HOST'])
   end
 
   def save_as_pdf
