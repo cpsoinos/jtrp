@@ -15,7 +15,7 @@ class StatementUpdater
   private
 
   def handle_payment
-    if attrs.delete(:status) == "1"
+    if attrs.delete(:status) == "paid"
       statement.pay
     end
   end

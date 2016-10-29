@@ -20,7 +20,7 @@
               <div class="form-group">
                 <div class="checkbox">
                   <%= f.label :status do %>
-                    <%= f.check_box :status, value: "paid" %> Paid
+                    <%= f.check_box :status, {}, "paid", "unpaid" %> Paid
                   <% end %>
                 </div>
               </div>
