@@ -26,7 +26,7 @@ class ProposalsController < ApplicationController
 
   def show
     @proposal = Proposal.find(params[:id])
-    require_token
+    require_token; return if performed?
     @client = @account.primary_contact
     @items = @proposal.items.order(:account_item_number)
     respond_to do |format|
@@ -91,7 +91,7 @@ class ProposalsController < ApplicationController
   private
 
   def require_token
-    unless params[:token] == @proposal.token
+    unless (params[:token] == @proposal.token) || (@proposal.created_at < DateTime.parse("October 29, 2016"))
       require_internal
     end
   end

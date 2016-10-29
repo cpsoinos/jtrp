@@ -292,6 +292,13 @@ feature "agreement" do
       expect(page).to have_content("You must be logged in to access this page!")
     end
 
+    scenario "prior to introducing tokens" do
+      agreement.update_attribute("created_at", DateTime.parse("October 1, 2016"))
+      visit account_job_proposal_agreement_path(account, job, proposal, agreement)
+
+      expect(page).not_to have_content("You must be logged in to access this page!")
+    end
+
     scenario "there is legal verbiage around the clickwrap" do
       visit account_job_proposal_agreement_path(account, job, proposal, agreement, token: agreement.token)
 
