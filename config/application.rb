@@ -43,5 +43,14 @@ module Jtrp
     config.active_record.raise_in_transactional_callbacks = true
     config.active_job.queue_adapter = :sidekiq
     config.react.addons = true
+
+    config.middleware.insert_before 0, "Rack::Cors" do
+      allow do
+        origins '*'
+        resource '/assets/*',
+          headers: :any,
+          methods: [:get]
+      end
+    end
   end
 end

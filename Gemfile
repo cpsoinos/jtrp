@@ -66,7 +66,7 @@ gem 'fullcontact'
 gem 'puma_worker_killer'
 gem 'friendly_id', '~> 5.1.0'
 gem 'audited', '~> 4.3'
-gem 'rack-cors'
+gem 'rack-cors', :require => 'rack/cors'
 gem 'where-or'
 
 group :production, :staging do
