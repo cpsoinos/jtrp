@@ -36,7 +36,7 @@ feature "home page" do
     let(:syncer) { double("syncer") }
 
     before do
-      sign_in user
+      sign_in(user)
       allow(InventorySync).to receive(:new).and_return(syncer)
       allow(syncer).to receive(:remote_create).and_return(true)
       allow(syncer).to receive(:remote_update).and_return(true)
@@ -70,6 +70,11 @@ feature "home page" do
     end
 
     context "to do list" do
+
+      before do
+        visit root_path
+      end
+
       it "has a to do list" do
         expect(page).to have_content("To Do")
         expect(page).to have_content(item.description)

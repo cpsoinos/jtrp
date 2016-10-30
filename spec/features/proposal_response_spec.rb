@@ -56,8 +56,31 @@ feature "proposal response" do
 
   context "client" do
 
-    scenario "sends a response to jtrp" do
+    scenario "token not present" do
       visit account_job_proposal_path(account, job, proposal)
+
+      expect(page).to have_content("You must be logged in to access this page!")
+    end
+
+    scenario "prior to introducing tokens" do
+      proposal.update_attribute("created_at", DateTime.parse("October 1, 2016"))
+      visit account_job_proposal_path(account, job, proposal)
+
+      expect(page).not_to have_content("You must be logged in to access this page!")
+    end
+
+    scenario "user chooses client intentions", js: true do
+      visit account_job_proposal_path(account, job, proposal, token: proposal.token)
+      items.each_with_index do |item, i|
+        find(:css, "#item_#{item.id}_client_intention_#{intentions[i]}", visible: false).trigger("click")
+        wait_for_ajax
+        item.reload
+        expect(item.client_intention).to eq(intentions[i])
+      end
+    end
+
+    scenario "sends a response to jtrp" do
+      visit account_job_proposal_path(account, job, proposal, token: proposal.token)
       fill_in("note", with: "this is a note")
       click_button("Send Email")
 

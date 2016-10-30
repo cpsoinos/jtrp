@@ -31,7 +31,7 @@
         <div id="to-do-list-statement-<%= todo.id %>">
           <div class="row list-group-item vertical-align">
             <div class="col-xs-4 text-center">
-              <%= link_to "<i class='material-icons' style='font-size: 120px;'>account_balance_wallet</i>".html_safe, account_statement_path(todo.account, todo) %>
+              <%= link_to "<i class='material-icons' style='font-size: 5em;'>account_balance_wallet</i>".html_safe, account_statement_path(todo.account, todo) %>
             </div>
             <div class="col-xs-6">
               <h4 class="list-group-item-heading"><%= todo.task[:name] %></h4>
