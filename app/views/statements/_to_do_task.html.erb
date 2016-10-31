@@ -17,25 +17,19 @@
             </div>
 
             <div class="col-xs-6 col-xs-offset-1">
-              <div class="form-group">
-                <div class="checkbox">
-                  <%= f.label :status do %>
-                    <%= f.check_box :status, {}, "paid", "unpaid" %> Paid
-                  <% end %>
-                </div>
-              </div>
               <div class="form-group label-floating">
                 <%= f.label :check_number, class: "control-label" %>
                 <div class="input-group">
                   <%= f.number_field :check_number, class: "form-control" %>
                 </div>
+                <%= f.hidden_field :status, value: "paid" %>
               </div>
             </div>
           </div>
 
         </div>
         <div class="modal-footer">
-          <%= f.submit class: "btn btn-raised btn-primary" %>
+          <%= f.submit "Pay", class: "btn btn-raised btn-primary" %>
         </div>
       </div><!-- /.modal-content -->
     <% end %>
