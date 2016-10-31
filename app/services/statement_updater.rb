@@ -8,16 +8,8 @@ class StatementUpdater
 
   def update(attrs)
     @attrs = attrs
-    handle_payment
+    statement.pay if attrs[:status] == "paid"
     statement.update(attrs)
-  end
-
-  private
-
-  def handle_payment
-    if attrs.delete(:status) == "paid"
-      statement.pay
-    end
   end
 
 end

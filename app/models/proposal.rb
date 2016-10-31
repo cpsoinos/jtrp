@@ -49,7 +49,7 @@ class Proposal < ActiveRecord::Base
   end
 
   def mark_job_active
-    job.mark_active!
+    job.mark_active! unless job.active?
   end
 
   def mark_job_complete
