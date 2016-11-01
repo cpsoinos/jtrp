@@ -21,7 +21,7 @@ class Statement < ActiveRecord::Base
   end
 
   def items
-    agreement.items.sold.where(sold_at: starting_date..ending_date).where.not("listed_at < ?", 90.days.ago).order(:sold_at)
+    agreement.items.sold.where(sold_at: starting_date..ending_date).order(:sold_at)
   end
 
   def total_sales
