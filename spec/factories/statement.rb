@@ -4,7 +4,7 @@ FactoryGirl.define do
 
   factory :statement do
     association :agreement, :consign, :active
-    date DateTime.now
+    date DateTime.parse("October 1, 2016")
 
     trait :paid do
       status "paid"
