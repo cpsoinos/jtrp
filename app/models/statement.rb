@@ -1,5 +1,6 @@
 class Statement < ActiveRecord::Base
   audited associated_with: :agreement
+  has_secure_token
 
   include Filterable
 
@@ -41,7 +42,7 @@ class Statement < ActiveRecord::Base
   end
 
   def object_url
-    Rails.application.routes.url_helpers.account_statement_url(account, self, host: ENV['HOST'])
+    Rails.application.routes.url_helpers.account_statement_url(account, self, token: token, host: ENV['HOST'])
   end
 
   def starting_date
