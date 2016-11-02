@@ -69,6 +69,7 @@ class Item < ActiveRecord::Base
     after_transition [:active, :inactive] => :sold, do: [:mark_agreement_inactive, :set_sold_at, :sync_inventory]
     after_transition any => :inactive, do: :sync_inventory
     after_transition any => :expired, do: :mark_agreement_inactive
+    after_transition sold: :active, do: [:clear_sale_data, :mark_agreement_active]
 
     event :mark_active do
       transition [:potential, :inactive] => :active, if: lambda { |item| item.meets_requirements_active? }
@@ -84,6 +85,10 @@ class Item < ActiveRecord::Base
 
     event :mark_expired do
       transition :active => :expired, if: lambda { |item| item.meets_requirements_expired? }
+    end
+
+    event :mark_not_sold do
+      transition :sold => :active
     end
 
   end
@@ -266,6 +271,19 @@ class Item < ActiveRecord::Base
 
   def record_original_description
     self.original_description ||= self.description
+  end
+
+  def clear_sale_data
+    cleared_attrs = {
+      sold_at: nil,
+      sale_price_cents: nil,
+      order: nil
+    }
+    ItemUpdater.new(self).update(cleared_attrs)
+  end
+
+  def mark_agreement_active
+    agreement.mark_active!
   end
 
 end

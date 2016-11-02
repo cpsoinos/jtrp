@@ -37,7 +37,7 @@ class Agreement < ActiveRecord::Base
     after_transition active: :inactive, do: :mark_proposal_inactive
 
     event :mark_active do
-      transition potential: :active, if: lambda { |agreement| agreement.meets_requirements_active? }
+      transition [:potential, :inactive] => :active, if: lambda { |agreement| agreement.meets_requirements_active? }
     end
 
     event :mark_inactive do
