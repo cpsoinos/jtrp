@@ -56,6 +56,10 @@ class ItemUpdater
 
   def process_sold_at
     attrs[:sold_at] ||= DateTime.now
+    attrs[:sold_at] = DateTime.parse(attrs[:sold_at].to_s)
+    if attrs[:sold_at] < 2000.years.ago
+      attrs[:sold_at] = 2000.years.since(attrs[:sold_at])
+    end
   end
 
   def format_date
