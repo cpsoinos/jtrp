@@ -9,7 +9,7 @@ class StatementJob < ActiveJob::Base
 
   def agreements
     @_agreements ||= begin
-      Item.sold.where(client_intention: "consign", sold_at: DateTime.now.last_month.beginning_of_month..DateTime.now.last_month.end_of_month).map(&:agreement).uniq
+      Item.sold.where(client_intention: "consign", sold_at: sale_date_range).map(&:agreement).uniq
     end
   end
 
@@ -25,6 +25,10 @@ class StatementJob < ActiveJob::Base
 
   def save_as_pdf(statement)
     PdfGenerator.new(statement).render_pdf
+  end
+
+  def sale_date_range
+    DateTime.now.last_month.beginning_of_month..DateTime.now.last_month.end_of_month
   end
 
 end

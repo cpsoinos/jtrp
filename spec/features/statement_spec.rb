@@ -81,7 +81,6 @@ feature "statement" do
     end
 
     scenario "tries to arrive at a statement page" do
-      pending("authorization tokens in links for clients")
       visit account_statement_path(agreement.account, statement)
 
       expect(page).to have_content("You must be logged in to access this page!")
@@ -104,7 +103,6 @@ feature "statement" do
     end
 
     scenario "tries to arrive at a statement page" do
-      pending("authorization tokens in links for clients")
       visit account_statement_path(agreement.account, statement)
 
       expect(page).to have_content("Sorry, you don't have permission to access this page!")
