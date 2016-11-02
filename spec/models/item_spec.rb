@@ -152,6 +152,13 @@ describe Item do
       expect(syncer).to have_received(:remote_destroy)
     end
 
+    it "transitions 'sold' to 'active'" do
+      item = create(:item, :sold)
+      item.mark_not_sold
+
+      expect(item).to be_active
+    end
+
     it "sets listed_at" do
       now = DateTime.now
       proposal = create(:proposal, :active)

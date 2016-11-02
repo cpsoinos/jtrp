@@ -3,12 +3,12 @@ class StatementsController < ApplicationController
   before_filter :require_internal, except: :show
 
   def index
-    require_internal
     @statements = @account.statements
   end
 
   def show
     @statement = Statement.find(params[:id])
+    require_token; return if performed?
     @client = @account.client
   end
 
@@ -33,6 +33,12 @@ class StatementsController < ApplicationController
 
   def statement_params
     params.require(:statement).permit(:status, :check_number)
+  end
+
+  def require_token
+    unless (params[:token] == @statement.token) || (@statement.created_at < DateTime.parse("October 29, 2016"))
+      require_internal
+    end
   end
 
 end

@@ -165,6 +165,20 @@ feature "item show" do
         expect(page).to have_content("Sold for $11.11 on 10/10/16")
         Timecop.return
       end
+
+      scenario "marks item as not sold" do
+        allow(InventorySyncJob).to receive(:perform_later)
+        visit account_job_proposal_item_path(account, job, proposal, item)
+        click_link("Mark Not Sold")
+        item.reload
+
+        expect(page).to have_content("Item marked as not sold.")
+        expect(item).to be_active
+        expect(item.agreement).to be_active
+        expect(item.sale_price_cents).to be(nil)
+        expect(item.sold_at).to be(nil)
+        expect(item.order).to be(nil)
+      end
     end
 
   end

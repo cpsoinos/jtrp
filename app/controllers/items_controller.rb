@@ -115,6 +115,15 @@ class ItemsController < ApplicationController
     end
   end
 
+  def mark_not_sold
+    @item = Item.find(params[:item_id])
+    if @item.mark_not_sold
+      redirect_to :back, notice: "Item marked as not sold."
+    else
+      redirect_to :back, alert: "Could not mark item as not sold."
+    end
+  end
+
   def destroy
     @item = Item.find(params[:id])
     filter = @item.status
