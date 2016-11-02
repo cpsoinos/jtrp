@@ -77,7 +77,9 @@
                 <% end %>
               </li>
             </ul>
-            <% unless @item.sold? %>
+            <% if @item.sold? %>
+              <%= link_to "Mark Not Sold <i class='material-icons'>replay</i>".html_safe, item_mark_not_sold_path(@item), class: "btn btn-warning btn-raised btn-round", method: :post %>
+            <% else %>
               <button type="button" class="btn btn-raised btn-primary btn-round" data-toggle="modal" data-target="#mark-sold-modal" data-item-id="<%= @item.id %>" data-item-description="<%= @item.description %>">
                 Mark as Sold <i class='material-icons'>done</i>
               </button>
