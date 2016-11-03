@@ -17,7 +17,10 @@
               <table>
                 <tr class="text-center">
                   <th colspan="3">
-                    <h4><%= link_to "Item No. #{item.account_item_number}: #{item.original_description}" %></h4>
+                    <h4><%= link_to "Item No. #{item.account_item_number}: #{item.description.titleize}", item_path(item) %></h4>
+                    <% if item.child? %>
+                      <p>from batch: <%= link_to "Item No. #{item.parent_item.account_item_number}: #{item.parent_item.original_description}", item_path(item.parent_item) %></p>
+                    <% end %>
                   </th>
                 </tr>
                 <td>
