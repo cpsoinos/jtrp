@@ -44,7 +44,7 @@ class Account < ActiveRecord::Base
     after_transition potential: :inactive, do: :deactivate_items
 
     event :mark_active do
-      transition potential: :active, if: lambda { |account| account.meets_requirements_active? }
+      transition [:potential, :inactive] => :active, if: lambda { |account| account.meets_requirements_active? }
     end
 
     event :mark_inactive do
