@@ -30,7 +30,7 @@ class PdfGenerator
 
       create_response = $docraptor.create_async_doc(
         test:             (Rails.env == 'production' ? false : true),
-        document_url:     "#{object.object_url}?print=true",
+        document_url:     "#{object.object_url}&print=true",
         name:             "#{account.full_name}_#{object.class.name}_#{object.id}.pdf",
         document_type:    "pdf",
         javascript:       true
