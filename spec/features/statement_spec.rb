@@ -2,9 +2,11 @@ feature "statement" do
 
   let(:user) { create(:internal_user) }
 
-  let!(:agreement) { create(:agreement, :active, :consign) }
+  let(:account) { create(:account, :active, :with_client) }
+  let(:proposal) { create(:proposal, :active, job: create(:job, :active, account: account)) }
+  let!(:agreement) { create(:agreement, :active, :consign, proposal: proposal) }
   let!(:items) { create_list(:item, 5, :sold, sale_price_cents: 5000, client_intention: 'consign', proposal: agreement.proposal) }
-  let!(:statement) { create(:statement, account: agreement.account) }
+  let!(:statement) { create(:statement, account: account) }
 
   context "internal user" do
 
@@ -28,14 +30,13 @@ feature "statement" do
       click_link("View Statements")
 
       expect(page).to have_content("Statements")
-      expect(page).to have_content("for #{agreement.account.full_name}")
+      expect(page).to have_content("for #{statement.account.full_name}")
       expect(page).to have_content("Unpaid")
       expect(page).to have_content("Paid")
       expect(page).to have_content("Date")
       expect(page).to have_content("September, 2016")
-      expect(page).to have_content("Agreement No.")
-      expect(page).to have_content(agreement.id)
-      expect(page).to have_link(agreement.id)
+      expect(page).to have_content("Account No.")
+      expect(page).to have_link(account.id)
       expect(page).to have_content("Balance")
       expect(page).to have_content(ActionController::Base.helpers.humanized_money_with_symbol(statement.amount_due_to_client))
       expect(page).to have_content("Paid?")
