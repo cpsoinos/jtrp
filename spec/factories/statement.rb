@@ -3,7 +3,7 @@ require 'factory_girl'
 FactoryGirl.define do
 
   factory :statement do
-    association :agreement, :consign, :active
+    association :account
     date DateTime.parse("October 1, 2016")
 
     trait :paid do

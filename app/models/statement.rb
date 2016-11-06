@@ -22,7 +22,7 @@ class Statement < ActiveRecord::Base
   end
 
   def items
-    agreement.items.sold.where(sold_at: starting_date..ending_date).order(:sold_at)
+    account.items.sold.where(client_intention: "consign", sold_at: starting_date..ending_date).order(:sold_at)
   end
 
   def total_sales

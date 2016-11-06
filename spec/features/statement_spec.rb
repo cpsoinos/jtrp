@@ -4,7 +4,7 @@ feature "statement" do
 
   let!(:agreement) { create(:agreement, :active, :consign) }
   let!(:items) { create_list(:item, 5, :sold, sale_price_cents: 5000, client_intention: 'consign', proposal: agreement.proposal) }
-  let!(:statement) { create(:statement, agreement: agreement) }
+  let!(:statement) { create(:statement, account: agreement.account) }
 
   context "internal user" do
 
@@ -49,7 +49,7 @@ feature "statement" do
 
       expect(page).to have_content("Consignment Sales")
       expect(page).to have_content("September, 2016")
-      expect(page).to have_content("Account # #{statement.account.id}")
+      expect(page).to have_content("Account # #{statement.account_id}")
       statement.items.each do |item|
         expect(page).to have_link("Item No. #{item.account_item_number}: #{item.original_description}")
         expect(page).to have_content("Starting Asking Price: #{ActionController::Base.helpers.humanized_money_with_symbol(item.listing_price)}")
