@@ -23,6 +23,12 @@ describe User do
     expect(user.full_name).to eq("Fred LeChat")
   end
 
+  it "inverse_full_name" do
+    user = create(:user, first_name: "Fred", last_name: "LeChat")
+
+    expect(user.inverse_full_name).to eq("LeChat, Fred")
+  end
+
   describe "scopes" do
 
     before do
