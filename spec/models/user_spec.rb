@@ -26,7 +26,7 @@ describe User do
   it "inverse_full_name" do
     user = create(:user, first_name: "Fred", last_name: "LeChat")
 
-    expect(user.full_name).to eq("LeChat, Fred")
+    expect(user.inverse_full_name).to eq("LeChat, Fred")
   end
 
   describe "scopes" do

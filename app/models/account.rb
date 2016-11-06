@@ -72,6 +72,18 @@ class Account < ActiveRecord::Base
   end
 
   def full_name
+    Rails.cache.fetch("#{cache_key}/full_name") do
+      if company_name.present?
+        company_name
+      elsif primary_contact.present?
+        primary_contact.full_name
+      else
+        "No Name Provided"
+      end
+    end
+  end
+
+  def inverse_full_name
     Rails.cache.fetch("#{cache_key}/inverse_full_name") do
       if company_name.present?
         company_name
