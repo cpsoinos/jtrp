@@ -2,7 +2,7 @@ class AccountsController < ApplicationController
   before_filter :require_internal
 
   def index
-    @accounts = Account.includes(:primary_contact).all
+    @accounts = Account.includes(:primary_contact).order("users.last_name")
   end
 
   def show
