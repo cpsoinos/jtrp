@@ -7,7 +7,6 @@ class Statement < ActiveRecord::Base
   belongs_to :account, touch: true
   belongs_to :agreement, touch: true
   has_one :statement_pdf
-  has_one :account, through: :agreement
 
   scope :status, -> (status) { where(status: status) }
   scope :unpaid, -> { where(status: "unpaid") }
