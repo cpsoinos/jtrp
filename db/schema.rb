@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161101235320) do
+ActiveRecord::Schema.define(version: 20161103234824) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -309,8 +309,10 @@ ActiveRecord::Schema.define(version: 20161101235320) do
     t.integer  "check_number"
     t.string   "status"
     t.string   "token"
+    t.integer  "account_id"
   end
 
+  add_index "statements", ["account_id"], name: "index_statements_on_account_id", using: :btree
   add_index "statements", ["agreement_id"], name: "index_statements_on_agreement_id", using: :btree
 
   create_table "system_infos", force: :cascade do |t|
@@ -381,6 +383,7 @@ ActiveRecord::Schema.define(version: 20161101235320) do
   add_foreign_key "photos", "proposals"
   add_foreign_key "scanned_agreements", "agreements"
   add_foreign_key "statement_pdfs", "statements"
+  add_foreign_key "statements", "accounts"
   add_foreign_key "statements", "agreements"
   add_foreign_key "users", "accounts"
 end

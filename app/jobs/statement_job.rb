@@ -7,15 +7,15 @@ class StatementJob < ActiveJob::Base
 
   private
 
-  def agreements
-    @_agreements ||= begin
-      Item.sold.where(client_intention: "consign", sold_at: sale_date_range).map(&:agreement).uniq
+  def accounts
+    @_accounts ||= begin
+      Item.sold.where(client_intention: "consign", sold_at: sale_date_range).map(&:account).uniq
     end
   end
 
   def generate_statements
-    agreements.each do |agreement|
-      statement = StatementCreator.new(agreement).create
+    accounts.each do |account|
+      statement = StatementCreator.new(account).create
       if statement.amount_due_to_client == 0
         statement.pay
       end
