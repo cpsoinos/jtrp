@@ -12,7 +12,7 @@ describe DailySummaryEmailJob do
   it "perform" do
     DailySummaryEmailJob.perform_later
 
-    expect(Notifier).to have_received(:send_daily_summary_email).with(Company.jtrp.team_email)
+    expect(Notifier).to have_received(:send_daily_summary_email).with(Company.jtrp.primary_contact)
     expect(notifier).to have_received(:deliver_now)
   end
 
