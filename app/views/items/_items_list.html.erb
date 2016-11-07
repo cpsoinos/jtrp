@@ -53,7 +53,7 @@
                 </td>
               <% end %>
 
-              <% if current_user.try(:internal?) %>
+              <% if current_user.try(:internal?) && controller_name != 'mailer' %>
                 <td class="td-actions text-center">
                   <%= link_to "<i class='material-icons'>edit</i>".html_safe, edit_account_job_proposal_item_url(item.account, item.job, item.proposal, item, redirect_url: request.try(:original_url)), class: "btn btn-fab btn-fab-mini btn-primary hidden-print" %>
                   <% if item.active? %>
