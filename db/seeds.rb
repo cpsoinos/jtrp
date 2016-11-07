@@ -20,7 +20,7 @@ def create_company
     agent_service_rate_schedule:
     "<h1><b>Service Rate Schedule for Agents</b></h1>\r\n<p><br></p>\r\n<ul>\r\n<li>for home stagers, realtors, and brokers</li>\r\n<li><b>box truck</b></li>\r\n<ul>\r\n<li>includes gasoline, truck insurance, and moving equipment</li>\r\n<li>$50.00 + $1.00 per mile</li>\r\n<li>our movers must drive the truck</li>\r\n</ul>\r\n<li><b>movers</b></li>\r\n<ul>\r\n<li>$40.00 per mover per hour (2 hour minimum)</li>\r\n<li>each mover’s time is calculated from the time he leaves the store until the time he arrives back to the store, and is rounded to the nearest 15 minute increment</li>\r\n</ul>\r\n</ul>",
     email: "cpsoinos@mac.com",
-    primary_contact_id: nil
+    primary_contact_id: nil,
     team_email: "example_team_email@example.com"
   )
 end
