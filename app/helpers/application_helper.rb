@@ -57,11 +57,11 @@ module ApplicationHelper
 
   def summary_values(item)
     {
-      "SKU" => item.id,
+      "SKU"     => item.id,
       "Account" => (item.client_intention == "consign" ? item.account.short_name : "JTRP"),
-      "Amount" => "#{humanized_money_with_symbol(item.listing_price)}<br>
-                  <i>#{item.discounts.present? ? humanized_money_with_symbol(item.discounts.first.amount) : ''}</i><br>
-                  <b>#{humanized_money_with_symbol(item.sale_price)}</b>".html_safe
+      "Amount"  => "#{humanized_money_with_symbol(item.listing_price)}<br>
+                   <i>#{item.discounts.present? ? humanized_money_with_symbol(item.discounts.first.amount) : ''}</i><br>
+                   <b>#{humanized_money_with_symbol(item.sale_price)}</b>".html_safe
     }
   end
 

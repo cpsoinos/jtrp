@@ -1,6 +1,6 @@
 <div class="row">
 
-  <% if current_user.try(:internal?) %>
+  <% if current_user.try(:internal?) && !controller_name == 'mailer' %>
     <div class="text-right">
       <%= link_to "Print Labels", labels_items_url(by_id: items.map(&:id)), class: "btn btn-info btn-raised btn-round", target: "blank" %>
     </div>
@@ -30,7 +30,7 @@
               </td>
               <td class="td-name">
                 <%= link_to (controller_name == "agreements" ? item.original_description.titleize : item.description.titleize), item_url(item) %>
-                <% if current_user.try(:internal?) && (controller_name != "jobs" && controller_name != "agreements") %>
+                <% if current_user.try(:internal?) && !controller_name.in?(["jobs", "agreements", "mailer"]) %>
                   <br><small>from: <%= link_to item.account.full_name, account_url(item.account) %></small>
                   <br><small>SKU: <%= item.id %></small>
                 <% end %>
