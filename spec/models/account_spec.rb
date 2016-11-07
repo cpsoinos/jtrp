@@ -65,6 +65,12 @@ describe Account do
       expect(account.full_name).to eq(account.primary_contact.full_name)
     end
 
+    it "inverse_full_name" do
+      account = create(:account, :with_client)
+
+      expect(account.inverse_full_name).to eq(account.primary_contact.inverse_full_name)
+    end
+
     it "short_name" do
       account = create(:account, :with_client)
 

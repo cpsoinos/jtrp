@@ -20,7 +20,7 @@ class Account < ActiveRecord::Base
   has_many :proposals, through: :jobs
   has_many :items, through: :proposals
   has_many :agreements, through: :proposals
-  has_many :statements, through: :agreements
+  has_many :statements
   belongs_to :created_by, class_name: "InternalUser", foreign_key: "created_by_id"
   belongs_to :updated_by, class_name: "InternalUser", foreign_key: "updated_by_id"
 
@@ -44,7 +44,7 @@ class Account < ActiveRecord::Base
     after_transition potential: :inactive, do: :deactivate_items
 
     event :mark_active do
-      transition potential: :active, if: lambda { |account| account.meets_requirements_active? }
+      transition [:potential, :inactive] => :active, if: lambda { |account| account.meets_requirements_active? }
     end
 
     event :mark_inactive do
@@ -77,6 +77,18 @@ class Account < ActiveRecord::Base
         company_name
       elsif primary_contact.present?
         primary_contact.full_name
+      else
+        "No Name Provided"
+      end
+    end
+  end
+
+  def inverse_full_name
+    Rails.cache.fetch("#{cache_key}/inverse_full_name") do
+      if company_name.present?
+        company_name
+      elsif primary_contact.present?
+        primary_contact.inverse_full_name
       else
         "No Name Provided"
       end

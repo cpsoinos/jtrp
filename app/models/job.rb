@@ -30,12 +30,13 @@ class Job < ActiveRecord::Base
     state :potential
     state :active
     state :completed
+    state :inactive
 
-    after_transition potential: :active, do: :mark_account_active
+    after_transition [:potential, :inactive] => :active, do: :mark_account_active
     after_transition active: :completed, do: :mark_account_inactive
 
     event :mark_active do
-      transition potential: :active, if: lambda { |job| job.meets_requirements_active? }
+      transition [:potential, :inactive] => :active, if: lambda { |job| job.meets_requirements_active? }
     end
 
     event :mark_completed do

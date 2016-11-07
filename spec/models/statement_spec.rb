@@ -2,6 +2,7 @@ describe Statement do
 
   it { should be_audited.associated_with(:agreement) }
   it { should belong_to(:agreement) }
+  it { should belong_to(:account) }
 
   describe "state machine" do
 
@@ -23,7 +24,7 @@ describe Statement do
     let(:items) { create_list(:item, 5, :sold, sale_price_cents: 5000, client_intention: 'consign', proposal: agreement.proposal) }
     let(:older_item) { create(:item, :sold, sale_price_cents: 7000, client_intention: 'consign', proposal: agreement.proposal, sold_at: 45.days.ago) }
     let(:expired_item) { create(:item, :sold, proposal: agreement.proposal, listed_at: 91.days.ago) }
-    let(:statement) { create(:statement, agreement: agreement) }
+    let(:statement) { create(:statement, account: agreement.account) }
 
     before do
       Timecop.freeze("October 1, 2016")

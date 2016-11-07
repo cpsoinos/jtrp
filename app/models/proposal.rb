@@ -22,7 +22,7 @@ class Proposal < ActiveRecord::Base
     state :active
     state :inactive
 
-    after_transition potential: :active, do: :mark_job_active
+    after_transition [:potential, :inactive] => :active, do: :mark_job_active
     after_transition active: :inactive, do: :mark_job_complete
 
     event :mark_active do

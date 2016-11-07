@@ -63,6 +63,10 @@ class User < ActiveRecord::Base
     "#{first_name} #{last_name}"
   end
 
+  def inverse_full_name
+    "#{last_name}, #{first_name}"
+  end
+
   def full_address
     "#{address_1}#{address_2.present? ? (', ' + address_2) : ''}, #{city}, #{state} #{zip}"
   end

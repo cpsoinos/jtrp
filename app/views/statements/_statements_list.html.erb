@@ -6,7 +6,7 @@
         <tr>
           <th class="text-center"></th>
           <th class="text-center">Date</th>
-          <th class="text-center">Agreement No.</th>
+          <th class="text-center">Account No.</th>
           <th class="text-center">Balance</th>
           <th class="text-center">Paid?</th>
           <th></th>
@@ -22,7 +22,7 @@
               <%= statement.date.last_month.strftime("%B, %Y") %>
             </td>
             <td class="text-center">
-              <%= link_to statement.agreement_id, agreement_path(statement.agreement) %>
+              <%= link_to statement.account_id, account_path(statement.account) %>
             </td>
             <td class="text-center">
               <%= humanized_money_with_symbol(statement.amount_due_to_client) %>

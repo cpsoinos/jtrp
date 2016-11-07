@@ -10,6 +10,6 @@ class Notifier < ApplicationMailer
     @company = Company.jtrp
     @user = user
     @orders = Order.where(created_at: DateTime.now.beginning_of_day..DateTime.now)
-    mail(to: @user.email, subject: 'Daily Sales Summary')
+    mail(to: @company.team_email, subject: 'Daily Sales Summary')
   end
 end
