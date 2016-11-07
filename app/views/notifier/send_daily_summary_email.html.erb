@@ -20,7 +20,7 @@
       </div>
 
       <% if order.items.present? %>
-        <%= render 'items/items_list', current_user: @user, headers: summary_headers, context: "summary", items: order.items %>
+        <%= render 'items/items_list', current_user: @user, controller_name: 'mailer', headers: summary_headers, context: "summary", items: order.items %>
       <% else %>
         <p class="large-top-margin text-center"><i>Item(s) processed outside of inventory</i></p>
       <% end %>
