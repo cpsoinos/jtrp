@@ -1,6 +1,6 @@
 <div class="row">
 
-  <% if current_user.try(:internal?) %>
+  <% if current_user.try(:internal?) && !controller_name == 'mailer' %>
     <div class="text-right">
       <%= link_to "Print Labels", labels_items_url(by_id: items.map(&:id)), class: "btn btn-info btn-raised btn-round", target: "blank" %>
     </div>
@@ -30,7 +30,7 @@
               </td>
               <td class="td-name">
                 <%= link_to (controller_name == "agreements" ? item.original_description.titleize : item.description.titleize), item_url(item) %>
-                <% if current_user.try(:internal?) && (controller_name != "jobs" && controller_name != "agreements") %>
+                <% if current_user.try(:internal?) && !controller_name.in?(["jobs", "agreements", "mailer"]) %>
                   <br><small>from: <%= link_to item.account.full_name, account_url(item.account) %></small>
                   <br><small>SKU: <%= item.id %></small>
                 <% end %>
@@ -53,7 +53,7 @@
                 </td>
               <% end %>
 
-              <% if current_user.try(:internal?) %>
+              <% if current_user.try(:internal?) && controller_name != 'mailer' %>
                 <td class="td-actions text-center">
                   <%= link_to "<i class='material-icons'>edit</i>".html_safe, edit_account_job_proposal_item_url(item.account, item.job, item.proposal, item, redirect_url: request.try(:original_url)), class: "btn btn-fab btn-fab-mini btn-primary hidden-print" %>
                   <% if item.active? %>
