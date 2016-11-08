@@ -76,6 +76,7 @@ class ApplicationController < ActionController::Base
   def meta_tags
     @meta_tags = {
       site: "Just the Right Piece",
+      description: "<%= @company.slogan %>. Find just the right piece of second-hand furniture at our consignment store, located at <%= @company.address_1 %> in <%= @company.city %>, <%= @company.state %>. Find used furniture or accessories for any room in your house: bedroom, dining room, living room, kitchen, and more. Downsizing? Sell or consign with us!",
       og: og_meta_tags,
       twitter: twitter_meta_tags,
       fb: facebook_meta_tags,
