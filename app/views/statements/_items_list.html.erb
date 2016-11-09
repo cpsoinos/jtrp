@@ -69,7 +69,7 @@
                     </tr>
                     <tr>
                       <th class="statement-data">Due to Consignor:</td>
-                      <th class="statement-data text-right"><%= humanized_money_with_symbol((item.sale_price - (item.sale_price * (item.consignment_rate))) / 100) %></td>
+                      <th class="statement-data text-right"><%= humanized_money_with_symbol(item.amount_due_to_client) %></td>
                     </tr>
                   </table>
                 </td>
