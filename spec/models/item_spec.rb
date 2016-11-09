@@ -83,8 +83,8 @@ describe Item do
       end
 
       it "calculates the correct amount due to client when consignment rate not standard" do
-        item = build_stubbed(:item, :sold, client_intention: 'consign', sale_price_cents: 1000, consignment_rate: 0.75)
-        expect(item.amount_due_to_client).to eq(Money.new(750))
+        item = build_stubbed(:item, :sold, client_intention: 'consign', sale_price_cents: 1000, consignment_rate: 75)
+        expect(item.amount_due_to_client).to eq(Money.new(250))
       end
 
       it "calculates the correct amount due to client when consignment rate 0" do
