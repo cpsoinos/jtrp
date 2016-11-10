@@ -1,6 +1,8 @@
 class Notifier < ApplicationMailer
   helper :application
   include SendGrid
+  self.asset_host = nil
+  include Roadie::Rails::Mailer
 
   default from: 'notifications@jtrpfurniture.com'
   sendgrid_category :use_subject_lines
@@ -14,7 +16,7 @@ class Notifier < ApplicationMailer
     @orders = orders(timeframe)
     recipient ||= default_recipient
 
-    mail(to: recipient, subject: 'Daily Sales Summary')
+    roadie_mail(to: recipient, subject: 'Daily Sales Summary', asset_providers: [Roadie::FilesystemProvider.new(Rails.application.root.join("app", "assets", "stylesheets"))])
   end
 
   private
