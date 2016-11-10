@@ -28,7 +28,7 @@ class Notifier < ApplicationMailer
   end
 
   def orders(timeframe)
-    Order.where(created_at: DateTime.now.beginning_of_day..DateTime.now)
+    Order.where(created_at: timeframe)
   end
 
   def default_recipient
