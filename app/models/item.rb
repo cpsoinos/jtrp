@@ -201,6 +201,11 @@ class Item < ActiveRecord::Base
     end
   end
 
+  def amount_due_to_client
+    return unless sold? && client_intention == "consign"
+    Money.new((sale_price_cents * (100 - consignment_rate)) / 100)
+  end
+
   def panel_color
     if owned?
       "complement-primary"

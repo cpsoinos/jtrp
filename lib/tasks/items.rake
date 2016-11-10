@@ -54,4 +54,94 @@ namespace :items do
     puts "created async jobs to sync all #{count} items"
   end
 
+  task :backfill_maher_sold_items => :environment do |task|
+
+    proposal = Proposal.find(23)
+
+    item_attrs = [
+      {
+        description: "Egyptian head wall plaque",
+        listing_price_cents: 1000,
+        minimum_sale_price_cents: 1000,
+        consignment_rate: 0,
+        listed_at: DateTime.parse("May 7, 2016"),
+        sold_at: DateTime.parse("September 2, 2016"),
+        sale_price_cents: 1000,
+        client_intention: "consign",
+        status: "sold"
+      },
+      {
+        description: "Tan chair",
+        listing_price_cents: 5000,
+        minimum_sale_price_cents: 5000,
+        consignment_rate: 0,
+        listed_at: DateTime.parse("July 15, 2016"),
+        sold_at: DateTime.parse("September 3, 2016"),
+        sale_price_cents: 5000,
+        client_intention: "consign",
+        status: "sold"
+      },
+      {
+        description: "Floral picture with green matting",
+        listing_price_cents: 1300,
+        minimum_sale_price_cents: 1300,
+        consignment_rate: 0,
+        listed_at: DateTime.parse("July 15, 2016"),
+        sold_at: DateTime.parse("September 16, 2016"),
+        sale_price_cents: 1300,
+        client_intention: "consign",
+        status: "sold"
+      },
+      {
+        description: "Brass and wood half-moon shelf",
+        listing_price_cents: 800,
+        minimum_sale_price_cents: 800,
+        consignment_rate: 0,
+        listed_at: DateTime.parse("July 15, 2016"),
+        sold_at: DateTime.parse("September 18, 2016"),
+        sale_price_cents: 800,
+        client_intention: "consign",
+        status: "sold"
+      },
+      {
+        description: "large wood framed mirror",
+        listing_price_cents: 15000,
+        minimum_sale_price_cents: 15000,
+        consignment_rate: 0,
+        listed_at: DateTime.parse("July 15, 2016"),
+        sold_at: DateTime.parse("September 21, 2016"),
+        sale_price_cents: 15000,
+        client_intention: "consign",
+        status: "sold"
+      },
+      {
+        description: "privacy screen",
+        listing_price_cents: 6000,
+        minimum_sale_price_cents: 6000,
+        consignment_rate: 0,
+        listed_at: DateTime.parse("September 29, 2016"),
+        sold_at: DateTime.parse("September 30, 2016"),
+        sale_price_cents: 6000,
+        client_intention: "consign",
+        status: "sold"
+      },
+      {
+        description: "Terra cotta bird sculpture",
+        listing_price_cents: 700,
+        minimum_sale_price_cents: 700,
+        consignment_rate: 0,
+        listed_at: DateTime.parse("September 29, 2016"),
+        sold_at: DateTime.parse("September 30, 2016"),
+        sale_price_cents: 700,
+        client_intention: "consign",
+        status: "sold"
+      }
+    ]
+
+    item_attrs.each do |item|
+      proposal.items.create(item)
+    end
+
+  end
+
 end

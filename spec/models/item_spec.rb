@@ -65,6 +65,34 @@ describe Item do
       expect(Item.for_sale.count).to eq(7)
     end
 
+    context "amount due to client" do
+
+      it "returns nil when item not sold" do
+        item = build_stubbed(:item)
+        expect(item.amount_due_to_client).to eq(nil)
+      end
+
+      it "returns nil when client intention not 'consign'" do
+        item = build_stubbed(:item, :sold, client_intention: 'sell')
+        expect(item.amount_due_to_client).to eq(nil)
+      end
+
+      it "calculates the correct amount due to client" do
+        item = build_stubbed(:item, :sold, client_intention: 'consign', sale_price_cents: 1000)
+        expect(item.amount_due_to_client).to eq(Money.new(500))
+      end
+
+      it "calculates the correct amount due to client when consignment rate not standard" do
+        item = build_stubbed(:item, :sold, client_intention: 'consign', sale_price_cents: 1000, consignment_rate: 75)
+        expect(item.amount_due_to_client).to eq(Money.new(250))
+      end
+
+      it "calculates the correct amount due to client when consignment rate 0" do
+        item = build_stubbed(:item, :sold, client_intention: 'consign', sale_price_cents: 1000, consignment_rate: 0)
+        expect(item.amount_due_to_client).to eq(Money.new(1000))
+      end
+    end
+
   end
 
   describe Item, "state_machine" do
