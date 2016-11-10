@@ -41,7 +41,7 @@ module ApplicationHelper
         "Consignment Rate"          =>  (item.consigned? ? "#{item.consignment_rate}%" : "N/A"),
         "Listing Price"             =>  humanized_money_with_symbol(item.listing_price),
         "Min. Sale Price"           =>  humanized_money_with_symbol(item.minimum_sale_price),
-        "Sale Date"                 =>  ((item.sold? && item.sold_at.present?) ? "<h4>#{item.sold_at.in_time_zone('Eastern Time (US & Canada)').strftime('%-m/%-d/%y')}</h4>".html_safe : ""),
+        "Sale Date"                 =>  ((item.sold? && item.sold_at.present?) ? "<h4>#{item.sold_at.strftime('%-m/%-d/%y')}</h4>".html_safe : ""),
         "Sale Price"                =>  (item.sold? ? "<h4>#{humanized_money_with_symbol(item.sale_price)}</h4>".html_safe : ""),
       }
     else
