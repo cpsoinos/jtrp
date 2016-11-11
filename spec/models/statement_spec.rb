@@ -57,25 +57,25 @@ describe Statement do
     end
 
     it "calculates the total consignment fee" do
-      expect(statement.total_consignment_fee).to eq(125)
+      expect(statement.total_consignment_fee).to eq(Money.new(12500))
     end
 
     it "calculates the amount due to client" do
-      expect(statement.amount_due_to_client).to eq(125)
+      expect(statement.amount_due_to_client).to eq(Money.new(12500))
     end
 
     it "calculates the total consignment fee when consignment rates aren't consistent" do
       items.last.update_attribute("consignment_rate", 65)
-      expect(statement.total_consignment_fee).to eq(132.5)
+      expect(statement.total_consignment_fee).to eq(Money.new(13250))
     end
 
     it "calculates the total amount due to client when consignment rates aren't consistent" do
       items.last.update_attribute("consignment_rate", 65)
-      expect(statement.amount_due_to_client).to eq(117.5)
+      expect(statement.amount_due_to_client).to eq(Money.new(11750))
     end
 
     it "calculates the total sales for the month" do
-      expect(statement.total_sales).to eq(250)
+      expect(statement.total_sales).to eq(Money.new(25000))
     end
 
   end
