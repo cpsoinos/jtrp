@@ -26,19 +26,17 @@ class Statement < ActiveRecord::Base
   end
 
   def total_sales
-    items.map do |item|
-      (item.sale_price_cents / 100)
-    end.sum
+    Money.new(items.sum(:sale_price_cents))
   end
 
   def total_consignment_fee
     items.map do |item|
-      (item.sale_price_cents / 100 * item.consignment_rate) / 100
+      Money.new(item.sale_price * (item.consignment_rate / 100))
     end.sum
   end
 
   def amount_due_to_client
-    items.sum(:sale_price_cents) / 100 - total_consignment_fee
+    Money.new(items.sum(:sale_price_cents)) - total_consignment_fee
   end
 
   def object_url
