@@ -43,5 +43,7 @@
 //= require image-picker
 //= require jquery.tablesorter.min
 //= require facebook_sdk
+//= require twitter_sdk
+//= require google_plus_sdk
 //= require_tree .
 //= require turbolinks
