@@ -54,7 +54,7 @@ class Job < ActiveRecord::Base
 
   def mark_account_active
     if !account.active?
-      account.mark_active!
+      account.mark_active
     end
   end
 
