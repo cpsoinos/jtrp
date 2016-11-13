@@ -85,22 +85,31 @@ class ApplicationController < ActionController::Base
   end
 
   def og_meta_tags
-    return unless @item.present?
-    {
-      title:       "Found at #{@company.name}",
-      description: "#{@item.description.titleize} - #{ActionController::Base.helpers.humanized_money_with_symbol(@item.listing_price)}",
-      type:        'product',
-      url:         item_url(@item),
-      image:       @item.featured_photo.photo_url(client_hints: true, quality: "auto", fetch_format: :auto, width: :auto, dpr: "auto", effect: :improve),
-      site_name:   @company.name,
-      see_also:    (category_url(@item.try(:category)) if @item.category.present?)
-    }
+    if @item.present?
+      {
+        title:       "#{@item.description.titleize}",
+        description: "Found at #{@company.name} - #{ActionController::Base.helpers.humanized_money_with_symbol(@item.listing_price)}",
+        type:        "product",
+        url:         item_url(@item),
+        image:       @item.featured_photo.photo_url(client_hints: true, quality: "auto", fetch_format: :auto, width: :auto, dpr: "auto", effect: :improve),
+        site_name:   @company.name,
+        see_also:    (category_url(@item.try(:category)) if @item.category.present?)
+      }
+    else
+      {
+        title:       "#{@company.name}",
+        description: "#{@company.slogan}. Find just the right piece of second-hand furniture at our consignment store, located at #{@company.address_1} in #{@company.city}, #{@company.state}. Used furniture or accessories for any room in your house: bedroom, dining room, living room, kitchen, and more. Downsizing? Sell or consign with us!",
+        type:        "website",
+        url:         @company.website,
+        image:       @company.logo.url
+      }
+    end
   end
 
   def facebook_meta_tags
     {
-      admins: '1499856343665394',
-      app_id: ENV['FACEBOOK_APP_ID']
+      admins:       "1499856343665394",
+      app_id:       ENV['FACEBOOK_APP_ID']
     }
   end
 
@@ -118,11 +127,11 @@ class ApplicationController < ActionController::Base
   def twitter_meta_tags
     return unless @item.present?
     {
-      card: "summary_large_image",
-      site: "@JtRP_furniture",
-      title: "Found at #{@company.name}",
-      description: "#{@item.description.titleize} - #{ActionController::Base.helpers.humanized_money_with_symbol(@item.listing_price)}",
-      image: @item.featured_photo.photo_url(client_hints: true, quality: "auto", fetch_format: :auto, width: :auto, dpr: "auto", effect: :improve)
+      card:         "summary_large_image",
+      site:         "@JtRP_furniture",
+      title:        "#{@item.description.titleize}",
+      description:  "Found at #{@company.name} - #{ActionController::Base.helpers.humanized_money_with_symbol(@item.listing_price)}",
+      image:        @item.featured_photo.photo_url(client_hints: true, quality: "auto", fetch_format: :auto, width: :auto, dpr: "auto", effect: :improve)
     }
   end
 
