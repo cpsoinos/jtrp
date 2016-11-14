@@ -75,8 +75,8 @@ class ApplicationController < ActionController::Base
 
   def meta_tags
     @meta_tags = {
-      site: "Just the Right Piece",
-      description: "#{@company.slogan}. Find just the right piece of second-hand furniture at our consignment store, located at #{@company.address_1} in #{@company.city}, #{@company.state}. Used furniture or accessories for any room in your house: bedroom, dining room, living room, kitchen, and more. Downsizing? Sell or consign with us!",
+      site: @company.name,
+      description: @company.meta_description,
       og: og_meta_tags,
       twitter: twitter_meta_tags,
       fb: facebook_meta_tags,
@@ -97,8 +97,8 @@ class ApplicationController < ActionController::Base
       }
     else
       {
-        title:       "#{@company.name}",
-        description: "#{@company.slogan}. Find just the right piece of second-hand furniture at our consignment store, located at #{@company.address_1} in #{@company.city}, #{@company.state}. Used furniture or accessories for any room in your house: bedroom, dining room, living room, kitchen, and more. Downsizing? Sell or consign with us!",
+        title:       @company.name,
+        description: @company.meta_description,
         type:        "website",
         url:         @company.website,
         image:       @company.logo.url
@@ -128,7 +128,7 @@ class ApplicationController < ActionController::Base
     return unless @item.present?
     {
       card:         "summary_large_image",
-      site:         "@JtRP_furniture",
+      site:         "@#{@company.twitter_account}",
       title:        "#{@item.description.titleize}",
       description:  "Found at #{@company.name} - #{ActionController::Base.helpers.humanized_money_with_symbol(@item.listing_price)}",
       image:        @item.featured_photo.photo_url(client_hints: true, quality: "auto", fetch_format: :auto, width: :auto, dpr: "auto", effect: :improve)

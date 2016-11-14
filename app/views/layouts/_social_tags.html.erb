@@ -1,10 +1,42 @@
-<br />
-<a href="https://twitter.com/jtrp_furniture" class="twitter-follow-button" data-show-count="false">Follow @jtrp_furniture</a>
+<% if @company.twitter_account %>
+  <br />
+  <a href="https://twitter.com/jtrp_furniture" class="twitter-follow-button" data-show-count="true">Follow <%= @company.twitter_account %></a>
+<% end %>
 
-<div class="g-plusone" data-href="https://plus.google.com/+JusttheRightPieceSalem"></div>
+<% if @company.google_plus_account %>
+  <div class="g-plusone" data-href="https://plus.google.com/<%= @company.google_plus_account %>"></div>
+<% end %>
 
-<br />
-<a href="https://www.instagram.com/justtherightpiece/?ref=badge" class="ig-b- ig-b-v-24"><img src="//badges.instagram.com/static/images/ig-badge-view-24.png" alt="Instagram" /></a>
-<br />
+<% if @company.yelp_account %>
+  <div id="yelp-biz-badge-plain-asWXdxjdar542BZc4HTs9A" class="top-margin">
+    <a href="http://yelp.com/biz/<%= @company.yelp_account %>?utm_medium=badge_button&amp;utm_source=biz_review_badge" target="_blank">Check out Just the Right Piece on Yelp</a>
+  </div>
+<% end %>
 
-<div class="fb-like" data-href="https://www.facebook.com/justtherightpiece/" data-layout="standard" data-action="like" data-size="large" data-show-faces="true" data-share="true"></div>
+<% if @company.linkedin_account %>
+  <br />
+  <script type="IN/FollowCompany" data-id="10940584" data-counter="right"></script>
+<% end %>
+
+<div class="margin-top">
+  <% if @company.instagram_account %>
+    <br />
+    <a href="https://www.instagram.com/<%= @company.instagram_account %>/?ref=badge" class="ig-b- ig-b-v-24"><img src="//badges.instagram.com/static/images/ig-badge-view-24.png" alt="Instagram" /></a>
+  <% end %>
+
+  <% if @company.pinterest_account %>
+    <a data-pin-do="buttonFollow" href="https://www.pinterest.com/justtherightpce/">Pinterest</a>
+    <br />
+  <% end %>
+</div>
+
+<% if @company.facebook_page %>
+  <br />
+  <div class="fb-like" data-href="https://www.facebook.com/justtherightpiece/" data-layout="standard" data-action="like" data-size="large" data-show-faces="true" data-share="true"></div>
+<% end %>
+
+<% if @company.yelp_account %>
+  <script>
+    (function(d, t) {var g = d.createElement(t);var s = d.getElementsByTagName(t)[0];g.id = "yelp-biz-badge-script-plain-asWXdxjdar542BZc4HTs9A";g.src = "//yelp.com/biz_badge_js/en_US/plain/asWXdxjdar542BZc4HTs9A.js";s.parentNode.insertBefore(g, s);}(document, 'script'));
+  </script>
+<% end %>

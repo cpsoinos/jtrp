@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161107231834) do
+ActiveRecord::Schema.define(version: 20161113223054) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -128,6 +128,15 @@ ActiveRecord::Schema.define(version: 20161107231834) do
     t.integer "primary_contact_id"
     t.string  "slug"
     t.string  "team_email"
+    t.string  "meta_description"
+    t.string  "facebook_page"
+    t.string  "twitter_account"
+    t.string  "instagram_account"
+    t.string  "google_plus_account"
+    t.string  "linkedin_account"
+    t.string  "yelp_account"
+    t.string  "houzz_account"
+    t.string  "pinterest_account"
   end
 
   add_index "companies", ["primary_contact_id"], name: "index_companies_on_primary_contact_id", using: :btree
