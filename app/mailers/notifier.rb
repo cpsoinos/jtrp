@@ -26,7 +26,7 @@ class Notifier < ApplicationMailer
   end
 
   def default_timeframe
-    DateTime.now.beginning_of_day..DateTime.now
+    DateTime.now.in_time_zone("Eastern Time (US & Canada)").beginning_of_day..DateTime.now.in_time_zone("Eastern Time (US & Canada)")
   end
 
   def orders(timeframe)

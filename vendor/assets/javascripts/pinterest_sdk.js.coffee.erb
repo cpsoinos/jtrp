@@ -1,0 +1,11 @@
+Pinterest =
+  load: ->
+    delete window["PIN_"+~~((new Date).getTime()/864e5)]
+    $.getScript("//assets.pinterest.com/js/pinit.js")
+
+$ ->
+  Pinterest.load()
+
+# if you're using jquery.turbolinks, you don't need this binding
+$(document).on 'page:load', ->
+  Pinterest.load()
