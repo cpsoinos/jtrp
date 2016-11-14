@@ -97,7 +97,7 @@ class ApplicationController < ActionController::Base
       }
     else
       {
-        title:       @company.name},
+        title:       @company.name,
         description: @company.meta_description,
         type:        "website",
         url:         @company.website,
@@ -128,7 +128,7 @@ class ApplicationController < ActionController::Base
     return unless @item.present?
     {
       card:         "summary_large_image",
-      site:         "@JtRP_furniture",
+      site:         "@#{@company.twitter_account}",
       title:        "#{@item.description.titleize}",
       description:  "Found at #{@company.name} - #{ActionController::Base.helpers.humanized_money_with_symbol(@item.listing_price)}",
       image:        @item.featured_photo.photo_url(client_hints: true, quality: "auto", fetch_format: :auto, width: :auto, dpr: "auto", effect: :improve)

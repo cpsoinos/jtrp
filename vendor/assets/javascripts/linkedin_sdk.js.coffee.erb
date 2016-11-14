@@ -1,0 +1,8 @@
+$ ->
+  loadLinkedIn()
+  $(document).on 'page:load', loadLinkedIn
+
+loadLinkedIn = ->
+  delete IN
+  $.getScript("//platform.linkedin.com/in.js")
+  lang: 'en_US'
