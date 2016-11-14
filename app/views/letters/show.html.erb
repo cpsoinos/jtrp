@@ -1,0 +1,32 @@
+<div class="row text-center">
+  <h1 class="company-title"><%= @company.name %></h1>
+  <p><%= @company.full_address %></p>
+  <p><%= number_to_phone(@company.phone) %></p>
+</div>
+
+<div class="row extra-large-top-margin">
+  <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2">
+
+    <p class="text-right">
+      <%= @letter.created_at.strftime("%B %m, %Y") %>
+    </p>
+
+    <p class="large-top-margin">Dear <%= @letter.account.first_name %>,</p>
+
+    <p>
+      Thank you for consigning your furniture with us. Your 90-day consignment period has reached its end. You must retrieve your items by <b><%= 10.days.since(@letter.created_at).strftime("%B %d") %></b> (10 days from the date of this letter), or contact us before then by phone or email for a local delivery quote or to schedule a local delivery. If you do not retrieve your items by <%= 10.days.since(@letter.created_at).strftime("%B %d") %>, the items will become our property at that time.
+    </p>
+
+    <p>
+      Please let me know how you would like to proceed or if you have any questions.
+    </p>
+
+    <p class="large-top-margin">Sincerely yours,</p>
+    <p class="top-margin">
+      <%= @company.primary_contact.full_name %><br />
+      Owner, <%= @company.name %>
+    </p>
+
+  </div>
+
+</div>

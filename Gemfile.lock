@@ -374,6 +374,8 @@ GEM
     listen (3.0.6)
       rb-fsevent (>= 0.9.3)
       rb-inotify (>= 0.9.7)
+    lob (2.5.1)
+      rest-client (>= 1.8, < 3.0)
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
     lumberjack (1.0.10)
@@ -761,6 +763,7 @@ DEPENDENCIES
   kaminari
   launchy
   letter_opener_web (~> 1.2.0)
+  lob
   metamagic
   mini_magick
   money-rails
