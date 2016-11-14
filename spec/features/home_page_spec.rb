@@ -102,17 +102,6 @@ feature "home page" do
         expect(page).to have_content("#{item.description} needs a price added")
       end
 
-      scenario "completes a to do list item and starts a second", js: true do
-        item_2 = create(:item, :active, description: "defghij", listing_price_cents: nil)
-        visit root_path
-        first(:button, "done").click
-        fill_in("Listing price", with: "12.34")
-        click_button("Update Item")
-        wait_for_ajax
-
-        expect(page).to have_content("SKU: #{item_2.id}")
-        expect(page).to have_field("Listing price")
-      end
     end
 
     context "clicks items links" do
