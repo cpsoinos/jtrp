@@ -4,34 +4,37 @@
     <% cache todo do %>
       <% case todo.class.name %>
       <% when "Item" %>
-          <%= render 'items/to_do_task', collection: @todos, cached: true, item: todo, task_field: todo.task[:task_field] %>
-          <div id="to-do-list-item-<%= todo.id %>">
-            <div class="row list-group-item vertical-align">
-              <div class="col-xs-4">
-                <a href="<%= item_path(todo) %>">
-                  <%= image_tag(todo.featured_photo.photo_url(client_hints: true, quality: "auto", fetch_format: :auto, width: :auto, dpr: "auto", effect: :improve), class: "img-raised img-responsive", alt: "icon") %>
-                </a>
-              </div>
-              <div class="col-xs-6">
-                <h4 class="list-group-item-heading"><%= todo.task[:name] %></h4>
-                <p class="list-group-item-text"><%= link_to todo.description, item_path(todo) %> <%= todo.task[:description] %></p>
-              </div>
-              <div class="col-xs-2">
-                <button type="button" class="btn btn-fab btn-fab-mini btn-primary" data-toggle="modal" data-target="#<%= todo.id %>-task-modal">
-                  <i class='material-icons'>done</i>
-                </button>
-              </div>
+        <%= render 'items/to_do_task', collection: @todos, cached: true, item: todo, task_field: todo.task[:task_field] %>
+        <div id="to-do-list-item-<%= todo.id %>">
+          <div class="row list-group-item vertical-align">
+            <div class="col-xs-4">
+              <a href="<%= item_path(todo) %>">
+                <%= image_tag(todo.featured_photo.photo_url(client_hints: true, quality: "auto", fetch_format: :auto, width: :auto, dpr: "auto", effect: :improve), class: "img-raised img-responsive", alt: "icon") %>
+              </a>
             </div>
-            <div class="list-group-separator"></div>
+            <div class="col-xs-6">
+              <h4 class="list-group-item-heading"><%= todo.task[:name] %></h4>
+              <p class="list-group-item-text"><%= link_to todo.description, item_path(todo) %> <%= todo.task[:description] %></p>
+            </div>
+            <div class="col-xs-2">
+              <button type="button" class="btn btn-fab btn-fab-mini btn-primary" data-toggle="modal" data-target="#<%= todo.id %>-task-modal">
+                <i class='material-icons'>done</i>
+              </button>
+            </div>
           </div>
+          <div class="list-group-separator"></div>
+        </div>
 
       <% when "Statement" %>
         <%= render 'statements/to_do_task', collection: @todos, cached: true, statement: todo, task_field: todo.task[:task_field] %>
-
         <div id="to-do-list-statement-<%= todo.id %>">
           <div class="row list-group-item vertical-align">
             <div class="col-xs-4 text-center">
-              <%= link_to "<i class='material-icons' style='font-size: 5em;'>account_balance_wallet</i>".html_safe, account_statement_path(todo.account, todo) %>
+              <a href="account_statement_path(todo.account, todo)">
+                <div class="icon icon-<%= todo.unpaid? ? 'success' : 'info' %>">
+                  <i class='material-icons' style='font-size: 5em;'>account_balance_wallet</i>
+                </div>
+              </a>
             </div>
             <div class="col-xs-6">
               <h4 class="list-group-item-heading"><%= todo.task[:name] %></h4>
@@ -45,6 +48,32 @@
           </div>
           <div class="list-group-separator"></div>
         </div>
+
+        <% when "Agreement" %>
+          <%= render 'agreements/to_do_task', collection: @todos, cached: true, agreement: todo, task_field: todo.task[:task_field] %>
+          <div id="to-do-list-item-<%= todo.id %>">
+            <div class="row list-group-item vertical-align">
+              <div class="col-xs-4 text-center">
+                <a href="<%= agreement_path(todo) %>">
+                  <div class="icon icon-<%= todo.meets_requirements_expired? ? 'danger' : 'warning' %>">
+                    <i class='material-icons' style='font-size: 5em;'>access_time</i>
+                  </div>
+                </a>
+              </div>
+              <div class="col-xs-6">
+                <h4 class="list-group-item-heading"><%= todo.task[:name] %></h4>
+                <p class="list-group-item-text">
+                  <%= link_to (todo.meets_requirements_expired? ? "Agreement No. #{todo.id}" : todo.account.primary_contact.full_name), agreement_path(todo) %> <%= todo.task[:description] %>
+                </p>
+              </div>
+              <div class="col-xs-2">
+                <button type="button" class="btn btn-fab btn-fab-mini btn-primary" data-toggle="modal" data-target="#agreement-<%= todo.id %>-task-modal">
+                  <i class='material-icons'>done</i>
+                </button>
+              </div>
+            </div>
+            <div class="list-group-separator"></div>
+          </div>
 
       <% end %>
     <% end %>

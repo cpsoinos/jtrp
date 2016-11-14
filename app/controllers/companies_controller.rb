@@ -57,7 +57,8 @@ class CompaniesController < ApplicationController
   def build_todos
     @items = ItemsPresenter.new.todo.page(params[:page])
     @statements = StatementsPresenter.new.todo
-    @todos = @statements | @items
+    @agreements = AgreementsPresenter.new.todo
+    @todos = @agreements | @statements | @items
   end
 
 end

@@ -1,0 +1,8 @@
+<table class="pull-right nested-statement-table">
+  <tr>
+    <th class="text-right">Days Active</th>
+    <td class="text-right statement-data">
+      <%= (DateTime.now.to_date - (agreement.items.where.not(listed_at: nil).order(:listed_at).last.listed_at.to_date)).to_i %>
+    </td>
+  </tr>
+</table>
