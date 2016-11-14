@@ -1,4 +1,5 @@
 class Item < ActiveRecord::Base
+  acts_as_paranoid
   audited associated_with: :proposal
 
   extend FriendlyId

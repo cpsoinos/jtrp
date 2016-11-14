@@ -1,6 +1,7 @@
 class Category < ActiveRecord::Base
+  acts_as_paranoid
   audited
-  
+
   extend FriendlyId
   friendly_id :name, use: [:slugged, :finders, :history]
 

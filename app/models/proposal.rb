@@ -1,4 +1,5 @@
 class Proposal < ActiveRecord::Base
+  acts_as_paranoid
   audited associated_with: :job
   has_secure_token
 

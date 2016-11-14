@@ -1,6 +1,7 @@
 class Order < ActiveRecord::Base
+  acts_as_paranoid
   audited
-  
+
   has_many :items
   has_many :discounts
 

@@ -1,4 +1,5 @@
 class Job < ActiveRecord::Base
+  acts_as_paranoid
   audited associated_with: :account
 
   extend FriendlyId
