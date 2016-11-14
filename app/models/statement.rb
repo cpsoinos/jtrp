@@ -1,4 +1,5 @@
 class Statement < ActiveRecord::Base
+  acts_as_paranoid
   audited associated_with: :agreement
   has_secure_token
 

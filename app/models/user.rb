@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  acts_as_paranoid
   audited
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
