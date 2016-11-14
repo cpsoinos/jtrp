@@ -1,15 +1,15 @@
 class LetterCreator
 
-  attr_reader :accounts
+  attr_reader :object, :account
 
-  def initialize(accounts)
-    @accounts = accounts
+  def initialize(object)
+    @object = object
+    @account = object.account
+    @type = type
   end
 
-  def create_letters
-    accounts.each do |account|
-      account.letters.create
-    end
+  def create_letter(type)
+    account.letters.create(type: type)
   end
 
 end

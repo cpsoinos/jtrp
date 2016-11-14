@@ -60,9 +60,10 @@ class AgreementsController < ApplicationController
     redirect_to :back, notice: "Email sent to client!"
   end
 
-  def send_expiration_pending_email
+  def notify_pending_expiration
     @agreement = Agreement.find(params[:agreement_id])
-    TransactionalEmailJob.perform_later(agreement, current_user, agreement.account.primary_contact, "agreement_expiration_pending", params[:note])
+    ConsignmentPeriodEndingNotifierJob.perform_later(@agreement)
+
     respond_to do |format|
       format.js do
         @message = "Client has been notified of pending expiration."
@@ -81,8 +82,9 @@ class AgreementsController < ApplicationController
 
   def expire_items
     @agreement = Agreement.find(params[:agreement_id])
+    ConsignmentPeriodEndedNotifierJob.perform_later(@agreement)
     ItemExpirerJob.perform_later(@agreement.items.pluck(:id))
-    TransactionalEmailJob.perform_later(agreement, current_user, agreement.account.primary_contact, "agreement_expiration", params[:note])
+
     respond_to do |format|
       format.js do
         @message = "Items have been queued to be expired! They will appear under the JTRP account shortly."

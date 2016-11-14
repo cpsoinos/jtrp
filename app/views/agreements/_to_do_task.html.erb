@@ -20,7 +20,7 @@
               <% if agreement.meets_requirements_expired? %>
                 <%= link_to "Expire Agreement", agreement_expire_items_path(agreement), method: "POST", remote: true, class: "btn btn-raised btn-primary" %>
               <% else %>
-                <%= link_to "Notify Client", agreement_send_expiration_pending_email_path(agreement), method: "POST", remote: true, class: "btn btn-raised btn-primary" %>
+                <%= link_to "Notify Client", agreement_notify_pending_expiration_path(agreement), method: "POST", remote: true, class: "btn btn-raised btn-primary" %>
               <% end %>
             </div>
           </div>

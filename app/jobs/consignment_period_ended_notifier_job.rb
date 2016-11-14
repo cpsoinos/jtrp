@@ -1,4 +1,4 @@
-class ConsignmentPeriodEndingNotifierJob < ActiveJob::Base
+class ConsignmentPeriodEndedNotifierJob < ActiveJob::Base
   queue_as :default
 
   attr_reader :agreement
@@ -17,7 +17,7 @@ class ConsignmentPeriodEndingNotifierJob < ActiveJob::Base
   end
 
   def build_letter
-    @letter = LetterCreator.new(agreement).create_letter("agreement_pending_expiration")
+    @letter = LetterCreator.new(agreement).create_letter("agreement_expired")
   end
 
   def deliver_mail
@@ -25,7 +25,7 @@ class ConsignmentPeriodEndingNotifierJob < ActiveJob::Base
   end
 
   def deliver_email
-    TransactionalEmailJob.perform_later(@letter, Company.jtrp.primary_contact, @agreement.account.primary_contact, "agreement_pending_expiration")
+    TransactionalEmailJob.perform_later(@letter, Company.jtrp.primary_contact, @agreement.account.primary_contact, "agreement_expired")
   end
 
 end
