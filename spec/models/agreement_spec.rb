@@ -35,9 +35,9 @@ describe Agreement do
       end
     end
 
-    it "includes expired items" do
+    it "does not include expired items" do
       expired_items.each do |item|
-        expect(item).to be_in(agreement.items)
+        expect(item).not_to be_in(agreement.items)
       end
     end
 
