@@ -7,11 +7,11 @@ class ItemsController < ApplicationController
   before_filter :require_internal, except: [:show, :update]
   before_filter :find_item, only: :show
   before_filter :meta_tags, only: :show
+  before_filter :set_intentions_map
 
   def index
     @items = ItemsPresenter.new(params).filter.order(:jtrp_number, :account_item_number).group_by { |i| i.client_intention }
     @intentions = @items.keys
-    @intentions_map = intentions_map
     @filter = params[:status].try(:capitalize)
     @type = params[:type]
   end
@@ -160,7 +160,7 @@ class ItemsController < ApplicationController
   end
 
   def intentions_map
-    {
+    @intentions_map = {
       "consign" => { display_name: "consigned", icon: "<i class='material-icons'>supervisor_account</i>", color: "secondary-primary" },
       "sell" => { display_name: "owned", icon: "<i class='material-icons'>store</i>", color: "complement-primary" },
       "donate" => { display_name: "will donate", icon: "<i class='fa fa-gift' aria-hidden='true'></i>", color: "secondary-darker" },
