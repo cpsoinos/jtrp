@@ -159,7 +159,7 @@ class ItemsController < ApplicationController
     params.require(:item).permit(:archive)
   end
 
-  def intentions_map
+  def set_intentions_map
     @intentions_map = {
       "consign" => { display_name: "consigned", icon: "<i class='material-icons'>supervisor_account</i>", color: "secondary-primary" },
       "sell" => { display_name: "owned", icon: "<i class='material-icons'>store</i>", color: "complement-primary" },
