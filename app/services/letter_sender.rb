@@ -16,7 +16,7 @@ class LetterSender
   def build_letter
     resp = begin
       lob.letters.create(
-        description: letter.type,
+        description: letter.category,
         to: {
           name: account.full_name,
           address_line1: account.address_1,
@@ -24,7 +24,7 @@ class LetterSender
           address_city: account.city,
           address_state: account.state,
           address_country: "US",
-          address_zip: account.zip,
+          address_zip: account.zip
         },
         from: {
           name: company.primary_contact.full_name,
@@ -47,11 +47,11 @@ class LetterSender
   end
 
   def save_response(resp)
-    letter.remote_id                = resp["id"]
-    letter.remote_url               = resp["url"]
-    letter.carrier                  = resp["carrier"]
-    letter.tracking_number          = resp["tracking_number"]
-    letter.expected_delivery_date   = resp["expected_delivery_date"]
+    letter.remote_id                = resp[:id]
+    letter.remote_url               = resp[:url]
+    letter.carrier                  = resp[:carrier]
+    letter.tracking_number          = resp[:tracking_number]
+    letter.expected_delivery_date   = resp[:expected_delivery_date]
     letter.save
   end
 

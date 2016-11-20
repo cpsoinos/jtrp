@@ -5,11 +5,10 @@ class LetterCreator
   def initialize(object)
     @object = object
     @account = object.account
-    @type = type
   end
 
-  def create_letter(type)
-    account.letters.create(type: type)
+  def create_letter(category)
+    account.letters.create(category: category)
   end
 
 end
