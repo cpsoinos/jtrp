@@ -62,7 +62,7 @@ class AgreementsController < ApplicationController
 
   def notify_pending_expiration
     @agreement = Agreement.find(params[:agreement_id])
-    ConsignmentPeriodEndingNotifierJob.perform_later(@agreement)
+    ConsignmentPeriodEndingNotifierJob.perform_later(@agreement, "agreement_pending_expiration")
 
     respond_to do |format|
       format.js do
@@ -82,7 +82,7 @@ class AgreementsController < ApplicationController
 
   def expire_items
     @agreement = Agreement.find(params[:agreement_id])
-    ConsignmentPeriodEndedNotifierJob.perform_later(@agreement)
+    ConsignmentPeriodEndingNotifierJob.perform_later(@agreement, "agreement_expired")
     ItemExpirerJob.perform_later(@agreement.items.pluck(:id))
 
     respond_to do |format|
