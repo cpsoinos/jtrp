@@ -1,4 +1,5 @@
 class Photo < ActiveRecord::Base
+  acts_as_paranoid
   audited associated_with: :item
 
   belongs_to :item, touch: true

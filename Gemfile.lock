@@ -439,6 +439,8 @@ GEM
       oauth2 (~> 1.0)
       omniauth (~> 1.2)
     orm_adapter (0.5.0)
+    paranoia (2.2.0)
+      activerecord (>= 4.0, < 5.1)
     pdf-core (0.6.1)
     pdf-reader (1.4.0)
       Ascii85 (~> 1.0.0)
@@ -770,6 +772,7 @@ DEPENDENCIES
   newrelic_rpm
   oj (~> 2.12.14)
   omniauth-clover
+  paranoia (~> 2.2)
   pdf-reader
   pg (~> 0.15)
   pg_search
