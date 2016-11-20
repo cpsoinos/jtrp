@@ -5,8 +5,6 @@ class Letter < ActiveRecord::Base
   belongs_to :account
   mount_uploader :pdf, ScannedAgreementUploader
 
-  # after_create :save_as_pdf, :deliver_to_client
-
   def object_url
     Rails.application.routes.url_helpers.account_letter_url(account, self, host: ENV['HOST'])
   end

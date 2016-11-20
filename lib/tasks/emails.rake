@@ -10,6 +10,11 @@ namespace :emails do
 
     clients.each do |client|
       client.email = "corey+#{incrementer}@justtherightpiece.furniture"
+      client.address_1 = "20 Prichard Ave"
+      client.address_2 = ""
+      client.city = "Somerville"
+      client.state = "MA"
+      client.zip = "02144"
       client.save
       incrementer += 1
       bar.inc

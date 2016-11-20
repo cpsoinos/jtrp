@@ -63,7 +63,7 @@
               <div class="col-xs-6">
                 <h4 class="list-group-item-heading"><%= todo.task[:name] %></h4>
                 <p class="list-group-item-text">
-                  <%= link_to (todo.meets_requirements_expired? ? "Agreement No. #{todo.id}" : todo.account.primary_contact.full_name), agreement_path(todo) %> <%= todo.task[:description] %>
+                  <%= link_to (todo.meets_requirements_expired? ? "#{todo.account.primary_contact.full_name} - Agreement No. #{todo.id}" : todo.account.primary_contact.full_name), agreement_path(todo) %> <%= todo.task[:description] %>
                 </p>
               </div>
               <div class="col-xs-2">
