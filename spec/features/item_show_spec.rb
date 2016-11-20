@@ -99,6 +99,7 @@ feature "item show" do
         fill_in("item[sale_price]", with: 64.66)
         fill_in("item[sold_at]", with: "07/04/2016")
         click_button("Update Item")
+        wait_for_ajax
         item.reload
 
         expect(item).to be_sold
