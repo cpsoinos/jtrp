@@ -24,6 +24,7 @@ class Account < ActiveRecord::Base
   has_many :statements
   belongs_to :created_by, class_name: "InternalUser", foreign_key: "created_by_id"
   belongs_to :updated_by, class_name: "InternalUser", foreign_key: "updated_by_id"
+  has_many :letters, through: :agreements
 
   validates :status, presence: true
   validates :type, presence: true
@@ -61,7 +62,15 @@ class Account < ActiveRecord::Base
 
   alias :client :primary_contact
   delegate :full_address, to: :primary_contact
+  delegate :first_name, to: :primary_contact
+  delegate :last_name, to: :primary_contact
+  delegate :address_1, to: :primary_contact
+  delegate :address_2, to: :primary_contact
+  delegate :city, to: :primary_contact
+  delegate :state, to: :primary_contact
+  delegate :zip, to: :primary_contact
   delegate :phone, to: :primary_contact
+  delegate :phone_ext, to: :primary_contact
   delegate :email, to: :primary_contact
 
   def self.yard_sale

@@ -4,9 +4,16 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title">
-            <%= link_to "<i class='material-icons md-48'>account_balance_wallet</i> #{statement.account.full_name} -  #{statement.date.last_month.strftime('%B, %Y')}".html_safe, account_statement_path(statement.account, statement) %>
-          </h4>
+          <div class="row vertical-align">
+            <span class="icon icon-<%= statement.unpaid? ? 'success' : 'info' %>">
+              <i class='material-icons' style='font-size: 5em;'>account_balance_wallet</i>
+            </span>
+            <span>
+              <h4 class="modal-title">
+                <%= link_to "#{statement.account.full_name} - #{statement.date.last_month.strftime('%B, %Y')}".html_safe, account_statement_path(statement.account, statement) %>
+              </h4>
+            </span>
+          </div>
         </div>
         <div class="modal-body">
 

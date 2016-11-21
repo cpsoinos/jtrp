@@ -13,25 +13,25 @@
 
 	<div class="col-xs-12 col-sm-4">
 		<a href="<%= items_path(status: 'active', type: 'consign') %>">
-		</a>
-		<div class="info">
-			<div class="icon icon-warning">
-				<i class="material-icons">supervisor_account</i>
+			<div class="info">
+				<div class="icon icon-warning">
+					<i class="material-icons">supervisor_account</i>
+				</div>
+				<h2 class="info-title"><%= @metrics[:consigned_count] %></h2>
+				<p>Consigned Items For Sale</p>
 			</div>
-			<h2 class="info-title"><%= @metrics[:consigned_count] %></h2>
-			<p>Consigned Items For Sale</p>
-		</div>
+		</a>
 	</div>
 
 	<div class="col-xs-12 col-sm-4">
 		<a href="<%= items_path(status: 'sold') %>">
-		</a>
-		<div class="info">
-			<div class="icon icon-success">
-				<i class='fa fa-credit-card-alt' aria-hidden='true'></i>
+			<div class="info">
+				<div class="icon icon-success">
+					<i class='fa fa-credit-card-alt' aria-hidden='true'></i>
+				</div>
+				<h2 class="info-title"><%= humanized_money_with_symbol(@metrics[:thirty_day_revenue]) %></h2>
+				<p>Sold in the last 30 days</p>
 			</div>
-			<h2 class="info-title"><%= humanized_money_with_symbol(@metrics[:thirty_day_revenue]) %></h2>
-			<p>Sold in the last 30 days</p>
-		</div>
+		</a>
 	</div>
 </div>

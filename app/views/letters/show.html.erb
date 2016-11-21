@@ -1,0 +1,26 @@
+<div class="row text-center double-extra-large-top-margin">
+  <%= image_tag('JTRPv2website-01.png') %>
+  <p><%= @company.full_address %></p>
+  <p><%= @company.website %></p>
+</div>
+
+<div class="row top-margin">
+  <div class="col-xs-10 col-xs-offset-1">
+
+    <p class="text-right">
+      <%= @letter.created_at.strftime("%B %m, %Y") %>
+    </p>
+
+    <p class="top-margin">Dear <%= @letter.account.first_name %>,</p>
+
+    <%= render @letter.category %>
+
+    <p class="large-top-margin">Sincerely yours,</p>
+    <p class="top-margin">
+      <%= @company.primary_contact.full_name %><br />
+      Owner, <%= @company.name %>
+    </p>
+
+  </div>
+
+</div>

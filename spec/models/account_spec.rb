@@ -5,6 +5,7 @@ describe Account do
   it { should belong_to(:primary_contact) }
   it { should have_many(:jobs) }
   it { should have_many(:proposals).through(:jobs) }
+  it { should have_many(:agreements).through(:proposals) }
   it { should have_many(:items).through(:proposals) }
   it { should belong_to(:created_by) }
   it { should belong_to(:updated_by) }
