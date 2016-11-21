@@ -79,7 +79,7 @@ class Agreement < ActiveRecord::Base
 
   def meets_requirements_expired?
     agreement_type == "consign" &&
-    items.active.none? { |i| i.listed_at > 90.days.ago }
+    items.active.none? { |i| i.listed_at < 90.days.ago }
   end
 
   def manager_signed?
