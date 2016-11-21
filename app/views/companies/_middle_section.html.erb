@@ -42,6 +42,6 @@
 
 	<div class="col-md-4">
 		<h3 class="text-center">Item Distribution</h3>
-		<%= pie_chart Item.active.group(:client_intention).count, library: {backgroundColor: '#eee', pieHole: 0.5} %>
+		<%= pie_chart Item.active.group(:client_intention).count, library: {backgroundColor: '#eee', legend: {position: 'bottom'}} %>
 	</div>
 </div>
