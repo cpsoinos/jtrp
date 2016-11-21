@@ -50,6 +50,7 @@
         </div>
 
         <% when "Agreement" %>
+          <% next if (!todo.meets_requirements_expired? && todo.letters.by_category('agreement_pending_expiration').present?) %>
           <%= render 'agreements/to_do_task', collection: @todos, cached: true, agreement: todo, task_field: todo.task[:task_field] %>
           <div id="to-do-list-agreement-<%= todo.id %>">
             <div class="row list-group-item vertical-align">

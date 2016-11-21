@@ -7,6 +7,8 @@ class Letter < ActiveRecord::Base
   has_one :account, through: :agreement
   mount_uploader :pdf, ScannedAgreementUploader
 
+  scope :by_category, -> (category) { where(category: category) }
+
   def object_url
     Rails.application.routes.url_helpers.account_letter_url(account, self, token: token, host: ENV['HOST'])
   end

@@ -4,9 +4,16 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title">
-            <%= link_to "<i class='material-icons' style='font-size: 5em;'>access_time</i> #{agreement.account.full_name} - Agreement No. #{agreement.id}".html_safe, agreement_path(agreement) %>
-          </h4>
+          <div class="row vertical-align">
+            <span class="icon icon-<%= agreement.meets_requirements_expired? ? 'danger' : 'warning' %>">
+              <i class='material-icons' style='font-size: 5em;'>access_time</i>
+            </span>
+            <span>
+              <h4 class="modal-title">
+                <%= link_to " #{agreement.account.full_name} - Agreement No. #{agreement.id}".html_safe, agreement_path(agreement) %>
+              </h4>
+            </span>
+          </div>
         </div>
         <div class="modal-body">
 
