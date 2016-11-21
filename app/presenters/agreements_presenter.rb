@@ -10,4 +10,8 @@ class AgreementsPresenter
     Agreement.includes(:proposal, :job, :account, {proposal: [:account, :primary_contact]}).filter(params.slice(:status))
   end
 
+  def todo
+    Agreement.by_type('consign').active.joins(proposal: :items).merge(Item.consigned.where("listed_at < ?", 80.days.ago))
+  end
+
 end

@@ -6,11 +6,12 @@ class Agreement < ActiveRecord::Base
   include Filterable
 
   belongs_to :proposal, touch: true
-  has_many :items, -> (instance) { where(items: {client_intention: instance.agreement_type}) }, through: :proposal
+  has_many :items, -> (instance) { where(items: {client_intention: instance.agreement_type}).where.not(items: {status: 'expired'}) }, through: :proposal
   has_one :scanned_agreement
   has_many :statements
   has_one :job, through: :proposal
   has_one :account, through: :job
+  has_many :letters
 
   after_destroy :delete_cache
 
@@ -76,6 +77,11 @@ class Agreement < ActiveRecord::Base
     items.active.empty?
   end
 
+  def meets_requirements_expired?
+    agreement_type == "consign" &&
+    items.active.none? { |i| i.listed_at > 90.days.ago }
+  end
+
   def manager_signed?
     manager_agreed? || scanned_agreement.present?
   end
@@ -97,6 +103,14 @@ class Agreement < ActiveRecord::Base
   def notify_company
     return unless self.active?
     TransactionalEmailJob.perform_later(self, account.primary_contact, proposal.created_by, "agreement_active_notifier")
+  end
+
+  def task
+    if meets_requirements_expired?
+      { name: "expire agreement", description: "is more than 90 days old" }
+    else
+      { name: "notify client", description: "needs to be notified that their consignment period is ending soon" }
+    end
   end
 
   private

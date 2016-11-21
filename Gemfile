@@ -68,6 +68,7 @@ gem 'friendly_id', '~> 5.1.0'
 gem 'audited', '~> 4.3'
 gem 'rack-cors', :require => 'rack/cors'
 gem 'where-or'
+gem 'lob'
 gem 'paranoia', '~> 2.2'
 
 group :production, :staging do

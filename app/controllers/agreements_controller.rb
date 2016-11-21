@@ -60,6 +60,21 @@ class AgreementsController < ApplicationController
     redirect_to :back, notice: "Email sent to client!"
   end
 
+  def notify_pending_expiration
+    @agreement = Agreement.find(params[:agreement_id])
+    ConsignmentPeriodEndingNotifierJob.perform_later(@agreement, "agreement_pending_expiration")
+
+    respond_to do |format|
+      format.js do
+        @message = "Client has been notified of pending expiration."
+        render 'expire_items'
+      end
+      format.html do
+        redirect_to :back, notice: "Client has been notified of pending expiration."
+      end
+    end
+  end
+
   def activate_items
     @agreement = Agreement.find(params[:agreement_id])
     @agreement.items.map(&:mark_active)
@@ -68,8 +83,17 @@ class AgreementsController < ApplicationController
 
   def expire_items
     @agreement = Agreement.find(params[:agreement_id])
+    ConsignmentPeriodEndingNotifierJob.perform_later(@agreement, "agreement_expired")
     ItemExpirerJob.perform_later(@agreement.items.pluck(:id))
-    redirect_to :back, notice: "Items have been queued to be expired! They will appear under the JTRP account shortly."
+
+    respond_to do |format|
+      format.js do
+        @message = "Items have been queued to be expired! They will appear under the JTRP account shortly."
+      end
+      format.html do
+        redirect_to :back, notice: "Items have been queued to be expired! They will appear under the JTRP account shortly."
+      end
+    end
   end
 
   protected

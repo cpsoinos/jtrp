@@ -2,7 +2,7 @@
   <tr>
     <th class="text-right">Total Sales</th>
     <td class="text-right statement-data">
-      <%= humanized_money_with_symbol(statement.items.sum(:sale_price_cents) / 100) %>
+      <%= humanized_money_with_symbol(Money.new(statement.items.sum(:sale_price_cents))) %>
     </td>
   </tr>
   <tr>

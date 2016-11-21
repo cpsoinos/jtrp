@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161114012409) do
+ActiveRecord::Schema.define(version: 20161121000149) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -253,15 +253,19 @@ ActiveRecord::Schema.define(version: 20161114012409) do
   create_table "letters", force: :cascade do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "account_id"
-    t.string   "type"
+    t.string   "category"
     t.string   "pdf"
     t.string   "remote_id"
     t.string   "remote_url"
     t.string   "carrier"
     t.string   "tracking_number"
     t.string   "expected_delivery_date"
+    t.datetime "deleted_at"
+    t.string   "token"
+    t.integer  "agreement_id"
   end
+
+  add_index "letters", ["deleted_at"], name: "index_letters_on_deleted_at", using: :btree
 
   create_table "orders", force: :cascade do |t|
     t.string   "remote_id"

@@ -46,8 +46,7 @@ class PdfGenerator
           file.class.class_eval { attr_accessor :original_filename, :content_type }
           file.original_filename = "#{account.full_name}_#{object.class.name}_#{object.id}.pdf"
           file.content_type = "application/pdf"
-          object.create_scanned_agreement(agreement: object, scan: file) if object.is_a?(Agreement)
-          object.create_statement_pdf(statement: object, pdf: file) if object.is_a?(Statement)
+          save_file(file)
           puts "Wrote PDF to /tmp/#{account.full_name}_#{object.class.name}_#{object.id}.pdf"
           break
         when "failed"
@@ -66,6 +65,13 @@ class PdfGenerator
       puts error.backtrace[0..3].join("\n")
       Rollbar.error(error, "#{error.class}: #{error.message}")
     end
+  end
+
+  def save_file(file)
+    object.create_scanned_agreement(agreement: object, scan: file) if object.is_a?(Agreement)
+    object.create_statement_pdf(statement: object, pdf: file) if object.is_a?(Statement)
+    object.pdf = file if object.is_a?(Letter)
+    object.save
   end
 
 end

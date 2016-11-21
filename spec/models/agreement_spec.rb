@@ -2,9 +2,11 @@ describe Agreement do
 
   it { should be_audited.associated_with(:proposal) }
   it { should belong_to(:proposal) }
+  it { should have_one(:account).through(:job) }
   it { should have_many(:items).through(:proposal) }
   it { should have_one(:scanned_agreement) }
   it { should have_many(:statements) }
+  it { should have_many(:letters) }
 
   describe "validations" do
     it { should validate_presence_of(:proposal) }
@@ -35,9 +37,9 @@ describe Agreement do
       end
     end
 
-    it "includes expired items" do
+    it "does not include expired items" do
       expired_items.each do |item|
-        expect(item).to be_in(agreement.items)
+        expect(item).not_to be_in(agreement.items)
       end
     end
 
