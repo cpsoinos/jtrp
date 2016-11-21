@@ -1,17 +1,17 @@
-<div class="row text-center">
-  <h1 class="company-title"><%= @company.name %></h1>
+<div class="row text-center double-extra-large-top-margin">
+  <%= image_tag('JTRPv2website-01.png') %>
   <p><%= @company.full_address %></p>
-  <p><%= number_to_phone(@company.phone) %></p>
+  <p><%= @company.website %></p>
 </div>
 
-<div class="row extra-large-top-margin">
-  <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2">
+<div class="row top-margin">
+  <div class="col-xs-10 col-xs-offset-1">
 
     <p class="text-right">
       <%= @letter.created_at.strftime("%B %m, %Y") %>
     </p>
 
-    <p class="large-top-margin">Dear <%= @letter.account.first_name %>,</p>
+    <p class="top-margin">Dear <%= @letter.account.first_name %>,</p>
 
     <%= render @letter.category %>
 

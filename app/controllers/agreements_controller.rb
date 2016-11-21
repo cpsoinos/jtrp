@@ -67,6 +67,7 @@ class AgreementsController < ApplicationController
     respond_to do |format|
       format.js do
         @message = "Client has been notified of pending expiration."
+        render 'expire_items'
       end
       format.html do
         redirect_to :back, notice: "Client has been notified of pending expiration."

@@ -24,7 +24,7 @@ class Account < ActiveRecord::Base
   has_many :statements
   belongs_to :created_by, class_name: "InternalUser", foreign_key: "created_by_id"
   belongs_to :updated_by, class_name: "InternalUser", foreign_key: "updated_by_id"
-  has_many :letters
+  has_many :letters, through: :agreements
 
   validates :status, presence: true
   validates :type, presence: true

@@ -10,6 +10,7 @@ describe ConsignmentPeriodEndingNotifierJob do
     allow(creator).to receive(:create_letter).and_return(letter)
     allow(LetterSender).to receive(:new).with(letter).and_return(sender)
     allow(sender).to receive(:send_letter)
+    allow(letter).to receive(:save_as_pdf)
     allow(TransactionalEmailJob).to receive(:perform_later)
   end
 
@@ -20,6 +21,12 @@ describe ConsignmentPeriodEndingNotifierJob do
     expect(creator).to have_received(:create_letter).with('consignment_period_ending')
     expect(LetterSender).to have_received(:new).with(letter)
     expect(sender).to have_received(:send_letter)
+  end
+
+  it "saves the letter as a pdf" do
+    ConsignmentPeriodEndingNotifierJob.perform_later(agreement, 'consignment_period_ending')
+
+    expect(letter).to have_received(:save_as_pdf)
   end
 
 end

@@ -1,7 +1,8 @@
 describe Letter do
 
-  it { should be_audited.associated_with(:account) }
-  it { should belong_to(:account) }
+  it { should be_audited.associated_with(:agreement) }
+  it { should belong_to(:agreement) }
+  it { should have_one(:account).through(:agreement) }
 
   context "callbacks" do
 

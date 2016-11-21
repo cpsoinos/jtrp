@@ -3,7 +3,7 @@ require 'factory_girl'
 FactoryGirl.define do
 
   factory :letter do
-    account
+    agreement { create(:agreement, :consign) }
     category "consignment_period_ending"
   end
 

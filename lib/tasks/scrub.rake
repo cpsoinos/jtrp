@@ -1,7 +1,7 @@
-namespace :emails do
-  task :scrub => :environment do |task|
+namespace :scrub do
+  task :emails_and_addresses => :environment do |task|
 
-    puts "begin scrubbing emails"
+    puts "begin scrubbing emails and addresses"
 
     clients = Client.all
     incrementer = 0

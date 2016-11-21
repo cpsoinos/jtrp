@@ -1,6 +1,6 @@
 describe LetterSender do
 
-  let(:letter) { create(:letter, account: create(:account, :with_client)) }
+  let(:letter) { create(:letter) }
   let(:sender) { LetterSender.new(letter) }
   let(:account) { letter.account }
   let(:company) { Company.jtrp }

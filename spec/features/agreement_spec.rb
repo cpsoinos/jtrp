@@ -213,7 +213,7 @@ feature "agreement" do
       scenario "expires items from index" do
         allow(PdfGeneratorJob).to receive(:perform_later)
         allow(InventorySyncJob).to receive(:perform_later)
-        allow(ConsignmentPeriodEndedNotifierJob).to receive(:perform_later)
+        allow(ConsignmentPeriodEndingNotifierJob).to receive(:perform_later)
         allow(ItemExpirerJob).to receive(:perform_later)
         agreement.update_attributes(client_agreed: true, client_agreed_at: 91.days.ago, date: 91.days.ago)
         agreement.mark_active
@@ -230,7 +230,7 @@ feature "agreement" do
       scenario "expires items from show" do
         allow(PdfGeneratorJob).to receive(:perform_later)
         allow(InventorySyncJob).to receive(:perform_later)
-        allow(ConsignmentPeriodEndedNotifierJob).to receive(:perform_later)
+        allow(ConsignmentPeriodEndingNotifierJob).to receive(:perform_later)
         allow(ItemExpirerJob).to receive(:perform_later)
         agreement.update_attributes(client_agreed: true, client_agreed_at: 91.days.ago, date: 91.days.ago)
         agreement.mark_active

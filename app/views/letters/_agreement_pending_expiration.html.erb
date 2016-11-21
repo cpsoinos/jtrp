@@ -1,7 +1,7 @@
 <p>
-  Thank you for consigning your items with us. Your 90-day consignment period will soon reach its end. You must retrieve your items by <b><%= 10.days.since(@letter.created_at).strftime("%B %d") %></b> (10 days from the date of this letter), or contact us before then by phone or email for a local delivery quote or to schedule a local delivery. If you do not retrieve your items by <%= 10.days.since(@letter.created_at).strftime("%B %d") %>, the items will become our property at that time.
+  Thank you for consigning your items with us. Your 90-day consignment period will soon reach its end. You must retrieve your items by <b><%= @letter.pending_deadline %></b> (10 days from the date of this letter), or contact us before then by phone or email for a local delivery quote or to schedule a local delivery. If you do not retrieve your items by <%= @letter.pending_deadline %>, the items will become our property at that time.
 </p>
 
 <p>
-  Please let me know how you would like to proceed or if you have any questions.
+  Please let us know how you would like to proceed or if you have any questions.
 </p>

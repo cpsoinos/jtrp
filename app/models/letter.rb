@@ -1,12 +1,14 @@
 class Letter < ActiveRecord::Base
   acts_as_paranoid
-  audited associated_with: :account
+  audited associated_with: :agreement
+  has_secure_token
 
-  belongs_to :account
+  belongs_to :agreement
+  has_one :account, through: :agreement
   mount_uploader :pdf, ScannedAgreementUploader
 
   def object_url
-    Rails.application.routes.url_helpers.account_letter_url(account, self, host: ENV['HOST'])
+    Rails.application.routes.url_helpers.account_letter_url(account, self, token: token, host: ENV['HOST'])
   end
 
   def save_as_pdf
@@ -24,6 +26,14 @@ class Letter < ActiveRecord::Base
 
   def deliver_letter
     LetterSender.new(self).send_letter
+  end
+
+  def pending_deadline
+    10.days.since(self.created_at).strftime("%B %d")
+  end
+
+  def hard_deadline
+    self.created_at.strftime("%B %d")
   end
 
 end

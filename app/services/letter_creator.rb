@@ -1,14 +1,13 @@
 class LetterCreator
 
-  attr_reader :object, :account
+  attr_reader :object
 
   def initialize(object)
     @object = object
-    @account = object.account
   end
 
   def create_letter(category)
-    account.letters.create(category: category)
+    object.letters.create(category: category)
   end
 
 end

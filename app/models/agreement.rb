@@ -11,6 +11,7 @@ class Agreement < ActiveRecord::Base
   has_many :statements
   has_one :job, through: :proposal
   has_one :account, through: :job
+  has_many :letters
 
   after_destroy :delete_cache
 
