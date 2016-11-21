@@ -58,7 +58,7 @@ class Order < ActiveRecord::Base
 
   def add_items_to_order
     return unless (remote_order && line_items.present?)
-    items = (Item.where(remote_id: remote_item_ids_from_line_items) | Item.where(description: descriptions_from_line_items))
+    items = Item.where(remote_id: remote_item_ids_from_line_items)
     self.items << items
   end
 
