@@ -8,7 +8,7 @@ class AccountsController < ApplicationController
   def show
     @account = Account.find(params[:id])
     if @account.slug == 'jtrp'
-      @items = Item.jtrp
+      @items = Item.jtrp.page(params[:page])
     end
   end
 
