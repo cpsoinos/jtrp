@@ -15,8 +15,7 @@ module Clover
         end
       end
     rescue CloverError => e
-      Rollbar.error(e, order_id: order.id, error: JSON.parse(response))
-      raise e
+      Rollbar.error(e, order_id: order.id)
     end
 
   end
