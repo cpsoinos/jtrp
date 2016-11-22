@@ -8,6 +8,7 @@ describe Item do
 
   it { should validate_presence_of(:description) }
   it { should validate_presence_of(:proposal) }
+  it { should validate_presence_of(:client_intention) }
 
   it { should monetize(:purchase_price).allow_nil }
   it { should monetize(:listing_price).allow_nil }
