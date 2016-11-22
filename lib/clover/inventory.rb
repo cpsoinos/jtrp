@@ -20,8 +20,7 @@ module Clover
         end
       end
     rescue CloverError => e
-      Rollbar.error(e, item_id: item.id, error: JSON.parse(response))
-      raise e
+      Rollbar.error(e, item_id: item.id)
     end
 
     def self.find(item)
@@ -36,8 +35,7 @@ module Clover
         end
       end
     rescue CloverError => e
-      Rollbar.error(e, item_id: item.id, error: JSON.parse(response))
-      raise e
+      Rollbar.error(e, item_id: item.id)
     end
 
     def self.update(item)
@@ -61,8 +59,7 @@ module Clover
         end
       end
     rescue CloverError => e
-      Rollbar.error(e, item_id: item.id, error: JSON.parse(response))
-      raise e
+      Rollbar.error(e, item_id: item.id)
     end
 
     def self.all
@@ -75,8 +72,7 @@ module Clover
         end
       end
     rescue CloverError => e
-      Rollbar.error(e, error: JSON.parse(response))
-      raise e
+      Rollbar.error(e)
     end
 
     def self.delete(item)
@@ -88,8 +84,7 @@ module Clover
         end
       end
     rescue CloverError => e
-      Rollbar.error(e, item_id: item.id, error: JSON.parse(response))
-      raise e
+      Rollbar.error(e, item_id: item.id)
     end
 
   end

@@ -15,8 +15,7 @@ module Clover
         end
       end
     rescue CloverError => e
-      Rollbar.error(e, item_id: item.id, error: JSON.parse(response))
-      raise e
+      Rollbar.error(e, item_id: item.id)
     end
 
     def self.all
@@ -29,8 +28,7 @@ module Clover
         end
       end
     rescue CloverError => e
-      Rollbar.error(e, error: JSON.parse(response))
-      raise e
+      Rollbar.error(e)
     end
 
   end
