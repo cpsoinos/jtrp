@@ -56,12 +56,30 @@
         <td><%= @client.full_name %></td>
       </tr>
       <tr>
-        <td>service address:</td>
-        <td><%= @client.full_address %></td>
+        <td>
+          service<br />
+          address:
+        </td>
+        <td>
+          <%= @job.address_1 %><br />
+          <% if @job.address_2.present? %>
+            <%= @job.address_2 %><br />
+          <% end %>
+          <%= @job.city %>, <%= @job.state %> <%= @job.zip %>
+        </td>
       </tr>
       <tr>
-        <td>mailing address:</td>
-        <td><%= @client.full_address %></td>
+        <td>
+          mailing<br />
+          address:
+        </td>
+        <td>
+          <%= @client.address_1 %><br />
+          <% if @client.address_2.present? %>
+            <%= @client.address_2 %><br />
+          <% end %>
+          <%= @client.city %>, <%= @client.state %> <%= @client.zip %>
+        </td>
       </tr>
       <tr>
         <td>phone:</td>
