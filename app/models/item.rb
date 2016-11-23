@@ -43,7 +43,7 @@ class Item < ActiveRecord::Base
     less_than_or_equal_to: 100000
   }
 
-  validates :description, :proposal, presence: true
+  validates :description, :proposal, :client_intention, presence: true
 
   scope :status, -> (status) { where(status: status) }
   scope :type, -> (type) { where(client_intention: type) }
