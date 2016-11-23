@@ -4,8 +4,8 @@ feature "proposal response" do
   let(:proposal) { create(:proposal, created_by: user) }
   let(:job) { proposal.job }
   let(:account) { job.account }
-  let!(:items) { create_list(:item, 3, proposal: proposal) }
-  let!(:intentions) { %w(sell consign nothing) }
+  let!(:items) { create_list(:item, 3, proposal: proposal, client_intention: "undecided") }
+  let!(:intentions) { %w(sell consign decline undecided) }
 
   before do
     allow(TransactionalEmailJob).to receive(:perform_later)
@@ -25,8 +25,7 @@ feature "proposal response" do
       items.each_with_index do |item, i|
         find(:css, "#item_#{item.id}_client_intention_#{intentions[i]}", visible: false).trigger("click")
         wait_for_ajax
-        item.reload
-        expect(item.client_intention).to eq(intentions[i])
+        expect(item.reload.client_intention).to eq(intentions[i])
       end
     end
 
