@@ -289,7 +289,7 @@ class Item < ActiveRecord::Base
   end
 
   def mark_agreement_active
-    agreement.mark_active! unless agreement.active?
+    agreement.mark_active unless agreement.try:(active?)
   end
 
 end
