@@ -1,5 +1,10 @@
+require 'active_job/traffic_control'
+
 class ImageConvertJob < ActiveJob::Base
   queue_as :default
+  include ActiveJob::TrafficControl::Throttle
+
+  throttle threshold: 2000, period: 1.hour
 
   attr_reader :photo
 
