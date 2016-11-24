@@ -83,6 +83,17 @@
       <div class="row form-row">
         <div class="text-center">
           <div class="col-xs-12 col-md-3 form-label">
+            <%= f.label :website, class: "control-label" %>
+          </div>
+          <div class="col-xs-12 col-md-9 text-left">
+            <%= f.url_field :website, class: "form-control", placeholder: "Website" %>
+          </div>
+        </div>
+      </div>
+
+      <div class="row form-row">
+        <div class="text-center">
+          <div class="col-xs-12 col-md-3 form-label">
             <%= f.label :phone, class: "control-label" %>
           </div>
           <div class="col-xs-12 col-md-9 text-left">

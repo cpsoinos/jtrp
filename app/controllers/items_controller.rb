@@ -166,7 +166,8 @@ class ItemsController < ApplicationController
       "donate" => { display_name: "will donate", icon: "<i class='fa fa-gift' aria-hidden='true'></i>", color: "secondary-darker" },
       "dump" => { display_name: "will dump", icon: "<i class='material-icons'>delete</i>", color: "complement-darker" },
       "undecided" => { display_name: "undecided", icon: "<i class='fa fa-question' aria-hidden='true'></i>", color: "primary-lighter" },
-      "nothing" => { display_name: "client kept", icon: "<i class='material-icons'>weekend</i>", color: "primary-lighter" }
+      "nothing" => { display_name: "client kept", icon: "<i class='material-icons'>weekend</i>", color: "primary-lighter" },
+      "decline" => { display_name: "client declined", icon: "<i class='material-icons'>weekend</i>", color: "primary-lighter" }
     }
   end
 

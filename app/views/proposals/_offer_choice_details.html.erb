@@ -56,7 +56,7 @@
 <%= form_for item, class: "form-horizontal", remote: true do |f| %>
 
   <div class="form-group">
-    <% intentions = %w(sell consign nothing) %>
+    <% intentions = %w(sell consign decline undecided) %>
     <% if !item.will_purchase? %>
       <% intentions.delete("sell") %>
     <% end %>
