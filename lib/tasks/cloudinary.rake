@@ -19,4 +19,20 @@ namespace :cloudinary do
     puts "finished migrating #{photos.count} images"
   end
 
+  task :convert_to_jpg => :environment do |task|
+
+    puts "begin converting all images to jpg"
+
+    photos = Photo.all
+    bar = RakeProgressbar.new(photos.count)
+
+    photos.each do |photo|
+      ImageConvertJob.perform_later(photo)
+      bar.inc
+    end
+
+    bar.finished
+
+  end
+
 end

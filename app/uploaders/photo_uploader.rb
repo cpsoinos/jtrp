@@ -1,6 +1,8 @@
 class PhotoUploader < CarrierWave::Uploader::Base
   include Cloudinary::CarrierWave
 
+  process convert: 'jpg'
+
   version :thumb do
     resize_to_fit(200, 200)
   end
