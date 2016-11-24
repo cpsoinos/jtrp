@@ -31,6 +31,8 @@ namespace :cloudinary do
       bar.inc
     end
 
+    bar.finished
+
   end
 
 end
