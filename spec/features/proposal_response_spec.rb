@@ -4,7 +4,7 @@ feature "proposal response" do
   let(:proposal) { create(:proposal, created_by: user) }
   let(:job) { proposal.job }
   let(:account) { job.account }
-  let!(:items) { create_list(:item, 3, proposal: proposal, client_intention: "undecided") }
+  let!(:items) { create_list(:item, 4, proposal: proposal, client_intention: "undecided") }
   let!(:intentions) { %w(sell consign decline undecided) }
 
   before do
@@ -47,7 +47,7 @@ feature "proposal response" do
         click_link("Generate Agreements")
 
         intentions.each do |intention|
-          expect(page).to have_link(intention) unless intention == "nothing"
+          expect(page).to have_link(intention) unless intention.in?(%w(nothing decline undecided))
         end
       end
     end

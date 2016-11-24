@@ -55,19 +55,21 @@
         <td>name:</td>
         <td><%= @client.full_name %></td>
       </tr>
-      <tr>
-        <td>
-          service<br />
-          address:
-        </td>
-        <td>
-          <%= @job.address_1 %><br />
-          <% if @job.address_2.present? %>
-            <%= @job.address_2 %><br />
-          <% end %>
-          <%= @job.city %>, <%= @job.state %> <%= @job.zip %>
-        </td>
-      </tr>
+      <% if @job.present? %>
+        <tr>
+          <td>
+            service<br />
+            address:
+          </td>
+          <td>
+            <%= @job.address_1 %><br />
+            <% if @job.address_2.present? %>
+              <%= @job.address_2 %><br />
+            <% end %>
+            <%= @job.city %>, <%= @job.state %> <%= @job.zip %>
+          </td>
+        </tr>
+      <% end %>
       <tr>
         <td>
           mailing<br />
