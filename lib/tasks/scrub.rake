@@ -9,7 +9,7 @@ namespace :scrub do
     bar = RakeProgressbar.new(clients.count)
 
     clients.each do |client|
-      client.email = "corey+#{incrementer}@justtherightpiece.furniture"
+      client.email = "corey+#{incrementer}@jtrpfurniture.com"
       client.address_1 = "20 Prichard Ave"
       client.address_2 = ""
       client.city = "Somerville"

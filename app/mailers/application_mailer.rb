@@ -1,4 +1,4 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: "notifications@justtherightpiece.furniture"
+  default from: "notifications@jtrpfurniture.com"
   layout 'mailer'
 end
