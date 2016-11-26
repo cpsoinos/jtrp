@@ -110,7 +110,6 @@ group :test do
   gem 'shoulda-matchers', require: false
   gem 'capybara'
   gem 'capybara-webkit'
-  gem 'poltergeist'
   gem 'launchy'
   gem 'email_spec'
   gem 'rspec-sidekiq'

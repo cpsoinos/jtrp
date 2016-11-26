@@ -6,7 +6,6 @@ require 'helpers/label_helper.rb'
 require 'coveralls'
 Coveralls.wear!
 require 'email_spec'
-require 'capybara/poltergeist'
 require 'money-rails/test_helpers'
 require 'best_in_place/test_helpers'
 require 'audited-rspec.rb'
