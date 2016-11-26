@@ -31,7 +31,6 @@ class ScannedAgreement < ActiveRecord::Base
   end
 
   def should_not_auto_deliver?
-    binding.pry
     agreement.updated_by.try(:internal?)
   end
 
