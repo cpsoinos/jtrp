@@ -41,7 +41,7 @@ feature "agreement" do
         expect(page).not_to have_link("dump")
         expect(page).not_to have_link("donate")
 
-        click_link("sell")
+        click_link("Purchase Order")
 
         expect(page).to have_content("Purchase Invoice")
       end
@@ -50,7 +50,7 @@ feature "agreement" do
         item.update_attribute("description", "new description")
         item.reload
         visit account_job_proposal_agreements_path(account, job, proposal)
-        click_link("sell")
+        click_link("Purchase Order")
 
         expect(page).to have_content(item.original_description)
         expect(page).not_to have_content("new description")
@@ -58,7 +58,7 @@ feature "agreement" do
 
       scenario "uploads scanned agreement", js: true do
         visit account_job_proposal_agreements_path(account, job, proposal)
-        click_link("sell")
+        click_link("Purchase Order")
         attach_file('scanned_agreement[scan]', File.join(Rails.root, '/spec/fixtures/test.pdf'))
         click_on("Create Scanned agreement")
 
@@ -71,7 +71,7 @@ feature "agreement" do
         agreement = scanned_agreement.agreement
 
         visit account_job_proposal_agreements_path(agreement.account, agreement.job, agreement.proposal)
-        click_link("sell")
+        click_link("Purchase Order")
         attach_file('scanned_agreement[scan]', File.join(Rails.root, '/spec/fixtures/test.pdf'))
         click_on("Update Scanned agreement")
 
@@ -87,7 +87,7 @@ feature "agreement" do
         agreement.mark_active
 
         visit account_job_proposal_agreements_path(account, job, proposal)
-        click_link("sell")
+        click_link("Purchase Order")
         click_on("Mark Items Active")
 
         expect(page).to have_content("Items are marked active!")
@@ -115,7 +115,7 @@ feature "agreement" do
         item.mark_active
 
         visit account_job_proposal_agreements_path(account, job, proposal)
-        click_link("sell")
+        click_link("Purchase Order")
 
         expect(page).not_to have_button("Mark Items Active")
       end
@@ -155,7 +155,7 @@ feature "agreement" do
         expect(page).not_to have_link("dump")
         expect(page).not_to have_link("donate")
 
-        click_link("consign")
+        click_link("Consignment Agreement")
 
         expect(page).to have_content("Consignment Agreement")
       end
@@ -190,7 +190,7 @@ feature "agreement" do
         agreement.mark_active
 
         visit account_job_proposal_agreements_path(account, job, proposal)
-        click_link("consign")
+        click_link("Consignment Agreement")
         click_on("Mark Items Active")
 
         expect(page).to have_content("Items are marked active!")
@@ -205,7 +205,7 @@ feature "agreement" do
         item.mark_active
 
         visit account_job_proposal_agreements_path(account, job, proposal)
-        click_link("consign")
+        click_link("Consignment Agreement")
 
         expect(page).not_to have_button("Mark Items Active")
       end
