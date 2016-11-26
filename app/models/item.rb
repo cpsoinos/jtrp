@@ -55,7 +55,7 @@ class Item < ActiveRecord::Base
   scope :unsold, -> { where.not(status: "sold") }
   scope :owned, -> { where(status: "active", client_intention: "sell").or(expired) }
   scope :jtrp, -> { where(status: ["active", "sold"], client_intention: "sell").or(expired) }
-  scope :consigned, -> { where(status: "active", client_intention: "consign") }
+  scope :consigned, -> { where(status: "active", client_intention: "consign", expired: false) }
   scope :for_sale, -> { active.where(client_intention: ['sell', 'consign']).or(expired) }
   scope :expired, -> { where(client_intention: 'consign', expired: true) }
 
@@ -268,8 +268,11 @@ class Item < ActiveRecord::Base
   end
 
   def mark_expired
-    expired = true
-    save
+    if meets_requirements_expired?
+      self.expired = true
+      self.save
+      mark_agreement_inactive
+    end
   end
 
   private
