@@ -1,4 +1,6 @@
-<% breadcrumb :proposal_agreements, @proposal %>
+<% if current_user.try(:internal?) %>
+  <% breadcrumb :proposal_agreements, @proposal %>
+<% end %>
 
 <div class="col-xs-12 col-lg-8 col-lg-offset-2">
 
