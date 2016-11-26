@@ -4,9 +4,12 @@ class JobsController < ApplicationController
   before_filter :find_account, only: [:create, :edit, :update]
 
   def index
-    @jobs = JobsPresenter.new(params).filter
     @filter = params[:status]
-    @account = Account.find(params[:account_id]) if params[:account_id]
+    if params[:account_id]
+      @account = Account.find(params[:account_id])
+      params[:account_id] = @account.id # to replace slug with id for Filterable
+    end
+    @jobs = JobsPresenter.new(params).filter
   end
 
   def show

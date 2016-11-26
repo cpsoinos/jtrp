@@ -70,6 +70,7 @@ gem 'rack-cors', :require => 'rack/cors'
 gem 'where-or'
 gem 'lob'
 gem 'paranoia', '~> 2.2'
+gem 'gretel'
 
 group :production, :staging do
   gem 'tunemygc'

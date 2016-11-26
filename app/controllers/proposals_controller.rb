@@ -37,6 +37,10 @@ class ProposalsController < ApplicationController
     end
   end
 
+  def index
+    @proposals = @job.proposals
+  end
+
   def send_email
     @proposal = Proposal.find(params[:proposal_id])
     TransactionalEmailJob.perform_later(@proposal, current_user, @proposal.account.primary_contact, "proposal", params[:note])

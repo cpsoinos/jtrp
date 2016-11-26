@@ -52,6 +52,14 @@ class Agreement < ActiveRecord::Base
     "#{account.short_name} #{agreement_type}"
   end
 
+  def humanized_agreement_type
+    if agreement_type == "consign"
+      "Consignment Agreement"
+    elsif agreement_type == "sell"
+      "Purchase Order"
+    end
+  end
+
   def mark_items_active
     items.map(&:mark_active)
   end

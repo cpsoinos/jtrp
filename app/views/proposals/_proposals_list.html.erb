@@ -1,0 +1,35 @@
+<div class="row">
+
+  <div class="table-responsive">
+    <table class="table table-shopping tablesorter">
+      <thead>
+        <tr>
+          <th class="text-center"></th>
+          <th class="th-description">Name</th>
+          <th class="text-center">Items</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% proposals.each do |proposal| %>
+          <% cache proposal do %>
+            <tr>
+              <td class="text-center">
+                <div class="icon icon-info">
+                  <i class="material-icons" style="font-size: 5em;">assignment</i>
+                </div>
+              </td>
+              <td>
+                <%= link_to "Proposal No. #{proposal.id}", account_job_proposal_path(proposal.account, proposal.job, proposal) %>
+              </td>
+              <td class="text-center">
+                <%= proposal.items.count %>
+              </td>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+</div>

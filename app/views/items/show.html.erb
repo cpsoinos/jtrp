@@ -3,6 +3,10 @@
 <% meta property: { product: @meta_tags[:product] } %>
 <% meta title: "#{@item.description.titleize} - #{@company.name}" %>
 
+<% if current_user.try(:internal?) %>
+  <% breadcrumb :item, @item %>
+<% end %>
+
 <div class="row">
   <div class="col-sm-12 text-center">
     <h1 class="company-title"><%= @item.description.titleize %></h1>

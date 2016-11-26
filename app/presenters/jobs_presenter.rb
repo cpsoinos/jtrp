@@ -7,7 +7,7 @@ class JobsPresenter
   end
 
   def filter
-    Job.filter(params.slice(:status))
+    Job.filter(params.slice(:status, :account_id))
   end
 
 end
