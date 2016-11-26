@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
+  force_ssl if: :ssl_configured?
   protect_from_forgery with: :exception
   before_filter :find_company
   before_filter :find_categories
@@ -133,6 +134,10 @@ class ApplicationController < ActionController::Base
       description:  "Found at #{@company.name} - #{ActionController::Base.helpers.humanized_money_with_symbol(@item.listing_price)}",
       image:        @item.featured_photo.photo_url(client_hints: true, quality: "auto", fetch_format: :auto, width: :auto, dpr: "auto", effect: :improve)
     }
+  end
+
+  def ssl_configured?
+    Rails.env.production? && controller_name != 'webhooks'
   end
 
 end
