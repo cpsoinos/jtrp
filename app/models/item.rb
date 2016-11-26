@@ -52,24 +52,22 @@ class Item < ActiveRecord::Base
   scope :potential, -> { where(status: "potential") }
   scope :active, -> { where(status: "active") }
   scope :sold, -> { where(status: "sold") }
-  scope :expired, -> { where(status: "expired") }
   scope :unsold, -> { where.not(status: "sold") }
   scope :owned, -> { where(status: "active", client_intention: "sell").or(expired) }
   scope :jtrp, -> { where(status: ["active", "sold"], client_intention: "sell").or(expired) }
   scope :consigned, -> { where(status: "active", client_intention: "consign") }
   scope :for_sale, -> { active.where(client_intention: ['sell', 'consign']).or(expired) }
+  scope :expired, -> { where(client_intention: 'consign', expired: true) }
 
   state_machine :status, initial: :potential do
     state :potential
     state :active
     state :sold
     state :inactive
-    state :expired
 
     after_transition [:potential, :inactive] => :active, do: [:set_listed_at, :sync_inventory]
     after_transition [:active, :inactive] => :sold, do: [:mark_agreement_inactive, :set_sold_at, :sync_inventory]
     after_transition any => :inactive, do: :sync_inventory
-    after_transition any => :expired, do: :mark_agreement_inactive
     after_transition sold: :active, do: [:clear_sale_data, :mark_agreement_active]
 
     event :mark_active do
@@ -82,10 +80,6 @@ class Item < ActiveRecord::Base
 
     event :mark_inactive do
       transition any => :inactive
-    end
-
-    event :mark_expired do
-      transition :active => :expired, if: lambda { |item| item.meets_requirements_expired? }
     end
 
     event :mark_not_sold do
@@ -271,6 +265,11 @@ class Item < ActiveRecord::Base
 
   def job_name
     job.try(:name)
+  end
+
+  def mark_expired
+    expired = true
+    save
   end
 
   private
