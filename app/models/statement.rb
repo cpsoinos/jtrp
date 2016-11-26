@@ -6,7 +6,6 @@ class Statement < ActiveRecord::Base
   include Filterable
 
   belongs_to :account, touch: true
-  belongs_to :agreement, touch: true
   has_one :statement_pdf
 
   scope :status, -> (status) { where(status: status) }

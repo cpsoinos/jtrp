@@ -1,7 +1,7 @@
 describe StatementCreator do
 
-  let(:agreement) { create(:agreement) }
-  let(:service) { StatementCreator.new(agreement) }
+  let(:account) { create(:account) }
+  let(:service) { StatementCreator.new(account) }
 
   it "can be instantiated" do
     expect(service).to be_an_instance_of(StatementCreator)
@@ -22,9 +22,9 @@ describe StatementCreator do
     Timecop.return
   end
 
-  it "creates the statement under the specified agreement" do
+  it "creates the statement under the specified account" do
     statement = service.create
-    expect(statement.agreement).to eq(agreement)
+    expect(statement.account).to eq(account)
   end
 
 end

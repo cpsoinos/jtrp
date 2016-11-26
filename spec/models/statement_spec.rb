@@ -1,7 +1,6 @@
 describe Statement do
 
   it { should be_audited.associated_with(:account) }
-  it { should belong_to(:agreement) }
   it { should belong_to(:account) }
 
   describe "state machine" do
@@ -40,7 +39,7 @@ describe Statement do
       Timecop.return
     end
 
-    it "returns items from the agreement sold within the past month" do
+    it "returns items from the account sold within the past month" do
       statement.items.each do |item|
         expect(item.in?(items)).to be(true)
         expect(item.sold_at > statement.send(:starting_date)).to be(true)
@@ -48,7 +47,7 @@ describe Statement do
       end
     end
 
-    it "does not include items from the agreement sold more than a month ago" do
+    it "does not include items from the account sold more than a month ago" do
       expect(statement.items).not_to include(older_item)
     end
 

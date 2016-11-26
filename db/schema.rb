@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161126213126) do
+ActiveRecord::Schema.define(version: 20161126232106) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -356,7 +356,6 @@ ActiveRecord::Schema.define(version: 20161126213126) do
   add_index "statement_pdfs", ["statement_id"], name: "index_statement_pdfs_on_statement_id", using: :btree
 
   create_table "statements", force: :cascade do |t|
-    t.integer  "agreement_id"
     t.datetime "date"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -368,7 +367,6 @@ ActiveRecord::Schema.define(version: 20161126213126) do
   end
 
   add_index "statements", ["account_id"], name: "index_statements_on_account_id", using: :btree
-  add_index "statements", ["agreement_id"], name: "index_statements_on_agreement_id", using: :btree
   add_index "statements", ["deleted_at"], name: "index_statements_on_deleted_at", using: :btree
 
   create_table "system_infos", force: :cascade do |t|
@@ -445,6 +443,5 @@ ActiveRecord::Schema.define(version: 20161126213126) do
   add_foreign_key "scanned_agreements", "agreements"
   add_foreign_key "statement_pdfs", "statements"
   add_foreign_key "statements", "accounts"
-  add_foreign_key "statements", "agreements"
   add_foreign_key "users", "accounts"
 end

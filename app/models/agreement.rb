@@ -8,7 +8,6 @@ class Agreement < ActiveRecord::Base
   belongs_to :proposal, touch: true
   has_many :items, -> (instance) { where(items: {client_intention: instance.agreement_type}).where.not(items: {status: 'expired'}) }, through: :proposal
   has_one :scanned_agreement
-  has_many :statements
   has_one :job, through: :proposal
   has_one :account, through: :job
   has_many :letters
