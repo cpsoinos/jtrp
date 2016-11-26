@@ -6,22 +6,27 @@
   <div class="col-xs-12 col-md-8 col-md-offset-2">
     <div class="well bs-component">
 
+      <%= render 'agreement_note_modal' %>
+
       <% if current_user.try(:internal?) %>
         <% if @agreement.active? && @agreement.items.any? { |i| i.potential? } %>
-          <div class="row hidden-print">
+          <div class="hidden-print">
             <%= link_to "Mark Items Active <i class='material-icons'>store</i>".html_safe, agreement_activate_items_path(@agreement), class: "btn btn-raised btn-primary pull-right", method: :post %>
           </div>
         <% end %>
 
         <% if @agreement.active? && @agreement.items.any? { |i| i.meets_requirements_expired? } %>
-          <div class="row hidden-print">
+          <div class="hidden-print">
             <%= link_to "Mark Items Expired <i class='material-icons'>store</i>".html_safe, agreement_expire_items_path(@agreement), class: "btn btn-raised btn-warning pull-right", method: :post %>
           </div>
         <% end %>
       <% end %>
 
       <% if @agreement.scanned_agreement.present? %>
-        <iframe src="<%= @agreement.scanned_agreement.scan_url %>" width="100%" style="border: none;" class="full-height"> </iframe>
+        <button type="button" class="btn btn-raised btn-primary pull-right hidden-print" data-toggle="modal" data-target="#agreement-note-modal">
+          Send Agreement <i class='material-icons'>email</i>
+        </button>
+        <iframe src="<%= @agreement.scanned_agreement.scan_url %>" width="100%" style="border: none;" class="full-height"></iframe>
       <% else %>
         <%= render "agreements/#{@agreement.agreement_type}", items: @items, agreement: @agreement %>
       <% end %>
@@ -30,9 +35,10 @@
         <%= render 'agreements/terms_form', agreement: @agreement, account: @account %>
       <% end %>
 
-      <% if current_user.try(:internal?) %>
+      <% if current_user.try(:internal?) && @agreement.scanned_agreement.nil? %>
         <%= render 'scanned_upload_form', agreement: @agreement %>
       <% end %>
+
     </div>
   </div>
 </div>

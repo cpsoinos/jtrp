@@ -36,7 +36,7 @@ feature "proposal response" do
         visit account_job_proposal_path(account, job, proposal)
         click_link("Generate Agreements")
 
-        expect(page).to have_link("Purchase Order")
+        expect(page).to have_link("Purchase Invoice")
       end
 
       scenario "multiple intentions" do
@@ -47,7 +47,7 @@ feature "proposal response" do
         click_link("Generate Agreements")
 
         expect(proposal.agreements.count).to eq(2)
-        ["Purchase Order", "Consignment Agreement"].each do |agreement_type|
+        ["Purchase Invoice", "Consignment Agreement"].each do |agreement_type|
           expect(page).to have_link(agreement_type)
         end
       end
