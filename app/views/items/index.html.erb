@@ -9,7 +9,7 @@
         <h4><%= @filter %> items have not yet been listed for sale or consigned.</h4>
       <% when "Active" %>
         <% if @type == "sell" %>
-          <h4>For Sale items have a signed purchase order and are actively for sale.</h4>
+          <h4>For Sale items have a signed purchase invoice and are actively for sale.</h4>
         <% elsif @type == "consign" %>
           <h4>Consigned items have a signed agreement and are actively on consignment.</h4>
         <% else %>

@@ -12,6 +12,8 @@ class Agreement < ActiveRecord::Base
   has_one :job, through: :proposal
   has_one :account, through: :job
   has_many :letters
+  belongs_to :created_by, class_name: "User"
+  belongs_to :updated_by, class_name: "User"
 
   after_destroy :delete_cache
 
@@ -56,7 +58,7 @@ class Agreement < ActiveRecord::Base
     if agreement_type == "consign"
       "Consignment Agreement"
     elsif agreement_type == "sell"
-      "Purchase Order"
+      "Purchase Invoice"
     end
   end
 
