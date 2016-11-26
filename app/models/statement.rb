@@ -1,6 +1,6 @@
 class Statement < ActiveRecord::Base
   acts_as_paranoid
-  audited associated_with: :agreement
+  audited associated_with: :account
   has_secure_token
 
   include Filterable
@@ -45,11 +45,11 @@ class Statement < ActiveRecord::Base
   end
 
   def starting_date
-    created_at.last_month.beginning_of_month
+    date.last_month.beginning_of_month
   end
 
   def ending_date
-    created_at.last_month.end_of_month
+    date.last_month.end_of_month
   end
 
   def task

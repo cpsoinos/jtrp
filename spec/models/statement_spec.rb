@@ -1,13 +1,13 @@
 describe Statement do
 
-  it { should be_audited.associated_with(:agreement) }
+  it { should be_audited.associated_with(:account) }
   it { should belong_to(:agreement) }
   it { should belong_to(:account) }
 
   describe "state machine" do
 
     it "starts as 'unpaid'" do
-      expect(Statement.new(agreement: build_stubbed(:agreement))).to be_unpaid
+      expect(Statement.new(account: build_stubbed(:account))).to be_unpaid
     end
 
     it "transitions 'unpaid' to 'paid'" do

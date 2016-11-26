@@ -1,13 +1,13 @@
 class StatementCreator
 
-  attr_reader :agreement
+  attr_reader :account
 
-  def initialize(agreement)
-    @agreement = agreement
+  def initialize(account)
+    @account = account
   end
 
   def create
-    statement = agreement.statements.new
+    statement = account.statements.new
     statement.date = DateTime.now
     statement.save
     statement
