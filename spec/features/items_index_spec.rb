@@ -64,7 +64,7 @@ feature "item index" do
     scenario "visits item list" do
       visit items_path(status: 'active', type: 'sell')
 
-      expect(page).to have_content("For Sale items have a signed purchase order and are actively for sale.")
+      expect(page).to have_content("For Sale items have a signed Purchase Invoice and are actively for sale.")
       active_owned_items.each do |item|
         expect(page).to have_link("Buddy")
       end

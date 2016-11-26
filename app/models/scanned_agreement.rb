@@ -8,10 +8,14 @@ class ScannedAgreement < ActiveRecord::Base
   validates :agreement, presence: true
   validates :scan, presence: true
 
-  after_create :mark_agreement_active, :deliver_to_client
+  after_create :mark_agreement_active
 
   def object_url
     scan.file.public_url
+  end
+
+  def deliver_to_client
+    TransactionalEmailJob.perform_later(self, Company.jtrp.primary_contact, agreement.account.primary_contact, "agreement", nil)
   end
 
   private
@@ -23,10 +27,6 @@ class ScannedAgreement < ActiveRecord::Base
     agreement.manager_agreed_at = DateTime.now
     agreement.save
     agreement.mark_active
-  end
-
-  def deliver_to_client
-    TransactionalEmailJob.perform_later(self, agreement.proposal.created_by, agreement.account.primary_contact, "agreement", nil)
   end
 
 end

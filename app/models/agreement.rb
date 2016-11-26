@@ -56,7 +56,7 @@ class Agreement < ActiveRecord::Base
     if agreement_type == "consign"
       "Consignment Agreement"
     elsif agreement_type == "sell"
-      "Purchase Order"
+      "Purchase Invoice"
     end
   end
 
