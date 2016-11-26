@@ -160,29 +160,6 @@ feature "agreement" do
         expect(page).to have_content("Consignment Agreement")
       end
 
-      scenario "manager agrees", skip: "not requiring manager signature", js: true do
-        first('input[name="agreement[manager_agreed]"]', visible: :false).set(true)
-        click_button("consign-manager-submit")
-        wait_for_ajax
-        agreement.reload
-
-        expect(agreement.manager_agreed).to be(true)
-      end
-
-      scenario "both client and manager sign", js: true do
-        pending("client portal")
-        first('input[name="agreement[manager_agreed]"]', visible: :false).set(true)
-        click_button("consign-manager-submit")
-        first('input[name="agreement[client_agreed]"]', visible: :false).set(true)
-        click_button("consign-client-submit")
-        wait_for_ajax
-        agreement.reload
-
-        expect(agreement.client_agreed).to be(true)
-        expect(agreement.manager_agreed).to be(true)
-        expect(agreement).to be_active
-      end
-
       scenario "activates items from index", js: true do
         allow(PdfGeneratorJob).to receive(:perform_later)
         allow(InventorySyncJob).to receive(:perform_later)
