@@ -37,11 +37,14 @@ class AgreementsController < ApplicationController
 
   def update
     @agreement = Agreement.find(params[:id])
-    if @agreement.update(agreement_params)
+    if @agreement.update(agreement_params.merge(updated_by: current_user))
       respond_to do |format|
         format.html do
-          @agreement.mark_active # will return if does not meet requirements
-          flash[:notice] = "Agreement updated!"
+          if @agreement.mark_active # will return if does not meet requirements
+            flash[:notice] = "Agreement updated!"
+          else
+            flash[:alert] = "Could not update agreement."
+          end
           redirect_to :back
         end
         format.js do

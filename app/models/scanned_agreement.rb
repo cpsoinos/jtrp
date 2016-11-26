@@ -9,6 +9,7 @@ class ScannedAgreement < ActiveRecord::Base
   validates :scan, presence: true
 
   after_create :mark_agreement_active
+  after_create :deliver_to_client, unless: :should_not_auto_deliver?
 
   def object_url
     scan.file.public_url
@@ -27,6 +28,11 @@ class ScannedAgreement < ActiveRecord::Base
     agreement.manager_agreed_at = DateTime.now
     agreement.save
     agreement.mark_active
+  end
+
+  def should_not_auto_deliver?
+    binding.pry
+    agreement.updated_by.try(:internal?)
   end
 
 end

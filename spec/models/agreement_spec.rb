@@ -7,6 +7,8 @@ describe Agreement do
   it { should have_one(:scanned_agreement) }
   it { should have_many(:statements) }
   it { should have_many(:letters) }
+  it { should belong_to(:created_by) }
+  it { should belong_to(:updated_by) }
 
   describe "validations" do
     it { should validate_presence_of(:proposal) }
