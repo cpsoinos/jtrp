@@ -5,7 +5,8 @@ describe ScannedAgreement do
   it { should validate_presence_of(:agreement) }
   it { should validate_presence_of(:scan) }
 
-  let(:agreement) { create(:agreement, :active) }
+  let(:agreement) { create(:agreement) }
+  let(:active_agreement) { create(:agreement, :active) }
 
   before do
     allow(TransactionalEmailJob).to receive(:perform_later)
@@ -23,13 +24,13 @@ describe ScannedAgreement do
   end
 
   it "delivers to the client on create" do
-    create(:scanned_agreement, agreement: agreement)
+    create(:scanned_agreement, agreement: active_agreement)
     expect(TransactionalEmailJob).to have_received(:perform_later)
   end
 
   it "does not deliver to the client on create when accepted internally" do
-    agreement.update_attribute("updated_by", create(:internal_user))
-    create(:scanned_agreement, agreement: agreement)
+    active_agreement.update_attribute("updated_by", create(:internal_user))
+    create(:scanned_agreement, agreement: active_agreement)
     expect(TransactionalEmailJob).not_to have_received(:perform_later)
   end
 
