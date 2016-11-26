@@ -1,3 +1,7 @@
+<% if current_user.try(:internal?) %>
+  <% breadcrumb :proposal_agreements, @proposal %>
+<% end %>
+
 <div class="col-xs-12 col-lg-8 col-lg-offset-2">
 
   <%= render 'agreement_note_modal' %>
@@ -5,7 +9,7 @@
   <!-- Tabs -->
   <ul class="nav nav-pills nav-justified hidden-print large-top-margin large-bottom-margin" role="tablist">
     <% @agreements.each do |agreement| %>
-    <li role="presentation"><a href="#<%= agreement.agreement_type %>" aria-controls="<%= agreement.agreement_type %>" role="tab" data-toggle="tab" class="agreement-tab"><%= agreement.agreement_type %></a></li>
+    <li role="presentation"><a href="#<%= agreement.agreement_type %>" aria-controls="<%= agreement.agreement_type %>" role="tab" data-toggle="tab" class="agreement-tab"><%= agreement.humanized_agreement_type %></a></li>
     <% end %>
   </ul>
 

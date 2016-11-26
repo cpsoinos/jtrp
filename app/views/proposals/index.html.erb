@@ -1,8 +1,8 @@
-<% breadcrumb :account_jobs, @account %>
+<% breadcrumb :job_proposals, @job %>
 
 <div class="row">
   <div class="col-sm-12 text-center">
-    <h1 class="company-title">Jobs</h1>
+    <h1 class="company-title">Proposals</h1>
   </div>
 </div>
 
@@ -31,12 +31,12 @@
           </a>
         </li>
         <li class="">
-          <a href="#completed" aria-controls="completed" role="tab" data-toggle="tab" aria-expanded="false">
+          <a href="#inactive" aria-controls="inactive" role="tab" data-toggle="tab" aria-expanded="false">
             <div class="info">
               <span class="icon icon-warning tab-icon">
                 <i class="material-icons">location_on</i>
               </span>
-              <h3>Completed</h3>
+              <h3>Inactive</h3>
             </div>
           </a>
         </li>
@@ -47,13 +47,13 @@
     <div class="large-top-margin">
       <div class="tab-content">
         <div role="tabpanel" class="tab-pane fade" id="potential">
-          <%= render "jobs_list", jobs: @jobs.potential %>
+          <%= render "proposals_list", proposals: @proposals.potential %>
         </div>
         <div role="tabpanel" class="tab-pane fade" id="active">
-          <%= render "jobs_list", jobs: @jobs.active %>
+          <%= render "proposals_list", proposals: @proposals.active %>
         </div>
-        <div role="tabpanel" class="tab-pane fade" id="completed">
-          <%= render "jobs_list", jobs: @jobs.completed %>
+        <div role="tabpanel" class="tab-pane fade" id="inactive">
+          <%= render "proposals_list", proposals: @proposals.inactive %>
         </div>
       </div>
     </div>

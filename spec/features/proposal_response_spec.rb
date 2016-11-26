@@ -36,7 +36,7 @@ feature "proposal response" do
         visit account_job_proposal_path(account, job, proposal)
         click_link("Generate Agreements")
 
-        expect(page).to have_link("sell")
+        expect(page).to have_link("Purchase Order")
       end
 
       scenario "multiple intentions" do
@@ -46,8 +46,9 @@ feature "proposal response" do
         visit account_job_proposal_path(account, job, proposal)
         click_link("Generate Agreements")
 
-        intentions.each do |intention|
-          expect(page).to have_link(intention) unless intention.in?(%w(nothing decline undecided))
+        expect(proposal.agreements.count).to eq(2)
+        ["Purchase Order", "Consignment Agreement"].each do |agreement_type|
+          expect(page).to have_link(agreement_type)
         end
       end
     end

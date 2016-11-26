@@ -1,3 +1,7 @@
+<% if current_user.try(:internal?) %>
+  <% breadcrumb :proposal, @proposal %>
+<% end %>
+
 <% unless params[:print] %>
   <h1 class="text-center hidden-print bottom-margin">Proposal for <%= @proposal.account.full_name %></h1>
 <% end %>
