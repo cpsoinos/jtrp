@@ -188,6 +188,17 @@ describe Item do
       expect(item).to be_active
     end
 
+    it "transitions 'sold' to 'active' when item is an import" do
+      item = create(:item, :sold, import: true)
+      item.agreement.destroy
+      item.reload
+
+      expect(item.agreement).to eq(nil)
+
+      item.mark_not_sold
+      expect(item).to be_active
+    end
+
     it "sets listed_at" do
       now = DateTime.now
       proposal = create(:proposal, :active)
