@@ -77,6 +77,7 @@ class ApplicationController < ActionController::Base
   def meta_tags
     @meta_tags = {
       site: @company.name,
+      title: @item.present? ? @item.description.titleize : @company.name,
       description: @company.meta_description,
       og: og_meta_tags,
       twitter: twitter_meta_tags,
