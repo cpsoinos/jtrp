@@ -40,14 +40,14 @@ describe Item do
     end
 
     it "sold" do
-      expect(Item.sold.count).to eq(4)
+      expect(Item.sold.count).to eq(6)
       Item.sold.each do |item|
         expect(item).to be_sold
       end
     end
 
     it "owned" do
-      expect(Item.owned.count).to eq(7)
+      expect(Item.owned.count).to eq(5)
     end
 
     it "jtrp" do
@@ -64,7 +64,7 @@ describe Item do
       create(:item, :active, client_intention: "consign")
       create(:item, :active, client_intention: "sell")
 
-      expect(Item.for_sale.count).to eq(9)
+      expect(Item.for_sale.count).to eq(7)
     end
 
     context "amount due to client" do
