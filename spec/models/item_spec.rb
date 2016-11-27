@@ -22,7 +22,7 @@ describe Item do
       create_list(:item, 3, :active)
       create_list(:item, 4, :sold)
       create_list(:item, 2, :expired)
-      create_list(:item, 2, :sold, :expired)
+      create_list(:item, 2, :sold, expired: true)
     end
 
     it "potential" do
@@ -33,7 +33,7 @@ describe Item do
     end
 
     it "active" do
-      expect(Item.active.count).to eq(3)
+      expect(Item.active.count).to eq(5)
       Item.active.each do |item|
         expect(item).to be_active
       end
@@ -64,7 +64,7 @@ describe Item do
       create(:item, :active, client_intention: "consign")
       create(:item, :active, client_intention: "sell")
 
-      expect(Item.for_sale.count).to eq(7)
+      expect(Item.for_sale.count).to eq(9)
     end
 
     context "amount due to client" do
