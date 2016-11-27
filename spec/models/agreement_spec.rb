@@ -5,7 +5,6 @@ describe Agreement do
   it { should have_one(:account).through(:job) }
   it { should have_many(:items).through(:proposal) }
   it { should have_one(:scanned_agreement) }
-  it { should have_many(:statements) }
   it { should have_many(:letters) }
   it { should belong_to(:created_by) }
   it { should belong_to(:updated_by) }

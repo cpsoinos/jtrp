@@ -22,6 +22,7 @@ describe Item do
       create_list(:item, 3, :active)
       create_list(:item, 4, :sold)
       create_list(:item, 2, :expired)
+      create_list(:item, 2, :sold, expired: true)
     end
 
     it "potential" do
@@ -32,14 +33,14 @@ describe Item do
     end
 
     it "active" do
-      expect(Item.active.count).to eq(3)
+      expect(Item.active.count).to eq(5)
       Item.active.each do |item|
         expect(item).to be_active
       end
     end
 
     it "sold" do
-      expect(Item.sold.count).to eq(4)
+      expect(Item.sold.count).to eq(6)
       Item.sold.each do |item|
         expect(item).to be_sold
       end
@@ -50,7 +51,7 @@ describe Item do
     end
 
     it "jtrp" do
-      expect(Item.jtrp.count).to eq(9)
+      expect(Item.jtrp.count).to eq(11)
     end
 
     it "consigned" do
@@ -222,30 +223,6 @@ describe Item do
       expect(item.sold_at).to be_within(1.second).of(now)
     end
 
-    it "transitions 'active' to 'expired'" do
-      now = DateTime.now
-      Timecop.freeze(now)
-      item = create(:item, :active, client_intention: "consign", listed_at: 91.days.ago)
-      item.proposal.agreements.first.update_attribute("agreement_type", "consign")
-      Timecop.return
-      item.mark_expired
-
-      expect(item).to be_expired
-      expect(item.agreement).to be_inactive
-    end
-
-    it "does not transition 'active' to 'expired' when requriements not met" do
-      now = DateTime.now
-      Timecop.freeze(now)
-      item = create(:item, :active, client_intention: "consign", listed_at: 89.days.ago)
-      Timecop.return
-      item.mark_expired
-      item.reload
-
-      expect(item).not_to be_expired
-      expect(item).to be_active
-    end
-
   end
 
   describe Item, "callbacks" do
@@ -266,6 +243,34 @@ describe Item do
       item.description = "a new description"
       item.save
       expect(item.reload.original_description).to eq("some initial description")
+    end
+
+  end
+
+  describe Item, "expired" do
+
+    it "marks an item 'expired'" do
+      now = DateTime.now
+      Timecop.freeze(now)
+      item = create(:item, :active, client_intention: "consign", listed_at: 91.days.ago)
+      item.proposal.agreements.first.update_attribute("agreement_type", "consign")
+      Timecop.return
+      item.mark_expired
+
+      expect(item).to be_expired
+      expect(item.agreement).to be_inactive
+    end
+
+    it "does not mark an item 'expired' when requirements not met" do
+      now = DateTime.now
+      Timecop.freeze(now)
+      item = create(:item, :active, client_intention: "consign", listed_at: 89.days.ago)
+      Timecop.return
+      item.mark_expired
+      item.reload
+
+      expect(item).not_to be_expired
+      expect(item).to be_active
     end
 
   end

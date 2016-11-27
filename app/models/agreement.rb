@@ -6,9 +6,8 @@ class Agreement < ActiveRecord::Base
   include Filterable
 
   belongs_to :proposal, touch: true
-  has_many :items, -> (instance) { where(items: {client_intention: instance.agreement_type}).where.not(items: {status: 'expired'}) }, through: :proposal
+  has_many :items, -> (instance) { where(items: {client_intention: instance.agreement_type}).where.not(items: {expired: 'true'}) }, through: :proposal
   has_one :scanned_agreement
-  has_many :statements
   has_one :job, through: :proposal
   has_one :account, through: :job
   has_many :letters
@@ -89,7 +88,7 @@ class Agreement < ActiveRecord::Base
 
   def meets_requirements_expired?
     agreement_type == "consign" &&
-    items.active.none? { |i| i.listed_at < 90.days.ago }
+      items.active.none? { |i| i.listed_at > 90.days.ago }
   end
 
   def manager_signed?

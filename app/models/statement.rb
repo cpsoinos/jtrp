@@ -1,12 +1,11 @@
 class Statement < ActiveRecord::Base
   acts_as_paranoid
-  audited associated_with: :agreement
+  audited associated_with: :account
   has_secure_token
 
   include Filterable
 
   belongs_to :account, touch: true
-  belongs_to :agreement, touch: true
   has_one :statement_pdf
 
   scope :status, -> (status) { where(status: status) }
@@ -45,11 +44,11 @@ class Statement < ActiveRecord::Base
   end
 
   def starting_date
-    created_at.last_month.beginning_of_month
+    date.last_month.beginning_of_month
   end
 
   def ending_date
-    created_at.last_month.end_of_month
+    date.last_month.end_of_month
   end
 
   def task

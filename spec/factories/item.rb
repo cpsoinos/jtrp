@@ -41,10 +41,11 @@ FactoryGirl.define do
     end
 
     trait :expired do
-      status "expired"
+      status "active"
       association :proposal, :active
       client_intention "consign"
       listed_at 91.days.ago
+      expired true
     end
 
     trait :with_initial_photo do
