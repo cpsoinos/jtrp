@@ -84,7 +84,7 @@ feature "proposal response" do
       fill_in("note", with: "this is a note")
       click_button("Send Email")
 
-      expect(TransactionalEmailJob).to have_received(:perform_later).with(proposal, account.primary_contact, user, "notification", "this is a note")
+      expect(TransactionalEmailJob).to have_received(:perform_later).with(proposal, account.primary_contact, Company.jtrp.primary_contact, "notification", "this is a note")
     end
 
   end
