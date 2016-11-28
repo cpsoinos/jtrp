@@ -59,7 +59,7 @@ class AgreementsController < ApplicationController
     @agreements = @proposal.agreements
     @agreements.each do |agreement|
       if agreement.potential?
-        TransactionalEmailJob.perform_later(agreement, current_user, agreement.account.primary_contact, "send_agreement", params[:note])
+        TransactionalEmailJob.perform_later(agreement, @company.primary_contact, agreement.account.primary_contact, "send_agreement", params[:note])
       else
         agreement.scanned_agreement.deliver_to_client
       end

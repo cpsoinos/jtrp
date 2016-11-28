@@ -122,7 +122,7 @@ feature "edit a proposal" do
       fill_in("note", with: "this is a note")
       click_button("Send Email")
 
-      expect(TransactionalEmailJob).to have_received(:perform_later).with(proposal, user, account.primary_contact, "proposal", "this is a note")
+      expect(TransactionalEmailJob).to have_received(:perform_later).with(proposal, Company.jtrp.primary_contact, account.primary_contact, "proposal", "this is a note")
     end
 
   end

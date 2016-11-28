@@ -84,7 +84,7 @@ describe Agreement do
       expect(agreement.proposal).to be_active
       expect(agreement.proposal.job).to be_active
       expect(agreement.proposal.account).to be_active
-      expect(TransactionalEmailJob).to have_received(:perform_later).with(agreement, agreement.account.primary_contact, agreement.proposal.created_by, "agreement_active_notifier")
+      expect(TransactionalEmailJob).to have_received(:perform_later).with(agreement, agreement.account.primary_contact, Company.jtrp.primary_contact, "agreement_active_notifier")
     end
 
     it "transitions 'active' to 'inactive'" do

@@ -111,7 +111,7 @@ class Agreement < ActiveRecord::Base
 
   def notify_company
     return unless self.active?
-    TransactionalEmailJob.perform_later(self, account.primary_contact, proposal.created_by, "agreement_active_notifier")
+    TransactionalEmailJob.perform_later(self, account.primary_contact, Company.jtrp.primary_contact, "agreement_active_notifier")
   end
 
   def task
