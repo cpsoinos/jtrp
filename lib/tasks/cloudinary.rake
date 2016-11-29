@@ -19,9 +19,9 @@ namespace :cloudinary do
     puts "finished migrating #{photos.count} images"
   end
 
-  task :convert_to_jpg => :environment do |task|
+  task :transform_and_reupload => :environment do |task|
 
-    puts "begin converting all images to jpg"
+    puts "begin converting all images to jpg, transforming, and reuploading"
 
     photos = Photo.all
     bar = RakeProgressbar.new(photos.count)

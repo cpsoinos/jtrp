@@ -3,6 +3,10 @@ class PhotoUploader < CarrierWave::Uploader::Base
 
   process convert: 'jpg'
 
+  cloudinary_transformation transformation: [
+    { width: 1000, crop: :limit }
+  ]
+
   version :thumb do
     resize_to_fit(200, 200)
   end
