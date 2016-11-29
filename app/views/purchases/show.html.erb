@@ -1,4 +1,7 @@
-<div class="row text-center">
+<% meta title: "#{@account.short_name} - Purchase - #{@company.name}" %>
+<% breadcrumb :purchase, @agreement %>
+
+<div class="row text-center large-top-margin">
   <div class="col-md-8 col-md-offset-2 col-xs-12">
     <%= render 'header_cards' %>
   </div>
@@ -12,7 +15,7 @@
       </div>
     </div>
     <div class="row large-top-margin no-break">
-      <span class="col-sm-6 col-sm-offset-5">
+      <span class="col-sm-6 col-sm-offset-6">
         <table class="pull-right">
           <tr>
             <th class="text-right">Subotal:</th>
