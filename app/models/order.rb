@@ -5,6 +5,8 @@ class Order < ActiveRecord::Base
   has_many :items
   has_many :discounts
 
+  scope :by_date, -> (date_range) { where(created_at: date_range) }
+
   monetize :amount_cents, allow_nil: true, numericality: {
     greater_than_or_equal_to: 0,
     less_than_or_equal_to: 1000000
