@@ -122,6 +122,18 @@ class Agreement < ActiveRecord::Base
     end
   end
 
+  def cost_of_items
+    if agreement_type == "sell"
+      Money.new(items.sum(:purchase_price_cents))
+    else
+      Money.new(0)
+    end
+  end
+
+  def total_price
+    cost_of_items - service_charge
+  end
+
   private
 
   def update_cache

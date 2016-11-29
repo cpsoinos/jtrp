@@ -14,4 +14,8 @@ $(document).on('turbolinks:load', function() {
 
   $(".tablesorter").tablesorter( { sortList: [[1,0]] } );
 
+  $("tr[data-link]").click(function() {
+    window.location = $(this).data("link")
+  })
+
 });

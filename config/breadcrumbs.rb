@@ -51,6 +51,15 @@ crumb :item do |item|
   parent :proposal_items, item.proposal
 end
 
+crumb :purchases do
+  link "Purchase List", purchases_path
+end
+
+crumb :purchase do |agreement|
+  link "#{agreement.humanized_agreement_type} #{agreement.id}", agreement_path(agreement)
+  parent :purchases
+end
+
 # crumb :issue do |issue|
 #   link issue.title, issue_path(issue)
 #   parent :project_issues, issue.project
