@@ -21,7 +21,7 @@
 
       <tbody>
         <% items.each do |item| %>
-          <% cache [item, context] do %>
+          <% cache [item, context, controller_name] do %>
             <tr class="no-break">
               <td class="text-center">
                 <div class="img-container">
