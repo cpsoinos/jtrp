@@ -26,7 +26,7 @@
       <tbody>
         <% @agreements.each do |agreement| %>
           <tr class="tr-link" data-link="<%= purchase_path(agreement) %>">
-            <td><%= agreement.date.strftime('%-m/%-d/%y') %></td>
+            <td><%= agreement.date.try(:strftime, '%-m/%-d/%y') %></td>
             <td><%= agreement.account.id %></td>
             <td><%= agreement.account.full_name %></td>
             <td><%= agreement.job.id %></td>
