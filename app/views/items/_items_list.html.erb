@@ -53,7 +53,7 @@
                 </td>
               <% end %>
 
-              <% if current_user.try(:internal?) && controller_name != 'mailer' %>
+              <% if current_user.try(:internal?) && !controller_name.in?(%w(mailer purchases)) %>
                 <td class="td-actions text-center">
                   <%= link_to "<i class='material-icons'>edit</i>".html_safe, edit_account_job_proposal_item_url(item.account, item.job, item.proposal, item, redirect_url: request.try(:original_url)), class: "btn btn-fab btn-fab-mini btn-primary hidden-print" %>
                   <% if item.active? %>
@@ -73,10 +73,10 @@
     </table>
   </div>
 
-  <% if @account && @account.is_a?(OwnerAccount) && !controller_name.in?(['proposals', 'agreements']) %>
+  <% if @account && @account.is_a?(OwnerAccount) && !controller_name.in?(['proposals', 'agreements', 'purchases']) %>
 
     <div class="text-center">
-      <%= paginate @items, html: {class: "pagination pagination-primary"} %>
+      <%= paginate items, html: {class: "pagination pagination-primary"} %>
     </div>
 
   <% end %>

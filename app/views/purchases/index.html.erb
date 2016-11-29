@@ -1,0 +1,40 @@
+<div class="row">
+  <div class="col-sm-12 text-center">
+    <h1 class="company-title">Purchases</h1>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-xs-12 col-sm-10 col-sm-offset-1">
+    <table class="table table-striped table-bordered table-hover tablesorter">
+      <thead class="thead-inverse">
+        <tr class="text-center">
+          <th>Date</th>
+          <th>Account No.</th>
+          <th>Client</th>
+          <th>Job No.</th>
+          <th>Job</th>
+          <th>Items Total</th>
+          <th>Service Total</th>
+          <th>Invoice Total</th>
+          <th>Check No.</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @agreements.each do |agreement| %>
+          <tr>
+            <td><%= agreement.date.strftime('%-m/%-d/%y') %></td>
+            <td><%= agreement.account.id %></td>
+            <td><%= agreement.account.full_name %></td>
+            <td><%= agreement.job.id %></td>
+            <td><%= agreement.job.name %></td>
+            <td><%= humanized_money_with_symbol(agreement.cost_of_items) %></td>
+            <td><%= humanized_money_with_symbol(agreement.service_charge) %></td>
+            <td><%= humanized_money_with_symbol(agreement.total_price) %></td>
+            <td><%= agreement.check_number %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
