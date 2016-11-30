@@ -13,7 +13,7 @@ class DeleteDerivedResourcesJob < ActiveJob::Base
   private
 
   def derived_resource_ids
-    Photo.all.map(&:derived_resource_ids).flatten
+    Photo.all.map(&:derived_resource_ids).flatten.compact
   end
 
   def delete_derived_resources

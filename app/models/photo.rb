@@ -25,6 +25,7 @@ class Photo < ActiveRecord::Base
   end
 
   def derived_resource_ids
+    return if remote_object.nil?
     DeepStruct.wrap(remote_object).derived.map(&:id)
   end
 
@@ -32,6 +33,8 @@ class Photo < ActiveRecord::Base
 
   def remote_object
     Cloudinary::Api.resource(public_id)
+  rescue Cloudinary::Api::NotFound
+    nil
   end
 
 end
