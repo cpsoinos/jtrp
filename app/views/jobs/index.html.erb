@@ -1,4 +1,8 @@
-<% breadcrumb :account_jobs, @account %>
+<% if @account %>
+  <% breadcrumb :account_jobs, @account %>
+<% else %>
+  <% breadcrumb :jobs %>
+<% end %>
 
 <div class="row">
   <div class="col-sm-12 text-center">
