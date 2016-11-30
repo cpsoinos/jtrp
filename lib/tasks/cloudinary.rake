@@ -36,15 +36,7 @@ namespace :cloudinary do
   end
 
   task :delete_derived_resources => :environment do |task|
-
-    photos = Photo.all
-
-    derived_ids.in_batches.with_index do |batch, index|
-      puts "Processing batch #{index}"
-      DeleteDerivedImagesJob.perform_later(batch)
-    end
-
-
+    DeleteDerivedResourcesJob.perform_later
   end
 
 end
