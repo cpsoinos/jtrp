@@ -10,7 +10,7 @@ namespace :cloudinary do
     bar = RakeProgressbar.new(photos.count)
 
     photos.each do |photo|
-      ImageMigrateJob.perform_later(photo)
+      Cloudinary::ImageMigrateJob.perform_later(photo)
       bar.inc
     end
 
@@ -19,7 +19,7 @@ namespace :cloudinary do
     puts "finished migrating #{photos.count} images"
   end
 
-  task :convert_to_jpg => :environment do |task|
+  task :convert_and_reupload => :environment do |task|
 
     puts "begin converting all images to jpg"
 
@@ -27,7 +27,7 @@ namespace :cloudinary do
     bar = RakeProgressbar.new(photos.count)
 
     photos.each do |photo|
-      ImageConvertJob.perform_later(photo)
+      Cloudinary::ImageConvertJob.perform_later(photo)
       bar.inc
     end
 
@@ -36,7 +36,7 @@ namespace :cloudinary do
   end
 
   task :delete_derived_resources => :environment do |task|
-    DeleteDerivedResourcesJob.perform_later
+    Cloudinary::DeleteDerivedResourcesJob.perform_later
   end
 
 end
