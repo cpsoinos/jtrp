@@ -21,6 +21,10 @@ crumb :job do |job|
   parent :account_jobs, job.account
 end
 
+crumb :jobs do
+  link "Jobs", jobs_path
+end
+
 crumb :job_proposals do |job|
   link "Proposals", account_job_proposals_path(job.account, job)
   parent :job, job
