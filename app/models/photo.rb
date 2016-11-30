@@ -20,4 +20,18 @@ class Photo < ActiveRecord::Base
     Photo.find_by(photo_type: 'default')
   end
 
+  def public_id
+    photo.file.public_id
+  end
+
+  def derived_resource_ids
+    DeepStruct.wrap(remote_object).derived.map(&:id)
+  end
+
+  private
+
+  def remote_object
+    Cloudinary::Api.resource(public_id)
+  end
+
 end

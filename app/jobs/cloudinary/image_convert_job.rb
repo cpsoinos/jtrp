@@ -1,7 +1,7 @@
 require 'active_job/traffic_control'
 
 class ImageConvertJob < ActiveJob::Base
-  queue_as :default
+  queue_as :maintenance
   include ActiveJob::TrafficControl::Throttle
 
   throttle threshold: 2000, period: 1.hour
@@ -16,7 +16,7 @@ class ImageConvertJob < ActiveJob::Base
   private
 
   def reupload_and_convert(photo)
-    Cloudinary::Uploader.upload("http://res.cloudinary.com/#{ENV['CLOUDINARY_CLOUD_NAME']}/#{identifier(photo)}", public_id: public_id(photo), format: "jpg")
+    Cloudinary::Uploader.upload("http://res.cloudinary.com/#{ENV['CLOUDINARY_CLOUD_NAME']}/#{identifier(photo)}", public_id: public_id(photo), upload_preset: 'limit_width_jpg')
   end
 
   def public_id(photo)

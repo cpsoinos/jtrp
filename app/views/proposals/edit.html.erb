@@ -18,7 +18,7 @@
                 <div class="thumbnail img-raised">
                   <%= image_tag("image_placeholder.jpg") %>
                 </div>
-                <%= cl_image_upload_tag(:photos, multiple: true, return_delete_token: true) %>
+                <%= cl_image_upload_tag(:photos, multiple: true, return_delete_token: true, upload_preset: 'limit_width_jpg') %>
                 <%= hidden_field_tag :photo_type, "initial" %>
                 <%= hidden_field_tag :proposal_id, @proposal.id %>
               </span>
