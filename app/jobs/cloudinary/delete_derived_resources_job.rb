@@ -1,6 +1,5 @@
 class DeleteDerivedResourcesJob < ActiveJob::Base
   queue_as :maintenance
-  include ActiveJob::TrafficControl::Throttle
 
   def perform
     delete_derived_resources
