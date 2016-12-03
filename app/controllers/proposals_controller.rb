@@ -65,7 +65,7 @@ class ProposalsController < ApplicationController
   end
 
   def sort_items
-    @categories = Category.all
+    @categories = Category.order(:name)
     @proposal = Proposal.find(params[:proposal_id])
     @item = @proposal.items.new
   end
