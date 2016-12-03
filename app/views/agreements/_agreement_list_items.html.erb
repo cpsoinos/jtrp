@@ -30,7 +30,7 @@
                 <%= link_to agreement.job.address_1, account_job_path(agreement.account, agreement.job) %>
               </td>
               <td class="text-center">
-                <%= link_to agreement.job.id, account_job_path(agreement.account, agreement.job) %>
+                <%= link_to "<i class='material-icons'>map</i> #{agreement.job.id}".html_safe, account_job_path(agreement.account, agreement.job) %>
               </td>
               <td class="text-center">
                 <%= link_to "<i class='material-icons'>assignment_turned_in</i> #{agreement.proposal_id}".html_safe, account_job_proposal_path(agreement.account, agreement.job, agreement.proposal) %>
