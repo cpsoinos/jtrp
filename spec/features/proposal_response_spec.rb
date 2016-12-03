@@ -69,6 +69,20 @@ feature "proposal response" do
       expect(page).not_to have_content("You must be logged in to access this page!")
     end
 
+    scenario "rate and term are visible" do
+      visit account_job_proposal_path(account, job, proposal, token: proposal.token)
+
+      expect(page).to have_content("50.0%")
+      expect(page).to have_content("90 days")
+    end
+
+    scenario "item notes are visible" do
+      items.first.update_attribute("notes", "This is a note on the item")
+      visit account_job_proposal_path(account, job, proposal, token: proposal.token)
+
+      expect(page).to have_content("This is a note on the item")
+    end
+
     scenario "user chooses client intentions", js: true do
       visit account_job_proposal_path(account, job, proposal, token: proposal.token)
       items.each_with_index do |item, i|
