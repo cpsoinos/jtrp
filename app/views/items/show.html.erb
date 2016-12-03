@@ -90,7 +90,13 @@
             </button>
             <% if @item.potential? || @item.inactive? %>
               <%= link_to "Mark Active <i class='material-icons'>store</i>".html_safe, item_activate_path(@item), class: "btn btn-raised btn-info btn-round", method: :post %>
+
             <% elsif @item.active? %>
+              <% if @item.expired? %>
+                <%= link_to "Unmark Expired <i class='material-icons'>access_time</i>".html_safe, item_path(@item, item: {expired: false}), class: "btn btn-raised btn-warning btn-round", method: :patch %>
+              <% else %>
+                <%= link_to "Mark Expired <i class='material-icons'>access_time</i>".html_safe, item_path(@item, item: {expired: true}), class: "btn btn-raised btn-warning btn-round", method: :patch %>
+              <% end %>
               <%= link_to "Mark Inactive <i class='material-icons'>remove_circle</i>".html_safe, item_deactivate_path(@item), class: "btn btn-raised btn-danger btn-round", method: :post %>
             <% end %>
           <% end %>
