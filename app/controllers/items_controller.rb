@@ -61,6 +61,7 @@ class ItemsController < ApplicationController
   end
 
   def show
+    meta_tags
     @child_item = @item.build_child_item
   end
 
