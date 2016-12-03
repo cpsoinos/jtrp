@@ -11,7 +11,7 @@ class ItemCreator
     initial_photo_attrs = attrs.delete(:initial_photos)
     listing_photo_attrs = attrs.delete(:listing_photos)
     if attrs[:account_item_number].blank?
-      attrs[:account_item_number] = account.last_item_number += 1
+      attrs[:account_item_number] = account.last_item_number + 1
     end
 
     if attrs[:parent_item_id].present?
