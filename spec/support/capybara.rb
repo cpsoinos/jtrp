@@ -9,3 +9,8 @@ options = { js_errors: false, timeout: 180, phantomjs_logger: StringIO.new, logg
 Capybara.register_driver(:poltergeist) do |app|
   Capybara::Poltergeist::Driver.new app, options
 end
+
+Capybara.register_server(:puma) do |app, port|
+  require 'rack/handler/puma'
+  Rack::Handler::Puma.run(app, Port: port)
+end
