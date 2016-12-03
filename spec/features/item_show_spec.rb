@@ -106,6 +106,29 @@ feature "item show" do
         expect(item.sale_price_cents).to eq(6466)
         expect(item.sold_at).to eq("04/07/2016".to_datetime)
       end
+
+      scenario "marks expired" do
+        allow(Clover::Inventory).to receive(:update)
+        click_link("Mark Expired")
+
+        item.reload
+        expect(page).to have_content("Item was successfully updated.")
+        expect(item.expired?).to be_truthy
+        expect(page).to have_link("Unmark Expired")
+      end
+
+      scenario "unmarks expired" do
+        allow(Clover::Inventory).to receive(:update)
+        item.update_attribute("expired", true)
+        visit item_path(item)
+        click_link("Unmark Expired")
+
+        item.reload
+        expect(page).to have_content("Item was successfully updated.")
+        expect(item.expired?).to be_falsey
+        expect(page).to have_link("Mark Expired")
+      end
+
     end
 
     context "consigned" do
