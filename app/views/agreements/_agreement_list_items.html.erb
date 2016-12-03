@@ -1,23 +1,50 @@
 <div class="row">
   <div class="col-xs-12">
-    <% agreements.each do |agreement| %>
-      <div class="col-xs-6 col-sm-4 col-md-3">
-        <div class="well agreement-card">
-          <p>
-            <%= link_to "<i class='material-icons'>assignment_ind</i> #{agreement.proposal.account.full_name}".html_safe, client_path(agreement.proposal.primary_contact) %>
-          </p>
-          <p>
-            <%= link_to "<i class='material-icons'>assignment_turned_in</i> Proposal No. #{agreement.proposal.id}".html_safe, account_job_proposal_path(agreement.account, agreement.job, agreement.proposal) %>
-          </p>
-          <p>
-            <%= link_to "<i class='material-icons'>assignment</i> Agreement No. #{agreement.id}".html_safe, account_job_proposal_agreements_path(agreement.account, agreement.job, agreement.proposal) %>
-          </p>
-          <% if agreement.potential? %>
-            <p class="pending"><%= link_to "pending signature", account_job_proposal_agreements_path(agreement.account, agreement.job, agreement.proposal), class: "pending" %></p>
+    <div class="table-responsive">
+      <table class="table table-shopping tablesorter">
+        <thead>
+          <tr>
+            <th class="text-center">Agreement No.</th>
+            <th class="text-center">Client</th>
+            <th class="text-center">Account No.</th>
+            <th class="text-center">Job</th>
+            <th class="text-center">Job No.</th>
+            <th class="text-center">Proposal No.</th>
+            <th class="text-center">Status</th>
+            <th class="text-center">Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% agreements.each do |agreement| %>
+            <tr>
+              <td class="text-center">
+                <%= link_to "<i class='material-icons md-48'>assignment</i> #{agreement.id}".html_safe, agreement_path(agreement) %>
+              </td>
+              <td class="text-center">
+                <%= link_to agreement.account.full_name, account_path(agreement.account) %>
+              </td>
+              <td class="text-center">
+                <%= link_to "<i class='material-icons'>assignment_ind</i> #{agreement.account.id}".html_safe, account_path(agreement.account) %>
+              </td>
+              <td class="text-center">
+                <%= link_to agreement.job.address_1, account_job_path(agreement.account, agreement.job) %>
+              </td>
+              <td class="text-center">
+                <%= link_to "<i class='material-icons'>map</i> #{agreement.job.id}".html_safe, account_job_path(agreement.account, agreement.job) %>
+              </td>
+              <td class="text-center">
+                <%= link_to "<i class='material-icons'>assignment_turned_in</i> #{agreement.proposal_id}".html_safe, account_job_proposal_path(agreement.account, agreement.job, agreement.proposal) %>
+              </td>
+              <td class="text-center">
+                <%= agreement.status %>
+              </td>
+              <td class="text-center">
+                <%= agreement.date.strftime('%-m/%-d/%y') %>
+              </td>
+            </tr>
           <% end %>
-
-        </div>
-      </div>
-    <% end %>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
