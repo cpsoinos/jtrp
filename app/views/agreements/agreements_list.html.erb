@@ -11,7 +11,9 @@
   <div class="well bs-component large-top-margin">
     <div class="tab-content">
       <% @intentions.each do |intention| %>
-        <div role="tabpanel" class="tab-pane fade" id="<%= intention %>"><%= render "agreement_list_items", agreements: @agreements.where(agreement_type: intention) %></div>
+        <div role="tabpanel" class="tab-pane fade" id="<%= intention %>">
+          <%= render "agreement_list_items", agreements: @agreements.where(agreement_type: intention) %>
+        </div>
       <% end %>
     </div>
   </div>
