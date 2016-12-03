@@ -2,6 +2,7 @@ describe ItemCreator do
 
   let(:user) { create(:internal_user) }
   let(:proposal) { create(:proposal) }
+  let(:account) { proposal.account }
   let(:attrs) { attributes_for(:item) }
   let(:initial_photo_attrs) { attributes_for(:photo) }
   let(:listing_photo_attrs) { attributes_for(:photo, :listing) }
@@ -20,6 +21,29 @@ describe ItemCreator do
 
   it "sets category to Uncategorized unless specified" do
     expect(ItemCreator.new(proposal).create(attrs).category.name).to eq("Uncategorized")
+  end
+
+  it "sets the account_item_number" do
+    item = ItemCreator.new(proposal).create(attrs)
+    expect(item.account_item_number).to eq(1)
+  end
+
+  it "correctly sequences account_item_number over a second proposal" do
+    item_1 = ItemCreator.new(proposal).create(attrs)
+    proposal_2 = create(:proposal, job: proposal.job)
+    item_2 = ItemCreator.new(proposal_2).create(description: "second item", client_intention: "sell")
+
+    expect(item_1.account_item_number).to eq(1)
+    expect(item_2.account_item_number).to eq(2)
+  end
+
+  it "correctly sequences account_item_number over a second job" do
+    item_1 = ItemCreator.new(proposal).create(attrs)
+    proposal_2 = create(:proposal, job: create(:job, account: account))
+    item_2 = ItemCreator.new(proposal_2).create(description: "second item", client_intention: "sell")
+
+    expect(item_1.account_item_number).to eq(1)
+    expect(item_2.account_item_number).to eq(2)
   end
 
   it "processes photos" do

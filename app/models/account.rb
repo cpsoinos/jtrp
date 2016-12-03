@@ -149,6 +149,14 @@ class Account < ActiveRecord::Base
     end
   end
 
+  def last_item_number
+    if items.present?
+      items.pluck(:account_item_number).sort.last
+    else
+      0
+    end
+  end
+
   private
 
   def deactivate_items
