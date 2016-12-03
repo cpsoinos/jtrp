@@ -4,7 +4,6 @@
       <table class="table table-shopping tablesorter">
         <thead>
           <tr>
-            <th class="text-center"></th>
             <th class="text-center">Agreement No.</th>
             <th class="text-center">Client</th>
             <th class="text-center">Account No.</th>
@@ -19,14 +18,13 @@
           <% agreements.each do |agreement| %>
             <tr>
               <td class="text-center">
-                <%= link_to "<i class='material-icons md-48'>assignment_ind</i>".html_safe, agreement_path(agreement) %>
+                <%= link_to "<i class='material-icons md-48'>assignment</i> #{agreement.id}".html_safe, agreement_path(agreement) %>
               </td>
-              <td class="text-center"><%= link_to agreement.id, agreement_path(agreement) %></td>
               <td class="text-center"><%= link_to agreement.account.full_name, account_path(agreement.account) %></td>
-              <td class="text-center"><%= link_to agreement.account.id, account_path(agreement.account) %></td>
+              <td class="text-center"><%= link_to "<i class='material-icons'>assignment_ind</i> #{agreement.account.id}".html_safe, account_path(agreement.account) %></td>
               <td class="text-center"><%= link_to agreement.job.address_1, account_job_path(agreement.account, agreement.job) %></td>
               <td class="text-center"><%= link_to agreement.job.id, account_job_path(agreement.account, agreement.job) %></td>
-              <td class="text-center"><%= link_to agreement.proposal_id, account_job_proposal_path(agreement.account, agreement.job, agreement.proposal) %></td>
+              <td class="text-center"><%= link_to "<i class='material-icons'>assignment_turned_in</i> #{agreement.proposal_id}".html_safe, account_job_proposal_path(agreement.account, agreement.job, agreement.proposal) %></td>
               <td class="text-center"><%= agreement.status %></td>
               <td class="text-center"><%= agreement.date.strftime('%-m/%-d/%y') %></td>
             </tr>
