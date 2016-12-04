@@ -5,12 +5,16 @@ describe Statement do
 
   describe "state machine" do
 
+    let(:sender) { double("sender") }
+
     it "starts as 'unpaid'" do
       expect(Statement.new(account: build_stubbed(:account))).to be_unpaid
     end
 
     it "transitions 'unpaid' to 'paid'" do
       statement = create(:statement)
+      allow(CheckSender).to receive(:new).and_return(sender)
+      allow(sender).to receive(:build_check)
       expect(statement).to be_unpaid
       statement.pay
       expect(statement.reload).to be_paid
