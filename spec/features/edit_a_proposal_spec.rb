@@ -80,13 +80,13 @@ feature "edit a proposal" do
         wait_for_ajax
         item.reload
 
+        expect(page).to have_content("Success!")
         expect(item.will_purchase?).to be_truthy
         expect(item.purchase_price_cents).to eq(5055)
         expect(item.will_consign?).to be_truthy
         expect(item.consignment_rate).to eq(45)
         expect(item.listing_price_cents).to eq(8889)
         expect(item.minimum_sale_price_cents).to eq(6755)
-        expect(page).to have_content("Success!")
       end
 
       scenario "views completed proposal" do
