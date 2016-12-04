@@ -118,13 +118,21 @@ describe CheckSender do
     expect(lob).to have_received(:create).with(check_params)
   end
 
+  it "creates a check" do
+    expect {
+      sender.send_check
+    }.to change {
+      statement.checks.count
+    }.by(1)
+  end
+
   it "saves the remote response" do
     sender.send_check
-    check.reload
+    statement_check = statement.checks.first
 
-    expect(check.remote_id).to eq("chk_534f10783683daa0")
-    expect(check.remote_url).to eq("https://s3-us-west-2.amazonaws.com/assets.lob.com/chk_534f10783683daa0.pdf?AWSAccessKeyId=AKIAJVT3IPSNH662QU6A&Expires=1449430428&Signature=j%2FTzUuHJkrlbAJZGNpCm3xfxgmE%3D")
-    expect(check.carrier).to eq("USPS")
+    expect(statement_check.remote_id).to eq("chk_534f10783683daa0")
+    expect(statement_check.remote_url).to eq("https://s3-us-west-2.amazonaws.com/assets.lob.com/chk_534f10783683daa0.pdf?AWSAccessKeyId=AKIAJVT3IPSNH662QU6A&Expires=1449430428&Signature=j%2FTzUuHJkrlbAJZGNpCm3xfxgmE%3D")
+    expect(statement_check.carrier).to eq("USPS")
   end
 
 end
