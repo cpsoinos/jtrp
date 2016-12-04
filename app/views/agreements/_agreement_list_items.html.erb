@@ -39,7 +39,9 @@
                 <%= agreement.status %>
               </td>
               <td class="text-center">
-                <%= agreement.date.strftime('%-m/%-d/%y') %>
+                <% if agreement.date %>
+                  <%= agreement.date.strftime('%-m/%-d/%y') %>
+                <% end %>
               </td>
             </tr>
           <% end %>
