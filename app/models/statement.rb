@@ -65,7 +65,7 @@ class Statement < ActiveRecord::Base
   end
 
   def create_and_send_check
-    CheckSender.new(self).build_check
+    CheckSenderJob.perform_later(self)
   end
 
 end
