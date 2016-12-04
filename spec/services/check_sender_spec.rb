@@ -93,7 +93,7 @@ describe CheckSender do
       amount: statement.amount_due_to_client.to_f,
       memo: check.memo,
       logo: company.logo_url(:thumb),
-      check_bottom: "url"
+      attachment: "url_to_statement_pdf"
     }
   end
 
@@ -102,7 +102,7 @@ describe CheckSender do
     company.save
     allow(PdfGenerator).to receive_message_chain(:new, :render_pdf)
     allow(statement).to receive(:statement_pdf).and_return(pdf)
-    allow(pdf).to receive(:object_url).and_return("url")
+    allow(pdf).to receive(:object_url).and_return("url_to_statement_pdf")
     allow(Lob).to receive_message_chain(:load, :checks).and_return(lob)
     allow(lob).to receive(:create).and_return(lob_response)
     stub_request(:get, "https://s3-us-west-2.amazonaws.com/assets.lob.com/chk_534f10783683daa0_thumb_large_1.png?AWSAccessKeyId=AKIAJVT3IPSNH662QU6A&Expires=1449430428&Signature=omhZpV4oQMAzVPtrRhaFUIh6PuE=").with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>'Ruby'}).to_return(:status => 200, :body => "", :headers => {})

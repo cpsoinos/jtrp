@@ -36,7 +36,7 @@ class CheckSender
         amount: statement.amount_due_to_client.to_f,
         memo: check.memo,
         logo: company.logo_url(:thumb),
-        check_bottom: statement.statement_pdf.object_url
+        attachment: statement.statement_pdf.object_url
       )
     end
     save_response(resp)
