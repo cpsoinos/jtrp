@@ -7,6 +7,7 @@ class Statement < ActiveRecord::Base
 
   belongs_to :account, touch: true
   has_one :statement_pdf
+  has_many :checks
 
   scope :status, -> (status) { where(status: status) }
   scope :unpaid, -> { where(status: "unpaid") }
@@ -15,6 +16,8 @@ class Statement < ActiveRecord::Base
   state_machine :status, initial: :unpaid do
     state :unpaid
     state :paid
+
+    after_transition unpaid: :paid, do: :create_and_send_check
 
     event :pay do
       transition unpaid: :paid
@@ -59,6 +62,10 @@ class Statement < ActiveRecord::Base
         { name: "record check number", description: "needs a check number recorded", task_field: :check_number }
       end
     end
+  end
+
+  def create_and_send_check
+    CheckSender.new(self).build_check
   end
 
 end
