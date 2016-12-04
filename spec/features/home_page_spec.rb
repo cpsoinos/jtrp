@@ -79,6 +79,7 @@ feature "home page" do
 
       scenario "completes a to do list item", js: true do
         visit root_path
+        expect(page).to have_content("needs a price added")
         first(:button, "done").click
         expect(page).to have_content("SKU: #{item.id}")
         expect(page).to have_field("Listing price")
@@ -88,7 +89,8 @@ feature "home page" do
         wait_for_ajax
         item.reload
 
-        expect(page).not_to have_content(item.description)
+        expect(page).to have_content("#{item.description} updated!")
+        expect(page).not_to have_content("needs a price added")
         expect(item.listing_price_cents).to eq(1234)
       end
 
