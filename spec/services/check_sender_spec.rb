@@ -103,7 +103,6 @@ describe CheckSender do
     allow(PdfGenerator).to receive_message_chain(:new, :render_pdf)
     allow(statement).to receive(:statement_pdf).and_return(pdf)
     allow(pdf).to receive(:object_url).and_return("url")
-    # allow(TransactionalEmailJob).to receive(:perform_later)
     allow(Lob).to receive_message_chain(:load, :checks).and_return(lob)
     allow(lob).to receive(:create).and_return(lob_response)
     stub_request(:get, "https://s3-us-west-2.amazonaws.com/assets.lob.com/chk_534f10783683daa0_thumb_large_1.png?AWSAccessKeyId=AKIAJVT3IPSNH662QU6A&Expires=1449430428&Signature=omhZpV4oQMAzVPtrRhaFUIh6PuE=").with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>'Ruby'}).to_return(:status => 200, :body => "", :headers => {})
@@ -126,8 +125,6 @@ describe CheckSender do
     expect(check.remote_id).to eq("chk_534f10783683daa0")
     expect(check.remote_url).to eq("https://s3-us-west-2.amazonaws.com/assets.lob.com/chk_534f10783683daa0.pdf?AWSAccessKeyId=AKIAJVT3IPSNH662QU6A&Expires=1449430428&Signature=j%2FTzUuHJkrlbAJZGNpCm3xfxgmE%3D")
     expect(check.carrier).to eq("USPS")
-    # expect(check.tracking_number).to eq("123456")
-    # expect(check.expected_delivery_date).to eq("2015-05-05")
   end
 
 end
