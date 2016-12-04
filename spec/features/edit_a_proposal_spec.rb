@@ -52,9 +52,9 @@ feature "edit a proposal" do
         expect(item.will_consign?).to be_falsey
         find(:css, "#item_#{item.id}_will_consign", visible: false).trigger("click")
         fill_in("item_consignment_rate", with: 45)
+        fill_in("item_consignment_term", with: 90)
         fill_in("item_listing_price", with: 88.89)
         fill_in("item_minimum_sale_price", with: 67.55)
-
         click_on("Save")
         wait_for_ajax
         item.reload
@@ -62,6 +62,7 @@ feature "edit a proposal" do
         expect(page).to have_content("Success!")
         expect(item.will_consign?).to be_truthy
         expect(item.consignment_rate).to eq(45)
+        expect(item.consignment_term).to eq(90)
         expect(item.listing_price_cents).to eq(8889)
         expect(item.minimum_sale_price_cents).to eq(6755)
       end
