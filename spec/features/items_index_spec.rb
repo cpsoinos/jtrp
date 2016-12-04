@@ -13,10 +13,6 @@ feature "item index" do
     sign_in user
   end
 
-  before :each, js: true do
-    page.execute_script("$($('a[role=tab]')[0]).tab('show');")
-  end
-
   context "all items" do
 
     scenario "visits item list from home page" do
