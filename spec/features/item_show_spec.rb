@@ -90,7 +90,7 @@ feature "item show" do
         expect(page).to have_content("$11.11")
       end
 
-      scenario "marks as sold", js: true do
+      scenario "marks as sold" do
         allow(Clover::Inventory).to receive(:delete)
         click_button("Mark as Sold")
         expect(page).to have_field("item[sale_price]")
@@ -99,9 +99,9 @@ feature "item show" do
         fill_in("item[sale_price]", with: 64.66)
         fill_in("item[sold_at]", with: "07/04/2016")
         click_button("Update Item")
-        wait_for_ajax
         item.reload
 
+        expect(page).to have_content("Item was successfully updated")
         expect(item).to be_sold
         expect(item.sale_price_cents).to eq(6466)
         expect(item.sold_at).to eq("04/07/2016".to_datetime)
