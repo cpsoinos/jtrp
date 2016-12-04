@@ -11,7 +11,7 @@ describe StatementUpdater do
 
   it "updates a statement" do
     allow(CheckSender).to receive(:new).and_return(sender)
-    allow(sender).to receive(:build_check)
+    allow(sender).to receive(:send_check)
     updater.update(attrs)
 
     expect(statement).to be_paid

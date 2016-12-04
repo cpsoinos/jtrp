@@ -92,7 +92,7 @@ describe CheckSender do
       from: "adr_cda4a50721394d23",
       amount: statement.amount_due_to_client.to_f,
       memo: check.memo,
-      logo: company.logo_url,
+      logo: company.logo_url(:thumb),
       check_bottom: "url"
     }
   end
