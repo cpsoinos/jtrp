@@ -1,3 +1,5 @@
+require 'simplecov'
+SimpleCov.start
 require 'capybara/rspec'
 require 'factory_girl_rails'
 require 'rails_helper'
@@ -54,3 +56,9 @@ RSpec.configure do |config|
 end
 
 Sidekiq::Testing.inline!
+
+# save to CircleCI's artifacts directory if we're on CircleCI
+if ENV['CIRCLE_ARTIFACTS']
+  dir = File.join(ENV['CIRCLE_ARTIFACTS'], "coverage")
+  SimpleCov.coverage_dir(dir)
+end

@@ -119,4 +119,5 @@ group :test do
   gem 'coveralls', require: false
   gem 'pdf-reader'
   gem 'timecop'
+  gem 'simplecov', require: false
 end

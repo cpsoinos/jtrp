@@ -814,6 +814,7 @@ DEPENDENCIES
   sextant
   shoulda-matchers
   sidekiq
+  simplecov
   sinatra
   spring
   state_machines
@@ -832,4 +833,4 @@ RUBY VERSION
    ruby 2.3.1p112
 
 BUNDLED WITH
-   1.13.3
+   1.13.6
