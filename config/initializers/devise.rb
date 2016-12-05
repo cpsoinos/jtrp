@@ -240,6 +240,10 @@ Devise.setup do |config|
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
   config.omniauth :clover, ENV["CLOVER_APP_ID"], ENV["CLOVER_APP_SECRET"], client_options: { site: ENV['CLOVER_URL'] }
+  config.omniauth :facebook, ENV["FACEBOOK_APP_ID"], ENV["FACEBOOK_APP_SECRET"],
+  info_fields: 'email, name, first_name, last_name', scope: 'public_profile, email, user_likes, user_location, user_photos, user_posts, user_status, user_videos, publish_actions, manage_pages, publish_pages, ads_management, ads_read'
+  config.omniauth :twitter, ENV["TWITTER_CONSUMER_KEY"], ENV["TWITTER_SECRET"]
+  config.omniauth :instagram, ENV["INSTAGRAM_CLIENT_ID"], ENV["INSTAGRAM_CLIENT_SECRET"]
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
