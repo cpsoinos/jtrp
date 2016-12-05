@@ -49,9 +49,12 @@ class CheckSender
     check.amount                          = Money.new(resp["amount"])
     check.tracking_number                 = resp["tracking_number"]
     check.expected_delivery_date          = resp["expected_delivery_date"]
+    check.check_number                    = resp["check_number"]
     check.data                            = resp
     check.save
-    retrieve_check_images(check.reload)
+    check.reload
+    set_check_number(check)
+    retrieve_check_images(check)
   end
 
   def company
@@ -72,6 +75,11 @@ class CheckSender
 
   def retrieve_check_images(saved_check)
     CheckImageRetrieverJob.perform_later(saved_check)
+  end
+
+  def set_check_number(saved_check)
+    statement.check_number = saved_check.check_number
+    statement.save
   end
 
 end
