@@ -382,6 +382,8 @@ GEM
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
     lumberjack (1.0.10)
+    madison (0.5.0)
+      json
     mail (2.6.3)
       mime-types (>= 1.16, < 3)
     mechanize (2.7.5)
@@ -771,6 +773,7 @@ DEPENDENCIES
   launchy
   letter_opener_web (~> 1.2.0)
   lob
+  madison
   metamagic
   mini_magick
   money-rails

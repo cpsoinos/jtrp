@@ -4,7 +4,9 @@ class Check < ActiveRecord::Base
 
   belongs_to :statement
   has_one :account, through: :statement
-  mount_uploader :check_image, ScannedAgreementUploader
+  
+  mount_uploader :check_image_front, ScannedAgreementUploader
+  mount_uploader :check_image_back, ScannedAgreementUploader
 
   monetize :amount_cents, allow_nil: true, numericality: {
     greater_than_or_equal_to: 0,

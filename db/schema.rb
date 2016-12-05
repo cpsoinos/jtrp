@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161203225938) do
+ActiveRecord::Schema.define(version: 20161205010356) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -126,10 +126,11 @@ ActiveRecord::Schema.define(version: 20161203225938) do
     t.string   "tracking_number"
     t.string   "expected_delivery_date"
     t.jsonb    "data"
-    t.string   "check_image"
+    t.string   "check_image_front"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "deleted_at"
+    t.string   "check_image_back"
   end
 
   add_index "checks", ["statement_id"], name: "index_checks_on_statement_id", using: :btree

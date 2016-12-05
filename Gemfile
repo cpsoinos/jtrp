@@ -71,6 +71,7 @@ gem 'where-or'
 gem 'lob'
 gem 'paranoia', '~> 2.2'
 gem 'gretel'
+gem 'madison'
 
 group :production, :staging do
   gem 'tunemygc'

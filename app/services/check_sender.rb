@@ -8,7 +8,7 @@ class CheckSender
   end
 
   def send_check
-    PdfGenerator.new(statement).render_pdf
+    PdfGenerator.new(statement).render_pdf unless statement.statement_pdf.present?
     build_check
   end
 
@@ -28,7 +28,7 @@ class CheckSender
           address_line1: account.address_1,
           address_line2: account.address_2,
           address_city: account.city,
-          address_state: account.state,
+          address_state: state_abbreviation(account.state),
           address_country: "US",
           address_zip: account.zip
         },
@@ -43,15 +43,15 @@ class CheckSender
   end
 
   def save_response(resp)
-    check.remote_id                = resp[:id]
-    check.remote_url               = resp[:url]
-    check.carrier                  = resp[:carrier]
-    check.amount                   = Money.new(resp[:amount])
-    check.tracking_number          = resp[:tracking_number]
-    check.expected_delivery_date   = resp[:expected_delivery_date]
-    check.data                     = resp
-    check.remote_check_image_url   = resp[:thumbnails].last[:large]
+    check.remote_id                       = resp["id"]
+    check.remote_url                      = resp["url"]
+    check.carrier                         = resp["carrier"]
+    check.amount                          = Money.new(resp["amount"])
+    check.tracking_number                 = resp["tracking_number"]
+    check.expected_delivery_date          = resp["expected_delivery_date"]
+    check.data                            = resp
     check.save
+    retrieve_check_images(check.reload)
   end
 
   def company
@@ -60,6 +60,18 @@ class CheckSender
 
   def lob
     @_lob ||= Lob.load
+  end
+
+  def state_abbreviation(state)
+    if state.length > 2
+      Madison.get_abbrev(state)
+    else
+      state
+    end
+  end
+
+  def retrieve_check_images(saved_check)
+    CheckImageRetrieverJob.perform_later(saved_check)
   end
 
 end
