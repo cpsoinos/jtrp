@@ -6,6 +6,7 @@
         <tr>
           <th class="text-center"></th>
           <th class="text-center">Date</th>
+          <th class="text-center">Account</th>
           <th class="text-center">Account No.</th>
           <th class="text-center">Balance</th>
           <th class="text-center">Paid?</th>
@@ -16,10 +17,13 @@
         <% statements.each do |statement| %>
           <tr>
             <td class="text-center">
-              <%= link_to "<i class='material-icons md-36'>account_balance_wallet</i> Consignment Statement".html_safe, account_statement_path(@account, statement) %>
+              <%= link_to "<i class='material-icons md-36'>account_balance_wallet</i> Consignment Statement".html_safe, account_statement_path(statement.account, statement) %>
             </td>
             <td class="text-center">
               <%= statement.date.last_month.strftime("%B, %Y") %>
+            </td>
+            <td class="text-center">
+              <%= link_to statement.account.short_name, account_path(statement.account) %>
             </td>
             <td class="text-center">
               <%= link_to statement.account_id, account_path(statement.account) %>

@@ -17,7 +17,7 @@ crumb :statements do |account|
 end
 
 crumb :statement do |statement|
-  link "#{statement.date.strftime('%B')}, #{statement.date.strftime('%Y')} - Consigned Sales", account_statement_path(statement.account, statement)
+  link "#{statement.date.last_month.strftime('%B')}, #{statement.date.last_month.strftime('%Y')} - Consigned Sales", account_statement_path(statement.account, statement)
   parent :statements, statement.account
 end
 
