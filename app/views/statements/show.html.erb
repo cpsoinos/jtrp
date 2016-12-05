@@ -1,3 +1,6 @@
+<% meta title: "Consignment Statement" %>
+<% breadcrumb :statement, @statement %>
+
 <div class="row">
   <div class="col-xs-12 col-md-8 col-md-offset-2">
     <div class="well bs-component">
@@ -7,13 +10,19 @@
       <% else %>
         <%= render 'proposals/header', form_name: "Consignment Sales" %>
         <%= render 'items_list', items: @statement.items %>
+        <div class="row">
+          <div class="col-xs-6 col-xs-offset-6 col-sm-4 col-sm-offset-8">
+            <%= render 'summary', statement: @statement %>
+          </div>
+        </div>
       <% end %>
 
-      <div class="row">
-        <div class="col-xs-6 col-xs-offset-6 col-sm-4 col-sm-offset-8">
-          <%= render 'summary', statement: @statement %>
+      <% if @check %>
+        <div class="text-center large-top-margin">
+          <%= image_tag(@check.check_image_front_url) %><br />
+          <%= image_tag(@check.check_image_back_url) %>
         </div>
-      </div>
+      <% end %>
 
     </div>
   </div>
