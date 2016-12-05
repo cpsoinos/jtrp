@@ -7,6 +7,7 @@ class Company < ActiveRecord::Base
 
   include Bootsy::Container
   mount_uploader :logo, PhotoUploader
+  mount_uploader :secondary_logo, PhotoUploader
 
   has_many :internal_users
   belongs_to :primary_contact, class_name: "User", foreign_key: "primary_contact_id"
