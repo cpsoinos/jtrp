@@ -1,9 +1,13 @@
 class StatementsController < ApplicationController
-  before_filter :find_account
+  before_filter :find_account, except: :statements_list
   before_filter :require_internal, except: :show
 
   def index
     @statements = @account.statements
+  end
+
+  def statements_list
+    @statements = Statement.all
   end
 
   def show

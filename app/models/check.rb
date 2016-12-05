@@ -4,7 +4,7 @@ class Check < ActiveRecord::Base
 
   belongs_to :statement
   has_one :account, through: :statement
-  
+
   mount_uploader :check_image_front, ScannedAgreementUploader
   mount_uploader :check_image_back, ScannedAgreementUploader
 
@@ -14,11 +14,11 @@ class Check < ActiveRecord::Base
   }
 
   def memo
-    "#{statement.date.strftime('%B')}, #{statement.date.strftime('%Y')} - Consigned Sales"
+    "#{statement.date.last_month.strftime('%B')}, #{statement.last_month.date.strftime('%Y')} - Consigned Sales"
   end
 
   def name
-    "#{account.short_name} - #{statement.date.strftime('%-m/%-d/%y')}"
+    "#{account.short_name} - #{statement.date.last_month.strftime('%-m/%-d/%y')}"
   end
 
 end

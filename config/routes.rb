@@ -66,6 +66,10 @@ Rails.application.routes.draw do
     post '/reactivate', to: 'accounts#reactivate', as: 'reactivate'
   end
 
+  resources :statements do
+    get '/statements_list', to: 'statements#statements_list', as: 'statements_list', on: :collection
+  end
+
   resources :clients
   resources :jobs
   resources :proposals, only: [:index, :show] do
