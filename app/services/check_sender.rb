@@ -46,7 +46,7 @@ class CheckSender
     check.remote_id                       = resp["id"]
     check.remote_url                      = resp["url"]
     check.carrier                         = resp["carrier"]
-    check.amount                          = Money.new(resp["amount"])
+    check.amount                          = Money.new(resp["amount"] * 100)
     check.tracking_number                 = resp["tracking_number"]
     check.expected_delivery_date          = resp["expected_delivery_date"]
     check.check_number                    = resp["check_number"]
