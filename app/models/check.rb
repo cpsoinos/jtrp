@@ -14,7 +14,7 @@ class Check < ActiveRecord::Base
   }
 
   def memo
-    "#{statement.date.last_month.strftime('%B')}, #{statement.last_month.date.strftime('%Y')} - Consigned Sales"
+    "#{statement.date.last_month.strftime('%B')}, #{statement.date.last_month.strftime('%Y')} - Consigned Sales"
   end
 
   def name
