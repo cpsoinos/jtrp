@@ -11,6 +11,16 @@ crumb :account do |account|
   parent :accounts
 end
 
+crumb :statements do |account|
+  link "Statements", account_statements_path(account)
+  parent :account, account
+end
+
+crumb :statement do |statement|
+  link "#{statement.date.strftime('%B')}, #{statement.date.strftime('%Y')} - Consigned Sales", account_statement_path(statement.account, statement)
+  parent :statements, statement.account
+end
+
 crumb :account_jobs do |account|
   link "Jobs", account_jobs_path(account)
   parent :account, account

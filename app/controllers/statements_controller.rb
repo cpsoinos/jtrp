@@ -9,6 +9,7 @@ class StatementsController < ApplicationController
   def show
     @statement = Statement.find(params[:id])
     require_token; return if performed?
+    @check = @statement.checks.first
     @client = @account.client
   end
 

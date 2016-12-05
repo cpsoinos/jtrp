@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161203181027) do
+ActiveRecord::Schema.define(version: 20161205010356) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -114,6 +114,26 @@ ActiveRecord::Schema.define(version: 20161203181027) do
   add_index "categories", ["deleted_at"], name: "index_categories_on_deleted_at", using: :btree
   add_index "categories", ["parent_id"], name: "index_categories_on_parent_id", using: :btree
   add_index "categories", ["slug"], name: "index_categories_on_slug", using: :btree
+
+  create_table "checks", force: :cascade do |t|
+    t.integer  "statement_id"
+    t.string   "remote_id"
+    t.string   "remote_url"
+    t.integer  "amount_cents",           default: 0,     null: false
+    t.string   "amount_currency",        default: "USD", null: false
+    t.integer  "check_number"
+    t.string   "carrier"
+    t.string   "tracking_number"
+    t.string   "expected_delivery_date"
+    t.jsonb    "data"
+    t.string   "check_image_front"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.datetime "deleted_at"
+    t.string   "check_image_back"
+  end
+
+  add_index "checks", ["statement_id"], name: "index_checks_on_statement_id", using: :btree
 
   create_table "companies", force: :cascade do |t|
     t.string   "name",                        null: false
@@ -433,6 +453,7 @@ ActiveRecord::Schema.define(version: 20161203181027) do
   end
 
   add_foreign_key "agreements", "proposals"
+  add_foreign_key "checks", "statements"
   add_foreign_key "discounts", "items"
   add_foreign_key "discounts", "orders"
   add_foreign_key "items", "categories"
