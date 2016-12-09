@@ -46,11 +46,7 @@
                   <% when "consignment_statement" %>
                     <%= statement_values(item)[header] %>
                   <% when "general" %>
-                    <% if header == 'JTRP No.' %>
-                      <%= best_in_place item, :jtrp_number, place_holder: 'N/A' %>
-                    <% else %>
-                      <%= general_values(item)[header] %>
-                    <% end %>
+                    <%= general_values(item)[header] %>
                   <% when "summary" %>
                     <%= summary_values(item)[header] %>
                   <% end %>
