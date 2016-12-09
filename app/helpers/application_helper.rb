@@ -37,7 +37,7 @@ module ApplicationHelper
     if current_user.try(:internal?)
       {
         "Account Item No."          =>  item.account_item_number,
-        "JTRP No."                  =>  item.jtrp_number || "N/A",
+        "JTRP No."                  =>  (best_in_place item, :jtrp_number, place_holder: 'N/A'),
         "Consignment Rate"          =>  (item.consigned? ? "#{item.consignment_rate}%" : "N/A"),
         "Listing Price"             =>  humanized_money_with_symbol(item.listing_price),
         "Min. Sale Price"           =>  humanized_money_with_symbol(item.minimum_sale_price),
