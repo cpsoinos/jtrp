@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <%= stylesheet_link_tag 'ecommerce', media: 'all', type: "text/css" %>
+  <%= javascript_include_tag 'ecommerce' %>
+  <meta property="fb:app_id" content="<%= ENV['FACEBOOK_APP_ID'] %>">
+  <%= csrf_meta_tags %>
+  <%= render 'favicon' %>
+  <%= metamagic %>
+  <meta name="p:domain_verify" content="<%= ENV['PINTEREST_ID'] %>"/>
+</head>
+
+<body class="<%= controller_name %> <%= action_name %>">
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=<%= ENV['GOOGLE_TAG_MANAGER_ID'] %>"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+  <% metamagic site: @company.name, title: [:title, :site], separator: " — " %>
+
+  <!-- Facebook SDK -->
+  <div id="fb-root"></div>
+
+  <div class="page-container">
+    <%= render 'layouts/sapphire_navbar' unless params[:print] %>
+    <div id="wrapper">
+      <!-- Page Content -->
+      <div id="page-content-wrapper">
+        <div class="container-fluid">
+          <% unless params[:print] %>
+            <%#= render 'layouts/alerts', alert: alert, notice: notice %>
+          <% end %>
+          <div class="row <%= 'extra-large-top-margin' unless params[:print] %>" id="layout-top-buffer">
+            <div class="row">
+              <div class="col-xs-12 col-md-8 col-md-offset-2 hidden-print">
+                <%#= breadcrumbs separator: " &rsaquo; " %>
+              </div>
+            </div>
+            <%= yield %>
+          </div>
+        </div>
+      </div>
+      <!-- /#page-content-wrapper -->
+    </div>
+  </div>
+
+</body>
+</html>

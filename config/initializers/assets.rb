@@ -12,3 +12,4 @@ Rails.application.config.assets.paths << Rails.root.join("app", "assets", "fonts
 # Rails.application.config.assets.precompile += %w( search.js )
 Rails.application.config.assets.precompile += %w( bootsy/gallery-loader.gif )
 Rails.application.config.assets.precompile += %w( image_placeholder.jpg )
+Rails.application.config.assets.precompile += %w( ecommerce.css.scss )

@@ -7,6 +7,7 @@
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/icon?family=Material+Icons" media="all">
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" media="all">
   <%= stylesheet_link_tag 'application', media: 'all', type: "text/css" %>
+  <%= stylesheet_link_tag 'ecommerce', media: 'all', type: "text/css" %>
   <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" media="all">
   <%#= render 'layouts/rollbar' %>
   <%= javascript_include_tag 'application' %>
@@ -35,28 +36,28 @@
   <!-- Facebook SDK -->
   <div id="fb-root"></div>
 
-  <%= render 'layouts/navbar' unless params[:print] %>
-
-  <div id="wrapper">
-    <!-- Page Content -->
-    <div id="page-content-wrapper">
-      <div class="container-fluid">
-        <% unless params[:print] %>
-          <%= render 'layouts/alerts', alert: alert, notice: notice %>
-        <% end %>
-        <div class="row <%= 'extra-large-top-margin' unless params[:print] %>" id="layout-top-buffer">
-          <div class="row">
-            <div class="col-xs-12 col-md-8 col-md-offset-2 hidden-print">
-              <%= breadcrumbs separator: " &rsaquo; " %>
+  <div class="page-container">
+    <%= render 'layouts/sapphire_navbar' unless params[:print] %>
+    <div id="wrapper">
+      <!-- Page Content -->
+      <div id="page-content-wrapper">
+        <div class="container-fluid">
+          <% unless params[:print] %>
+            <%= render 'layouts/alerts', alert: alert, notice: notice %>
+          <% end %>
+          <div class="row <%= 'extra-large-top-margin' unless params[:print] %>" id="layout-top-buffer">
+            <div class="row">
+              <div class="col-xs-12 col-md-8 col-md-offset-2 hidden-print">
+                <%= breadcrumbs separator: " &rsaquo; " %>
+              </div>
             </div>
+            <%= yield %>
           </div>
-          <%= yield %>
         </div>
       </div>
+      <!-- /#page-content-wrapper -->
     </div>
-    <!-- /#page-content-wrapper -->
   </div>
-  <!-- #wrapper -->
 
 </body>
 </html>
