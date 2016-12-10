@@ -29,7 +29,10 @@
                 </div>
               </td>
               <td class="td-name">
-                <%= link_to (controller_name == "agreements" ? item.original_description.titleize : item.description.titleize), item_url(item) %>
+                <% if controller_name == "agreements" %>
+                  <% desc = item.original_description.try(:titleize) || item.description.titleize %>
+                <% end %>
+                <%= link_to (controller_name == "agreements" ? desc : item.description.titleize), item_url(item) %>
                 <% if current_user.try(:internal?) && !controller_name.in?(["jobs", "agreements", "mailer"]) %>
                   <br><small>from: <%= link_to item.account.full_name, account_url(item.account) %></small>
                   <br><small>SKU: <%= item.id %></small>

@@ -22,8 +22,6 @@ class Item < ActiveRecord::Base
   has_one :job, through: :proposal
   has_one :account, through: :job
 
-  before_create :record_original_description
-
   has_secure_token
 
   monetize :purchase_price_cents, allow_nil: true, numericality: {
@@ -276,10 +274,6 @@ class Item < ActiveRecord::Base
   end
 
   private
-
-  def record_original_description
-    self.original_description ||= self.description
-  end
 
   def clear_sale_data
     cleared_attrs = {

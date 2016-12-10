@@ -75,6 +75,10 @@ describe Agreement do
 
     it "transitions 'potential' to 'active'" do
       agreement = create(:agreement)
+      items = create_list(:item, 3, proposal: agreement.proposal, client_intention: "sell")
+      items.each do |item|
+        expect(item.original_description).to eq(nil)
+      end
       expect(agreement).to be_potential
       expect(agreement.proposal).to be_potential
       agreement.client_agreed = true
@@ -85,6 +89,10 @@ describe Agreement do
       expect(agreement.proposal.job).to be_active
       expect(agreement.proposal.account).to be_active
       expect(TransactionalEmailJob).to have_received(:perform_later).with(agreement, agreement.account.primary_contact, Company.jtrp.primary_contact, "agreement_active_notifier")
+      items.each do |item|
+        item.reload
+        expect(item.original_description).to eq(item.description)
+      end
     end
 
     it "transitions 'active' to 'inactive'" do

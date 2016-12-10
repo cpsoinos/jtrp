@@ -46,16 +46,6 @@ feature "agreement" do
         expect(page).to have_content("Purchase Invoice")
       end
 
-      scenario "item original description is displayed on agreements", js: true do
-        item.update_attribute("description", "new description")
-        item.reload
-        visit account_job_proposal_agreements_path(account, job, proposal)
-        click_link("Purchase Invoice")
-
-        expect(page).to have_content(item.original_description)
-        expect(page).not_to have_content("new description")
-      end
-
       scenario "uploads scanned agreement", js: true do
         visit account_job_proposal_agreements_path(account, job, proposal)
         click_link("Purchase Invoice")
