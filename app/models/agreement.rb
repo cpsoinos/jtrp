@@ -134,6 +134,14 @@ class Agreement < ActiveRecord::Base
     cost_of_items - service_charge
   end
 
+  def pending_expiration_letter
+    letters.by_category("agreement_pending_expiration").first
+  end
+
+  def expiration_letter
+    letters.by_category("agreement_expired").first
+  end
+
   private
 
   def update_cache
