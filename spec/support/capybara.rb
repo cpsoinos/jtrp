@@ -9,6 +9,8 @@ Capybara.register_driver(:poltergeist) do |app|
   Capybara::Poltergeist::Driver.new app, options
 end
 
+Capybara.default_max_wait_time = 10
+
 Capybara.register_server(:puma) do |app, port|
   require 'rack/handler/puma'
   Rack::Handler::Puma.run(app, Port: port)
