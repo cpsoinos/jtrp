@@ -12,5 +12,10 @@
 //
 
 
-//= require_tree .
+//= require jquery.min
+//= require bootstrap.min
+//= require bootstrap-select.min
+//= require jquery.easing.1.3
+//= require camera.min
+//= require sapphire
 //= require turbolinks
