@@ -25,10 +25,10 @@
 
             <div class="col-xs-6 col-xs-offset-1">
               <% if agreement.meets_requirements_expired? %>
-                <%= link_to "Expire Agreement and Notify Client", agreement_expire_items_path(agreement), method: "POST", remote: true, class: "btn btn-raised btn-primary" %>
+                <%= link_to "Expire Agreement and Notify Client", agreement_expire_items_path(agreement), method: "POST", remote: true, class: "btn btn-raised btn-danger btn-responsive" %>
               <% end %>
               <% unless agreement.pending_expiration_letter.present? %>
-                <%= link_to "Notify Client of Pending Expiration", agreement_notify_pending_expiration_path(agreement), method: "POST", remote: true, class: "btn btn-raised btn-primary" %>
+                <%= link_to "Notify Client of Pending Expiration", agreement_notify_pending_expiration_path(agreement), method: "POST", remote: true, class: "btn btn-raised btn-warning btn-responsive" %>
               <% end %>
             </div>
           </div>
