@@ -36,7 +36,7 @@ class Agreement < ActiveRecord::Base
     state :active
     state :inactive
 
-    after_transition potential: :active, do: [:mark_proposal_active, :set_agreement_date, :save_as_pdf, :notify_company]
+    after_transition potential: :active, do: [:mark_proposal_active, :set_agreement_date, :save_as_pdf, :notify_company, :save_item_descriptions]
     after_transition active: :inactive, do: :mark_proposal_inactive
 
     event :mark_active do
@@ -142,6 +142,13 @@ class Agreement < ActiveRecord::Base
 
   def delete_cache
     Rails.cache.delete("#{proposal.cache_key}/#{agreement_type}_agreement")
+  end
+
+  def save_item_descriptions
+    items.each do |item|
+      item.original_description = item.description
+      item.save
+    end
   end
 
 end
