@@ -86,11 +86,10 @@ feature "home page" do
 
         fill_in("Listing price", with: "12.34")
         click_button("Update Item")
-        wait_for_ajax
-        item.reload
 
         expect(page).to have_content("#{item.description} updated!")
         expect(page).not_to have_content("needs a price added")
+        item.reload
         expect(item.listing_price_cents).to eq(1234)
       end
 
@@ -98,7 +97,6 @@ feature "home page" do
         visit root_path
         first(:button, "done").click
         click_button("×")
-        wait_for_ajax
 
         expect(page).to have_field("Listing price", visible: false)
         expect(page).to have_content("#{item.description} needs a price added")
