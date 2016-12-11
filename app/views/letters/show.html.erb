@@ -8,7 +8,7 @@
   <div class="col-xs-10 col-xs-offset-1">
 
     <p class="text-right">
-      <%= @letter.created_at.strftime("%B %m, %Y") %>
+      <%= @letter.created_at.in_time_zone('Eastern Time (US & Canada)').strftime("%B %e, %Y") %>
     </p>
 
     <p class="top-margin">Dear <%= @letter.account.first_name %>,</p>

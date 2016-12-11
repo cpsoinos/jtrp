@@ -31,11 +31,11 @@ class Letter < ActiveRecord::Base
   end
 
   def pending_deadline
-    10.days.since(self.created_at).strftime("%B %d")
+    10.days.since(self.created_at.in_time_zone('Eastern Time (US & Canada)')).strftime("%B %e")
   end
 
   def hard_deadline
-    self.created_at.strftime("%B %d")
+    self.created_at.in_time_zone('Eastern Time (US & Canada)').strftime("%B %e")
   end
 
 end
