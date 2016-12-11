@@ -13,7 +13,6 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'turbolinks'
 gem 'jquery-turbolinks'
-gem 'dotenv-rails', require: 'dotenv/rails-now'
 gem 'devise'
 gem 'carrierwave'
 gem 'carrierwave_direct'
@@ -33,7 +32,6 @@ gem 'state_machines'
 gem 'state_machines-activerecord'
 gem 'bootsy'
 gem 'rubyzip'
-gem 'react-rails', '~> 1.7'
 gem 'chartkick'
 gem 'sweet-alert-confirm'
 gem 'jquery-fileupload-rails'
@@ -89,6 +87,7 @@ source 'https://rails-assets.org' do
 end
 
 group :development, :test, :local do
+  gem 'dotenv-rails', require: 'dotenv/rails-now'
   gem 'sextant'
   gem 'better_errors'
   gem 'faker'
@@ -120,4 +119,5 @@ group :test do
   gem 'coveralls', require: false
   gem 'pdf-reader'
   gem 'timecop'
+  gem 'capybara-screenshot'
 end
