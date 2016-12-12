@@ -11,18 +11,18 @@ class TransactionalEmailer
     @email_type = email_type
   end
 
-  def send(recipient, note=nil)
-    response = build_email(recipient, note)
+  def send(recipient, options={})
+    response = build_email(recipient, options)
     record_response(response, recipient)
   end
 
   private
 
-  def build_email(recipient, note=nil)
+  def build_email(recipient, options)
     mail = Mail.new
-    mail.from = Email.new(email: (user.try(:internal?) ? user.email : "notifications@jtrpfurniture.com"))
+    mail.from = Email.new(from_email(options))
 
-    mail.personalizations = personalizations(recipient, note)
+    mail.personalizations = personalizations(recipient, options)
 
     mail.template_id = template_hash[email_type]
 
@@ -39,11 +39,12 @@ class TransactionalEmailer
       'send_agreement'                => '53c7255e-09fe-43b6-9f5d-07b3d9001240',
       'agreement_active_notifier'     => 'a44c4a4e-a852-4250-bd24-026c74da4ca8',
       'agreement_pending_expiration'  => '39421dcb-df09-47da-9abb-a3cbdf69acf0',
-      'agreement_expired'             => '4c362444-967d-4558-9455-929cc1bd8392'
+      'agreement_expired'             => '4c362444-967d-4558-9455-929cc1bd8392',
+      'contact_us'                    => '787a8214-a2da-4a0d-a086-c60010c24916'
     }
   end
 
-  def personalizations(recipient, note=nil)
+  def personalizations(recipient, options)
     personalization = Personalization.new
     personalization.to = Email.new(email: recipient.email)
     personalization.substitutions = Substitution.new(key: '[name]', value: recipient.first_name)
@@ -51,10 +52,19 @@ class TransactionalEmailer
     personalization.substitutions = Substitution.new(key: '[object_url]', value: (object.try(:object_url) || ''))
     personalization.substitutions = Substitution.new(key: '[pending_deadline]', value: (object.try(:pending_deadline) || ''))
     personalization.substitutions = Substitution.new(key: '[hard_deadline]', value: (object.try(:hard_deadline) || ''))
-    personalization.substitutions = Substitution.new(key: '[from_name]', value: Company.jtrp.primary_contact.full_name)
+    personalization.substitutions = begin
+      if options[:from_name].present?
+        Substitution.new(key: '[from_name]', value: options[:from_name])
+      else
+        Substitution.new(key: '[from_name]', value: Company.jtrp.primary_contact.full_name)
+      end
+    end
+    if options[:subject].present?
+      personalization.substitutions = Substitution.new(key: '[subject]', value: options[:subject])
+    end
     personalization.substitutions = Substitution.new(key: '[from_title]', value: "Owner")
-    if note.present?
-      personalization.substitutions = Substitution.new(key: '[note]', value: note)
+    if options[:note].present?
+      personalization.substitutions = Substitution.new(key: '[note]', value: options[:note])
     end
     personalization.substitutions = Substitution.new(key: '[Sender_Name]', value: "Just the Right Piece")
     personalization.substitutions = Substitution.new(key: '[Sender_Address]', value: "369 South Broadway")
@@ -66,6 +76,16 @@ class TransactionalEmailer
 
   def record_response(response, recipient)
     TransactionalEmailRecord.create(recipient_id: recipient.id, created_by_id: user.try(:id), category: email_type, sendgrid_response: response)
+  end
+
+  def from_email(options)
+    if user.try(:internal?)
+      user.email
+    elsif options[:email].present?
+      options[:email]
+    else
+      "notifications@jtrpfurniture.com"
+    end
   end
 
 end

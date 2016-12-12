@@ -1,5 +1,6 @@
 class CompaniesController < ApplicationController
-  before_filter :require_internal, except: [:client_services, :consignment_policies, :service_rate_schedule, :agent_service_rate_schedule, :home]
+  layout :resolve_layout
+  before_filter :require_internal, except: [:client_services, :consignment_policies, :service_rate_schedule, :agent_service_rate_schedule, :home, :about, :contact]
 
   def show
     build_todos
@@ -20,6 +21,12 @@ class CompaniesController < ApplicationController
 
   def home
     @featured_photos = Photo.featured
+  end
+
+  def about
+  end
+
+  def contact
   end
 
   def edit
@@ -47,6 +54,11 @@ class CompaniesController < ApplicationController
   def agent_service_rate_schedule
   end
 
+  def send_email
+    TransactionalEmailJob.perform_later(@company, current_user, @company.primary_contact, "contact", params)
+    redirect_to root_path, notice: "Your message has been sent!"
+  end
+
   protected
 
   def company_params
@@ -58,6 +70,14 @@ class CompaniesController < ApplicationController
     @statements = StatementsPresenter.new.todo
     @agreements = AgreementsPresenter.new.todo
     @todos = @agreements | @statements | @items
+  end
+
+  def resolve_layout
+    if action_name.in?(%w(home about contact client_services consignment_policies service_rate_schedule agent_service_rate_schedule))
+      "ecommerce"
+    else
+      "application"
+    end
   end
 
 end

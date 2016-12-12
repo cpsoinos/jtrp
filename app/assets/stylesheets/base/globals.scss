@@ -45,7 +45,7 @@ div.navbar.navbar-default {
 }
 
 .navbar-brand {
-  font-family: "Bradley Hand";
+  font-family: "Bradley Hand" !important;
 }
 
 .panel, .panel-heading, body .container .well, body .container-fluid .well, body .container .jumbotron, body .container-fluid .jumbotron {
@@ -166,4 +166,8 @@ h1, h3, h4 {
     background-image: url(//badges.instagram.com/static/images/ig-badge-view-sprite-24@2x.png);
     background-size: 160px 178px;
   }
+}
+
+.large-icon {
+  font-size: 5em !important;
 }

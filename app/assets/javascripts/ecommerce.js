@@ -16,6 +16,7 @@
 //= require bootstrap.min
 //= require bootstrap-select.min
 //= require jquery.easing.1.3
-//= require camera.min
+//= require camera
 //= require sapphire
+//= require companies
 //= require turbolinks

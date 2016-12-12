@@ -46,7 +46,13 @@ class ApplicationController < ActionController::Base
   end
 
   def find_categories
-    @categories = Category.primary.order(:name)
+    @categories ||= begin
+      if current_user.try(:internal?)
+        Category.all.order(:name)
+      else
+        Category.categorized.order(:name)
+      end
+    end
   end
 
   def find_categories_for_dropdown

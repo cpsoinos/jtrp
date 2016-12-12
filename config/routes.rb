@@ -19,6 +19,9 @@ Rails.application.routes.draw do
   root 'passthrough#index'
 
   get '/home', to: 'companies#home', as: 'landing_page'
+  get '/about', to: 'companies#about', as: 'about'
+  get '/contact', to: 'companies#contact', as: 'contact'
+  post '/contact_us', to: 'companies#contact_us', as: 'contact_us'
   get '/dashboard', to: 'companies#show', as: 'dashboard'
   get '/client_services', to: 'companies#client_services', as: 'client_services'
   get '/consignment_policies', to: 'companies#consignment_policies', as: 'consignment_policies'
@@ -79,6 +82,7 @@ Rails.application.routes.draw do
   resources :archives
 
   resources :users_admin, controller: "users"
+  resources :users, only: [:show, :edit]
 
   resources :proposals do
     resources :items

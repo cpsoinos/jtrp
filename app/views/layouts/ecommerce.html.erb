@@ -1,16 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8"/>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <%= stylesheet_link_tag 'ecommerce', media: 'all', type: "text/css" %>
   <link href='http://fonts.googleapis.com/css?family=Montserrat:200,300,400,600,700' rel='stylesheet' type='text/css'/>
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:200,300,400,600,700' rel='stylesheet' type='text/css'/>
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/icon?family=Material+Icons" media="all">
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" media="all">
   <%= javascript_include_tag 'ecommerce' %>
+  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAPS_API_KEY'] %>"></script>
   <meta property="fb:app_id" content="<%= ENV['FACEBOOK_APP_ID'] %>">
   <%= csrf_meta_tags %>
   <%= render 'favicon' %>
   <%= metamagic %>
   <meta name="p:domain_verify" content="<%= ENV['PINTEREST_ID'] %>"/>
+  <title><%= @company.name %></title>
 </head>
 
 <body class="<%= controller_name %> <%= action_name %>">
@@ -27,19 +32,15 @@
     <div id="wrapper">
       <!-- Page Content -->
       <div id="page-content-wrapper">
-        <div class="container-fluid">
+        <div class="container">
           <% unless params[:print] %>
-            <%#= render 'layouts/alerts', alert: alert, notice: notice %>
+            <%= render 'layouts/alerts', alert: alert, notice: notice %>
           <% end %>
-          <div class="row <%= 'extra-large-top-margin' unless params[:print] %>" id="layout-top-buffer">
-            <div class="row">
-              <div class="col-xs-12 col-md-8 col-md-offset-2 hidden-print">
-                <%#= breadcrumbs separator: " &rsaquo; " %>
-              </div>
-            </div>
+          <div class="<%= 'extra-large-top-margin' unless params[:print] %>" id="layout-top-buffer">
             <%= yield %>
           </div>
         </div>
+        <%= render 'layouts/sapphire_footer' unless params[:print] %>
       </div>
       <!-- /#page-content-wrapper -->
     </div>
