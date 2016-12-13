@@ -28,7 +28,11 @@ class ItemsController < ApplicationController
       if @item.persisted?
         format.html do
           flash[:notice] = "Item created"
-          redirect_to account_job_proposal_sort_items_path(@account, @job, @proposal)
+          if @item.child?
+            redirect_to account_job_proposal_item_path(@account, @job, @proposal, @item)
+          else
+            redirect_to account_job_proposal_sort_items_path(@account, @job, @proposal)
+          end
         end
         format.js do
           render :'proposals/add_item'

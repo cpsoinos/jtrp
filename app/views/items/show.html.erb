@@ -77,6 +77,13 @@
                   for <%= humanized_money_with_symbol(@item.sale_price) %> <%= @item.sold_at.present? ? "on #{@item.sold_at.strftime('%-m/%-d/%y')}" : '' %>
                 <% end %>
               </li>
+              <% if current_user.try(:internal?) %>
+              <li>
+                <div class="text-center">
+                  <%= link_to "Print Label", labels_items_url(by_id: [@item.id]), class: "btn btn-info btn-raised btn-round", target: "blank" %>
+                </div>
+              </li>
+              <% end %>
             </ul>
             <% if @item.sold? %>
               <%= link_to "Mark Not Sold <i class='material-icons'>replay</i>".html_safe, item_mark_not_sold_path(@item), class: "btn btn-warning btn-raised btn-round", method: :post %>
@@ -90,7 +97,6 @@
             </button>
             <% if @item.potential? || @item.inactive? %>
               <%= link_to "Mark Active <i class='material-icons'>store</i>".html_safe, item_activate_path(@item), class: "btn btn-raised btn-info btn-round", method: :post %>
-
             <% elsif @item.active? %>
               <% if @item.expired? %>
                 <%= link_to "Unmark Expired <i class='material-icons'>access_time</i>".html_safe, item_path(@item, item: {expired: false}), class: "btn btn-raised btn-warning btn-round", method: :patch %>
@@ -101,28 +107,55 @@
             <% end %>
           <% end %>
 
-          <% if current_user.try(:internal?) && @item.child? %>
-            <div class="card card-plain card-blog">
-              <h4>This item was created from this batch:</h4>
-              <a href="<%= account_job_proposal_item_path(@item.account, @item.job, @item.proposal, @item.parent_item) %>">
-                <div class="card-image">
-                    <%= image_tag(@item.parent_item.featured_photo.photo_url(client_hints: true, quality: "auto", fetch_format: :auto, width: :auto, dpr: "auto", effect: :improve), class: "img img-raised") %>
-                  <div class="ripple-container"></div>
-                </div>
-              </a>
-
-              <div class="content">
-                <%= link_to "<i class='material-icons'>edit</i>".html_safe, edit_account_job_proposal_item_path(@item.account, @item.job, @item.proposal, @item.parent_item), class: "btn btn-fab btn-fab-mini btn-primary pull-right" %>
-                <h6 class="category text-info"><%= @item.parent_item.ownership_type %></h6>
-                <h4 class="card-title">
-                  <%= link_to @item.parent_item.description, account_job_proposal_item_path(@item.account, @item.job, @item.proposal, @item.parent_item) %>
-                </h4>
-              </div>
-            </div>
-          <% end %>
-
           <div class="fb-like" data-href="<%= item_url(@item) %>" data-layout="standard" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
           <%= render 'houzz_button', item: @item %>
+
+          <% if current_user.try(:internal?) %>
+            <% if @item.child? %>
+              <div class="card card-plain card-blog">
+                <h4>This item was created from this batch:</h4>
+                <a href="<%= account_job_proposal_item_path(@item.account, @item.job, @item.proposal, @item.parent_item) %>">
+                  <div class="card-image">
+                      <%= image_tag(@item.parent_item.featured_photo.photo_url(client_hints: true, quality: "auto", fetch_format: :auto, width: :auto, dpr: "auto", effect: :improve), class: "img img-raised") %>
+                    <div class="ripple-container"></div>
+                  </div>
+                </a>
+
+                <div class="content">
+                  <%= link_to "<i class='material-icons'>edit</i>".html_safe, edit_account_job_proposal_item_path(@item.account, @item.job, @item.proposal, @item.parent_item), class: "btn btn-fab btn-fab-mini btn-primary pull-right" %>
+                  <h6 class="category text-info"><%= @item.parent_item.ownership_type %></h6>
+                  <h4 class="card-title">
+                    <%= link_to @item.parent_item.description, account_job_proposal_item_path(@item.account, @item.job, @item.proposal, @item.parent_item) %>
+                  </h4>
+                </div>
+              </div>
+            <% end %>
+
+            <% if @item.children.present? %>
+              <div class="row large-top-margin">
+                <h4>These items were created from this batch:</h4>
+                <div class="text-center">
+                  <%= link_to "Print Labels", labels_items_url(by_id: @item.children.order(:id).pluck(:id)), class: "btn btn-info btn-raised btn-round", target: "blank" %>
+                </div>
+                <% @item.children.order(:id).each do |item| %>
+                  <div class="col-xs-4 large-top-margin">
+                    <a href="<%= account_job_proposal_item_path(item.account, item.job, item.proposal, item) %>">
+                      <div class="card-image">
+                          <%= image_tag(item.featured_photo.photo_url(client_hints: true, quality: "auto", fetch_format: :auto), class: "img img-raised") %>
+                        <div class="ripple-container"></div>
+                      </div>
+                    </a>
+
+                    <div class="content">
+                      <%= link_to "<i class='material-icons'>edit</i>".html_safe, edit_account_job_proposal_item_path(item.account, item.job, item.proposal, item), class: "btn btn-fab btn-fab-mini btn-primary pull-right" %>
+                      <h6 class="category text-info"><%= link_to item.description, account_job_proposal_item_path(item.account, item.job, item.proposal, item) %></h6>
+                    </div>
+                  </div>
+                <% end %>
+              </div>
+            <% end %>
+          <% end %>
+
         </div>
       </div>
 
