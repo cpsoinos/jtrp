@@ -123,8 +123,9 @@
                   </h4>
                 </div>
               </div>
+            <% end %>
 
-            <% elsif @item.children.present? %>
+            <% if @item.children.present? %>
               <div class="row large-top-margin">
                 <h4>These items were created from this batch:</h4>
                 <div class="text-center">
@@ -140,7 +141,7 @@
                     </a>
 
                     <div class="content">
-                      <%= link_to "<i class='material-icons'>edit</i>".html_safe, edit_account_job_proposal_item_path(@item.account, item.job, item.proposal, item), class: "btn btn-fab btn-fab-mini btn-primary pull-right" %>
+                      <%= link_to "<i class='material-icons'>edit</i>".html_safe, edit_account_job_proposal_item_path(item.account, item.job, item.proposal, item), class: "btn btn-fab btn-fab-mini btn-primary pull-right" %>
                       <h6 class="category text-info"><%= link_to item.description, account_job_proposal_item_path(item.account, item.job, item.proposal, item) %></h6>
                     </div>
                   </div>
