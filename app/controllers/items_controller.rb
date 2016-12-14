@@ -1,6 +1,7 @@
 require 'prawn/labels'
 
 class ItemsController < ApplicationController
+  layout :resolve_layout
   before_filter :find_clients, only: [:new, :edit]
   before_filter :find_categories, only: [:new, :edit, :show, :index]
   before_filter :find_proposal, only: [:create, :batch_create]
@@ -62,7 +63,11 @@ class ItemsController < ApplicationController
 
   def show
     meta_tags
-    @child_item = @item.build_child_item
+    if current_user.try(:internal?)
+      @child_item = @item.build_child_item
+    else
+      render :sapphire_show
+    end
   end
 
   def edit
@@ -173,6 +178,16 @@ class ItemsController < ApplicationController
 
   def find_item
     @item = Item.find(params[:id])
+  end
+
+  def resolve_layout
+    if !current_user.try(:internal?)
+      if action_name.in?(%w(show))
+        "ecommerce"
+      end
+    else
+      "application"
+    end
   end
 
 end

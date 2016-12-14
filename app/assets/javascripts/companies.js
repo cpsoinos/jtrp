@@ -47,6 +47,22 @@ $(document).on('turbolinks:load', function() {
     imagePath: 'images/'
   });
 
+  $.fn.CloudZoom.defaults = {
+  	zoomWidth:"auto",
+  	zoomHeight:"auto",
+  	position:"inside",
+  	adjustX:0,
+  	adjustY:0,
+  	adjustY:"",
+  	tintOpacity:0.5,
+  	lensOpacity:0.5,
+  	titleOpacity:0.5,
+  	smoothMove:3,
+  	showTitle:false
+  };
+
+
+
 });
 
 var initMap = function() {
