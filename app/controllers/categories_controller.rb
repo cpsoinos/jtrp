@@ -1,15 +1,13 @@
 class CategoriesController < ApplicationController
+  layout :resolve_layout
   before_filter :require_internal, except: [:index, :show]
 
   def index
-    @featured_photos = Photo.featured
   end
 
   def show
-    @category = Category.find(params[:id])
-    if request.path != category_path(@category)
-      redirect_to @category, status: :moved_permanently
-    end
+    @category = Category.includes(:subcategories).find(params[:id])
+    @items = find_items
   end
 
   def new
@@ -56,6 +54,22 @@ class CategoriesController < ApplicationController
 
   def category_params
     params.require(:category).permit(:name, :parent_id, :photo)
+  end
+
+  def resolve_layout
+    if action_name.in?(%w(show))
+      "ecommerce"
+    else
+      "application"
+    end
+  end
+
+  def find_items
+    if @category.subcategory?
+      @category.items.active.page(params[:page]).per(12)
+    else
+      Item.where(id: ([@category.id] | @category.subcategories.pluck(:id))).page(params[:page]).per(12)
+    end
   end
 
 end

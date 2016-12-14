@@ -48,9 +48,9 @@ class ApplicationController < ActionController::Base
   def find_categories
     @categories ||= begin
       if current_user.try(:internal?)
-        Category.all.order(:name)
+        Category.includes(:subcategories).all.order(:name)
       else
-        Category.categorized.order(:name)
+        Category.includes(:subcategories).categorized.order(:name)
       end
     end
   end

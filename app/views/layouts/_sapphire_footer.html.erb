@@ -5,10 +5,10 @@
         <div>
           <h3>Information</h3>
           <ul>
-            <li><a href="about.html">About Us</a></li>
-            <li><a href="">Delivery Information</a></li>
-            <li><a href="">Privacy Policy</a></li>
-            <li><a href="">Terms & Conditions</a></li>
+            <li><%= link_to "About Us", about_path %></li>
+            <li><%= link_to "Service Rate Schedule", service_rate_schedule_path %></li>
+            <li><%= link_to "Service Rate Schedule for Agents", agent_service_rate_schedule_path %></li>
+            <li><%= link_to "Consignment Terms & Conditions", consignment_policies_path %></li>
           </ul>
         </div>
       </div>
@@ -16,7 +16,7 @@
         <div>
           <h3>Customer Service</h3>
           <ul>
-            <li><a href="contact.html" class="ajax_right">Contact Us</a></li>
+            <li><%= link_to "Contact Us", contact_path %></li>
             <li><a href="">Returns</a></li>
             <li><a href="">Site Map</a></li>
             <li><a href="">Shipping</a></li>

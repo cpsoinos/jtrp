@@ -2,6 +2,15 @@ crumb :root do
   link "Dashboard", root_path
 end
 
+crumb :home do
+  link "Home", landing_page_path
+end
+
+crumb :category do |category|
+  link category.name, category_path(category)
+  parent :home
+end
+
 crumb :accounts do
   link "Accounts", accounts_path
 end
