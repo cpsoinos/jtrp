@@ -10,11 +10,13 @@
 
   <% unless params[:print] %>
     <% if current_user.try(:internal?) %>
-      <%= render 'email_note_modal' %>
-      <%= link_to "<i class='fa fa-caret-left'></i> Back to Job".html_safe, account_job_path(@account, @job), class: "btn btn-raised btn-primary hidden-print" %>
-      <button type="button" class="btn btn-raised btn-primary pull-right" data-toggle="modal" data-target="#email-note-modal">
-        Send this Proposal <i class='material-icons'>email</i>
-      </button>
+      <div class="hidden-print">
+        <%= render 'email_note_modal' %>
+        <%= link_to "<i class='fa fa-caret-left'></i> Back to Job".html_safe, account_job_path(@account, @job), class: "btn btn-raised btn-primary hidden-print" %>
+        <button type="button" class="btn btn-raised btn-primary pull-right" data-toggle="modal" data-target="#email-note-modal">
+          Send this Proposal <i class='material-icons'>email</i>
+        </button>
+      </div>
     <% end %>
   <% end %>
 
