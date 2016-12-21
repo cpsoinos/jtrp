@@ -382,6 +382,10 @@ GEM
       rb-inotify (>= 0.9.7)
     lob (2.5.1)
       rest-client (>= 1.8, < 3.0)
+    lograge (0.3.5)
+      actionpack (>= 3)
+      activesupport (>= 3)
+      railties (>= 3)
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
     lumberjack (1.0.10)
@@ -777,6 +781,7 @@ DEPENDENCIES
   launchy
   letter_opener_web (~> 1.2.0)
   lob
+  lograge
   madison
   metamagic
   mini_magick

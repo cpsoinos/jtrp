@@ -76,6 +76,7 @@ gem 'madison'
 group :production, :staging do
   gem 'tunemygc'
   gem 'scout_apm', '~> 3.0.x'
+  gem 'lograge'
 end
 
 group :production, :staging, :local, :development do
