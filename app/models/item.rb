@@ -50,6 +50,7 @@ class Item < ActiveRecord::Base
   }
 
   validates :description, :proposal, :client_intention, presence: true
+  validates_time :sold_at, on_or_after: 50.years.ago, on_or_after_message: "Invalid date. Please choose from date picker or use mm/dd/yyyy format.", allow_blank: true
 
   scope :status, -> (status) { where(status: status) }
   scope :type, -> (type) { where(client_intention: type) }

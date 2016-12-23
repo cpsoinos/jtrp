@@ -72,6 +72,7 @@ gem 'lob'
 gem 'paranoia', '~> 2.2'
 gem 'gretel'
 gem 'madison'
+gem 'validates_timeliness', '~> 4.0'
 
 group :production, :staging do
   gem 'tunemygc'

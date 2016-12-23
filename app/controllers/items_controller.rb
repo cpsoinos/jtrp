@@ -93,7 +93,7 @@ class ItemsController < ApplicationController
         format.json { respond_with_bip(@item) }
       else
         format.html do
-          flash[:alert] = 'Could not update item.'
+          flash[:alert] = "Could not update item. #{@item.errors.full_messages.first}"
           redirect_to edit_account_job_proposal_item_path(@item.account, @item.job, @item.proposal, @item)
         end
         format.json { respond_with_bip(@item) }
