@@ -189,31 +189,6 @@ ActiveRecord::Schema.define(version: 20161223175115) do
   add_index "discounts", ["item_id"], name: "index_discounts_on_item_id", using: :btree
   add_index "discounts", ["order_id"], name: "index_discounts_on_order_id", using: :btree
 
-  create_table "facebook_accounts", force: :cascade do |t|
-    t.integer  "identity_id"
-    t.string   "token"
-    t.string   "uid"
-    t.string   "name"
-    t.string   "avatar"
-    t.string   "account_url"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.datetime "deleted_at"
-  end
-
-  add_index "facebook_accounts", ["identity_id"], name: "index_facebook_accounts_on_identity_id", using: :btree
-
-  create_table "facebook_pages", force: :cascade do |t|
-    t.string   "name"
-    t.string   "graph_id"
-    t.string   "token"
-    t.string   "page_url"
-    t.string   "picture"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.datetime "deleted_at"
-  end
-
   create_table "friendly_id_slugs", force: :cascade do |t|
     t.string   "slug",                      null: false
     t.integer  "sluggable_id",              null: false
@@ -238,17 +213,6 @@ ActiveRecord::Schema.define(version: 20161223175115) do
     t.integer  "order_id"
     t.string   "remote_id",                default: "14QFV6H0K3N62"
   end
-
-  create_table "identities", force: :cascade do |t|
-    t.integer  "user_id"
-    t.string   "provider"
-    t.string   "uid"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.datetime "deleted_at"
-  end
-
-  add_index "identities", ["user_id"], name: "index_identities_on_user_id", using: :btree
 
   create_table "item_spreadsheets", force: :cascade do |t|
     t.string "csv"
@@ -496,8 +460,6 @@ ActiveRecord::Schema.define(version: 20161223175115) do
   add_foreign_key "checks", "statements"
   add_foreign_key "discounts", "items"
   add_foreign_key "discounts", "orders"
-  add_foreign_key "facebook_accounts", "identities"
-  add_foreign_key "identities", "users"
   add_foreign_key "items", "categories"
   add_foreign_key "items", "orders"
   add_foreign_key "jobs", "accounts"
