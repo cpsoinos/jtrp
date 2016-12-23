@@ -40,6 +40,14 @@ class Item < ActiveRecord::Base
     greater_than_or_equal_to: 0,
     less_than_or_equal_to: 100000
   }
+  monetize :parts_cost_cents, allow_nil: true, numericality: {
+    greater_than_or_equal_to: 0,
+    less_than_or_equal_to: 100000
+  }
+  monetize :labor_cost_cents, allow_nil: true, numericality: {
+    greater_than_or_equal_to: 0,
+    less_than_or_equal_to: 100000
+  }
 
   validates :description, :proposal, :client_intention, presence: true
 
