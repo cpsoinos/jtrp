@@ -38,8 +38,12 @@ class Statement < ActiveRecord::Base
     end.sum
   end
 
+  def total_parts_and_labor
+    Money.new(items.sum(:parts_cost_cents) + items.sum(:labor_cost_cents))
+  end
+
   def amount_due_to_client
-    Money.new(items.sum(:sale_price_cents)) - total_consignment_fee
+    Money.new(items.sum(:sale_price_cents)) - total_consignment_fee - total_parts_and_labor
   end
 
   def object_url

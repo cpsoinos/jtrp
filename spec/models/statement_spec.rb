@@ -67,6 +67,11 @@ describe Statement do
       expect(statement.amount_due_to_client).to eq(Money.new(12500))
     end
 
+    it "calculates the amount due to client when parts and labor included on items" do
+      items.first.update_attributes(parts_cost_cents: 300, labor_cost_cents: 200)
+      expect(statement.amount_due_to_client).to eq(Money.new(12000))
+    end
+
     it "calculates the total consignment fee when consignment rates aren't consistent" do
       items.last.update_attribute("consignment_rate", 65)
       expect(statement.total_consignment_fee).to eq(Money.new(13250))

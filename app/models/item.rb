@@ -202,9 +202,13 @@ class Item < ActiveRecord::Base
     end
   end
 
+  def parts_and_labor
+    Money.new(parts_cost_cents) + Money.new(labor_cost_cents)
+  end
+
   def amount_due_to_client
     return unless sold? && client_intention == "consign"
-    Money.new((sale_price_cents * (100 - consignment_rate)) / 100)
+    Money.new((sale_price_cents * (100 - consignment_rate)) / 100) - parts_and_labor
   end
 
   def panel_color
