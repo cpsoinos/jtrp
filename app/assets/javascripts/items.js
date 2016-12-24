@@ -147,7 +147,7 @@ $(document).on('turbolinks:load', function() {
   $("select").imagepicker();
 
   $('.datepicker').datepicker({
-    zIndexOffset: '9999'
+    zIndexOffset: '9999',
     clearBtn: true,
     autoclose: true,
     todayHighlight: true
