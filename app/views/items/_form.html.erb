@@ -97,6 +97,34 @@
               <span class="input-group-addon">
                 <i class="fa fa-usd" aria-hidden="true"></i>
               </span>
+              <%= f.label :parts_cost, "parts cost", class: "control-label" %>
+              <%= f.text_field :parts_cost, class: "form-control" %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xs-6 col-md-3">
+        <div class="row">
+          <div class="form-group label-floating">
+            <div class="input-group">
+              <span class="input-group-addon">
+                <i class="fa fa-usd" aria-hidden="true"></i>
+              </span>
+              <%= f.label :labor_cost, "labor cost", class: "control-label" %>
+              <%= f.text_field :labor_cost, class: "form-control" %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xs-6 col-md-3">
+        <div class="row">
+          <div class="form-group label-floating">
+            <div class="input-group">
+              <span class="input-group-addon">
+                <i class="fa fa-usd" aria-hidden="true"></i>
+              </span>
               <%= f.label :sale_price, "sale price", class: "control-label" %>
               <%= f.text_field :sale_price, class: "form-control" %>
             </div>
@@ -106,10 +134,13 @@
 
       <div class="col-xs-6 col-md-3">
         <div class="row">
-          <div class="form-group">
-            <%= f.label :sold_at, class: "control-label" %>
+          <div class="form-group label-floating">
             <div class="input-group">
-              <%= f.text_field :sold_at, id: "sale-date", value: @item.try(:sold_at).try(:strftime, '%-m/%-d/%y') %>
+              <span class="input-group-addon">
+                <i class="fa fa-calendar" aria-hidden="true"></i>
+              </span>
+              <%= f.label :sold_at, "sold at", class: "control-label" %>
+              <%= f.text_field :sold_at, value: @item.try(:sold_at).try(:strftime, '%-m/%-d/%Y'), class: "form-control datepicker" %>
             </div>
           </div>
         </div>

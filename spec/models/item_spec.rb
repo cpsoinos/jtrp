@@ -14,6 +14,8 @@ describe Item do
   it { should monetize(:listing_price).allow_nil }
   it { should monetize(:minimum_sale_price).allow_nil }
   it { should monetize(:sale_price).allow_nil }
+  it { should monetize(:parts_cost).allow_nil }
+  it { should monetize(:labor_cost).allow_nil }
 
   describe "scopes" do
 

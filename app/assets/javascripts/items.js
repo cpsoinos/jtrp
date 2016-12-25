@@ -146,8 +146,11 @@ $(document).on('turbolinks:load', function() {
 
   $("select").imagepicker();
 
-  $('#sale-date').datepicker({
-    zIndexOffset: '9999'
+  $('.datepicker').datepicker({
+    zIndexOffset: '9999',
+    clearBtn: true,
+    autoclose: true,
+    todayHighlight: true
   });
 
   // Dynamically create mark-sold-modals
