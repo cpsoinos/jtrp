@@ -79,7 +79,7 @@
   <% if @account && @account.is_a?(OwnerAccount) && !controller_name.in?(['proposals', 'agreements', 'purchases']) %>
 
     <div class="text-center">
-      <%= paginate items, html: {class: "pagination pagination-primary"} %>
+      <%= paginate items, remote: true, html: {class: "pagination pagination-primary"} %>
     </div>
 
   <% end %>
