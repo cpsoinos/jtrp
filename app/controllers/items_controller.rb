@@ -9,10 +9,14 @@ class ItemsController < ApplicationController
   before_filter :set_intentions_map
 
   def index
-    @items = ItemsPresenter.new(params).filter.order(:jtrp_number, :account_item_number).group_by { |i| i.client_intention }
-    @intentions = @items.keys
+    filter_params = params
+    if params[:status] == "all"
+      filter_params = params.except(:status)
+    end
+    @intentions = @intentions_map.keys
     @filter = params[:status].try(:capitalize)
     @type = params[:type]
+    @items = ItemsPresenter.new(filter_params).filter.order(params[:order]).page(params[:page])
   end
 
   def new

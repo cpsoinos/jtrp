@@ -90,8 +90,8 @@ $(document).on('turbolinks:load', function() {
   //Reinitialize masonry inside each panel after the relative tab link is clicked -
 	$('a[data-toggle=tab]').each(function () {
 		var $this = $(this);
-
 		$this.on('shown.bs.tab', function () {
+
 
       $grid.imagesLoaded().progress( function() {
         $grid.masonry('layout');

@@ -33,6 +33,25 @@ module ApplicationHelper
     end
   end
 
+  def header_sort_values
+    {
+      "Account Item No."      =>  "account_item_number",
+      "JTRP No."              =>  "jtrp_number",
+      "Consignment Rate"      =>  "consignment_rate",
+      "Listing Price"         =>  "listing_price_cents",
+      "Min. Sale Price"       =>  "minimum_sale_price_cents",
+      "Sale Date"             =>  "sold_at",
+      "Sale Price"            =>  "sale_price_cents",
+      "Price"                 =>  "listing_price_cents",
+      "Period"                =>  "consignment_period",
+      "Starting Asking Price" =>  "listing_price_cents",
+      "Starting Min. Price"   =>  "minimum_sale_price_cents",
+      "Consignment Fee"       =>  "consignment_rate",
+      "SKU"                   =>  "id",
+      "Item"                  =>  "description"
+    }
+  end
+
   def general_values(item)
     if current_user.try(:internal?)
       {
