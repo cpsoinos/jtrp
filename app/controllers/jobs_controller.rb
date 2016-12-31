@@ -17,8 +17,6 @@ class JobsController < ApplicationController
     @account = @job.account
     @type = params[:type]
     @items = ItemsPresenter.new(params, @job).execute
-
-    # @items = @job.items.page(params[:page])
   end
 
   def new

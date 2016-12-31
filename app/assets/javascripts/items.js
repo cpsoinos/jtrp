@@ -91,8 +91,6 @@ $(document).on('turbolinks:load', function() {
 	$('a[data-toggle=tab]').each(function () {
 		var $this = $(this);
 		$this.on('shown.bs.tab', function () {
-
-
       $grid.imagesLoaded().progress( function() {
         $grid.masonry('layout');
       });
