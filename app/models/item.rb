@@ -9,7 +9,7 @@ class Item < ActiveRecord::Base
   include PgSearch
 
   multisearchable against: [:id, :account_item_number, :description, :original_description, :category_name, :account_name, :job_name]
-  paginates_per 50
+  paginates_per 20
 
   has_many :photos, dependent: :destroy
   accepts_nested_attributes_for :photos
@@ -52,7 +52,13 @@ class Item < ActiveRecord::Base
   validates :description, :proposal, :client_intention, presence: true
 
   scope :status, -> (status) { where(status: status) }
-  scope :type, -> (type) { where(client_intention: type) }
+  scope :type, -> (type) do
+    if type == 'expired'
+      expired
+    else
+      where(client_intention: type)
+    end
+  end
   scope :by_id, -> (id_param) { where(id: id_param) }
 
   scope :potential, -> { where(status: "potential") }
