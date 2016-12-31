@@ -82,12 +82,12 @@
     </table>
   </div>
 
-  <%# if @account && @account.is_a?(OwnerAccount) && !controller_name.in?(['proposals', 'agreements', 'purchases']) %>
+  <% unless controller_name.in?(['proposals', 'agreements', 'purchases', 'search']) %>
 
     <div class="text-center">
       <%= paginate items, params: params, html: {class: "pagination pagination-info"} %>
     </div>
 
-  <%# end %>
+  <% end %>
 
 </div>

@@ -52,7 +52,13 @@ class Item < ActiveRecord::Base
   validates :description, :proposal, :client_intention, presence: true
 
   scope :status, -> (status) { where(status: status) }
-  scope :type, -> (type) { where(client_intention: type) }
+  scope :type, -> (type) do
+    if type == 'expired'
+      expired
+    else
+      where(client_intention: type)
+    end
+  end
   scope :by_id, -> (id_param) { where(id: id_param) }
 
   scope :potential, -> { where(status: "potential") }

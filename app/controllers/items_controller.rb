@@ -6,17 +6,15 @@ class ItemsController < ApplicationController
   before_filter :find_proposal, only: [:create, :batch_create]
   before_filter :require_internal, except: [:show, :update]
   before_filter :find_item, only: :show
-  before_filter :set_intentions_map
 
   def index
     filter_params = params
     if params[:status] == "all"
       filter_params = params.except(:status)
     end
-    @intentions = @intentions_map.keys
     @filter = params[:status].try(:capitalize)
     @type = params[:type]
-    @items = ItemsPresenter.new(filter_params).filter.order(params[:order]).page(params[:page])
+    @items = ItemsPresenter.new(filter_params).execute
   end
 
   def new
@@ -165,18 +163,6 @@ class ItemsController < ApplicationController
 
   def archive_params
     params.require(:item).permit(:archive)
-  end
-
-  def set_intentions_map
-    @intentions_map = {
-      "consign" => { display_name: "consigned", icon: "<i class='material-icons'>supervisor_account</i>", color: "secondary-primary" },
-      "sell" => { display_name: "owned", icon: "<i class='material-icons'>store</i>", color: "complement-primary" },
-      "donate" => { display_name: "will donate", icon: "<i class='fa fa-gift' aria-hidden='true'></i>", color: "secondary-darker" },
-      "dump" => { display_name: "will dump", icon: "<i class='material-icons'>delete</i>", color: "complement-darker" },
-      "undecided" => { display_name: "undecided", icon: "<i class='fa fa-question' aria-hidden='true'></i>", color: "primary-lighter" },
-      "nothing" => { display_name: "client kept", icon: "<i class='material-icons'>weekend</i>", color: "primary-lighter" },
-      "decline" => { display_name: "client declined", icon: "<i class='material-icons'>weekend</i>", color: "primary-lighter" }
-    }
   end
 
   def find_item

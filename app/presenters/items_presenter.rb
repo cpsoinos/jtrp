@@ -1,13 +1,31 @@
 class ItemsPresenter
 
-  attr_reader :params
+  attr_reader :params, :resource
 
-  def initialize(params={})
+  def initialize(params={}, resource=nil)
     @params = params
+    @resource = resource
+    @items = item_base
   end
 
   def filter
-    Item.includes(:account, :job).filter(params.slice(:status, :type, :by_id))
+    @items = @items.filter(params.slice(:status, :type, :by_id))
+    self
+  end
+
+  def sort
+    @items = @items.order(params[:order])
+    self
+  end
+
+  def paginate
+    @items = @items.page(params[:page])
+    self
+  end
+
+  def execute
+    filter.sort.paginate
+    @items
   end
 
   def todo
@@ -22,6 +40,14 @@ class ItemsPresenter
 
   def no_sale_price
     Item.sold.where(sale_price_cents: nil).pluck(:id)
+  end
+
+  def item_base
+    if resource
+      resource.items
+    else
+      Item
+    end
   end
 
 end

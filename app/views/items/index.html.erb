@@ -43,11 +43,11 @@
     <div class="row top-margin">
       <ul class="nav nav-pills nav-pills-icons nav-pills-primary text-center justify-list">
         <% if current_user.try(:internal?) %>
-          <% @intentions.each do |intention| %>
+          <% intentions_map.each do |intention, values| %>
             <li class="<%= 'active' if params[:type] == intention.downcase %>">
               <a href="<%= items_path(status: params[:status], type: intention.downcase) %>"  >
-                <%= @intentions_map[intention][:icon].html_safe %>
-                <h5><%= @intentions_map[intention][:display_name] %></h5>
+                <%= values[:icon].html_safe %>
+                <h5><%= values[:display_name] %></h5>
               </a>
             </li>
           <% end %>
