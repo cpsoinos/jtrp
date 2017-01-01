@@ -9,7 +9,7 @@ class StatementJob < ActiveJob::Base
 
   def accounts
     @_accounts ||= begin
-      Item.sold.where(client_intention: "consign", sold_at: sale_date_range).map(&:account).uniq
+      Item.sold.where(client_intention: "consign", sold_at: sale_date_range, expired: false).map(&:account).uniq
     end
   end
 
@@ -19,7 +19,6 @@ class StatementJob < ActiveJob::Base
       if statement.amount_due_to_client == 0
         statement.pay
       end
-      # save_as_pdf(statement)
     end
   end
 
