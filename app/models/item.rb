@@ -1,5 +1,6 @@
 class Item < ActiveRecord::Base
   acts_as_paranoid
+  acts_as_taggable_on :tags
   audited associated_with: :proposal
 
   extend FriendlyId
@@ -162,13 +163,13 @@ class Item < ActiveRecord::Base
   end
 
   def meets_requirements_sold?
-    meets_requirements_active?
+    meets_requirements_active? || expired?
   end
 
   def meets_requirements_expired?
-    active?     &&
-    consigned?  &&
-    (listed_at < 90.days.ago)
+    active?       &&
+      consigned?  &&
+      (listed_at < consignment_term.days.ago)
   end
 
   def set_listed_at
@@ -285,6 +286,7 @@ class Item < ActiveRecord::Base
 
   def mark_expired
     if meets_requirements_expired?
+      self.tag_list += "expired"
       self.expired = true
       self.save
       mark_agreement_inactive
