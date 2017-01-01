@@ -78,7 +78,6 @@ class ItemsController < ApplicationController
 
   def update
     @item = Item.find(params[:id])
-    binding.pry
     respond_to do |format|
       if ItemUpdater.new(@item).update(item_params) && !@item.errors.present?
         format.js do
@@ -115,7 +114,7 @@ class ItemsController < ApplicationController
 
   def deactivate
     @item = Item.find(params[:item_id])
-    if @item.mark_inactive
+    if @item.mark_inactive and @item.update(item_params)
       redirect_to :back, notice: "Item deactivated"
     else
       redirect_to :back, alert: "Could not deactivate item."

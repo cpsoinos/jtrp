@@ -32,7 +32,7 @@ feature "item show" do
       agreement = create(:agreement, :active, proposal: proposal)
       visit account_job_proposal_item_path(account, job, proposal, item)
 
-      click_link("Mark Active")
+      click_link("Activate")
       expect(page).to have_content("Item activated!")
       expect(item.reload).to be_active
     end
@@ -41,7 +41,7 @@ feature "item show" do
       agreement = create(:agreement, proposal: proposal)
       visit account_job_proposal_item_path(account, job, proposal, item)
 
-      click_link("Mark Active")
+      click_link("Activate")
       expect(page).to have_content("Could not activate item. Check that the agreement is active first.")
       expect(item.reload).to be_potential
     end
@@ -56,7 +56,7 @@ feature "item show" do
       allow(InventorySyncJob).to receive(:perform_later)
       visit item_path(item)
 
-      click_link("Mark Active")
+      click_link("Activate")
       expect(page).to have_content("Item activated!")
       expect(item.reload).to be_active
     end

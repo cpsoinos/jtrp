@@ -96,14 +96,25 @@
               Create Item from this Batch <i class='material-icons'>content_copy</i>
             </button>
             <% if @item.potential? || @item.inactive? %>
-              <%= link_to "Mark Active <i class='material-icons'>store</i>".html_safe, item_activate_path(@item), class: "btn btn-raised btn-info btn-round", method: :post %>
+              <%= link_to "Activate <i class='material-icons'>store</i>".html_safe, item_activate_path(@item), class: "btn btn-raised btn-info btn-round", method: :post %>
             <% elsif @item.active? %>
               <% if @item.expired? %>
-                <%= link_to "Unmark Expired <i class='material-icons'>access_time</i>".html_safe, item_path(@item, item: {expired: true, tag_list: @item.tag_list.except("expired")}), class: "btn btn-raised btn-warning btn-round", method: :patch %>
+                <%= link_to "Unmark Expired <i class='material-icons'>access_time</i>".html_safe, item_path(@item, item: {expired: false, tag_list: @item.tag_list.delete("expired")}), class: "btn btn-raised btn-warning btn-round", method: :patch %>
               <% else %>
                 <%= link_to "Mark Expired <i class='material-icons'>access_time</i>".html_safe, item_path(@item, item: {expired: true, tag_list: @item.tag_list.push("expired")}), class: "btn btn-raised btn-warning btn-round", method: :patch %>
               <% end %>
-              <%= link_to "Mark Inactive <i class='material-icons'>remove_circle</i>".html_safe, item_deactivate_path(@item), class: "btn btn-raised btn-danger btn-round", method: :post %>
+
+              <div class="btn-group">
+                <button type="button" class="btn btn-raised btn-danger btn-round dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Deactivate <i class='material-icons'>remove_circle</i>
+                </button>
+                <ul class="dropdown-menu">
+                  <li><%= link_to "Damaged", item_deactivate_path(@item, item: {tag_list: @item.tag_list.push("damaged")}), method: :patch %></li>
+                  <li><%= link_to "Retrieved by Client", item_deactivate_path(@item, item: {tag_list: @item.tag_list.push("client_retrieved")}), method: :patch %></li>
+                  <li><%= link_to "Other", item_deactivate_path(@item), method: :patch %></li>
+                </ul>
+              </div>
+
             <% end %>
           <% end %>
 
