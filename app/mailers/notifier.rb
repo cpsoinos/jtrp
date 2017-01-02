@@ -16,7 +16,7 @@ class Notifier < ApplicationMailer
     @orders = orders(timeframe)
     recipient ||= default_recipient
 
-    roadie_mail(to: recipient, subject: 'Daily Sales Summary', asset_providers: [Roadie::FilesystemProvider.new(Rails.application.root.join("app", "assets", "stylesheets"))])
+    roadie_mail(to: recipient, subject: 'Daily Sales Summary')
   end
 
   private
