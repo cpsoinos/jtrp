@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170101212025) do
+ActiveRecord::Schema.define(version: 20170102040705) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -246,6 +246,7 @@ ActiveRecord::Schema.define(version: 20170101212025) do
     t.string   "parts_cost_currency",         default: "USD",       null: false
     t.integer  "labor_cost_cents"
     t.string   "labor_cost_currency",         default: "USD",       null: false
+    t.datetime "acquired_at"
   end
 
   add_index "items", ["account_item_number"], name: "index_items_on_account_item_number", using: :btree

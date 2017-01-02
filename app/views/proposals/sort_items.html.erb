@@ -26,14 +26,26 @@
           <%= form_for [@proposal, @item], class: "form-horizontal" do |f| %>
 
             <div class="row">
-              <div class="col-xs-12 col-md-6">
+              <div class="col-xs-12 col-md-4">
                 <div class="form-group label-floating">
                   <%= f.label :description, class: "control-label required" %>
                   <%= f.text_field :description, class: "form-control", required: true %>
                 </div>
               </div>
 
-              <div class="col-xs-12 col-md-6">
+              <div class="col-xs-12 col-md-4">
+                <div class="form-group label-floating">
+                  <div class="input-group">
+                    <span class="input-group-addon">
+                      <i class="fa fa-calendar" aria-hidden="true"></i>
+                    </span>
+                    <%= f.label :acquired_at, "acquired at", class: "control-label" %>
+                    <%= f.text_field :acquired_at, value: @item.try(:sold_at).try(:strftime, '%-m/%-d/%Y'), class: "form-control datepicker" %>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-xs-12 col-md-4">
                 <div class="form-group label-floating">
                   <%= f.label :category, class: "control-label" %>
                   <%= f.collection_select :category_id, @categories, :id, :name, {include_blank: true}, {class: "select form-control" } %>
@@ -63,7 +75,6 @@
                 </div>
               </div>
             </div>
-
 
             <h4 class="large-top-margin">Select one or more photos of this item:</h4>
 
