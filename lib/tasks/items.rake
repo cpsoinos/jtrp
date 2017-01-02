@@ -144,4 +144,21 @@ namespace :items do
 
   end
 
+  task :tag_expired => :environment do
+
+    items = Item.expired
+    bar = RakeProgressbar.new(items.count)
+    puts "Begin tagging #{items.count} expired items with 'expired'"
+
+    items.each do |item|
+      item.tag_list.add("expired")
+      item.save
+      bar.inc
+    end
+
+    bar.finished
+    puts "Tagged #{items.count} items with 'expired'"
+
+  end
+
 end

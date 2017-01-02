@@ -1,0 +1,1 @@
+$('#pill1').html("<%= escape_javascript render(partial: 'items/items_list', locals: {headers: general_headers, context: 'general', items: @items.order(:jtrp_number, :account_item_number)}) %>");

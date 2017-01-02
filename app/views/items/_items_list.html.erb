@@ -7,21 +7,27 @@
   <% end %>
 
   <div class="table-responsive">
-    <table class="table table-shopping tablesorter">
+    <table class="table table-shopping">
 
       <thead>
         <tr>
           <th class="text-center"></th>
           <th class="th-description">Item</th>
           <% headers.each do |header| %>
-            <th class="text-center"><%= header %></th>
+            <% sort_params = { order: header_sort_values[header] }.merge(params.except(:action, :controller, :page, :order)) %>
+            <% if params[:order] == header_sort_values[header] %>
+              <% sort_params[:order] = "#{header_sort_values[header]} DESC NULLS LAST" %>
+            <% elsif params[:order] == "#{header_sort_values[header]} DESC NULLS LAST" %>
+              <% sort_params[:order] = header_sort_values[header] %>
+            <% end %>
+            <th class="text-center"><%= link_to header, "#{request.path}?#{sort_params.to_param}" %></th>
           <% end %>
         </tr>
       </thead>
 
       <tbody>
         <% items.each do |item| %>
-          <% cache [item, context, controller_name, current_user.try(:role)] do %>
+          <% cache [item, context, params, current_user.try(:role)] do %>
             <tr class="no-break">
               <td class="text-center">
                 <div class="img-container">
@@ -76,10 +82,10 @@
     </table>
   </div>
 
-  <% if @account && @account.is_a?(OwnerAccount) && !controller_name.in?(['proposals', 'agreements', 'purchases']) %>
+  <% unless controller_name.in?(['proposals', 'agreements', 'purchases', 'search']) %>
 
     <div class="text-center">
-      <%= paginate items, html: {class: "pagination pagination-primary"} %>
+      <%= paginate items, params: params, html: {class: "pagination pagination-info"} %>
     </div>
 
   <% end %>

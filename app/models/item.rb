@@ -1,5 +1,6 @@
 class Item < ActiveRecord::Base
   acts_as_paranoid
+  acts_as_taggable_on :tags
   audited associated_with: :proposal
 
   extend FriendlyId
@@ -9,7 +10,7 @@ class Item < ActiveRecord::Base
   include PgSearch
 
   multisearchable against: [:id, :account_item_number, :description, :original_description, :category_name, :account_name, :job_name]
-  paginates_per 50
+  paginates_per 20
 
   has_many :photos, dependent: :destroy
   accepts_nested_attributes_for :photos
@@ -53,7 +54,13 @@ class Item < ActiveRecord::Base
   validates_time :sold_at, on_or_after: 50.years.ago, on_or_after_message: "Invalid date. Please choose from date picker or use mm/dd/yyyy format.", allow_blank: true
 
   scope :status, -> (status) { where(status: status) }
-  scope :type, -> (type) { where(client_intention: type) }
+  scope :type, -> (type) do
+    if type == 'expired'
+      expired
+    else
+      where(client_intention: type)
+    end
+  end
   scope :by_id, -> (id_param) { where(id: id_param) }
 
   scope :potential, -> { where(status: "potential") }
@@ -72,13 +79,15 @@ class Item < ActiveRecord::Base
     state :sold
     state :inactive
 
-    after_transition [:potential, :inactive] => :active, do: [:set_listed_at, :sync_inventory]
+    after_transition [:potential] => :active, do: [:set_listed_at, :sync_inventory]
+    after_transition [:inactive] => :active, do: [:set_listed_at, :sync_inventory, :mark_agreement_active]
     after_transition [:active, :inactive] => :sold, do: [:mark_agreement_inactive, :set_sold_at, :sync_inventory]
     after_transition any => :inactive, do: :sync_inventory
     after_transition sold: :active, do: [:clear_sale_data, :mark_agreement_active]
 
     event :mark_active do
-      transition [:potential, :inactive] => :active, if: lambda { |item| item.meets_requirements_active? }
+      transition [:potential] => :active, if: lambda { |item| item.meets_requirements_active? }
+      transition [:inactive] => :active
     end
 
     event :mark_sold do
@@ -157,13 +166,13 @@ class Item < ActiveRecord::Base
   end
 
   def meets_requirements_sold?
-    meets_requirements_active?
+    meets_requirements_active? || expired?
   end
 
   def meets_requirements_expired?
-    active?     &&
-    consigned?  &&
-    (listed_at < 90.days.ago)
+    active?       &&
+      consigned?  &&
+      (listed_at < consignment_term.days.ago)
   end
 
   def set_listed_at
@@ -186,7 +195,7 @@ class Item < ActiveRecord::Base
   end
 
   def consigned?
-    (active? || sold?) && client_intention == "consign"
+    (active? || sold?) && client_intention == "consign" && !expired?
   end
 
   def offer_chosen?
@@ -196,6 +205,8 @@ class Item < ActiveRecord::Base
   def ownership_type
     if owned?
       "owned".titleize
+    elsif expired?
+      "expired".titleize
     elsif consigned?
       "consigned".titleize
     else
@@ -280,6 +291,7 @@ class Item < ActiveRecord::Base
 
   def mark_expired
     if meets_requirements_expired?
+      self.tag_list += "expired"
       self.expired = true
       self.save
       mark_agreement_inactive
@@ -298,7 +310,7 @@ class Item < ActiveRecord::Base
   end
 
   def mark_agreement_active
-    return if import?
+    return if (import? || expired?)
     agreement.mark_active unless agreement.active?
   end
 

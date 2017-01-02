@@ -27,14 +27,27 @@
 <!-- Tabs -->
 <div class="row">
   <div class="col-md-10 col-md-offset-1 col-xs-12">
+
     <div class="row">
-      <ul class="nav nav-pills nav-pills-icons nav-pills-primary text-center justify-list" role="tablist">
+      <ul class="nav nav-pills nav-pills-info text-center justify-list">
+        <% ["all", "potential", "active", "sold", "inactive"].each do |status| %>
+          <li class="<%= 'active' if params[:status] == status %>">
+            <a href="<%= items_path(params.except(:action, :controller, :status).merge(status: status)) %>">
+              <h3><%= status.titleize %></h3>
+            </a>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+
+    <div class="row top-margin">
+      <ul class="nav nav-pills nav-pills-icons nav-pills-primary text-center justify-list">
         <% if current_user.try(:internal?) %>
-          <% @intentions.each do |intention| %>
-            <li class="">
-              <a href="#<%= intention %>" aria-controls="<%= intention %>" role="tab" data-toggle="tab" aria-expanded="false">
-                <%= @intentions_map[intention][:icon].html_safe %>
-                <h5><%= @intentions_map[intention][:display_name] %></h5>
+          <% intentions_map.each do |intention, values| %>
+            <li class="<%= 'active' if params[:type] == intention.downcase %>">
+              <a href="<%= items_path(status: params[:status], type: intention.downcase) %>"  >
+                <%= values[:icon].html_safe %>
+                <h5><%= values[:display_name] %></h5>
               </a>
             </li>
           <% end %>
@@ -52,22 +65,18 @@
 
     <!-- Tab panes -->
     <div class="large-top-margin">
-      <div class="tab-content">
-        <% if current_user.try(:internal?) %>
-          <%= render 'items/mark_sold_modal', redirect_url: request.original_url %>
-          <% @intentions.each do |intention| %>
-            <div role="tabpanel" class="tab-pane fade" id="<%= intention %>">
-              <%= render "items_list", headers: general_headers, context: "general", items: @items[intention] %>
-            </div>
-          <% end %>
-        <% else %>
-          <% @categories.each do |category| %>
-            <div role="tabpanel" class="tab-pane fade" id="<%= category.name %>">
-              <%= render "items_list", headers: general_headers, context: "general", items: category.items.active %>
-            </div>
-          <% end %>
+      <% if current_user.try(:internal?) %>
+        <%= render 'items/mark_sold_modal', redirect_url: request.original_url %>
+        <div id="item-list-container">
+          <%= render "items_list", headers: general_headers, context: "general", items: @items, cached: true %>
+        </div>
+      <% else %>
+        <% @categories.each do |category| %>
+          <div role="tabpanel" class="tab-pane fade" id="<%= category.name %>">
+            <%= render "items_list", headers: general_headers, context: "general", items: category.items.active %>
+          </div>
         <% end %>
-      </div>
+      <% end %>
     </div>
   </div>
 </div>
