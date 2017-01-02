@@ -92,7 +92,7 @@ feature "item show" do
 
       scenario "marks as sold" do
         allow(Clover::Inventory).to receive(:delete)
-        click_button("Mark as Sold")
+        click_link("Mark as Sold")
         expect(page).to have_field("item[sale_price]")
         expect(page).to have_field("item[sold_at]")
 
@@ -160,7 +160,7 @@ feature "item show" do
         allow(InventorySyncJob).to receive(:perform_later)
         visit item_path(item)
 
-        click_link("Mark Inactive")
+        click_link("Other")
         expect(page).to have_content("Item deactivated")
         expect(item.reload).to be_inactive
       end

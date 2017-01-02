@@ -194,7 +194,7 @@ class Item < ActiveRecord::Base
   end
 
   def consigned?
-    (active? || sold?) && client_intention == "consign"
+    (active? || sold?) && client_intention == "consign" && !expired?
   end
 
   def offer_chosen?
@@ -204,6 +204,8 @@ class Item < ActiveRecord::Base
   def ownership_type
     if owned?
       "owned".titleize
+    elsif expired?
+      "expired".titleize
     elsif consigned?
       "consigned".titleize
     else
