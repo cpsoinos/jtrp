@@ -39,7 +39,7 @@ Rails.application.routes.draw do
   get '/csv_import', to: 'items#csv_import', as: 'items_csv_import'
   resources :items do
     post '/activate', to: 'items#activate', as: 'activate'
-    post '/deactivate', to: 'items#deactivate', as: 'deactivate'
+    patch '/deactivate', to: 'items#deactivate', as: 'deactivate'
     post '/mark_not_sold', to: 'items#mark_not_sold', as: 'mark_not_sold'
     get '/labels', to: 'items#labels', on: :collection
   end

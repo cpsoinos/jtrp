@@ -46,6 +46,11 @@ FactoryGirl.define do
       client_intention "consign"
       listed_at 91.days.ago
       expired true
+      after(:create) do |item|
+        create(:agreement, :inactive, :consign, proposal: item.proposal)
+        item.tag_list += "expired"
+        item.save
+      end
     end
 
     trait :with_initial_photo do

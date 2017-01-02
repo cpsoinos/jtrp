@@ -114,7 +114,7 @@ class ItemsController < ApplicationController
 
   def deactivate
     @item = Item.find(params[:item_id])
-    if @item.mark_inactive
+    if @item.mark_inactive and @item.update(item_params)
       redirect_to :back, notice: "Item deactivated"
     else
       redirect_to :back, alert: "Could not deactivate item."
@@ -158,7 +158,7 @@ class ItemsController < ApplicationController
   protected
 
   def item_params
-    params.require(:item).permit(:description, {photos: []}, {initial_photos: []}, {listing_photos: []}, :purchase_price, :asking_price, :listing_price, :sale_price, :sold_at, :minimum_sale_price, :condition, :category_id, :client_intention, :notes, :will_purchase, :will_consign, :account_item_number, :consignment_rate, :proposal_id, :parent_item_id, :jtrp_number, :expired, :consignment_term, :parts_cost, :labor_cost)
+    params.require(:item).permit(:description, {photos: []}, {initial_photos: []}, {listing_photos: []}, :purchase_price, :asking_price, :listing_price, :sale_price, :sold_at, :minimum_sale_price, :condition, :category_id, :client_intention, :notes, :will_purchase, :will_consign, :account_item_number, :consignment_rate, :proposal_id, :parent_item_id, :jtrp_number, :expired, :consignment_term, :parts_cost, :labor_cost, {tag_list: []})
   end
 
   def archive_params

@@ -72,6 +72,7 @@ gem 'lob'
 gem 'paranoia', '~> 2.2'
 gem 'gretel'
 gem 'madison'
+gem 'acts-as-taggable-on', '~> 4.0'
 
 group :production, :staging do
   gem 'tunemygc'
