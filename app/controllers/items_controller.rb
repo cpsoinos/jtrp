@@ -149,7 +149,7 @@ class ItemsController < ApplicationController
   end
 
   def labels
-    @items = ItemsPresenter.new(params).filter
+    @items = ItemsPresenter.new(params).execute
     labels = LabelGenerator.new(@items).generate
 
     send_data labels, filename: "Item Labels", type: "application/pdf", disposition: "inline"
