@@ -1,52 +1,190 @@
-<div class="row extra-large-top-margin">
-  <div class="col-xs-10 col-xs-offset-1">
-    <p>
-      Here is your sales summary for the day:
-    </p>
+<table class="content" align="center" cellpadding="0" cellspacing="0" border="0" style="padding-bottom: 30px;">
+  <tr>
+    <td class="header" bgcolor="black">
 
-    <div class="text-center large-top-margin">
-      <h4>Orders</h4>
-    </div>
-
-    <% @orders.each do |order| %>
-
-      <div class="row">
-        <div class="col-xs-4">
-          Time: <b><%= order.created_at.in_time_zone('Eastern Time (US & Canada)').strftime("%l:%M%P") %></b><br />
-          Clover Order #<%= order.remote_id %>
-        </div>
-      </div>
-
-      <% if order.items.present? %>
-        <%= render 'items/items_list', current_user: @user, controller_name: 'mailer', headers: summary_headers, context: "summary", items: order.items %>
-      <% else %>
-        <p class="large-top-margin text-center"><i>Item(s) processed outside of inventory</i></p>
-      <% end %>
-
-      <div class="pull-right nested-statement-table large-bottom-margin">
-        <table class="nested-statement-table">
-          <tr>
-            <th class="text-right">Total:</th>
-            <td class="text-right statement-data"><%= humanized_money_with_symbol(order.amount) %></td>
-          </tr>
-        </table>
-      </div>
-
-      <br />
-      <br />
-      <br />
-      <br />
-
-    <% end %>
-
-    <div class="row">
-      <table class="pull-right nested-statement-table">
+      <table width="70" align="left" border="0" cellpadding="0" cellspacing="0">
         <tr>
-          <th class="text-right">Total Sales:</th>
-          <th class="text-right statement-data"><%= humanized_money_with_symbol(@orders.sum(:amount_cents) / 100) %></td>
+          <td height="70" style="padding: 0 20px 20px 0;">
+            <%= image_tag('JTRPv2_allwhite.png', width: 70, height: 70) %>
+          </td>
         </tr>
       </table>
-    </div>
 
-  </div>
-</div>
+      <table align="left" border="0" cellpadding="0" cellspacing="0" style="width: 100%; max-width: 425px;">
+        <tr>
+          <td height="70">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td class="subhead" style="padding: 0 0 0 3px;">
+                  <%= DateTime.now.in_time_zone('Eastern Time (US & Canada)').strftime('%A, %b %-d, %Y') %>
+                </td>
+              </tr>
+              <tr>
+                <td class="h1" style="padding: 5px 0 0 0;color:white;">
+                  Daily Sales Summary
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
+<% @orders.each do |order| %>
+  <table class="content" align="center" cellpadding="0" cellspacing="0" border="0">
+    <tr>
+      <td class="subheader borderbottom" bgcolor="black">
+        <table width="115" align="left" border="0" cellpadding="0" cellspacing="0">
+          <tr style="text-align:left;">
+            <td class="bodycopy" style="color:white;"><i><%= order.created_at.in_time_zone('Eastern Time (US & Canada)').strftime("%l:%M%P") %></i></td>
+          </tr>
+          <tr style="text-align:left;">
+            <td class="bodycopy" style="color:white;"><i><%= order.remote_id %></i></td>
+          </tr>
+        </table>
+        <table align="right" border="0" cellpadding="0" cellspacing="0" style="width: 100%; max-width: 405px;">
+          <tr>
+            <td>
+              <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                  <th class="bodycopy" valign="bottom" style="width:310px;color:white;">Item</td>
+                  <th class="bodycopy" valign="bottom" style="text-align:right;color:white;">SKU</th>
+                  <th class="bodycopy" valign="bottom" style="float:right;width:75px;text-align:right;color:white;">Amount</th>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+
+  <% if order.items.empty? %>
+    <table class="content" align="center" cellpadding="0" cellspacing="0" border="0">
+      <tr>
+        <td class="subheader borderbottom">
+          <table width="115" align="left" border="0" cellpadding="0" cellspacing="0">
+            <tr>
+              <td height="115" style="padding:0 20px 20px 0;">
+                <%= image_tag(Photo.default_photo.photo_url(client_hints: true, quality: "auto", fetch_format: :auto, dpr: "auto", width: "115", height: "115", crop: "fill", effect: "shadow:50", x: 10, y: 10)) %>
+              </td>
+            </tr>
+          </table>
+          <table align="right" border="0" cellpadding="0" cellspacing="0" style="width: 100%; max-width: 405px;">
+            <tr>
+              <td height="115">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <td class="bodycopy" style="width:310px;">
+                      <i>Item(s) processed outside of inventory</i>
+                    </td>
+                    <td class="bodycopy" style="text-align:right;"></td>
+                    <td class="bodycopy" style="float:right;width:75px;text-align:right;">
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  <% else %>
+    <% order.items.each do |item| %>
+      <table class="content" align="center" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td class="subheader borderbottom">
+
+            <table width="115" align="left" border="0" cellpadding="0" cellspacing="0">
+              <tr>
+                <td height="115" style="padding:0 20px 20px 0;">
+                  <%= link_to image_tag(item.featured_photo.photo_url(client_hints: true, quality: "auto", fetch_format: :auto, dpr: "auto", effect: :improve, width: "115", height: "115", crop: "fill", effect: "shadow:50", x: 10, y: 10)), item_url(item) %>
+                </td>
+              </tr>
+            </table>
+
+            <table align="right" border="0" cellpadding="0" cellspacing="0" style="width: 100%; max-width: 405px;">
+              <tr>
+                <td height="115">
+                  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                      <td class="bodycopy" style="width:310px;">
+                        <%= link_to item.description.titleize, item_url(item) %>
+                      </td>
+                      <td class="bodycopy" style="text-align:right;"><%= item.id %></td>
+                      <td class="bodycopy" style="float:right;width:75px;text-align:right;">
+                        <% if item.discounts.present? %>
+                          <%= humanized_money_with_symbol(item.listing_price) %><br />
+                          <i><small><%= humanized_money_with_symbol(item.discounts.first.amount) %></i></small><br />
+                        <% end %>
+                        <b><%= humanized_money_with_symbol(item.sale_price) %></b>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+
+          </td>
+        </tr>
+      </table>
+    <% end %>
+  <% end %>
+
+  <table class="content" align="center" cellpadding="0" cellspacing="0" border="0" style="padding-bottom: 50px;">
+    <tr>
+      <td class="subheader borderbottom">
+        <table width="115" align="left" border="0" cellpadding="0" cellspacing="0">
+          <tr>
+            <th style="padding:0 20px 20px 0;"></th>
+          </tr>
+        </table>
+        <table align="right" border="0" cellpadding="0" cellspacing="0" style="width: 100%; max-width: 405px;">
+          <tr>
+            <td>
+              <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                  <th class="bodycopy" style="width:310px;"></td>
+                  <td class="bodycopy" style="text-align:right;"><i>subtotal</i></td>
+                  <th class="bodycopy" style="float:right;width:75px;text-align:right;">
+                    <%= humanized_money_with_symbol(order.amount) %>
+                  </th>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+
+<% end %>
+
+<table class="content" align="center" cellpadding="0" cellspacing="0" border="0">
+  <tr>
+    <td class="subheader borderbottom">
+      <table width="115" align="left" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+          <th style="padding:0 20px 20px 0;"></th>
+        </tr>
+      </table>
+      <table align="right" border="0" cellpadding="0" cellspacing="0" style="width: 100%; max-width: 405px;">
+        <tr>
+          <td>
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <th class="bodycopy" style="width:310px;"></td>
+                <th class="bodycopy" style="text-align:right;"><i>Total</i></th>
+                <th class="bodycopy" style="float:right;width:75px;text-align:right;">
+                  <h4><%= humanized_money_with_symbol(Money.new(@orders.sum(:amount_cents))) %><h4>
+                </th>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
