@@ -3,7 +3,6 @@ describe Discount do
   it { should be_audited.associated_with(:item) }
   it { should belong_to(:item) }
   it { should belong_to(:order) }
-  it { should validate_presence_of(:item) }
   it { should validate_presence_of(:order) }
 
   let(:discount) { create(:discount) }
