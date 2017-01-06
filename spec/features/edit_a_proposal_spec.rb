@@ -81,6 +81,7 @@ feature "edit a proposal" do
         fill_in("item_minimum_sale_price", with: 67.55)
         click_on("Save")
 
+        expect(page).to have_content("#{item.description} updated!")
         expect(page).to have_content("Success!")
         item.reload
         expect(item.will_purchase?).to be_truthy
