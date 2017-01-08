@@ -21,7 +21,7 @@ feature "update an item" do
       visit item_path(item)
 
       expect(page).to have_field("Description")
-      expect(page).to have_field("sale-date")
+      expect(page).to have_field("sold_at")
     end
 
     scenario "successfully updates an item" do
