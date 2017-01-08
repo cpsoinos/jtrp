@@ -97,6 +97,7 @@ Rails.application.routes.draw do
     post '/notify_pending_expiration', to: 'agreements#notify_pending_expiration', as: 'notify_pending_expiration'
     post '/expire_items', to: 'agreements#expire_items', as: "expire_items"
     resources :scanned_agreements, only: [:create, :update, :show, :destroy]
+    resources :letters, only: [:create]
   end
 
   post '/:integration_name' => 'webhooks#receive', as: :receive_webhooks
