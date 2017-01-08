@@ -95,6 +95,9 @@ GEM
     capybara-screenshot (1.0.14)
       capybara (>= 1.0, < 3)
       launchy
+    capybara-webkit (1.1.0)
+      capybara (~> 2.0, >= 2.0.2)
+      json
     carrierwave (0.11.2)
       activemodel (>= 3.2.0)
       activesupport (>= 3.2.0)
@@ -752,6 +755,7 @@ DEPENDENCIES
   capybara
   capybara-mechanize
   capybara-screenshot
+  capybara-webkit
   carrierwave
   carrierwave_direct
   chartkick

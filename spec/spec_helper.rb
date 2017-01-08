@@ -7,6 +7,7 @@ require 'coveralls'
 Coveralls.wear!
 require 'email_spec'
 require 'capybara/poltergeist'
+require 'capybara/webkit/matchers'
 require 'money-rails/test_helpers'
 require 'best_in_place/test_helpers'
 require 'audited-rspec.rb'
@@ -51,6 +52,9 @@ RSpec.configure do |config|
   config.order = :random
 
   Kernel.srand config.seed
+
+  config.include(Capybara::Webkit::RspecMatchers, :type => :feature)
+
 end
 
 Sidekiq::Testing.inline!
