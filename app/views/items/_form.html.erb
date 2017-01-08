@@ -48,7 +48,7 @@
                 <i class="fa fa-calendar" aria-hidden="true"></i>
               </span>
               <%= f.label :acquired_at, "acquired at", class: "control-label" %>
-              <%= f.text_field :acquired_at, value: @item.try(:sold_at).try(:strftime, '%-m/%-d/%Y'), class: "form-control datepicker" %>
+              <%= f.text_field :acquired_at, value: @item.try(:acquired_at).try(:strftime, '%-m/%-d/%Y'), class: "form-control datepicker" %>
             </div>
           </div>
         </div>
