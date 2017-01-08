@@ -67,7 +67,7 @@
         <%= f.label :minimum_sale_price, class: "control-label" %>
         <div class="input-group">
           <span class="input-group-addon">$</span>
-          <%= f.number_field :minimum_sale_price, class: "form-control text-field" %>
+          <%= f.number_field :minimum_sale_price, class: "form-control text-field", step: 0.01 %>
         </div>
       </div>
     </div>

@@ -37,7 +37,6 @@ feature "edit a proposal" do
         visit account_job_proposal_details_path(account, job, proposal)
         expect(item.will_purchase?).to be_falsey
         find(:css, "#item_#{item.id}_will_purchase", visible: false).trigger("click")
-        wait_for_ajax
         fill_in("item_purchase_price", with: 50.55)
         click_on("Save")
 
@@ -51,7 +50,6 @@ feature "edit a proposal" do
         visit account_job_proposal_details_path(account, job, proposal)
         expect(item.will_consign?).to be_falsey
         find(:css, "#item_#{item.id}_will_consign", visible: false).trigger("click")
-        wait_for_ajax
         fill_in("item_consignment_rate", with: 45)
         fill_in("item_consignment_term", with: 90)
         fill_in("item_listing_price", with: 88.89)
@@ -72,9 +70,7 @@ feature "edit a proposal" do
         expect(item.will_consign?).to be_falsey
         expect(item.will_purchase?).to be_falsey
         find(:css, "#item_#{item.id}_will_purchase", visible: false).trigger("click")
-        wait_for_ajax
         find(:css, "#item_#{item.id}_will_consign", visible: false).trigger("click")
-        wait_for_ajax
         fill_in("item_purchase_price", with: 50.55)
         fill_in("item_consignment_rate", with: 45)
         fill_in("item_listing_price", with: 88.89)
