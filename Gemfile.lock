@@ -520,7 +520,10 @@ GEM
       sprockets-rails
     rails-assets-classnames (2.2.5)
     rails-assets-image-picker (0.2.4)
+    rails-assets-jquery (2.2.4)
     rails-assets-sweetalert (1.1.3)
+    rails-assets-toastr (2.1.3)
+      rails-assets-jquery (>= 1.6.3, < 3)
     rails-deprecated_sanitizer (1.0.3)
       activesupport (>= 4.2.0.alpha)
     rails-dom-testing (1.0.7)
@@ -813,6 +816,7 @@ DEPENDENCIES
   rails-assets-classnames!
   rails-assets-image-picker!
   rails-assets-sweetalert!
+  rails-assets-toastr!
   rails_12factor
   rails_real_favicon
   react-rails (~> 1.7)
