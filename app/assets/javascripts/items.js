@@ -144,12 +144,14 @@ $(document).on('turbolinks:load', function() {
 
   $("select").imagepicker();
 
-  $('.datepicker').datepicker({
+  $('form .datepicker').datepicker({
     zIndexOffset: '9999',
     clearBtn: true,
     autoclose: true,
     todayHighlight: true
-  });
+  }).on('changeDate', function(ev){
+    $('form .datepicker').datepicker('hide');
+});;
 
   // Dynamically create mark-sold-modals
   $("#mark-sold-modal").on('shown.bs.modal', function (event) {

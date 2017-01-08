@@ -14,20 +14,26 @@
         <div class="modal-body">
 
           <div class="row">
-            <div class="col-xs-12 col-md-6">
-              <div class="form-group">
-                <%= label_tag :sale_price, nil, class: "control-label" %>
+            <div class="col-md-6 col-xs-12">
+              <div class="form-group label-floating">
                 <div class="input-group">
-                  <span class="input-group-addon">$</span>
-                  <%= number_field_tag "item[sale_price]", nil, class: "form-control text-field", step: 0.01 %>
+                  <span class="input-group-addon">
+                    <i class="fa fa-usd" aria-hidden="true"></i>
+                  </span>
+                  <%= label_tag :sale_price, "sale price", class: "control-label" %>
+                  <%= text_field_tag :sale_price, nil, name: "item[sale_price]", class: "form-control" %>
                 </div>
               </div>
             </div>
-            <div class="col-xs-12 col-md-6">
-              <div class="form-group">
-                <%= label_tag :sold_at, nil, class: "control-label" %>
+
+            <div class="col-md-6 col-xs-12">
+              <div class="form-group label-floating">
                 <div class="input-group">
-                  <%= text_field_tag "item[sold_at]", nil, id: "sale-date", data: {provide: "datepicker"} %>
+                  <span class="input-group-addon">
+                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                  </span>
+                  <%= label_tag :sold_at, "sold at", class: "control-label" %>
+                  <%= text_field_tag :sold_at, nil, name: "item[sold_at]", class: "form-control datepicker" %>
                 </div>
               </div>
             </div>
