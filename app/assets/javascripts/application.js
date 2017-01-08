@@ -47,5 +47,6 @@
 //= require google_plus_sdk
 //= require pinterest_sdk
 //= require linkedin_sdk
+//= require toastr
 //= require_tree .
 //= require turbolinks

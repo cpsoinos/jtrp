@@ -1,40 +1,45 @@
 <html>
   <head>
-    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" media="all">
-    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto+Slab" media="all">
-    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/icon?family=Material+Icons" media="all">
-    <%= stylesheet_link_tag "#{stylesheet_url('application')}", media: 'all' %>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" media="all">
+    <style>
+      a {
+        color:black;
+        text-decoration: none;
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        min-width: 100% !important;
+      }
+      .content {
+        width: 100%;
+        max-width: 600px;
+      }
+      .header {padding: 40px 30px 20px 30px;}
+      .subheader {padding: 40px 15px 20px 15px;}
+      .subhead {font-size: 15px; color: #ffffff; font-family: sans-serif; letter-spacing: 10px;}
+      .h1 {font-size: 33px; line-height: 38px; font-weight: bold;}
+      .h1, .h2 {color: white; font-family: sans-serif;}
+      .h1, .h2, .bodycopy {color: #153643; font-family: sans-serif;}
+      .button {text-align: center; font-size: 18px; font-family: sans-serif; font-weight: bold; padding: 0 30px 0 30px;}
+      .button a {color: #ffffff; text-decoration: none;}
+      .innerpadding {
+        padding-top: 30px;
+      }
+      .borderbottom {border-bottom: 1px solid #f2eeed;}
+      .h2 {padding: 0 0 15px 0; font-size: 24px; line-height: 28px; font-weight: bold;}
+      .bodycopy {font-size: 16px; line-height: 22px;padding: 0 0 0 3px;}
+    </style>
+    <style type="text/css">
+      @media only screen and (min-device-width: 601px) {
+        .content {width: 600px !important;}
+        .col425 {width: 425px!important;}
+        .col380 {width: 380px!important;}
+      }
+    </style>
   </head>
-  <body>
-
-    <nav class="navbar navbar-inverse navbar-fixed-top hidden-print" role="navigation-demo">
-      <div class="container">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <% if @company %>
-            <div class="brand-logo-link">
-              <span><%= link_to "<i class='icon-jtrpv2-allwhite-noname' style='font-size: 43pt'></i>".html_safe, root_url, class: "navbar-brand" %></span>
-              <span><%= link_to @company.name, root_url, class: "navbar-brand" %></span>
-            </div>
-          <% end %>
-        </div>
-
-    <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse">
-          <ul class="nav navbar-nav navbar-right">
-            <li><%= link_to 'Sign In', new_user_session_url %></li>
-          </ul>
-        </div><!-- /.navbar-collapse -->
-      </div><!-- /.container-->
-    </nav>
-
-    <%= yield %>
-
+  <body yahoo>
+    <table width="100%; max-width:600px;" border="0" cellpadding="0" cellspacing="0">
+      <%= yield %>
+    </table>
   </body>
 </html>

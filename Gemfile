@@ -89,6 +89,7 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-classnames'
   gem 'rails-assets-sweetalert'
   gem 'rails-assets-image-picker'
+  gem 'rails-assets-toastr'
 end
 
 group :development, :test, :local do

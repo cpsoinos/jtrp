@@ -4,4 +4,4 @@ var modal = $("#statement-<%= @statement.id %>-task-modal")
 modal.modal('toggle');
 listItem.remove();
 
-toastr.success('<%= @message %>', 'Success!')
+toastr.success('<%= @message %>', 'Success!', {timeOut: 5000})

@@ -24,11 +24,11 @@ feature "proposal response" do
       visit account_job_proposal_path(account, job, proposal)
       items.each_with_index do |item, i|
         find(:css, "#item_#{item.id}_client_intention_#{intentions[i]}", visible: false).trigger("click")
-        wait_for_ajax
 
         expect(page).to have_content("Success!")
+        wait_for_ajax
         item.reload
-        expect(item.client_intention).to eq(intentions[i])
+        expect(item.reload.client_intention).to eq(intentions[i])
       end
     end
 
@@ -90,9 +90,9 @@ feature "proposal response" do
       visit account_job_proposal_path(account, job, proposal, token: proposal.token)
       items.each_with_index do |item, i|
         find(:css, "#item_#{item.id}_client_intention_#{intentions[i]}", visible: false).trigger("click")
-        wait_for_ajax
 
         expect(page).to have_content("Success!")
+        wait_for_ajax
         item.reload
         expect(item.client_intention).to eq(intentions[i])
       end
