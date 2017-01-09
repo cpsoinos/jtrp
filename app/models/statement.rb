@@ -1,5 +1,6 @@
 class Statement < ActiveRecord::Base
   acts_as_paranoid
+  acts_as_taggable_on :tags
   audited associated_with: :account
   has_secure_token
 
@@ -68,7 +69,12 @@ class Statement < ActiveRecord::Base
     end
   end
 
+  def paid_manually?
+    self.tag_list.include?("paid_manually")
+  end
+
   def create_and_send_check
+    return if paid_manually?
     CheckSenderJob.perform_later(self)
   end
 
