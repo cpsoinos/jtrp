@@ -26,9 +26,9 @@ class Letter < ActiveRecord::Base
   end
 
   def deliver_to_client
+    expire_items
     deliver_email
     deliver_letter
-    expire_items
   end
 
   def deliver_email
