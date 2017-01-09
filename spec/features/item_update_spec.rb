@@ -52,6 +52,26 @@ feature "update an item" do
       expect(page).to have_content("Item removed")
     end
 
+    scenario "sets acquired_at" do
+      visit edit_item_path(item)
+      fill_in("acquired at", with: "05/16/2016")
+      click_button("Update Item")
+      item.reload
+
+      expect(item.acquired_at).to eq(DateTime.parse("May 16 2016"))
+    end
+
+    scenario "sets acquired_at when sold_at is already set" do
+      item = create(:item, :sold)
+      visit edit_item_path(item)
+      fill_in("acquired at", with: "05/16/2016")
+      click_button("Update Item")
+      item.reload
+
+      expect(item.acquired_at).to eq(DateTime.parse("May 16 2016"))
+      expect(item.acquired_at).not_to eq(item.sold_at)
+    end
+
   end
 
 end

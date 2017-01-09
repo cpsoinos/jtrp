@@ -9,7 +9,7 @@ class ItemUpdater
   def update(attrs)
     @attrs = attrs
     process_photos
-    format_date if attrs[:sold_at]
+    format_date
     process_sale
     if item.update(attrs)
       sync_inventory
@@ -62,9 +62,19 @@ class ItemUpdater
     end
   end
 
+  def process_acquired_at
+    attrs[:sold_at] = DateTime.parse(attrs[:sold_at].to_s)
+    if attrs[:sold_at] < 2000.years.ago
+      attrs[:sold_at] = 2000.years.since(attrs[:sold_at])
+    end
+  end
+
   def format_date
     if attrs[:sold_at].present? && attrs[:sold_at].is_a?(String)
       attrs[:sold_at] = DateTime.strptime(attrs[:sold_at], '%m/%d/%Y')
+    end
+    if attrs[:acquired_at].present? && attrs[:acquired_at].is_a?(String)
+      attrs[:acquired_at] = DateTime.strptime(attrs[:acquired_at], '%m/%d/%Y')
     end
   end
 
