@@ -134,6 +134,18 @@ class Agreement < ActiveRecord::Base
     cost_of_items - service_charge
   end
 
+  def notify_pending_expiration
+    ConsignmentPeriodEndingNotifierJob.perform_later(self, "agreement_pending_expiration")
+  end
+
+  def notify_expiration
+    ConsignmentPeriodEndingNotifierJob.perform_later(self, "agreement_expired")
+  end
+
+  def expire
+    ItemExpirerJob.perform_later(@agreement.items.pluck(:id))
+  end
+
   def pending_expiration_letter
     letters.by_category("agreement_pending_expiration").first
   end

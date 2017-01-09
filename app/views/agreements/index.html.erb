@@ -32,7 +32,10 @@
 
           <% if agreement.active? && agreement.items.any? { |i| i.meets_requirements_expired? } %>
             <div class="row hidden-print">
-              <%= link_to "Mark Items Expired <i class='material-icons'>store</i>".html_safe, agreement_expire_items_path(agreement), class: "btn btn-raised btn-warning pull-right", method: :post %>
+              <%= render 'agreements/to_do_task', agreement: agreement, task_field: agreement.task[:task_field] %>
+              <button type="button" class="btn btn-raised btn-warning pull-right" data-toggle="modal" data-target="#agreement-<%= agreement.id %>-task-modal">
+                Mark Items Expired <i class='material-icons'>store</i>
+              </button>
             </div>
           <% end %>
 

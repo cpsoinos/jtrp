@@ -9,6 +9,14 @@ class Letter < ActiveRecord::Base
 
   scope :by_category, -> (category) { where(category: category) }
 
+  def expiration_notice?
+    category == "agreement_expired"
+  end
+
+  def expiration_pending_notice?
+    category == "agreement_pending_expiration"
+  end
+
   def object_url
     Rails.application.routes.url_helpers.account_letter_url(account, self, token: token, host: ENV['HOST'])
   end
@@ -18,16 +26,22 @@ class Letter < ActiveRecord::Base
   end
 
   def deliver_to_client
+    expire_items
     deliver_email
     deliver_letter
   end
 
   def deliver_email
-    TransactionalEmailJob.perform_later(self, Company.jtrp.primary_contact, account.primary_contact, "consignment_period_ending", nil)
+    TransactionalEmailJob.perform_later(self, Company.jtrp.primary_contact, account.primary_contact, category, note)
   end
 
   def deliver_letter
-    LetterSender.new(self).send_letter
+    LetterSenderJob.perform_later(self)
+  end
+
+  def expire_items
+    return unless expiration_notice?
+    ItemExpirerJob.perform_later(agreement.items.pluck(:id))
   end
 
   def pending_deadline
