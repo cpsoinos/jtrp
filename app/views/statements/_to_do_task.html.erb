@@ -24,6 +24,17 @@
             </div>
 
             <div class="col-xs-6 col-xs-offset-1">
+              <div class="form-group">
+                <div class="checkbox">
+                  <label>
+                    <%= check_box_tag 'statement[paid_manually]' %> Paid Manually
+                  </label>
+                </div>
+                <p class="help-block">Statement was paid outside the platform</p>
+              </div>
+            </div>
+
+            <div class="col-xs-6 col-xs-offset-1">
               <div class="form-group label-floating">
                 <%= f.label :check_number, class: "control-label" %>
                 <div class="input-group">

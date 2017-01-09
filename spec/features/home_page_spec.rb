@@ -159,6 +159,7 @@ feature "home page" do
         end
 
       end
+
     end
 
     context "clicks items links" do
