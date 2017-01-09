@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170102040705) do
+ActiveRecord::Schema.define(version: 20170108224758) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -291,6 +291,7 @@ ActiveRecord::Schema.define(version: 20170102040705) do
     t.datetime "deleted_at"
     t.string   "token"
     t.integer  "agreement_id"
+    t.text     "note"
   end
 
   add_index "letters", ["deleted_at"], name: "index_letters_on_deleted_at", using: :btree

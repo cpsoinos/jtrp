@@ -35,7 +35,7 @@ FactoryGirl.define do
 
     trait :consigned do
       status "active"
-      association :proposal, :active
+      proposal { create(:proposal, :active, agreements: [create(:agreement, :active, :consign)]) }
       client_intention "consign"
       listed_at 10.days.ago
     end

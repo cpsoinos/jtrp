@@ -102,6 +102,63 @@ feature "home page" do
         expect(page).to have_content("#{item.description} needs a price added")
       end
 
+      context "agreements" do
+
+        let!(:item) { create(:item, :consigned, listed_at: 85.days.ago) }
+        let!(:agreement) { item.agreement }
+
+        before do
+          allow(TransactionalEmailJob).to receive(:perform_later).and_return(true)
+          allow(LetterSenderJob).to receive(:perform_later).and_return(true)
+          allow(ItemExpirerJob).to receive(:perform_later).and_return(true)
+        end
+
+        scenario "consignment period coming to an end" do
+          visit root_path
+          expect(page).to have_content("#{agreement.account.full_name} needs to be notified that their consignment period is ending soon")
+        end
+
+        scenario "notifies client of pending expiration", js: true do
+          visit root_path
+          first(:button, "done").click
+
+          expect(page).to have_content("has items that have been active for #{(DateTime.now.to_date - (agreement.items.where.not(listed_at: nil).order(:listed_at).first.listed_at.to_date)).to_i} days")
+          expect(page).to have_field("Expiration Pending", visible: false)
+          expect(page).to have_field("Expire Agreement", visible: false)
+
+          within("#expiration-pending") do
+            first(:css, ".circle").trigger("click")
+          end
+          fill_in("note", with: "Personalized message goes here")
+          click_button("Notify Client")
+
+          expect(page).to have_content("Email and letter queued for delivery")
+          expect(page).to have_content("Success!")
+          expect(page).not_to have_content("#{agreement.account.full_name} needs to be notified that their consignment period is ending soon")
+        end
+
+        scenario "notifies client of expired agreement", js: true do
+          item.update_attribute("listed_at", 91.days.ago)
+
+          visit root_path
+          first(:button, "done").click
+
+          expect(page).to have_content("has items that have been active for #{(DateTime.now.to_date - (agreement.items.where.not(listed_at: nil).order(:listed_at).first.listed_at.to_date)).to_i} days")
+          expect(page).to have_field("Expiration Pending", visible: false)
+          expect(page).to have_field("Expire Agreement", visible: false)
+
+          within("#expired") do
+            first(:css, ".circle").trigger("click")
+          end
+          fill_in("note", with: "Personalized message goes here")
+          click_button("Notify Client")
+
+          expect(page).to have_content("Email and letter queued for delivery")
+          expect(page).to have_content("Success!")
+          expect(page).not_to have_content("#{agreement.account.full_name} needs to be notified that their consignment period is ending soon")
+        end
+
+      end
     end
 
     context "clicks items links" do

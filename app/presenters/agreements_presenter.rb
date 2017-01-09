@@ -11,7 +11,7 @@ class AgreementsPresenter
   end
 
   def todo
-    Agreement.by_type('consign').active.joins(proposal: :items).merge(Item.consigned.where("listed_at < ?", 80.days.ago))
+    Agreement.includes(:account).by_type('consign').active.joins(proposal: :items).merge(Item.consigned.where("listed_at < ?", 80.days.ago))
   end
 
 end

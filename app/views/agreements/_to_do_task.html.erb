@@ -18,21 +18,21 @@
         <div class="modal-body">
           <div class="row vertical-align">
             <div class="col-xs-5">
-              <%= link_to "Agreement No. #{agreement.id}", agreement_path(agreement) %> has items that have been been active for <%= (DateTime.now.to_date - (agreement.items.where.not(listed_at: nil).order(:listed_at).first.listed_at.to_date)).to_i %> days.
+              <%= link_to "Agreement No. #{agreement.id}", agreement_path(agreement) %> has items that have been active for <%= (DateTime.now.to_date - (agreement.items.where.not(listed_at: nil).order(:listed_at).first.listed_at.to_date)).to_i %> days.
             </div>
 
             <div class="col-xs-7">
               <div class="radio radio-primary">
-                <label>
+                <label id="expiration-pending">
                   <%= f.label :category, "Expiration Pending" %>
-                  <%= f.radio_button :category, "agreement_pending_expiration", class: "intention-selector" %>
+                  <%= f.radio_button :category, "agreement_pending_expiration" %>
                 </label>
               </div>
 
               <div class="radio radio-primary">
-                <label>
+                <label id="expired">
                   <%= f.label :category, "Expire Agreement" %>
-                  <%= f.radio_button :category, "agreement_expired", class: "intention-selector" %>
+                  <%= f.radio_button :category, "agreement_expired" %>
                 </label>
               </div>
             </div>
@@ -41,13 +41,15 @@
           <div class="row">
             <div class="col-xs-12 col-md-8 col-md-offset-2">
               <div class="form-group label-floating">
-                <%= label_tag :note, "Add a note?", class: "control-label" %>
-                <%= text_area_tag :note, nil, class: "form-control" %>
+                <%= f.label :note, "Add a note?", class: "control-label" %>
+                <%= f.text_area :note, class: "form-control" %>
               </div>
             </div>
+
             <div class="text-center">
               <%= f.submit "Notify Client", class: "btn btn-raised btn-primary" %>
             </div>
+
           </div>
         </div>
       </div><!-- /.modal-content -->

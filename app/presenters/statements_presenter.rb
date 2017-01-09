@@ -11,7 +11,7 @@ class StatementsPresenter
   end
 
   def todo
-    Statement.includes(account: :primary_contact).where("statements.status = ? OR statements.check_number IS NULL", "unpaid")
+    Statement.includes(:account).where("statements.status = ? OR statements.check_number IS NULL", "unpaid")
   end
 
 end
