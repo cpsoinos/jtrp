@@ -30,7 +30,7 @@ class Notifier < ApplicationMailer
   end
 
   def orders(timeframe)
-    Order.where(created_at: timeframe)
+    Order.where(created_at: timeframe).order(:created_at)
   end
 
   def default_recipient
