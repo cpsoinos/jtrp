@@ -1,6 +1,6 @@
 <div class="modal fade" tabindex="-1" role="dialog" id="agreement-<%= agreement.id %>-task-modal">
   <div class="modal-dialog">
-    <%= form_for agreement, remote: true do |f| %>
+    <%= form_for [agreement, agreement.letters.new], remote: true do |f| %>
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -16,25 +16,42 @@
           </div>
         </div>
         <div class="modal-body">
-
           <div class="row vertical-align">
-
             <div class="col-xs-5">
-              <%= link_to "Agreement No. #{agreement.id}", agreement_path(agreement) %> has items that have been been active for <%= (DateTime.now.to_date - (agreement.items.where.not(listed_at: nil).order(:listed_at).first.listed_at.to_date)).to_i %> days.
+              <%= link_to "Agreement No. #{agreement.id}", agreement_path(agreement) %> has items that have been active for <%= (DateTime.now.to_date - (agreement.items.where.not(listed_at: nil).order(:listed_at).first.listed_at.to_date)).to_i %> days.
             </div>
 
-            <div class="col-xs-6 col-xs-offset-1">
-              <% if agreement.meets_requirements_expired? %>
-                <%= link_to "Expire Agreement and Notify Client", agreement_expire_items_path(agreement), method: "POST", remote: true, class: "btn btn-raised btn-danger btn-responsive" %>
-              <% end %>
-              <% unless agreement.pending_expiration_letter.present? %>
-                <%= link_to "Notify Client of Pending Expiration", agreement_notify_pending_expiration_path(agreement), method: "POST", remote: true, class: "btn btn-raised btn-warning btn-responsive" %>
-              <% end %>
+            <div class="col-xs-7">
+              <div class="radio radio-primary">
+                <label id="expiration-pending">
+                  <%= f.label :category, "Expiration Pending" %>
+                  <%= f.radio_button :category, "agreement_pending_expiration" %>
+                </label>
+              </div>
+
+              <div class="radio radio-primary">
+                <label id="expired">
+                  <%= f.label :category, "Expire Agreement" %>
+                  <%= f.radio_button :category, "agreement_expired" %>
+                </label>
+              </div>
             </div>
           </div>
 
-        </div>
+          <div class="row">
+            <div class="col-xs-12 col-md-8 col-md-offset-2">
+              <div class="form-group label-floating">
+                <%= f.label :note, "Add a note?", class: "control-label" %>
+                <%= f.text_area :note, class: "form-control" %>
+              </div>
+            </div>
 
+            <div class="text-center">
+              <%= f.submit "Notify Client", class: "btn btn-raised btn-primary" %>
+            </div>
+
+          </div>
+        </div>
       </div><!-- /.modal-content -->
     <% end %>
   </div><!-- /.modal-dialog -->

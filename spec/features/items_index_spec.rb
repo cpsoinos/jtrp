@@ -28,6 +28,7 @@ feature "item index" do
       visit items_path
 
       expect(page).to have_content("All Items")
+      expect(page).to have_link("Print Labels")
       intentions.each do |intention|
         next if intention == "undecided"
         expect(page).to have_link(intention)

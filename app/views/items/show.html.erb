@@ -50,14 +50,6 @@
     <div class="col-xs-10 col-xs-offset-1 col-md-4">
       <div class="card card-pricing">
         <div class="content">
-          <% if current_user.try(:internal?) %>
-            <span class="hidden-print">
-              <%= link_to "<i class='material-icons'>edit</i>".html_safe, edit_account_job_proposal_item_path(@item.account, @item.job, @item.proposal, @item), class: "btn btn-fab btn-fab-mini btn-primary pull-left" %>
-            </span>
-            <span class="hidden-print">
-              <%= link_to "<i class='material-icons'>delete_forever</i>".html_safe, item_path(@item), method: :delete, class: "btn btn-fab btn-fab-mini btn-danger pull-right", data: {confirm: "Are you sure?", :'confirm-button-text' => "Yes, I'm sure", :'cancel-button-text' => "No, cancel!", :'sweet-alert-type' => 'warning', :'confirm-button-color' => '#f44336', text: "This will delete the item. This is irreversable."} %>
-            </span>
-          <% end %>
           <h6 class="category text-success"><%= @item.description %></h6>
           <% if @item.listing_price_cents %>
             <h1 class="card-title"><small>$</small><%= humanized_money(@item.listing_price) %></h1>
@@ -77,52 +69,59 @@
                   for <%= humanized_money_with_symbol(@item.sale_price) %> <%= @item.sold_at.present? ? "on #{@item.sold_at.strftime('%-m/%-d/%y')}" : '' %>
                 <% end %>
               </li>
+
             </ul>
-            <% if @item.sold? %>
-              <%= link_to "Mark Not Sold <i class='material-icons'>replay</i>".html_safe, item_mark_not_sold_path(@item), class: "btn btn-warning btn-raised btn-round", method: :post %>
-            <% else %>
-              <button type="button" class="btn btn-raised btn-primary btn-round" data-toggle="modal" data-target="#mark-sold-modal" data-item-id="<%= @item.id %>" data-item-description="<%= @item.description %>">
-                Mark as Sold <i class='material-icons'>done</i>
-              </button>
-            <% end %>
-            <button type="button" class="btn btn-raised btn-notice btn-round" data-toggle="modal" data-target="#new-item-from-batch-modal">
-              Create Item from this Batch <i class='material-icons'>content_copy</i>
-            </button>
-            <% if @item.potential? || @item.inactive? %>
-              <%= link_to "Mark Active <i class='material-icons'>store</i>".html_safe, item_activate_path(@item), class: "btn btn-raised btn-info btn-round", method: :post %>
-
-            <% elsif @item.active? %>
-              <% if @item.expired? %>
-                <%= link_to "Unmark Expired <i class='material-icons'>access_time</i>".html_safe, item_path(@item, item: {expired: false}), class: "btn btn-raised btn-warning btn-round", method: :patch %>
-              <% else %>
-                <%= link_to "Mark Expired <i class='material-icons'>access_time</i>".html_safe, item_path(@item, item: {expired: true}), class: "btn btn-raised btn-warning btn-round", method: :patch %>
-              <% end %>
-              <%= link_to "Mark Inactive <i class='material-icons'>remove_circle</i>".html_safe, item_deactivate_path(@item), class: "btn btn-raised btn-danger btn-round", method: :post %>
-            <% end %>
-          <% end %>
-
-          <% if current_user.try(:internal?) && @item.child? %>
-            <div class="card card-plain card-blog">
-              <h4>This item was created from this batch:</h4>
-              <a href="<%= account_job_proposal_item_path(@item.account, @item.job, @item.proposal, @item.parent_item) %>">
-                <div class="card-image">
-                    <%= image_tag(@item.parent_item.featured_photo.photo_url(client_hints: true, quality: "auto", fetch_format: :auto, width: :auto, dpr: "auto", effect: :improve), class: "img img-raised") %>
-                  <div class="ripple-container"></div>
-                </div>
-              </a>
-
-              <div class="content">
-                <%= link_to "<i class='material-icons'>edit</i>".html_safe, edit_account_job_proposal_item_path(@item.account, @item.job, @item.proposal, @item.parent_item), class: "btn btn-fab btn-fab-mini btn-primary pull-right" %>
-                <h6 class="category text-info"><%= @item.parent_item.ownership_type %></h6>
-                <h4 class="card-title">
-                  <%= link_to @item.parent_item.description, account_job_proposal_item_path(@item.account, @item.job, @item.proposal, @item.parent_item) %>
-                </h4>
-              </div>
-            </div>
           <% end %>
 
           <div class="fb-like" data-href="<%= item_url(@item) %>" data-layout="standard" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
           <%= render 'houzz_button', item: @item %>
+
+          <% if current_user.try(:internal?) %>
+            <% if @item.child? %>
+              <div class="card card-plain card-blog">
+                <h4>This item was created from this batch:</h4>
+                <a href="<%= account_job_proposal_item_path(@item.account, @item.job, @item.proposal, @item.parent_item) %>">
+                  <div class="card-image">
+                      <%= image_tag(@item.parent_item.featured_photo.photo_url(client_hints: true, quality: "auto", fetch_format: :auto, width: :auto, dpr: "auto", effect: :improve), class: "img img-raised") %>
+                    <div class="ripple-container"></div>
+                  </div>
+                </a>
+
+                <div class="content">
+                  <%= link_to "<i class='material-icons'>edit</i>".html_safe, edit_account_job_proposal_item_path(@item.account, @item.job, @item.proposal, @item.parent_item), class: "btn btn-fab btn-fab-mini btn-primary pull-right" %>
+                  <h6 class="category text-info"><%= @item.parent_item.ownership_type %></h6>
+                  <h4 class="card-title">
+                    <%= link_to @item.parent_item.description, account_job_proposal_item_path(@item.account, @item.job, @item.proposal, @item.parent_item) %>
+                  </h4>
+                </div>
+              </div>
+            <% end %>
+
+            <% if @item.children.present? %>
+              <div class="row large-top-margin">
+                <h4>These items were created from this batch:</h4>
+                <div class="text-center">
+                  <%= link_to "Print Labels", labels_items_url(by_id: @item.children.order(:id).pluck(:id)), class: "btn btn-info btn-raised btn-round", target: "blank" %>
+                </div>
+                <% @item.children.order(:id).each do |item| %>
+                  <div class="col-xs-4 large-top-margin">
+                    <a href="<%= account_job_proposal_item_path(item.account, item.job, item.proposal, item) %>">
+                      <div class="card-image">
+                          <%= image_tag(item.featured_photo.photo_url(client_hints: true, quality: "auto", fetch_format: :auto), class: "img img-raised") %>
+                        <div class="ripple-container"></div>
+                      </div>
+                    </a>
+
+                    <div class="content">
+                      <%= link_to "<i class='material-icons'>edit</i>".html_safe, edit_account_job_proposal_item_path(item.account, item.job, item.proposal, item), class: "btn btn-fab btn-fab-mini btn-primary pull-right" %>
+                      <h6 class="category text-info"><%= link_to item.description, account_job_proposal_item_path(item.account, item.job, item.proposal, item) %></h6>
+                    </div>
+                  </div>
+                <% end %>
+              </div>
+            <% end %>
+          <% end %>
+
         </div>
       </div>
 
@@ -133,4 +132,47 @@
     </div>
 
   </div>
+</div>
+
+<div class="btn-group dropup">
+  <button type="button" class="btn btn-raised btn-primary btn-fab dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <i class='material-icons'>menu</i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-right fab-menu">
+
+    <li><%= link_to "<i class='material-icons'>edit</i> Edit".html_safe, edit_account_job_proposal_item_path(@item.account, @item.job, @item.proposal, @item) %></li>
+    <li><%= link_to "<i class='material-icons'>delete_forever</i> Delete".html_safe, item_path(@item), method: :delete, data: {confirm: "Are you sure?", :'confirm-button-text' => "Yes, I'm sure", :'cancel-button-text' => "No, cancel!", :'sweet-alert-type' => 'warning', :'confirm-button-color' => '#f44336', text: "This will delete the item. This is irreversable."} %></li>
+    <li role="separator" class="divider"></li>
+
+    <% unless @item.inactive? %>
+      <li class="dropdown-header">Deactivate</li>
+      <li><%= link_to "<i class='fa fa-chain-broken' aria-hidden='true'></i> Damaged".html_safe, item_deactivate_path(@item, item: {tag_list: @item.tag_list.push("damaged")}), method: :patch %></li>
+      <li><%= link_to "<i class='fa fa-user' aria-hidden='true'></i> Retrieved by Client".html_safe, item_deactivate_path(@item, item: {tag_list: @item.tag_list.push("client_retrieved")}), method: :patch %></li>
+      <li><%= link_to "<i class='fa fa-question-circle' aria-hidden='true'></i> Other".html_safe, item_deactivate_path(@item, item: {tag_list: @item.tag_list.push("other")}), method: :patch %></li>
+      <li role="separator" class="divider"></li>
+    <% end %>
+
+    <% if @item.sold? %>
+      <li><%= link_to "<i class='material-icons'>replay</i> Mark Not Sold".html_safe, item_mark_not_sold_path(@item), method: :post %></li>
+    <% else %>
+      <li><%= link_to "<i class='material-icons'>done</i> Mark as Sold".html_safe, "#", data: { toggle: "modal", target: "#mark-sold-modal", :"item-id" => @item.id, :"item-description" => @item.description } %></li>
+    <% end %>
+
+    <li><%= link_to "<i class='material-icons'>content_copy</i> Create Item from this Batch".html_safe, "#", data: { toggle: "modal", target: "#new-item-from-batch-modal" } %></li>
+
+    <% if @item.potential? || @item.inactive? %>
+      <li><%= link_to "<i class='material-icons'>store</i> Activate".html_safe, item_activate_path(@item), method: :post %></li>
+    <% elsif @item.active? %>
+      <% if @item.expired? %>
+        <li><%= link_to "<i class='material-icons'>access_time</i> Unmark Expired".html_safe, item_path(@item, item: {expired: false, tag_list: @item.tag_list.delete("expired")}), method: :patch %></li>
+      <% else %>
+        <li><%= link_to "<i class='material-icons'>access_time</i> Mark Expired".html_safe, item_path(@item, item: {expired: true, tag_list: @item.tag_list.push("expired")}), method: :patch %></li>
+      <% end %>
+    <% end %>
+
+    <% if current_user.try(:internal?) %>
+      <li><%= link_to "<i class='material-icons'>print</i> Print Label".html_safe, labels_items_url(by_id: [@item.id]), target: "blank" %></li>
+    <% end %>
+
+  </ul>
 </div>

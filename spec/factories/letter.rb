@@ -4,7 +4,12 @@ FactoryGirl.define do
 
   factory :letter do
     agreement { create(:agreement, :consign) }
-    category "consignment_period_ending"
+    category "agreement_pending_expiration"
+
+    trait :expiration_notice do
+      category "agreement_expired"
+    end
+
   end
 
 end

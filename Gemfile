@@ -72,10 +72,12 @@ gem 'lob'
 gem 'paranoia', '~> 2.2'
 gem 'gretel'
 gem 'madison'
+gem 'acts-as-taggable-on', '~> 4.0'
 
 group :production, :staging do
   gem 'tunemygc'
   gem 'scout_apm', '~> 3.0.x'
+  gem 'lograge'
 end
 
 group :production, :staging, :local, :development do
@@ -86,6 +88,7 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-classnames'
   gem 'rails-assets-sweetalert'
   gem 'rails-assets-image-picker'
+  gem 'rails-assets-toastr'
 end
 
 group :development, :test, :local do

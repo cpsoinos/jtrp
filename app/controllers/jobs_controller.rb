@@ -15,11 +15,8 @@ class JobsController < ApplicationController
   def show
     @job = Job.includes(proposals: {items: :photos}).find(params[:id])
     @account = @job.account
-    if @account.is_a? OwnerAccount
-      @items = @job.items.page(params[:page])
-    else
-      @items = @job.items
-    end
+    @type = params[:type]
+    @items = ItemsPresenter.new(params, @job).execute
   end
 
   def new

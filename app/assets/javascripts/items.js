@@ -90,9 +90,7 @@ $(document).on('turbolinks:load', function() {
   //Reinitialize masonry inside each panel after the relative tab link is clicked -
 	$('a[data-toggle=tab]').each(function () {
 		var $this = $(this);
-
 		$this.on('shown.bs.tab', function () {
-
       $grid.imagesLoaded().progress( function() {
         $grid.masonry('layout');
       });
@@ -146,9 +144,14 @@ $(document).on('turbolinks:load', function() {
 
   $("select").imagepicker();
 
-  $('#sale-date').datepicker({
-    zIndexOffset: '9999'
-  });
+  $('form .datepicker').datepicker({
+    zIndexOffset: '9999',
+    clearBtn: true,
+    autoclose: true,
+    todayHighlight: true
+  }).on('changeDate', function(ev){
+    $('form .datepicker').datepicker('hide');
+});;
 
   // Dynamically create mark-sold-modals
   $("#mark-sold-modal").on('shown.bs.modal', function (event) {

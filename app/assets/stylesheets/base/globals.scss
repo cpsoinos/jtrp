@@ -171,3 +171,16 @@ h1, h3, h4 {
 .large-icon {
   font-size: 5em !important;
 }
+
+.dropup {
+  .btn-fab {
+    position: fixed;
+    bottom: 50px;
+    right: 50px;
+  }
+  ul.fab-menu {
+    position: fixed;
+    bottom: 110px;
+    right: 50px;
+  }
+}

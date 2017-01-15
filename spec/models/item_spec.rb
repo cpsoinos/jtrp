@@ -14,6 +14,8 @@ describe Item do
   it { should monetize(:listing_price).allow_nil }
   it { should monetize(:minimum_sale_price).allow_nil }
   it { should monetize(:sale_price).allow_nil }
+  it { should monetize(:parts_cost).allow_nil }
+  it { should monetize(:labor_cost).allow_nil }
 
   describe "scopes" do
 
@@ -200,6 +202,13 @@ describe Item do
       expect(item).to be_active
     end
 
+    it "can transition to 'sold' when expired" do
+      item = create(:item, :expired)
+      item.mark_sold
+
+      expect(item).to be_sold
+    end
+
     it "sets listed_at" do
       now = DateTime.now
       proposal = create(:proposal, :active)
@@ -236,6 +245,7 @@ describe Item do
       item.mark_expired
 
       expect(item).to be_expired
+      expect(item.tag_list).to match_array(["expired"])
       expect(item.agreement).to be_inactive
     end
 
@@ -248,6 +258,7 @@ describe Item do
       item.reload
 
       expect(item).not_to be_expired
+      expect("expired").not_to be_in(item.tag_list)
       expect(item).to be_active
     end
 

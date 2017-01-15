@@ -9,6 +9,10 @@ class AccountsController < ApplicationController
     @account = Account.find(params[:id])
     if @account.slug == 'jtrp'
       @items = Item.jtrp.page(params[:page])
+      respond_to do |format|
+        format.html
+        format.js
+      end
     end
   end
 

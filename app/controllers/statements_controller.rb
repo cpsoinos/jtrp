@@ -37,7 +37,7 @@ class StatementsController < ApplicationController
   protected
 
   def statement_params
-    params.require(:statement).permit(:status, :check_number)
+    params.require(:statement).permit(:status, :check_number, :paid_manually)
   end
 
   def require_token

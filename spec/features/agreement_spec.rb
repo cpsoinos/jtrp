@@ -177,11 +177,11 @@ feature "agreement" do
         expect(page).not_to have_button("Mark Items Active")
       end
 
-      scenario "expires items from index" do
+      scenario "expires items from index", js: true do
         allow(PdfGeneratorJob).to receive(:perform_later)
-        allow(InventorySyncJob).to receive(:perform_later)
-        allow(ConsignmentPeriodEndingNotifierJob).to receive(:perform_later)
-        allow(ItemExpirerJob).to receive(:perform_later)
+        allow(TransactionalEmailJob).to receive(:perform_later).and_return(true)
+        allow(LetterSenderJob).to receive(:perform_later).and_return(true)
+        allow(ItemExpirerJob).to receive(:perform_later).and_return(true)
         agreement.update_attributes(client_agreed: true, client_agreed_at: 91.days.ago, date: 91.days.ago)
         agreement.mark_active
         item.mark_active
@@ -190,15 +190,26 @@ feature "agreement" do
         visit account_job_proposal_agreements_path(account, job, proposal)
         click_on("Mark Items Expired")
 
+        expect(page).to have_field("Expiration Pending", visible: false)
+        expect(page).to have_field("Expire Agreement", visible: false)
+
+        within("#expired") do
+          first(:css, ".circle").trigger("click")
+        end
+        fill_in("note", with: "Personalized message goes here")
+        click_button("Notify Client")
+
+        expect(page).to have_content("Email and letter queued for delivery")
+        expect(page).to have_content("Success!")
+
         expect(ItemExpirerJob).to have_received(:perform_later)
-        expect(page).to have_content("Items have been queued to be expired! They will appear under the JTRP account shortly.")
       end
 
-      scenario "expires items from show" do
+      scenario "expires items from show", js: true do
         allow(PdfGeneratorJob).to receive(:perform_later)
-        allow(InventorySyncJob).to receive(:perform_later)
-        allow(ConsignmentPeriodEndingNotifierJob).to receive(:perform_later)
-        allow(ItemExpirerJob).to receive(:perform_later)
+        allow(TransactionalEmailJob).to receive(:perform_later).and_return(true)
+        allow(LetterSenderJob).to receive(:perform_later).and_return(true)
+        allow(ItemExpirerJob).to receive(:perform_later).and_return(true)
         agreement.update_attributes(client_agreed: true, client_agreed_at: 91.days.ago, date: 91.days.ago)
         agreement.mark_active
         item.mark_active
@@ -207,8 +218,19 @@ feature "agreement" do
         visit agreement_path(agreement)
         click_on("Mark Items Expired")
 
+        expect(page).to have_field("Expiration Pending", visible: false)
+        expect(page).to have_field("Expire Agreement", visible: false)
+
+        within("#expired") do
+          first(:css, ".circle").trigger("click")
+        end
+        fill_in("note", with: "Personalized message goes here")
+        click_button("Notify Client")
+
+        expect(page).to have_content("Email and letter queued for delivery")
+        expect(page).to have_content("Success!")
+
         expect(ItemExpirerJob).to have_received(:perform_later)
-        expect(page).to have_content("Items have been queued to be expired! They will appear under the JTRP account shortly.")
       end
 
       scenario "can't try to expire items from index when items already expired", js: true do

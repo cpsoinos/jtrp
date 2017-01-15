@@ -1,5 +1,6 @@
 class Statement < ActiveRecord::Base
   acts_as_paranoid
+  acts_as_taggable_on :tags
   audited associated_with: :account
   has_secure_token
 
@@ -38,8 +39,12 @@ class Statement < ActiveRecord::Base
     end.sum
   end
 
+  def total_parts_and_labor
+    Money.new(items.sum(:parts_cost_cents) + items.sum(:labor_cost_cents))
+  end
+
   def amount_due_to_client
-    Money.new(items.sum(:sale_price_cents)) - total_consignment_fee
+    Money.new(items.sum(:sale_price_cents)) - total_consignment_fee - total_parts_and_labor
   end
 
   def object_url
@@ -64,7 +69,12 @@ class Statement < ActiveRecord::Base
     end
   end
 
+  def paid_manually?
+    self.tag_list.include?("paid_manually")
+  end
+
   def create_and_send_check
+    return if paid_manually?
     CheckSenderJob.perform_later(self)
   end
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161205010356) do
+ActiveRecord::Schema.define(version: 20170108224758) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -202,18 +202,6 @@ ActiveRecord::Schema.define(version: 20161205010356) do
   add_index "friendly_id_slugs", ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id", using: :btree
   add_index "friendly_id_slugs", ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type", using: :btree
 
-  create_table "gift_certificates", force: :cascade do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.datetime "deleted_at"
-    t.integer  "initial_balance_cents"
-    t.string   "initial_balance_currency", default: "USD",           null: false
-    t.integer  "current_balance_cents"
-    t.string   "current_balance_currency", default: "USD",           null: false
-    t.integer  "order_id"
-    t.string   "remote_id",                default: "14QFV6H0K3N62"
-  end
-
   create_table "item_spreadsheets", force: :cascade do |t|
     t.string "csv"
   end
@@ -254,6 +242,11 @@ ActiveRecord::Schema.define(version: 20161205010356) do
     t.datetime "deleted_at"
     t.boolean  "expired",                     default: false
     t.integer  "consignment_term",            default: 90
+    t.integer  "parts_cost_cents"
+    t.string   "parts_cost_currency",         default: "USD",       null: false
+    t.integer  "labor_cost_cents"
+    t.string   "labor_cost_currency",         default: "USD",       null: false
+    t.datetime "acquired_at"
   end
 
   add_index "items", ["account_item_number"], name: "index_items_on_account_item_number", using: :btree
@@ -298,6 +291,7 @@ ActiveRecord::Schema.define(version: 20161205010356) do
     t.datetime "deleted_at"
     t.string   "token"
     t.integer  "agreement_id"
+    t.text     "note"
   end
 
   add_index "letters", ["deleted_at"], name: "index_letters_on_deleted_at", using: :btree
@@ -392,6 +386,33 @@ ActiveRecord::Schema.define(version: 20161205010356) do
   create_table "system_infos", force: :cascade do |t|
     t.integer "last_account_number", default: 10
   end
+
+  create_table "taggings", force: :cascade do |t|
+    t.integer  "tag_id"
+    t.integer  "taggable_id"
+    t.string   "taggable_type"
+    t.integer  "tagger_id"
+    t.string   "tagger_type"
+    t.string   "context",       limit: 128
+    t.datetime "created_at"
+  end
+
+  add_index "taggings", ["context"], name: "index_taggings_on_context", using: :btree
+  add_index "taggings", ["tag_id", "taggable_id", "taggable_type", "context", "tagger_id", "tagger_type"], name: "taggings_idx", unique: true, using: :btree
+  add_index "taggings", ["tag_id"], name: "index_taggings_on_tag_id", using: :btree
+  add_index "taggings", ["taggable_id", "taggable_type", "context"], name: "index_taggings_on_taggable_id_and_taggable_type_and_context", using: :btree
+  add_index "taggings", ["taggable_id", "taggable_type", "tagger_id", "context"], name: "taggings_idy", using: :btree
+  add_index "taggings", ["taggable_id"], name: "index_taggings_on_taggable_id", using: :btree
+  add_index "taggings", ["taggable_type"], name: "index_taggings_on_taggable_type", using: :btree
+  add_index "taggings", ["tagger_id", "tagger_type"], name: "index_taggings_on_tagger_id_and_tagger_type", using: :btree
+  add_index "taggings", ["tagger_id"], name: "index_taggings_on_tagger_id", using: :btree
+
+  create_table "tags", force: :cascade do |t|
+    t.string  "name"
+    t.integer "taggings_count", default: 0
+  end
+
+  add_index "tags", ["name"], name: "index_tags_on_name", unique: true, using: :btree
 
   create_table "transactional_email_records", force: :cascade do |t|
     t.datetime "created_at"

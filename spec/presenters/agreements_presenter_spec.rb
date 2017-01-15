@@ -15,15 +15,15 @@ describe AgreementsPresenter do
   context 'filters' do
 
     it 'returns potential agreements' do
-      expect(AgreementsPresenter.new(status: 'potential').filter).to eq(potential_agreements)
+      expect(AgreementsPresenter.new(status: 'potential').filter).to match_array(potential_agreements)
     end
 
     it 'returns active agreements' do
-      expect(AgreementsPresenter.new(status: 'active').filter).to eq(active_agreements)
+      expect(AgreementsPresenter.new(status: 'active').filter).to match_array(active_agreements)
     end
 
     it 'returns inactive agreements' do
-      expect(AgreementsPresenter.new(status: 'inactive').filter).to eq(inactive_agreements)
+      expect(AgreementsPresenter.new(status: 'inactive').filter).to match_array(inactive_agreements)
     end
 
   end
