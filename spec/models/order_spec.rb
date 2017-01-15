@@ -8,7 +8,7 @@ describe Order do
     let(:webhook) { create(:webhook) }
     let(:remote_order) { double("remote_order") }
     let(:line_items) { double("line_items") }
-    let(:elements) { DeepStruct.wrap([{item: {id: "1234"}, name: "some name"}, {name: "Manual Transaction"}]) }
+    let(:elements) { DeepStruct.wrap([{item: {id: "1234"}, name: "some name", alternateName: Faker::Code.ean}, {name: "Manual Transaction"}]) }
 
     before do
       allow(Clover::Inventory).to receive(:delete)
