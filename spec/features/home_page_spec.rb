@@ -86,6 +86,7 @@ feature "home page" do
 
         fill_in("Listing price", with: "12.34")
         click_button("Update Item")
+        sleep(1)
 
         expect(page).to have_content("#{item.description} updated!")
         expect(page).not_to have_content("needs a price added")
