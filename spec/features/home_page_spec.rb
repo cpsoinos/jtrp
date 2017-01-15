@@ -12,18 +12,20 @@ feature "home page" do
       visit root_path
 
       expect(page).to have_content(company.name)
-      expect(page).to have_content(company.slogan)
+      expect(page).to have_content("Information")
+      expect(page).to have_content("Customer Service")
+      expect(page).to have_content("Follow us")
     end
 
     scenario "clicks through to a category" do
       visit root_path
-      within(".categories-row") do
+      within(".col-md-9") do
         click_link(category_1.name)
       end
 
-      expect(page).to have_content(category_1.name)
-      expect(page).not_to have_link("edit")
-      expect(page).not_to have_link("delete_forever")
+      within(".cat_header") do
+        expect(page).to have_content(category_1.name)
+      end
     end
 
   end
@@ -196,13 +198,13 @@ feature "home page" do
     context "home page" do
       scenario "clicks through to a category" do
         visit landing_page_path
-        within(".categories-row") do
+        within(".col-md-9") do
           click_link(category_1.name)
         end
 
-        expect(page).to have_content(category_1.name)
-        expect(page).to have_link("edit")
-        expect(page).to have_link("delete_forever")
+        within(".cat_header") do
+          expect(page).to have_content(category_1.name)
+        end
       end
     end
 
