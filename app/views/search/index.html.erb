@@ -1,45 +1,79 @@
 <% meta title: "Search Results: '#{params[:query]}' - #{@company.name}" %>
 
+
 <div class="row">
-  <div class="col-md-8 col-md-offset-2 col-xs-10 col-xs-offset-1">
-    <div class="row">
-
-      <% if @results.empty? %>
-        <h4>Sorry, no results found for "<%= params[:query] %>".</h4>
-      <% end %>
-
-      <ul class="nav nav-pills nav-pills-icons nav-pills-primary text-center" role="tablist">
-        <% @results.each do |key, values| %>
-          <li class="">
-            <a href="#<%= key %>" aria-controls="<%= key %>" role="tab" data-toggle="tab" aria-expanded="false">
-              <h5><%= key.titleize.pluralize(values.count) %></h5>
-            </a>
-          </li>
-        <% end %>
+  <div class="col-md-12">
+    <div class="breadcrumbs">
+      <ul class="breadcrumb">
+        <li><%= link_to "Home", landing_page_path %> <span class="divider"></span></li>
+        <li class="active">Search</li>
       </ul>
     </div>
+  </div>
 
-    <!-- Tab panes -->
-    <div class="large-top-margin">
-      <div class="tab-content">
-        <% @results.each do |key, values| %>
-          <div role="tabpanel" class="tab-pane fade" id="<%= key %>">
-            <% case key %>
-            <% when "item" %>
-              <% if current_user.try(:internal?) %>
-                <%= render 'items/mark_sold_modal', redirect_url: request.original_url %>
-              <% end %>
-              <%= render "items/items_list", items: values, headers: general_headers, context: "general" %>
-            <% when "account" %>
-              <%= render "accounts/accounts_list", accounts: values %>
-            <% when "client" %>
-              <%= render "clients/clients_list", clients: values %>
-            <% when "job" %>
-              <%= render "jobs/jobs_list", jobs: values %>
-            <% end %>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <h2>Search</h2>
+  </div>
+</div>
+
+<%= form_tag search_index_path, method: :get, class: "form-horizontal" do %>
+  <div class="row">
+    <div class="col-md-12">
+        <p>Search Criteria</p>
+        <div class="search" class="form-group">
+          <div class="col-md-4">
+            <%= text_field_tag :query, nil, placeholder: "Search", class: "form-control" %>
+            <!-- <input type="text" placeholder="Search" class="form-control"> -->
           </div>
-        <% end %>
+          <%= select_tag :categories, options_from_collection_for_select(@categories.primary, :id, :name), { class: "select", include_blank: "All Categories" } %>
+          <label class="inline" style="margin-left: 10px;">
+            <input type="checkbox" id="inlineCheckbox1" value="option1"> Search in subcategories
+          </label>
       </div>
+    </div>
+  </div>
+
+  <div class="row search-btn .btn-default">
+    <div class="col-md-12">
+      <p>
+        <%= submit_tag "Search", class: "btn btn-primary" %>
+      </p>
+    </div>
+  </div>
+<% end %>
+
+
+<div class="row">
+  <div class="col-md-12">
+    <h2 class="search-criteria">
+      <% if !@results.empty? %>
+        Products meeting the search criteria
+      <% else %>
+        Sorry, no results found for "<%= params[:query] %>".
+      <% end %>
+    </h2>
+  </div>
+</div>
+
+<!-- <div class="row"> -->
+  <% @results.each_slice(3) do |slice| %>
+    <div class="row">
+      <% slice.each do |result| %>
+        <div class="col-md-4 col-xs-12">
+          <%= render 'items/item_card', item: result %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+<!-- </div> -->
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="text-center">
+      <%= paginate @results, html: {class: "pagination pull-right"} %>
     </div>
   </div>
 </div>

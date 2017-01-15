@@ -30,6 +30,4 @@ feature "search" do
 
   end
 
-
-
 end

@@ -10,7 +10,7 @@ class Item < ActiveRecord::Base
   include PgSearch
 
   multisearchable against: [:id, :account_item_number, :description, :original_description, :category_name, :account_name, :job_name]
-  paginates_per 20
+  paginates_per 18
 
   has_many :photos, dependent: :destroy
   accepts_nested_attributes_for :photos

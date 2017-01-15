@@ -4,7 +4,7 @@ feature "company: about us" do
 
     scenario "sees links from home page" do
       visit root_path
-      click_link("About Us")
+      click_link("About Us", match: :first)
 
       expect(page).to have_link("Client Services")
       expect(page).to have_link("Consignment Policies")
@@ -14,7 +14,7 @@ feature "company: about us" do
 
     scenario "clicks through to client services" do
       visit root_path
-      click_link("About Us")
+      click_link("About Us", match: :first)
       click_link("Client Services")
 
       expect(page).to have_content("Just the Right Piece")
@@ -23,7 +23,7 @@ feature "company: about us" do
 
     scenario "clicks through to consignment policies" do
       visit root_path
-      click_link("About Us")
+      click_link("About Us", match: :first)
       click_link("Consignment Policies")
 
       expect(page).to have_content("Just the Right Piece")
@@ -32,8 +32,8 @@ feature "company: about us" do
 
     scenario "clicks through to service rate schedule" do
       visit root_path
-      click_link("About Us")
-      click_link("Service Rate Schedule")
+      click_link("About Us", match: :first)
+      click_link("Service Rate Schedule", match: :first)
 
       expect(page).to have_content("Just the Right Piece")
       expect(page).not_to have_link("Edit")
@@ -41,8 +41,8 @@ feature "company: about us" do
 
     scenario "clicks through to agent service rate schedule" do
       visit root_path
-      click_link("About Us")
-      click_link("Service Rate Schedule for Agents")
+      click_link("About Us", match: :first)
+      click_link("Service Rate Schedule for Agents", match: :first)
 
       expect(page).to have_content("Just the Right Piece")
       expect(page).not_to have_link("Edit")
@@ -60,7 +60,7 @@ feature "company: about us" do
 
     scenario "sees links from home page" do
       visit root_path
-      click_link("About Us")
+      click_link("About Us", match: :first)
 
       expect(page).to have_link("Client Services")
       expect(page).to have_link("Consignment Policies")
@@ -70,7 +70,7 @@ feature "company: about us" do
 
     scenario "clicks through to client services" do
       visit root_path
-      click_link("About Us")
+      click_link("About Us", match: :first)
       click_link("Client Services")
 
       expect(page).to have_content("Just the Right Piece")
@@ -79,7 +79,7 @@ feature "company: about us" do
 
     scenario "clicks through to consignment policies" do
       visit root_path
-      click_link("About Us")
+      click_link("About Us", match: :first)
       click_link("Consignment Policies")
 
       expect(page).to have_content("Just the Right Piece")
@@ -88,8 +88,8 @@ feature "company: about us" do
 
     scenario "clicks through to service rate schedule" do
       visit root_path
-      click_link("About Us")
-      click_link("Service Rate Schedule")
+      click_link("About Us", match: :first)
+      click_link("Service Rate Schedule", match: :first)
 
       expect(page).to have_content("Just the Right Piece")
       expect(page).to have_link("Edit")
@@ -97,8 +97,8 @@ feature "company: about us" do
 
     scenario "clicks through to agent service rate schedule" do
       visit root_path
-      click_link("About Us")
-      click_link("Service Rate Schedule for Agents")
+      click_link("About Us", match: :first)
+      click_link("Service Rate Schedule for Agents", match: :first)
 
       expect(page).to have_content("Just the Right Piece")
       expect(page).to have_link("Edit")
