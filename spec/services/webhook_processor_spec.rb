@@ -7,7 +7,7 @@ describe WebhookProcessor do
 
   let(:remote_order) do
     DeepStruct.wrap(
-    {"href"=>"https://www.clover.com/v3/merchants/DEF456/orders/JKL987", "id"=>"JKL987", "currency"=>"USD", "employee"=>{"id"=>"QQYBQFPPQ8D0C"}, "total"=>51000, "taxRemoved"=>false, "isVat"=>false, "state"=>"open", "manualTransaction"=>false, "groupLineItems"=>true, "testMode"=>false, "createdTime"=>1468069942000, "clientCreatedTime"=>1468069942000, "modifiedTime"=>1468074202000, "lineItems"=>{"elements"=>[{"id"=>"MNO654", "orderRef"=>{"id"=>"JKL987"}, "item"=>{"id"=>"MNO654"}, "name"=>"1 Small Stool", "price"=>1000, "printed"=>false, "createdTime"=>1468074064000, "orderClientCreatedTime"=>1468069942000, "exchanged"=>false, "refunded"=>false, "isRevenue"=>true}, {"id"=>"PQR432", "orderRef"=>{"id"=>"JKL987"}, "item"=>{"id"=>"PQR432"}, "name"=>"2 Identical Dressers", "price"=>35000, "printed"=>false, "createdTime"=>1468074148000, "orderClientCreatedTime"=>1468069942000, "exchanged"=>false, "refunded"=>false, "isRevenue"=>true}, {"id"=>"STU123", "orderRef"=>{"id"=>"PHM4QATAVKYDC"}, "item"=>{"id"=>"STU123"}, "name"=>"2 Overstuffed Chairs 1 Ottoman", "price"=>15000, "printed"=>false, "createdTime"=>1468074202000, "orderClientCreatedTime"=>1468069942000, "exchanged"=>false, "refunded"=>false, "isRevenue"=>true}]}, "device"=>{"id"=>"43fb2150-4593-4a67-a7c9-fb19325bded9"}}
+    {"href"=>"https://www.clover.com/v3/merchants/DEF456/orders/JKL987", "id"=>"JKL987", "currency"=>"USD", "employee"=>{"id"=>"QQYBQFPPQ8D0C"}, "total"=>51000, "taxRemoved"=>false, "isVat"=>false, "state"=>"open", "manualTransaction"=>false, "groupLineItems"=>true, "testMode"=>false, "createdTime"=>1468069942000, "clientCreatedTime"=>1468069942000, "modifiedTime"=>1468074202000, "lineItems"=>{"elements"=>[{"id"=>"MNO654", "orderRef"=>{"id"=>"JKL987"}, "item"=>{"id"=>"MNO654"}, "name"=>"1 Small Stool", "alternateName"=>"abc", "price"=>1000, "printed"=>false, "createdTime"=>1468074064000, "orderClientCreatedTime"=>1468069942000, "exchanged"=>false, "refunded"=>false, "isRevenue"=>true}, {"id"=>"PQR432", "orderRef"=>{"id"=>"JKL987"}, "item"=>{"id"=>"PQR432"}, "name"=>"2 Identical Dressers", "alternateName"=>"def", "price"=>35000, "printed"=>false, "createdTime"=>1468074148000, "orderClientCreatedTime"=>1468069942000, "exchanged"=>false, "refunded"=>false, "isRevenue"=>true}, {"id"=>"STU123", "orderRef"=>{"id"=>"PHM4QATAVKYDC"}, "item"=>{"id"=>"STU123"}, "name"=>"2 Overstuffed Chairs 1 Ottoman", "alternateName"=>"ghi", "price"=>15000, "printed"=>false, "createdTime"=>1468074202000, "orderClientCreatedTime"=>1468069942000, "exchanged"=>false, "refunded"=>false, "isRevenue"=>true}]}, "device"=>{"id"=>"43fb2150-4593-4a67-a7c9-fb19325bded9"}}
     )
   end
 
@@ -38,9 +38,9 @@ describe WebhookProcessor do
 
   it "updates and adds items to an existing order" do
     order = create(:order, remote_id: "JKL987")
-    item = create(:item, :active, remote_id: "MNO654")
-    item = create(:item, :active, remote_id: "PQR432")
-    item = create(:item, :active, remote_id: "STU123")
+    item = create(:item, :active, remote_id: "MNO654", token: "abc")
+    item = create(:item, :active, remote_id: "PQR432", token: "def")
+    item = create(:item, :active, remote_id: "STU123", token: "ghi")
 
     expect {
       processor.process
