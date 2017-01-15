@@ -104,7 +104,7 @@ Rails.application.routes.draw do
 
   post '/:integration_name' => 'webhooks#receive', as: :receive_webhooks
 
-  resources :search
+  resources :search, only: [:index]
   resources :purchases, only: [:index, :show]
 
 end

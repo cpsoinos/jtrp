@@ -29,7 +29,7 @@ feature "edit a company" do
       fill_in("company_phone_ext", with: "123")
       click_on("Update Company")
 
-      expect(page).to have_content("Close, but no cigar")
+      expect(page).to have_content("Changes saved!")
     end
 
   end

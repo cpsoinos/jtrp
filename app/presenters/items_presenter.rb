@@ -9,7 +9,7 @@ class ItemsPresenter
   end
 
   def filter
-    @items = @items.filter(params.slice(:status, :type, :by_id))
+    @items = @items.filter(params.slice(:status, :type, :by_id, :by_category_id))
     self
   end
 
@@ -20,6 +20,11 @@ class ItemsPresenter
 
   def paginate
     @items = @items.page(params[:page])
+    self
+  end
+
+  def search
+    @items = @items.includes(:pg_search_document).joins(:pg_search_document).merge(PgSearch.multisearch(params[:query]))
     self
   end
 

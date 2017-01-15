@@ -1,6 +1,5 @@
 $(document).on('turbolinks:load', function() {
 
-
   if (document.getElementById('map') != null) {
     initMap();
   };
@@ -60,8 +59,6 @@ $(document).on('turbolinks:load', function() {
   	smoothMove:3,
   	showTitle:false
   };
-
-
 
 });
 
