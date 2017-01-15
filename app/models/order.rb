@@ -34,11 +34,24 @@ class Order < ActiveRecord::Base
     end
   end
 
-  def remote_item_ids_from_line_items
-    line_items.map do |element|
-      next if element.name == "Manual Transaction"
-      element.item.id
-    end.compact
+  def items_from_remote_id
+    remote_item_ids ||= begin
+      line_items.map do |element|
+        next if element.name == "Manual Transaction"
+        element.item.id
+      end.compact
+    end
+    Item.where(remote_id: remote_item_ids)
+  end
+
+  def items_from_token
+    tokens ||= begin
+      line_items.map do |element|
+        next if element.name == "Manual Transaction"
+        element.alternateName
+      end.compact
+    end
+    Item.where(token: tokens)
   end
 
   def descriptions_from_line_items
@@ -58,8 +71,8 @@ class Order < ActiveRecord::Base
 
   def add_items_to_order
     return unless (remote_order && line_items.present?)
-    items = Item.where(remote_id: remote_item_ids_from_line_items)
-    self.items << items
+    self.items << items_from_remote_id
+    self.items << items_from_token # failsafe against items with prematurely removed remote ids
   end
 
   def remote_order_open?
