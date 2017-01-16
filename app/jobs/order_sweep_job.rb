@@ -3,7 +3,7 @@ require 'active_job/traffic_control'
 class OrderSweepJob < ActiveJob::Base
   include ActiveJob::TrafficControl::Throttle
 
-  queue_as :low
+  queue_as :maintenance
 
   throttle threshold: 5, period: 1.second
 
