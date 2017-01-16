@@ -28,7 +28,7 @@ class Order < ActiveRecord::Base
 
   def line_items
     if remote_order.respond_to?(:lineItems)
-      remote_order.lineItems.elements
+      remote_order.lineItems.try(:elements) || []
     else
       []
     end
@@ -104,7 +104,10 @@ class Order < ActiveRecord::Base
   end
 
   def retrieve_discounts
-    remote_discounts ||= Clover::Discount.find(self).elements.map { |e| e }
+    remote_discounts ||= begin
+      elements = Clover::Discount.find(self).try(:elements) || []
+      elements.map { |e| e }
+    end
     remote_discounts.map do |line_item|
       next unless line_item.respond_to?(:discounts)
       self.discounts.find_or_create_by!(
