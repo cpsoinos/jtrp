@@ -1,4 +1,6 @@
 class OrderSweepJob < ActiveJob::Base
+  include ActiveJob::TrafficControl::Throttle
+
   queue_as :low
 
   throttle threshold: 5, period: 1.second
