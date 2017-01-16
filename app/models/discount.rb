@@ -14,7 +14,9 @@ class Discount < ActiveRecord::Base
   def apply_to_item
     return if applied?
     # this will handle marking as sold in addition to applying discount
-    ItemUpdater.new(item).update(sale_price_cents: (item.listing_price_cents + calculate_discount), sold_at: order.created_at)
+    if item
+      ItemUpdater.new(item).update(sale_price_cents: (item.listing_price_cents + calculate_discount), sold_at: order.created_at)
+    end
     self.applied = true
     self.save
   end

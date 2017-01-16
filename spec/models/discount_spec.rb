@@ -20,6 +20,14 @@ describe Discount do
     expect(discount.applied?).to be(true)
   end
 
+  it "can apply without an item" do
+    discount.item = nil
+    discount.save
+
+    discount.apply_to_item
+    expect(discount.applied?).to be(true)
+  end
+
   it "calculates the discount when percent-based" do
     percent_discount = create(:discount, :percent_based)
     other_item = percent_discount.item
