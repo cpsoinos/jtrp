@@ -132,6 +132,7 @@ feature "home page" do
           end
           fill_in("note", with: "Personalized message goes here")
           click_button("Notify Client")
+          sleep(1)
 
           expect(page).to have_content("Email and letter queued for delivery")
           expect(page).to have_content("Success!")
@@ -153,6 +154,7 @@ feature "home page" do
           end
           fill_in("note", with: "Personalized message goes here")
           click_button("Notify Client")
+          sleep(1)
 
           expect(page).to have_content("Email and letter queued for delivery")
           expect(page).to have_content("Success!")
