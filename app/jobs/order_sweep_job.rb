@@ -1,3 +1,5 @@
+require 'active_job/traffic_control'
+
 class OrderSweepJob < ActiveJob::Base
   include ActiveJob::TrafficControl::Throttle
 
