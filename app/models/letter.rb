@@ -22,6 +22,7 @@ class Letter < ActiveRecord::Base
   end
 
   def save_as_pdf
+    return if pdf.present?
     PdfGenerator.new(self).render_pdf
   end
 
