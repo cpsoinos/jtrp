@@ -88,6 +88,7 @@ feature "home page" do
 
         fill_in("Listing price", with: "12.34")
         click_button("Update Item")
+        sleep(1)
 
         expect(page).to have_content("#{item.description} updated!")
         expect(page).not_to have_content("needs a price added")
@@ -133,6 +134,7 @@ feature "home page" do
           end
           fill_in("note", with: "Personalized message goes here")
           click_button("Notify Client")
+          sleep(1)
 
           expect(page).to have_content("Email and letter queued for delivery")
           expect(page).to have_content("Success!")
@@ -154,6 +156,7 @@ feature "home page" do
           end
           fill_in("note", with: "Personalized message goes here")
           click_button("Notify Client")
+          sleep(1)
 
           expect(page).to have_content("Email and letter queued for delivery")
           expect(page).to have_content("Success!")

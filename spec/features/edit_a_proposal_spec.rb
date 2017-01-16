@@ -39,6 +39,7 @@ feature "edit a proposal" do
         find(:css, "#item_#{item.id}_will_purchase", visible: false).trigger("click")
         fill_in("item_purchase_price", with: 50.55)
         click_on("Save")
+        sleep(1)
 
         expect(page).to have_content("Success!")
         item.reload
@@ -55,6 +56,7 @@ feature "edit a proposal" do
         fill_in("item_listing_price", with: 88.89)
         fill_in("item_minimum_sale_price", with: 67.55)
         click_on("Save")
+        sleep(1)
 
         expect(page).to have_content("Success!")
         item.reload
@@ -77,6 +79,7 @@ feature "edit a proposal" do
         fill_in("item_minimum_sale_price", with: 67.55)
         sleep(1)
         click_on("Save")
+        sleep(1)
 
         expect(page).to have_content("#{item.description} updated!")
         expect(page).to have_content("Success!")
