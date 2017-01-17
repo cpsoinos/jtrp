@@ -14,9 +14,14 @@ class Category < ActiveRecord::Base
 
   scope :primary, -> { where(parent: nil) }
   scope :secondary, -> { where.not(parent: nil) }
+  scope :categorized, -> { where.not(slug: "uncategorized") }
 
   def subcategory?
     parent.present?
+  end
+
+  def lowest_price
+    items.where("listing_price_cents > ?", 0).order(:listing_price_cents).limit(1).first.try(:listing_price)
   end
 
 end

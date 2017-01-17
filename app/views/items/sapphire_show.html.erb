@@ -1,0 +1,39 @@
+<% meta @meta_tags %>
+
+<div class="container">
+
+  <div class="row product-info">
+    <div class="col-md-6">
+
+      <div class="image">
+        <a class="cloud-zoom" rel="adjustX: 0, adjustY:0" id='zoom1' href="<%= @item.featured_photo.photo_url(client_hints: true, quality: "auto", fetch_format: :auto, width: :auto, dpr: "auto", effect: :improve) %>" title="Nano">
+          <%= image_tag(@item.featured_photo.photo_url(client_hints: true, quality: "auto", fetch_format: :auto, width: :auto, dpr: "auto", effect: :improve)) %>
+        </a>
+      </div>
+
+      <div class="image-additional">
+        <% @item.photos[1..-1].each do |photo| %>
+          <a class="cloud-zoom" rel="adjustX: 0, adjustY:0" id='zoom1' href="<%= photo.photo_url(client_hints: true, quality: "auto", fetch_format: :auto, width: :auto, dpr: "auto", effect: :improve) %>" title="Nano">
+            <%= image_tag(photo.photo_url(client_hints: true, quality: "auto", fetch_format: :auto, width: :auto, dpr: "auto", effect: :improve)) %>
+          </a>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+
+      <h1><%= @item.description.titleize %></h1>
+      <div class="line"></div>
+      <ul>
+        <li><span>SKU:</span> <%= @item.id %></li>
+      </ul>
+      <div class="price">
+        Price <strong><%= humanized_money_with_symbol(@item.listing_price) %></strong>
+      </div>
+
+      <div class="fb-comments" data-href="<%= item_url(@item) %>" data-numposts="5" data-width="100%"></div>
+
+    </div>
+  </div>
+
+</div>

@@ -133,14 +133,10 @@ feature "agreement" do
         Company.first.update_attribute("primary_contact_id", user.id)
         allow(InventorySync).to receive(:new).and_return(syncer)
         allow(syncer).to receive(:remote_create).and_return(true)
-        visit account_job_proposal_agreements_path(account, job, proposal)
-      end
-
-      before :each, js: true do
-        page.execute_script("$($('a[role=tab]')[0]).tab('show');")
       end
 
       scenario "visits consignment agreement path" do
+        visit account_job_proposal_agreements_path(account, job, proposal)
         expect(page).not_to have_link("sell")
         expect(page).not_to have_link("dump")
         expect(page).not_to have_link("donate")

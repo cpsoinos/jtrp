@@ -9,8 +9,8 @@ class Item < ActiveRecord::Base
   include Filterable
   include PgSearch
 
-  multisearchable against: [:id, :account_item_number, :description, :original_description, :category_name, :account_name, :job_name]
-  paginates_per 20
+  multisearchable against: [:id, :account_item_number, :description, :original_description, :category_name, :category_id, :account_name, :job_name]
+  paginates_per 18
 
   has_many :photos, dependent: :destroy
   accepts_nested_attributes_for :photos
@@ -61,6 +61,7 @@ class Item < ActiveRecord::Base
     end
   end
   scope :by_id, -> (id_param) { where(id: id_param) }
+  scope :by_category_id, -> (category_id_param) { where(category_id: category_id_param) }
 
   scope :potential, -> { where(status: "potential") }
   scope :active, -> { where(status: "active") }

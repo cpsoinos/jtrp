@@ -1,0 +1,9 @@
+<div class="product">
+  <%= link_to image_tag(item.featured_photo.photo_url(client_hints: true, quality: "auto", fetch_format: :auto, dpr: "auto", effect: :improve, width: "350", height: "270", crop: "fit")), item_path(item) %>
+  <div class="name">
+    <%= link_to item.description.titleize, item_path(item) %>
+  </div>
+  <div class="price">
+    <p><%= humanized_money_with_symbol(item.listing_price) %></p>
+  </div>
+</div>

@@ -15,7 +15,6 @@ feature "edit a category" do
 
       click_link(category.name, match: :first)
       expect(page).to have_link("edit")
-      expect(page).to have_link("delete_forever")
     end
 
     scenario "visits edit category page from show" do

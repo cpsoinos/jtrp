@@ -1,0 +1,12 @@
+<div class="col-md-3 left-menu">
+  <div class="">
+    <% @categories.primary.each do |category| %>
+      <h3><%= link_to category.name.titleize, category_path(category) %></h3>
+      <ul>
+        <% category.subcategories.each do |subcategory| %>
+          <li><%= link_to subcategory.name, category_path(subcategory) %></li>
+        <% end %>
+      </ul>
+    <% end %>
+  </div>
+</div>

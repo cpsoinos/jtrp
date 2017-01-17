@@ -48,5 +48,17 @@
 //= require pinterest_sdk
 //= require linkedin_sdk
 //= require toastr
-//= require_tree .
+
+//= require accounts
+//= require agreements
+//= require categories
+//= require clients
+//= require components
+//= require global
+//= require google_tag_manager
+//= require items
+//= require jobs
+//= require proposals
+//= require users
+
 //= require turbolinks

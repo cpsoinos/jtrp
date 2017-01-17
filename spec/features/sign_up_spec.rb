@@ -1,4 +1,4 @@
-feature "sign up" do
+feature "sign up", skip: true do
 
   scenario "visits root path" do
     visit root_path

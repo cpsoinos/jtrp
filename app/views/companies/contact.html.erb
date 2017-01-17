@@ -1,0 +1,71 @@
+<div class="container">
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="breadcrumbs">
+  	    <ul class="breadcrumb">
+          <li><%= link_to "Home", landing_page_path %> <span class="divider"></span></li>
+          <li class="active">Contact Us</li>
+        </ul>
+    	</div>
+  	</div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+    	<h2>Contact Us</h2>
+  	</div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div id="map">
+        <p>Enable your JavaScript!</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+
+  	<div class="col-md-6">
+  		<div class="contact_form">
+        <%= form_tag send_message_path do %>
+          <fieldset class="form-group label-floating">
+            <%= label_tag :from_name, "Name", class: "required" %> *
+            <%= text_field_tag :from_name, nil, placeholder: "Name", class: "form-control", required: true %>
+            <%= label_tag :email, nil, class: "required" %>
+            <%= email_field_tag :email, nil, placeholder: "Email", class: "form-control", required: true %>
+            <%= label_tag :subject, nil, class: "required" %> *
+            <%= text_field_tag :subject, nil, placeholder: "Subject", class: "form-control", required: true %>
+          </fieldset>
+
+  			<div class="form-group">
+          <%= label_tag :note, "Message", class: "required" %> *
+          <%= text_area_tag :note, nil, placeholder: "Type your message here...", class: "form-control", required: true, rows: 3 %>
+  			</div>
+  			<p class="form-group">
+          <%= submit_tag "Send Request", class: "btn btn-primary" %>
+  			</p>
+        <% end %>
+  		</div>
+  	</div>
+
+  	<div class="col-md-6">
+  		<div class="location">
+  			<address>
+  			  <strong><%= @company.name %>, LLC</strong><br>
+  			  <%= @company.address_1 %><br>
+  			  <%= @company.city %>, <%= @company.state %> <%= @company.zip %><br>
+  			  <%= @company.phone %>
+  			</address>
+
+  			<address>
+  			  <strong><%= @company.primary_contact.full_name %></strong><br>
+  			  <a href="mailto:<%= @company.primary_contact.email %>"><%= @company.primary_contact.email %></a>
+  			</address>
+  		</div>
+  	</div>
+
+  </div>
+
+</div>

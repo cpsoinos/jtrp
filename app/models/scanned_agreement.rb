@@ -16,7 +16,7 @@ class ScannedAgreement < ActiveRecord::Base
   end
 
   def deliver_to_client
-    TransactionalEmailJob.perform_later(self, Company.jtrp.primary_contact, agreement.account.primary_contact, "agreement", nil)
+    TransactionalEmailJob.perform_later(self, Company.jtrp.primary_contact, agreement.account.primary_contact, "agreement")
   end
 
   private
