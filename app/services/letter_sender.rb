@@ -8,6 +8,7 @@ class LetterSender
   end
 
   def send_letter
+    letter.save_as_pdf
     build_letter
   end
 
