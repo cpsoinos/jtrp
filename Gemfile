@@ -73,6 +73,7 @@ gem 'paranoia', '~> 2.2'
 gem 'gretel'
 gem 'madison'
 gem 'acts-as-taggable-on', '~> 4.0'
+gem 'her'
 
 group :production, :staging do
   gem 'tunemygc'
