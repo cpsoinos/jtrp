@@ -68,7 +68,7 @@ class CategoriesController < ApplicationController
     if @category.subcategory?
       @category.items.active.page(params[:page]).per(12)
     else
-      Item.where(id: ([@category.id] | @category.subcategories.pluck(:id))).page(params[:page]).per(12)
+      Item.active.where(id: ([@category.id] | @category.subcategories.pluck(:id))).page(params[:page]).per(12)
     end
   end
 
