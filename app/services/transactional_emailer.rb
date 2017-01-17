@@ -20,7 +20,7 @@ class TransactionalEmailer
 
   def build_email(recipient, options)
     mail = Mail.new
-    mail.from = Email.new(from_email(options))
+    mail.from = Email.new(email: from_email(options))
 
     mail.personalizations = personalizations(recipient, options)
 
@@ -40,7 +40,7 @@ class TransactionalEmailer
       'agreement_active_notifier'     => 'a44c4a4e-a852-4250-bd24-026c74da4ca8',
       'agreement_pending_expiration'  => '39421dcb-df09-47da-9abb-a3cbdf69acf0',
       'agreement_expired'             => '4c362444-967d-4558-9455-929cc1bd8392',
-      'contact_us'                    => '787a8214-a2da-4a0d-a086-c60010c24916'
+      'contact'                       => '787a8214-a2da-4a0d-a086-c60010c24916'
     }
   end
 

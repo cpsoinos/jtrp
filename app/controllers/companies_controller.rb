@@ -1,6 +1,6 @@
 class CompaniesController < ApplicationController
   layout :resolve_layout
-  before_filter :require_internal, except: [:client_services, :consignment_policies, :service_rate_schedule, :agent_service_rate_schedule, :home, :about, :contact]
+  before_filter :require_internal, except: [:client_services, :consignment_policies, :service_rate_schedule, :agent_service_rate_schedule, :home, :about, :contact, :send_message]
 
   def show
     build_todos
@@ -54,7 +54,7 @@ class CompaniesController < ApplicationController
   def agent_service_rate_schedule
   end
 
-  def send_email
+  def send_message
     TransactionalEmailJob.perform_later(@company, current_user, @company.primary_contact, "contact", params)
     redirect_to root_path, notice: "Your message has been sent!"
   end

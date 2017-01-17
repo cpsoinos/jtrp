@@ -20,4 +20,5 @@
 //= require cloud-zoom.1.0.3
 //= require sapphire
 //= require companies
+//= require facebook_sdk
 //= require turbolinks

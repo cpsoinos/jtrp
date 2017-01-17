@@ -60,6 +60,10 @@ $(document).on('turbolinks:load', function() {
   	showTitle:false
   };
 
+  setTimeout(function() {
+    $('.alert').slideUp();
+  }, 5000);
+
 });
 
 var initMap = function() {
