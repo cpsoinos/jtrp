@@ -53,6 +53,7 @@ class TransactionalEmailer
     personalization.substitutions = Substitution.new(key: '[pending_deadline]', value: (object.try(:pending_deadline) || ''))
     personalization.substitutions = Substitution.new(key: '[hard_deadline]', value: (object.try(:hard_deadline) || ''))
     personalization.substitutions = begin
+      binding.pry
       if options[:from_name].present?
         Substitution.new(key: '[from_name]', value: options[:from_name])
       else
