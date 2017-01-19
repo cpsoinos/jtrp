@@ -102,8 +102,16 @@ feature "proposal response" do
       visit account_job_proposal_path(account, job, proposal, token: proposal.token)
       fill_in("note", with: "this is a note")
       click_button("Send Email")
+      params = {
+        "utf8"=>"✓",
+        "note"=>"this is a note",
+        "commit"=>"Send Email",
+        "controller"=>"proposals",
+        "action"=>"notify_response",
+        "proposal_id"=>"#{proposal.id}"
+      }
 
-      expect(TransactionalEmailJob).to have_received(:perform_later).with(proposal, account.primary_contact, Company.jtrp.primary_contact, "notification", "this is a note")
+      expect(TransactionalEmailJob).to have_received(:perform_later).with(proposal, account.primary_contact, Company.jtrp.primary_contact, "notification", params)
     end
 
   end
