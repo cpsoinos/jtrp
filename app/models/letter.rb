@@ -33,7 +33,7 @@ class Letter < ActiveRecord::Base
   end
 
   def deliver_email
-    TransactionalEmailJob.perform_later(self, Company.jtrp.primary_contact, account.primary_contact, category, note)
+    TransactionalEmailJob.perform_later(self, Company.jtrp.primary_contact, account.primary_contact, category, {note: note})
   end
 
   def deliver_letter
