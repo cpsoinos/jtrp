@@ -12,11 +12,11 @@ describe Photo do
     let!(:listing_photos) { create_list(:photo, 2, :listing) }
 
     it "initial" do
-      expect(Photo.initial).to eq(initial_photos)
+      expect(Photo.initial).to match_array(initial_photos)
     end
 
     it "listing" do
-      expect(Photo.listing).to eq(listing_photos)
+      expect(Photo.listing).to match_array(listing_photos)
     end
 
   end
