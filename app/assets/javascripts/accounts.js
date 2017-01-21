@@ -1,5 +1,7 @@
-$(".accounts.new").on('turbolinks:load', function() {
+$(document).on('turbolinks:load', function() {
+
   $("#new-account-button").click(function() {
-    $("#new-account-form").toggleClass('hidden');
+    $("#new-account-modal").modal("show");
   });
+
 })

@@ -1,34 +1,40 @@
-<%= form_for @account, class: "form-horizontal" do |f| %>
-  <%= f.hidden_field :is_company, value: true %>
+<div class="modal fade" tabindex="-1" role="dialog" id="new-account-modal">
+  <div class="modal-dialog">
+    <%= form_for @account, class: "form-horizontal" do |f| %>
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">New Account: Company</h4>
+        </div>
 
-  <div class="row form-row">
-    <div class="text-center">
-      <div class="col-xs-12 col-md-3 form-label">
-        <%= f.label :company_name, class: "control-label" %>
+        <div class="modal-body">
+
+          <%= f.hidden_field :is_company, value: true %>
+
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="form-group label-floating">
+                <%= f.label :company_name, class: "control-label required" %>
+                <%= f.text_field :company_name, class: "form-control", required: true %>
+              </div>
+            </div>
+
+            <div class="col-xs-12">
+              <div class="form-group label-floating">
+                <%= f.label :notes, class: "control-label" %>
+                <%= f.text_field :notes, class: "form-control" %>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="modal-footer">
+          <%= f.submit class: "btn btn-raised btn-primary" %>
+        </div>
+
       </div>
-      <div class="col-xs-12 col-md-9 text-left">
-        <%= f.text_field :company_name, class: "form-control" %>
-      </div>
-    </div>
+
+    <% end %>
   </div>
-
-  <div class="row form-row">
-    <div class="text-center">
-      <div class="col-xs-12 col-md-3 form-label">
-        <%= f.label :notes, class: "control-label" %>
-      </div>
-      <div class="col-xs-12 col-md-9 text-left">
-        <%= f.text_area :notes, class: "form-control" %>
-      </div>
-    </div>
-  </div>
-
-  <div class="row form-row">
-    <div class="actions">
-      <div class="col-xs-12 text-center">
-        <%= f.submit class: "btn btn-raised btn-primary" %>
-      </div>
-    </div>
-  </div>
-
-<% end %>
+</div>
