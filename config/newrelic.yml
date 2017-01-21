@@ -25,6 +25,7 @@ common: &default_settings
   log_level: debug
   browser_monitoring:
     auto_instrument: true
+  capture_params: true
 
 
 # Environment-specific settings are in this section.
