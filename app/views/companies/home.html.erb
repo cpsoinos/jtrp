@@ -5,7 +5,7 @@
     <div id="slideshow0">
       <div class="camera_wrap camera_emboss camera_white_skin">
         <% @featured_photos.each do |photo| %>
-          <div data-thumb="<%= photo.photo_url(:thumb) %>" data-src="<%= photo.photo_url %>" data-link="product.html"></div>
+          <div data-thumb="<%= photo.photo_url(:thumb) %>" data-src="<%= photo.photo_url %>"></div>
         <% end %>
       </div>
     </div>
