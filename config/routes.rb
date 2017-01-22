@@ -16,7 +16,7 @@ Rails.application.routes.draw do
 
   mount Bootsy::Engine => '/bootsy', as: 'bootsy'
   devise_for :users, controllers: { registrations: 'registrations', omniauth_callbacks: 'users/omniauth_callbacks' }
-  root 'passthrough#index'
+  root 'companies#home'
 
   get '/home', to: 'companies#home', as: 'landing_page'
   get '/about', to: 'companies#about', as: 'about'
