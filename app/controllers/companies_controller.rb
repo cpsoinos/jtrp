@@ -62,7 +62,10 @@ class CompaniesController < ApplicationController
   protected
 
   def company_params
-    params.require(:company).permit([:slogan, :address_1, :address_2, :city, :state, :zip, :phone, :phone_ext, :website, :logo, :description, :consignment_policies, :service_rate_schedule, :agent_service_rate_schedule, :bootsy_image_gallery_id])
+    params.require(:company).permit([
+      :slogan, :address_1, :address_2, :city, :state, :zip, :phone, :phone_ext, :website, :logo, :description, :consignment_policies, :service_rate_schedule, :agent_service_rate_schedule, :bootsy_image_gallery_id, :name]).tap do |whitelisted|
+      whitelisted[:hours_of_operation] = params[:company][:hours_of_operation]
+    end
   end
 
   def build_todos
@@ -73,7 +76,7 @@ class CompaniesController < ApplicationController
   end
 
   def resolve_layout
-    if action_name.in?(%w(home about contact client_services consignment_policies service_rate_schedule agent_service_rate_schedule))
+    if action_name.in?(%w(home about contact client_services consignment_policies service_rate_schedule agent_service_rate_schedule edit))
       "ecommerce"
     else
       "application"

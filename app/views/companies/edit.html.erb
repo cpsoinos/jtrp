@@ -1,163 +1,126 @@
-<div class="col-md-8 col-md-offset-2">
-  <div class="well bs-component">
+<div class="container">
 
-    <%= form_for @company do |f| %>
-
-      <div class="row form-row">
-        <div class="text-center">
-          <div class="col-xs-12 col-md-3 form-label">
-            <%= f.label :logo, class: "control-label" %>
-          </div>
-          <div class="col-xs-12 col-md-9 text-left">
-            <%= f.file_field :logo, class: "form-control" %>
-          </div>
-        </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="breadcrumbs">
+        <ul class="breadcrumb">
+          <li><a href="<%= dashboard_path %>">Dashboard</a> <span class="divider"></span></li>
+          <li class="active">Edit</li>
+        </ul>
       </div>
-
-      <div class="row form-row">
-        <div class="text-center">
-          <div class="col-xs-12 col-md-3 form-label">
-            <%= f.label :slogan, class: "control-label" %>
-          </div>
-          <div class="col-xs-12 col-md-9 text-left">
-            <%= f.text_field :slogan, class: "form-control" %>
-          </div>
-        </div>
-      </div>
-
-      <div class="row form-row">
-        <div class="text-center">
-          <div class="col-xs-12 col-md-3 form-label">
-            <%= f.label :address_1, class: "control-label" %>
-          </div>
-          <div class="col-xs-12 col-md-9 text-left">
-            <%= f.text_field :address_1, class: "form-control", placeholder: "Address" %>
-          </div>
-        </div>
-      </div>
-
-      <div class="row form-row">
-        <div class="text-center">
-          <div class="col-xs-12 col-md-3 form-label">
-            <%= f.label :address_2, class: "control-label" %>
-          </div>
-          <div class="col-xs-12 col-md-9 text-left">
-            <%= f.text_field :address_2, class: "form-control", placeholder: "Address Line Two" %>
-          </div>
-        </div>
-      </div>
-
-      <div class="row form-row">
-        <div class="text-center">
-          <div class="col-xs-12 col-md-3 form-label">
-            <%= f.label :city, class: "control-label" %>
-          </div>
-          <div class="col-xs-12 col-md-9 text-left">
-            <%= f.text_field :city, class: "form-control", placeholder: "City" %>
-          </div>
-        </div>
-      </div>
-
-      <div class="row form-row">
-        <div class="text-center">
-          <div class="col-xs-12 col-md-3 form-label">
-            <%= f.label :state, class: "control-label" %>
-          </div>
-          <div class="col-xs-12 col-md-9 text-left">
-            <%= f.text_field :state, class: "form-control", placeholder: "State" %>
-          </div>
-        </div>
-      </div>
-
-      <div class="row form-row">
-        <div class="text-center">
-          <div class="col-xs-12 col-md-3 form-label">
-            <%= f.label :zip, class: "control-label" %>
-          </div>
-          <div class="col-xs-12 col-md-9 text-left">
-            <%= f.text_field :zip, class: "form-control", placeholder: "Zip" %>
-          </div>
-        </div>
-      </div>
-
-      <div class="row form-row">
-        <div class="text-center">
-          <div class="col-xs-12 col-md-3 form-label">
-            <%= f.label :website, class: "control-label" %>
-          </div>
-          <div class="col-xs-12 col-md-9 text-left">
-            <%= f.url_field :website, class: "form-control", placeholder: "Website" %>
-          </div>
-        </div>
-      </div>
-
-      <div class="row form-row">
-        <div class="text-center">
-          <div class="col-xs-12 col-md-3 form-label">
-            <%= f.label :phone, class: "control-label" %>
-          </div>
-          <div class="col-xs-12 col-md-9 text-left">
-            <%= f.text_field :phone, class: "form-control", placeholder: "(123) 456-7890" %>
-            <%= f.text_field :phone_ext, class: "form-control", placeholder: "ext. 123" %>
-          </div>
-        </div>
-      </div>
-
-      <!-- Custom Info Fields -->
-
-      <div class="row form-row">
-        <div class="text-center">
-          <div class="col-xs-12 col-md-3 form-label">
-            <%= f.label :description, class: "control-label" %>
-          </div>
-          <div class="col-xs-12 col-md-9 text-left">
-            <%= f.bootsy_area :description, class: "form-control", id: "wysiwyg" %>
-          </div>
-        </div>
-      </div>
-
-      <div class="row form-row">
-        <div class="text-center">
-          <div class="col-xs-12 col-md-3 form-label">
-            <%= f.label :consignment_policies, class: "control-label" %>
-          </div>
-          <div class="col-xs-12 col-md-9 text-left">
-            <%= f.bootsy_area :consignment_policies, class: "form-control", id: "wysiwyg" %>
-          </div>
-        </div>
-      </div>
-
-      <div class="row form-row">
-        <div class="text-center">
-          <div class="col-xs-12 col-md-3 form-label">
-            <%= f.label :service_rate_schedule, class: "control-label" %>
-          </div>
-          <div class="col-xs-12 col-md-9 text-left">
-            <%= f.bootsy_area :service_rate_schedule, class: "form-control", id: "wysiwyg" %>
-          </div>
-        </div>
-      </div>
-
-      <div class="row form-row">
-        <div class="text-center">
-          <div class="col-xs-12 col-md-3 form-label">
-            <%= f.label :agent_service_rate_schedule, class: "control-label" %>
-          </div>
-          <div class="col-xs-12 col-md-9 text-left">
-            <%= f.bootsy_area :agent_service_rate_schedule, class: "form-control", id: "wysiwyg" %>
-          </div>
-        </div>
-      </div>
-
-      <div class="row form-row">
-        <div class="actions">
-          <div class="col-xs-12 text-center">
-            <%= f.submit class: "btn btn-raised btn-primary"%>
-          </div>
-        </div>
-      </div>
-
-    <% end %>
+    </div>
 
   </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <h2><%= @company.name %></h2>
+    </div>
+  </div>
+
+  <%= form_for @company, html: {class: "loginbox form-horizontal"} do |f| %>
+    <div class="row">
+      <div class="col-md-6">
+
+        <div class="form-group">
+          <%= f.label :name, class: "control-label col-md-4" %>
+          <div class="col-md-8">
+            <%= f.text_field :name, class: "form-control" %>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :hours_of_operation, class: "control-label col-md-4" %>
+          <div class="col-md-8">
+            <%= f.fields_for :hours_of_operation do |ff| %>
+
+              <% [:monday, :tuesday, :wednesday, :thursday, :friday, :saturday, :sunday].each do |day| %>
+                <div class="row">
+                  <%= ff.label day, class: "control-label col-md-4" %>
+                  <%= ff.fields_for day do |fff| %>
+                    <div class="col-md-4">
+                      <%= fff.text_field :open, placeholder: "open", class: "form-control" %>
+                    </div>
+                    <div class="col-md-4">
+                      <%= fff.text_field :close, placeholder: "close", class: "form-control" %>
+                    </div>
+                  <% end %>
+                </div>
+                <br />
+              <% end %>
+
+            </div>
+
+          </div>
+        <% end %>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <%= f.label :address_1, class: "control-label col-md-4" %>
+          <div class="col-md-8">
+            <%= f.text_field :address_1, class: "form-control" %>
+          </div>
+        </div>
+        <div class="form-group">
+          <%= f.label :address_2, class: "control-label col-md-4" %>
+          <div class="col-md-8">
+            <%= f.text_field :address_2, class: "form-control" %>
+          </div>
+        </div>
+        <div class="form-group">
+          <%= f.label :city, class: "control-label col-md-4" %>
+          <div class="col-md-8">
+            <%= f.text_field :city, class: "form-control" %>
+          </div>
+        </div>
+        <div class="form-group">
+          <%= f.label :state, class: "control-label col-md-4" %>
+          <div class="col-md-8">
+            <%= f.text_field :state, class: "form-control" %>
+          </div>
+        </div>
+        <div class="form-group">
+          <%= f.label :zip, class: "control-label col-md-4" %>
+          <div class="col-md-8">
+            <%= f.text_field :zip, class: "form-control" %>
+          </div>
+        </div>
+        <div class="form-group">
+          <%= f.label :phone, class: "control-label col-md-4" %>
+          <div class="col-md-8">
+            <%= f.phone_field :phone, class: "form-control" %>
+          </div>
+        </div>
+        <div class="form-group">
+          <%= f.label :website, class: "control-label col-md-4" %>
+          <div class="col-md-8">
+            <%= f.url_field :website, class: "form-control" %>
+          </div>
+        </div>
+        <div class="form-group">
+          <%= f.label :logo, class: "control-label col-md-4" %>
+          <div class="col-md-8 text-center">
+            <% if @company.logo.present? %>
+              <div style="margin-bottom: 10px;">
+                <%= image_tag(@company.logo_url(:thumb)) %>
+              </div>
+            <% end %>
+            <label class="btn btn-default btn-raised btn-file">
+              Browse <%= f.file_field :logo, class: "hidden" %>
+            </label>
+          </div>
+        </div>
+
+      </div>
+
+
+    <div class="row text-center">
+      <%= f.submit "Save", class: "btn btn-raised btn-primary" %>
+    </div>
+
+  <% end %>
+
+  </div>
+
 </div>

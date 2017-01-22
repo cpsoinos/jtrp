@@ -5,7 +5,7 @@
     <div id="slideshow0">
       <div class="camera_wrap camera_emboss camera_white_skin">
         <% @featured_photos.each do |photo| %>
-          <div data-thumb="<%= photo.photo_url(:thumb) %>" data-src="<%= photo.photo_url %>"></div>
+          <div data-thumb="<%= photo.photo_url(:thumb) %>" data-src="<%= photo.photo_url(:slideshow) %>"></div>
         <% end %>
       </div>
     </div>
@@ -13,6 +13,15 @@
 </div>
 
 <div class="row">
+  <div class="col-md-6">
+    <%= render 'hours_block' %>
+  </div>
+  <div class="col-md-6">
+    <%= render 'address_block' %>
+  </div>
+</div>
+
+<div class="row" style="margin-top: 20px;">
   <%= render 'categories/sapphire_left_nav' %>
 
   <div class="col-md-9">

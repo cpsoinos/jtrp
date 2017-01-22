@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170108224758) do
+ActiveRecord::Schema.define(version: 20170122191221) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -165,6 +165,7 @@ ActiveRecord::Schema.define(version: 20170108224758) do
     t.string   "houzz_account"
     t.string   "pinterest_account"
     t.datetime "deleted_at"
+    t.jsonb    "hours_of_operation"
   end
 
   add_index "companies", ["deleted_at"], name: "index_companies_on_deleted_at", using: :btree

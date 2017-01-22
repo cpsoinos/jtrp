@@ -13,6 +13,14 @@ class Company < ActiveRecord::Base
 
   validates :name, presence: true
 
+  def address
+    @address
+  end
+
+  def address_attributes=(attributes)
+    # Process the attributes hash
+  end
+
   def self.jtrp
     Company.find_by(name: "Just the Right Piece")
   end

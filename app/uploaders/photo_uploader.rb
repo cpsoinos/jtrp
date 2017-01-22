@@ -13,6 +13,10 @@ class PhotoUploader < CarrierWave::Uploader::Base
     resize_to_fit(50, 50)
   end
 
+  version :slideshow do
+    cloudinary_transformation width: 1140, height: 367, crop: "fill", gravity: "auto"
+  end
+
   def default_public_id
     ENV['CLOUDINARY_DEFAULT_IMAGE_ID']
   end
