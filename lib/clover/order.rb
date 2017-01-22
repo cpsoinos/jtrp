@@ -5,30 +5,34 @@ module Clover
 
     def self.find(order)
       RestClient.get("#{base_url}/orders/#{order.remote_id}?expand=lineItems,discounts", headers) do |response, request, result|
-        case response.code
-        when 200
-          DeepStruct.wrap(JSON.parse(response))
-        when 404
-          nil
-        else
-          raise CloverError
+        begin
+          case response.code
+          when 200
+            DeepStruct.wrap(JSON.parse(response))
+          when 404
+            nil
+          else
+            raise CloverError
+          end
+        rescue CloverError => e
+          Rollbar.error(e, item_id: item.id)
         end
       end
-    rescue CloverError => e
-      Rollbar.error(e, item_id: item.id)
     end
 
     def self.all
       RestClient.get("#{base_url}/orders?expand=lineItems,discounts", headers) do |response, request, result|
-        case response.code
-        when 200
-          DeepStruct.wrap(JSON.parse(response)["elements"])
-        else
-          raise CloverError
+        begin
+          case response.code
+          when 200
+            DeepStruct.wrap(JSON.parse(response)["elements"])
+          else
+            raise CloverError
+          end
+        rescue CloverError => e
+          Rollbar.error(e)
         end
       end
-    rescue CloverError => e
-      Rollbar.error(e)
     end
 
   end
