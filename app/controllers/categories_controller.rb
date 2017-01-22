@@ -8,6 +8,8 @@ class CategoriesController < ApplicationController
   def show
     @category = Category.includes(:subcategories).find(params[:id])
     @items = find_items
+    find_toggle_selector
+    find_selected_selector
   end
 
   def new
@@ -70,6 +72,20 @@ class CategoriesController < ApplicationController
     else
       Item.active.where(category_id: ([@category.id] | @category.subcategories.pluck(:id))).page(params[:page]).per(12)
     end
+  end
+
+  def find_toggle_selector
+    gon.toggleSelector = begin
+      if @category.subcategory?
+        "#collapse-#{@category.parent.slug}"
+      else
+        "#collapse-#{@category.slug}"
+      end
+    end
+  end
+
+  def find_selected_selector
+    gon.selectedSelector = "#selected-category-#{@category.slug}"
   end
 
 end

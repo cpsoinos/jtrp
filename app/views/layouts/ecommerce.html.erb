@@ -11,6 +11,7 @@
   <%= javascript_include_tag 'ecommerce' %>
   <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAPS_API_KEY'] %>"></script>
   <meta property="fb:app_id" content="<%= ENV['FACEBOOK_APP_ID'] %>">
+  <%= Gon::Base.render_data %>
   <%= csrf_meta_tags %>
   <%= render 'favicon' %>
   <%= metamagic %>

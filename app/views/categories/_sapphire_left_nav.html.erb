@@ -4,14 +4,16 @@
       <% if category.subcategories.present? %>
         <div role="tab" id="headingOne">
           <h3>
-            <%= link_to "#{category.name.titleize} <b class='caret'></b>".html_safe, "#collapse-#{category.name}", role: "button", data: {toggle: "collapse", parent: "#accordion"}, aria: {expanded: true, controls: "collapse-#{category.name}"} %>
+            <%= link_to "#{category.name.titleize} <b class='caret'></b>".html_safe, "#collapse-#{category.slug}", role: "button", data: {toggle: "collapse", parent: "#accordion"}, aria: {expanded: true, controls: "collapse-#{category.slug}"} %>
           </h3>
         </div>
-        <div id="collapse-<%= category.name %>" class="collapse" role="tabpanel" aria-labelledby="headingOne">
+        <div id="collapse-<%= category.slug %>" class="collapse" role="tabpanel" aria-labelledby="headingOne">
           <ul>
-            <li><h5><b><%= link_to "All #{category.name.titleize}", category_path(category) %></b></h5></li>
+            <li id="selected-category-<%= category.slug %>">
+              <h5><b><%= link_to "All #{category.name.titleize}", category_path(category) %></b></h5>
+            </li>
             <% category.subcategories.each do |subcategory| %>
-              <li><%= link_to subcategory.name.titleize, category_path(subcategory) %></li>
+              <li id="selected-category-<%= subcategory.slug %>"><%= link_to subcategory.name.titleize, category_path(subcategory) %></li>
             <% end %>
           </ul>
         </div>
