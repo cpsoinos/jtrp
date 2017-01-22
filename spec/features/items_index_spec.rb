@@ -16,7 +16,7 @@ feature "item index" do
   context "all items" do
 
     scenario "visits item list from home page" do
-      visit root_path
+      visit dashboard_path
       click_link("All Items")
 
       expect(page).to have_content("All Items")
@@ -91,7 +91,7 @@ feature "item index" do
   context "sold items" do
 
     scenario "visits item list from home page" do
-      visit root_path
+      visit dashboard_path
       click_link("Sold")
 
       expect(page).to have_content("Sold items have been sold.")
@@ -114,7 +114,7 @@ feature "item index" do
   context "inactive items" do
 
     scenario "visits item list from home page" do
-      visit root_path
+      visit dashboard_path
       click_link("Inactive")
 
       expect(page).to have_content("Inactive items have been deactivated.")
@@ -138,7 +138,7 @@ feature "item index" do
   context "potential items" do
 
     scenario "visits item list from home page" do
-      visit root_path
+      visit dashboard_path
       within("#items") do
         click_link("Potential")
       end
