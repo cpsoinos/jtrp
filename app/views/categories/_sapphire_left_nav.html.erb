@@ -1,12 +1,23 @@
 <div class="col-md-3 left-menu">
-  <div class="">
+  <div class="list-group" id="accordion" role="tablist" aria-multiselectable="true">
     <% @categories.primary.each do |category| %>
-      <h3><%= link_to category.name.titleize, category_path(category) %></h3>
-      <ul>
-        <% category.subcategories.each do |subcategory| %>
-          <li><%= link_to subcategory.name, category_path(subcategory) %></li>
-        <% end %>
-      </ul>
+      <% if category.subcategories.present? %>
+        <div role="tab" id="headingOne">
+          <h3>
+            <%= link_to "#{category.name.titleize} <b class='caret'></b>".html_safe, "#collapse-#{category.name}", role: "button", data: {toggle: "collapse", parent: "#accordion"}, aria: {expanded: true, controls: "collapse-#{category.name}"} %>
+          </h3>
+        </div>
+        <div id="collapse-<%= category.name %>" class="collapse" role="tabpanel" aria-labelledby="headingOne">
+          <ul>
+            <li><h5><b><%= link_to "All #{category.name.titleize}", category_path(category) %></b></h5></li>
+            <% category.subcategories.each do |subcategory| %>
+              <li><%= link_to subcategory.name.titleize, category_path(subcategory) %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% else %>
+        <h3><%= link_to category.name.titleize, category_path(category) %></h3>
+      <% end %>
     <% end %>
   </div>
 </div>
