@@ -44,7 +44,7 @@ feature "home page" do
     end
 
     it "has navigation links" do
-      visit root_path
+      visit dashboard_path
 
       expect(page).to have_content(company.name)
       expect(page).not_to have_content(company.slogan)
@@ -63,7 +63,7 @@ feature "home page" do
     end
 
     it "has information panels" do
-      visit root_path
+      visit dashboard_path
 
       expect(page).to have_content("Owned Items For Sale")
       expect(page).to have_content("Consigned Items For Sale")
@@ -73,14 +73,14 @@ feature "home page" do
     context "to do list" do
 
       it "has a to do list" do
-        visit root_path
+        visit dashboard_path
         expect(page).to have_content("To Do")
         expect(page).to have_content(item.description)
         expect(page).to have_content("needs a price added")
       end
 
       scenario "completes a to do list item", js: true do
-        visit root_path
+        visit dashboard_path
         expect(page).to have_content("needs a price added")
         first(:button, "done").click
         expect(page).to have_content("SKU: #{item.id}")
@@ -97,7 +97,7 @@ feature "home page" do
       end
 
       scenario "closes a to do list modal without completing", js: true do
-        visit root_path
+        visit dashboard_path
         first(:button, "done").click
         click_button("×")
 
@@ -117,12 +117,12 @@ feature "home page" do
         end
 
         scenario "consignment period coming to an end" do
-          visit root_path
+          visit dashboard_path
           expect(page).to have_content("#{agreement.account.full_name} needs to be notified that their consignment period is ending soon")
         end
 
         scenario "notifies client of pending expiration", js: true do
-          visit root_path
+          visit dashboard_path
           first(:button, "done").click
 
           expect(page).to have_content("has items that have been active for #{(DateTime.now.to_date - (agreement.items.where.not(listed_at: nil).order(:listed_at).first.listed_at.to_date)).to_i} days")
@@ -144,7 +144,7 @@ feature "home page" do
         scenario "notifies client of expired agreement", js: true do
           item.update_attribute("listed_at", 91.days.ago)
 
-          visit root_path
+          visit dashboard_path
           first(:button, "done").click
 
           expect(page).to have_content("has items that have been active for #{(DateTime.now.to_date - (agreement.items.where.not(listed_at: nil).order(:listed_at).first.listed_at.to_date)).to_i} days")
@@ -170,7 +170,7 @@ feature "home page" do
     context "clicks items links" do
 
       scenario "potential" do
-        visit root_path
+        visit dashboard_path
         within('#items') do
           click_link("Potential")
         end
@@ -179,7 +179,7 @@ feature "home page" do
       end
 
       scenario "active" do
-        visit root_path
+        visit dashboard_path
         within('#items') do
           click_link("Active")
         end
@@ -188,7 +188,7 @@ feature "home page" do
       end
 
       scenario "sold" do
-        visit root_path
+        visit dashboard_path
         within('#items') do
           click_link("Sold")
         end

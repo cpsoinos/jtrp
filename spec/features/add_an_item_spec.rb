@@ -24,7 +24,7 @@ feature "add an item" do
     end
 
     scenario "visits home page" do
-      visit root_path
+      visit dashboard_path
 
       expect(page).to have_link("Item")
     end

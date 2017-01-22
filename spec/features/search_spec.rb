@@ -107,7 +107,7 @@ feature "search" do
     end
 
     scenario "searches for an existing item", js: true do
-      visit root_path
+      visit dashboard_path
       click_link("search")
       fill_in("query", with: item.description).native.send_keys(:return)
 
@@ -116,7 +116,7 @@ feature "search" do
     end
 
     scenario "searches for a non-existing item", js: true do
-      visit root_path
+      visit dashboard_path
       click_link("search")
       fill_in("query", with: "The Jungle Book").native.send_keys(:return)
 
@@ -125,7 +125,7 @@ feature "search" do
 
     scenario "initiates a second search from results page", js: true do
       second_item = create(:item, :active)
-      visit root_path
+      visit dashboard_path
       click_link("search")
       fill_in("query", with: item.description).native.send_keys(:return)
 
