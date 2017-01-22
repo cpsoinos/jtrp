@@ -6,8 +6,8 @@ class CategoriesController < ApplicationController
   end
 
   def show
-    @category = Category.includes(:subcategories).find(params[:id])
-    @items = find_items
+    find_category
+    find_items
     find_toggle_selector
     find_selected_selector
   end
@@ -66,11 +66,17 @@ class CategoriesController < ApplicationController
     end
   end
 
+  def find_category
+    @category = Category.includes(:subcategories).find(params[:id])
+  end
+
   def find_items
-    if @category.subcategory?
-      @category.items.active.page(params[:page]).per(12)
-    else
-      Item.active.where(category_id: ([@category.id] | @category.subcategories.pluck(:id))).page(params[:page]).per(12)
+    @items = begin
+      if @category.subcategory?
+        @category.items.active.page(params[:page]).per(12)
+      else
+        Item.active.where(category_id: ([@category.id] | @category.subcategories.pluck(:id))).page(params[:page]).per(12)
+      end
     end
   end
 

@@ -4,8 +4,6 @@ $(document).on('turbolinks:load', function() {
     initMap();
   };
 
-  // debugger
-
   if ($(".camera_wrap").length > 0) {
     $('#slideshow0 > div').camera({
       alignment: "center",
@@ -63,7 +61,6 @@ $(document).on('turbolinks:load', function() {
       showTitle:false
     };
   }
-
 
   setTimeout(function() {
     $('.alert').slideUp();
