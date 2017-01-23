@@ -1,23 +1,37 @@
 <% meta @meta_tags %>
 
 <div class="row">
-  <div class="col-md-12 slideshow">
+  <div class="col-md-6 slideshow">
     <div id="slideshow0">
       <div class="camera_wrap camera_emboss camera_white_skin">
-        <% @featured_photos.each do |photo| %>
-          <div data-thumb="<%= photo.photo_url(:thumb) %>" data-src="<%= photo.photo_url(:slideshow) %>"></div>
+        <% @featured_items[0..4].each do |item| %>
+          <div data-thumb="<%= item.featured_photo.photo_url(:thumb) %>" data-src="<%= item.featured_photo.photo_url(:slideshow) %>"></div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 slideshow">
+    <div id="slideshow1">
+      <div class="camera_wrap camera_emboss camera_white_skin">
+        <% @featured_items[5..9].each do |item| %>
+          <div data-thumb="<%= item.featured_photo.photo_url(:thumb) %>" data-src="<%= item.featured_photo.photo_url(:slideshow) %>"></div>
         <% end %>
       </div>
     </div>
   </div>
 </div>
 
-<div class="row">
-  <div class="col-md-6">
-    <%= render 'hours_block' %>
-  </div>
-  <div class="col-md-6">
-    <%= render 'address_block' %>
+<div class="location">
+  <div class="row">
+    <div class="col-md-6">
+      <%= render 'hours_block' %>
+    </div>
+    <div class="col-md-3">
+      <%= render 'address_block' %>
+    </div>
+    <div class="col-md-3 text-center">
+      <%= link_to image_tag(@company.maps_url, class: "img"), contact_path %>
+    </div>
   </div>
 </div>
 
@@ -30,7 +44,11 @@
       <% @categories.primary.each do |category| %>
         <div class="col-md-4">
           <div class="product">
-            <%= link_to image_tag(category.photo_url(width: 200, height: 150, crop: "fill")), category_path(category) %>
+            <% if category.items.active.present? %>
+              <%= link_to image_tag(category.items.active.sample.featured_photo.photo_url(width: 200, height: 150, crop: "fill", fetch_format: "auto", gravity: "auto")), category_path(category) %>
+            <% else %>
+              <%= link_to image_tag(category.photo_url(width: 200, height: 150, crop: "fill")), category_path(category) %>
+            <% end %>
             <div class="name">
               <%= link_to category.name, category_path(category) %>
             </div>

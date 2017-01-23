@@ -20,7 +20,8 @@ class CompaniesController < ApplicationController
   end
 
   def home
-    @featured_photos = Photo.featured
+    # @featured_photos = Photo.featured
+    @featured_items = Item.active.limit(10).order("RANDOM()")
   end
 
   def about
@@ -80,6 +81,16 @@ class CompaniesController < ApplicationController
       "ecommerce"
     else
       "application"
+    end
+  end
+
+  def find_categories
+    @categories ||= begin
+      if current_user.try(:internal?)
+        Category.includes(:subcategories).all.order(:name)
+      else
+        Category.includes(:subcategories).categorized.order(:name)
+      end
     end
   end
 

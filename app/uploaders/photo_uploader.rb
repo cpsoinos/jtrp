@@ -14,7 +14,7 @@ class PhotoUploader < CarrierWave::Uploader::Base
   end
 
   version :slideshow do
-    cloudinary_transformation width: 1140, height: 367, crop: "fill", gravity: "auto"
+    cloudinary_transformation width: 555, height: 367, crop: "fill", gravity: "auto"
   end
 
   def default_public_id

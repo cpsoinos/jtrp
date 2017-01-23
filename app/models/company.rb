@@ -29,4 +29,8 @@ class Company < ActiveRecord::Base
     "#{address_1}#{address_2.present? ? (', ' + address_2) : ''}, #{city}, #{state} #{zip}"
   end
 
+  def maps_url(size="200x200")
+    GeolocationService.new(self).static_map_url(size)
+  end
+
 end

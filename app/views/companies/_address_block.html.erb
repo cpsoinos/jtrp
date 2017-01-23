@@ -1,6 +1,6 @@
-<div class="location">
+<!-- <div class="location"> -->
   <address>
-    <strong><%= @company.name %>, LLC</strong><br>
+    <h4><span class="company-title"><%= @company.name %></span></h4>
     <%= @company.address_1 %><br>
     <%= @company.city %>, <%= @company.state %> <%= @company.zip %><br>
     <%= @company.phone %><br>
@@ -9,4 +9,4 @@
 
   <strong><%= @company.primary_contact.full_name %></strong>, Owner<br>
   <a href="mailto:<%= @company.primary_contact.email %>"><%= @company.primary_contact.email %></a>
-</div>
+<!-- </div> -->
