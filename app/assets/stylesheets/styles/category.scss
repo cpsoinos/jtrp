@@ -1,15 +1,6 @@
 .background-image {
-  transform: translate3d(0px, 0px, 0px);
-  background: cloudinary-url('facebook_banner.jpg', $fetch_format: 'auto', $quality: 'auto');
-  margin-top: -8em;
+  background: cloudinary-url('facebook_banner.jpg', $opacity: '30', $quality: 'auto', $fetch_format: 'auto');
   background-size: cover;
-
- -khtml-opacity:.33;
- -moz-opacity:.33;
- -ms-filter:"alpha(opacity=33)";
-  filter:alpha(opacity=33);
-  filter: progid:DXImageTransform.Microsoft.Alpha(opacity=0.33);
-  opacity:.33;
 }
 
 .over-background {

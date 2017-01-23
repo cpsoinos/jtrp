@@ -20,7 +20,7 @@ class CompaniesController < ApplicationController
   end
 
   def home
-    @featured_photos = Photo.featured
+    @featured_items = Item.active.limit(10).order("RANDOM()")
   end
 
   def about
@@ -62,7 +62,10 @@ class CompaniesController < ApplicationController
   protected
 
   def company_params
-    params.require(:company).permit([:slogan, :address_1, :address_2, :city, :state, :zip, :phone, :phone_ext, :website, :logo, :description, :consignment_policies, :service_rate_schedule, :agent_service_rate_schedule, :bootsy_image_gallery_id])
+    params.require(:company).permit([
+      :slogan, :address_1, :address_2, :city, :state, :zip, :phone, :phone_ext, :website, :logo, :description, :consignment_policies, :service_rate_schedule, :agent_service_rate_schedule, :bootsy_image_gallery_id, :name]).tap do |whitelisted|
+      whitelisted[:hours_of_operation] = params[:company][:hours_of_operation]
+    end
   end
 
   def build_todos
@@ -73,10 +76,20 @@ class CompaniesController < ApplicationController
   end
 
   def resolve_layout
-    if action_name.in?(%w(home about contact client_services consignment_policies service_rate_schedule agent_service_rate_schedule))
+    if action_name.in?(%w(home about contact client_services consignment_policies service_rate_schedule agent_service_rate_schedule edit))
       "ecommerce"
     else
       "application"
+    end
+  end
+
+  def find_categories
+    @categories ||= begin
+      if current_user.try(:internal?)
+        Category.includes(:subcategories).all.order(:name)
+      else
+        Category.includes(:subcategories).categorized.order(:name)
+      end
     end
   end
 

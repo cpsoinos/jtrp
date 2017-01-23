@@ -3,7 +3,7 @@ Cloudinary.config do |config|
   config.api_key = ENV['CLOUDINARY_API_KEY']
   config.api_secret = ENV['CLOUDINARY_API_SECRET']
 
-  if Rails.env.in? %w(staging production)
+  unless Rails.env.test?
     config.enhance_image_tag = true
     config.static_image_support = true
     config.secure = true

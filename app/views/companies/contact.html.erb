@@ -51,19 +51,9 @@
   	</div>
 
   	<div class="col-md-6">
-  		<div class="location">
-  			<address>
-  			  <strong><%= @company.name %>, LLC</strong><br>
-  			  <%= @company.address_1 %><br>
-  			  <%= @company.city %>, <%= @company.state %> <%= @company.zip %><br>
-  			  <%= @company.phone %>
-  			</address>
-
-  			<address>
-  			  <strong><%= @company.primary_contact.full_name %></strong><br>
-  			  <a href="mailto:<%= @company.primary_contact.email %>"><%= @company.primary_contact.email %></a>
-  			</address>
-  		</div>
+      <div class="location">
+        <%= render 'address_block' %>
+      </div>
   	</div>
 
   </div>

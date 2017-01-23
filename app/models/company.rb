@@ -13,12 +13,24 @@ class Company < ActiveRecord::Base
 
   validates :name, presence: true
 
+  def address
+    @address
+  end
+
+  def address_attributes=(attributes)
+    # Process the attributes hash
+  end
+
   def self.jtrp
     Company.find_by(name: "Just the Right Piece")
   end
 
   def full_address
     "#{address_1}#{address_2.present? ? (', ' + address_2) : ''}, #{city}, #{state} #{zip}"
+  end
+
+  def maps_url(size="200x200")
+    GeolocationService.new(self).static_map_url(size)
   end
 
 end
