@@ -17,6 +17,34 @@ feature "home page" do
       expect(page).to have_content("Follow Us")
     end
 
+    scenario "hours of operation" do
+      visit root_path
+
+      expect(page).to have_content("Hours of Operation")
+      %w(Monday Tuesday Wednesday Thursday Friday Saturday Sunday).each do |day|
+        expect(page).to have_content("#{day}")
+      end
+    end
+
+    scenario "address" do
+      visit root_path
+
+      expect(page).to have_content(company.address_1)
+      expect(page).to have_content(company.city)
+      expect(page).to have_content(company.state)
+      expect(page).to have_content(company.zip)
+      expect(page).to have_content(company.phone)
+      expect(page).to have_content(company.website)
+    end
+
+    scenario "categories" do
+      visit root_path
+
+      Category.primary.categorized.each do |category|
+        expect(page).to have_link(category.name)
+      end
+    end
+
     scenario "clicks through to a category" do
       visit root_path
       within(".col-md-9") do

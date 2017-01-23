@@ -20,7 +20,6 @@ class CompaniesController < ApplicationController
   end
 
   def home
-    # @featured_photos = Photo.featured
     @featured_items = Item.active.limit(10).order("RANDOM()")
   end
 
