@@ -6,10 +6,12 @@
       <tr>
         <td style="padding-left: 20px;"><%= day.titleize %></td>
         <td style="padding-left: 10px;">
-          <% if @company.hours_of_operation[day]["open"].present? && @company.hours_of_operation[day]["close"].present? %>
-            <%= @company.hours_of_operation[day]["open"] %> to <%= @company.hours_of_operation[day]["close"] %>
-          <% else %>
-            <em>closed</em>
+          <% if @company.hours_of_operation.present? && @company.hours_of_operation[day].present? %>
+            <% if @company.hours_of_operation[day]["open"].present? && @company.hours_of_operation[day]["close"].present? %>
+              <%= @company.hours_of_operation[day]["open"] %> to <%= @company.hours_of_operation[day]["close"] %>
+            <% else %>
+              <em>closed</em>
+            <% end %>
           <% end %>
         </td>
       </tr>

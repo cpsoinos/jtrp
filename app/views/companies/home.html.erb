@@ -4,8 +4,10 @@
   <div class="col-md-6 slideshow">
     <div id="slideshow0">
       <div class="camera_wrap camera_emboss camera_white_skin">
-        <% @featured_items[0..4].each do |item| %>
-          <div data-thumb="<%= item.featured_photo.photo_url(:thumb) %>" data-src="<%= item.featured_photo.photo_url(:slideshow) %>"></div>
+        <% if @featured_items.present? %>
+          <% @featured_items[0..4].each do |item| %>
+            <div data-thumb="<%= item.featured_photo.photo_url(:thumb) %>" data-src="<%= item.featured_photo.photo_url(:slideshow) %>"></div>
+          <% end %>
         <% end %>
       </div>
     </div>
@@ -13,8 +15,10 @@
   <div class="col-md-6 slideshow">
     <div id="slideshow1">
       <div class="camera_wrap camera_emboss camera_white_skin">
-        <% @featured_items[5..9].each do |item| %>
-          <div data-thumb="<%= item.featured_photo.photo_url(:thumb) %>" data-src="<%= item.featured_photo.photo_url(:slideshow) %>"></div>
+        <% if @featured_items.length >= 5 %>
+          <% @featured_items[5..9].each do |item| %>
+            <div data-thumb="<%= item.featured_photo.photo_url(:thumb) %>" data-src="<%= item.featured_photo.photo_url(:slideshow) %>"></div>
+          <% end %>
         <% end %>
       </div>
     </div>

@@ -14,7 +14,7 @@ feature "home page" do
       expect(page).to have_content(company.name)
       expect(page).to have_content("Information")
       expect(page).to have_content("Customer Service")
-      expect(page).to have_content("Follow us")
+      expect(page).to have_content("Follow Us")
     end
 
     scenario "clicks through to a category" do
