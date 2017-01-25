@@ -14,6 +14,8 @@ Rails.application.routes.draw do
     mount LetterOpenerWeb::Engine, at: "/devel/emails"
   end
 
+  get '/sitemap', to: 'passthrough#sitemap'
+
   mount Bootsy::Engine => '/bootsy', as: 'bootsy'
   devise_for :users, controllers: { registrations: 'registrations', omniauth_callbacks: 'users/omniauth_callbacks' }
   root 'companies#home'

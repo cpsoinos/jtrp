@@ -8,4 +8,8 @@ class PassthroughController < ApplicationController
     end
   end
 
+  def sitemap
+    redirect_to "https://#{ENV['FOG_DIRECTORY']}.s3.amazonaws.com/sitemaps/sitemap.xml.gz"
+  end
+
 end
