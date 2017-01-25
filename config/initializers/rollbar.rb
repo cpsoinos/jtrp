@@ -9,7 +9,7 @@ Rollbar.configure do |config|
     config.enabled = false
   end
 
-  config.js_enabled = false
+  config.js_enabled = true
   config.js_options = {
     accessToken: ENV['ROLLBAR_CLIENT_ACCESS_TOKEN'],
     captureUncaught: true,
