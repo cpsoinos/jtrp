@@ -51,6 +51,8 @@ CarrierWave.configure do |config|
       # endpoint:              'https://s3.example.com:8080' # optional, defaults to nil
     }
     config.fog_directory  = ENV['FOG_DIRECTORY']           # required
+    config.cache_dir = "#{Rails.root}/tmp/"
+    config.permissions = 0666
     config.storage = :fog
     # config.fog_public     = false                                        # optional, defaults to true
     # config.fog_attributes = { 'Cache-Control' => "max-age=#{365.day.to_i}" } # optional, defaults to {}

@@ -4,4 +4,4 @@
 # User-agent: *
 # Disallow: /
 
-Sitemap: https://www.jtrpfurniture.com/sitemap.xml.gz
+Sitemap: http://s3.amazonaws.com/jtrp/sitemaps/sitemap_index.xml.gz
