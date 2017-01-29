@@ -84,7 +84,7 @@ Rails.application.routes.draw do
   resources :archives
 
   resources :users_admin, controller: "users"
-  resources :users, only: [:show, :edit]
+  resources :users, only: [:show, :edit, :update]
 
   resources :proposals do
     resources :items
