@@ -108,6 +108,10 @@ feature "item show" do
           expect(item.sold_at).to eq("04/07/2016".to_datetime)
         end
 
+        scenario "no 'expire' option" do
+          expect(page).not_to have_link("Mark Expired")
+        end
+
       end
 
       context "consigned" do
@@ -184,6 +188,7 @@ feature "item show" do
           item.reload
           expect(page).to have_content("Item was successfully updated.")
           expect(item.expired?).to be_truthy
+          expect(item.tag_list).to include("expired")
           expect(page).to have_link("Unmark Expired")
         end
 
@@ -196,10 +201,9 @@ feature "item show" do
           item.reload
           expect(page).to have_content("Item was successfully updated.")
           expect(item.expired?).to be_falsey
+          expect(item.tag_list).not_to include("expired")
           expect(page).to have_link("Mark Expired")
         end
-
-      end
 
       end
 

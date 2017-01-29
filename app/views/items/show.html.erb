@@ -162,7 +162,7 @@
 
     <% if @item.potential? || @item.inactive? %>
       <li><%= link_to "<i class='material-icons'>store</i> Activate".html_safe, item_activate_path(@item), method: :post %></li>
-    <% elsif @item.active? %>
+    <% elsif @item.active? && @item.client_intention == 'consign' %>
       <% if @item.expired? %>
         <li><%= link_to "<i class='material-icons'>access_time</i> Unmark Expired".html_safe, item_path(@item, item: {expired: false, tag_list: @item.tag_list.delete("expired")}), method: :patch %></li>
       <% else %>
