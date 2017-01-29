@@ -15,7 +15,7 @@ module Clover
             raise CloverError
           end
         rescue CloverError => e
-          Rollbar.error(e, item_id: item.id)
+          Rollbar.error(e, item_id: item.id, response: response, result: result)
         end
       end
     end
@@ -30,7 +30,7 @@ module Clover
             raise CloverError
           end
         rescue CloverError => e
-          Rollbar.error(e)
+          Rollbar.error(e, response: response, result: result)
         end
       end
     end
