@@ -24,20 +24,11 @@ describe LetterSender do
         address_line1: account.address_1,
         address_line2: account.address_2,
         address_city: account.city,
-        address_state: account.state,
+        address_state: Madison.get_abbrev(account.state),
         address_country: "US",
         address_zip: account.zip
       },
-      from: {
-        name: company.primary_contact.full_name,
-        company: company.name,
-        address_line1: company.address_1,
-        address_line2: company.address_2,
-        address_city: company.city,
-        address_state: company.state,
-        address_country: "US",
-        address_zip: company.zip
-      },
+      from: ENV['LOB_COMPANY_ADDRESS_KEY'],
       file: letter.pdf_url,
       data: {
         name: account.primary_contact.first_name
