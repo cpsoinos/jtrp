@@ -108,28 +108,6 @@ feature "item show" do
           expect(item.sold_at).to eq("04/07/2016".to_datetime)
         end
 
-        scenario "marks expired" do
-          allow(Clover::Inventory).to receive(:update)
-          click_link("Mark Expired")
-
-          item.reload
-          expect(page).to have_content("Item was successfully updated.")
-          expect(item.expired?).to be_truthy
-          expect(page).to have_link("Unmark Expired")
-        end
-
-        scenario "unmarks expired" do
-          allow(Clover::Inventory).to receive(:update)
-          item.update_attribute("expired", true)
-          visit item_path(item)
-          click_link("Unmark Expired")
-
-          item.reload
-          expect(page).to have_content("Item was successfully updated.")
-          expect(item.expired?).to be_falsey
-          expect(page).to have_link("Mark Expired")
-        end
-
       end
 
       context "consigned" do
@@ -165,6 +143,63 @@ feature "item show" do
           expect(page).to have_content("Item deactivated")
           expect(item.reload).to be_inactive
         end
+
+        scenario "marks inactive - damaged" do
+          allow(Clover::Inventory).to receive(:delete)
+          click_link("Damaged")
+
+          item.reload
+          expect(page).to have_content("Item deactivated")
+          expect(item.inactive?).to be_truthy
+          expect(item.tag_list).to include("damaged")
+          expect(page).to have_link("Activate")
+        end
+
+        scenario "marks inactive - 'Retrieved by Client'" do
+          allow(Clover::Inventory).to receive(:delete)
+          click_link("Retrieved by Client")
+
+          item.reload
+          expect(page).to have_content("Item deactivated")
+          expect(item.inactive?).to be_truthy
+          expect(item.tag_list).to include("client_retrieved")
+          expect(page).to have_link("Activate")
+        end
+
+        scenario "marks inactive - 'other'" do
+          allow(Clover::Inventory).to receive(:delete)
+          click_link("Other")
+
+          item.reload
+          expect(page).to have_content("Item deactivated")
+          expect(item.inactive?).to be_truthy
+          expect(item.tag_list).to include("other")
+          expect(page).to have_link("Activate")
+        end
+
+        scenario "marks expired" do
+          allow(Clover::Inventory).to receive(:update)
+          click_link("Mark Expired")
+
+          item.reload
+          expect(page).to have_content("Item was successfully updated.")
+          expect(item.expired?).to be_truthy
+          expect(page).to have_link("Unmark Expired")
+        end
+
+        scenario "unmarks expired" do
+          allow(Clover::Inventory).to receive(:update)
+          item.update_attribute("expired", true)
+          visit item_path(item)
+          click_link("Unmark Expired")
+
+          item.reload
+          expect(page).to have_content("Item was successfully updated.")
+          expect(item.expired?).to be_falsey
+          expect(page).to have_link("Mark Expired")
+        end
+
+      end
 
       end
 

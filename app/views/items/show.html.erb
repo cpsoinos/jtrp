@@ -146,9 +146,9 @@
 
     <% unless @item.inactive? %>
       <li class="dropdown-header">Deactivate</li>
-      <li><%= link_to "<i class='fa fa-chain-broken' aria-hidden='true'></i> Damaged".html_safe, item_deactivate_path(@item, item: {tag_list: @item.tag_list.push("damaged")}), method: :patch %></li>
-      <li><%= link_to "<i class='fa fa-user' aria-hidden='true'></i> Retrieved by Client".html_safe, item_deactivate_path(@item, item: {tag_list: @item.tag_list.push("client_retrieved")}), method: :patch %></li>
-      <li><%= link_to "<i class='fa fa-question-circle' aria-hidden='true'></i> Other".html_safe, item_deactivate_path(@item, item: {tag_list: @item.tag_list.push("other")}), method: :patch %></li>
+      <li><%= link_to "<i class='fa fa-chain-broken' aria-hidden='true'></i> Damaged".html_safe, item_deactivate_path(@item, item: {tag_list: @item.tag_list.push("damaged")}), method: :put %></li>
+      <li><%= link_to "<i class='fa fa-user' aria-hidden='true'></i> Retrieved by Client".html_safe, item_deactivate_path(@item, item: {tag_list: @item.tag_list.push("client_retrieved")}), method: :put %></li>
+      <li><%= link_to "<i class='fa fa-question-circle' aria-hidden='true'></i> Other".html_safe, item_deactivate_path(@item, item: {tag_list: @item.tag_list.push("other")}), method: :put %></li>
       <li role="separator" class="divider"></li>
     <% end %>
 
