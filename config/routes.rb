@@ -17,7 +17,7 @@ Rails.application.routes.draw do
   get '/sitemap', to: 'passthrough#sitemap'
 
   mount Bootsy::Engine => '/bootsy', as: 'bootsy'
-  devise_for :users, controllers: { registrations: 'registrations', omniauth_callbacks: 'users/omniauth_callbacks' }
+  devise_for :users, controllers: { registrations: 'users/registrations', omniauth_callbacks: 'users/omniauth_callbacks', sessions: 'users/sessions' }
   root 'companies#home'
 
   get '/home', to: 'companies#home', as: 'landing_page'
