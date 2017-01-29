@@ -1,5 +1,7 @@
 $(document).on('turbolinks:load', function() {
 
+  snapFooter();
+
   if (document.getElementById('map') != null) {
     initMap();
   };
@@ -14,6 +16,16 @@ $(document).on('turbolinks:load', function() {
   }, 5000);
 
 });
+
+var snapFooter = function() {
+  var docHeight = $(window).height();
+  var footerHeight = $('#footer').height();
+  var footerTop = $('#footer').position().top + footerHeight;
+
+  if (footerTop < docHeight) {
+    $('#footer').css('margin-top', 10+ (docHeight - footerTop) + 'px');
+  };
+}
 
 var initSlideshow = function(selector) {
   $(selector + ' > div').camera({

@@ -1,0 +1,61 @@
+<div class="container">
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="breadcrumbs">
+  	    <ul class="breadcrumb">
+          <li><%= link_to "Home", landing_page_path %> <span class="divider"></span></li>
+          <li class="active">My Account</li>
+        </ul>
+    	</div>
+  	</div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="well bs-component">
+        <div class="row">
+          <div class="col-md-4">
+            <%= image_tag(@user.avatar_url) %>
+          </div>
+          <div class="col-md-6 col-md-offset-1">
+            <h2><%= current_user == @user ? "My Account" : "#{@user.full_name}'s Account" %></h2>
+            <table>
+              <tr>
+                <th>First Name</th>
+                <td class="td-left-padding"><%= @user.first_name %></td>
+              </tr>
+              <tr>
+                <th>Last Name</th>
+                <td class="td-left-padding"><%= @user.last_name %></td>
+              </tr>
+              <tr>
+                <th>Email</th>
+                <td class="td-left-padding"><%= @user.email %></td>
+              </tr>
+              <tr>
+                <th>Phone</th>
+                <td class="td-left-padding"><%= number_to_phone(@user.phone) %></td>
+              </tr>
+              <tr>
+                <th>Address</th>
+                <td class="td-left-padding">
+                  <%= @user.address_1 %><br />
+                  <% if @user.address_2.present? %>
+                    <%= @user.address_2 %><br />
+                  <% end %>
+                  <%= @user.city %>, <%= @user.state %> <%= @user.zip %>
+                </td>
+              </tr>
+            </table>
+
+            <div class="text-center" style="margin-top: 8em;">
+              <%= link_to "Edit", edit_user_path(@user), class: "btn btn-primary" %>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

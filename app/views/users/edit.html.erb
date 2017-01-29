@@ -1,0 +1,41 @@
+<div class="container">
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="breadcrumbs">
+  	    <ul class="breadcrumb">
+          <li><%= link_to "Home", landing_page_path %> <span class="divider"></span></li>
+          <li class="active">My Account</li>
+        </ul>
+    	</div>
+  	</div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="well bs-component">
+        <div class="row">
+          <%= form_for @user, as: :user, url: user_path(@user) do |f| %>
+            <div class="col-md-4 text-center">
+              <%= image_tag(@user.avatar_url) %>
+              <div class="form-group">
+                <%= f.label :avatar, class: "control-label" %>
+                <label class="btn btn-default btn-raised btn-file">
+                  Browse <%= f.file_field :avatar, class: "hidden" %>
+                </label>
+              </div>
+            </div>
+
+            <div class="col-md-8">
+              <h2><%= current_user == @user ? "My Account" : "#{@user.full_name}'s Account" %></h2>
+              <%= render 'form_fields', resource: @user, f: f %>
+              <div class="text-center">
+                <%= f.submit "Save", class: "btn btn-primary btn-raised" %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
