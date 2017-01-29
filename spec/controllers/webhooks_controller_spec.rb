@@ -1,4 +1,4 @@
-describe WebhooksController do
+describe WebhooksController, :skip do
 
   let(:processor) { double('processor') }
 
