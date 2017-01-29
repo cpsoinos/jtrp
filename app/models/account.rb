@@ -151,7 +151,7 @@ class Account < ActiveRecord::Base
 
   def last_item_number
     if items.present?
-      items.pluck(:account_item_number).sort.last
+      items.pluck(:account_item_number).compact.sort.last || 0
     else
       0
     end

@@ -112,4 +112,27 @@ describe Account do
     expect(account.model_name).to eq("Account")
   end
 
+  context "last_item_number" do
+    it "returns 0 when no items present" do
+      expect(account.last_item_number).to eq(0)
+    end
+
+    it "returns the largest account_item_number from its items" do
+      proposal = create(:proposal, job: create(:job, account: account))
+      item_a = create(:item, proposal: proposal, account_item_number: 1)
+      item_b = create(:item, proposal: proposal, account_item_number: 2)
+      item_c = create(:item, proposal: proposal, account_item_number: 3)
+
+      expect(account.last_item_number).to eq(item_c.account_item_number)
+    end
+
+    it "returns 0 when items have no account item number" do
+      proposal = create(:proposal, job: create(:job, account: account))
+      create_list(:item, 3, proposal: proposal)
+
+      expect(account.last_item_number).to eq(0)
+    end
+
+  end
+
 end
