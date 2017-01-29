@@ -8,7 +8,7 @@ feature "agreement" do
   let(:syncer) { double("syncer") }
 
   before do
-    allow(TransactionalEmailJob).to receive(:perform_later)
+    allow(TransactionalEmailJob).to receive(:perform_async)
     allow(InventorySync).to receive(:new).and_return(syncer)
     allow(syncer).to receive(:remote_create).and_return(true)
     allow(syncer).to receive(:remote_update).and_return(true)
@@ -71,8 +71,8 @@ feature "agreement" do
       end
 
       scenario "activates items from index", js: true do
-        allow(PdfGeneratorJob).to receive(:perform_later)
-        allow(InventorySyncJob).to receive(:perform_later)
+        allow(PdfGeneratorJob).to receive(:perform_async)
+        allow(InventorySyncJob).to receive(:perform_async)
         agreement.update_attributes(client_agreed: true, client_agreed_at: 3.minutes.ago, date: 3.minutes.ago)
         agreement.mark_active
 
@@ -85,8 +85,8 @@ feature "agreement" do
       end
 
       scenario "activates items from show" do
-        allow(PdfGeneratorJob).to receive(:perform_later)
-        allow(InventorySyncJob).to receive(:perform_later)
+        allow(PdfGeneratorJob).to receive(:perform_async)
+        allow(InventorySyncJob).to receive(:perform_async)
         agreement.update_attributes(client_agreed: true, client_agreed_at: 3.minutes.ago, date: 3.minutes.ago)
         agreement.mark_active
 
@@ -98,8 +98,8 @@ feature "agreement" do
       end
 
       scenario "can't try to activate items from index when items already active", js: true do
-        allow(PdfGeneratorJob).to receive(:perform_later)
-        allow(InventorySyncJob).to receive(:perform_later)
+        allow(PdfGeneratorJob).to receive(:perform_async)
+        allow(InventorySyncJob).to receive(:perform_async)
         agreement.update_attributes(client_agreed: true, client_agreed_at: 3.minutes.ago, date: 3.minutes.ago)
         agreement.mark_active
         item.mark_active
@@ -111,8 +111,8 @@ feature "agreement" do
       end
 
       scenario "can't try to activate items from show when items already active" do
-        allow(PdfGeneratorJob).to receive(:perform_later)
-        allow(InventorySyncJob).to receive(:perform_later)
+        allow(PdfGeneratorJob).to receive(:perform_async)
+        allow(InventorySyncJob).to receive(:perform_async)
         agreement.update_attributes(client_agreed: true, client_agreed_at: 3.minutes.ago, date: 3.minutes.ago)
         agreement.mark_active
         item.mark_active
@@ -147,8 +147,8 @@ feature "agreement" do
       end
 
       scenario "activates items from index", js: true do
-        allow(PdfGeneratorJob).to receive(:perform_later)
-        allow(InventorySyncJob).to receive(:perform_later)
+        allow(PdfGeneratorJob).to receive(:perform_async)
+        allow(InventorySyncJob).to receive(:perform_async)
         agreement.update_attributes(client_agreed: true, client_agreed_at: 3.minutes.ago, date: 3.minutes.ago)
         agreement.mark_active
 
@@ -161,8 +161,8 @@ feature "agreement" do
       end
 
       scenario "can't try to activate items when items already active", js: true do
-        allow(PdfGeneratorJob).to receive(:perform_later)
-        allow(InventorySyncJob).to receive(:perform_later)
+        allow(PdfGeneratorJob).to receive(:perform_async)
+        allow(InventorySyncJob).to receive(:perform_async)
         agreement.update_attributes(client_agreed: true, client_agreed_at: 3.minutes.ago, date: 3.minutes.ago)
         agreement.mark_active
         item.mark_active
@@ -174,10 +174,10 @@ feature "agreement" do
       end
 
       scenario "expires items from index", js: true do
-        allow(PdfGeneratorJob).to receive(:perform_later)
-        allow(TransactionalEmailJob).to receive(:perform_later).and_return(true)
-        allow(LetterSenderJob).to receive(:perform_later).and_return(true)
-        allow(ItemExpirerJob).to receive(:perform_later).and_return(true)
+        allow(PdfGeneratorJob).to receive(:perform_async)
+        allow(TransactionalEmailJob).to receive(:perform_async).and_return(true)
+        allow(LetterSenderJob).to receive(:perform_async).and_return(true)
+        allow(ItemExpirerJob).to receive(:perform_async).and_return(true)
         agreement.update_attributes(client_agreed: true, client_agreed_at: 91.days.ago, date: 91.days.ago)
         agreement.mark_active
         item.mark_active
@@ -198,14 +198,14 @@ feature "agreement" do
         expect(page).to have_content("Email and letter queued for delivery")
         expect(page).to have_content("Success!")
 
-        expect(ItemExpirerJob).to have_received(:perform_later)
+        expect(ItemExpirerJob).to have_received(:perform_async)
       end
 
       scenario "expires items from show", js: true do
-        allow(PdfGeneratorJob).to receive(:perform_later)
-        allow(TransactionalEmailJob).to receive(:perform_later).and_return(true)
-        allow(LetterSenderJob).to receive(:perform_later).and_return(true)
-        allow(ItemExpirerJob).to receive(:perform_later).and_return(true)
+        allow(PdfGeneratorJob).to receive(:perform_async)
+        allow(TransactionalEmailJob).to receive(:perform_async).and_return(true)
+        allow(LetterSenderJob).to receive(:perform_async).and_return(true)
+        allow(ItemExpirerJob).to receive(:perform_async).and_return(true)
         agreement.update_attributes(client_agreed: true, client_agreed_at: 91.days.ago, date: 91.days.ago)
         agreement.mark_active
         item.mark_active
@@ -226,13 +226,13 @@ feature "agreement" do
         expect(page).to have_content("Email and letter queued for delivery")
         expect(page).to have_content("Success!")
 
-        expect(ItemExpirerJob).to have_received(:perform_later)
+        expect(ItemExpirerJob).to have_received(:perform_async)
       end
 
       scenario "can't try to expire items from index when items already expired", js: true do
-        allow(PdfGeneratorJob).to receive(:perform_later)
-        allow(InventorySyncJob).to receive(:perform_later)
-        allow(ItemExpirerJob).to receive(:perform_later)
+        allow(PdfGeneratorJob).to receive(:perform_async)
+        allow(InventorySyncJob).to receive(:perform_async)
+        allow(ItemExpirerJob).to receive(:perform_async)
         agreement.update_attributes(client_agreed: true, client_agreed_at: 91.days.ago, date: 91.days.ago)
         agreement.mark_active
         item.mark_active
@@ -245,9 +245,9 @@ feature "agreement" do
       end
 
       scenario "can't try to expire items from show when items already expired" do
-        allow(PdfGeneratorJob).to receive(:perform_later)
-        allow(InventorySyncJob).to receive(:perform_later)
-        allow(ItemExpirerJob).to receive(:perform_later)
+        allow(PdfGeneratorJob).to receive(:perform_async)
+        allow(InventorySyncJob).to receive(:perform_async)
+        allow(ItemExpirerJob).to receive(:perform_async)
         agreement.update_attributes(client_agreed: true, client_agreed_at: 91.days.ago, date: 91.days.ago)
         agreement.mark_active
         item.mark_active
@@ -268,8 +268,8 @@ feature "agreement" do
     let!(:agreement) { create(:agreement, :consign, proposal: proposal) }
 
     before do
-      allow(PdfGeneratorJob).to receive(:perform_later)
-      allow(TransactionalEmailJob).to receive(:perform_later)
+      allow(PdfGeneratorJob).to receive(:perform_async)
+      allow(TransactionalEmailJob).to receive(:perform_async)
       allow(InventorySync).to receive(:new).and_return(syncer)
     end
 
@@ -305,8 +305,8 @@ feature "agreement" do
     end
 
     scenario "client doesn't see 'Mark Items Active' button from show" do
-      allow(PdfGeneratorJob).to receive(:perform_later)
-      allow(InventorySyncJob).to receive(:perform_later)
+      allow(PdfGeneratorJob).to receive(:perform_async)
+      allow(InventorySyncJob).to receive(:perform_async)
       agreement.update_attributes(client_agreed: true, client_agreed_at: 3.minutes.ago, date: 3.minutes.ago)
       agreement.mark_active
 

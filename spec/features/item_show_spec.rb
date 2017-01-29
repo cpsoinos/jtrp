@@ -27,7 +27,7 @@ feature "item show" do
     end
 
     scenario "internal user successfully marks an item active" do
-      allow(InventorySyncJob).to receive(:perform_later)
+      allow(InventorySyncJob).to receive(:perform_async)
       item.update_attribute("client_intention", "sell")
       agreement = create(:agreement, :active, proposal: proposal)
       visit account_job_proposal_item_path(account, job, proposal, item)
@@ -53,7 +53,7 @@ feature "item show" do
     let(:item) { create(:item, :inactive) }
 
     scenario "internal user successfully marks an item active" do
-      allow(InventorySyncJob).to receive(:perform_later)
+      allow(InventorySyncJob).to receive(:perform_async)
       visit item_path(item)
 
       click_link("Activate")
@@ -157,7 +157,7 @@ feature "item show" do
       end
 
       scenario "internal user successfully marks an item inactive" do
-        allow(InventorySyncJob).to receive(:perform_later)
+        allow(InventorySyncJob).to receive(:perform_async)
         visit item_path(item)
 
         click_link("Other")
@@ -191,7 +191,7 @@ feature "item show" do
       end
 
       scenario "marks item as not sold" do
-        allow(InventorySyncJob).to receive(:perform_later)
+        allow(InventorySyncJob).to receive(:perform_async)
         visit account_job_proposal_item_path(account, job, proposal, item)
         click_link("Mark Not Sold")
         item.reload

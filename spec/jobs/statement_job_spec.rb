@@ -18,14 +18,14 @@ describe StatementJob do
 
   it "perform" do
     expect {
-      StatementJob.perform_later
+      StatementJob.perform_async
     }.to change {
       Statement.count
     }.by (3)
   end
 
   it "does not create a statement for an account with only expired items" do
-    StatementJob.perform_later
+    StatementJob.perform_async
 
     expect(expired_agreement.account.id).not_to be_in(Statement.pluck(:account_id))
   end

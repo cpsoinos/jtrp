@@ -55,7 +55,7 @@ class CompaniesController < ApplicationController
   end
 
   def send_message
-    TransactionalEmailJob.perform_later(@company, current_user, @company.primary_contact, "contact", params)
+    TransactionalEmailJob.perform_async(@company, current_user, @company.primary_contact, "contact", params)
     redirect_to root_path, notice: "Your message has been sent!"
   end
 

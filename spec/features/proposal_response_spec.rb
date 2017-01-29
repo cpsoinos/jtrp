@@ -8,7 +8,7 @@ feature "proposal response" do
   let!(:intentions) { %w(sell consign decline undecided) }
 
   before do
-    allow(TransactionalEmailJob).to receive(:perform_later)
+    allow(TransactionalEmailJob).to receive(:perform_async)
     account.primary_contact = create(:client, account: account)
     items.first.update_attribute("will_purchase", true)
     items.second.update_attribute("will_consign", true)
@@ -111,7 +111,7 @@ feature "proposal response" do
         "proposal_id"=>"#{proposal.id}"
       }
 
-      expect(TransactionalEmailJob).to have_received(:perform_later).with(proposal, account.primary_contact, Company.jtrp.primary_contact, "notification", params)
+      expect(TransactionalEmailJob).to have_received(:perform_async).with(proposal, account.primary_contact, Company.jtrp.primary_contact, "notification", params)
     end
 
   end

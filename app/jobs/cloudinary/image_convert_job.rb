@@ -1,8 +1,9 @@
 require 'active_job/traffic_control'
 
 module Cloudinary
-  class ImageConvertJob < ActiveJob::Base
-    queue_as :maintenance
+  class ImageConvertJob
+  include Sidekiq::Worker
+    sidekiq_options queue: 'maintenance'
     include ActiveJob::TrafficControl::Throttle
 
     throttle threshold: 2000, period: 1.hour

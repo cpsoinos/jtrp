@@ -9,7 +9,7 @@ describe ScannedAgreement do
   let(:active_agreement) { create(:agreement, :active) }
 
   before do
-    allow(TransactionalEmailJob).to receive(:perform_later)
+    allow(TransactionalEmailJob).to receive(:perform_async)
   end
 
   it "marks agreement active" do
@@ -25,13 +25,13 @@ describe ScannedAgreement do
 
   it "delivers to the client on create" do
     create(:scanned_agreement, agreement: active_agreement)
-    expect(TransactionalEmailJob).to have_received(:perform_later)
+    expect(TransactionalEmailJob).to have_received(:perform_async)
   end
 
   it "does not deliver to the client on create when accepted internally" do
     active_agreement.update_attribute("updated_by", create(:internal_user))
     create(:scanned_agreement, agreement: active_agreement)
-    expect(TransactionalEmailJob).not_to have_received(:perform_later)
+    expect(TransactionalEmailJob).not_to have_received(:perform_async)
   end
 
 end

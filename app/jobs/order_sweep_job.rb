@@ -1,9 +1,10 @@
 require 'active_job/traffic_control'
 
-class OrderSweepJob < ActiveJob::Base
+class OrderSweepJob
+  include Sidekiq::Worker
   include ActiveJob::TrafficControl::Throttle
 
-  queue_as :maintenance
+  sidekiq_options queue: 'maintenance'
 
   throttle threshold: 5, period: 1.second
 

@@ -1,6 +1,7 @@
 module Cloudinary
-  class ImageMigrateJob < ActiveJob::Base
-    queue_as :default
+  class ImageMigrateJob
+  include Sidekiq::Worker
+    sidekiq_options queue: 'default'
 
     attr_reader :photo
 

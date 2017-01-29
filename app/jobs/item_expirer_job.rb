@@ -1,5 +1,6 @@
-class ItemExpirerJob < ActiveJob::Base
-  queue_as :default
+class ItemExpirerJob
+  include Sidekiq::Worker
+  sidekiq_options queue: 'default'
 
   attr_reader :item_ids
 

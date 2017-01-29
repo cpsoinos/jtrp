@@ -39,7 +39,6 @@ gem 'chartkick'
 gem 'sweet-alert-confirm'
 gem 'jquery-fileupload-rails'
 gem 'sidekiq'
-gem 'activejob-traffic_control'
 gem 'sinatra', :require => nil
 gem 'pusher'
 gem 'puma'
@@ -75,6 +74,7 @@ gem 'gretel'
 gem 'madison'
 gem 'acts-as-taggable-on', '~> 4.0'
 gem 'sitemap_generator'
+gem 'sidekiq-throttler'
 
 group :production, :staging do
   gem 'tunemygc'

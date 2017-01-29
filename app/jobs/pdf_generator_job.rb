@@ -1,5 +1,6 @@
-class PdfGeneratorJob < ActiveJob::Base
-  queue_as :default
+class PdfGeneratorJob
+  include Sidekiq::Worker
+  sidekiq_options queue: 'default'
 
   attr_reader :object
 

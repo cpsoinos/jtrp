@@ -51,7 +51,7 @@ class ItemUpdater
 
   def sync_inventory
     return if item.potential?
-    InventorySyncJob.perform_later(item)
+    InventorySyncJob.perform_async(item)
   end
 
   def process_sold_at

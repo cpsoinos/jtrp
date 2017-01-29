@@ -9,7 +9,7 @@ describe AgreementCreator do
   end
 
   before do
-    allow(PdfGeneratorJob).to receive(:perform_later)
+    allow(PdfGeneratorJob).to receive(:perform_async)
   end
 
   it "can be instantiated" do

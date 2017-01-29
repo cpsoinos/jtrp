@@ -11,7 +11,7 @@ describe TransactionalEmailJob do
   end
 
   it "perform" do
-    TransactionalEmailJob.perform_later(proposal, user, recipient, "proposal", "this is a note")
+    TransactionalEmailJob.perform_async(proposal, user, recipient, "proposal", "this is a note")
 
     expect(sender).to have_received(:send).with(recipient, "this is a note")
   end

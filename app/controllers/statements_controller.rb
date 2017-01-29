@@ -30,7 +30,7 @@ class StatementsController < ApplicationController
 
   def send_email
     @statement = Statement.find(params[:statement_id])
-    TransactionalEmailJob.perform_later(@statement, current_user, @statement.account.primary_contact, "statement", params)
+    TransactionalEmailJob.perform_async(@statement, current_user, @statement.account.primary_contact, "statement", params)
     redirect_to :back, notice: "Email sent to client!"
   end
 

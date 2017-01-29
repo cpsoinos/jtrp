@@ -7,7 +7,7 @@ class WebhookProcessor
   end
 
   def process
-    WebhookProcessorJob.perform_later(webhook)
+    WebhookProcessorJob.perform_async(webhook)
   end
 
   private

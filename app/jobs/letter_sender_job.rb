@@ -1,5 +1,6 @@
-class LetterSenderJob < ActiveJob::Base
-  queue_as :default
+class LetterSenderJob
+  include Sidekiq::Worker
+  sidekiq_options queue: 'default', retry: false, backtrace: true
 
   def perform(letter)
     LetterSender.new(letter).send_letter

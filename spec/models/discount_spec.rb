@@ -9,7 +9,7 @@ describe Discount do
   let(:item) { discount.item }
 
   before do
-    allow(InventorySyncJob).to receive(:perform_later)
+    allow(InventorySyncJob).to receive(:perform_async)
   end
 
   it "applies a discount to an item" do

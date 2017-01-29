@@ -74,7 +74,7 @@ class CheckSender
   end
 
   def retrieve_check_images(saved_check)
-    CheckImageRetrieverJob.perform_later(saved_check)
+    CheckImageRetrieverJob.perform_async(saved_check)
   end
 
   def set_check_number(saved_check)

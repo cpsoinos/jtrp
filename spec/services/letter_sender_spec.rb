@@ -50,7 +50,7 @@ describe LetterSender do
     company.primary_contact = create(:internal_user)
     company.save
     allow(PdfGenerator).to receive_message_chain(:new, :render_pdf)
-    allow(TransactionalEmailJob).to receive(:perform_later)
+    allow(TransactionalEmailJob).to receive(:perform_async)
     allow(Lob).to receive_message_chain(:load, :letters).and_return(lob)
     allow(lob).to receive(:create).and_return(lob_response)
   end

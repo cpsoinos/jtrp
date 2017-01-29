@@ -1,5 +1,6 @@
-class CheckImageRetrieverJob < ActiveJob::Base
-  queue_as :default
+class CheckImageRetrieverJob
+  include Sidekiq::Worker
+  sidekiq_options queue: 'default'
   rescue_from(StandardError) do
     retry_job wait: 10.seconds
   end

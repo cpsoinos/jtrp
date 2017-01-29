@@ -15,8 +15,8 @@ describe Agreement do
   end
 
   before do
-    allow(PdfGeneratorJob).to receive(:perform_later)
-    allow(TransactionalEmailJob).to receive(:perform_later)
+    allow(PdfGeneratorJob).to receive(:perform_async)
+    allow(TransactionalEmailJob).to receive(:perform_async)
   end
 
   describe "items" do
@@ -88,7 +88,7 @@ describe Agreement do
       expect(agreement.proposal).to be_active
       expect(agreement.proposal.job).to be_active
       expect(agreement.proposal.account).to be_active
-      expect(TransactionalEmailJob).to have_received(:perform_later).with(agreement, agreement.account.primary_contact, Company.jtrp.primary_contact, "agreement_active_notifier")
+      expect(TransactionalEmailJob).to have_received(:perform_async).with(agreement, agreement.account.primary_contact, Company.jtrp.primary_contact, "agreement_active_notifier")
       items.each do |item|
         item.reload
         expect(item.original_description).to eq(item.description)

@@ -22,7 +22,7 @@ describe WebhookProcessorJob do
 
   it "creates a new order when not existing" do
     expect {
-      WebhookProcessorJob.perform_later(webhook)
+      WebhookProcessorJob.perform_async(webhook)
     }.to change {
       Order.count
     }.by 1
@@ -32,7 +32,7 @@ describe WebhookProcessorJob do
     order = create(:order, remote_id: "JKL987")
 
     expect {
-      WebhookProcessorJob.perform_later(webhook)
+      WebhookProcessorJob.perform_async(webhook)
     }.to change {
       order.items.count
     }.by 3
@@ -44,7 +44,7 @@ describe WebhookProcessorJob do
     create(:order, remote_id: "JKL987")
 
     expect {
-      WebhookProcessorJob.perform_later(webhook)
+      WebhookProcessorJob.perform_async(webhook)
     }.to change {
       Item.sold.count
     }.by 3

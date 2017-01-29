@@ -105,13 +105,13 @@ class Agreement < ActiveRecord::Base
 
   def save_as_pdf
     unless scanned_agreement.present?
-      PdfGeneratorJob.perform_later(self)
+      PdfGeneratorJob.perform_async(self)
     end
   end
 
   def notify_company
     return unless self.active?
-    TransactionalEmailJob.perform_later(self, account.primary_contact, Company.jtrp.primary_contact, "agreement_active_notifier")
+    TransactionalEmailJob.perform_async(self, account.primary_contact, Company.jtrp.primary_contact, "agreement_active_notifier")
   end
 
   def task
@@ -135,15 +135,15 @@ class Agreement < ActiveRecord::Base
   end
 
   def notify_pending_expiration
-    ConsignmentPeriodEndingNotifierJob.perform_later(self, "agreement_pending_expiration")
+    ConsignmentPeriodEndingNotifierJob.perform_async(self, "agreement_pending_expiration")
   end
 
   def notify_expiration
-    ConsignmentPeriodEndingNotifierJob.perform_later(self, "agreement_expired")
+    ConsignmentPeriodEndingNotifierJob.perform_async(self, "agreement_expired")
   end
 
   def expire
-    ItemExpirerJob.perform_later(@agreement.items.pluck(:id))
+    ItemExpirerJob.perform_async(@agreement.items.pluck(:id))
   end
 
   def pending_expiration_letter

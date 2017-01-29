@@ -11,7 +11,7 @@ describe ItemExpirerJob do
 
   it "perform" do
     expiring_items = Item.where(id: item_ids)
-    ItemExpirerJob.perform_later(item_ids)
+    ItemExpirerJob.perform_async(item_ids)
     expect(expirer).to have_received(:expire!).with(expiring_items)
   end
 

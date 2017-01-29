@@ -1,5 +1,6 @@
-class ConsignmentPeriodEndingNotifierJob < ActiveJob::Base
-  queue_as :default
+class ConsignmentPeriodEndingNotifierJob
+  include Sidekiq::Worker
+  sidekiq_options queue: 'default'
 
   attr_reader :agreement, :category
 
@@ -27,7 +28,7 @@ class ConsignmentPeriodEndingNotifierJob < ActiveJob::Base
   end
 
   def deliver_email
-    TransactionalEmailJob.perform_later(@letter, Company.jtrp.primary_contact, @agreement.account.primary_contact, category)
+    TransactionalEmailJob.perform_async(@letter, Company.jtrp.primary_contact, @agreement.account.primary_contact, category)
   end
 
 end

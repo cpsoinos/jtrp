@@ -187,7 +187,7 @@ class Item < ActiveRecord::Base
 
   def sync_inventory
     return if self.listing_price_cents.nil?
-    InventorySyncJob.perform_later(self)
+    InventorySyncJob.perform_async(self)
   end
 
   def owned?

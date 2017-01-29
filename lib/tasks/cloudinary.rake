@@ -10,7 +10,7 @@ namespace :cloudinary do
     bar = RakeProgressbar.new(photos.count)
 
     photos.each do |photo|
-      Cloudinary::ImageMigrateJob.perform_later(photo)
+      Cloudinary::ImageMigrateJob.perform_async(photo)
       bar.inc
     end
 
@@ -27,7 +27,7 @@ namespace :cloudinary do
     bar = RakeProgressbar.new(photos.count)
 
     photos.each do |photo|
-      Cloudinary::ImageConvertJob.perform_later(photo)
+      Cloudinary::ImageConvertJob.perform_async(photo)
       bar.inc
     end
 
@@ -36,7 +36,7 @@ namespace :cloudinary do
   end
 
   task :delete_derived_resources => :environment do |task|
-    Cloudinary::DeleteDerivedResourcesJob.perform_later
+    Cloudinary::DeleteDerivedResourcesJob.perform_async
   end
 
 end

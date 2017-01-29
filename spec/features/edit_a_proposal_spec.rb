@@ -119,7 +119,7 @@ feature "edit a proposal" do
     end
 
     scenario "sends a proposal to the client" do
-      allow(TransactionalEmailJob).to receive(:perform_later)
+      allow(TransactionalEmailJob).to receive(:perform_async)
       visit account_job_proposal_path(account, job, proposal)
       click_button("Send this Proposal")
       fill_in("note", with: "this is a note")
@@ -133,7 +133,7 @@ feature "edit a proposal" do
         "proposal_id"=>"#{proposal.id}"
       }
 
-      expect(TransactionalEmailJob).to have_received(:perform_later).with(proposal, Company.jtrp.primary_contact, account.primary_contact, "proposal", params)
+      expect(TransactionalEmailJob).to have_received(:perform_async).with(proposal, Company.jtrp.primary_contact, account.primary_contact, "proposal", params)
     end
 
   end

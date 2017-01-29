@@ -105,7 +105,7 @@ describe CheckSender do
     allow(pdf).to receive(:object_url).and_return("url_to_statement_pdf")
     allow(Lob).to receive_message_chain(:load, :checks).and_return(lob)
     allow(lob).to receive(:create).and_return(lob_response)
-    allow(CheckImageRetrieverJob).to receive(:perform_later)
+    allow(CheckImageRetrieverJob).to receive(:perform_async)
   end
 
   it "can be instantiated" do
@@ -139,7 +139,7 @@ describe CheckSender do
   it "enqueues a CheckImageRetrieverJob" do
     sender.send_check
 
-    expect(CheckImageRetrieverJob).to have_received(:perform_later).with(statement.checks.first)
+    expect(CheckImageRetrieverJob).to have_received(:perform_async).with(statement.checks.first)
   end
 
   it "sets the check number on the statement" do

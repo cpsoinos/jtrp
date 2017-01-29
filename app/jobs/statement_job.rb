@@ -1,5 +1,6 @@
-class StatementJob < ActiveJob::Base
-  queue_as :cron
+class StatementJob
+  include Sidekiq::Worker
+  sidekiq_options queue: 'cron'
 
   def perform
     generate_statements

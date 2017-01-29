@@ -7,7 +7,7 @@ namespace :agreements do
     bar = RakeProgressbar.new(agreements.count)
 
     agreements.each do |agreement|
-      PdfGeneratorJob.perform_later(agreement)
+      PdfGeneratorJob.perform_async(agreement)
       bar.inc
     end
 
@@ -20,7 +20,7 @@ namespace :agreements do
 
     # Heroku Scheduler "daily" job, but only run if the 1st day of the month
     if Time.now.day == 1
-      StatementJob.perform_later
+      StatementJob.perform_async
       puts "StatementJob enqueued for #{Date.today.strftime("%B")} consignment sales."
     else
       puts "Today is #{Time.now.month}/#{Time.now.day}. This job will run again on #{Time.now.month + 1}/1."

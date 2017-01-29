@@ -75,7 +75,7 @@ class Statement < ActiveRecord::Base
 
   def create_and_send_check
     return if paid_manually?
-    CheckSenderJob.perform_later(self)
+    CheckSenderJob.perform_async(self)
   end
 
 end

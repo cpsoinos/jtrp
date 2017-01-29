@@ -1,12 +1,9 @@
-require 'active_job/traffic_control'
-
-class InventorySyncJob < ActiveJob::Base
-  queue_as :default
-  include ActiveJob::TrafficControl::Throttle
-
-  throttle threshold: 8, period: 1.second
+class InventorySyncJob
+  include Sidekiq::Worker
+  sidekiq_options queue: 'default', throttle: {threshold: 8, period: 1.second}
 
   def perform(item)
+    binding.pry
     if item.remote_id
       if item.sold? || item.inactive?
         InventorySync.new(item).remote_destroy

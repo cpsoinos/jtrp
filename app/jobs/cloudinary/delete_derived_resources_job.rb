@@ -1,6 +1,7 @@
 module Cloudinary
-  class DeleteDerivedResourcesJob < ActiveJob::Base
-    queue_as :maintenance
+  class DeleteDerivedResourcesJob
+  include Sidekiq::Worker
+    sidekiq_options queue: 'maintenance'
 
     def perform
       delete_derived_resources

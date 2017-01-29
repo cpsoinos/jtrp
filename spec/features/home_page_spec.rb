@@ -139,9 +139,9 @@ feature "home page" do
         let!(:agreement) { item.agreement }
 
         before do
-          allow(TransactionalEmailJob).to receive(:perform_later).and_return(true)
-          allow(LetterSenderJob).to receive(:perform_later).and_return(true)
-          allow(ItemExpirerJob).to receive(:perform_later).and_return(true)
+          allow(TransactionalEmailJob).to receive(:perform_async).and_return(true)
+          allow(LetterSenderJob).to receive(:perform_async).and_return(true)
+          allow(ItemExpirerJob).to receive(:perform_async).and_return(true)
         end
 
         scenario "consignment period coming to an end" do

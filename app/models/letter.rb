@@ -33,16 +33,16 @@ class Letter < ActiveRecord::Base
   end
 
   def deliver_email
-    TransactionalEmailJob.perform_later(self, Company.jtrp.primary_contact, account.primary_contact, category, {note: note})
+    TransactionalEmailJob.perform_async(self, Company.jtrp.primary_contact, account.primary_contact, category, {note: note})
   end
 
   def deliver_letter
-    LetterSenderJob.perform_later(self)
+    LetterSenderJob.perform_async(self)
   end
 
   def expire_items
     return unless expiration_notice?
-    ItemExpirerJob.perform_later(agreement.items.pluck(:id))
+    ItemExpirerJob.perform_async(agreement.items.pluck(:id))
   end
 
   def pending_deadline
