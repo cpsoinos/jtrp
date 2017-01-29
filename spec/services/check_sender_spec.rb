@@ -89,7 +89,7 @@ describe CheckSender do
         address_country: "US",
         address_zip: account.zip
       },
-      from: "adr_cda4a50721394d23",
+      from: ENV['LOB_COMPANY_ADDRESS_KEY'],
       amount: statement.amount_due_to_client.to_f,
       memo: check.memo,
       logo: company.logo_url(width: 100, height: 100, crop: :pad),

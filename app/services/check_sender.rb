@@ -1,4 +1,5 @@
 class CheckSender
+  include LobAddressable
 
   attr_reader :statement, :account
 
@@ -23,15 +24,7 @@ class CheckSender
       lob.checks.create(
         description: check.name,
         bank_account: ENV['LOB_BANK_KEY'],
-        to: {
-          name: account.full_name,
-          address_line1: account.address_1,
-          address_line2: account.address_2,
-          address_city: account.city,
-          address_state: state_abbreviation(account.state),
-          address_country: "US",
-          address_zip: account.zip
-        },
+        to: build_address(account.primary_contact),
         from: ENV['LOB_COMPANY_ADDRESS_KEY'],
         amount: statement.amount_due_to_client.to_f,
         memo: check.memo,
@@ -59,18 +52,6 @@ class CheckSender
 
   def company
     @_company ||= Company.jtrp
-  end
-
-  def lob
-    @_lob ||= Lob.load
-  end
-
-  def state_abbreviation(state)
-    if state.length > 2
-      Madison.get_abbrev(state)
-    else
-      state
-    end
   end
 
   def retrieve_check_images(saved_check)
