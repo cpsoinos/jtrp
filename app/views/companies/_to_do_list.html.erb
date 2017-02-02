@@ -26,7 +26,7 @@
         </div>
 
       <% when "Statement" %>
-        <%= render 'statements/to_do_task', collection: @todos, cached: true, statement: todo, task_field: todo.task[:task_field] %>
+        <%= render 'statements/to_do_task', statement: todo, task_field: todo.task[:task_field] %>
         <div id="to-do-list-statement-<%= todo.id %>">
           <div class="row list-group-item vertical-align">
             <div class="col-xs-4 text-center">
