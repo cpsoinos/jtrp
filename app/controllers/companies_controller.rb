@@ -86,9 +86,9 @@ class CompaniesController < ApplicationController
   def find_categories
     @categories ||= begin
       if current_user.try(:internal?)
-        Category.includes(:subcategories).all.order(:name)
+        Category.all.order(:name)
       else
-        Category.includes(:subcategories).categorized.order(:name)
+        Category.categorized.order(:name)
       end
     end
   end

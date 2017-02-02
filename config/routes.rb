@@ -100,6 +100,7 @@ Rails.application.routes.draw do
     get '/agreements_list', to: 'agreements#agreements_list', as: 'agreements_list', on: :collection
     post '/send_email', to: 'agreements#send_email', as: 'send_email'
     post '/activate_items', to: 'agreements#activate_items', as: "activate_items"
+    post '/tag', to: 'agreements#tag'
     resources :scanned_agreements, only: [:create, :update, :show, :destroy]
     resources :letters, only: [:create]
   end

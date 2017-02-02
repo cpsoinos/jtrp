@@ -73,6 +73,19 @@ class AgreementsController < ApplicationController
     redirect_to :back, notice: "Items are marked active!"
   end
 
+  def tag
+    @agreement = Agreement.find(params[:agreement_id])
+    @agreement.tag_list.add(params[:tag])
+    if @agreement.save
+      respond_to do |format|
+        format.js do
+          @message = "Agreement tagged as unexpireable."
+          render 'letters/create'
+        end
+      end
+    end
+  end
+
   protected
 
   def agreement_params
