@@ -17,7 +17,9 @@
 
     <div class="navbar-collapse collapse navbar-right">
       <ul class="nav navbar-nav">
-        <li class="active"><span class="company-font"><%= link_to "Home", root_path, class: "nav-link" %></span></li>
+        <% if current_user.try(:internal?) %>
+          <li class="active"><span class="company-font"><%= link_to "Dashboard", dashboard_path, class: "nav-link" %></span></li>
+        <% end %>
 
         <li class="dropdown">
           <span class="company-font">
