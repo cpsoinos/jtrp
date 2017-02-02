@@ -65,6 +65,12 @@ describe Agreement do
       expect(Agreement.inactive.first).to eq(inactive_agreement)
     end
 
+    it "unexpireable" do
+      active_agreement.tag_list.add("unexpireable")
+      active_agreement.save
+      expect(Agreement.unexpireable).to match_array([active_agreement])
+    end
+
   end
 
   describe "state_machine" do

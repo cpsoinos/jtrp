@@ -1,5 +1,6 @@
 class Agreement < ActiveRecord::Base
   acts_as_paranoid
+  acts_as_taggable_on :tags
   audited associated_with: :proposal
   has_secure_token
 
@@ -25,6 +26,7 @@ class Agreement < ActiveRecord::Base
   scope :potential, -> { where(status: "potential") }
   scope :active, -> { where(status: "active") }
   scope :inactive, -> { where(status: "inactive") }
+  scope :unexpireable, -> { joins(:tags).where(tags: { name: 'unexpireable' }) }
 
   monetize :service_charge_cents, allow_nil: true, numericality: {
     greater_than_or_equal_to: 0,

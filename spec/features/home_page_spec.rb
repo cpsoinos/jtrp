@@ -191,6 +191,16 @@ feature "home page" do
           expect(page).not_to have_content("#{agreement.account.full_name} needs to be notified that their consignment period is ending soon")
         end
 
+        scenario "tags an agreement as unexpireable", js: true do
+          visit dashboard_path
+          first(:button, "done").click
+          click_button("Unexpireable")
+
+          expect(page).to have_content("Success!")
+          expect(page).to have_content("Agreement tagged as unexpireable.")
+          expect(agreement.reload.tag_list).to include("unexpireable")
+        end
+
       end
 
     end
