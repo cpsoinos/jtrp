@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170122191221) do
+ActiveRecord::Schema.define(version: 20170204181407) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -59,10 +59,6 @@ ActiveRecord::Schema.define(version: 20170122191221) do
 
   add_index "agreements", ["deleted_at"], name: "index_agreements_on_deleted_at", using: :btree
   add_index "agreements", ["proposal_id"], name: "index_agreements_on_proposal_id", using: :btree
-
-  create_table "archives", force: :cascade do |t|
-    t.string "archive"
-  end
 
   create_table "audits", force: :cascade do |t|
     t.integer  "auditable_id"
@@ -202,10 +198,6 @@ ActiveRecord::Schema.define(version: 20170122191221) do
   add_index "friendly_id_slugs", ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type", using: :btree
   add_index "friendly_id_slugs", ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id", using: :btree
   add_index "friendly_id_slugs", ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type", using: :btree
-
-  create_table "item_spreadsheets", force: :cascade do |t|
-    t.string "csv"
-  end
 
   create_table "items", force: :cascade do |t|
     t.text     "description",                                       null: false
