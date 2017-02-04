@@ -1,8 +1,15 @@
 connections:
-  default:
-    url: redis://127.0.0.1:6379/2
-  # production:
-  #   host: mydomain.com
-  #   port: 6666
-  #   db: 1
-  #   auth: password
+  
+  default: &default
+    sidekiq:
+      url: <%= ENV['REDIS_URL'] %>
+
+  production:
+    <<: *default
+    cache:
+      url: <%= ENV['REDISCLOUD_URL'] %>
+
+  development:
+    <<: *default
+    cache:
+      url: <%= ENV['REDIS_URL'] %>/2

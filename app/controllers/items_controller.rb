@@ -52,21 +52,6 @@ class ItemsController < ApplicationController
     end
   end
 
-  def batch_create
-    find_proposal
-    @archive = Archive.new
-    @archive.update_attribute(:key, params[:key])
-    @archive.save_and_process_items(@proposal)
-    redirect_to edit_account_job_proposal_path(@proposal.account, @proposal.job, @proposal)
-  end
-
-  def csv_import
-    @csv = ItemSpreadsheet.new
-    @csv.update_attribute(:key, params[:key])
-    @csv.save_and_process_items(current_user)
-    redirect_to items_path
-  end
-
   def show
     meta_tags
     if current_user.try(:internal?)
@@ -164,10 +149,6 @@ class ItemsController < ApplicationController
 
   def item_params
     params.require(:item).permit(:description, {photos: []}, {initial_photos: []}, {listing_photos: []}, :purchase_price, :asking_price, :listing_price, :sale_price, :sold_at, :minimum_sale_price, :condition, :category_id, :client_intention, :notes, :will_purchase, :will_consign, :account_item_number, :consignment_rate, :proposal_id, :parent_item_id, :jtrp_number, :expired, :consignment_term, :parts_cost, :labor_cost, {tag_list: []}, :acquired_at)
-  end
-
-  def archive_params
-    params.require(:item).permit(:archive)
   end
 
   def find_item

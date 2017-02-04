@@ -56,11 +56,6 @@ class ProposalsController < ApplicationController
   def edit
     @proposal = Proposal.includes(items: :photos).find(params[:id])
     @item = @proposal.items.new
-
-    @archive = Archive.new
-    @uploader = @archive.archive
-    @uploader.success_action_redirect = items_batch_create_url(proposal_id: @proposal.id)
-
     gon.proposalId = @proposal.id
   end
 
