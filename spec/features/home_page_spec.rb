@@ -8,11 +8,6 @@ feature "home page" do
 
   context "visitor" do
 
-    scenario "fails" do
-      visit root_path
-      expect(page).to have_content("FAILURE")
-    end
-
     scenario "visits home page" do
       visit root_path
 
