@@ -4,11 +4,6 @@ Rollbar.configure do |config|
 
   config.access_token = ENV['ROLLBAR_ACCESS_TOKEN']
 
-  # Here we'll disable in 'test':
-  if Rails.env.in? ["test", "development", "local"]
-    config.enabled = false
-  end
-
   config.js_enabled = true
   config.js_options = {
     accessToken: ENV['ROLLBAR_CLIENT_ACCESS_TOKEN'],
@@ -16,16 +11,22 @@ Rollbar.configure do |config|
     payload: {
       environment: ENV['ROLLBAR_ENV'] || Rails.env,
       client: {
-      javascript: {
-        source_map_enabled: true,
-        # code_version: "some version string, such as a version number or git sha",
-        # Optionally have Rollbar guess which frames the error was thrown from
-        # when the browser does not provide line and column numbers.
-        guess_uncaught_frames: true
+        javascript: {
+          source_map_enabled: true,
+          # code_version: "some version string, such as a version number or git sha",
+          # Optionally have Rollbar guess which frames the error was thrown from
+          # when the browser does not provide line and column numbers.
+          guess_uncaught_frames: true
+        }
       }
     }
-    }
   }
+
+  # Here we'll disable in 'test':
+  if Rails.env.in? ["test", "development", "local"]
+    config.enabled = false
+    config.js_enabled = false
+  end
 
   # By default, Rollbar will try to call the `current_user` controller method
   # to fetch the logged-in user object, and then call that object's `id`,

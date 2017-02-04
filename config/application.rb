@@ -10,7 +10,6 @@ require "action_mailer/railtie"
 require "action_view/railtie"
 require "sprockets/railtie"
 require "carrierwave"
-# require "rails/test_unit/railtie"
 
 ActiveSupport::Logger.class_eval do
   #monkey patching here so there aren't duplicate lines in console/server
@@ -42,7 +41,6 @@ module Jtrp
     config.autoload_paths += %W(#{config.root}/lib)
     config.active_record.raise_in_transactional_callbacks = true
     config.active_job.queue_adapter = :sidekiq
-    config.react.addons = true
 
     config.middleware.insert_before 0, "Rack::Cors" do
       allow do

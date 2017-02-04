@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby "2.3.1"
+ruby '2.3.1'
 gem 'bundler', '>= 1.8.4'
 gem 'rails', '4.2.5.2'
 gem 'pg', '~> 0.15'
@@ -13,7 +13,6 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'turbolinks'
 gem 'jquery-turbolinks'
-gem 'dotenv-rails', require: 'dotenv/rails-now'
 gem 'devise'
 gem 'carrierwave'
 gem 'carrierwave_direct'
@@ -33,15 +32,12 @@ gem 'gon'
 gem 'state_machines'
 gem 'state_machines-activerecord'
 gem 'bootsy'
-gem 'rubyzip'
-gem 'react-rails', '~> 1.7'
 gem 'chartkick'
 gem 'sweet-alert-confirm'
 gem 'jquery-fileupload-rails'
 gem 'sidekiq'
 gem 'activejob-traffic_control'
 gem 'sinatra', :require => nil
-gem 'pusher'
 gem 'puma'
 gem 'omniauth-clover'
 gem 'deepstruct'
@@ -49,9 +45,6 @@ gem 'pg_search'
 gem 'kaminari'
 gem 'amoeba'
 gem 'metamagic'
-gem 'pry-rails'
-gem 'pry-coolline'
-gem 'pry-byebug', '~> 3.3.0'
 gem 'docraptor'
 gem 'sendgrid'
 gem 'sendgrid-ruby'
@@ -76,16 +69,6 @@ gem 'madison'
 gem 'acts-as-taggable-on', '~> 4.0'
 gem 'sitemap_generator'
 
-group :production, :staging do
-  gem 'tunemygc'
-  gem 'scout_apm', '~> 3.0.x'
-  gem 'lograge'
-end
-
-group :production, :staging, :local, :development do
-  gem 'rails_12factor'
-end
-
 source 'https://rails-assets.org' do
   gem 'rails-assets-classnames'
   gem 'rails-assets-sweetalert'
@@ -93,7 +76,21 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-toastr'
 end
 
-group :development, :test, :local do
+group :production, :staging do
+  gem 'tunemygc'
+  gem 'scout_apm', '~> 3.0.x'
+  gem 'lograge'
+end
+
+group :production, :staging, :development do
+  gem 'rails_12factor'
+end
+
+group :development, :test do
+  gem 'pry-rails'
+  gem 'pry-coolline'
+  gem 'pry-byebug', '~> 3.3.0'
+  gem 'dotenv-rails', require: 'dotenv/rails-now'
   gem 'sextant'
   gem 'better_errors'
   gem 'faker'
@@ -104,7 +101,7 @@ group :development, :test, :local do
   gem 'selenium-webdriver'
 end
 
-group :development, :local do
+group :development do
   gem 'spring'
   gem 'rails_real_favicon'
   gem 'bullet'
@@ -121,9 +118,9 @@ group :test do
   gem 'rspec-sidekiq'
   gem 'database_cleaner'
   gem 'webmock'
-  gem 'capybara-mechanize'
   gem 'coveralls', require: false
   gem 'pdf-reader'
   gem 'timecop'
   gem 'capybara-screenshot'
+  gem 'aws-sdk', '~> 2'
 end

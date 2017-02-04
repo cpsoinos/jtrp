@@ -11,12 +11,6 @@ class CompaniesController < ApplicationController
       owed_to_consignors: Item.consigned.sold.where("items.sold_at >= ?", 30.days.ago).sum(:sale_price_cents) / 2
     }
     @featured_photo = Photo.new(photo_type: 'featured_photo')
-
-    if current_user.admin?
-      @csv = ItemSpreadsheet.new
-      @uploader = @csv.csv
-      @uploader.success_action_redirect = items_csv_import_url
-    end
   end
 
   def home

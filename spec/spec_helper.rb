@@ -1,4 +1,3 @@
-require 'capybara/rspec'
 require 'factory_girl_rails'
 require 'rails_helper'
 require 'helpers/user_helper.rb'
@@ -53,5 +52,3 @@ RSpec.configure do |config|
 
   Kernel.srand config.seed
 end
-
-Sidekiq::Testing.inline!
