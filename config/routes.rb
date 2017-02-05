@@ -108,5 +108,6 @@ Rails.application.routes.draw do
 
   resources :search, only: [:index]
   resources :purchases, only: [:index, :show]
+  resources :orders, only: [:index, :show]
 
 end

@@ -1,0 +1,11 @@
+class OrdersController < ApplicationController
+
+  def index
+    @orders = Order.page(params[:page])
+    respond_to do |format|
+      format.html
+      format.json { render json: @orders }
+    end
+  end
+
+end

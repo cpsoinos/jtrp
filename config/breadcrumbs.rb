@@ -83,6 +83,15 @@ crumb :purchase do |agreement|
   parent :purchases
 end
 
+crumb :orders do
+  link "Order List", orders_path
+end
+
+crumb :order do |order|
+  link "Order #{order.id}", order_path(order)
+  parent :orders
+end
+
 # crumb :issue do |issue|
 #   link issue.title, issue_path(issue)
 #   parent :project_issues, issue.project

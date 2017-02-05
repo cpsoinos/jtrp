@@ -68,6 +68,7 @@ gem 'gretel'
 gem 'madison'
 gem 'acts-as-taggable-on', '~> 4.0'
 gem 'sitemap_generator'
+gem 'vuejs-rails'
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-classnames'
