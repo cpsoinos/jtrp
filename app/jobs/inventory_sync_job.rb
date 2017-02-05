@@ -4,7 +4,7 @@ class InventorySyncJob < ActiveJob::Base
   queue_as :default
   include ActiveJob::TrafficControl::Throttle
 
-  throttle threshold: 8, period: 1.second
+  throttle threshold: 5, period: 1.second
 
   def perform(item)
     if item.remote_id

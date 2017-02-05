@@ -38,20 +38,27 @@ namespace :items do
   end
 
   task :full_inventory_sync => :environment do |task|
-    puts "beginning full inventory sync with Clover"
-    items = Item.all
-    count = items.count
 
-    bar = RakeProgressbar.new(count)
+    # Heroku Scheduler "daily" job, but only run on Sundays
+    if DateTime.now.cwday == 7
+      puts "beginning full inventory sync with Clover"
+      items = Item.all
+      count = items.count
 
-    items.each do |item|
-      item.sync_inventory
-      bar.inc
+      bar = RakeProgressbar.new(count)
+
+      items.each do |item|
+        item.sync_inventory
+        bar.inc
+      end
+
+      bar.finished
+
+      puts "created async jobs to sync all #{count} items"
+    else
+      puts "This job will run on Sunday night."
     end
 
-    bar.finished
-
-    puts "created async jobs to sync all #{count} items"
   end
 
   task :backfill_maher_sold_items => :environment do |task|

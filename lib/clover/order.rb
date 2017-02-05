@@ -12,10 +12,10 @@ module Clover
           when 404
             nil
           else
-            raise CloverError
+            raise CloverError.new(result.message)
           end
         rescue CloverError => e
-          Rollbar.error(e, order_id: order.id, response: response, result: result)
+          Rollbar.error(e, result.message,  order_id: order.id, response: response, result: result)
         end
       end
     end
@@ -27,10 +27,10 @@ module Clover
           when 200
             DeepStruct.wrap(JSON.parse(response)["elements"])
           else
-            raise CloverError
+            raise CloverError.new(result.message)
           end
         rescue CloverError => e
-          Rollbar.error(e, response: response, result: result)
+          Rollbar.error(e, result.message,  response: response, result: result)
         end
       end
     end
