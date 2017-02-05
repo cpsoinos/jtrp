@@ -17,10 +17,10 @@ module Clover
             item.remote_id = inventory_item.id
             item.save
           else
-            raise CloverError
+            raise CloverError.new(result.message)
           end
         rescue CloverError => e
-          Rollbar.error(e, item_id: item.id, response: response, result: result)
+          Rollbar.error(e, result.message,  item_id: item.id, response: response, result: result)
         end
       end
     end
@@ -34,10 +34,10 @@ module Clover
           when 404
             nil
           else
-            raise CloverError
+            raise CloverError.new(result.message)
           end
         rescue CloverError => e
-          Rollbar.error(e, item_id: item.id, response: response, result: result)
+          Rollbar.error(e, result.message,  item_id: item.id, response: response, result: result)
         end
       end
     end
@@ -60,10 +60,10 @@ module Clover
             item.save
             item.sync_inventory
           else
-            raise CloverError
+            raise CloverError.new(result.message)
           end
         rescue CloverError => e
-          Rollbar.error(e, item_id: item.id, response: response, result: result)
+          Rollbar.error(e, result.message,  item_id: item.id, response: response, result: result)
         end
       end
     end
@@ -75,10 +75,10 @@ module Clover
           when 200
             DeepStruct.wrap(JSON.parse(response)["elements"])
           else
-            raise CloverError
+            raise CloverError.new(result.message)
           end
         rescue CloverError => e
-          Rollbar.error(e, response: response, result: result)
+          Rollbar.error(e, result.message,  response: response, result: result)
         end
       end
     end
@@ -89,10 +89,10 @@ module Clover
           if [200, 400].include?(response.code)
             ItemUpdater.new(item).update(remote_id: nil)
           else
-            raise CloverError
+            raise CloverError.new(result.message)
           end
         rescue CloverError => e
-          Rollbar.error(e, item_id: item.id, response: response, result: result)
+          Rollbar.error(e, result.message,  item_id: item.id, response: response, result: result)
         end
       end
     end
