@@ -66,6 +66,8 @@ class Order < ActiveRecord::Base
     self.amount_cents = remote_order.total
     self.created_at = format_time(remote_order.createdTime)
     self.updated_at = format_time(remote_order.modifiedTime)
+    self.tender = remote_order.tender
+    self.employee = remote_order.employee
     self.save
   end
 

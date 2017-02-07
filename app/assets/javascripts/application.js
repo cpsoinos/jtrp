@@ -10,9 +10,6 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require vue
-//= require vue-router
-//= require vue-resource
 //= require jquery
 //= require jquery.turbolinks
 //= require jquery_ujs
@@ -51,6 +48,8 @@
 //= require pinterest_sdk
 //= require linkedin_sdk
 //= require toastr
+//= require vue
+//= require moment
 
 //= require accounts
 //= require agreements

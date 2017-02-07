@@ -17,6 +17,9 @@ $(document).on('turbolinks:load', function() {
               that.orders = res;
             }
           });
+        },
+        moment: function () {
+          return moment();
         }
       }
     });
@@ -30,5 +33,13 @@ Vue.component('order-row', {
   template: '#order-row',
   props: {
     order: Object
+  },
+  filters: {
+    moment: function (date) {
+      return moment(date).format('MMMM Do YYYY, h:mm a');
+    },
+    currency: function (cents) {
+      return '$' + (parseInt(cents) / 100).toFixed(2);
+    }
   }
 })

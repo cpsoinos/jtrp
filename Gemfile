@@ -75,6 +75,7 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-sweetalert'
   gem 'rails-assets-image-picker'
   gem 'rails-assets-toastr'
+  gem 'rails-assets-moment'
 end
 
 group :production, :staging do
