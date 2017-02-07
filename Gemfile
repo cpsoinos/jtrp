@@ -10,6 +10,9 @@ gem 'coffee-rails', '~> 4.1.0'
 gem 'jquery-rails'
 gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
+gem 'pry-rails'
+gem 'pry-coolline'
+gem 'pry-byebug', '~> 3.3.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'turbolinks'
 gem 'jquery-turbolinks'
@@ -87,9 +90,6 @@ group :production, :staging, :development do
 end
 
 group :development, :test do
-  gem 'pry-rails'
-  gem 'pry-coolline'
-  gem 'pry-byebug', '~> 3.3.0'
   gem 'dotenv-rails', require: 'dotenv/rails-now'
   gem 'sextant'
   gem 'better_errors'
