@@ -298,6 +298,10 @@ class Item < ActiveRecord::Base
     end
   end
 
+  def process_webhook
+    # do something
+  end
+
   private
 
   def clear_sale_data
