@@ -1,6 +1,8 @@
 describe Order do
 
   it { should have_many(:items) }
+  it { should have_many(:discounts) }
+  it { should belong_to(:customer) }
 
   describe "#process_webhook" do
 

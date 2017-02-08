@@ -4,6 +4,8 @@ class Order < ActiveRecord::Base
 
   has_many :items
   has_many :discounts
+  belongs_to :customer
+  belongs_to :employee, class_name: "User", foreign_key: "employee_id"
 
   monetize :amount_cents, allow_nil: true, numericality: {
     greater_than_or_equal_to: 0,

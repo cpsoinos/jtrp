@@ -49,6 +49,7 @@
 //= require linkedin_sdk
 //= require toastr
 //= require vue
+//= require vue-resource
 //= require moment
 
 //= require accounts

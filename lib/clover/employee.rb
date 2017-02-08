@@ -1,10 +1,11 @@
 require 'rest-client'
 
 module Clover
-  class Order < Clover::CloverBase
+  class Employee < Clover::CloverBase
 
-    def self.find(order)
-      RestClient.get("#{base_url}/orders/#{order.remote_id}?expand=lineItems,discounts,employee,customers", headers) do |response, request, result|
+    def self.find(user)
+      return unless user.internal?
+      RestClient.get("#{base_url}/employees/#{user.remote_id}", headers) do |response, request, result|
         begin
           case response.code
           when 200
@@ -15,13 +16,13 @@ module Clover
             raise CloverError
           end
         rescue CloverError => e
-          Rollbar.error(e, order_id: order.id, response: response, result: result)
+          Rollbar.error(e, user_id: user.id, response: response, result: result)
         end
       end
     end
 
     def self.all
-      RestClient.get("#{base_url}/orders?expand=lineItems,discounts,employee,customers", headers) do |response, request, result|
+      RestClient.get("#{base_url}/employees", headers) do |response, request, result|
         begin
           case response.code
           when 200

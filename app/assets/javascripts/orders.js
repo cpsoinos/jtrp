@@ -5,22 +5,19 @@ $(document).on('turbolinks:load', function() {
     var orders = new Vue({
       el: '#orders',
       data: {
-        orders: []
+        orders: [],
+        paginate: ['orders']
       },
       methods: {
         fetchOrders: function() {
-          var that;
-          that = this;
-          $.ajax({
-            url: '/orders.json',
-            success: function(res) {
-              that.orders = res;
-            }
+          this.$http.get('/orders.json').then(response => {
+            $("#loader").remove();
+            this.orders = response.body;
+          }, response => {
+            $("#loader").remove();
+            alert("error!")
           });
         },
-        moment: function () {
-          return moment();
-        }
       }
     });
 
@@ -40,6 +37,11 @@ Vue.component('order-row', {
     },
     currency: function (cents) {
       return '$' + (parseInt(cents) / 100).toFixed(2);
+    },
+    fullName: function (obj) {
+      if (typeof obj !== 'undefined') {
+        obj.first_name + ' ' + obj.last_name
+      }
     }
   }
 })

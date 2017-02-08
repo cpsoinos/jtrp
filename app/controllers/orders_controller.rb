@@ -1,10 +1,12 @@
 class OrdersController < ApplicationController
 
   def index
-    @orders = Order.includes(:items).page(params[:page])
     respond_to do |format|
       format.html
-      format.json { render json: @orders.to_json(include: :items) }
+      format.json do
+        @orders = Order.includes(:items, :employee, :customer)
+        render json: @orders.to_json(include: [:items, :employee, :customer])
+      end
     end
   end
 

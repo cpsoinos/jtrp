@@ -14,24 +14,28 @@
         <tr class="text-center">
           <th>Date</th>
           <th>Employee</th>
-          <th>Tender</th>
+          <th>Customer</th>
+          <th>No. of Items</th>
           <th>Amount</th>
-          <th></th>
         </tr>
       </thead>
       <tbody>
+        <div class="text-center" id="loader">
+          <div class="showbox"><div class="loader"><svg class="circular" viewBox="25 25 50 50"><circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/></svg></div></div>
+        </div>
         <tr is="order-row" v-for="order in orders" :order="order"></tr>
       </tbody>
     </table>
   </div>
+
 </div>
 
 <script type="text/x-template" id="order-row">
-  <tr>
+  <tr v-bind:id="order.id">
     <td>{{ order.created_at | moment }}</td>
-    <td>{{ order.employee }}</td>
-    <td>{{ order.tender }}</td>
+    <td>{{ order.employee | fullName }}</td>
+    <td>{{ order.customer | fullName }}</td>
+    <td>{{ order.items.length }}</td>
     <td>{{ order.amount_cents | currency }}</td>
-    <td></td>
   </tr>
 </script>
