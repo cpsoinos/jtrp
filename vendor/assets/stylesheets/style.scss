@@ -123,12 +123,12 @@ textarea:focus, input[type="text"]:focus, input[type="password"]:focus, input[ty
 }
 .btn:hover
 {
-   background-color:#4DC7EC;
+   background-color:#0000FF;
    color:#fff;
 }
 .btn-primary
 {
-	background-color:#4DC7EC;
+	background-color:#0000FF;
 	color:#fff;
 	padding:12px 25px 10px;
 	transition:all 0.4s ease 0s;
@@ -276,7 +276,7 @@ textarea:focus, input[type="text"]:focus, input[type="password"]:focus, input[ty
 
 	.navbar .nav > li:hover > a
 	{
-	  background:#4DC7EC;
+	  background:#0000FF;
 	  color:#fff;
 	}
 
@@ -309,8 +309,8 @@ textarea:focus, input[type="text"]:focus, input[type="password"]:focus, input[ty
 	{
 		background:#777;
 		background:rgba(0, 0, 0, 0.9);
-		background:#4DC7EC;
-		background:rgba(77, 199, 236, 0.9);
+		background:#0000FF;
+		background:#0000FF;
 		color:#fff;
 		text-shadow:none;
 	}
@@ -441,7 +441,7 @@ textarea:focus, input[type="text"]:focus, input[type="password"]:focus, input[ty
 
 	.navbar .nav.cart > li > a span
 	{
-		background:#4DC7EC;
+		background:#0000FF;
 		padding:2px 5px;
 		border-radius:3px;
 		font-weight:400px;
@@ -732,7 +732,7 @@ textarea:focus, input[type="text"]:focus, input[type="password"]:focus, input[ty
 {
 	background: rgba(255, 255, 255, 0.05);
 	box-shadow:none;
-	border-bottom:2px solid #4DC7EC;
+	border-bottom:2px solid #0000FF;
 	border-bottom:2px solid rgba(77, 199, 236, 0.5);
 	padding-bottom: 1px;
 }
@@ -960,7 +960,7 @@ a.menu:after, .dropdown-toggle:after {
 	margin:0px;
 	margin-top:20px;
 	color:#555;
-	/*color:#4DC7EC;*/
+	/*color:#0000FF;*/
 	padding:10px;
 }
 
@@ -1012,7 +1012,7 @@ a.menu:after, .dropdown-toggle:after {
 
 .left-menu > div ul li.active > a
 {
-	border-bottom:1px solid #4DC7EC;
+	border-bottom:1px solid #0000FF;
 }
 
 .left-menu h3
@@ -1076,8 +1076,8 @@ ul.slides
 
 .product_sale
 {
-  background:#4DC7EC;
-  background: none repeat scroll 0 0 rgba(77, 199, 236, 0.9);
+  background:#0000FF;
+  background: none repeat scroll 0 0 #0000FF;
 
   color: #FFFFFF;
   font-size: 12px;
@@ -1093,7 +1093,7 @@ ul.slides
 /*.product:hover
 {
    border:1px solid rgba(42, 127, 211, 0.2);
-   box-shadow:0 0 15px -8px #4DC7EC;
+   box-shadow:0 0 15px -8px #0000FF;
 }*/
 .product .name
 {
@@ -1134,7 +1134,7 @@ ul.slides
 }
 .product .addcart a
 {
-    background:#4DC7EC;
+    background:#0000FF;
 	padding:8px 15px;
 	color:#fff;
 	font-family:'Open Sans';
@@ -1442,7 +1442,7 @@ ul.slides
     margin-bottom: 0;
 }
 #twitter_update_list a {
-    color: #4DC7EC;
+    color: #0000FF;
 }
 #twitter_update_list a:hover {
     color: #3D3D3D;
@@ -1706,7 +1706,7 @@ ul.slides
 }
 .show-login a
 {
-   color:#4DC7EC;
+   color:#0000FF;
    font-size:12px;
 }
 .show-login a:hover
@@ -1847,7 +1847,7 @@ label
 }
 .your_order  td span
 {
-    color:#4DC7EC;
+    color:#0000FF;
 }
 .your_order  .subtotal
 {
@@ -1876,7 +1876,7 @@ label
 }
 .your_order .radio:hover
 {
-   color:#4DC7EC;
+   color:#0000FF;
 }
 .your_order .radio img
 {
@@ -1927,7 +1927,7 @@ input[type="text"],label
 }
 .controls a:hover
 {
-   color:#4DC7EC;
+   color:#0000FF;
 }
 /*end my account*/
 
@@ -1955,7 +1955,7 @@ input[type="text"],label
 
 .image-additional a:focus
 {
-  outline: 1px dotted #4DC7EC;
+  outline: 1px dotted #0000FF;
 }
 
 .product-info h1
@@ -1985,7 +1985,7 @@ input[type="text"],label
 }
 .product-info li a:hover
 {
-   color:#4DC7EC;
+   color:#0000FF;
 }
 .line
 {
@@ -2090,7 +2090,7 @@ input[type="text"],label
 .tabs .nav-tabs > .active > a, .nav-tabs > .active > a:hover
 {
    color:#555;
-   border-color:#4DC7EC #eee transparent;
+   border-color:#0000FF #eee transparent;
 }
 
 .nav > li > a:hover, .nav > li > a:focus
@@ -2149,7 +2149,7 @@ input[type="text"],label
 }
 .tab-pane a
 {
-   color:#4DC7EC;
+   color:#0000FF;
    font-size:12px;
 }
 .product-info .control-label
@@ -2410,7 +2410,7 @@ p.forgotten-password
 }
 .sitemap .subtitle a:hover
 {
-	color:#4DC7EC;
+	color:#0000FF;
 }
 .sitemap ul li a:hover
 {
@@ -2527,7 +2527,7 @@ h2.page-title
 .content-blog h3 a:hover
 {
 	text-decoration:none;
-	color:#4DC7EC;
+	color:#0000FF;
 }
 .post-detail
 {
@@ -2540,7 +2540,7 @@ h2.page-title
 }
 .post-detail a
 {
-	color:#4DC7EC;
+	color:#0000FF;
 }
 .post-detail a:hover
 {
@@ -2560,7 +2560,7 @@ h2.page-title
 }
 .text-blog a em:hover
 {
-	color:#4DC7EC;
+	color:#0000FF;
 	text-decoration:none;
 }
 
@@ -2590,7 +2590,7 @@ h2.page-title
 }
 .col-post ul.post-menu li a:hover
 {
-	color:#4DC7EC;
+	color:#0000FF;
 	text-decoration:none;
 }
 .col-post .post-menu b
@@ -2613,7 +2613,7 @@ h2.page-title
 .col-post ul.tags a:hover
 {
 	text-decoration:none;
-	background:#4DC7EC;
+	background:#0000FF;
 	color:#fff;
 }
 .col-post .tags li a
@@ -2693,7 +2693,7 @@ h2.page-title
 }
 .pagination > li > a:hover
 {
-	background:#4DC7EC;
+	background:#0000FF;
 	color:#fff;
 }
 .flickr-widget ul img
@@ -2742,7 +2742,7 @@ h2.page-title
 
 a.comment-reply-link
 {
-	color:#4DC7EC;
+	color:#0000FF;
 }
 
 .respond
@@ -2956,13 +2956,13 @@ ul.autocomplete li
 
 ul.autocomplete li.selected
 {
-  background-color: #4DC7EC;
+  background-color: #0000FF;
   color: #fff;
 }
 
 ul.autocomplete li strong
 {
-  color: #4DC7EC;
+  color: #0000FF;
   font-weight:600;
 }
 

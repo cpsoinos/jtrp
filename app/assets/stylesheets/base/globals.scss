@@ -36,6 +36,38 @@ div.navbar.navbar-default {
   z-index:9999;
 }
 
+.top-margin {
+  margin-top: 1em;
+}
+
+.bottom-margin {
+  margin-bottom: 1em;
+}
+
+.large-top-margin {
+  margin-top: 3em;
+}
+
+.extra-large-top-margin {
+  margin-top: 8em;
+}
+
+.double-extra-large-top-margin {
+  margin-top: 16em;
+}
+
+.large-bottom-margin {
+  margin-bottom: 3em;
+}
+
+.extra-large-bottom-margin {
+  margin-bottom: 8em;
+}
+
+.large-bottom-padding {
+  padding-bottom: 3em;
+}
+
 .btn.btn-raised.btn-primary, .input-group-btn .btn.btn-raised.btn-primary, .btn.btn-fab.btn-primary, .input-group-btn .btn.btn-fab.btn-primary, .btn-group-raised .btn.btn-primary, .btn-group-raised .input-group-btn .btn.btn-primary {
   background-color: $brand-primary;
 }
