@@ -14,7 +14,7 @@ class CompaniesController < ApplicationController
   end
 
   def home
-    @featured_items = Item.active.limit(10).order("RANDOM()")
+    @featured_items = Item.active.joins(:photos).limit(10).order("RANDOM()")
   end
 
   def about

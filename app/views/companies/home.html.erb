@@ -6,7 +6,7 @@
       <div class="camera_wrap camera_emboss camera_white_skin">
         <% if @featured_items.present? %>
           <% @featured_items[0..4].each do |item| %>
-            <div data-thumb="<%= item.featured_photo.photo_url(:thumb) %>" data-src="<%= item.featured_photo.photo_url(:slideshow) %>"></div>
+            <div data-thumb="<%= item.featured_photo.photo_url(:thumb) %>" data-src="<%= item.featured_photo.photo_url(:slideshow) %>" data-link="<%= item_path(item) %>"></div>
           <% end %>
         <% end %>
       </div>
@@ -17,7 +17,7 @@
       <div class="camera_wrap camera_emboss camera_white_skin">
         <% if @featured_items.length >= 5 %>
           <% @featured_items[5..9].each do |item| %>
-            <div data-thumb="<%= item.featured_photo.photo_url(:thumb) %>" data-src="<%= item.featured_photo.photo_url(:slideshow) %>"></div>
+            <div data-thumb="<%= item.featured_photo.photo_url(:thumb) %>" data-src="<%= item.featured_photo.photo_url(:slideshow) %>" data-link="<%= item_path(item) %>" data-thumbnails="false"></div>
           <% end %>
         <% end %>
       </div>
@@ -26,7 +26,10 @@
 </div>
 
 <div class="location">
-  <div class="row">
+  <div class="row text-center">
+    <h1 class="company-title"><%= @company.name %></h1>
+  </div>
+  <div class="row top-margin">
     <div class="col-md-6">
       <%= render 'hours_block' %>
     </div>
@@ -64,18 +67,6 @@
       <% end %>
     </div>
 
-    <!-- <div class="row">
-      <div class="col-md-12">
-
-        <div class="newsletter clearfix">
-          <h3>Newsletter</h3>
-          <div>
-            <input type="text" name="email" class="email">
-            <input type="submit" value="Subscribe" class="btn btn-primary">
-          </div>
-        </div>
-      </div>
-    </div> -->
   </div>
 
 </div>
