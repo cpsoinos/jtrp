@@ -84,9 +84,6 @@ var initSlideshow = function(selector) {
     showTitle:false
   };
 
-  // $("#privacy-policy").click(function() {
-  //   $("#privacy-policy-modal").modal('show');
-  // })
 }
 
 var initMap = function() {
