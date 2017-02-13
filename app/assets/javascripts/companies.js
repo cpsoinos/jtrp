@@ -83,6 +83,7 @@ var initSlideshow = function(selector) {
     smoothMove:3,
     showTitle:false
   };
+
 }
 
 var initMap = function() {

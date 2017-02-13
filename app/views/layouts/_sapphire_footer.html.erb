@@ -1,3 +1,4 @@
+<%= render "layouts/privacy_policy_modal" %>
 <div class="footer black" id="footer">
   <div class="container">
     <div class="row">
@@ -6,9 +7,7 @@
           <h3><span class="company-font nav-link">Information</span></h3>
           <ul>
             <li><%= link_to "About Us", about_path %></li>
-            <li><%= link_to "Service Rate Schedule", service_rate_schedule_path %></li>
-            <li><%= link_to "Service Rate Schedule for Agents", agent_service_rate_schedule_path %></li>
-            <li><%= link_to "Consignment Terms & Conditions", consignment_policies_path %></li>
+            <li><%= link_to "Privacy Policy", "#", id: "privacy-policy", data: {toggle: "modal", target: "#privacy-policy-modal"} %></li>
           </ul>
         </div>
       </div>
@@ -17,9 +16,9 @@
           <h3><span class="company-font nav-link">Customer Service</span></h3>
           <ul>
             <li><%= link_to "Contact Us", contact_path %></li>
-            <!-- <li><a href="">Returns</a></li>
-            <li><a href="">Site Map</a></li>
-            <li><a href="">Shipping</a></li> -->
+            <li><%= link_to "Service Rate Schedule", service_rate_schedule_path %></li>
+            <li><%= link_to "Service Rate Schedule for Agents", agent_service_rate_schedule_path %></li>
+            <li><%= link_to "Consignment Terms & Conditions", consignment_policies_path %></li>
           </ul>
         </div>
       </div>

@@ -37,7 +37,7 @@
           <% unless params[:print] %>
             <%= render 'layouts/alerts', alert: alert, notice: notice %>
           <% end %>
-          <div class="<%= 'extra-large-top-margin' unless params[:print] %>" id="layout-top-buffer">
+          <div id="layout-top-buffer">
             <%= yield %>
           </div>
         </div>
