@@ -8,7 +8,7 @@ module Clover
         name: item.description,
         price: item.listing_price_cents,
         sku: item.id,
-        alternateName: item.token
+        code: item.token
       }.to_json, headers) do |response, request, result|
         begin
           case response.code
@@ -47,7 +47,7 @@ module Clover
         name: item.description,
         price: item.listing_price_cents,
         sku: item.id,
-        alternateName: item.token
+        code: item.token
       }.to_json, headers) do |response, request, result|
         begin
           case response.code

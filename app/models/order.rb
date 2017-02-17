@@ -48,7 +48,7 @@ class Order < ActiveRecord::Base
     tokens ||= begin
       line_items.map do |element|
         next if element.name == "Manual Transaction"
-        element.try(:alternateName)
+        element.try(:code)
       end.compact
     end
     Item.where(token: tokens)
