@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170204181407) do
+ActiveRecord::Schema.define(version: 20170208020350) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -168,6 +168,14 @@ ActiveRecord::Schema.define(version: 20170204181407) do
   add_index "companies", ["primary_contact_id"], name: "index_companies_on_primary_contact_id", using: :btree
   add_index "companies", ["slug"], name: "index_companies_on_slug", using: :btree
 
+  create_table "customers", force: :cascade do |t|
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "remote_id"
+    t.boolean  "marketing_allowed"
+    t.datetime "customer_since"
+  end
+
   create_table "discounts", force: :cascade do |t|
     t.integer  "order_id"
     t.integer  "item_id"
@@ -296,9 +304,13 @@ ActiveRecord::Schema.define(version: 20170204181407) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "deleted_at"
+    t.integer  "customer_id"
+    t.integer  "employee_id"
   end
 
+  add_index "orders", ["customer_id"], name: "index_orders_on_customer_id", using: :btree
   add_index "orders", ["deleted_at"], name: "index_orders_on_deleted_at", using: :btree
+  add_index "orders", ["employee_id"], name: "index_orders_on_employee_id", using: :btree
 
   create_table "pg_search_documents", force: :cascade do |t|
     t.text     "content"
@@ -451,6 +463,7 @@ ActiveRecord::Schema.define(version: 20170204181407) do
     t.string   "clover_token"
     t.string   "slug"
     t.datetime "deleted_at"
+    t.string   "remote_id"
   end
 
   add_index "users", ["account_id"], name: "index_users_on_account_id", using: :btree
@@ -473,6 +486,7 @@ ActiveRecord::Schema.define(version: 20170204181407) do
   add_foreign_key "items", "categories"
   add_foreign_key "items", "orders"
   add_foreign_key "jobs", "accounts"
+  add_foreign_key "orders", "customers"
   add_foreign_key "photos", "items"
   add_foreign_key "photos", "proposals"
   add_foreign_key "scanned_agreements", "agreements"

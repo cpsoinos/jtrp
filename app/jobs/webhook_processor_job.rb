@@ -10,26 +10,46 @@ class WebhookProcessorJob < ActiveJob::Base
 
   def perform(webhook)
     @webhook = webhook
-    process_objects
+    execute
   end
 
   private
 
-  def process_objects
-    webhook.objects.each do |object|
-      local_object(object).process_webhook
+  def execute
+    unique_remote_identifiers.each do |obj|
+      process_local_object(obj)
     end
   end
 
-  def local_object(object)
-    identifier_type = object["objectId"].split(":").first
-    identifier = object["objectId"].split(":").last
+  def remote_objects
+    return [] unless webhook.data["appId"] == ENV["CLOVER_APP_ID"]
+    webhook.data["merchants"][ENV["CLOVER_MERCHANT_ID"]]
+  end
+
+  def unique_remote_identifiers
+    remote_objects.map { |obj| obj["objectId"] }.uniq
+  end
+
+  def find_local_object(remote_object)
+    identifier_type = remote_object.split(":").first
+    identifier = remote_object.split(":").last
+    return unless identifier_type == "O"
+    return unless object_processable?(identifier)
+
     case identifier_type
     when "I"
       Item.find_by(remote_id: identifier)
     when "O"
       Order.find_or_create_by(remote_id: identifier)
     end
+  end
+
+  def object_processable?(identifier)
+    Clover::Order.find(identifier).try(:state) == "locked"
+  end
+
+  def process_local_object(obj)
+    find_local_object(obj).try(:process_webhook)
   end
 
 end

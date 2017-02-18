@@ -4,7 +4,7 @@ module Clover
   class Order < Clover::CloverBase
 
     def self.find(order)
-      RestClient.get("#{base_url}/orders/#{order.remote_id}?expand=lineItems,discounts", headers) do |response, request, result|
+      RestClient.get("#{base_url}/orders/#{self.identifier(order)}?expand=lineItems,discounts", headers) do |response, request, result|
         begin
           case response.code
           when 200
@@ -33,6 +33,13 @@ module Clover
           Rollbar.error(e, result.message,  response: response, result: result)
         end
       end
+    end
+
+    private
+
+    def self.identifier(order)
+      id = order.try(:remote_id)
+      id ||= order
     end
 
   end

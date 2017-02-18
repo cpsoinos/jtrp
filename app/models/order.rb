@@ -72,7 +72,6 @@ class Order < ActiveRecord::Base
   def add_items_to_order
     return unless (remote_order && line_items.present?)
     self.items << items_from_remote_id
-    # self.items << items_from_token # failsafe against items with prematurely removed remote ids
   end
 
   def remote_order_open?
