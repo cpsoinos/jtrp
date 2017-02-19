@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170208020350) do
+ActiveRecord::Schema.define(version: 20170219005340) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -182,15 +182,18 @@ ActiveRecord::Schema.define(version: 20170208020350) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "amount_cents"
-    t.string   "amount_currency", default: "USD", null: false
+    t.string   "amount_currency",   default: "USD", null: false
     t.string   "name"
     t.string   "remote_id"
-    t.boolean  "applied",         default: false
+    t.boolean  "applied",           default: false
     t.decimal  "percentage"
     t.datetime "deleted_at"
+    t.integer  "discountable_id"
+    t.string   "discountable_type"
   end
 
   add_index "discounts", ["deleted_at"], name: "index_discounts_on_deleted_at", using: :btree
+  add_index "discounts", ["discountable_type", "discountable_id"], name: "index_discounts_on_discountable_type_and_discountable_id", using: :btree
   add_index "discounts", ["item_id"], name: "index_discounts_on_item_id", using: :btree
   add_index "discounts", ["order_id"], name: "index_discounts_on_order_id", using: :btree
 
@@ -306,6 +309,7 @@ ActiveRecord::Schema.define(version: 20170208020350) do
     t.datetime "deleted_at"
     t.integer  "customer_id"
     t.integer  "employee_id"
+    t.boolean  "processed"
   end
 
   add_index "orders", ["customer_id"], name: "index_orders_on_customer_id", using: :btree

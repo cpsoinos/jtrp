@@ -1,7 +1,8 @@
 class Discount < ActiveRecord::Base
   acts_as_paranoid
-  audited associated_with: :item
+  # audited associated_with: :item
 
+  belongs_to :discountable, polymorphic: true
   belongs_to :item
   belongs_to :order
 
@@ -9,21 +10,37 @@ class Discount < ActiveRecord::Base
     less_than_or_equal_to: 0
   }
 
-  validates_presence_of :order
+  # validates :discountable, presence: true
 
-  def apply_to_item
+  def apply
     return if applied?
-    # this will handle marking as sold in addition to applying discount
-    if item
-      ItemUpdater.new(item).update(sale_price_cents: (item.listing_price_cents + calculate_discount), sold_at: order.created_at)
+    if discountable_type == "Item"
+      apply_to_item
+    else
+      apply_to_order
     end
     self.applied = true
     self.save
   end
 
-  def calculate_discount
+  private
+
+  def apply_to_item
+    # this will handle marking as sold in addition to applying discount
+    ItemUpdater.new(discountable).update(sale_price_cents: (discountable.listing_price_cents + calculate_discount(discountable)), sold_at: discountable.order.created_at)
+    self.applied = true
+    self.save
+  end
+
+  def apply_to_order
+    discountable.items.each do |item|
+      ItemUpdater.new(item).update(sale_price_cents: (item.listing_price_cents - calculate_discount(item)), sold_at: item.order.created_at)
+    end
+  end
+
+  def calculate_discount(item)
     if percentage
-      item.listing_price_cents * (percentage.to_f / 100) * -1
+      item.listing_price_cents * percentage
     else
       amount_cents
     end

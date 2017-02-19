@@ -45,11 +45,18 @@ class WebhookProcessorJob < ActiveJob::Base
   end
 
   def object_processable?(identifier)
-    Clover::Order.find(identifier).try(:state) == "locked"
+    remote_order = Clover::Order.find(identifier)
+    remote_order.try(:state) == "locked"
+      # !remote_order.try(:payType).nil?    &&
+      # remote_order.try(:payments).try(:elements).each { |payment| payment.result == 'SUCCESS'}
   end
 
   def process_local_object(obj)
     find_local_object(obj).try(:process_webhook)
+  end
+
+  def order_paid?
+
   end
 
 end

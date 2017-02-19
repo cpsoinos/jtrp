@@ -71,6 +71,7 @@ gem 'gretel'
 gem 'madison'
 gem 'acts-as-taggable-on', '~> 4.0'
 gem 'sitemap_generator'
+gem 'sidekiq-unique-jobs'
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-classnames'
@@ -123,4 +124,5 @@ group :test do
   gem 'timecop'
   gem 'capybara-screenshot'
   gem 'aws-sdk', '~> 2'
+  gem 'vcr'
 end
