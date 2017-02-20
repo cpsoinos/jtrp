@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170219005340) do
+ActiveRecord::Schema.define(version: 20170220162044) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -174,6 +174,7 @@ ActiveRecord::Schema.define(version: 20170219005340) do
     t.string   "remote_id"
     t.boolean  "marketing_allowed"
     t.datetime "customer_since"
+    t.datetime "deleted_at"
   end
 
   create_table "discounts", force: :cascade do |t|
@@ -315,6 +316,20 @@ ActiveRecord::Schema.define(version: 20170219005340) do
   add_index "orders", ["customer_id"], name: "index_orders_on_customer_id", using: :btree
   add_index "orders", ["deleted_at"], name: "index_orders_on_deleted_at", using: :btree
   add_index "orders", ["employee_id"], name: "index_orders_on_employee_id", using: :btree
+
+  create_table "payments", force: :cascade do |t|
+    t.integer  "order_id"
+    t.string   "remote_id"
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
+    t.datetime "deleted_at"
+    t.integer  "amount_cents"
+    t.string   "amount_currency",     default: "USD", null: false
+    t.integer  "tax_amount_cents"
+    t.string   "tax_amount_currency", default: "USD", null: false
+  end
+
+  add_index "payments", ["order_id"], name: "index_payments_on_order_id", using: :btree
 
   create_table "pg_search_documents", force: :cascade do |t|
     t.text     "content"
@@ -476,6 +491,19 @@ ActiveRecord::Schema.define(version: 20170219005340) do
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   add_index "users", ["slug"], name: "index_users_on_slug", using: :btree
 
+  create_table "webhook_entries", force: :cascade do |t|
+    t.integer  "webhook_id"
+    t.integer  "webhookable_id"
+    t.string   "webhookable_type"
+    t.datetime "timestamp"
+    t.string   "action"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "webhook_entries", ["webhook_id"], name: "index_webhook_entries_on_webhook_id", using: :btree
+  add_index "webhook_entries", ["webhookable_type", "webhookable_id"], name: "index_webhook_entries_on_webhookable_type_and_webhookable_id", using: :btree
+
   create_table "webhooks", force: :cascade do |t|
     t.string   "integration"
     t.jsonb    "data"
@@ -491,10 +519,12 @@ ActiveRecord::Schema.define(version: 20170219005340) do
   add_foreign_key "items", "orders"
   add_foreign_key "jobs", "accounts"
   add_foreign_key "orders", "customers"
+  add_foreign_key "payments", "orders"
   add_foreign_key "photos", "items"
   add_foreign_key "photos", "proposals"
   add_foreign_key "scanned_agreements", "agreements"
   add_foreign_key "statement_pdfs", "statements"
   add_foreign_key "statements", "accounts"
   add_foreign_key "users", "accounts"
+  add_foreign_key "webhook_entries", "webhooks"
 end

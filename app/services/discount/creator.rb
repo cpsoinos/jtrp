@@ -8,7 +8,7 @@ class Discount::Creator
   end
 
   def create(attrs)
-    @attrs = attrs
+    @attrs = attrs.to_hash
     massage_attrs
     create_discount
   end
@@ -21,6 +21,7 @@ class Discount::Creator
     attrs.delete(:orderRef)
     attrs.delete(:lineItemRef)
     attrs[:percentage] = format_percentage(attrs[:percentage])
+    attrs[:amount_cents] = attrs.delete(:amount)
     attrs[:discountable] = discountable
   end
 
@@ -29,7 +30,7 @@ class Discount::Creator
   end
 
   def create_discount
-    Discount.create!(attrs)
+    Discount.find_or_create_by!(attrs)
   end
 
 end

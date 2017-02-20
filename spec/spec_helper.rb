@@ -1,3 +1,5 @@
+ENV['RAILS_ENV'] = 'test'
+
 require 'factory_girl_rails'
 require 'rails_helper'
 require 'helpers/user_helper.rb'

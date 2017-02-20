@@ -1,7 +1,7 @@
 Sidekiq.default_worker_options = {
   backtrace: true,
-  unique: :while_executing,
-  unique_args: -> (args) { [ args.first.except('job_id') ] }
+  # unique: :while_executing,
+  # unique_args: -> (args) { [ args.first.except('job_id') ] }
 }
 
 Sidekiq.configure_server do |config|

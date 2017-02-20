@@ -2,42 +2,29 @@ describe WebhookProcessorJob do
 
   context "open order" do
 
-    let(:webhook) { create(:webhook, :open_order) }
+    let(:webhook_entry) { create(:webhook_entry, :open_order) }
 
-    it "does not create an order unless it has been locked in Clover", :vcr do
+    it "does not error when calling 'process_webhook' on nil webhookable" do
       expect {
-        WebhookProcessorJob.perform_later(webhook)
-      }.not_to change {
-        Order.count
-      }
-    end
-
-    it "only checks the remote order status once" do
-      allow(Clover::Order).to receive(:find)
-      WebhookProcessorJob.perform_later(webhook)
-
-      expect(Clover::Order).to have_received(:find).once
+        WebhookProcessorJob.perform_later(webhook_entry)
+      }.not_to raise_error
     end
 
   end
 
   context "locked order" do
 
-    let(:webhook) { create(:webhook, :locked_order) }
+    let(:webhook_entry) { create(:webhook_entry, :locked_order) }
+    let(:order) { webhook_entry.webhookable }
+    let(:updater) { double("updater") }
 
-    it "creates a new order", :vcr do
-      expect {
-        WebhookProcessorJob.perform_later(webhook)
-      }.to change {
-        Order.count
-      }.by(1)
-    end
+    it "calls 'process_webhook' on webhookable" do
+      allow(Order::Updater).to receive(:new).and_return(updater)
+      allow(updater).to receive(:update)
+      WebhookProcessorJob.perform_later(webhook_entry)
 
-    it "checks all unique remote_objects for processability", :vcr do
-      allow(Clover::Order).to receive(:find)
-      WebhookProcessorJob.perform_later(webhook)
-
-      expect(Clover::Order).to have_received(:find).twice
+      expect(Order::Updater).to have_received(:new).with(order)
+      expect(updater).to have_received(:update)
     end
 
   end

@@ -17,11 +17,12 @@ class Item < ActiveRecord::Base
   belongs_to :category, touch: true
   belongs_to :proposal, counter_cache: true, touch: true
   belongs_to :order
-  has_many :discounts
+  has_many :discounts, as: :discountable
   has_many :children, class_name: "Item", foreign_key: "parent_item_id"
   belongs_to :parent_item, class_name: "Item", foreign_key: "parent_item_id", touch: true
   has_one :job, through: :proposal
   has_one :account, through: :job
+  has_many :webhook_entries, as: :webhookable
 
   has_secure_token
 
@@ -51,6 +52,7 @@ class Item < ActiveRecord::Base
   }
 
   validates :description, :proposal, :client_intention, presence: true
+  validates :remote_id, uniqueness: true
 
   scope :status, -> (status) { where(status: status) }
   scope :type, -> (type) do
