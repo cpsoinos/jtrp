@@ -11,6 +11,8 @@ Rails.application.routes.draw do
   end
 
   if Rails.env.development?
+    require 'mr_video'
+    mount MrVideo::Engine => '/mr_video'
     mount LetterOpenerWeb::Engine, at: "/devel/emails"
   end
 

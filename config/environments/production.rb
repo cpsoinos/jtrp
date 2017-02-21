@@ -98,11 +98,8 @@ Rails.application.configure do
   Readthis::Cache.new(marshal: Oj)
 
   config.cache_store = :readthis_store, {
-    expires_in: 2.weeks.to_i,
+    expires_in: 2.days.to_i,
     compress: true,
-    compression_threshold: 2.kilobytes,
-    namespace: 'cache',
-    redis: { url: "#{ENV['REDISCLOUD_URL']}", driver: :hiredis },
-    refresh: true
+    redis: { url: "#{ENV['REDISCLOUD_URL']}", driver: :hiredis }
   }
 end

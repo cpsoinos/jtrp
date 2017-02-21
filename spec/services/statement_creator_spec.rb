@@ -16,7 +16,7 @@ describe StatementCreator do
   end
 
   it "sets the statement date" do
-    Timecop.freeze
+    Timecop.freeze(DateTime.parse("January 12, 2016 13:00"))
     statement = service.create
     expect(statement.date.to_date.to_s).to eq(Date.today.to_s)
     Timecop.return

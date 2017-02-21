@@ -1,14 +1,14 @@
 require 'rest-client'
 
 module Clover
-  class Discount < Clover::CloverBase
+  class LineItem < CloverBase
 
     def self.find(order)
       RestClient.get("#{base_url}/orders/#{order.remote_id}/line_items?expand=discounts", headers) do |response, request, result|
         begin
           case response.code
           when 200
-            DeepStruct.wrap(JSON.parse(response))
+            DeepStruct.wrap(JSON.parse(response)["elements"])
           when 404
             nil
           else

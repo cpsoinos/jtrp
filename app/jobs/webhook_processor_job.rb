@@ -6,30 +6,17 @@ class WebhookProcessorJob < ActiveJob::Base
 
   throttle threshold: 8, period: 1.second
 
-  attr_reader :webhook
+  attr_reader :webhook_entry
 
-  def perform(webhook)
-    @webhook = webhook
-    process_objects
+  def perform(webhook_entry)
+    @webhook_entry = webhook_entry
+    execute
   end
 
   private
 
-  def process_objects
-    webhook.objects.each do |object|
-      local_object(object).process_webhook
-    end
-  end
-
-  def local_object(object)
-    identifier_type = object["objectId"].split(":").first
-    identifier = object["objectId"].split(":").last
-    case identifier_type
-    when "I"
-      Item.find_by(remote_id: identifier)
-    when "O"
-      Order.find_or_create_by(remote_id: identifier)
-    end
+  def execute
+    webhook_entry.webhookable.try(:process_webhook)
   end
 
 end

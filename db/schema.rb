@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170204181407) do
+ActiveRecord::Schema.define(version: 20170221032705) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -168,21 +168,35 @@ ActiveRecord::Schema.define(version: 20170204181407) do
   add_index "companies", ["primary_contact_id"], name: "index_companies_on_primary_contact_id", using: :btree
   add_index "companies", ["slug"], name: "index_companies_on_slug", using: :btree
 
+  create_table "customers", force: :cascade do |t|
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "remote_id"
+    t.boolean  "marketing_allowed"
+    t.datetime "customer_since"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.datetime "deleted_at"
+  end
+
   create_table "discounts", force: :cascade do |t|
     t.integer  "order_id"
     t.integer  "item_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "amount_cents"
-    t.string   "amount_currency", default: "USD", null: false
+    t.string   "amount_currency",   default: "USD", null: false
     t.string   "name"
     t.string   "remote_id"
-    t.boolean  "applied",         default: false
+    t.boolean  "applied",           default: false
     t.decimal  "percentage"
     t.datetime "deleted_at"
+    t.integer  "discountable_id"
+    t.string   "discountable_type"
   end
 
   add_index "discounts", ["deleted_at"], name: "index_discounts_on_deleted_at", using: :btree
+  add_index "discounts", ["discountable_type", "discountable_id"], name: "index_discounts_on_discountable_type_and_discountable_id", using: :btree
   add_index "discounts", ["item_id"], name: "index_discounts_on_item_id", using: :btree
   add_index "discounts", ["order_id"], name: "index_discounts_on_order_id", using: :btree
 
@@ -296,9 +310,24 @@ ActiveRecord::Schema.define(version: 20170204181407) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "deleted_at"
+    t.boolean  "processed"
   end
 
   add_index "orders", ["deleted_at"], name: "index_orders_on_deleted_at", using: :btree
+
+  create_table "payments", force: :cascade do |t|
+    t.integer  "order_id"
+    t.string   "remote_id"
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
+    t.datetime "deleted_at"
+    t.integer  "amount_cents"
+    t.string   "amount_currency",     default: "USD", null: false
+    t.integer  "tax_amount_cents"
+    t.string   "tax_amount_currency", default: "USD", null: false
+  end
+
+  add_index "payments", ["order_id"], name: "index_payments_on_order_id", using: :btree
 
   create_table "pg_search_documents", force: :cascade do |t|
     t.text     "content"
@@ -459,6 +488,19 @@ ActiveRecord::Schema.define(version: 20170204181407) do
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   add_index "users", ["slug"], name: "index_users_on_slug", using: :btree
 
+  create_table "webhook_entries", force: :cascade do |t|
+    t.integer  "webhook_id"
+    t.integer  "webhookable_id"
+    t.string   "webhookable_type"
+    t.datetime "timestamp"
+    t.string   "action"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "webhook_entries", ["webhook_id"], name: "index_webhook_entries_on_webhook_id", using: :btree
+  add_index "webhook_entries", ["webhookable_type", "webhookable_id"], name: "index_webhook_entries_on_webhookable_type_and_webhookable_id", using: :btree
+
   create_table "webhooks", force: :cascade do |t|
     t.string   "integration"
     t.jsonb    "data"
@@ -473,10 +515,12 @@ ActiveRecord::Schema.define(version: 20170204181407) do
   add_foreign_key "items", "categories"
   add_foreign_key "items", "orders"
   add_foreign_key "jobs", "accounts"
+  add_foreign_key "payments", "orders"
   add_foreign_key "photos", "items"
   add_foreign_key "photos", "proposals"
   add_foreign_key "scanned_agreements", "agreements"
   add_foreign_key "statement_pdfs", "statements"
   add_foreign_key "statements", "accounts"
   add_foreign_key "users", "accounts"
+  add_foreign_key "webhook_entries", "webhooks"
 end
