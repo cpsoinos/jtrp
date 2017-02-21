@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170220162044) do
+ActiveRecord::Schema.define(version: 20170221032705) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -174,6 +174,8 @@ ActiveRecord::Schema.define(version: 20170220162044) do
     t.string   "remote_id"
     t.boolean  "marketing_allowed"
     t.datetime "customer_since"
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.datetime "deleted_at"
   end
 
@@ -308,14 +310,11 @@ ActiveRecord::Schema.define(version: 20170220162044) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "deleted_at"
-    t.integer  "customer_id"
-    t.integer  "employee_id"
     t.boolean  "processed"
+    t.string   "employee"
   end
 
-  add_index "orders", ["customer_id"], name: "index_orders_on_customer_id", using: :btree
   add_index "orders", ["deleted_at"], name: "index_orders_on_deleted_at", using: :btree
-  add_index "orders", ["employee_id"], name: "index_orders_on_employee_id", using: :btree
 
   create_table "payments", force: :cascade do |t|
     t.integer  "order_id"
@@ -482,7 +481,6 @@ ActiveRecord::Schema.define(version: 20170220162044) do
     t.string   "clover_token"
     t.string   "slug"
     t.datetime "deleted_at"
-    t.string   "remote_id"
   end
 
   add_index "users", ["account_id"], name: "index_users_on_account_id", using: :btree
@@ -518,7 +516,6 @@ ActiveRecord::Schema.define(version: 20170220162044) do
   add_foreign_key "items", "categories"
   add_foreign_key "items", "orders"
   add_foreign_key "jobs", "accounts"
-  add_foreign_key "orders", "customers"
   add_foreign_key "payments", "orders"
   add_foreign_key "photos", "items"
   add_foreign_key "photos", "proposals"
