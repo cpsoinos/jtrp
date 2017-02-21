@@ -10,6 +10,7 @@ class Order::Updater
     return "order unchanged" unless remote_object_changed?
     update_amount
     retrieve_items
+    remove_cleared_items
     retrieve_order_discounts
     retrieve_item_discounts
     apply_discounts
@@ -64,6 +65,17 @@ class Order::Updater
   def retrieve_local_item_from(line_item)
     remote_id = line_item.try(:item).try(:id)
     Item.find_by(remote_id: remote_id)
+  end
+
+  def remove_cleared_items
+    valid_remote_ids = line_items.map { |i| i.item.id }
+    order.items.each do |item|
+      unless valid_remote_ids.include?(item.remote_id)
+        item.order = nil
+        item.save
+        order.reload
+      end
+    end
   end
 
   def retrieve_order_discounts

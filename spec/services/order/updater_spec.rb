@@ -34,6 +34,18 @@ describe Order::Updater do
       expect(order.items).to match_array([mug, chair, shelf])
     end
 
+    it "removes an item if cleared from clover order" do
+      rogue_item = create(:item, :active, remote_id: "not_in_this_order")
+      order.items << rogue_item
+
+      expect(order.items).to include(rogue_item)
+
+      updater.update
+
+      expect(order.items).to match_array([mug, chair, shelf])
+      expect(rogue_item.reload).to be_active
+    end
+
     context "discounts" do
 
       context "on full order" do
