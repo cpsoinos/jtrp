@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170221032705) do
+ActiveRecord::Schema.define(version: 20170221041436) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -176,7 +176,6 @@ ActiveRecord::Schema.define(version: 20170221032705) do
     t.datetime "customer_since"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.datetime "deleted_at"
   end
 
   create_table "discounts", force: :cascade do |t|
@@ -320,11 +319,11 @@ ActiveRecord::Schema.define(version: 20170221032705) do
     t.string   "remote_id"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
-    t.datetime "deleted_at"
     t.integer  "amount_cents"
     t.string   "amount_currency",     default: "USD", null: false
     t.integer  "tax_amount_cents"
     t.string   "tax_amount_currency", default: "USD", null: false
+    t.datetime "deleted_at"
   end
 
   add_index "payments", ["order_id"], name: "index_payments_on_order_id", using: :btree
