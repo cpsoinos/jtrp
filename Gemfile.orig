@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby "2.3.0"
+ruby '2.3.1'
 gem 'bundler', '>= 1.8.4'
 gem 'rails', '4.2.5.2'
 gem 'pg', '~> 0.15'
@@ -10,8 +10,12 @@ gem 'coffee-rails', '~> 4.1.0'
 gem 'jquery-rails'
 gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
+gem 'pry-rails'
+gem 'pry-coolline'
+gem 'pry-byebug', '~> 3.3.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
-gem 'dotenv-rails', require: 'dotenv/rails-now'
+gem 'turbolinks'
+gem 'jquery-turbolinks'
 gem 'devise'
 gem 'carrierwave'
 gem 'carrierwave_direct'
@@ -26,41 +30,68 @@ gem 'has_secure_token'
 gem 'remotipart', '~> 1.2'
 gem 'dropzonejs-rails'
 gem 'fog'
+gem 'fog-aws'
 gem 'gon'
-gem 'rollbar'
-gem 'wicked_pdf'
-gem 'wkhtmltopdf-binary-edge', '~> 0.12.3.0'
 gem 'state_machines'
 gem 'state_machines-activerecord'
 gem 'bootsy'
-gem 'rubyzip'
-gem 'react-rails'
 gem 'chartkick'
 gem 'sweet-alert-confirm'
 gem 'jquery-fileupload-rails'
 gem 'sidekiq'
+gem 'activejob-traffic_control'
 gem 'sinatra', :require => nil
-gem 'pusher'
 gem 'puma'
 gem 'omniauth-clover'
 gem 'deepstruct'
 gem 'pg_search'
 gem 'kaminari'
 gem 'amoeba'
-
-group :production, :staging, :local do
-  gem 'rails_12factor'
-end
+gem 'metamagic'
+gem 'docraptor'
+gem 'sendgrid'
+gem 'sendgrid-ruby'
+gem 'roadie-rails'
+gem 'newrelic_rpm'
+gem 'readthis'
+gem 'hiredis'
+gem 'redis-browser'
+gem 'prawn-labels'
+gem 'rollbar'
+gem 'oj', '~> 2.12.14'
+gem 'fullcontact'
+gem 'puma_worker_killer'
+gem 'friendly_id', '~> 5.1.0'
+gem 'audited', '~> 4.3'
+gem 'rack-cors', :require => 'rack/cors'
+gem 'where-or'
+gem 'lob'
+gem 'paranoia', '~> 2.2'
+gem 'gretel'
+gem 'madison'
+gem 'acts-as-taggable-on', '~> 4.0'
+gem 'sitemap_generator'
+gem 'sidekiq-unique-jobs'
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-classnames'
   gem 'rails-assets-sweetalert'
+  gem 'rails-assets-image-picker'
+  gem 'rails-assets-toastr'
 end
 
-group :development, :test, :local do
-  gem 'pry-rails'
-  gem 'pry-coolline'
-  gem 'pry-byebug', '~> 3.3.0'
+group :production, :staging do
+  gem 'tunemygc'
+  gem 'scout_apm', '~> 3.0.x'
+  gem 'lograge'
+end
+
+group :production, :staging, :development do
+  gem 'rails_12factor'
+end
+
+group :development, :test do
+  gem 'dotenv-rails', require: 'dotenv/rails-now'
   gem 'sextant'
   gem 'better_errors'
   gem 'faker'
@@ -69,11 +100,15 @@ group :development, :test, :local do
   gem 'guard-rspec', require: false
   gem 'terminal-notifier-guard'
   gem 'selenium-webdriver'
+  gem 'parallel_tests'
 end
 
-group :development, :local do
+group :development do
   gem 'spring'
   gem 'rails_real_favicon'
+  gem 'bullet'
+  gem 'letter_opener_web', '~> 1.2.0'
+  gem 'mr_video'
 end
 
 group :test do
@@ -86,8 +121,12 @@ group :test do
   gem 'rspec-sidekiq'
   gem 'database_cleaner'
   gem 'webmock'
-  gem 'capybara-mechanize'
   gem 'coveralls', require: false
   gem 'pdf-reader'
   gem 'timecop'
+  gem 'capybara-screenshot'
+  gem 'aws-sdk', '~> 2'
+  gem 'vcr'
+  gem 'rspec-retry'
+  gem 'rspec_junit_formatter'
 end

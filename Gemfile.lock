@@ -809,10 +809,10 @@ DEPENDENCIES
   rails_12factor
   rails_real_favicon
   readthis
-  redis-browser
+  redis-browser (~> 0.3)
   remotipart (~> 1.2)
   roadie-rails
-  rollbar
+  rollbar (~> 2.13)
   rspec-rails (~> 3.0)
   rspec-retry
   rspec-sidekiq

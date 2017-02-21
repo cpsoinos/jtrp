@@ -1,5 +1,5 @@
 ***************
-*** 21 ****
-- gem 'money-rails'
---- 21 ----
-+ gem 'money-rails', '~> 1.6'
+*** 56 ****
+- gem 'readthis'
+--- 56 ----
++ gem 'readthis', '~> 2.0'
