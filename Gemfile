@@ -128,4 +128,5 @@ group :test do
   gem 'aws-sdk', '~> 2'
   gem 'vcr'
   gem 'rspec-retry'
+  gem 'rspec_junit_formatter'
 end
