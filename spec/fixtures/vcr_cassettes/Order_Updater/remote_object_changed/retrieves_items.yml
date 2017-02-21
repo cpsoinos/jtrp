@@ -55,4 +55,51 @@ http_interactions:
         rsHBSrXg+CUzKgCrBQDRU3gZoAcAAA==
     http_version: 
   recorded_at: Mon, 20 Feb 2017 19:59:06 GMT
+- request:
+    method: get
+    uri: https://apisandbox.dev.clover.com/v3/merchants/HFBW9FH45ZBH2/orders/KJHCCYXHV3ZDY/line_items?expand=discounts
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Bearer 285036e1-d1a8-dfc6-fe5c-51babdd7d241
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Content-Encoding:
+      - gzip
+      X-Frame-Options:
+      - SAMEORIGIN
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIAAAAAAAEA6pWSs1JzU3NKylWslKIVqhWykxRslJQCrMwsjCMjAgx8I2w
+        9FLSUVDKL0pJLQpKTVOygqvx9vJwdo6M8AgzjnKJVKrVUVDKLEnNRVJgEeJl
+        YBngZWYZZeDuBVaQl5ibCjLeUKEgWcE5vygvtUghKT8/W6E4IzUnDWRPYk5J
+        alFeYkmqH1RphpFplXdgnptRmKM7SEFBUWYyyAwzAwMDHQWlgqLMvJJUkJvT
+        EnOKU3UUlJKLUhNLUlNCMsFWGZpYmJuYGhgaGELUg/3hnJOZmlfijE2hgSVU
+        YWpFckZiXjqK0UWpaaV5KShCmcVBqWWpeaUgJ5UUlabW6sDDx8jDy9ky2MXD
+        MczXBOx0sN0khqFlhLlpiLOHS3hUWEQ4WhgmZyRmFikk5SQmZysUpyaWgIIH
+        I/yKU7KDywtc04K83CpACmDhZ2hKSvgZWBrTPfzMfN3MvQ0sLN0DQ4IDQE4n
+        K/yM/aKcvDw8opzCjZxRwi9GyTe1qKgyRkkhtzQdZDxG0JmVJ2cXuOUVGaU6
+        gvMAPOhICzkjOoVcrI6CUkYROIsqZZSUFFjp6ycWZBYn5qUk5VfopaSW6SXn
+        5JelFukl5+fqlxnr56YWgZJ4SbG+h5tTuKWbh4lplJOHkT44mIv1UbK3fk5m
+        Xmo8KH8DVmyfk5mbWWJraGCgVAsA96bERD4EAAA=
+    http_version: 
+  recorded_at: Tue, 21 Feb 2017 01:41:09 GMT
 recorded_with: VCR 3.0.3

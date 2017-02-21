@@ -5,7 +5,7 @@ FactoryGirl.define do
   factory :payment do
     order
     amount_cents 1500
-    remote_id Faker::Lorem.word
+    sequence(:remote_id) { |n| "#{Faker::Lorem.word}#{n}" }
   end
 
 end

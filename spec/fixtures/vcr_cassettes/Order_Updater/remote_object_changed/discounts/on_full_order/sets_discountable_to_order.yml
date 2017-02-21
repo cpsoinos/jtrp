@@ -227,4 +227,50 @@ http_interactions:
       string: '{"details":"No item found with id 14PKM2V26HN30.","message":"Not Found"}'
     http_version: 
   recorded_at: Mon, 20 Feb 2017 21:10:46 GMT
+- request:
+    method: get
+    uri: https://apisandbox.dev.clover.com/v3/merchants/HFBW9FH45ZBH2/orders/TDF8DFBQHYYNE/line_items?expand=discounts
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Bearer 285036e1-d1a8-dfc6-fe5c-51babdd7d241
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Content-Encoding:
+      - gzip
+      X-Frame-Options:
+      - SAMEORIGIN
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIAAAAAAAEA6pWSs1JzU3NKylWslKIVqhWykxRslJQcox0d/W19PCONDJz
+        clfSUVDKL0pJLQpKTVOygqsJcXGzcHFzCvSIjPRzVarVUVDKLEnNRVIQ5R1m
+        7B3m5ucY6GbkCFaQl5ibCjLeqTQtLbVEvzwzL1UhOTEpMy+1BGRJYk5JalFe
+        YkmqH1SdRXGkiatxuHNiUaYlSEFBUWYyyAAjUwMDAx0FpYKizLySVJCL0xJz
+        ilN1FJSSi1ITS1JTQjLBFhmaWJibGRmaGRlC1IN94ZyTmZpX4oxVoaElRGFq
+        RXJGYl46itFFqWmleSkoQpnFQallqXmlIDeVFJWm1urAQyfI2cLQzDfI3MUy
+        wiwA5Haw3SSGoKFJgLevUZiRmYefsQFKCCYV5ZfnKZRnJmenFimk5eSXpxYp
+        JCUWZ+MISKPMrNRSy8gSk9xUV5BjYAFpaERaOBpAggfsF1qGY6yOglJGETi5
+        KWWUlBRY6esnFmQWJ+alJOVX6KWklukl5+SXpRbpJefn6pcZ6+emFoEirKRY
+        38PNKdzSzcPENMrJw0gf7NBifZSkqp+TmZcaD0qrgBXb52TmZpbYGhoYKNUC
+        AOUFJ9wKAwAA
+    http_version: 
+  recorded_at: Tue, 21 Feb 2017 01:41:21 GMT
 recorded_with: VCR 3.0.3

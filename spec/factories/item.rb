@@ -11,7 +11,7 @@ FactoryGirl.define do
     trait :active do
       status "active"
       association :proposal, :active
-      sequence(:remote_id) { |n| "#{Faker::Number.number(10)}#{n}" }
+      sequence(:remote_id) { |n| "#{Faker::Lorem.word}#{n}" }
       listed_at 10.days.ago
     end
 

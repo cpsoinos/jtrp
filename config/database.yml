@@ -13,7 +13,7 @@ local:
 
 test:
   <<: *default
-  database: jtrp_test
+  database: jtrp_test<%= ENV['TEST_ENV_NUMBER'] %>
 
 production:
   url:  <%= ENV["DATABASE_URL"] %>

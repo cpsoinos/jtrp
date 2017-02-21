@@ -100,6 +100,7 @@ group :development, :test do
   gem 'guard-rspec', require: false
   gem 'terminal-notifier-guard'
   gem 'selenium-webdriver'
+  gem 'parallel_tests'
 end
 
 group :development do
@@ -107,6 +108,7 @@ group :development do
   gem 'rails_real_favicon'
   gem 'bullet'
   gem 'letter_opener_web', '~> 1.2.0'
+  gem 'mr_video'
 end
 
 group :test do
@@ -125,4 +127,5 @@ group :test do
   gem 'capybara-screenshot'
   gem 'aws-sdk', '~> 2'
   gem 'vcr'
+  gem 'rspec-retry'
 end

@@ -3,7 +3,7 @@ require 'factory_girl'
 FactoryGirl.define do
 
   factory :discount do
-    remote_id Faker::Lorem.word
+    sequence(:remote_id) { |n| "#{Faker::Lorem.word}#{n}" }
     amount_cents -1000
     percentage 0
     applied false
