@@ -10,9 +10,6 @@ gem 'coffee-rails', '~> 4.1.0'
 gem 'jquery-rails'
 gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
-gem 'pry-rails'
-gem 'pry-coolline'
-gem 'pry-byebug', '~> 3.3.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'turbolinks'
 gem 'jquery-turbolinks'
@@ -101,6 +98,9 @@ group :development, :test do
   gem 'terminal-notifier-guard'
   gem 'selenium-webdriver'
   gem 'parallel_tests'
+  gem 'pry-rails'
+  gem 'pry-coolline'
+  gem 'pry-byebug', '~> 3.3.0'
 end
 
 group :development do
@@ -109,6 +109,7 @@ group :development do
   gem 'bullet'
   gem 'letter_opener_web', '~> 1.2.0'
   gem 'mr_video'
+  gem 'derailed'
 end
 
 group :test do
