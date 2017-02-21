@@ -30,7 +30,7 @@ class Discount::Creator
   end
 
   def create_discount
-    Discount.find_or_create_by!(attrs)
+    Discount.find_or_create_by(attrs)
   end
 
 end

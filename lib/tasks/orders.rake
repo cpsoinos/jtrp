@@ -20,4 +20,14 @@ namespace :orders do
 
   end
 
+  task :reconcile_daily_sales => :environment do
+
+    # Heroku Scheduler "daily" job
+    orders = Order.where(created_at: 1.day.ago..DateTime.now)
+    orders.each do |order|
+      OrderSweepJob.perform_later(order)
+    end
+
+  end
+
 end
