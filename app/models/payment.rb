@@ -4,7 +4,8 @@ class Payment < ActiveRecord::Base
   belongs_to :order
   has_many :webhook_entries, as: :webhookable
 
-  validates :remote_id, uniqueness: true
+  validates :remote_id, uniqueness: true, allow_nil: true
+
   monetize :amount_cents, allow_nil: true, numericality: {
     greater_than_or_equal_to: 0,
     less_than_or_equal_to: 1000000

@@ -3,6 +3,6 @@ class Customer < ActiveRecord::Base
 
   has_many :webhook_entries, as: :webhookable
 
-  validates :remote_id, uniqueness: true
-  
+  validates :remote_id, uniqueness: true, allow_nil: true
+
 end

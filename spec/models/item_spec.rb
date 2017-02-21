@@ -9,6 +9,9 @@ describe Item do
   it { should validate_presence_of(:description) }
   it { should validate_presence_of(:proposal) }
   it { should validate_presence_of(:client_intention) }
+  
+  subject { create(:item, remote_id: 'abc123') }
+  it { should validate_uniqueness_of(:remote_id).allow_nil }
 
   it { should monetize(:purchase_price).allow_nil }
   it { should monetize(:listing_price).allow_nil }

@@ -52,7 +52,7 @@ class Item < ActiveRecord::Base
   }
 
   validates :description, :proposal, :client_intention, presence: true
-  validates :remote_id, uniqueness: true
+  validates :remote_id, uniqueness: true, allow_nil: true
 
   scope :status, -> (status) { where(status: status) }
   scope :type, -> (type) do
