@@ -9,7 +9,6 @@ class OrderSweepJob < ActiveJob::Base
 
   def perform(order)
     order.process_webhook
-    order.items.update_all(sold_at: order.created_at)
   end
 
 end
