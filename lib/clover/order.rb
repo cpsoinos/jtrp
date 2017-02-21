@@ -1,7 +1,7 @@
 require 'rest-client'
 
 module Clover
-  class Order < Clover::CloverBase
+  class Order < CloverBase
 
     def self.find(order)
       RestClient.get("#{base_url}/orders/#{self.identifier(order)}?expand=discounts,lineItems,payType,payments", headers) do |response, request, result|

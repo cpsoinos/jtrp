@@ -15,7 +15,7 @@ class Payment::Creator
   private
 
   def create_payment
-    order.payments.find_or_create_by!(payment_attrs)
+    order.payments.find_or_create_by(payment_attrs)
   end
 
   def payment_attrs

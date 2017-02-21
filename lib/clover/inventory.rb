@@ -1,7 +1,7 @@
 require 'rest-client'
 
 module Clover
-  class Inventory < Clover::CloverBase
+  class Inventory < CloverBase
 
     def self.create(item)
       RestClient.post("#{base_url}/items", {

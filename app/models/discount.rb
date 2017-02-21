@@ -9,7 +9,7 @@ class Discount < ActiveRecord::Base
   }
 
   validates :discountable, presence: true
-  validates :remote_id, uniqueness: true, allow_nil: true
+  validates :remote_id, uniqueness: { message: "remote_id already taken" }, allow_nil: true
 
   def apply
     return if applied?

@@ -12,7 +12,7 @@ class Order < ActiveRecord::Base
     less_than_or_equal_to: 1000000
   }
 
-  validates :remote_id, uniqueness: true, allow_nil: true
+  validates :remote_id, uniqueness: { message: "remote_id already taken" }, allow_nil: true
 
   def process_webhook
     Order::Updater.new(self).update

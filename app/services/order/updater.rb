@@ -98,13 +98,6 @@ class Order::Updater
     ApplyDiscountsJob.perform_later(order)
   end
 
-  # def mark_items_sold
-  #   order.items.map do |item|
-  #     next if item.sold? && item.sale_price_cents.present? && item.sold_at.present?
-  #     ItemUpdater.new(item).update(sale_price_cents: item.listing_price_cents, sold_at: order.created_at)
-  #   end
-  # end
-
   def remote_payments
     @_remote_payments ||= remote_object.try(:payments).try(:elements)
     @_remote_payments ||= []
