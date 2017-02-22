@@ -14,6 +14,8 @@ class Order < ActiveRecord::Base
 
   validates :remote_id, uniqueness: { message: "remote_id already taken" }, allow_nil: true
 
+  scope :paid, -> { joins(:payments) }
+
   def process_webhook
     Order::Updater.new(self).update
   end
