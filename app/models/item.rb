@@ -53,6 +53,7 @@ class Item < ActiveRecord::Base
 
   validates :description, :proposal, :client_intention, presence: true
   validates :remote_id, uniqueness: { message: "remote_id already taken" }, allow_nil: true
+  validates :token, uniqueness: true, allow_nil: true
 
   scope :status, -> (status) { where(status: status) }
   scope :type, -> (type) do
