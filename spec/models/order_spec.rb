@@ -10,4 +10,16 @@ describe Order do
 
   it { should monetize(:amount).allow_nil }
 
+  context "scopes" do
+
+    it "paid" do
+      paid_orders = create_list(:order, 3)
+      paid_orders.each { |o| create(:payment, order: o) }
+      unpaid_order = create(:order)
+
+      expect(Order.paid).to match_array(paid_orders)
+    end
+
+  end
+
 end
