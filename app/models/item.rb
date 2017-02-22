@@ -301,6 +301,16 @@ class Item < ActiveRecord::Base
     end
   end
 
+  def remote_attributes
+    {
+      name: description,
+      price: listing_price_cents,
+      sku: id,
+      alternateName: token,
+      code: token
+    }.to_json
+  end
+
   private
 
   def clear_sale_data

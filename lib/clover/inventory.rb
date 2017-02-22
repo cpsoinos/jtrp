@@ -4,7 +4,7 @@ module Clover
   class Inventory < CloverBase
 
     def self.create(item)
-      RestClient.post("#{base_url}/items", generate_remote_attributes(item), headers) do |response, request, result|
+      RestClient.post("#{base_url}/items", item.remote_attributes, headers) do |response, request, result|
         begin
           case response.code
           when 200
@@ -38,7 +38,7 @@ module Clover
     end
 
     def self.update(item)
-      RestClient.post("#{base_url}/items/#{item.remote_id}", generate_remote_attributes(item), headers) do |response, request, result|
+      RestClient.post("#{base_url}/items/#{item.remote_id}", item.remote_attributes, headers) do |response, request, result|
         begin
           case response.code
           when 200
@@ -85,18 +85,6 @@ module Clover
           Rollbar.error(e, result.message,  item_id: item.id, response: response, result: result)
         end
       end
-    end
-
-    private
-
-    def generate_remote_attributes(item)
-      {
-        name: item.description,
-        price: item.listing_price_cents,
-        sku: item.id,
-        alternateName: item.token,
-        code: item.token
-      }.to_json
     end
 
   end
