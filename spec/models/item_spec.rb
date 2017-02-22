@@ -9,7 +9,7 @@ describe Item do
   it { should validate_presence_of(:description) }
   it { should validate_presence_of(:proposal) }
   it { should validate_presence_of(:client_intention) }
-  
+
   subject { create(:item, remote_id: 'abc123') }
   it { should validate_uniqueness_of(:remote_id).with_message("remote_id already taken").allow_nil }
 
@@ -265,6 +265,18 @@ describe Item do
       expect(item).to be_active
     end
 
+  end
+
+  it "remote_attributes" do
+    item = create(:item)
+
+    expect(item.remote_attributes).to eq({
+      name: item.description,
+      price: item.listing_price_cents,
+      sku: item.id,
+      alternateName: item.token,
+      code: item.token
+    }.to_json)
   end
 
 end

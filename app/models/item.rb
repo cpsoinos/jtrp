@@ -53,6 +53,7 @@ class Item < ActiveRecord::Base
 
   validates :description, :proposal, :client_intention, presence: true
   validates :remote_id, uniqueness: { message: "remote_id already taken" }, allow_nil: true
+  validates :token, uniqueness: true, allow_nil: true
 
   scope :status, -> (status) { where(status: status) }
   scope :type, -> (type) do
@@ -298,6 +299,16 @@ class Item < ActiveRecord::Base
       self.save
       mark_agreement_inactive
     end
+  end
+
+  def remote_attributes
+    {
+      name: description,
+      price: listing_price_cents,
+      sku: id,
+      alternateName: token,
+      code: token
+    }.to_json
   end
 
   private

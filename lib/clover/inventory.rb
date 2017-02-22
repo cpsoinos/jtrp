@@ -4,12 +4,7 @@ module Clover
   class Inventory < CloverBase
 
     def self.create(item)
-      RestClient.post("#{base_url}/items", {
-        name: item.description,
-        price: item.listing_price_cents,
-        sku: item.id,
-        alternateName: item.token
-      }.to_json, headers) do |response, request, result|
+      RestClient.post("#{base_url}/items", item.remote_attributes, headers) do |response, request, result|
         begin
           case response.code
           when 200
@@ -43,12 +38,7 @@ module Clover
     end
 
     def self.update(item)
-      RestClient.post("#{base_url}/items/#{item.remote_id}", {
-        name: item.description,
-        price: item.listing_price_cents,
-        sku: item.id,
-        alternateName: item.token
-      }.to_json, headers) do |response, request, result|
+      RestClient.post("#{base_url}/items/#{item.remote_id}", item.remote_attributes, headers) do |response, request, result|
         begin
           case response.code
           when 200
