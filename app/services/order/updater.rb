@@ -53,6 +53,8 @@ class Order::Updater
 
   def retrieve_items
     line_items.each do |line_item|
+      item = retrieve_local_item_from(line_item)
+      next if item.nil?
       order.items << retrieve_local_item_from(line_item)
     end
   end
