@@ -100,7 +100,7 @@
             <table width="115" align="left" border="0" cellpadding="0" cellspacing="0">
               <tr>
                 <td height="115" style="padding:0 20px 20px 0;">
-                  <%= link_to image_tag(item.featured_photo.photo_url(client_hints: true, quality: "auto", fetch_format: :auto, dpr: "auto", effect: :improve, width: "115", height: "115", crop: "fill", effect: "shadow:50", x: 10, y: 10)), item_url(item) %>
+                  <%= link_to image_tag(item.featured_photo.photo_url(client_hints: true, quality: "auto", fetch_format: :auto, dpr: "auto", width: "115", height: "115", crop: "fill", effect: "shadow:50", x: 10, y: 10)), item_url(item) %>
                 </td>
               </tr>
             </table>
