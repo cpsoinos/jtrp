@@ -29,7 +29,7 @@ class Order::Updater
       cache_key = "orders/#{order.id}/clover/#{order.remote_id}"
       Rails.cache.delete(cache_key)
       Rails.cache.fetch("orders/#{order.id}/clover/#{order.remote_id}") do
-        order.remote_object
+        Clover::Order.find(order)
       end
     end
   end
