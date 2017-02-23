@@ -1,0 +1,45 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://apisandbox.dev.clover.com/v3/merchants/HFBW9FH45ZBH2/items
+    body:
+      encoding: UTF-8
+      string: '{"name":"Dining Room Hutch","price":15000,"sku":3850,"alternateName":"abc123A","code":"abc123A"}'
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Bearer 285036e1-d1a8-dfc6-fe5c-51babdd7d241
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '96'
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Content-Encoding:
+      - gzip
+      X-Frame-Options:
+      - SAMEORIGIN
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIAAAAAAAEA6pWykxRslJQiorwcjR0jXAxNnQxCFDSUVDKyExJSc1TslJI
+        S8wpTtVRUMpLzE0FqXTJzMvMS1cIys/PVfAoLUnOAKlOzClJLcpLLEn1g6pK
+        TEo2NDJ2BMkl56eANSIJFWeXgowytjA1AKkoKMpMBikxNDUwMNBRUALzQyoL
+        QGJKbp4Rri4gVSmpaYmlOSUhiRVBiSWpxUpWCiVFpSCXZRYHpZal5pWClEOF
+        cvNTMtMyU1NCMsGOBszQxMLcwsTC2NzIwMCgFgD8lvpa9AAAAA==
+    http_version: 
+  recorded_at: Thu, 23 Feb 2017 11:12:52 GMT
+recorded_with: VCR 3.0.3

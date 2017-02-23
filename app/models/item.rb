@@ -311,6 +311,11 @@ class Item < ActiveRecord::Base
     }.to_json
   end
 
+  def remote_object
+    return unless active? && remote_id.present?
+    Clover::Inventory.find(self)
+  end
+
   private
 
   def clear_sale_data

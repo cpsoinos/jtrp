@@ -66,6 +66,16 @@ FactoryGirl.define do
       end
     end
 
+    trait :vcr_test do
+      status "active"
+      association :proposal, :active
+      description "Dining Room Hutch"
+      listing_price_cents 15000
+      listed_at 10.days.ago
+      id 3850
+      token "abc123A"
+    end
+
   end
 
 end
