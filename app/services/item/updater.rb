@@ -1,4 +1,4 @@
-class ItemUpdater
+class Item::Updater
 
   attr_reader :item, :attrs
 

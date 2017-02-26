@@ -25,7 +25,7 @@ class Discount < ActiveRecord::Base
   private
 
   def apply_to_item(item)
-    ItemUpdater.new(item).update(sale_price_cents: (item.listing_price_cents - calculate_discount(item)), sold_at: item.order.created_at)
+    Item::Updater.new(item).update(sale_price_cents: (item.listing_price_cents - calculate_discount(item)), sold_at: item.order.created_at)
   end
 
   def apply_to_order

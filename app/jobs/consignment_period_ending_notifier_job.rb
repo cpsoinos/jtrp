@@ -18,12 +18,12 @@ class ConsignmentPeriodEndingNotifierJob < ActiveJob::Base
   end
 
   def build_letter
-    @letter = LetterCreator.new(agreement).create_letter(category)
+    @letter = Letter::Creator.new(agreement).create_letter(category)
     @letter.save_as_pdf
   end
 
   def deliver_mail
-    LetterSender.new(@letter).send_letter
+    Letter::Sender.new(@letter).send_letter
   end
 
   def deliver_email

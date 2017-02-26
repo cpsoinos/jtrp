@@ -1,10 +1,10 @@
-describe LetterCreator do
+describe Letter::Creator do
 
   let(:agreement) { create(:agreement) }
-  let(:creator) { LetterCreator.new(agreement) }
+  let(:creator) { Letter::Creator.new(agreement) }
 
   it "can be instantiated" do
-    expect(creator).to be_an_instance_of(LetterCreator)
+    expect(creator).to be_an_instance_of(Letter::Creator)
   end
 
   it "creates a letter" do

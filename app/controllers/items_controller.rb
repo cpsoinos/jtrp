@@ -23,7 +23,7 @@ class ItemsController < ApplicationController
   end
 
   def create
-    @item = ItemCreator.new(@proposal).create(item_params)
+    @item = Item::Creator.new(@proposal).create(item_params)
     @proposal = @item.proposal
     @job = @proposal.job
     @account = @job.account
@@ -69,7 +69,7 @@ class ItemsController < ApplicationController
   def update
     @item = Item.find(params[:id])
     respond_to do |format|
-      if ItemUpdater.new(@item).update(item_params) && !@item.errors.present?
+      if Item::Updater.new(@item).update(item_params) && !@item.errors.present?
         format.js do
           @message = "#{@item.description} updated!"
           render 'proposals/update_item_details'

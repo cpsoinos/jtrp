@@ -1,4 +1,4 @@
-class ItemExpirer
+class Item::Expirer
 
   attr_reader :item
 

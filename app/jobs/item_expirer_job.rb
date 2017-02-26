@@ -5,7 +5,7 @@ class ItemExpirerJob < ActiveJob::Base
 
   def perform(item_ids=[])
     @item_ids = item_ids
-    ItemExpirer.new.expire!(items)
+    Item::Expirer.new.expire!(items)
   end
 
   private

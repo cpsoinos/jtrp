@@ -1,22 +1,22 @@
-describe ClientCreator do
+describe Client::Creator do
 
   let(:user) { create(:internal_user) }
   let(:attrs) { attributes_for(:client) }
 
   it "can be instantiated" do
-    expect(ClientCreator.new(user)).to be_an_instance_of(ClientCreator)
+    expect(Client::Creator.new(user)).to be_an_instance_of(Client::Creator)
   end
 
   it "creates a client" do
     expect {
-      ClientCreator.new(user).create(attrs)
+      Client::Creator.new(user).create(attrs)
     }.to change {
       Client.count
     }.by 1
   end
 
   it "creates an account for the client" do
-    client = ClientCreator.new(user).create(attrs)
+    client = Client::Creator.new(user).create(attrs)
 
     expect(client.account).not_to be(nil)
   end
@@ -26,7 +26,7 @@ describe ClientCreator do
     attrs.merge!(account_id: account.id)
 
     expect {
-      ClientCreator.new(user).create(attrs)
+      Client::Creator.new(user).create(attrs)
     }.not_to change {
       Account.count
     }

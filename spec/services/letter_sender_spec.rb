@@ -1,7 +1,7 @@
-describe LetterSender do
+describe Letter::Sender do
 
   let(:letter) { create(:letter) }
-  let(:sender) { LetterSender.new(letter) }
+  let(:sender) { Letter::Sender.new(letter) }
   let(:account) { letter.account }
   let(:company) { Company.jtrp }
   let(:lob) { double("lob") }
@@ -47,7 +47,7 @@ describe LetterSender do
   end
 
   it "can be instantiated" do
-    expect(sender).to be_an_instance_of(LetterSender)
+    expect(sender).to be_an_instance_of(Letter::Sender)
   end
 
   it "builds a letter" do

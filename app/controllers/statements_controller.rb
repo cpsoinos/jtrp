@@ -19,7 +19,7 @@ class StatementsController < ApplicationController
 
   def update
     @statement = Statement.find(params[:id])
-    if StatementUpdater.new(@statement).update(statement_params)
+    if Statement::Updater.new(@statement).update(statement_params)
       respond_to do |format|
         format.js do
           @message = "Statement updated!"

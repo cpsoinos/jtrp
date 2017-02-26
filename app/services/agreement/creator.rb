@@ -1,4 +1,4 @@
-class AgreementCreator
+class Agreement::Creator
 
   attr_reader :user, :proposal
 

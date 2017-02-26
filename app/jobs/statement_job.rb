@@ -15,7 +15,7 @@ class StatementJob < ActiveJob::Base
 
   def generate_statements
     accounts.each do |account|
-      statement = StatementCreator.new(account).create
+      statement = Statement::Creator.new(account).create
       if statement.amount_due_to_client == 0
         statement.pay
       end

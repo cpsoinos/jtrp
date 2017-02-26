@@ -1,10 +1,10 @@
-describe StatementCreator do
+describe Statement::Creator do
 
   let(:account) { create(:account) }
-  let(:service) { StatementCreator.new(account) }
+  let(:service) { Statement::Creator.new(account) }
 
   it "can be instantiated" do
-    expect(service).to be_an_instance_of(StatementCreator)
+    expect(service).to be_an_instance_of(Statement::Creator)
   end
 
   it "creates a statement" do
