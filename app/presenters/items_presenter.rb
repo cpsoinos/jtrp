@@ -19,6 +19,7 @@ class ItemsPresenter
   end
 
   def paginate
+    return self if params[:labels].present?
     @items = @items.page(params[:page])
     self
   end

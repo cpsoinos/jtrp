@@ -8,9 +8,10 @@ feature "item labels" do
 
     before do
       sign_in user
+      allow_any_instance_of(LabelGenerator).to receive(:logo).and_return("#{Rails.root.join('spec', 'fixtures', 'test.png')}")
     end
 
-    scenario "clicks on 'Print Labels' link", skip: true do
+    scenario "clicks on 'Print Labels' link" do
       visit items_path
       click_link("Print Labels")
       convert_pdf_to_page
