@@ -11,7 +11,7 @@ describe Letter do
   before do
     allow(PdfGenerator).to receive(:new).and_return(generator)
     allow(TransactionalEmailJob).to receive(:perform_later)
-    allow(LetterSender).to receive(:new).and_return(sender)
+    allow(Letter::Sender).to receive(:new).and_return(sender)
     allow(generator).to receive(:render_pdf)
     allow(sender).to receive(:send_letter)
   end
@@ -41,7 +41,7 @@ describe Letter do
   it "delivers by mail" do
     letter.deliver_to_client
 
-    expect(LetterSender).to have_received(:new).with(letter)
+    expect(Letter::Sender).to have_received(:new).with(letter)
     expect(sender).to have_received(:send_letter)
   end
 

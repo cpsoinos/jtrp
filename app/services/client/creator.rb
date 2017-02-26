@@ -1,4 +1,4 @@
-class ClientCreator
+class Client::Creator
 
   attr_reader :user
 

@@ -1,4 +1,4 @@
-class ItemCreator
+class Item::Creator
 
   attr_reader :proposal, :account
 

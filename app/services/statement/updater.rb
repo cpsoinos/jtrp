@@ -1,4 +1,4 @@
-class StatementUpdater
+class Statement::Updater
 
   attr_reader :statement, :attrs
 

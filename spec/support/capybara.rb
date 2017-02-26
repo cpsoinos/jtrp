@@ -21,11 +21,3 @@ Capybara.register_server(:puma) do |app, port|
   require 'rack/handler/puma'
   Rack::Handler::Puma.run(app, Port: port)
 end
-
-# Capybara::Screenshot.s3_configuration = {
-#   s3_client_credentials: {
-#     access_key_id: ENV['AWS_ACCESS_KEY_ID'],
-#     secret_access_key: ENV['AWS_SECRET_ACCESS_KEY'],
-#   },
-#   bucket_name: "jtrp-test"
-# }

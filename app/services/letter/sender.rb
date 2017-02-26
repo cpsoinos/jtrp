@@ -1,4 +1,4 @@
-class LetterSender
+class Letter::Sender
   include LobAddressable
 
   attr_reader :letter, :account

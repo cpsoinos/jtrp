@@ -13,7 +13,7 @@ describe Statement do
 
     it "transitions 'unpaid' to 'paid'" do
       statement = create(:statement)
-      allow(CheckSender).to receive(:new).and_return(sender)
+      allow(Check::Sender).to receive(:new).and_return(sender)
       allow(sender).to receive(:send_check)
       expect(statement).to be_unpaid
       statement.pay

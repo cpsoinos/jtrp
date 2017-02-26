@@ -1,4 +1,4 @@
-class LetterCreator
+class Letter::Creator
 
   attr_reader :object
 

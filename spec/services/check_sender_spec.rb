@@ -1,9 +1,9 @@
-describe CheckSender do
+describe Check::Sender do
 
   let(:check) { create(:check) }
   let(:statement) { create(:statement) }
   let(:pdf) { double("pdf") }
-  let(:sender) { CheckSender.new(statement) }
+  let(:sender) { Check::Sender.new(statement) }
   let(:account) { check.account }
   let(:company) { Company.jtrp }
   let(:lob) { double("lob") }
@@ -109,7 +109,7 @@ describe CheckSender do
   end
 
   it "can be instantiated" do
-    expect(sender).to be_an_instance_of(CheckSender)
+    expect(sender).to be_an_instance_of(Check::Sender)
   end
 
   it "builds a check" do

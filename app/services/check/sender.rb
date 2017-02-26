@@ -1,4 +1,4 @@
-class CheckSender
+class Check::Sender
   include LobAddressable
 
   attr_reader :statement, :account

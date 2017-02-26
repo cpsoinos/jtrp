@@ -324,7 +324,7 @@ class Item < ActiveRecord::Base
       sale_price_cents: nil,
       order: nil
     }
-    ItemUpdater.new(self).update(cleared_attrs)
+    Item::Updater.new(self).update(cleared_attrs)
   end
 
   def mark_agreement_active

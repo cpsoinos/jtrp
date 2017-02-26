@@ -77,7 +77,7 @@ module Clover
       RestClient.delete("#{base_url}/items/#{item.remote_id}", headers) do |response, request, result|
         begin
           if [200, 400].include?(response.code)
-            ItemUpdater.new(item).update(remote_id: nil)
+            Item::Updater.new(item).update(remote_id: nil)
           else
             raise CloverError.new(result.message)
           end

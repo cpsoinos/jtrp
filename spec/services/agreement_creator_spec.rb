@@ -1,4 +1,4 @@
-describe AgreementCreator do
+describe Agreement::Creator do
 
   let(:user) { create(:user) }
   let(:proposal) { create(:proposal) }
@@ -13,12 +13,12 @@ describe AgreementCreator do
   end
 
   it "can be instantiated" do
-    expect(AgreementCreator.new(user)).to be_an_instance_of(AgreementCreator)
+    expect(Agreement::Creator.new(user)).to be_an_instance_of(Agreement::Creator)
   end
 
   it "creates new agreements" do
     expect{
-      AgreementCreator.new(user).create(proposal)
+      Agreement::Creator.new(user).create(proposal)
     }.to change{
       Agreement.count
     }.by(5)
@@ -30,12 +30,12 @@ describe AgreementCreator do
     agreement = create(:agreement, :consign, proposal: proposal)
 
     expect{
-      AgreementCreator.new(user).create(proposal)
+      Agreement::Creator.new(user).create(proposal)
     }.to change {
       Agreement.count
     }.by(4)
 
-    expect(agreement.in?(AgreementCreator.new(user).create(proposal))).to be(true)
+    expect(agreement.in?(Agreement::Creator.new(user).create(proposal))).to be(true)
   end
 
 end

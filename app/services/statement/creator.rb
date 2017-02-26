@@ -1,4 +1,4 @@
-class StatementCreator
+class Statement::Creator
 
   attr_reader :account
 
