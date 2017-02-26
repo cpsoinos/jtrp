@@ -139,6 +139,7 @@ class ItemsController < ApplicationController
   end
 
   def labels
+    params[:labels] = true
     @items = ItemsPresenter.new(params).execute
     labels = LabelGenerator.new(@items).generate
 
