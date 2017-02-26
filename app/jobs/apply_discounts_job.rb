@@ -4,7 +4,11 @@ class ApplyDiscountsJob < ActiveJob::Base
   queue_as :default
   include ActiveJob::TrafficControl::Throttle
 
-  throttle threshold: 5, period: 1.second
+  throttle threshold: 1, period: 1.second
+
+  rescue_from(Clover::CloverError) do
+    retry_job wait: 5.minutes, queue: :low
+  end
 
   attr_reader :order
 

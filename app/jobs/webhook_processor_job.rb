@@ -4,7 +4,7 @@ class WebhookProcessorJob < ActiveJob::Base
   queue_as :default
   include ActiveJob::TrafficControl::Throttle
 
-  throttle threshold: 3, period: 1.second
+  throttle threshold: 2, period: 1.second
 
   attr_reader :webhook_entry
 
