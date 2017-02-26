@@ -40,8 +40,8 @@
                 <%= link_to (controller_name == "agreements" ? desc : item.description.titleize), item_url(item) %>
                 <% if current_user.try(:internal?) && !controller_name.in?(["jobs", "agreements", "mailer"]) %>
                   <br><small>from: <%= link_to item.account.full_name, account_url(item.account) %></small>
-                  <br><small>SKU: <%= item.id %></small>
                 <% end %>
+                <br><small>SKU: <%= item.id %></small>
               </td>
 
               <% headers.each do |header| %>
