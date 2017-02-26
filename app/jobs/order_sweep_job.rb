@@ -5,7 +5,11 @@ class OrderSweepJob < ActiveJob::Base
 
   queue_as :maintenance
 
-  throttle threshold: 5, period: 1.second
+  throttle threshold: 2, period: 1.second
+
+  rescue_from(Clover::CloverError) do
+    retry_job wait: 5.minutes, queue: :low
+  end
 
   def perform(order)
     order.process_webhook
