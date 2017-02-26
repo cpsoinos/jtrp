@@ -60,5 +60,6 @@
 //= require jobs
 //= require proposals
 //= require users
+//= require letters
 
 //= require turbolinks

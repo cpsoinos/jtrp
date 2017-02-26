@@ -6,6 +6,7 @@ class Letter < ActiveRecord::Base
   belongs_to :agreement
   has_one :account, through: :agreement
   mount_uploader :pdf, ScannedAgreementUploader
+  mount_uploader :letter_pdf, PhotoUploader
 
   scope :by_category, -> (category) { where(category: category) }
 
@@ -51,6 +52,11 @@ class Letter < ActiveRecord::Base
 
   def hard_deadline
     self.created_at.in_time_zone('Eastern Time (US & Canada)').strftime("%B %e")
+  end
+
+  def humanized_category
+    return unless category
+    category.gsub("_", " ").titleize
   end
 
 end

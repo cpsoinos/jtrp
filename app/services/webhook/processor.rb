@@ -1,8 +1,9 @@
 class Webhook::Processor
 
-  attr_reader :data
+  attr_reader :integration_name, :data
 
-  def initialize(data)
+  def initialize(integration_name, data)
+    @integration_name = integration_name
     @data = data
   end
 
@@ -16,7 +17,7 @@ class Webhook::Processor
   private
 
   def create_webhook
-    @webhook ||= Webhook.create(integration: "clover", data: data)
+    @webhook ||= Webhook.create(integration: integration_name, data: data)
   end
 
   def create_webhook_entries

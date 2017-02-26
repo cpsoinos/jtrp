@@ -27,7 +27,7 @@ class Letter::Sender
         },
         color: true
       )
-    end
+    end.deep_symbolize_keys
     save_response(resp)
   end
 

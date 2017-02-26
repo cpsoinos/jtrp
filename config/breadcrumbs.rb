@@ -20,6 +20,16 @@ crumb :account do |account|
   parent :accounts
 end
 
+crumb :letters do |account|
+  link "Letters", account_letters_path(account)
+  parent :account, account
+end
+
+crumb :letter do |letter|
+  link letter.humanized_category, account_letter_path(letter.account, letter)
+  parent :letters, letter.account
+end
+
 crumb :statements do |account|
   link "Statements", account_statements_path(account)
   parent :account, account
