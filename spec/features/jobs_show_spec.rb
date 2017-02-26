@@ -11,6 +11,9 @@ feature "job show" do
     scenario "client account" do
       account = create(:client_account)
       job = create(:job, account: account)
+      proposal = create(:proposal, job: job)
+      owned_items = create_list(:item, 3, :owned, proposal: proposal)
+      consigned_items = create_list(:item, 3, :consigned, proposal: proposal)
       visit account_job_path(account, job)
 
       expect(page).to have_content("Job Number")
@@ -21,6 +24,15 @@ feature "job show" do
       expect(page).to have_content("Status")
       expect(page).to have_content("Proposals")
       expect(page).to have_content("Agreements")
+
+      owned_items.each do |item|
+        expect(page).to have_content(item.description.titleize)
+        expect(page).to have_content("SKU: #{item.id}")
+      end
+      consigned_items.each do |item|
+        expect(page).to have_content(item.description.titleize)
+        expect(page).to have_content("SKU: #{item.id}")
+      end
     end
 
     context "owner account" do
@@ -48,9 +60,11 @@ feature "job show" do
 
         owned_items.each do |item|
           expect(page).to have_content(item.description.titleize)
+          expect(page).to have_content("SKU: #{item.id}")
         end
         consigned_items.each do |item|
           expect(page).not_to have_content(item.description.titleize)
+          expect(page).not_to have_content("SKU: #{item.id}")
         end
       end
 
