@@ -3,6 +3,7 @@ require 'factory_girl'
 FactoryGirl.define do
 
   factory :webhook_entry do
+    timestamp 5.seconds.ago
 
     trait :open_order do
       webhook { create(:webhook, :open_order) }
