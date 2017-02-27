@@ -205,4 +205,58 @@ http_interactions:
         H4sIAAAAAAAEA6uuBQBDv6ajAgAAAA==
     http_version: 
   recorded_at: Mon, 20 Feb 2017 21:40:44 GMT
+- request:
+    method: get
+    uri: https://apisandbox.dev.clover.com/v3/merchants/HFBW9FH45ZBH2/orders/28QHBJ7FA1EB4?expand=discounts,lineItems,payType,payments
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Bearer 285036e1-d1a8-dfc6-fe5c-51babdd7d241
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Content-Encoding:
+      - gzip
+      X-Frame-Options:
+      - SAMEORIGIN
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIAAAAAAAEA6pWyihKTVOyUlDKKCkpKLbS1y9OzEtJyq/QS0kt00vOyS9L
+        LdJLzs/VLzPWz00tSs5IzCsp1vdwcwq3dPMwMY1y8jDSzy9KSS0q1jeyCPRw
+        8jJ3czR0dTJR0lFQykwBmYshnFxaVJSal1wJkgwNdgGpTM0tyMmvTE1VslKo
+        hmpzcfMJcfUN8PGPdHVVqtVRUCrJL0nMUbJSMDKyNDAA8RMrglJz88tSQbak
+        JeYUp4KsLA5LLFGyUoDxi0sSS0CmKuXkJ2enpoDsyk3MK03MCSlKzCtOTC7J
+        zM9DUp5elF9a4JOZl+pZkppbrGSlUFJUCjK2JLW4xDc/BWQSzOSCxMqQygKQ
+        iJJbqI8PyOTkotTEktSUkMxckLChiYW5mZGZiYmlAdi9yTmZqXklztjVWEDU
+        5OanZKZlYhhhbgiRzkFyWbVSak5qbmpeCciZ0fBgM4lwiTB28rawdPF2iwQ5
+        Chw5QeAohgUtaoyAwjazJDUXKeydTKK8PLy8zYy93aN8lUAK8hLBflIyKkhW
+        CE4FB1tijoJTUX55nkJaYmmFQk5qYklGapFCub5CfklJfm5iHsjyxJyS1KK8
+        xJJUP6j+QK8g39SqrFDziogKkIKCosxkUGAZG0B8WFCUmVeCEqP4AxXsO2ci
+        Qja1ApR001GMLkpNK81LQRHKLA5KLUvNKwW5CRT3tTrwkPUI8nY3cgryCIiK
+        DPcFuR1sN4kha+Ji5GvuGuHq6BFmboISshYxShWGBjFKCk45icnZCm5FoBDT
+        UVDCDMJgs8TyonTzoMRIQ5AzYEFoCk5lgy4AY0HJpyCxEpZUcaRb98iQwEjz
+        ILMgCzMzZ5C3wKGLlCYxE21Kahkk8cDSdVpyqmWiqYGFromRSYqupZlhsm6K
+        Qaqhrom5mZG5cbJhmkmaMTjMS1LzUlKLwIZTXvpBDCvWD7NwDfE2DfJ1D44y
+        MAP5AFL8oQqDAiMxN780D1RIIZVkjjAxUMmWnFicEQJ2IjhtwpQRU0hizy2w
+        8gNfEQRTg6sIgmbQotTi0hyQ45WCQ52dXYODlWrBMUxmZABWCwBxRq8RgAYA
+        AA==
+    http_version: 
+  recorded_at: Mon, 27 Feb 2017 13:07:21 GMT
 recorded_with: VCR 3.0.3
