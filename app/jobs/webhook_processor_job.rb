@@ -3,8 +3,9 @@ require 'active_job/traffic_control'
 class WebhookProcessorJob < ActiveJob::Base
   queue_as :default
   include ActiveJob::TrafficControl::Throttle
+  include ActiveJob::TrafficControl::Concurrency
 
-  throttle threshold: 2, period: 1.second
+  concurrency 1, drop: false
 
   attr_reader :webhook_entry
 

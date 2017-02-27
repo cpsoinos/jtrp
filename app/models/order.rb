@@ -25,7 +25,9 @@ class Order < ActiveRecord::Base
   end
 
   def remote_object
-    Clover::Order.find(self)
+    Rails.cache.fetch(cache_key) do
+      Clover::Order.find(self)
+    end
   end
 
 end
