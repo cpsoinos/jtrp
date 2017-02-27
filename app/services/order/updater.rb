@@ -79,8 +79,8 @@ class Order::Updater
   end
 
   def find_item_by_token(line_item)
-    token = line_item.try(:item).try(:itemCode)
-    token ||= line_item.try(:item).try(:alternateName)
+    token = line_item.try(:itemCode)
+    token ||= line_item.try(:alternateName)
     Item.find_by(token: token)
   end
 
