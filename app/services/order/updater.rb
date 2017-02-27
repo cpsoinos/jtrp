@@ -7,7 +7,6 @@ class Order::Updater
   end
 
   def update
-    # return "order unchanged" unless remote_object_changed?
     update_amount
     retrieve_items
     remove_cleared_items
@@ -20,20 +19,8 @@ class Order::Updater
 
   private
 
-  # TODO: monitor this
-  # def remote_object_changed?
-  #   Rails.cache.read("orders/#{order.id}/clover/#{order.remote_id}").try(:to_hash) != order.remote_object.try(:to_hash)
-  # end
-
   def remote_object
     @_remote_object ||= order.remote_object
-    # @_remote_object ||= begin
-    #   cache_key = "orders/#{order.id}/clover/#{order.remote_id}"
-    #   Rails.cache.delete(cache_key)
-    #   Rails.cache.fetch("orders/#{order.id}/clover/#{order.remote_id}") do
-    #     Clover::Order.find(order)
-    #   end
-    # end
   end
 
   def set_timestamps
