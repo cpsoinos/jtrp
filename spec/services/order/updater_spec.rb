@@ -13,10 +13,6 @@ describe Order::Updater do
     let!(:chair) { create(:item, description: "1 chair black seat", remote_id: "9X75TCHDWZVXW", listing_price_cents: 1500) }
     let!(:shelf) { create(:item, description: "1 pc Corner book shelf", remote_id: "8TJ09PJ69Z0GJ", listing_price_cents: 6000) }
 
-    # before do
-    #   allow(updater).to receive(:remote_object_changed?).and_return(true)
-    # end
-
     it "updates the order's amount" do
       expect {
         updater.update
@@ -159,17 +155,5 @@ describe Order::Updater do
     end
 
   end
-  # 
-  # context "remote object has not changed" do
-  #
-  #   before do
-  #     allow_any_instance_of(Order::Updater).to receive(:remote_object_changed?).and_return(false)
-  #   end
-  #
-  #   it "returns if remote object has not changed" do
-  #     expect(updater.update).to eq("order unchanged")
-  #   end
-  #
-  # end
 
 end
