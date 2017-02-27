@@ -1,0 +1,44 @@
+<% if current_user.try(:internal?) %>
+  <% breadcrumb :letters, @account %>
+<% end %>
+
+<div class="row">
+  <div class="col-sm-12 text-center">
+    <h1 class="company-title">Letters</h1>
+    <h4>for <%= @account.full_name %></h4>
+  </div>
+</div>
+
+<%= render 'letter_pdf_modal' %>
+
+<div class="col-md-10 col-md-offset-1 col-xs-12">
+
+    <div class="row">
+      <div class="table-responsive">
+        <table class="table table-shopping">
+          <thead>
+            <tr>
+              <th class="text-center"></th>
+              <th class="th-description text-center">Date Sent</th>
+              <th class="th-description text-center">Type</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <% @letters.each do |letter| %>
+              <tr>
+                <td>
+                  <div class="img-container" style="margin: auto;">
+                    <%= link_to image_tag(letter.letter_pdf.url(client_hints: true, quality: "auto", fetch_format: :auto, dpr: "auto", width: "120", height: "160"), class: "img-rounded img-responsive img-raised"), "", data: { toggle: "modal", target: "#letter-pdf-modal", category: letter.humanized_category, url: letter.letter_pdf_url(client_hints: true, quality: "auto", fetch_format: :auto, dpr: "auto") } %>
+                  </div>
+                </td>
+                <td class="text-center"><%= letter.created_at.strftime("%B %d, %Y") %></td>
+                <td class="text-center"><%= letter.humanized_category %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+</div>

@@ -35,16 +35,28 @@
                 <%= account.items.count %>
               </td>
               <td class="text-center">
-                <% if account.consignment_account? %>
-                  <%= link_to "View Statements", account_statements_path(account), class: "btn btn-round btn-raised btn-primary" %>
-                  <br />
-                <% end %>
-                <% unless account.inactive? %>
-                  <%= link_to "Deactivate", account_deactivate_path(account), class: "btn btn-round btn-raised btn-warning", method: :post %>
-                <% end %>
-                <% if account.inactive? %>
-                  <%= link_to "Reactivate", account_reactivate_path(account), class: "btn btn-round btn-raised btn-info", method: :post %>
-                <% end %>
+
+
+                <div class="btn-group dropdown">
+                  <button type="button" class="btn btn-raised btn-fab btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class='material-icons'>menu</i>
+                  </button>
+                  <ul class="dropdown-menu dropdown-menu-right">
+
+                    <% if account.consignment_account? %>
+                      <li><%= link_to "View Statements", account_statements_path(account) %></li>
+                      <li><%= link_to "View Letters", account_letters_path(account) %></li>
+                    <% end %>
+                    <% unless account.inactive? %>
+                      <li><%= link_to "Deactivate", account_deactivate_path(account), method: :post %></li>
+                    <% end %>
+                    <% if account.inactive? %>
+                      <li><%= link_to "Reactivate", account_reactivate_path(account), method: :post %></li>
+                    <% end %>
+
+                  </ul>
+                </div>
+
               </td>
             </tr>
           <% end %>

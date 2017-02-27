@@ -13,4 +13,8 @@ class Webhook < ActiveRecord::Base
     integration == 'clover'
   end
 
+  def lob?
+    integration == 'lob'
+  end
+
 end

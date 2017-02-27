@@ -3,7 +3,7 @@ class WebhooksController < ApplicationController
   before_filter :verify_webhook_auth_header
 
   def receive
-    Webhook::Processor.new(data).process
+    Webhook::Processor.new(params[:integration_name], data).process
     head :ok
   end
 
