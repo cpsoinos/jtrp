@@ -9,9 +9,9 @@ describe Order::Updater do
 
   context "remote object changed", :vcr do
 
-    let!(:mug) { create(:item, description: "Merry mug", remote_id: "93NZBJHHZBW2C", listing_price_cents: 100) }
-    let!(:chair) { create(:item, description: "1 chair black seat", remote_id: "9X75TCHDWZVXW", listing_price_cents: 1500) }
-    let!(:shelf) { create(:item, description: "1 pc Corner book shelf", remote_id: "8TJ09PJ69Z0GJ", listing_price_cents: 6000) }
+    let!(:mug) { create(:item, description: "Merry mug", remote_id: "93NZBJHHZBW2C", token: '6wckpFnr2eAJ', listing_price_cents: 100) }
+    let!(:chair) { create(:item, description: "1 chair black seat", remote_id: "9X75TCHDWZVXW", token: 'sdkSwpEfRJFx', listing_price_cents: 1500) }
+    let!(:shelf) { create(:item, description: "1 pc Corner book shelf", remote_id: "8TJ09PJ69Z0GJ", token: 'h25zKQnF2VAG', listing_price_cents: 6000) }
 
     it "updates the order's amount" do
       expect {
@@ -31,7 +31,7 @@ describe Order::Updater do
     end
 
     it "removes an item if cleared from clover order" do
-      rogue_item = create(:item, :active, remote_id: "not_in_this_order")
+      rogue_item = create(:item, :active, token: "not_in_this_order")
       order.items << rogue_item
 
       expect(order.items).to include(rogue_item)
@@ -47,8 +47,8 @@ describe Order::Updater do
       context "on full order" do
 
         let(:order_with_discount) { create(:order, remote_id: "TDF8DFBQHYYNE") }
-        let!(:basket) { create(:item, :active, description: "brown wicker flower basket", remote_id: "14PKM2V26HN30", listing_price_cents: 1200) }
-        let!(:cabinet) { create(:item, :active, description: "Buffet/wine cabinet", remote_id: "ZKV3KVFNAQF2A", listing_price_cents: 25000) }
+        let!(:basket) { create(:item, :active, description: "brown wicker flower basket", remote_id: "14PKM2V26HN30", token: '2ijeu9Yt4meE', listing_price_cents: 1200) }
+        let!(:cabinet) { create(:item, :active, description: "Buffet/wine cabinet", remote_id: "ZKV3KVFNAQF2A", token: '8sY4E3WCari9', listing_price_cents: 25000) }
         let(:updater) { Order::Updater.new(order_with_discount) }
         subject { updater.update }
 
@@ -78,7 +78,7 @@ describe Order::Updater do
       context "on an individual item" do
 
         let(:order_with_item_discount) { create(:order, remote_id: "PGQR8K1YD9AGE") }
-        let!(:dining_set) { create(:item, :active, description: "Dining Room Table 6 Chairs 2 Arm 4 Side 2 Leafs Cherry", remote_id: "Z0K3MWBA8JHPP", listing_price_cents: 30000) }
+        let!(:dining_set) { create(:item, :active, description: "Dining Room Table 6 Chairs 2 Arm 4 Side 2 Leafs Cherry", token: 'Ehoca5fbk5zW', remote_id: "Z0K3MWBA8JHPP", listing_price_cents: 30000) }
         let(:updater) { Order::Updater.new(order_with_item_discount) }
         subject { updater.update }
 
@@ -108,8 +108,8 @@ describe Order::Updater do
       context "on multiple individual items" do
 
         let(:order_with_item_discounts) { create(:order, remote_id: "28QHBJ7FA1EB4") }
-        let!(:chair) { create(:item, :active, description: "2pc Sectional Brown faux leather w/ ottoman", remote_id: "B4ZJHJK63KGZM", listing_price_cents: 30000) }
-        let!(:frame) { create(:item, :active, description: "8\"x10\" Black Frame", remote_id: "4D2M7EXEAHV74", listing_price_cents: 500) }
+        let!(:chair) { create(:item, :active, description: "2pc Sectional Brown faux leather w/ ottoman", token: 'QJRMezjU7xXx', remote_id: "B4ZJHJK63KGZM", listing_price_cents: 30000) }
+        let!(:frame) { create(:item, :active, description: "8\"x10\" Black Frame", token: 'QS6awrg7RaY1', remote_id: "4D2M7EXEAHV74", listing_price_cents: 500) }
         let(:updater) { Order::Updater.new(order_with_item_discounts) }
         subject { updater.update }
 

@@ -72,9 +72,9 @@ class Order::Updater
   end
 
   def remove_cleared_items
-    valid_remote_ids = line_items.map { |i| i.try(:item).try(:id) }.compact
+    valid_tokens = line_items.map { |i| (i.try(:itemCode) || i.try(:alternateName)) }.compact
     order.items.each do |item|
-      unless valid_remote_ids.include?(item.remote_id)
+      unless valid_tokens.include?(item.token)
         item.order = nil
         item.save
         order.reload
