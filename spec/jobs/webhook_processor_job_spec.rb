@@ -18,13 +18,23 @@ describe WebhookProcessorJob do
     let(:order) { webhook_entry.webhookable }
     let(:updater) { double("updater") }
 
-    it "calls 'process_webhook' on webhookable" do
+    before do
       allow(Order::Updater).to receive(:new).and_return(updater)
       allow(updater).to receive(:update)
+    end
+
+    it "calls 'process_webhook' on webhookable" do
       WebhookProcessorJob.perform_later(webhook_entry)
 
       expect(Order::Updater).to have_received(:new).with(order)
       expect(updater).to have_received(:update)
+    end
+
+    it "does not call 'process_webhook' when local object not changed" do
+      order.update_attributes(updated_at: webhook_entry.timestamp)
+      WebhookProcessorJob.perform_later(webhook_entry)
+
+      expect(Order::Updater).not_to have_received(:new)
     end
 
   end

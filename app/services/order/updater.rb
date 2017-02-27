@@ -7,7 +7,7 @@ class Order::Updater
   end
 
   def update
-    return "order unchanged" unless remote_object_changed?
+    # return "order unchanged" unless remote_object_changed?
     update_amount
     retrieve_items
     remove_cleared_items
@@ -20,18 +20,20 @@ class Order::Updater
 
   private
 
-  def remote_object_changed?
-    Rails.cache.read("orders/#{order.id}/clover/#{order.remote_id}").try(:to_hash) != order.remote_object.try(:to_hash)
-  end
+  # TODO: monitor this
+  # def remote_object_changed?
+  #   Rails.cache.read("orders/#{order.id}/clover/#{order.remote_id}").try(:to_hash) != order.remote_object.try(:to_hash)
+  # end
 
   def remote_object
-    @_remote_object ||= begin
-      cache_key = "orders/#{order.id}/clover/#{order.remote_id}"
-      Rails.cache.delete(cache_key)
-      Rails.cache.fetch("orders/#{order.id}/clover/#{order.remote_id}") do
-        Clover::Order.find(order)
-      end
-    end
+    @_remote_object ||= order.remote_object
+    # @_remote_object ||= begin
+    #   cache_key = "orders/#{order.id}/clover/#{order.remote_id}"
+    #   Rails.cache.delete(cache_key)
+    #   Rails.cache.fetch("orders/#{order.id}/clover/#{order.remote_id}") do
+    #     Clover::Order.find(order)
+    #   end
+    # end
   end
 
   def set_timestamps
@@ -55,8 +57,10 @@ class Order::Updater
     line_items.each do |line_item|
       item = retrieve_local_item_from(line_item)
       next if item.nil?
-      order.items << retrieve_local_item_from(line_item)
+      order.items << item
+      item.save
     end
+    order.save
   end
 
   def line_items
@@ -65,8 +69,19 @@ class Order::Updater
   end
 
   def retrieve_local_item_from(line_item)
+    item = find_item_by_remote_id(line_item)
+    item ||= find_item_by_token(line_item)
+  end
+
+  def find_item_by_remote_id(line_item)
     remote_id = line_item.try(:item).try(:id)
-    Item.find_by(remote_id: remote_id)
+    item = Item.find_by(remote_id: remote_id)
+  end
+
+  def find_item_by_token(line_item)
+    token = line_item.try(:item).try(:itemCode)
+    token ||= line_item.try(:item).try(:alternateName)
+    Item.find_by(token: token)
   end
 
   def remove_cleared_items
