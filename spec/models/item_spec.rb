@@ -279,4 +279,20 @@ describe Item do
     }.to_json)
   end
 
+  context 'amoeba' do
+
+    let(:item) { create(:item, :active, :with_initial_photo, token: 'abc', remote_id: 'def') }
+
+    it 'creates a child copy' do
+      child_item = item.build_child_item
+      child_item.save
+
+      expect(item.children).to match_array([child_item])
+      expect(child_item.token).not_to eq(item.token)
+      expect(child_item.remote_id).not_to eq(item.remote_id)
+      expect(child_item.description).to eq("Copy of #{item.description}")
+    end
+
+  end
+
 end

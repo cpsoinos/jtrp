@@ -111,6 +111,9 @@ class Item < ActiveRecord::Base
     include_association :category
     include_association :proposal
     include_association :photos
+    prepend description: "Copy of "
+    nullify :token
+    nullify :remote_id
   end
 
   def initial_photos
