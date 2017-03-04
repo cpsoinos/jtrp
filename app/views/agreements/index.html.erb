@@ -47,7 +47,7 @@
             <% end %>
             <iframe src="<%= agreement.scanned_agreement.scan_url %>" width="100%" style="border: none;" class="full-height"> </iframe>
           <% else %>
-            <%= render "#{agreement.agreement_type}", items: agreement.items, agreement: agreement %>
+            <%= render "#{agreement.agreement_type}", items: agreement.items, agreement: agreement, proposal: @proposal, job: @job, account: @account, client: @client, company: @company %>
             <%= render "agreements/terms_form", account: agreement.account, agreement: agreement %>
           <% end %>
           <%= render 'scanned_upload_form', agreement: agreement %>
