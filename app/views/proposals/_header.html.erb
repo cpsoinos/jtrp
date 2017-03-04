@@ -2,20 +2,20 @@
 
   <span class="col-sm-6">
     <h3 class="company-title brand-logo-link">
-      <%= link_to "#{image_tag('JTRPv2_color_noname.png', height: 30, width: 33, class: 'logo')} #{@company.name}".html_safe, root_path %>
+      <%= link_to "#{image_tag('JTRPv2_color_noname.png', height: 30, width: 33, class: 'logo')} #{company.name}".html_safe, root_path %>
     </h3>
     <table class="form-header-table">
       <tr>
         <td>phone:</td>
-        <td><%= number_to_phone(@company.phone) %></td>
+        <td><%= number_to_phone(company.phone) %></td>
       </tr>
       <tr>
         <td>email:</td>
-        <td><%= @company.email %></td>
+        <td><%= company.email %></td>
       </tr>
       <tr>
         <td>website:</td>
-        <td><%= @company.website %></td>
+        <td><%= company.website %></td>
       </tr>
     </table>
   </span>
@@ -23,22 +23,22 @@
   <span class="col-sm-push-6 text-right form-header-table">
     <h4><%= form_name %></h4>
     <table class="pull-right">
-      <% if @proposal.present? %>
+      <% if proposal.present? %>
         <tr>
           <td class="text-left">Date</td>
-          <td><%= @proposal.updated_at.strftime("%B %d, %Y") %></td>
+          <td><%= proposal.updated_at.strftime("%B %d, %Y") %></td>
         </tr>
         <tr>
           <td class="text-left">Proposal #</td>
-          <td><%= @proposal.id %></td>
+          <td><%= proposal.id %></td>
         </tr>
-      <% elsif @statement.present? %>
+      <% elsif statement.present? %>
         <td class="text-left">Date</td>
-        <td><%= @statement.date.last_month.strftime("%B, %Y") %></td>
+        <td><%= statement.date.last_month.strftime("%B, %Y") %></td>
       <% end %>
       <tr>
         <td class="text-left">Account #</td>
-        <td><%= @account.id %></td>
+        <td><%= account.id %></td>
       </tr>
     </table>
   </span>
@@ -53,20 +53,20 @@
       </tr>
       <tr>
         <td>name:</td>
-        <td><%= @client.full_name %></td>
+        <td><%= client.full_name %></td>
       </tr>
-      <% if @job.present? %>
+      <% if job.present? %>
         <tr>
           <td>
             service<br />
             address:
           </td>
           <td>
-            <%= @job.address_1 %><br />
-            <% if @job.address_2.present? %>
-              <%= @job.address_2 %><br />
+            <%= job.address_1 %><br />
+            <% if job.address_2.present? %>
+              <%= job.address_2 %><br />
             <% end %>
-            <%= @job.city %>, <%= @job.state %> <%= @job.zip %>
+            <%= job.city %>, <%= job.state %> <%= job.zip %>
           </td>
         </tr>
       <% end %>
@@ -76,20 +76,20 @@
           address:
         </td>
         <td>
-          <%= @client.address_1 %><br />
-          <% if @client.address_2.present? %>
-            <%= @client.address_2 %><br />
+          <%= client.address_1 %><br />
+          <% if client.address_2.present? %>
+            <%= client.address_2 %><br />
           <% end %>
-          <%= @client.city %>, <%= @client.state %> <%= @client.zip %>
+          <%= client.city %>, <%= client.state %> <%= client.zip %>
         </td>
       </tr>
       <tr>
         <td>phone:</td>
-        <td><%= number_to_phone(@client.phone) %></td>
+        <td><%= number_to_phone(client.phone) %></td>
       </tr>
       <tr>
         <td>email:</td>
-        <td><%= @client.email %></td>
+        <td><%= client.email %></td>
       </tr>
     </table>
   </div>

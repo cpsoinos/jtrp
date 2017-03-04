@@ -159,7 +159,7 @@ class Item < ActiveRecord::Base
   end
 
   def mark_agreement_inactive
-    agreement.mark_inactive unless import?
+    # agreement.mark_inactive unless import?
   end
 
   def meets_requirements_active?
