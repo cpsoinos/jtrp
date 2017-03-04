@@ -30,7 +30,10 @@ class Discount::Creator
   end
 
   def create_discount
-    Discount.find_or_create_by(attrs)
+    discount = Discount.find_or_initialize_by(remote_id: attrs[:remote_id])
+    discount.assign_attributes(attrs)
+    discount.save
+    discount
   end
 
 end
