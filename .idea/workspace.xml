@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8baf1e49-049e-4155-9471-283c3eee73cd" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/jtrp.iml" afterPath="$PROJECT_DIR$/.idea/jtrp.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/jobs/webhook_processor_job_spec.rb" afterPath="$PROJECT_DIR$/spec/jobs/webhook_processor_job_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="$PROJECT_DIR$/.bundle/" />
     <ignored path="$PROJECT_DIR$/components/" />
@@ -152,11 +152,21 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="webhook_processor_job_spec.rb" pinned="false" current-in-tab="true">
+          <file leaf-file-name="webhook_processor_job_spec.rb" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/spec/jobs/webhook_processor_job_spec.rb">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="496">
                   <caret line="31" column="0" lean-forward="true" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/.gitignore">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="288">
+                  <caret line="18" column="7" lean-forward="false" selection-start-line="18" selection-start-column="7" selection-end-line="18" selection-end-column="7" />
                   <folding />
                 </state>
               </provider>
@@ -230,6 +240,7 @@
         <option value="$PROJECT_DIR$/Procfile" />
         <option value="$PROJECT_DIR$/clock.rb" />
         <option value="$PROJECT_DIR$/spec/jobs/webhook_processor_job_spec.rb" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -727,7 +738,7 @@
       <workItem from="1488580092626" duration="76000" />
       <workItem from="1488580196750" duration="838000" />
       <workItem from="1488581920510" duration="7992000" />
-      <workItem from="1488797166241" duration="3766000" />
+      <workItem from="1488797166241" duration="3797000" />
     </task>
     <servers />
   </component>
@@ -764,7 +775,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="12672000" />
+    <option name="totallyTimeSpent" value="12703000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="22" width="2560" height="1414" extended-state="6" />
@@ -800,7 +811,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/spec/services/item/expirer_spec.rb" />
     <entry file="file://$PROJECT_DIR$/spec/services/item/updater_spec.rb" />
     <entry file="file://$PROJECT_DIR$/spec/services/letter/creator_spec.rb" />
     <entry file="file://$PROJECT_DIR$/spec/services/letter/sender_spec.rb" />
@@ -1165,6 +1175,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="496">
           <caret line="31" column="0" lean-forward="true" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="288">
+          <caret line="18" column="7" lean-forward="false" selection-start-line="18" selection-start-column="7" selection-end-line="18" selection-end-column="7" />
           <folding />
         </state>
       </provider>
