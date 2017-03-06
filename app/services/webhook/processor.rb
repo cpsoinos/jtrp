@@ -10,7 +10,6 @@ class Webhook::Processor
   def process
     create_webhook
     create_webhook_entries
-    process_webhook_entries
     @webhook
   end
 
@@ -25,10 +24,6 @@ class Webhook::Processor
     @webhook.remote_entries.map do |entry|
       WebhookEntry::Creator.new(@webhook).create(entry)
     end
-  end
-
-  def process_webhook_entries
-    @webhook.webhook_entries.map(&:process)
   end
 
 end

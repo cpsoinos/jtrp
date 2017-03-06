@@ -72,6 +72,7 @@ gem 'madison'
 gem 'acts-as-taggable-on', '~> 4.0'
 gem 'sitemap_generator'
 gem 'sidekiq-unique-jobs'
+gem 'clockwork'
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-classnames'

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170226031154) do
+ActiveRecord::Schema.define(version: 20170306105517) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -494,8 +494,9 @@ ActiveRecord::Schema.define(version: 20170226031154) do
     t.string   "webhookable_type"
     t.datetime "timestamp"
     t.string   "action"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
+    t.boolean  "processed",        default: false, null: false
   end
 
   add_index "webhook_entries", ["webhook_id"], name: "index_webhook_entries_on_webhook_id", using: :btree
