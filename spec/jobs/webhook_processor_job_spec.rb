@@ -30,13 +30,6 @@ describe WebhookProcessorJob do
       expect(updater).to have_received(:update)
     end
 
-    it "does not call 'process_webhook' when local object not changed" do
-      order.update_attributes(updated_at: webhook_entry.timestamp)
-      WebhookProcessorJob.perform_later(webhook_entry)
-
-      expect(Order::Updater).not_to have_received(:new)
-    end
-
   end
 
 end

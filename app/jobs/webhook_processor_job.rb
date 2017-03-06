@@ -1,31 +1,28 @@
-require 'active_job/traffic_control'
-
 class WebhookProcessorJob < ActiveJob::Base
   queue_as :default
-  include ActiveJob::TrafficControl::Throttle
 
-  throttle threshold: 2, period: 1.second
-
-  attr_reader :webhook_entry
-
-  def perform(webhook_entry)
-    @webhook_entry = webhook_entry
+  def perform(*args)
     execute
   end
 
   private
 
   def execute
-    local_object.try(:process_webhook) if object_changed?
+    processable_entities.map do |object|
+      object.try(:process_webhook)
+    end
   end
 
-  def local_object
-    @_local_object ||= webhook_entry.webhookable
+  def webhook_entries
+    @_webhook_entries ||= WebhookEntry.includes(:webhookable).unprocessed
   end
 
-  def object_changed?
-    return if local_object.nil?
-    webhook_entry.timestamp.to_i > local_object.updated_at.to_i
+  def processable_entities
+    @_processable_entities ||= webhook_entries.map(&:webhookable).uniq
+  end
+
+  def mark_webhook_entry_processed(obj)
+    webhook_entries.where(webhookable: obj).map(&:mark_processed)
   end
 
 end
