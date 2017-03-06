@@ -111,9 +111,6 @@ GEM
       ffi (~> 1.0, >= 1.0.11)
     chunky_png (1.3.5)
     cliver (0.3.2)
-    clockwork (2.0.1)
-      activesupport
-      tzinfo
     cloudinary (1.2.3)
       aws_cf_signer
       rest-client
@@ -753,7 +750,6 @@ DEPENDENCIES
   carrierwave_direct
   chartkick
   chunky_png
-  clockwork
   cloudinary
   coffee-rails (~> 4.1.0)
   coveralls
