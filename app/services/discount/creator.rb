@@ -8,8 +8,7 @@ class Discount::Creator
   end
 
   def create(attrs)
-    @attrs = attrs.to_hash
-    massage_attrs
+    @attrs = attrs
     create_discount
   end
 
@@ -25,13 +24,23 @@ class Discount::Creator
     attrs[:discountable] = discountable
   end
 
+  def discount_attrs
+    @_discount_attrs ||= {
+      remote_id: attrs.id,
+      percentage: format_percentage(attrs.try(:percentage)),
+      amount_cents: attrs.try(:amount),
+      discountable: discountable,
+      name: attrs.try(:name)
+    }
+  end
+
   def format_percentage(amt)
     amt.to_f / 100
   end
 
   def create_discount
-    discount = Discount.find_or_initialize_by(remote_id: attrs[:remote_id])
-    discount.assign_attributes(attrs)
+    discount = Discount.find_or_initialize_by(remote_id: attrs.id)
+    discount.assign_attributes(discount_attrs)
     discount.save
     discount
   end
