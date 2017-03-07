@@ -15,7 +15,7 @@ module Clover
             raise CloverError.new(result.message)
           end
         rescue CloverError => e
-          Rollbar.error(e, result.message,  item_id: item.id, response: response, result: result)
+          # Rollbar.error(e, result.message,  item_id: item.id, response: response, result: result)
         end
       end
     end
@@ -32,7 +32,7 @@ module Clover
             raise CloverError.new(result.message)
           end
         rescue CloverError => e
-          Rollbar.error(e, result.message,  item_id: item.id, response: response, result: result)
+          # Rollbar.error(e, result.message,  item_id: item.id, response: response, result: result)
         end
       end
     end
@@ -53,7 +53,7 @@ module Clover
             raise CloverError.new(result.message)
           end
         rescue CloverError => e
-          Rollbar.error(e, result.message,  item_id: item.id, response: response, result: result)
+          # Rollbar.error(e, result.message,  item_id: item.id, response: response, result: result)
         end
       end
     end
@@ -68,7 +68,7 @@ module Clover
             raise CloverError.new(result.message)
           end
         rescue CloverError => e
-          Rollbar.error(e, result.message,  response: response, result: result)
+          # Rollbar.error(e, result.message,  response: response, result: result)
         end
       end
     end
@@ -82,7 +82,7 @@ module Clover
             raise CloverError.new(result.message)
           end
         rescue CloverError => e
-          Rollbar.error(e, result.message,  item_id: item.id, response: response, result: result)
+          # Rollbar.error(e, result.message,  item_id: item.id, response: response, result: result)
         end
       end
     end
