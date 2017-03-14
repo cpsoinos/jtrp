@@ -32,6 +32,9 @@
   <div class="row top-margin">
     <div class="col-md-6">
       <%= render 'hours_block' %>
+      <% if Date.today == Date.parse("Tue, 14 Mar 2017") %>
+        <p>We are closed today (Tuesday, March 14) due to the weather. Stay warm and safe!</p>
+      <% end %>
     </div>
     <div class="col-md-3">
       <%= render 'address_block' %>
