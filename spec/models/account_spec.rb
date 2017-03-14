@@ -81,7 +81,7 @@ describe Account do
 
   context "company" do
     it "full_name" do
-      account = build_stubbed(:account, :company)
+      account = create(:account, :company)
 
       expect(account.full_name).to eq(account.company_name)
     end
