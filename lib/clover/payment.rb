@@ -15,8 +15,8 @@ module Clover
             raise CloverError.new(result.message)
           end
         rescue CloverError => e
-          # Rollbar.error(e, result.message,  order_id: order.id, response: response, result: result)
-          Airbrake.notify(e, {message: result.message,  order_id: order.id, response: response, result: result})
+          # Rollbar.error(e, result.message,  payment_id: payment.id, response: response, result: result)
+          Airbrake.notify(e, {message: result.message,  payment_id: payment.id, response: response, result: result})
         end
       end
     end
@@ -35,13 +35,6 @@ module Clover
           Airbrake.notify(e, {message: result.message,  response: response, result: result})
         end
       end
-    end
-
-    private
-
-    def self.identifier(order)
-      id = order.try(:remote_id)
-      id ||= order
     end
 
   end
