@@ -10,6 +10,7 @@ class WebhookProcessorJob < ActiveJob::Base
   def execute
     processable_entities.map do |object|
       object.try(:process_webhook)
+      mark_webhook_entry_processed(object)
     end
   end
 
