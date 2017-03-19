@@ -12,6 +12,10 @@ describe Order do
 
   context "scopes" do
 
+    before do
+      allow_any_instance_of(Payment).to receive(:process)
+    end
+
     it "paid" do
       paid_orders = create_list(:order, 3)
       paid_orders.each { |o| create(:payment, order: o) }
