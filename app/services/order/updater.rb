@@ -13,7 +13,7 @@ class Order::Updater
     retrieve_order_discounts
     retrieve_item_discounts
     apply_discounts
-    record_payment
+    # record_payment
     set_timestamps
   end
 
@@ -58,6 +58,7 @@ class Order::Updater
   def retrieve_local_item_from(line_item)
     item = find_item_by_remote_id(line_item)
     item ||= find_item_by_token(line_item)
+    item
   end
 
   def find_item_by_remote_id(line_item)
@@ -110,24 +111,24 @@ class Order::Updater
   end
 
   def apply_discounts
-    return unless payment_success?
+    # return unless payment_success?
     ApplyDiscountsJob.perform_later(order)
   end
 
-  def remote_payments
-    @_remote_payments ||= remote_object.try(:payments).try(:elements)
-    @_remote_payments ||= []
-  end
-
-  def record_payment
-    remote_payments.each do |attrs|
-      Payment::Creator.new(order).create(attrs)
-    end
-  end
-
-  def payment_success?
-    return nil unless remote_payments.present?
-    remote_payments.map(&:amount).sum == order.amount_cents
-  end
+  # def remote_payments
+  #   @_remote_payments ||= remote_object.try(:payments).try(:elements)
+  #   @_remote_payments ||= []
+  # end
+  #
+  # def record_payment
+  #   remote_payments.each do |attrs|
+  #     Payment::Creator.new(order).create(attrs)
+  #   end
+  # end
+  #
+  # def payment_success?
+  #   return nil unless remote_payments.present?
+  #   remote_payments.map(&:amount).sum == order.amount_cents
+  # end
 
 end

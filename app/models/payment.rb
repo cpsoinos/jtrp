@@ -6,6 +6,8 @@ class Payment < ActiveRecord::Base
 
   validates :remote_id, uniqueness: { message: "remote_id already taken" }, allow_nil: true
 
+  after_create :process
+
   monetize :amount_cents, allow_nil: true, numericality: {
     greater_than_or_equal_to: 0,
     less_than_or_equal_to: 1000000
@@ -14,5 +16,13 @@ class Payment < ActiveRecord::Base
     greater_than_or_equal_to: 0,
     less_than_or_equal_to: 1000000
   }
+
+  def remote_object
+    Clover::Payment.find(self)
+  end
+
+  def process
+    PaymentProcessorJob.perform_later(self)
+  end
 
 end
