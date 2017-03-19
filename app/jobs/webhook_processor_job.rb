@@ -3,7 +3,7 @@ class WebhookProcessorJob < ActiveJob::Base
 
   def perform(*args)
     handle_deleted
-    execute_processable
+    execute
   end
 
   private

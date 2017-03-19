@@ -28,6 +28,14 @@ describe WebhookProcessorJob do
     end
   end
 
+  it "handles webhook entries with DELETE action" do
+    order = create(:order)
+    create(:webhook_entry, webhookable: order, action: 'DELETE')
+    WebhookProcessorJob.perform_later
+
+    expect(order.reload.deleted_at).not_to be(nil)
+  end
+
   context "open order" do
 
     let(:webhook_entry) { create(:webhook_entry, :open_order) }
