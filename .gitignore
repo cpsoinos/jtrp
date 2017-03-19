@@ -16,4 +16,4 @@
 .env.test
 /coverage/
 rspec.xml
-.idea/*
+.idea
