@@ -14,8 +14,13 @@ describe WebhookProcessorJob do
   end
 
   it "only tries to process unprocessed webhook entries" do
-    processed_entries = create_list(:webhook_entry, 3, :locked_order, :processed)
-    allow_any_instance_of(Order).to receive(:process_webhook)
+    processed_entries = create_list(:webhook_entry, 3, :open_order, :processed)
+    processed_entries.each do |entry|
+      order = create(:order)
+      allow(order).to receive(:process_webhook)
+      entry.webhookable = order
+      entry.save
+    end
     WebhookProcessorJob.perform_later
 
     processed_entries.each do |entry|
@@ -37,8 +42,8 @@ describe WebhookProcessorJob do
 
   context "locked order" do
 
-    let(:webhook_entry) { create(:webhook_entry, :locked_order) }
-    let(:order) { webhook_entry.webhookable }
+    let!(:webhook_entry) { create(:webhook_entry, :locked_order) }
+    let!(:order) { webhook_entry.webhookable }
     let(:updater) { double("updater") }
 
     before do
