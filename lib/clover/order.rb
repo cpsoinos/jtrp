@@ -15,7 +15,8 @@ module Clover
             raise CloverError.new(result.message)
           end
         rescue CloverError => e
-          Rollbar.error(e, result.message,  order_id: order.id, response: response, result: result)
+          # Rollbar.error(e, result.message,  order_id: order.id, response: response, result: result)
+          Airbrake.notify(e, {message: result.message,  order_id: order.id, response: response, result: result})
         end
       end
     end
@@ -30,7 +31,8 @@ module Clover
             raise CloverError.new(result.message)
           end
         rescue CloverError => e
-          Rollbar.error(e, result.message,  response: response, result: result)
+          # Rollbar.error(e, result.message,  response: response, result: result)
+          Airbrake.notify(e, {message: result.message,  response: response, result: result})
         end
       end
     end
