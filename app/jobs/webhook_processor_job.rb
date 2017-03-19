@@ -2,6 +2,7 @@ class WebhookProcessorJob < ActiveJob::Base
   queue_as :default
 
   def perform(*args)
+    handle_deleted
     execute
   end
 
@@ -24,6 +25,21 @@ class WebhookProcessorJob < ActiveJob::Base
 
   def mark_webhook_entry_processed(obj)
     webhook_entries.where(webhookable: obj).map(&:mark_processed)
+  end
+
+  def handle_deleted
+    deleteable_entities.each do |entity|
+      entity.webhook_entries.map(&:mark_processed)
+      entity.destroy
+    end
+  end
+
+  def delete_action_webhooks
+    @_delete_action_webhooks ||= webhook_entries.where(action: 'DELETE')
+  end
+
+  def deleteable_entities
+    @_deleteable_entities ||= delete_action_webhooks.map(&:webhookable).uniq
   end
 
 end
