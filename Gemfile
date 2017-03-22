@@ -102,6 +102,7 @@ group :development, :test do
   gem 'terminal-notifier-guard'
   gem 'selenium-webdriver'
   gem 'parallel_tests'
+  gem 'spring-commands-rspec'
 end
 
 group :development do

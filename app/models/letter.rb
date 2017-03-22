@@ -8,6 +8,8 @@ class Letter < ActiveRecord::Base
   mount_uploader :pdf, ScannedAgreementUploader
   mount_uploader :letter_pdf, PhotoUploader
 
+  validates :category, presence: true
+
   scope :by_category, -> (category) { where(category: category) }
 
   def expiration_notice?

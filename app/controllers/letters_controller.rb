@@ -13,10 +13,10 @@ class LettersController < ApplicationController
 
   def create
     @agreement = Agreement.find(params[:agreement_id])
-    @letter = @agreement.letters.create(letter_params)
+    @letter = @agreement.letters.new(letter_params)
     respond_to do |format|
       format.js do
-        if @letter.deliver_to_client
+        if @letter.save and @letter.deliver_to_client
           @message = "Email and letter queued for delivery"
         else
           @message = @letter.errors.full_messages

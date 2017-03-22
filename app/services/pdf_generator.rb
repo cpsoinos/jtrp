@@ -38,7 +38,6 @@ class PdfGenerator
 
       loop do
         status_response = $docraptor.get_async_doc_status(create_response.status_id)
-        puts "doc status: #{status_response.status}"
         case status_response.status
         when "completed"
           doc_response = $docraptor.get_async_doc(status_response.download_id)
@@ -47,11 +46,9 @@ class PdfGenerator
           file.original_filename = "#{account.full_name}_#{object.class.name}_#{object.id}.pdf"
           file.content_type = "application/pdf"
           save_file(file)
-          puts "Wrote PDF to /tmp/#{account.full_name}_#{object.class.name}_#{object.id}.pdf"
           break
         when "failed"
-          puts "FAILED"
-          puts status_response
+          raise DocRaptor::ApiError.new(status_response)
           break
         else
           sleep 1
@@ -59,12 +56,7 @@ class PdfGenerator
       end
 
     rescue DocRaptor::ApiError => error
-      puts "#{error.class}: #{error.message}"
-      puts error.code          # HTTP response code
-      puts error.response_body # HTTP response body
-      puts error.backtrace[0..3].join("\n")
-      # Rollbar.error(error, "#{error.class}: #{error.message}")
-      Airbrake.notify(error, {error.class => error.message})
+      Airbrake.notify(error, { object_type: object.class.name, object_id: object.id })
     end
   end
 

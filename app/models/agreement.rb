@@ -156,6 +156,10 @@ class Agreement < ActiveRecord::Base
     letters.by_category("agreement_expired").first
   end
 
+  def unexpireable?
+    "unexpireable".in?(tag_list)
+  end
+
   private
 
   def update_cache
