@@ -191,6 +191,17 @@ feature "home page" do
           expect(page).not_to have_content("#{agreement.account.full_name} needs to be notified that their consignment period is ending soon")
         end
 
+        scenario "does not choose a category", js: true do
+          visit dashboard_path
+          first(:button, "done").click
+          click_button("Notify Client")
+          sleep(1)
+
+          expect(page).to have_content("Category can't be blank")
+          expect(page).to have_content("Error")
+          expect(page).to have_content("#{agreement.account.full_name} needs to be notified that their consignment period is ending soon")
+        end
+
         scenario "tags an agreement as unexpireable", js: true do
           visit dashboard_path
           first(:button, "done").click

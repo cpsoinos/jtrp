@@ -3,6 +3,7 @@ describe Letter do
   it { should be_audited.associated_with(:agreement) }
   it { should belong_to(:agreement) }
   it { should have_one(:account).through(:agreement) }
+  it { should validate_presence_of(:category) }
 
   let(:generator) { double("generator") }
   let(:sender) { double("sender") }

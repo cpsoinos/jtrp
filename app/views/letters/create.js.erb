@@ -1,7 +1,10 @@
 var listItem = $("#to-do-list-agreement-<%= @agreement.id %>")
 var modal = $("#agreement-<%= @agreement.id %>-task-modal")
 
-modal.modal('toggle');
-listItem.remove();
-
-toastr.success('<%= @message %>', 'Success!', {timeOut: 5000})
+<% if @letter.valid? %>
+  modal.modal('toggle');
+  listItem.remove();
+  toastr.success('<%= @message %>', 'Success!', {timeOut: 5000})
+<% else %>
+  toastr.error('<%= @message.join("\n") %>', 'Error!', {timeOut: 5000})
+<% end %>
