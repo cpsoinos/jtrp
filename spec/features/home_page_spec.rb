@@ -207,7 +207,7 @@ feature "home page" do
           first(:button, "done").click
           click_button("Unexpireable")
 
-          expect(page).to have_content("Success!")
+          expect(page).to have_content("Note:")
           expect(page).to have_content("Agreement tagged as unexpireable.")
           expect(agreement.reload.tag_list).to include("unexpireable")
         end

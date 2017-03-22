@@ -1,10 +1,14 @@
 var listItem = $("#to-do-list-agreement-<%= @agreement.id %>")
 var modal = $("#agreement-<%= @agreement.id %>-task-modal")
 
-<% if @letter.valid? %>
+<% if @letter.try(:valid?) %>
   modal.modal('toggle');
   listItem.remove();
   toastr.success('<%= @message %>', 'Success!', {timeOut: 5000})
+<% elsif @agreement.unexpireable? %>
+  modal.modal('toggle');
+  listItem.remove();
+  toastr.warning('<%= @message %>', 'Note:', {timeOut: 5000})
 <% else %>
   toastr.error('<%= @message.join("\n") %>', 'Error!', {timeOut: 5000})
 <% end %>
