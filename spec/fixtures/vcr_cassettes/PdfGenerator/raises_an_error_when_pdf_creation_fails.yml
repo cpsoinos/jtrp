@@ -1,0 +1,341 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://docraptor.com/async_docs
+    body:
+      encoding: UTF-8
+      string: '{"test":true,"document_url":"https://jtrp.ngrok.io/accounts/anthony/letters/6?token=H1ZQKG7xnQmJ\u0026print=true","name":"Leonora
+        Block_Letter_1.pdf","document_type":"pdf","javascript":true}'
+    headers:
+      User-Agent:
+      - ruby-swagger-0.3.0
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      Authorization:
+      - Basic MG1IVDN0REhWYk0yOEhuQWtPWms6
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Wed, 22 Mar 2017 11:39:55 GMT
+      Etag:
+      - W/"551072a5d4ab482ed47a7303c73f711b"
+      Server:
+      - nginx
+      Set-Cookie:
+      - _doc_raptor_session=SjEzdVkrZmtTV3hQSE1LNDErbHFyOGZwVjdBUkZrNmc2VFYwbzZpWmlEcjRzZC9xMHUydkE2YkJ6dTVxdnQvZ1JxVm9FRVExZ2tUdCtCRWZwTG5OUU9MYStpaDFuemMrMytKaVhSR25JczluTDUzWEJ0SmV1cWZLK3MvTXY1L0JtMXJnaktEQWE3dlFHUVZKWldWemovRDhjelZnWjFmVGtTTTVoV01SNmRKa0pIT3ZTN3R4NnNEYXRSeW5MYjZsckk0VVJiTFJNcEFLdy9HMWY4YjhjOUU4VjA2YnY2VDdBejlCb2I3Mi9jMFUyRkhzM3JrMUFTQVBiL29kcVZVR2V6UXVORkN2MFdUQVoydS84Zm96RHBHaWdOcW84WjVNVWVBcUZ6SzZWS2hDbnBuMXRnamV5eEw3L2V1Tkk5c1gtLSs1Q1lnZWIyVG5rU0x6U3VkODgrZVE9PQ%3D%3D--efe5984ebf39f2aea1cfe784b187b3f2de8505fc;
+        path=/; HttpOnly
+      - eb_tracking_id=5de0a1c0-28d0-4bf7-814b-10df3e64d31a; path=/; expires=Tue,
+        17 Mar 2037 11:39:55 -0000
+      Vary:
+      - Accept-Encoding
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Request-Id:
+      - be31c2c0-0557-4af8-a388-59f320d7021f
+      X-Runtime:
+      - '0.059033'
+      X-Xss-Protection:
+      - 1; mode=block
+      Content-Length:
+      - '52'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"status_id":"ef1acb66-8dc3-48fd-b388-41bd76d9523a"}'
+    http_version: 
+  recorded_at: Wed, 22 Mar 2017 11:39:55 GMT
+- request:
+    method: get
+    uri: https://docraptor.com/status/ef1acb66-8dc3-48fd-b388-41bd76d9523a
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - ruby-swagger-0.3.0
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      Authorization:
+      - Basic MG1IVDN0REhWYk0yOEhuQWtPWms6
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Wed, 22 Mar 2017 11:39:55 GMT
+      Etag:
+      - W/"f0a1c1a0cfb52787bdf8195cd46d1ef9"
+      Server:
+      - nginx
+      Set-Cookie:
+      - _doc_raptor_session=WDN5QklEaHJNSDdXS2JVK3Bra3d1UWVlcjQzQ1ZaU1ZIT2cxUjJmUElnUHNDU0l5SXRmRXVkOGhtN1R3blQ1c1Aza0xnV2xqSnlkY01FY0wrcVJMTnlicGQ0WWFqenJ4VlpPM3NtaGI2SktLcXl3MzZzV0pMVG1odk94NXp4ZUtvT1kxUnl1ZTVoRFRZd1ZHUFlsa1QwVnRkMjV2YmtuNWFoai9nbWhzWm1BQXh4SWJtY2lJZEF2SmJmbXFucDhvY2FyN1UwSHNwQ3cwOEV2SkpqSVp0UGhXdCtXazNXb2c1UHdvZWRuUjZZbnNmdjNVRFNORzZSTDhlUTluOTVaSE5aVUFvUkxJTEdraHBlQXJNQzdhYTNBb09LNDdIVVZlbDhkVGhwTHlsNUlMSzhRK21lcHpnSkVDMERJWnNZVTVzVlBaR2VUNy9RQndHWm5zSERreWtOdjRYblU5NnFpdWVaV1VpTGRpTXJ1T1NvL1dId0hlbGFZbHVxNkZveWVJLS1EeDR6WFlYdDc4SGNnbHZXQTlmUEp3PT0%3D--fa58f8a231c7f98b982b720918ec8c6687467449;
+        path=/; HttpOnly
+      - eb_tracking_id=5de0a1c0-28d0-4bf7-814b-10df3e64d31a; path=/; expires=Tue,
+        17 Mar 2037 11:39:55 -0000
+      Vary:
+      - Accept-Encoding
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Request-Id:
+      - 887732e3-5565-47d6-b4e2-13b16d5ed875
+      X-Runtime:
+      - '0.008230'
+      X-Xss-Protection:
+      - 1; mode=block
+      Content-Length:
+      - '19'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"status":"queued"}'
+    http_version: 
+  recorded_at: Wed, 22 Mar 2017 11:39:55 GMT
+- request:
+    method: get
+    uri: https://docraptor.com/status/ef1acb66-8dc3-48fd-b388-41bd76d9523a
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - ruby-swagger-0.3.0
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      Authorization:
+      - Basic MG1IVDN0REhWYk0yOEhuQWtPWms6
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Wed, 22 Mar 2017 11:39:56 GMT
+      Etag:
+      - W/"902f9386399a6e71337ab74e8ebf399d"
+      Server:
+      - nginx
+      Set-Cookie:
+      - _doc_raptor_session=bDRJQ2NNYzFNUlhmdlFjRlVNd0dOTnhZTHJaTVZzbW5EbExKWHg3SzR0VTVRVkRrR0RYUFhsWE42R2pDNnpNTXRzYmpnS2pjaTZnQTduMTZEbGl0QVQxdjQ0TEpKNHliOGFiR0JiRE04dHVrOGIxRzhvQ2tQdG5rZHV1ODI5NGxIVk83eHFickZwY25hMGdxOExCWkhnL1NpMFB6b3lDWDdTeVR5bG5nRXpxTFRYdlZKOXkvdnVZQXJVek1QUW1FYXhrcnJtR3RWM0RiOEkxWU5uRVRLMWZyZHVmUkFhTWNOYlIxYjhqb09Fd1BkbnFHL1dydzl4MDdWWGlpSzFrRlFiVHIyais5ZXpSczNzRDNJcUtlMjdPMkgvMkEwM1hZNXVwbElReEwzSXgycVhxYmlVUUZTSytSZVpCU3prN3pTRHZaLzdVQmVma2V2YzJwR2U1WmNEZUM3SHhudytydlZpdFBnYVhBNEdJQU05MEUzdDdCSWN1aWx3TjI1eGpULS10TzF5TWV6YmRqZzduWmtwZzVoVkRRPT0%3D--800291be047eb54a51c3c9090dd6974b8919c73a;
+        path=/; HttpOnly
+      - eb_tracking_id=5de0a1c0-28d0-4bf7-814b-10df3e64d31a; path=/; expires=Tue,
+        17 Mar 2037 11:39:56 -0000
+      Vary:
+      - Accept-Encoding
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Request-Id:
+      - 06aa827b-3c2a-46dc-9d20-27283095d6fa
+      X-Runtime:
+      - '0.007631'
+      X-Xss-Protection:
+      - 1; mode=block
+      Content-Length:
+      - '20'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"status":"working"}'
+    http_version: 
+  recorded_at: Wed, 22 Mar 2017 11:39:56 GMT
+- request:
+    method: get
+    uri: https://docraptor.com/status/ef1acb66-8dc3-48fd-b388-41bd76d9523a
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - ruby-swagger-0.3.0
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      Authorization:
+      - Basic MG1IVDN0REhWYk0yOEhuQWtPWms6
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Wed, 22 Mar 2017 11:39:57 GMT
+      Etag:
+      - W/"902f9386399a6e71337ab74e8ebf399d"
+      Server:
+      - nginx
+      Set-Cookie:
+      - _doc_raptor_session=bFNjVkMyY051VFpMZW1vTUU5RVhFbXdQZlhkM1BFZzd1RWFvOHU3eVVObFhNaHQzQUNsR05iNnBqV2swdW92YjdCZCtvcTdsa0NUalhwNHljT2JzaXJXRWwyRGllYnR4L1FLdnk3MHVVbnhPbFVyNjgvWklPL3ZpOHFNSVZ1UmRLb0t4NGE0eGdTSWFTQzFiWHJTTndMRWVGMFdmNnJPWkN6RCtuOGNIc0Q5b29CQ0FzV0NjSW5aYWtyTEl3VzFDOVYvYWY2eko1WEVFVTExbjJKdHM2UFQrWXlJZjBpemIxVWQ5Tkc0TXBiY2RraGxBRDlWaEJJT3NmTnF0N0N0bUtKbkZ0aHpMTURKMVhXUHo0QURFYjZ2ZzhqWUZVU2dSclZDWCtvS0RlRDhNbmxsR2d5S2syQmptVlFzdTlZV2l6UjBuTWs2ZnJIeHJBRDVqU2JzNERFUWVsRTNMK0dCUmgxbWFWOG1xVVlYRjQxWjlteHhtK0dueEpMZW9UMTBsLS01Q3pWUFVLbU4xaE9aNVl0Z3FFcU1BPT0%3D--cd745bc2a81b586f400b737927f0739bbdc58d4f;
+        path=/; HttpOnly
+      - eb_tracking_id=5de0a1c0-28d0-4bf7-814b-10df3e64d31a; path=/; expires=Tue,
+        17 Mar 2037 11:39:57 -0000
+      Vary:
+      - Accept-Encoding
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Request-Id:
+      - 66abdf00-236d-4f1c-a9ce-eec387533b87
+      X-Runtime:
+      - '0.007840'
+      X-Xss-Protection:
+      - 1; mode=block
+      Content-Length:
+      - '20'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"status":"working"}'
+    http_version: 
+  recorded_at: Wed, 22 Mar 2017 11:39:57 GMT
+- request:
+    method: get
+    uri: https://docraptor.com/status/ef1acb66-8dc3-48fd-b388-41bd76d9523a
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - ruby-swagger-0.3.0
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      Authorization:
+      - Basic MG1IVDN0REhWYk0yOEhuQWtPWms6
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Wed, 22 Mar 2017 11:39:58 GMT
+      Etag:
+      - W/"902f9386399a6e71337ab74e8ebf399d"
+      Server:
+      - nginx
+      Set-Cookie:
+      - _doc_raptor_session=L2I3YTh2anB6eVk5N0dLcm5xN0RpODRQTEdhbUJiS0sxS2lGVGVJaFFrUGVGdzFIOFl4aHRwNHphR2RqbXJ1VTNGRUtqMU1JUVF4S21BZFpKeEF6RVdqK3Y1WUZqNjMzNDhrNHJOc0ZGZ25GVlRXT3c2S1ZxOFdFUzFFeXhVWGNDdFFDSldoWDlOdHJJQ1dYZ3Q0L2N4cUZ1amM1czlkYlNVTWlBZzN1YUhqOXRKOGMycWFGU09RZnlaL0liem9qQjB2bVNzWUhERDR1R0ViNnhVK0UyYTd4aHFCTkVQNVkydWRGWUY2WUpjdFJQOFlRRVUvOU50Q01wdGs1MlJWcXhwTm9Rc3l6WXNQZnZqSXJsSVZjNFJFZVdPTlJEeXZCTlhJRENIUnZpN0U0c2M4bnNxQWhwaSs0YnVhc3dzaHpxQkJPS2lDbTFKUjc4bmtXcjZzeUM1YzRTMTE0TFliVERiT2hJdmVQYWpGV1RmaTFvWFVnSmFvWUJaaWpWVXoyLS1rTzhCZlBMQnVCMjA1SUI1Rm54eld3PT0%3D--236d14f2e4f59a44aeff359419107f96c384abe0;
+        path=/; HttpOnly
+      - eb_tracking_id=5de0a1c0-28d0-4bf7-814b-10df3e64d31a; path=/; expires=Tue,
+        17 Mar 2037 11:39:58 -0000
+      Vary:
+      - Accept-Encoding
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Request-Id:
+      - 9a432d23-5a09-4bb0-afb3-3fec8d2bb0f3
+      X-Runtime:
+      - '0.011736'
+      X-Xss-Protection:
+      - 1; mode=block
+      Content-Length:
+      - '20'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"status":"working"}'
+    http_version: 
+  recorded_at: Wed, 22 Mar 2017 11:39:58 GMT
+- request:
+    method: get
+    uri: https://docraptor.com/status/ef1acb66-8dc3-48fd-b388-41bd76d9523a
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - ruby-swagger-0.3.0
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      Authorization:
+      - Basic MG1IVDN0REhWYk0yOEhuQWtPWms6
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Wed, 22 Mar 2017 11:39:59 GMT
+      Etag:
+      - W/"bf21b775c1cede0e476c6c48d952a8de"
+      Server:
+      - nginx
+      Set-Cookie:
+      - _doc_raptor_session=NmtXdm51dXlLYmZhN3c3RW83NTVUTjBmbjFXSzhOYjlxY3V1QXpZMVRIZzk0T29LQTV5K0tUNjRWb210QVZEU0M0cjFMNjV1UTRvTlVsMll3VThXRGoyNCtYV0sxSGZZNitlTVBScWZOUXZzaDRHclQxTEsvdTB4VWtpTHpLMkU0YXY1QXF1VkRYaTU1RjZMWll6ZEUrSVpDaVlZaXlVU0JxRkE1VHIwYVh3UjR4Y1ZRbWJjRk5DWkp6SHVZdmJIdXM2UkhhMW1GaG9OLy9YWGI5WUtNMVRtMmtsblNDRFVFdU05YysvSGszZUkvai9sTEdNclNyTUYwcUJWUTQwcXI4ai9lTEtOaW1jODl2dVFjQm02S01sMFluU21FRXk3cmdLZFJlcGNMaHFoOVFKOVQzaEpJdU1ENFd6eWFHQ0tqa05xWFdWU05RNUMyOGJVZHlnbHlWSGU3dUFmTGQ1WDVGMmtCNDc1dnIyTEVzVklJZ0ZkYVh1ZjE0SGFTM0pILS1oMm5qUkpIZ0NKNXVyd0ZlM2dlSVF3PT0%3D--44884edbce7924ffe50e8c4495911802bab81c46;
+        path=/; HttpOnly
+      - eb_tracking_id=5de0a1c0-28d0-4bf7-814b-10df3e64d31a; path=/; expires=Tue,
+        17 Mar 2037 11:39:59 -0000
+      Vary:
+      - Accept-Encoding
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Request-Id:
+      - 0219b1e5-fec1-4449-852a-9ab79e0b228f
+      X-Runtime:
+      - '0.009386'
+      X-Xss-Protection:
+      - 1; mode=block
+      Content-Length:
+      - '115'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"status":"failed","validation_errors":"Response Code Error (500) downloading
+        document content from supplied url."}'
+    http_version: 
+  recorded_at: Wed, 22 Mar 2017 11:39:59 GMT
+recorded_with: VCR 3.0.3

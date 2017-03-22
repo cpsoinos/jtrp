@@ -50,8 +50,7 @@ class PdfGenerator
           puts "Wrote PDF to /tmp/#{account.full_name}_#{object.class.name}_#{object.id}.pdf"
           break
         when "failed"
-          puts "FAILED"
-          puts status_response
+          raise DocRaptor::ApiError.new(status_response)
           break
         else
           sleep 1
@@ -59,12 +58,7 @@ class PdfGenerator
       end
 
     rescue DocRaptor::ApiError => error
-      puts "#{error.class}: #{error.message}"
-      puts error.code          # HTTP response code
-      puts error.response_body # HTTP response body
-      puts error.backtrace[0..3].join("\n")
-      # Rollbar.error(error, "#{error.class}: #{error.message}")
-      Airbrake.notify(error, {error.class => error.message})
+      Airbrake.notify(error, { object_type: object.class.name, object_id: object.id })
     end
   end
 
