@@ -131,4 +131,5 @@ group :test do
   gem 'vcr'
   gem 'rspec-retry'
   gem 'rspec_junit_formatter'
+  gem 'test_after_commit'
 end
