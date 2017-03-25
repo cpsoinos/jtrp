@@ -23,7 +23,7 @@ describe Payment do
     allow(Payment::Processor).to receive(:new).and_return(processor)
     allow(processor).to receive(:process)
 
-    create(:payment, remote_id: '3KVFXMRVTYF4C')
+    build(:payment, remote_id: '3KVFXMRVTYF4C')
 
     expect(processor).to have_received(:process)
   end
