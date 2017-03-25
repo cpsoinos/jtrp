@@ -6,7 +6,7 @@ class Payment < ActiveRecord::Base
 
   validates :remote_id, uniqueness: { message: "remote_id already taken" }, allow_nil: true
 
-  after_create :process
+  after_commit :process, on: :create
 
   monetize :amount_cents, allow_nil: true, numericality: {
     greater_than_or_equal_to: 0,
