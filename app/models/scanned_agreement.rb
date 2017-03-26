@@ -9,7 +9,7 @@ class ScannedAgreement < ActiveRecord::Base
   validates :scan, presence: true
 
   after_create :mark_agreement_active
-  after_create :deliver_to_client, unless: :should_not_auto_deliver?
+  after_commit :deliver_to_client, on: :create, unless: :should_not_auto_deliver?
 
   def object_url
     scan.file.public_url
