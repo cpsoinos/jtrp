@@ -173,7 +173,7 @@ class Item < ActiveRecord::Base
   end
 
   def meets_requirements_sold?
-    meets_requirements_active? || expired?
+    !potential?
   end
 
   def meets_requirements_expired?
