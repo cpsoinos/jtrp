@@ -175,4 +175,134 @@ http_interactions:
         zBJbQwMDpVoA5d8hpI4CAAA=
     http_version: 
   recorded_at: Mon, 20 Feb 2017 21:32:13 GMT
+- request:
+    method: get
+    uri: https://apisandbox.dev.clover.com/v3/merchants/HFBW9FH45ZBH2/orders/PGQR8K1YD9AGE?expand=discounts,lineItems,payType,payments
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Bearer 285036e1-d1a8-dfc6-fe5c-51babdd7d241
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Content-Encoding:
+      - gzip
+      X-Frame-Options:
+      - SAMEORIGIN
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIAAAAAAAEA6pWyihKTVOyUlDKKCkpKLbS1y9OzEtJyq/QS0kt00vOyS9L
+        LdJLzs/VLzPWz00tSs5IzCsp1vdwcwq3dPMwMY1y8jDSzy9KSS0q1g9wDwyy
+        8DaMdLF0dHdV0lFQykwBmYshnFxaVJSal1wJkgwNdgGpTM0tyMmvTE1VslKo
+        hmpzcfMJcfUN8PGPdHVVqtVRUCrJL0nMUbJSMDI3MDAA8RMrglJz88tSQbak
+        JeYUp4KsLA5LLFGyUoDxi0sSS0CmKuXkJ2enpoDsyk3MK03MCSlKzCtOTC7J
+        zM9DUp5elF9a4JOZl+pZkppbrGSlUFJUCjK2JLW4xDc/BWQSzOSCxMqQygKQ
+        iJJbqI8PyOTkotTEktSUkMxckLChiYW5mZGJmakRxL3JOZmpeSXOeNXk5qdk
+        pmViGGFmDDEiB8ll1UqpOam5qXklIGdGw4MtIsLJ2Tg4OCgoJNLQF+QocOQE
+        gaMYFrSoMQIK28yS1FyksI8y8Db2DXdytPDyCAhQAinISwT7ScklMy8zL10h
+        KD8/VyEkMSknVcFMwTkjMbOoWMFIwbEoV8FEITgzJVXBSMEnNTGtWME5I7Wo
+        qBLkjsScktSivMSSVD+oUa4Z+cmJpmlJ2aZV4SAFBUWZyaBwA/kVFL8FRZl5
+        JSiRiz98wR51ziEcyKkVoFScjmJ0UWpaaV4KilBmcVBqWWpeKchNoGRQGwsK
+        iILESlig44iBMA+vcGPTCBOjKDcnd5DHwA5DCl3M4E9JLYP4HRZDacmplomm
+        Bha6JkYmKbqWZobJuikGqYa6JuZmRubGyYZpJmnG4HgpSc1LSS0CG055PoYY
+        VqwfZuEa4m0a5OseHGVgBvIBJCOjCoMCIzE3vzQPlN2Q8qQjTAwUh8mJxRkh
+        YCeCgxamjJjsjj2yYTkBX2aCqcGVmaD5sSi1uDQH5Hil4FBnZ9fgYCVIDJMZ
+        GYDVAgBILknjSgUAAA==
+    http_version: 
+  recorded_at: Thu, 30 Mar 2017 23:27:26 GMT
+- request:
+    method: post
+    uri: https://apisandbox.dev.clover.com/v3/merchants/HFBW9FH45ZBH2/items/Z0K3MWBA8JHPP
+    body:
+      encoding: UTF-8
+      string: '{"name":"Dining Room Table 6 Chairs 2 Arm 4 Side 2 Leafs Cherry","price":30000,"sku":17,"alternateName":"Ehoca5fbk5zW","code":"Ehoca5fbk5zW"}'
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Bearer 285036e1-d1a8-dfc6-fe5c-51babdd7d241
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '141'
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Content-Length:
+      - '66'
+      Content-Type:
+      - application/json; charset=utf-8
+      X-Frame-Options:
+      - SAMEORIGIN
+    body:
+      encoding: UTF-8
+      string: '{"details":"No item with id: Z0K3MWBA8JHPP","message":"Not Found"}'
+    http_version: 
+  recorded_at: Thu, 30 Mar 2017 23:27:27 GMT
+- request:
+    method: post
+    uri: https://apisandbox.dev.clover.com/v3/merchants/HFBW9FH45ZBH2/items
+    body:
+      encoding: UTF-8
+      string: '{"name":"Dining Room Table 6 Chairs 2 Arm 4 Side 2 Leafs Cherry","price":30000,"sku":17,"alternateName":"Ehoca5fbk5zW","code":"Ehoca5fbk5zW"}'
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Bearer 285036e1-d1a8-dfc6-fe5c-51babdd7d241
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '141'
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Content-Encoding:
+      - gzip
+      X-Frame-Options:
+      - SAMEORIGIN
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIAAAAAAAEA6pWykxRslJQ8vANcnNzMvUzCDPxMFHSUVDKyExJSc1TslJI
+        S8wpTtVRUMpLzE0FqXTJzMvMS1cIys/PVQhJTMpJVTBTcM5IzCwqVjBScCzK
+        VTBRCM5MSVUwUvBJTUwrVnDOSC0qqgQZmZhTklqUl1iS6gc1yjUjPznRNC0p
+        27QqHKQgOT8FbAW6eHF2KchmQ3OQooKizGSQKmMDAwMDHQUlMD+ksgAkpuTm
+        GeHqAlKVkpqWWJpTEpJYEZRYklqsZKVQUlQK8kZmcVBqWWpeKUg5VCg3PyUz
+        LTM1JSQT7EPADE0sDSwNzUxMzA0MDGoBX7QMeiEBAAA=
+    http_version: 
+  recorded_at: Thu, 30 Mar 2017 23:27:27 GMT
 recorded_with: VCR 3.0.3

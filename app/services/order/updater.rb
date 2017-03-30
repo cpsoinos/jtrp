@@ -1,20 +1,19 @@
 class Order::Updater
 
-  attr_reader :order
+  attr_reader :order, :discounts
 
   def initialize(order)
     @order = order
+    @discounts = []
   end
 
   def update
     update_amount
     retrieve_items
-    remove_cleared_items
-    retrieve_order_discounts
-    retrieve_item_discounts
+    retrieve_discounts
     apply_discounts
-    # record_payment
     set_timestamps
+    mark_items_sold
   end
 
   private
@@ -42,7 +41,7 @@ class Order::Updater
 
   def retrieve_items
     line_items.each do |line_item|
-      item = retrieve_local_item_from(line_item)
+      item = LineItems::Retriever.new(line_item).execute
       next if item.nil?
       order.items << item
       item.save
@@ -55,80 +54,20 @@ class Order::Updater
     @_line_items ||= []
   end
 
-  def retrieve_local_item_from(line_item)
-    item = find_item_by_remote_id(line_item)
-    item ||= find_item_by_token(line_item)
-    item
-  end
-
-  def find_item_by_remote_id(line_item)
-    remote_id = line_item.try(:item).try(:id)
-    item = Item.find_by(remote_id: remote_id)
-  end
-
-  def find_item_by_token(line_item)
-    token = line_item.try(:itemCode)
-    token ||= line_item.try(:alternateName)
-    Item.find_by(token: token)
-  end
-
-  def remove_cleared_items
-    valid_tokens = line_items.map { |i| (i.try(:itemCode) || i.try(:alternateName)) }.compact
-    order.items.each do |item|
-      unless valid_tokens.include?(item.token)
-        item.order = nil
-        item.save
-        order.reload
-      end
-    end
-  end
-
-  def retrieve_order_discounts
-    order_discounts.each do |attrs|
-      Discount::Creator.new(order).create(attrs)
-    end
-  end
-
-  def order_discounts
-    @_order_discounts ||= remote_object.try(:discounts).try(:elements)
-    @_order_discounts ||= []
-  end
-
-  def retrieve_item_discounts
-    item_discounts.each do |attrs|
-      item = retrieve_local_item_from(attrs)
-      Discount::Creator.new(item).create(attrs.discounts.elements.first)
-    end
-  end
-
-  def items_discounted?
-    order.amount_cents != order.items.sum(:listing_price_cents)
-  end
-
-  def item_discounts
-    # only keep discounts applied to a specific item in Clover
-    @_item_discounts ||= Clover::LineItem.find(order).reject { |d| d.try(:discounts).nil? }
+  def retrieve_discounts
+    @_retrieve_discounts ||= Discounts::Retriever.new(order).execute
   end
 
   def apply_discounts
-    # return unless payment_success?
-    ApplyDiscountsJob.perform_later(order)
+    retrieve_discounts.each do |discount|
+      Discounts::Applier.new(discount).execute
+    end
   end
 
-  # def remote_payments
-  #   @_remote_payments ||= remote_object.try(:payments).try(:elements)
-  #   @_remote_payments ||= []
-  # end
-  #
-  # def record_payment
-  #   remote_payments.each do |attrs|
-  #     Payment::Creator.new(order).create(attrs)
-  #   end
-  # end
-  #
-  # def payment_success?
-  #   return nil unless remote_payments.present?
-  #   remote_payments.map(&:amount).sum == order.amount_cents
-  # end
+  def mark_items_sold
+    order.reload.items.each do |item|
+      Item::Updater.new(item).update(sold_at: order.created_at)
+    end
+  end
 
 end

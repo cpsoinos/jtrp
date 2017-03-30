@@ -18,6 +18,10 @@ FactoryGirl.define do
       percentage 0.1
     end
 
+    trait :for_order do
+      discountable { create(:order) }
+    end
+
   end
 
 end
