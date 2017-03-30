@@ -394,4 +394,159 @@ http_interactions:
       string: '{"details":"No item found with id ZKV3KVFNAQF2A.","message":"Not Found"}'
     http_version: 
   recorded_at: Sun, 19 Mar 2017 19:07:53 GMT
+- request:
+    method: post
+    uri: https://apisandbox.dev.clover.com/v3/merchants/HFBW9FH45ZBH2/items/14PKM2V26HN30
+    body:
+      encoding: UTF-8
+      string: '{"name":"brown wicker flower basket","price":1200,"sku":37,"alternateName":"2ijeu9Yt4meE","code":"2ijeu9Yt4meE"}'
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Bearer 285036e1-d1a8-dfc6-fe5c-51babdd7d241
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '112'
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Content-Length:
+      - '66'
+      Content-Type:
+      - application/json; charset=utf-8
+      X-Frame-Options:
+      - SAMEORIGIN
+    body:
+      encoding: UTF-8
+      string: '{"details":"No item with id: 14PKM2V26HN30","message":"Not Found"}'
+    http_version: 
+  recorded_at: Thu, 30 Mar 2017 23:27:42 GMT
+- request:
+    method: post
+    uri: https://apisandbox.dev.clover.com/v3/merchants/HFBW9FH45ZBH2/items
+    body:
+      encoding: UTF-8
+      string: '{"name":"brown wicker flower basket","price":1200,"sku":37,"alternateName":"2ijeu9Yt4meE","code":"2ijeu9Yt4meE"}'
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Bearer 285036e1-d1a8-dfc6-fe5c-51babdd7d241
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '112'
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Content-Encoding:
+      - gzip
+      X-Frame-Options:
+      - SAMEORIGIN
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIAAAAAAAEA6pWykxRslJQcgpyMY4KCQkOjgz081LSUVDKyExJSc1TslJI
+        S8wpTtVRUMpLzE0FqUwqyi/PUyjPTM5OLVJIy8kvTy1SSEoszk4tAWlLzClJ
+        LcpLLEn1gyo3ysxKLbWMLDHJTXUFKUjOTwEbgy5enF0KMt3YHKSooCgzGaTK
+        0MjAQEdBCcwNqSwACSm5eUa4uoAUpaSmJZbmlIQkVgQllqQWK1kplBSVglya
+        WRyUWpaaVwpSDhXKzU/JTMtMTQnJBHsCMEMTSwNLQzMTM2MDA4NaACsS7isE
+        AQAA
+    http_version: 
+  recorded_at: Thu, 30 Mar 2017 23:27:43 GMT
+- request:
+    method: post
+    uri: https://apisandbox.dev.clover.com/v3/merchants/HFBW9FH45ZBH2/items/ZKV3KVFNAQF2A
+    body:
+      encoding: UTF-8
+      string: '{"name":"Buffet/wine cabinet","price":25000,"sku":38,"alternateName":"8sY4E3WCari9","code":"8sY4E3WCari9"}'
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Bearer 285036e1-d1a8-dfc6-fe5c-51babdd7d241
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '106'
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Content-Length:
+      - '66'
+      Content-Type:
+      - application/json; charset=utf-8
+      X-Frame-Options:
+      - SAMEORIGIN
+    body:
+      encoding: UTF-8
+      string: '{"details":"No item with id: ZKV3KVFNAQF2A","message":"Not Found"}'
+    http_version: 
+  recorded_at: Thu, 30 Mar 2017 23:27:44 GMT
+- request:
+    method: post
+    uri: https://apisandbox.dev.clover.com/v3/merchants/HFBW9FH45ZBH2/items
+    body:
+      encoding: UTF-8
+      string: '{"name":"Buffet/wine cabinet","price":25000,"sku":38,"alternateName":"8sY4E3WCari9","code":"8sY4E3WCari9"}'
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Bearer 285036e1-d1a8-dfc6-fe5c-51babdd7d241
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '106'
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Content-Encoding:
+      - gzip
+      X-Frame-Options:
+      - SAMEORIGIN
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIAAAAAAAEA6pWykxRslJQ8jIKN3TxMnUKCDC2DFfSUVDKyExJSc1TslJI
+        S8wpTtVRUMpLzE0FqXQqTUtLLdEvz8xLVUhOTMrMSy0BqU/MKUktykssSfWD
+        qrMojjRxNQ53TizKtAQpSM5PAetHFy/OLgUZa2wBUlRQlJkMUmVkamBgoKOg
+        BOaHVBaAxJTcPCNcXUCqUlLTEktzSkISK4ISS1KLlawUSopKQW7MLA5KLUvN
+        KwUphwrl5qdkpmWmpoRkgp0PmKGJpYGloZmJmYmBgUEtAM+9eQ7+AAAA
+    http_version: 
+  recorded_at: Thu, 30 Mar 2017 23:27:44 GMT
 recorded_with: VCR 3.0.3

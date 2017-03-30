@@ -259,4 +259,159 @@ http_interactions:
         AA==
     http_version: 
   recorded_at: Mon, 27 Feb 2017 13:07:21 GMT
+- request:
+    method: post
+    uri: https://apisandbox.dev.clover.com/v3/merchants/HFBW9FH45ZBH2/items/4D2M7EXEAHV74
+    body:
+      encoding: UTF-8
+      string: '{"name":"8\"x10\" Black Frame","price":500,"sku":4,"alternateName":"QS6awrg7RaY1","code":"QS6awrg7RaY1"}'
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Bearer 285036e1-d1a8-dfc6-fe5c-51babdd7d241
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '104'
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Content-Length:
+      - '66'
+      Content-Type:
+      - application/json; charset=utf-8
+      X-Frame-Options:
+      - SAMEORIGIN
+    body:
+      encoding: UTF-8
+      string: '{"details":"No item with id: 4D2M7EXEAHV74","message":"Not Found"}'
+    http_version: 
+  recorded_at: Thu, 30 Mar 2017 23:27:06 GMT
+- request:
+    method: post
+    uri: https://apisandbox.dev.clover.com/v3/merchants/HFBW9FH45ZBH2/items
+    body:
+      encoding: UTF-8
+      string: '{"name":"8\"x10\" Black Frame","price":500,"sku":4,"alternateName":"QS6awrg7RaY1","code":"QS6awrg7RaY1"}'
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Bearer 285036e1-d1a8-dfc6-fe5c-51babdd7d241
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '104'
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Content-Encoding:
+      - gzip
+      X-Frame-Options:
+      - SAMEORIGIN
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIAAAAAAAEA6pWykxRslJQirJ0svDyi4pyNTAydFbSUVDKyExJSc1TslJI
+        S8wpTtVRUMpLzE0FqbSIUaowNIhRUnDKSUzOVnArAonrKCgl5pSkFuUllqT6
+        gQSsFJQCg80Sy4vSzYMSIw1BJibnp4ANQBcvzi4FmWsCUlNQlJkMUmRqYKCj
+        oATmhVQWgESU3DwjXF1AalJS0xJLc0pCEiuCEktSi5WsFEqKSkEuzCwOSi1L
+        zSsFKYcK5eanZKZlpqaEZIIdD5ihiaWBpaGZiZG5gYFBLQCDsItw/AAAAA==
+    http_version: 
+  recorded_at: Thu, 30 Mar 2017 23:27:07 GMT
+- request:
+    method: post
+    uri: https://apisandbox.dev.clover.com/v3/merchants/HFBW9FH45ZBH2/items/B4ZJHJK63KGZM
+    body:
+      encoding: UTF-8
+      string: '{"name":"2pc Sectional Brown faux leather w/ ottoman","price":30000,"sku":2,"alternateName":"QJRMezjU7xXx","code":"QJRMezjU7xXx"}'
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Bearer 285036e1-d1a8-dfc6-fe5c-51babdd7d241
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '129'
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Content-Length:
+      - '66'
+      Content-Type:
+      - application/json; charset=utf-8
+      X-Frame-Options:
+      - SAMEORIGIN
+    body:
+      encoding: UTF-8
+      string: '{"details":"No item with id: B4ZJHJK63KGZM","message":"Not Found"}'
+    http_version: 
+  recorded_at: Thu, 30 Mar 2017 23:27:08 GMT
+- request:
+    method: post
+    uri: https://apisandbox.dev.clover.com/v3/merchants/HFBW9FH45ZBH2/items
+    body:
+      encoding: UTF-8
+      string: '{"name":"2pc Sectional Brown faux leather w/ ottoman","price":30000,"sku":2,"alternateName":"QJRMezjU7xXx","code":"QJRMezjU7xXx"}'
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Bearer 285036e1-d1a8-dfc6-fe5c-51babdd7d241
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '129'
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Content-Encoding:
+      - gzip
+      X-Frame-Options:
+      - SAMEORIGIN
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIAAAAAAAEA6pWykxRslJQCjAztjBz8nP0NTEKclXSUVDKyExJSc1TslJI
+        S8wpTtVRUMpLzE0FqTQqSFYITk0uyczPS8xRcCrKL89TSEssrVDISU0syUgt
+        UijXV8gvKcnPTcwDmZOYU5JalJdYkuoH1R/oFeSbWpUVal4RUQFSkJyfAjYX
+        Xbw4uxRsHUhNQVFmMkiRsYGBgYGOghKYH1JZABJTcvOMcHUBqUpJTUsszSkJ
+        SawISixJLVayUigpKgU5PbM4KLUsNa8UpBwqlJufkpmWmZoSkgn2FWCGJpYG
+        loZmJkYWBgYGtQDHLr3OFQEAAA==
+    http_version: 
+  recorded_at: Thu, 30 Mar 2017 23:27:08 GMT
 recorded_with: VCR 3.0.3
