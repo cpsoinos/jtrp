@@ -21,6 +21,7 @@ module Clover
     end
 
     def self.all(params={})
+      params.merge!(limit: 1000)
       params = headers.merge(params: params)
       RestClient.get("#{base_url}/payments", params) do |response, request, result|
         begin
