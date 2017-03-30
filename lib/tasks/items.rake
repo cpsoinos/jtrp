@@ -180,7 +180,7 @@ namespace :items do
     items.map do |item|
       item.valid?
       item.save
-      item.sync_inventory
+      item.sync_inventory unless item.potential?
       count += 1
       bar.inc
     end
