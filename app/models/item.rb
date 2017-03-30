@@ -25,6 +25,7 @@ class Item < ActiveRecord::Base
   has_many :webhook_entries, as: :webhookable
 
   has_secure_token
+  after_validation :ensure_token_uniqueness
 
   monetize :purchase_price_cents, allow_nil: true, numericality: {
     greater_than_or_equal_to: 0,
@@ -333,6 +334,13 @@ class Item < ActiveRecord::Base
   def mark_agreement_active
     return if (import? || expired?)
     agreement.mark_active unless agreement.active?
+  end
+
+  def ensure_token_uniqueness
+    if self.errors.full_messages.include?("Token has already been taken")
+      self.regenerate_token
+      ensure_token_uniqueness
+    end
   end
 
 end

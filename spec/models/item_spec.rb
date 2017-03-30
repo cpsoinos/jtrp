@@ -20,7 +20,7 @@ describe Item do
   it { should monetize(:parts_cost).allow_nil }
   it { should monetize(:labor_cost).allow_nil }
 
-  describe "scopes" do
+  context "scopes" do
 
     before do
       create_list(:item, 2)
@@ -72,37 +72,37 @@ describe Item do
       expect(Item.for_sale.count).to eq(7)
     end
 
-    context "amount due to client" do
-
-      it "returns nil when item not sold" do
-        item = build_stubbed(:item)
-        expect(item.amount_due_to_client).to eq(nil)
-      end
-
-      it "returns nil when client intention not 'consign'" do
-        item = build_stubbed(:item, :sold, client_intention: 'sell')
-        expect(item.amount_due_to_client).to eq(nil)
-      end
-
-      it "calculates the correct amount due to client" do
-        item = build_stubbed(:item, :sold, client_intention: 'consign', sale_price_cents: 1000)
-        expect(item.amount_due_to_client).to eq(Money.new(500))
-      end
-
-      it "calculates the correct amount due to client when consignment rate not standard" do
-        item = build_stubbed(:item, :sold, client_intention: 'consign', sale_price_cents: 1000, consignment_rate: 75)
-        expect(item.amount_due_to_client).to eq(Money.new(250))
-      end
-
-      it "calculates the correct amount due to client when consignment rate 0" do
-        item = build_stubbed(:item, :sold, client_intention: 'consign', sale_price_cents: 1000, consignment_rate: 0)
-        expect(item.amount_due_to_client).to eq(Money.new(1000))
-      end
-    end
-
   end
 
-  describe Item, "state_machine" do
+  context "amount due to client" do
+
+    it "returns nil when item not sold" do
+      item = build_stubbed(:item)
+      expect(item.amount_due_to_client).to eq(nil)
+    end
+
+    it "returns nil when client intention not 'consign'" do
+      item = build_stubbed(:item, :sold, client_intention: 'sell')
+      expect(item.amount_due_to_client).to eq(nil)
+    end
+
+    it "calculates the correct amount due to client" do
+      item = build_stubbed(:item, :sold, client_intention: 'consign', sale_price_cents: 1000)
+      expect(item.amount_due_to_client).to eq(Money.new(500))
+    end
+
+    it "calculates the correct amount due to client when consignment rate not standard" do
+      item = build_stubbed(:item, :sold, client_intention: 'consign', sale_price_cents: 1000, consignment_rate: 75)
+      expect(item.amount_due_to_client).to eq(Money.new(250))
+    end
+
+    it "calculates the correct amount due to client when consignment rate 0" do
+      item = build_stubbed(:item, :sold, client_intention: 'consign', sale_price_cents: 1000, consignment_rate: 0)
+      expect(item.amount_due_to_client).to eq(Money.new(1000))
+    end
+  end
+
+  context "state_machine" do
 
     let(:syncer) { double("syncer") }
 
@@ -156,7 +156,6 @@ describe Item do
       item.mark_sold
 
       expect(item).to be_sold
-      # expect(item.agreement.reload).to be_inactive
       expect(syncer).to have_received(:remote_destroy)
     end
 
@@ -237,7 +236,7 @@ describe Item do
 
   end
 
-  describe Item, "expired" do
+  context "expired" do
 
     it "marks an item 'expired'" do
       now = DateTime.now
@@ -249,7 +248,6 @@ describe Item do
 
       expect(item).to be_expired
       expect(item.tag_list).to match_array(["expired"])
-      # expect(item.agreement).to be_inactive
     end
 
     it "does not mark an item 'expired' when requirements not met" do
@@ -293,6 +291,14 @@ describe Item do
       expect(child_item.description).to eq("Copy of #{item.description}")
     end
 
+  end
+
+  it "regenerates token before save to prevent collisions" do
+    item = create(:item, description: "first item", token: "abc")
+    new_item = build(:item, description: "second item", token: "abc")
+    new_item.save
+
+    expect(new_item.token).not_to eq("abc")
   end
 
 end
