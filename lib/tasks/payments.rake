@@ -33,7 +33,7 @@ namespace :payments do
   def reconcile_payment(remote_payment)
     payment = Payment.find_or_initialize_by(remote_id: remote_payment.id)
     if payment.persisted?
-      Payment::Processor.new(payment).process
+      PaymentProcessorJob.perform_later(payment)
     else
       payment.save
     end
