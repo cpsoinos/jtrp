@@ -15,14 +15,14 @@ module Clover
             raise CloverError.new(result.message)
           end
         rescue CloverError => e
-          # Rollbar.error(e, result.message,  payment_id: payment.id, response: response, result: result)
           Airbrake.notify(e, {message: result.message,  payment_id: payment.id, response: response, result: result})
         end
       end
     end
 
-    def self.all
-      RestClient.get("#{base_url}/payments", headers) do |response, request, result|
+    def self.all(params={})
+      params = headers.merge(params: params)
+      RestClient.get("#{base_url}/payments", params) do |response, request, result|
         begin
           case response.code
           when 200
@@ -31,7 +31,6 @@ module Clover
             raise CloverError.new(result.message)
           end
         rescue CloverError => e
-          # Rollbar.error(e, result.message,  response: response, result: result)
           Airbrake.notify(e, {message: result.message,  response: response, result: result})
         end
       end

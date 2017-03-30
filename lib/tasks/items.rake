@@ -168,4 +168,26 @@ namespace :items do
 
   end
 
+  task :regenerate_tokens => :environment do
+
+    duplicate_token_hash = Item.group(:token).count.select { |_k, v| v > 1 }
+    duplicate_item_count = duplicate_token_hash.values.sum
+    puts "Found #{duplicate_item_count} items with non-unique tokens"
+    count = 0
+
+    bar = RakeProgressbar.new(duplicate_item_count)
+    items = Item.where(token: duplicate_token_hash.keys)
+    items.map do |item|
+      item.valid?
+      item.save
+      item.sync_inventory unless item.potential?
+      count += 1
+      bar.inc
+    end
+    bar.finished
+
+    puts "Updated #{count} tokens"
+
+  end
+
 end
