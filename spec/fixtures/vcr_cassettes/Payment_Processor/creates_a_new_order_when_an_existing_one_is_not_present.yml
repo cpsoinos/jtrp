@@ -1,0 +1,89 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://apisandbox.dev.clover.com/v3/merchants/HFBW9FH45ZBH2/payments/K4WF4WZET3962
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Bearer 285036e1-d1a8-dfc6-fe5c-51babdd7d241
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Content-Encoding:
+      - gzip
+      X-Frame-Options:
+      - SAMEORIGIN
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIAAAAAAAEA6pWykxRslJQ8jYJdzMJj3INMbY0M1LSUVDKL0pJLVKyUoAp
+        cAs2d3TxDTEwM4wyDFeq1VFQSkkty0xORVKSlpxqmWhqYKFrYmSSomtpZpis
+        m2KQaqhrYm5mZG6cbJhmkmYM1lmSmgczPKMoNQ1kf0ZJSUGxlb5+cWJeSlJ+
+        hV5Kapleck5+WWqRXnJ+rn6ZsX5ualFyRmJeSbG+h5tTuKWbh4lplJOHkT7E
+        sGJ9Aw8vExdDsyDfkJAoX5APIB5DFQa5OzE3vzSvRMlKwcjQwEBHQakkscIR
+        JgTiJycWZyQlJmejCKbmFuTkV6Yie9fNzCXAzcDX19zNwsgd7K/kotTEktSU
+        kMxckDpDEwtzI0tLEwMzA7A9yTmZqXklztjVmELU5OanZKZlYhoBlc5PS8vJ
+        zAMZnpaYU5yqo6BUlFpcmgPyDGBKwaHOzq7BwUq1AP55CsXTAQAA
+    http_version: 
+  recorded_at: Thu, 30 Mar 2017 11:05:33 GMT
+- request:
+    method: get
+    uri: https://apisandbox.dev.clover.com/v3/merchants/HFBW9FH45ZBH2/payments/K4WF4WZET3962
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Bearer 285036e1-d1a8-dfc6-fe5c-51babdd7d241
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Content-Encoding:
+      - gzip
+      X-Frame-Options:
+      - SAMEORIGIN
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIAAAAAAAEA6pWykxRslJQ8jYJdzMJj3INMbY0M1LSUVDKL0pJLVKyUoAp
+        cAs2d3TxDTEwM4wyDFeq1VFQSkkty0xORVKSlpxqmWhqYKFrYmSSomtpZpis
+        m2KQaqhrYm5mZG6cbJhmkmYM1lmSmgczPKMoNQ1kf0ZJSUGxlb5+cWJeSlJ+
+        hV5Kapleck5+WWqRXnJ+rn6ZsX5ualFyRmJeSbG+h5tTuKWbh4lplJOHkT7E
+        sGJ9Aw8vExdDsyDfkJAoX5APIB5DFQa5OzE3vzSvRMlKwcjQwEBHQakkscIR
+        JgTiJycWZyQlJmejCKbmFuTkV6Yie9fNzCXAzcDX19zNwsgd7K/kotTEktSU
+        kMxckDpDEwtzI0tLEwMzA7A9yTmZqXklztjVmELU5OanZKZlYhoBlc5PS8vJ
+        zAMZnpaYU5yqo6BUlFpcmgPyDGBKwaHOzq7BwUq1AP55CsXTAQAA
+    http_version: 
+  recorded_at: Thu, 30 Mar 2017 11:05:50 GMT
+recorded_with: VCR 3.0.3
