@@ -26,7 +26,12 @@ class Order < ActiveRecord::Base
 
   def remote_object
     Rails.cache.fetch(cache_key) do
-      Clover::Order.find(self)
+      begin
+        Clover::Order.find(self)
+      rescue TypeError
+        sleep(1)
+        remote_object
+      end
     end
   end
 
