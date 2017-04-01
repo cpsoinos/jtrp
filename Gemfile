@@ -114,6 +114,7 @@ group :development do
 end
 
 group :test do
+  gem 'knapsack'
   gem 'rspec-rails', '~> 3.0'
   gem 'shoulda-matchers', require: false
   gem 'capybara'
