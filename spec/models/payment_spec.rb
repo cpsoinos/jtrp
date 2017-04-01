@@ -1,6 +1,5 @@
 describe Payment do
 
-
   context "validations" do
 
     before do
