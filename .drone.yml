@@ -4,7 +4,7 @@ script:
   - bundle exec rake parallel:create
   - bundle exec rake parallel:prepare
   - bundle exec rake parallel:spec
-depends_on:
+services:
   - postgres
 notify:
   email:
