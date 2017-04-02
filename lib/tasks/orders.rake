@@ -30,10 +30,4 @@ namespace :orders do
 
   end
 
-  task :process_webhooks => :environment do
-
-    WebhookProcessorJob.perform_later
-
-  end
-
 end

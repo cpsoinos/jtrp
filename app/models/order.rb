@@ -16,8 +16,8 @@ class Order < ActiveRecord::Base
 
   scope :paid, -> { joins(:payments) }
 
-  def process_webhook
-    Order::Updater.new(self).update
+  def process
+    Orders::Processor.new(self).process
   end
 
   def self.thirty_day_revenue

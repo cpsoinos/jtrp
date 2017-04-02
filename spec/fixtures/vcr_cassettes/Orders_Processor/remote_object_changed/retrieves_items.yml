@@ -1,0 +1,160 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://apisandbox.dev.clover.com/v3/merchants/HFBW9FH45ZBH2/orders/KJHCCYXHV3ZDY?expand=discounts,lineItems,payType,payments
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Bearer 285036e1-d1a8-dfc6-fe5c-51babdd7d241
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Content-Encoding:
+      - gzip
+      X-Frame-Options:
+      - SAMEORIGIN
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIAAAAAAAEA6pWyihKTVOyUlDKKCkpKLbS1y9OzEtJyq/QS0kt00vOyS9L
+        LdJLzs/VLzPWz00tSs5IzCsp1vdwcwq3dPMwMY1y8jDSzy9KSS0q1vf28nB2
+        jozwCDOOcolU0lFQykwBmYshnFxaVJSal1wJkgwNdgGpTM0tyMmvTE1VslKo
+        hmpzcfMJcfUN8PGPdHVVqtVRUCrJL0nMUbJSMDczMABxEyuCUnPzy1JBlqQl
+        5hSngmwsDkssUbJSgPGLSxJLQIYq5eQnZ6emgKzKTcwrTcwJKUrMK05MLsnM
+        z0NSnl6UX1rgk5mX6lmSmlusZKVQUlQKMrYktbjENz8FZBLM5ILEypDKApCI
+        kluojw/I5OSi1MSS1JSQzFyQsKGJhbmJqYGBpZEB2L3JOZmpeSXO2NUYQtTk
+        5qdkpmWiG2FkbA6RzkFyWbVSak5qbmpeCciZ0fBQM/N1M/c2sLB0DwwJDgA5
+        Chw3QeAYhoUsaoSAgjazJDUXKegtjf2inLw8PKKcwo2clUAK8hLBflKKUfJN
+        LSqqjFFSyC1NBxmfmFOSWpSXWJLqB1VhVp6cXeCWV2SU6ugFUlBQlJkMDg5w
+        IBQUZeaVoMQY/kADu945h3DIpVaAUmY6itFFqWmleSkoQpnFQallqXmlIBeB
+        4rZWBx5yRh5ezpbBLh6OYb4m7iCXg+0mNeQizE1DnD1cwqPCIsJRQs5QITkj
+        MbNIISknMTlboTg1sQRkB0bwFadkB5cXuKYFeblVgBTAg8+UtPAzhqQYsB/o
+        E35hFkYWhpERIQa+EZbgmAfbTWL4WYR4GVgGeJlZRhm4e6GFX0GygnN+UV5q
+        kUJSfn62QnFGak4aKIgwwjDDyLTKOzDPzSjMERyRsDA0g4QJkWnQ0ACaKcH+
+        oGUYxoJyWEFiJSw348jaASFRIb4WAe7eFo4G4OIV7DCkbIuZr1NSyyC5D5b1
+        05JTLRNNDSx0TYxMUnQtzQyTdVMMUg11TczNjMyNkw3TTNKMwcFekpqXkloE
+        Npzy+gFiWLF+mIVriLdpkK97cJSBGSjqIBUEqjAoMBJz80vzQOU4oqx3hAmB
+        yv7kxOKMELALwbkbqoqYSgRrcWNkbAFJGnjKaLgaAmV0UWpxaQ7I6UrBoc7O
+        rsHBSrXg+CUzKgCrBQDRU3gZoAcAAA==
+    http_version: 
+  recorded_at: Sun, 02 Apr 2017 21:56:20 GMT
+- request:
+    method: get
+    uri: https://apisandbox.dev.clover.com/v3/merchants/HFBW9FH45ZBH2/orders/KJHCCYXHV3ZDY?expand=discounts,lineItems,payType,payments
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Bearer 285036e1-d1a8-dfc6-fe5c-51babdd7d241
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Content-Encoding:
+      - gzip
+      X-Frame-Options:
+      - SAMEORIGIN
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIAAAAAAAEA6pWyihKTVOyUlDKKCkpKLbS1y9OzEtJyq/QS0kt00vOyS9L
+        LdJLzs/VLzPWz00tSs5IzCsp1vdwcwq3dPMwMY1y8jDSzy9KSS0q1vf28nB2
+        jozwCDOOcolU0lFQykwBmYshnFxaVJSal1wJkgwNdgGpTM0tyMmvTE1VslKo
+        hmpzcfMJcfUN8PGPdHVVqtVRUCrJL0nMUbJSMDczMABxEyuCUnPzy1JBlqQl
+        5hSngmwsDkssUbJSgPGLSxJLQIYq5eQnZ6emgKzKTcwrTcwJKUrMK05MLsnM
+        z0NSnl6UX1rgk5mX6lmSmlusZKVQUlQKMrYktbjENz8FZBLM5ILEypDKApCI
+        kluojw/I5OSi1MSS1JSQzFyQsKGJhbmJqYGBpZEB2L3JOZmpeSXO2NUYQtTk
+        5qdkpmWiG2FkbA6RzkFyWbVSak5qbmpeCciZ0fBQM/N1M/c2sLB0DwwJDgA5
+        Chw3QeAYhoUsaoSAgjazJDUXKegtjf2inLw8PKKcwo2clUAK8hLBflKKUfJN
+        LSqqjFFSyC1NBxmfmFOSWpSXWJLqB1VhVp6cXeCWV2SU6ugFUlBQlJkMDg5w
+        IBQUZeaVoMQY/kADu945h3DIpVaAUmY6itFFqWmleSkoQpnFQallqXmlIBeB
+        4rZWBx5yRh5ezpbBLh6OYb4m7iCXg+0mNeQizE1DnD1cwqPCIsJRQs5QITkj
+        MbNIISknMTlboTg1sQRkB0bwFadkB5cXuKYFeblVgBTAg8+UtPAzhqQYsB/o
+        E35hFkYWhpERIQa+EZbgmAfbTWL4WYR4GVgGeJlZRhm4e6GFX0GygnN+UV5q
+        kUJSfn62QnFGak4aKIgwwjDDyLTKOzDPzSjMERyRsDA0g4QJkWnQ0ACaKcH+
+        oGUYxoJyWEFiJSw348jaASFRIb4WAe7eFo4G4OIV7DCkbIuZr1NSyyC5D5b1
+        05JTLRNNDSx0TYxMUnQtzQyTdVMMUg11TczNjMyNkw3TTNKMwcFekpqXkloE
+        Npzy+gFiWLF+mIVriLdpkK97cJSBGSjqIBUEqjAoMBJz80vzQOU4oqx3hAmB
+        yv7kxOKMELALwbkbqoqYSgRrcWNkbAFJGnjKaLgaAmV0UWpxaQ7I6UrBoc7O
+        rsHBSrXg+CUzKgCrBQDRU3gZoAcAAA==
+    http_version: 
+  recorded_at: Sun, 02 Apr 2017 21:56:21 GMT
+- request:
+    method: get
+    uri: https://apisandbox.dev.clover.com/v3/merchants/HFBW9FH45ZBH2/orders/KJHCCYXHV3ZDY/line_items?expand=discounts
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Bearer 285036e1-d1a8-dfc6-fe5c-51babdd7d241
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Content-Encoding:
+      - gzip
+      X-Frame-Options:
+      - SAMEORIGIN
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIAAAAAAAEA6pWSs1JzU3NKylWslKIVqhWykxRslJQCrMwsjCMjAgx8I2w
+        9FLSUVDKL0pJLQpKTVOygqvx9vJwdo6M8AgzjnKJVKrVUVDKLEnNRVJgEeJl
+        YBngZWYZZeDuBVaQl5ibCjLeUKEgWcE5vygvtUghKT8/W6E4IzUnDWRPYk5J
+        alFeYkmqH1RphpFplXdgnptRmKM7SEFBUWYyyAwzAwMDHQWlgqLMvJJUkJvT
+        EnOKU3UUlJKLUhNLUlNCMsFWGZpYmJuYGhgaGELUg/3hnJOZmlfijE2hgSVU
+        YWpFckZiXjqK0UWpaaV5KShCmcVBqWWpeaUgJ5UUlabW6sDDx8jDy9ky2MXD
+        MczXBOx0sN0khqFlhLlpiLOHS3hUWEQ4WhgmZyRmFikk5SQmZysUpyaWgIIH
+        I/yKU7KDywtc04K83CpACmDhZ2hKSvgZWBrTPfzMfN3MvQ0sLN0DQ4IDQE4n
+        K/yM/aKcvDw8opzCjZxRwi9GyTe1qKgyRkkhtzQdZDxG0JmVJ2cXuOUVGaU6
+        gvMAPOhICzkjOoVcrI6CUkYROIsqZZSUFFjp6ycWZBYn5qUk5VfopaSW6SXn
+        5JelFukl5+fqlxnr56YWgZJ4SbG+h5tTuKWbh4lplJOHkT44mIv1UbK3fk5m
+        Xmo8KH8DVmyfk5mbWWJraGCgVAsA96bERD4EAAA=
+    http_version: 
+  recorded_at: Sun, 02 Apr 2017 21:56:21 GMT
+recorded_with: VCR 3.0.3

@@ -7,10 +7,6 @@ class WebhookEntry < ActiveRecord::Base
 
   validates :processed, inclusion: { in: [ true, false ] }
 
-  def process
-    WebhookProcessorJob.perform_later(self)
-  end
-
   def mark_processed
     self.processed = true
     self.save
