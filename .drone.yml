@@ -9,7 +9,6 @@ script:
   # - mysql -u root -h127.0.0.1 -P 3306 -D rails_app_test < ./db/structure.sql
   - bundle exec rspec spec
   #
-  #
   # - bundle install
   # - bundle exec rake parallel:create
   # - bundle exec rake parallel:prepare
