@@ -23,6 +23,7 @@ pipeline:
   build:
     image: ruby:2.3.1
     commands:
+      - curl --output /usr/local/bin/phantomjs https://s3.amazonaws.com/circle-downloads/phantomjs-2.1.1
       - mkdir -p /tmp/bundler
       - gem install bundler
       - bundle install --path=/tmp/bundler --jobs 8
