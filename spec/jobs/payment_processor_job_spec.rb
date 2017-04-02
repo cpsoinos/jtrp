@@ -1,18 +1,18 @@
 describe PaymentProcessorJob do
 
+  let(:payment) { create(:payment) }
   let(:processor) { double("processor") }
-  let(:payment) { build_stubbed(:payment) }
-  
+
   before do
-    allow(Payment).to receive(:find).and_return(payment)
-    allow(Payment::Processor).to receive(:new).and_return(processor)
+    allow_any_instance_of(Payment).to receive(:process)
+    allow(Payments::Processor).to receive(:new).and_return(processor)
     allow(processor).to receive(:process)
   end
-  
+
   it 'processes a payment' do
-    PaymentProcessorJob.perform_later(123)
+    PaymentProcessorJob.perform_later(payment)
 
     expect(processor).to have_received(:process)
   end
-  
+
 end

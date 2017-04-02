@@ -4,7 +4,7 @@ describe Payment do
 
     before do
       allow(Clover::Payment).to receive(:find)
-      allow(Payment::Processor).to receive(:new).and_return(processor)
+      allow(Payments::Processor).to receive(:new).and_return(processor)
       allow(processor).to receive(:process)
     end
 
@@ -19,7 +19,7 @@ describe Payment do
   let(:processor) { double("processor") }
 
   it 'processes the payment after create' do
-    allow(Payment::Processor).to receive(:new).and_return(processor)
+    allow(Payments::Processor).to receive(:new).and_return(processor)
     allow(processor).to receive(:process)
 
     payment = build(:payment, remote_id: '3KVFXMRVTYF4C')
