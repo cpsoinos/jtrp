@@ -13,8 +13,6 @@ script:
   # - bundle exec rake parallel:create
   # - bundle exec rake parallel:prepare
   # - bundle exec rake parallel:spec
-services:
-  - postgres
 notify:
   email:
     recipients:1
