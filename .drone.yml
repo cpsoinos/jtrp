@@ -1,6 +1,8 @@
 image: ruby2.3.1
 script:
+  - cp config/database.drone.yml config/database.yml
   - bundle install
+  # - psql -c 'create database test;' -U postgres -h 127.0.0.1
   - bundle exec rake parallel:create
   - bundle exec rake parallel:prepare
   - bundle exec rake parallel:spec
