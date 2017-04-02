@@ -8,7 +8,8 @@ RUN apt-get update -qq && apt-get install -y \
   postgresql-client \
   nodejs \
   libmagickwand-dev \
-  imagemagick
+  imagemagick \
+  libcurl4-openssl-dev
 
 # Define where our application will live inside the image
 ENV RAILS_ROOT /home/jtrp
@@ -27,6 +28,7 @@ RUN gem install bundler
 # COPY . .
 ADD . $RAILS_ROOT
 RUN chmod +x script/start
+RUN chown -R $USER:$USER .
 
 # Define the script we want run once the container boots
 # Use the "exec" form of CMD so our script shuts down gracefully on SIGTERM (i.e. `docker stop`)

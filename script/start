@@ -1,5 +1,6 @@
 #!/bin/bash
 
-bundle check || bundle install
-
-bundle exec rails s -b 0.0.0.0
+# setup database and start puma
+bundle check || bundle install --jobs 8
+# RAILS_ENV=development bundle exec rake db:seed
+RAILS_ENV=development bundle exec rails s -p 3000 -b '0.0.0.0'

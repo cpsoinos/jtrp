@@ -10,10 +10,17 @@ services:
       - .:/jtrp
     volumes_from:
       - bundle
+    environment:
+      - POSTGRESQL_HOST=db
+      - POSTGRESQL_USERNAME=postgres
+      - POSTGRESQL_PASSWORD=postgres
+      - REDIS_DOMAIN=redis
+      - REDIS_PORT=6379
     env_file:
       - .env
     depends_on:
       - db
+      - redis
     restart: always
 
   bundle:
@@ -23,9 +30,6 @@ services:
 
   db:
     image: 'postgres:9.6.2'
-    environment:
-      POSTGRES_USER: 'jtrp'
-      POSTGRES_PASSWORD: 'yourpassword'
     ports:
       - '5432:5432'
     volumes:
@@ -44,11 +48,11 @@ services:
     image: wernight/phantomjs
 
   sidekiq:
+    build: .
     depends_on:
       - db
       - redis
       - web
-    build: .
     command: bundle exec sidekiq -C config/sidekiq.yml
     volumes:
       - .:/jtrp
