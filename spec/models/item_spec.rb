@@ -185,7 +185,7 @@ describe Item do
 
     it "transitions 'sold' to 'active'" do
       item = create(:item, :sold)
-      item.mark_not_sold
+      item.mark_not_sold!
 
       expect(item).to be_active
     end
