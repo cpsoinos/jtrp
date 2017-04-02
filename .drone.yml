@@ -26,7 +26,7 @@ pipeline:
       # - cp config/database.drone.yml config/database.yml
       - mkdir -p /tmp/bundler
       # - sudo chown ubuntu:ubuntu /tmp/bundler
-      - bundle install --path=/tmp/bundler --deployment --quiet
+      - bundle install --path=/tmp/bundler
       # - psql -c 'create database test;' -U postgres -h 127.0.0.1
       - sudo start xvfb
       - bundle exec rake parallel:create
