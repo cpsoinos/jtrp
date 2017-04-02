@@ -25,11 +25,4 @@ describe WebhookEntry do
     end
   end
 
-  it "#process" do
-    allow(WebhookProcessorJob).to receive(:perform_later)
-    webhook_entry.process
-
-    expect(WebhookProcessorJob).to have_received(:perform_later).with(webhook_entry)
-  end
-
 end
