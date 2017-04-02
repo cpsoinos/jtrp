@@ -39,3 +39,8 @@ services:
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
+
+cache:
+  mount:
+    - /tmp/bundler
+    - .git
