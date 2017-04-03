@@ -5,7 +5,7 @@ describe ItemExpirerJob do
   let(:expirer) { double('expirer') }
 
   before do
-    allow(Item::Expirer).to receive(:new).and_return(expirer)
+    allow(Items::Expirer).to receive(:new).and_return(expirer)
     allow(expirer).to receive(:expire!)
   end
 

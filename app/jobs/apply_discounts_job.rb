@@ -25,7 +25,7 @@ class ApplyDiscountsJob < ActiveJob::Base
       if item.discounts.present?
         item.discounts.map(&:apply)
       else
-        Item::Updater.new(item).update(sale_price_cents: item.listing_price_cents, sold_at: order.created_at) unless item.sold?
+        Items::Updater.new(item).update(sale_price_cents: item.listing_price_cents, sold_at: order.created_at) unless item.sold?
       end
     end
   end
