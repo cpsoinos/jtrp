@@ -93,12 +93,14 @@ feature "item show" do
 
         scenario "marks as sold" do
           allow(Clover::Inventory).to receive(:delete)
+          allow(Clover::Inventory).to receive(:update)
+
           click_link("Mark as Sold")
           expect(page).to have_field("item[sale_price]")
           expect(page).to have_field("item[sold_at]")
 
           fill_in("item[sale_price]", with: 64.66)
-          fill_in("item[sold_at]", with: "07/04/2016")
+          fill_in("item[sold_at]", with: "04/07/2016")
           click_button("Update Item")
           item.reload
 

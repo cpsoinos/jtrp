@@ -7,7 +7,7 @@ class Item::Updater
   end
 
   def update(attrs)
-    @attrs = attrs
+    @attrs = attrs.symbolize_keys
     process_photos
     format_date
     process_sale
