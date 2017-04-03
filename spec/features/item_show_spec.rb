@@ -151,7 +151,7 @@ feature "item show" do
         end
 
         scenario "marks inactive - damaged" do
-          allow(Clover::Inventory).to receive(:delete)
+          allow(Clover::Inventory).to receive(:update)
           click_link("Damaged")
 
           item.reload
@@ -162,7 +162,7 @@ feature "item show" do
         end
 
         scenario "marks inactive - 'Retrieved by Client'" do
-          allow(Clover::Inventory).to receive(:delete)
+          allow(Clover::Inventory).to receive(:update)
           click_link("Retrieved by Client")
 
           item.reload
@@ -173,7 +173,7 @@ feature "item show" do
         end
 
         scenario "marks inactive - 'other'" do
-          allow(Clover::Inventory).to receive(:delete)
+          allow(Clover::Inventory).to receive(:update)
           click_link("Other")
 
           item.reload
