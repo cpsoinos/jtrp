@@ -7,11 +7,11 @@ class Item::Updater
   end
 
   def update(attrs)
-    @attrs = attrs
+    @attrs = HashWithIndifferentAccess.new(attrs)
     process_photos
     format_date
     process_sale
-    if item.update(attrs)
+    if item.update(@attrs)
       sync_inventory
     end
     item
@@ -26,7 +26,7 @@ class Item::Updater
 
   def process_initial_photos
     if attrs[:initial_photos].present?
-      initial_photos = attrs.delete(:initial_photos)
+      initial_photos = @attrs.delete(:initial_photos)
       initial_photos.each do |photo|
         item.photos.create(photo: photo, photo_type: "initial")
       end
@@ -35,7 +35,7 @@ class Item::Updater
 
   def process_listing_photos
     if attrs[:listing_photos].present?
-      listing_photos = attrs.delete(:listing_photos)
+      listing_photos = @attrs.delete(:listing_photos)
       listing_photos.each do |photo|
         item.photos.create!(photo: photo, photo_type: "listing")
       end
@@ -43,7 +43,7 @@ class Item::Updater
   end
 
   def process_sale
-    if (attrs[:sale_price].present? || attrs[:sale_price_cents].present?) && !item.sold?
+    if [:sale_price, "sale_price", :sale_price_cents, "sale_price_cents", :sold_at, "sold_at"].any? { |key| key.in?(attrs.keys) }
       process_sold_at
       item.mark_sold unless item.sold?
     end
@@ -55,6 +55,7 @@ class Item::Updater
   end
 
   def process_sold_at
+    return if attrs[:sold_at].blank?
     attrs[:sold_at] ||= DateTime.now
     attrs[:sold_at] = DateTime.parse(attrs[:sold_at].to_s)
     if attrs[:sold_at] < 2000.years.ago
