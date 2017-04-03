@@ -11,7 +11,7 @@ class Item::Updater
     process_photos
     format_date
     process_sale
-    if item.update(attrs)
+    if item.update(@attrs)
       sync_inventory
     end
     item
@@ -26,7 +26,7 @@ class Item::Updater
 
   def process_initial_photos
     if attrs[:initial_photos].present?
-      initial_photos = attrs.delete(:initial_photos)
+      initial_photos = @attrs.delete(:initial_photos)
       initial_photos.each do |photo|
         item.photos.create(photo: photo, photo_type: "initial")
       end
@@ -35,7 +35,7 @@ class Item::Updater
 
   def process_listing_photos
     if attrs[:listing_photos].present?
-      listing_photos = attrs.delete(:listing_photos)
+      listing_photos = @attrs.delete(:listing_photos)
       listing_photos.each do |photo|
         item.photos.create!(photo: photo, photo_type: "listing")
       end
