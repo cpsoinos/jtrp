@@ -7,7 +7,7 @@ class Item::Updater
   end
 
   def update(attrs)
-    @attrs = attrs.symbolize_keys
+    @attrs = HashWithIndifferentAccess.new(attrs)
     process_photos
     format_date
     process_sale
@@ -43,7 +43,7 @@ class Item::Updater
   end
 
   def process_sale
-    if [:sale_price, :sale_price_cents, :sold_at].any? { |key| key.in?(attrs.keys) }
+    if [:sale_price, "sale_price", :sale_price_cents, "sale_price_cents", :sold_at, "sold_at"].any? { |key| key.in?(attrs.keys) }
       process_sold_at
       item.mark_sold unless item.sold?
     end
@@ -55,6 +55,7 @@ class Item::Updater
   end
 
   def process_sold_at
+    return if attrs[:sold_at].blank?
     attrs[:sold_at] ||= DateTime.now
     attrs[:sold_at] = DateTime.parse(attrs[:sold_at].to_s)
     if attrs[:sold_at] < 2000.years.ago
