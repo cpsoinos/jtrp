@@ -156,7 +156,7 @@ describe Item do
       item.mark_sold
 
       expect(item).to be_sold
-      expect(syncer).to have_received(:remote_destroy)
+      expect(syncer).not_to have_received(:remote_destroy)
     end
 
     it "does not transition 'active' to 'sold' when requirements not met" do
@@ -180,7 +180,7 @@ describe Item do
 
       expect(item).not_to be_active
       expect(item).to be_inactive
-      expect(syncer).to have_received(:remote_destroy)
+      expect(syncer).not_to have_received(:remote_destroy)
     end
 
     it "transitions 'sold' to 'active'" do

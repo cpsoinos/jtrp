@@ -12,11 +12,7 @@ class InventorySyncJob < ActiveJob::Base
 
   def perform(item)
     if item.remote_id
-      if item.sold? || item.inactive? || item.potential?
-        InventorySync.new(item).remote_destroy
-      else
-        InventorySync.new(item).remote_update
-      end
+      InventorySync.new(item).remote_update
     else
       InventorySync.new(item).remote_create unless (item.sold? || item.inactive?)
     end
