@@ -37,6 +37,7 @@ module Discounts
     def item_discounts
       # only keep discounts applied to a specific item in Clover
       @_item_discounts ||= Clover::LineItem.find(order).reject { |d| d.try(:discounts).nil? }
+      @_item_discounts ||= []
     end
 
     def find_item(line_item)
