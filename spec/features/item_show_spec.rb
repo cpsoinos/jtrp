@@ -107,7 +107,7 @@ feature "item show" do
           expect(page).to have_content("Item was successfully updated")
           expect(item).to be_sold
           expect(item.sale_price_cents).to eq(6466)
-          expect(item.sold_at).to eq("04/07/2016".to_datetime)
+          expect(item.sold_at).to eq(DateTime.parse("April 7, 2016"))
         end
 
         scenario "no 'expire' option" do
