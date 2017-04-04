@@ -1,11 +1,10 @@
 module Discounts
   class Retriever
 
-    attr_reader :order, :line_items, :discounts
+    attr_reader :order, :discounts
 
     def initialize(order)
       @order = order
-      @line_items = line_items
       @discounts = []
     end
 

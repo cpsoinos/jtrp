@@ -156,4 +156,66 @@ http_interactions:
         gVysj1Ji6udk5qXGg4pMwIrtczJzM0tsDQ0MlGoB2gryMZEFAAA=
     http_version: 
   recorded_at: Mon, 03 Apr 2017 12:44:51 GMT
+- request:
+    method: get
+    uri: https://apisandbox.dev.clover.com/v3/merchants/HFBW9FH45ZBH2/orders/PBSS1MMCZBZEC?expand=discounts,lineItems,payType,payments,lineItems.discounts,lineItems.item
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Bearer 285036e1-d1a8-dfc6-fe5c-51babdd7d241
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Content-Encoding:
+      - gzip
+      X-Frame-Options:
+      - SAMEORIGIN
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIAAAAAAAEA6pWyihKTVOyUlDKKCkpKLbS1y9OzEtJyq/QS0kt00vOyS9L
+        LdJLzs/VLzPWz00tSs5IzCsp1vdwcwq3dPMwMY1y8jDSzy9KSS0q1g9wCg42
+        9PV1jnKKcnVW0lFQykwBmYshnFxaVJSal1wJkgwNdgGpTM0tyMmvTE1VslKo
+        hmpzM3MJcDPw9TV3szByV6rVUVAqyS9JzFGyUjA0MrQ0BfETK4JSc/PLUkHW
+        pCXmFKeC7CwOSyxRslKA8YtLEktAxirl5Cdnp6aALMtNzCtNzAkpSswrTkwu
+        yczPQ1KeXpRfWuCTmZfqWZKaW6xkpVBSVAoytiS1uMQ3PwVkEszkgsTKkMoC
+        kIiSW6iPD8jk5KLUxJLUlJDMXJCwoYmFuYmZqYmZoYGBgY6CUnJOZmpeiTNe
+        Nbn5KZlpmZhGWEKMSMksTs4vzSsBuaxaKTUnNTcVwomGh5uRuYm3uZe5hYGF
+        QZAXyFHg2AkCxzEsbFGjBBS2eYlgJysZGqgq+KelgfQVpBYlp+aVJKaD/WJQ
+        GwtSl4MUNDgcYBYUZGIebu5q4WQUFgkyiCgHZJak5iLFvouFuZlbkIWZcYCz
+        sTvIkIzMlJRU5JiCu1jBN7UkMUfBKb88B6QwMacktSgvsSTVD+ql0kCzKouU
+        /GSjghA/kILi7FJQyjMzMLYEcQuKMpNBPjQFRRGYA49VzwhXcOpMSU1LLM0p
+        CUmsCEosSQWFPTRVZBYHpZal5pWC9EOFsESgmYmpgbmZgYEBKADJdjbYaUpW
+        CjB35pWgpHv8SQ8cBc5EpL/UClAOT0cxuig1rTQvBUUI3eO1OvD052zgZBLk
+        Z+ntGGbsS3z6Q4t+QzdnE0fvMCdDs3ADM1As4Yx+Y4XwjMySVIXgjNScstRi
+        kFqMFFCVXmiYFFxsERZQ6AFSAE8BBkYgLixkjSB5DMyldhowMTMzsABlYuQ0
+        QI7bwa5TslJAOHawJgQvL5dwb5MocxP3KNNwUDiDEyGhgggtIZh5hURGuLsZ
+        GXpZuAeADMGZEIwUCpIVcjLTM0pSUxQySkuSMxTK9RXKM/NSFYoSk7MVikvy
+        ixLTUxVASbkIZBJGMjHLcC5KiwzMrzLyBldf0GRibGZiDFIPC3lQaU6zssLc
+        0tDA2BStrKC+17D4hbhkBE124KikT3ni7hcU5efs5eLn5AGJFrDdJCYjyyC3
+        AG9TXwvXgEBfcJ2EMxkZQ9KQQlpOfn6RQk5ibgEo7jHSiqNhbkZGcIRfRq4r
+        OG3D04opaloxBdf84OCmdpFiZGlhaW6MllTIdD7YgaCmFdy9gys5gNseBYmV
+        sOYOjqaHa5CfkUtQUFiEt4W3ASjewGkFqVmB2fBJSS2D1P+wtlFacqploqmB
+        ha6JkUmKrqWZYbJuikGqoa6JuZmRuXGyYZpJmrESqBQvSc1LSS0CG055Expi
+        WLF+mIVriLdpkK97cBSk4oO0oVGFQbYn5oLagaAoQ7SGHWFioOIpObE4IwTs
+        RHDNbQhVRlRLG0djAlR/EWrHQtVgaQaBm8IWkDq2KLW4NAfUTFcKDnV2dg0O
+        VoI0L8mMDcBqAfAwkanGDAAA
+    http_version: 
+  recorded_at: Tue, 04 Apr 2017 13:34:15 GMT
 recorded_with: VCR 3.0.3
