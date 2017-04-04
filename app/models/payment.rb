@@ -1,5 +1,6 @@
 class Payment < ActiveRecord::Base
   acts_as_paranoid
+  audited associated_with: :order
 
   belongs_to :order
   has_many :webhook_entries, as: :webhookable

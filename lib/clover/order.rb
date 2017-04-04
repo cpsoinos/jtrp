@@ -4,7 +4,7 @@ module Clover
   class Order < CloverBase
 
     def self.find(order)
-      RestClient.get("#{base_url}/orders/#{self.identifier(order)}?expand=discounts,lineItems,payType,payments", headers) do |response, request, result|
+      RestClient.get("#{base_url}/orders/#{self.identifier(order)}?expand=discounts,lineItems,payType,payments,lineItems.discounts,lineItems.item", headers) do |response, request, result|
         begin
           case response.code
           when 200

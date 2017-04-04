@@ -1,5 +1,7 @@
 describe Payment do
 
+  it { should be_audited.associated_with(:order) }
+
   context "validations" do
 
     before do

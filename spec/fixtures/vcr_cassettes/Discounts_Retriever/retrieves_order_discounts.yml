@@ -97,4 +97,58 @@ http_interactions:
         FdvnZOZmltgaGhgo1QIAUEIU9NoBAAA=
     http_version: 
   recorded_at: Mon, 03 Apr 2017 12:31:56 GMT
+- request:
+    method: get
+    uri: https://apisandbox.dev.clover.com/v3/merchants/HFBW9FH45ZBH2/orders/0APKFKJVAVGCR?expand=discounts,lineItems,payType,payments,lineItems.discounts,lineItems.item
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Bearer 285036e1-d1a8-dfc6-fe5c-51babdd7d241
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Content-Encoding:
+      - gzip
+      X-Frame-Options:
+      - SAMEORIGIN
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIAAAAAAAEA6pWyihKTVOyUlDKKCkpKLbS1y9OzEtJyq/QS0kt00vOyS9L
+        LdJLzs/VLzPWz00tSs5IzCsp1vdwcwq3dPMwMY1y8jDSzy9KSS0q1jdwDPB2
+        8/YKcwxzdw5S0lFQykwBmYshnFxaVJSal1wJkgwNdgGpTM0tyMmvTE1VslKo
+        hmpzM3MJcDPw9TV3szByV6rVUVAqyS9JzFGyUjAyNzAwAPETK4JSc/PLUkHW
+        pCXmFKeC7CwOSyxRslKA8YtLEktAxirl5Cdnp6aALMtNzCtNzAkpSswrTkwu
+        yczPQ1KeXpRfWuCTmZfqWZKaW6xkpVBSVAoytiS1uMQ3PwVkEszkgsTKkMoC
+        kIiSW6iPD8jk5KLUxJLUlJDMXJCwoYmFuYmZmaUl1L3JOZmpeSXOeNXk5qdk
+        pmWiGWFuYGYA8XJKZnFyfmleCchl1UqpOam5qRBONDzcvILMfV1MwtzcLL1N
+        DUCOAsdOEDiOYWGLGiWgsM1LBDtZydBAVcE/LQ2kryC1KDk1ryQxHewXg9pY
+        kLocpKDB4QDnMEtHp4BgYy8LgyAzkEFEOSCzJDUXKfadTKK8PLy8zYy93aN8
+        QYZkZKakpCLHFMzFRgXJCsGp4HhMzFFwKsovz1NISyytUMhJTSzJSC1SKNdX
+        yC8pyc9NzAOZk5hTklqUl1iS6gf1caBXkG9qVVaoeUVEBUhBcXYpKGEaWxqB
+        HV9QlJkMCgBjaAyA+fB494xwBafflNS0xNKckpDEiqDEklRQ7EDTTWZxUGpZ
+        al4pyAioEJYoNjMyszAxMTAwAAUxrTwGdrmSlQKST/JKUPIO/uQLjkZnItJw
+        agWolEhHMbooNa00LwVFCD1oIAmsILESlqZxpC9zi0gnXzNDs4gAMxcvUIyB
+        HYaUdjBTd0pqGSQWYRkgLTnVMtHUwELXxMgkRdfSzDBZN8Ug1VDXxNzMyNw4
+        2TDNJM1YCRQZJal5KalFYMMpLychhhXrG3h4mbgYmgX5hoRAEje0oEQRBtme
+        mAvK7KhFniNMDFQEJicWZyQlJmejCBJVmGKLa3MDY1BBo6OghLuoQqjBko5N
+        zBDS+WlpoMICqWwtSi0uzQGVzUrBoc7OrsHBSpAoJzN2AKsFABY9GlO7BgAA
+    http_version: 
+  recorded_at: Tue, 04 Apr 2017 13:34:18 GMT
 recorded_with: VCR 3.0.3

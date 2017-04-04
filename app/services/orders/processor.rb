@@ -42,8 +42,9 @@ module Orders
 
     def retrieve_items
       line_items.each do |line_item|
-        item = LineItems::Retriever.new(line_item).execute
-        next if item.nil?
+        remote_item = line_item.try(:item)
+        next if remote_item.nil?
+        item = Item.find(remote_item.sku)
         order.items << item
         item.save
       end
@@ -51,8 +52,7 @@ module Orders
     end
 
     def line_items
-      @_line_items ||= remote_object.try(:lineItems).try(:elements)
-      @_line_items ||= []
+      @_line_items ||= Clover::LineItem.find(order)
     end
 
     def retrieve_discounts

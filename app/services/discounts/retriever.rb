@@ -28,20 +28,17 @@ module Discounts
     end
 
     def retrieve_item_discounts
-      item_discounts.each do |line_item|
-        item = find_item(line_item)
-        discounts << Discounts::Creator.new(item).create(line_item.discounts.elements.first)
+      line_items.map do |line_item|
+        next unless line_item.respond_to?(:item)
+        next unless line_item.respond_to?(:discounts)
+        item = Item.find(line_item.item.sku)
+        remote_discount = line_item.discounts.elements.first
+        discounts << Discounts::Creator.new(item).create(remote_discount)
       end
     end
 
-    def item_discounts
-      # only keep discounts applied to a specific item in Clover
-      @_item_discounts ||= Clover::LineItem.find(order).reject { |d| d.try(:discounts).nil? }
-      @_item_discounts ||= []
-    end
-
-    def find_item(line_item)
-      LineItems::Retriever.new(line_item).execute
+    def line_items
+      @_line_items ||= order.remote_object.lineItems.elements
     end
 
   end
