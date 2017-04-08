@@ -45,6 +45,8 @@ GEM
       tzinfo (~> 1.1)
     acts-as-taggable-on (4.0.0)
       activerecord (>= 4.0)
+    acts_as_list (0.9.5)
+      activerecord (>= 3.0)
     addressable (2.5.0)
       public_suffix (~> 2.0, >= 2.0.2)
     afm (0.2.2)
@@ -371,6 +373,8 @@ GEM
     jquery-turbolinks (2.1.0)
       railties (>= 3.1.0)
       turbolinks
+    jquery-ui-rails (6.0.1)
+      railties (>= 3.2.16)
     json (1.8.3)
     jwt (1.5.1)
     kaminari (0.17.0)
@@ -741,6 +745,7 @@ PLATFORMS
 DEPENDENCIES
   activejob-traffic_control
   acts-as-taggable-on (~> 4.0)
+  acts_as_list
   airbrake (~> 5.0)
   amoeba
   audited (~> 4.3)
@@ -783,6 +788,7 @@ DEPENDENCIES
   jquery-fileupload-rails
   jquery-rails
   jquery-turbolinks
+  jquery-ui-rails
   kaminari
   launchy
   letter_opener_web (~> 1.2.0)

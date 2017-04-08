@@ -8,6 +8,7 @@ gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.1.0'
 gem 'jquery-rails'
+gem 'jquery-ui-rails'
 gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'pry-rails'
@@ -74,6 +75,7 @@ gem 'acts-as-taggable-on', '~> 4.0'
 gem 'sitemap_generator'
 gem 'sidekiq-unique-jobs'
 gem 'redis-namespace'
+gem 'acts_as_list'
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-classnames'

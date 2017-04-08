@@ -13,6 +13,7 @@
 //= require jquery
 //= require jquery.turbolinks
 //= require jquery_ujs
+//= require jquery-ui
 //= require bootsy
 //= require jquery.remotipart
 //= require bootstrap.min
@@ -61,5 +62,6 @@
 //= require proposals
 //= require users
 //= require letters
+//= require photos
 
 //= require turbolinks

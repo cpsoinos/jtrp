@@ -30,6 +30,13 @@ class PhotosController < ApplicationController
     redirect_to account_job_proposal_sort_items_path(@proposal.account, @proposal.job, @proposal)
   end
 
+  def sort
+    params[:photo].each_with_index do |id, index|
+      Photo.where(id: id).update_all(position: index+1)
+    end
+    render nothing: true
+  end
+
   protected
 
   def photo_params
