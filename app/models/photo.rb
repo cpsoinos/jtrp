@@ -1,5 +1,6 @@
 class Photo < ActiveRecord::Base
   acts_as_paranoid
+  acts_as_list scope: :item
   audited associated_with: :item
 
   belongs_to :item, touch: true

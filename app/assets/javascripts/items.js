@@ -151,7 +151,7 @@ $(document).on('turbolinks:load', function() {
     todayHighlight: true
   }).on('changeDate', function(ev){
     $('form .datepicker').datepicker('hide');
-});;
+  });;
 
   // Dynamically create mark-sold-modals
   $("#mark-sold-modal").on('shown.bs.modal', function (event) {
@@ -161,6 +161,6 @@ $(document).on('turbolinks:load', function() {
     var modal = $(this)
     modal.find('form').attr('action', ('/items/' + itemId));
     modal.find('.modal-title').text(itemDescription);
-  })
+  });
 
 });

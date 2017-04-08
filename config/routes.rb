@@ -40,6 +40,7 @@ Rails.application.routes.draw do
 
   resources :photos, only: [:create, :destroy] do
     post '/batch_create', to: 'photos#batch_create', on: :collection
+    post '/sort', to: 'photos#sort', on: :collection
   end
 
   get '/batch_create', to: 'items#batch_create', as: 'items_batch_create'

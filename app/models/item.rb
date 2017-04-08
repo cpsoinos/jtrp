@@ -12,7 +12,7 @@ class Item < ActiveRecord::Base
   multisearchable against: [:id, :account_item_number, :description, :original_description, :category_name, :category_id, :account_name, :job_name]
   paginates_per 18
 
-  has_many :photos, dependent: :destroy
+  has_many :photos, -> { order(position: :asc) }, dependent: :destroy
   accepts_nested_attributes_for :photos
   belongs_to :category, touch: true
   belongs_to :proposal, counter_cache: true, touch: true
