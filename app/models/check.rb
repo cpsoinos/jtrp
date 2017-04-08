@@ -4,6 +4,7 @@ class Check < ActiveRecord::Base
 
   belongs_to :statement
   has_one :account, through: :statement
+  has_many :webhook_entries, as: :webhookable
 
   mount_uploader :check_image_front, ScannedAgreementUploader
   mount_uploader :check_image_back, ScannedAgreementUploader
@@ -13,12 +14,18 @@ class Check < ActiveRecord::Base
     less_than_or_equal_to: 100000
   }
 
+  after_touch :retrieve_images
+
   def memo
     "#{statement.date.last_month.strftime('%B')}, #{statement.date.last_month.strftime('%Y')} - Consigned Sales"
   end
 
   def name
     "#{account.short_name} - #{statement.date.last_month.strftime('%-m/%-d/%y')}"
+  end
+
+  def retrieve_images
+    CheckImageRetrieverJob.perform_later(self)
   end
 
 end

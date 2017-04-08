@@ -21,19 +21,18 @@ module Webhooks
 
       def attrs
         @_attrs = {
-          timestamp:   format_time(remote_entry["ts"]),
-          action:      remote_entry["type"],
+          timestamp:   timestamp,
+          action:      action,
           webhookable: local_object
         }
       end
 
       def local_object
-        @_local_object ||= object_base.find_or_create_by(remote_id: remote_entry["objectId"].split(":").last)
+        @_local_object ||= object_base.find_or_create_by(remote_id: remote_id)
       end
 
       def object_base
         @_object_base ||= begin
-          identifier_type = remote_entry["objectId"].split(":").first
           case identifier_type
           when "I"
             Item
@@ -43,7 +42,19 @@ module Webhooks
             Payment
           when "C"
             Customer
+          when "chk"
+            Check
+          when "ltr"
+            Letter
           end
+        end
+      end
+
+      def timestamp
+        if webhook.clover?
+          format_time(remote_entry["ts"])
+        elsif webhook.lob?
+          remote_entry["date_created"].to_datetime
         end
       end
 
@@ -52,7 +63,30 @@ module Webhooks
         Time.at(time/1000)
       end
 
+      def identifier_type
+        if webhook.clover?
+          remote_entry["objectId"].split(":").first
+        elsif webhook.lob?
+          remote_entry["body"]["id"].split("_").first
+        end
+      end
+
+      def remote_id
+        if webhook.clover?
+          remote_entry["objectId"].split(":").last
+        elsif webhook.lob?
+          remote_entry["body"]["id"]
+        end
+      end
+
+      def action
+        if webhook.clover?
+          remote_entry["type"]
+        elsif webhook.lob?
+          remote_entry["event_type"]["id"].split(".").last
+        end
+      end
+
     end
   end
 end
-
