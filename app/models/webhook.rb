@@ -4,10 +4,14 @@ class Webhook < ActiveRecord::Base
   after_create :create_webhook_entries
 
   def remote_entries
-    begin
-      data["merchants"][ENV["CLOVER_MERCHANT_ID"]]
-    rescue NoMethodError
-      []
+    if clover?
+      begin
+        data["merchants"][ENV["CLOVER_MERCHANT_ID"]]
+      rescue NoMethodError
+        []
+      end
+    elsif lob?
+      [data]
     end
   end
 
