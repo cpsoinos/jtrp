@@ -8,7 +8,7 @@ describe CheckSenderJob do
     allow(sender).to receive(:send_check)
   end
 
-  it "calls Check::Sender" do
+  it "calls Checks::Sender" do
     CheckSenderJob.perform_later(statement)
 
     expect(Checks::Sender).to have_received(:new).with(statement)

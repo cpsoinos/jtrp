@@ -10,7 +10,7 @@ describe Statement::Updater do
   end
 
   it "updates a statement" do
-    allow(Check::Sender).to receive(:new).and_return(sender)
+    allow(Checks::Sender).to receive(:new).and_return(sender)
     allow(sender).to receive(:send_check)
     updater.update(attrs)
 
