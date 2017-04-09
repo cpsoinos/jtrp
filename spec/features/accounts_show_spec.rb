@@ -19,7 +19,7 @@ feature "account show" do
       expect(page).to have_content("Potential")
     end
 
-    scenario "no primary contact" do
+    scenario "with primary contact" do
       account = create(:client_account, :with_client)
       visit account_path(account)
 
