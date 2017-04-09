@@ -24,7 +24,11 @@ class AccountsController < ApplicationController
     @account = Account.new(account_params)
     if @account.save
       flash[:notice] = "Account created"
-      redirect_to account_path(@account)
+      if @account.primary_contact
+        render :show
+      else
+        redirect_to new_client_path(account_id: @account.id)
+      end
     else
       redirect_to :back
     end
@@ -38,7 +42,11 @@ class AccountsController < ApplicationController
     @account = Account.find(params[:id])
     if @account.update(account_params)
       flash[:notice] = "Account updated"
-      redirect_to account_path(@account)
+      if @account.primary_contact
+        render :show
+      else
+        redirect_to new_client_path(account_id: @account.id)
+      end
     else
       redirect_to :back
     end
@@ -76,7 +84,7 @@ class AccountsController < ApplicationController
   protected
 
   def account_params
-    params.require(:account).permit(:is_company, :company_name, :notes)
+    params.require(:account).permit(:is_company, :company_name, :primary_contact_id, :notes)
   end
 
 end

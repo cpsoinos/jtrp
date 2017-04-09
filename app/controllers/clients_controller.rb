@@ -8,12 +8,16 @@ class ClientsController < ApplicationController
   end
 
   def new
+    if params[:account_id]
+      @account = Account.find(params[:account_id])
+    end
     @client = Client.new
   end
 
   def create
     @client = Client.new(client_params)
     if @client.save
+      set_primary_contact
       flash[:notice] = "Client created!"
       redirect_to account_path(@client.account)
     else
@@ -35,6 +39,14 @@ class ClientsController < ApplicationController
       flash[:alert] = @client.errors.full_messages.uniq.join
       redirect_to :back
     end
+  end
+
+  private
+
+  def set_primary_contact
+    account = @client.account
+    account.primary_contact ||= @client
+    account.save
   end
 
   protected

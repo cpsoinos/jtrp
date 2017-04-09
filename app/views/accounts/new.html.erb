@@ -9,6 +9,10 @@
     <%= link_to "Yes", "javascript:void(0);", class: "btn btn-raised btn-primary btn-lg", id: "new-account-button" %>
   </div>
 
-  <%= render 'form' %>
+  <div class="modal fade" tabindex="-1" role="dialog" id="new-account-modal">
+    <div class="modal-dialog">
+      <%= render 'form' %>
+    </div>
+  </div>
 
 </div>
