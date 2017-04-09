@@ -157,17 +157,6 @@ feature "add an account" do
         expect(page).to have_content(client.full_name)
       end
 
-      scenario "successfully fills in company information" do
-        visit new_account_path
-        click_link("Yes")
-        fill_in("Company name", with: "Blah, Inc.")
-        fill_in("Notes", with: "blah ditty blah blah")
-        click_button("Create Account")
-
-        expect(page).to have_content("Account created")
-        expect(page).to have_content("Blah, Inc.")
-      end
-
     end
 
   end
