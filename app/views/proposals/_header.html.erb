@@ -26,7 +26,7 @@
       <% if proposal.present? %>
         <tr>
           <td class="text-left">Date</td>
-          <td><%= proposal.updated_at.strftime("%B %d, %Y") %></td>
+          <td><%= proposal.created_at.strftime("%B %d, %Y") %></td>
         </tr>
         <tr>
           <td class="text-left">Proposal #</td>
