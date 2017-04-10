@@ -24,6 +24,16 @@ class AgreementsController < ApplicationController
     @items = @agreement.items
   end
 
+  def edit
+    @agreement = Agreement.find(params[:id])
+    @proposal = @agreement.proposal
+    @job = @proposal.job
+    @account = @agreement.proposal.job.account
+    @client = @account.primary_contact
+    @agreements = [@agreement]
+    @items = @agreement.items
+  end
+
   def agreements_list
     @agreements = AgreementsPresenter.new(params).filter
     @intentions = @agreements.pluck(:agreement_type).uniq
@@ -61,7 +71,7 @@ class AgreementsController < ApplicationController
       if agreement.potential?
         TransactionalEmailJob.perform_later(agreement, @company.primary_contact, agreement.account.primary_contact, "send_agreement", params)
       else
-        agreement.scanned_agreement.deliver_to_client
+        agreement.deliver_to_client
       end
     end
     redirect_to :back, notice: "Email sent to client!"
@@ -84,6 +94,13 @@ class AgreementsController < ApplicationController
         end
       end
     end
+  end
+
+  def regenerate_pdf
+    @agreement = Agreement.find(params[:agreement_id])
+    @agreement.save_as_pdf
+    flash[:notice] = "Generating new PDF... refresh the page in a moment to see changes."
+    redirect_to agreement_path(@agreement)
   end
 
   protected

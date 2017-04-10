@@ -14,9 +14,6 @@
   </ul>
 
   <%= link_to "<i class='fa fa-caret-left'></i> Back to Proposal".html_safe, account_job_proposal_path(@account, @job, @proposal), class: "btn btn-raised btn-primary hidden-print" %>
-  <button type="button" class="btn btn-raised btn-primary pull-right hidden-print" data-toggle="modal" data-target="#agreement-note-modal">
-    Send Agreements <i class='material-icons'>email</i>
-  </button>
 
   <!-- Tab panes -->
   <div class="well bs-component">
@@ -24,33 +21,34 @@
       <% @agreements.each do |agreement| %>
         <div role="tabpanel" class="tab-pane fade" id="<%= agreement.agreement_type %>">
 
-          <% if agreement.active? && agreement.items.any? { |i| i.potential? } %>
-            <div class="row hidden-print">
-              <%= link_to "Mark Items Active <i class='material-icons'>store</i>".html_safe, agreement_activate_items_path(agreement), class: "btn btn-raised btn-primary pull-right", method: :post %>
-            </div>
-          <% end %>
+          <% if agreement.pdf.present? && !params[:print] %>
 
-          <% if agreement.active? && agreement.items.any? { |i| i.meets_requirements_expired? } %>
-            <div class="row hidden-print">
-              <%= render 'agreements/to_do_task', agreement: agreement, task_field: agreement.task[:task_field] %>
-              <button type="button" class="btn btn-raised btn-warning pull-right" data-toggle="modal" data-target="#agreement-<%= agreement.id %>-task-modal">
-                Mark Items Expired <i class='material-icons'>store</i>
-              </button>
+            <div class="text-center">
+              <% (1..agreement.pdf_pages).to_a.each do |page| %>
+                <%= image_tag(agreement.pdf_url(client_hints: true, page: page, fetch_format: :auto)) %><br /><br />
+              <% end %>
             </div>
-          <% end %>
 
-          <% if agreement.scanned_agreement.present? %>
-            <% if current_user.try(:internal?) %>
-              <div class="text-right hidden-print">
-                <%= link_to "Print Labels", labels_items_path(by_id: agreement.items.map(&:id)), class: "btn btn-info btn-raised btn-round", target: "blank" %>
-              </div>
-            <% end %>
-            <iframe src="<%= agreement.scanned_agreement.scan_url %>" width="100%" style="border: none;" class="full-height"> </iframe>
           <% else %>
-            <%= render "#{agreement.agreement_type}", items: agreement.items, agreement: agreement, proposal: @proposal, job: @job, account: @account, client: @client, company: @company %>
-            <%= render "agreements/terms_form", account: agreement.account, agreement: agreement %>
+
+            <%= render "agreements/#{agreement.agreement_type}", items: agreement.items, agreement: agreement, proposal: @proposal, job: @job, account: @account, client: @client %>
+
+            <% if current_user.try(:internal?) %>
+              <%= render 'scanned_upload_form', agreement: agreement %>
+            <% end %>
+
           <% end %>
-          <%= render 'scanned_upload_form', agreement: agreement %>
+
+          <% unless params[:print] %>
+            <%= render 'agreements/terms_form', agreement: agreement, account: @account %>
+          <% end %>
+
+          <% if agreement.meets_requirements_expired? %>
+            <%= render 'agreements/to_do_task', agreement: agreement, task_field: agreement.task[:task_field] %>
+          <% end %>
+          
+          <%= render 'agreements/fab_menu', agreement: agreement, items: agreement.items %>
+
         </div>
       <% end %>
     </div>

@@ -1,4 +1,5 @@
 require 'sendgrid-ruby'
+require 'base64'
 
 class TransactionalEmailer
   include SendGrid
@@ -23,6 +24,11 @@ class TransactionalEmailer
     mail.from = Email.new(email: from_email(options))
 
     mail.personalizations = personalizations(recipient, options)
+
+    binding.pry
+    if object.respond_to?(:pdf)
+      mail.attachments = attachments
+    end
 
     mail.template_id = template_hash[email_type]
 
@@ -74,6 +80,16 @@ class TransactionalEmailer
     personalization
   end
 
+  def attachments
+    attachment = Attachment.new
+    attachment.content      = encode_attachment
+    attachment.type         = 'application/pdf'
+    attachment.filename     = object.short_name
+    attachment.disposition  = 'attachment'
+    attachment.content_id   = attachment.class.name
+    attachment
+  end
+
   def record_response(response, recipient)
     TransactionalEmailRecord.create(recipient_id: recipient.id, created_by_id: user.try(:id), category: email_type, sendgrid_response: response)
   end
@@ -86,6 +102,10 @@ class TransactionalEmailer
     else
       "notifications@jtrpfurniture.com"
     end
+  end
+
+  def encode_attachment
+    Base64.encode64(open(object.pdf_url) { |io| io.read })
   end
 
 end

@@ -1673,4 +1673,62 @@ http_interactions:
         JUVPRgo=
     http_version: 
   recorded_at: Wed, 22 Mar 2017 11:19:32 GMT
+- request:
+    method: get
+    uri: https://274927167167847:FV9DLShvVRx0s_v3uN_S6uXK8_I@api.cloudinary.com/v1_1/jtrp-c9-dev/resources/image/upload/1491795493-62904-0003-2469_Dominic_Littel_Letter_2
+    body:
+      encoding: UTF-8
+      string: pages=true
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - CloudinaryRuby/1.2.3
+      Content-Length:
+      - '10'
+      Content-Type:
+      - application/x-www-form-urlencoded
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Cache-Control:
+      - no-cache
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Mon, 10 Apr 2017 03:38:14 GMT
+      Server:
+      - cloudinary
+      Status:
+      - 404 Not Found
+      X-Cld-Error:
+      - Resource not found - 1491795493-62904-0003-2469_Dominic_Littel_Letter_2
+      X-Featureratelimit-Limit:
+      - '500'
+      X-Featureratelimit-Remaining:
+      - '499'
+      X-Featureratelimit-Reset:
+      - Mon, 10 Apr 2017 04:00:00 GMT
+      X-Request-Id:
+      - 6e2b03508f93b540
+      X-Ua-Compatible:
+      - IE=Edge,chrome=1
+      Content-Length:
+      - '116'
+      Connection:
+      - keep-alive
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIAAAAAAAAAwzFsQqAIBAA0F+R2wUzM665sakfkKgrhPLg1En693rLa0Ai
+        LDA1eCjn7SKYYKXMVXZSiYs6uaZDadU57EYcHPbaWzROG2N6bZ3HMPMTU9zD
+        EkuhOyz0J8HC+34AAAD//wMADr6RC18AAAA=
+    http_version: 
+  recorded_at: Mon, 10 Apr 2017 03:38:14 GMT
 recorded_with: VCR 3.0.3

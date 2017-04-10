@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170408204601) do
+ActiveRecord::Schema.define(version: 20170409225010) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -55,6 +55,8 @@ ActiveRecord::Schema.define(version: 20170408204601) do
     t.datetime "deleted_at"
     t.integer  "created_by_id"
     t.integer  "updated_by_id"
+    t.string   "pdf"
+    t.integer  "pdf_pages"
   end
 
   add_index "agreements", ["deleted_at"], name: "index_agreements_on_deleted_at", using: :btree
@@ -299,6 +301,7 @@ ActiveRecord::Schema.define(version: 20170408204601) do
     t.integer  "agreement_id"
     t.text     "note"
     t.string   "letter_pdf"
+    t.integer  "pdf_pages"
   end
 
   add_index "letters", ["deleted_at"], name: "index_letters_on_deleted_at", using: :btree
@@ -401,6 +404,8 @@ ActiveRecord::Schema.define(version: 20170408204601) do
     t.string   "token"
     t.integer  "account_id"
     t.datetime "deleted_at"
+    t.string   "pdf"
+    t.integer  "pdf_pages"
   end
 
   add_index "statements", ["account_id"], name: "index_statements_on_account_id", using: :btree

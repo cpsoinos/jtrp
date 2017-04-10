@@ -6,6 +6,8 @@ class Agreement < ActiveRecord::Base
 
   include Filterable
 
+  mount_uploader :pdf, PdfUploader
+
   belongs_to :proposal, touch: true
   has_many :items, -> (instance) { where(items: {client_intention: instance.agreement_type}).where.not(items: {expired: 'true'}) }, through: :proposal
   has_one :scanned_agreement
@@ -38,7 +40,7 @@ class Agreement < ActiveRecord::Base
     state :active
     state :inactive
 
-    after_transition potential: :active, do: [:mark_proposal_active, :set_agreement_date, :save_as_pdf, :notify_company, :save_item_descriptions]
+    after_transition potential: :active, do: [:mark_proposal_active, :set_agreement_date, :save_as_pdf, :deliver_to_client, :notify_company, :save_item_descriptions]
     after_transition active: :inactive, do: :mark_proposal_inactive
 
     event :mark_active do
@@ -52,7 +54,7 @@ class Agreement < ActiveRecord::Base
   end
 
   def short_name
-    "#{account.short_name} #{agreement_type}"
+    "#{account.short_name}_#{agreement_type}"
   end
 
   def humanized_agreement_type
@@ -90,7 +92,9 @@ class Agreement < ActiveRecord::Base
 
   def meets_requirements_expired?
     agreement_type == "consign" &&
-      items.active.none? { |i| i.listed_at > 90.days.ago }
+      active?                   &&
+      items.present?            &&
+      items.any? { |i| i.meets_requirements_expired? }
   end
 
   def manager_signed?
@@ -106,9 +110,7 @@ class Agreement < ActiveRecord::Base
   end
 
   def save_as_pdf
-    unless scanned_agreement.present?
-      PdfGeneratorJob.perform_later(self)
-    end
+    PdfGeneratorJob.perform_later(self)
   end
 
   def notify_company
@@ -160,6 +162,11 @@ class Agreement < ActiveRecord::Base
     "unexpireable".in?(tag_list)
   end
 
+  def deliver_to_client
+    return if should_not_auto_deliver?
+    TransactionalEmailJob.perform_later(self, Company.jtrp.primary_contact, account.primary_contact, "agreement")
+  end
+
   private
 
   def update_cache
@@ -175,6 +182,10 @@ class Agreement < ActiveRecord::Base
       item.original_description = item.description
       item.save
     end
+  end
+
+  def should_not_auto_deliver?
+    updated_by.try(:internal?)
   end
 
 end

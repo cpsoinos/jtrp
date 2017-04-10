@@ -1,29 +1,31 @@
 <% meta title: "Consignment Statement" %>
 <% breadcrumb :statement, @statement %>
 
-<div class="row">
+<div class="row top-margin">
   <div class="col-xs-12 col-md-8 col-md-offset-2">
-    <div class="well bs-component">
 
-      <% if @statement.statement_pdf.present? %>
-        <iframe src="<%= @statement.statement_pdf.pdf_url %>" width="100%" style="border: none;" class="full-height"> </iframe>
-      <% else %>
-        <%= render 'proposals/header', form_name: "Consignment Sales", statement: @statement, proposal: @proposal, job: @job, account: @account, client: @client, company: @company %>
-        <%= render 'items_list', items: @statement.items %>
-        <div class="row">
-          <div class="col-xs-6 col-xs-offset-6 col-sm-4 col-sm-offset-8">
-            <%= render 'summary', statement: @statement %>
-          </div>
+    <% if @statement.pdf.present? && !params[:print] %>
+      <div class="text-center">
+        <% (1..@statement.pdf_pages).to_a.each do |page| %>
+          <%= image_tag(@statement.pdf_url(client_hints: true, page: page, fetch_format: :auto)) %><br /><br />
+        <% end %>
+      </div>
+    <% else %>
+      <%= render 'proposals/header', form_name: "Consignment Sales", statement: @statement, proposal: @proposal, job: @job, account: @account, client: @client, company: @company %>
+      <%= render 'items_list', items: @statement.items %>
+      <div class="row">
+        <div class="col-xs-6 col-xs-offset-6 col-sm-4 col-sm-offset-8">
+          <%= render 'summary', statement: @statement %>
         </div>
-      <% end %>
+      </div>
+    <% end %>
 
-      <% if @check %>
-        <div class="text-center large-top-margin">
-          <%= image_tag(@check.check_image_front_url) %><br />
-          <%= image_tag(@check.check_image_back_url) %>
-        </div>
-      <% end %>
+    <% if @check %>
+      <div class="text-center large-top-margin">
+        <%= image_tag(@check.check_image_front_url) %><br />
+        <%= image_tag(@check.check_image_back_url) %>
+      </div>
+    <% end %>
 
-    </div>
   </div>
 </div>

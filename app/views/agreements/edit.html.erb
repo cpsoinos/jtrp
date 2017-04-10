@@ -1,0 +1,22 @@
+<% if current_user.try(:internal?) %>
+  <% breadcrumb :agreement, @agreement %>
+<% end %>
+
+<div class="row top-margin">
+  <div class="col-xs-12 col-md-8 col-md-offset-2">
+
+    <div class="row">
+      <span>
+        <%= link_to "Back", agreement_path(@agreement), class: "btn btn-primary btn-raised pull-left" %>
+        <%= button_to "Regenerate PDF", agreement_regenerate_pdf_path(@agreement), class: "btn btn-primary btn-raised pull-right" %>
+      <span>
+    </div>
+
+    <%= render "agreements/#{@agreement.agreement_type}", items: @items, agreement: @agreement, proposal: @proposal, job: @job, account: @account, client: @client %>
+
+    <% if current_user.try(:internal?) %>
+      <%= render 'scanned_upload_form', agreement: @agreement %>
+    <% end %>
+
+  </div>
+</div>

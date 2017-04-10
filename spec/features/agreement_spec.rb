@@ -8,7 +8,10 @@ feature "agreement" do
   let(:syncer) { double("syncer") }
 
   before do
-    allow(TransactionalEmailJob).to receive(:perform_later)
+    allow(PdfGeneratorJob).to receive(:perform_later).and_return(true)
+    allow(TransactionalEmailJob).to receive(:perform_later).and_return(true)
+    allow(LetterSenderJob).to receive(:perform_later).and_return(true)
+    allow(ItemExpirerJob).to receive(:perform_later).and_return(true)
     allow(InventorySync).to receive(:new).and_return(syncer)
     allow(syncer).to receive(:remote_create).and_return(true)
     allow(syncer).to receive(:remote_update).and_return(true)
@@ -52,7 +55,6 @@ feature "agreement" do
         attach_file('scanned_agreement[scan]', File.join(Rails.root, '/spec/fixtures/test.pdf'))
         click_on("Create Scanned agreement")
 
-        expect(page).to have_selector('iframe')
         expect(agreement.reload).to be_active
       end
 
@@ -66,18 +68,16 @@ feature "agreement" do
         click_on("Update Scanned agreement")
 
         expect(page).to have_content("Agreement updated!")
-        expect(page).to have_selector('iframe')
         expect(agreement.reload).to be_active
       end
 
       scenario "activates items from index", js: true do
-        allow(PdfGeneratorJob).to receive(:perform_later)
-        allow(InventorySyncJob).to receive(:perform_later)
         agreement.update_attributes(client_agreed: true, client_agreed_at: 3.minutes.ago, date: 3.minutes.ago)
         agreement.mark_active
 
         visit account_job_proposal_agreements_path(account, job, proposal)
         click_link("Purchase Invoice")
+        click_on("menu")
         click_on("Mark Items Active")
 
         expect(page).to have_content("Items are marked active!")
@@ -85,12 +85,11 @@ feature "agreement" do
       end
 
       scenario "activates items from show" do
-        allow(PdfGeneratorJob).to receive(:perform_later)
-        allow(InventorySyncJob).to receive(:perform_later)
         agreement.update_attributes(client_agreed: true, client_agreed_at: 3.minutes.ago, date: 3.minutes.ago)
         agreement.mark_active
 
         visit agreement_path(agreement)
+        click_on("menu")
         click_on("Mark Items Active")
 
         expect(page).to have_content("Items are marked active!")
@@ -98,25 +97,23 @@ feature "agreement" do
       end
 
       scenario "can't try to activate items from index when items already active", js: true do
-        allow(PdfGeneratorJob).to receive(:perform_later)
-        allow(InventorySyncJob).to receive(:perform_later)
         agreement.update_attributes(client_agreed: true, client_agreed_at: 3.minutes.ago, date: 3.minutes.ago)
         agreement.mark_active
         item.mark_active
 
         visit account_job_proposal_agreements_path(account, job, proposal)
-        click_link("Purchase Invoice")
+        click_on("menu")
 
         expect(page).not_to have_button("Mark Items Active")
       end
 
       scenario "can't try to activate items from show when items already active" do
-        allow(PdfGeneratorJob).to receive(:perform_later)
-        allow(InventorySyncJob).to receive(:perform_later)
         agreement.update_attributes(client_agreed: true, client_agreed_at: 3.minutes.ago, date: 3.minutes.ago)
         agreement.mark_active
         item.mark_active
+
         visit agreement_path(agreement)
+        click_on("menu")
 
         expect(page).not_to have_button("Mark Items Active")
       end
@@ -127,11 +124,9 @@ feature "agreement" do
 
       let!(:item) { create(:item, proposal: proposal, client_intention: "consign") }
       let!(:agreement) { create(:agreement, :consign, proposal: proposal) }
-      let(:syncer) { double("syncer") }
 
       before do
         Company.first.update_attribute("primary_contact_id", user.id)
-        allow(InventorySync).to receive(:new).and_return(syncer)
         allow(syncer).to receive(:remote_create).and_return(true)
       end
 
@@ -141,19 +136,16 @@ feature "agreement" do
         expect(page).not_to have_link("dump")
         expect(page).not_to have_link("donate")
 
-        click_link("Consignment Agreement")
 
         expect(page).to have_content("Consignment Agreement")
       end
 
       scenario "activates items from index", js: true do
-        allow(PdfGeneratorJob).to receive(:perform_later)
-        allow(InventorySyncJob).to receive(:perform_later)
         agreement.update_attributes(client_agreed: true, client_agreed_at: 3.minutes.ago, date: 3.minutes.ago)
         agreement.mark_active
 
         visit account_job_proposal_agreements_path(account, job, proposal)
-        click_link("Consignment Agreement")
+        click_on("menu")
         click_on("Mark Items Active")
 
         expect(page).to have_content("Items are marked active!")
@@ -161,29 +153,24 @@ feature "agreement" do
       end
 
       scenario "can't try to activate items when items already active", js: true do
-        allow(PdfGeneratorJob).to receive(:perform_later)
-        allow(InventorySyncJob).to receive(:perform_later)
         agreement.update_attributes(client_agreed: true, client_agreed_at: 3.minutes.ago, date: 3.minutes.ago)
         agreement.mark_active
         item.mark_active
 
         visit account_job_proposal_agreements_path(account, job, proposal)
-        click_link("Consignment Agreement")
+        click_on("menu")
 
         expect(page).not_to have_button("Mark Items Active")
       end
 
       scenario "expires items from index", js: true do
-        allow(PdfGeneratorJob).to receive(:perform_later)
-        allow(TransactionalEmailJob).to receive(:perform_later).and_return(true)
-        allow(LetterSenderJob).to receive(:perform_later).and_return(true)
-        allow(ItemExpirerJob).to receive(:perform_later).and_return(true)
         agreement.update_attributes(client_agreed: true, client_agreed_at: 91.days.ago, date: 91.days.ago)
         agreement.mark_active
         item.mark_active
         item.update_attribute("listed_at", 91.days.ago)
 
         visit account_job_proposal_agreements_path(account, job, proposal)
+        click_on("menu")
         click_on("Mark Items Expired")
 
         expect(page).to have_field("Expiration Pending", visible: false)
@@ -202,16 +189,15 @@ feature "agreement" do
       end
 
       scenario "expires items from show", js: true do
-        allow(PdfGeneratorJob).to receive(:perform_later)
-        allow(TransactionalEmailJob).to receive(:perform_later).and_return(true)
-        allow(LetterSenderJob).to receive(:perform_later).and_return(true)
-        allow(ItemExpirerJob).to receive(:perform_later).and_return(true)
         agreement.update_attributes(client_agreed: true, client_agreed_at: 91.days.ago, date: 91.days.ago)
         agreement.mark_active
+        agreement.reload
         item.mark_active
         item.update_attribute("listed_at", 91.days.ago)
+        item.reload
 
         visit agreement_path(agreement)
+        click_on("menu")
         click_on("Mark Items Expired")
 
         expect(page).to have_field("Expiration Pending", visible: false)
@@ -230,9 +216,6 @@ feature "agreement" do
       end
 
       scenario "can't try to expire items from index when items already expired", js: true do
-        allow(PdfGeneratorJob).to receive(:perform_later)
-        allow(InventorySyncJob).to receive(:perform_later)
-        allow(ItemExpirerJob).to receive(:perform_later)
         agreement.update_attributes(client_agreed: true, client_agreed_at: 91.days.ago, date: 91.days.ago)
         agreement.mark_active
         item.mark_active
@@ -245,9 +228,6 @@ feature "agreement" do
       end
 
       scenario "can't try to expire items from show when items already expired" do
-        allow(PdfGeneratorJob).to receive(:perform_later)
-        allow(InventorySyncJob).to receive(:perform_later)
-        allow(ItemExpirerJob).to receive(:perform_later)
         agreement.update_attributes(client_agreed: true, client_agreed_at: 91.days.ago, date: 91.days.ago)
         agreement.mark_active
         item.mark_active
@@ -305,8 +285,6 @@ feature "agreement" do
     end
 
     scenario "client doesn't see 'Mark Items Active' button from show" do
-      allow(PdfGeneratorJob).to receive(:perform_later)
-      allow(InventorySyncJob).to receive(:perform_later)
       agreement.update_attributes(client_agreed: true, client_agreed_at: 3.minutes.ago, date: 3.minutes.ago)
       agreement.mark_active
 

@@ -26,15 +26,15 @@
                 <td>
                   <table class="nested-statement-table">
                     <tr>
-                      <td class="statement-data">Starting Asking Price:</td>
+                      <td class="statement-data">Asking Price:</td>
                       <td class="statement-data"><%= humanized_money_with_symbol(item.listing_price) %></td>
                     </tr>
                     <tr>
-                      <td class="statement-data">Min. Sale Price:</td>
+                      <td class="statement-data">Min. Price:</td>
                       <td class="statement-data"><%= humanized_money_with_symbol(item.minimum_sale_price) %></td>
                     </tr>
                     <tr>
-                      <td class="statement-data">Consignment Rate:</td>
+                      <td class="statement-data">Consigned at:</td>
                       <td class="statement-data"><%= item.consignment_rate %>%</td>
                     </tr>
                   </table>
