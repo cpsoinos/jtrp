@@ -53,9 +53,9 @@ feature "statement" do
       expect(page).to have_content("Account # #{statement.account_id}")
       statement.items.each do |item|
         expect(page).to have_link("Item No. #{item.account_item_number}: #{item.original_description}")
-        expect(page).to have_content("Starting Asking Price: #{ActionController::Base.helpers.humanized_money_with_symbol(item.listing_price)}")
-        expect(page).to have_content("Min. Sale Price: #{ActionController::Base.helpers.humanized_money_with_symbol(item.minimum_sale_price)}")
-        expect(page).to have_content("Consignment Rate: #{item.consignment_rate}%")
+        expect(page).to have_content("Asking Price: #{ActionController::Base.helpers.humanized_money_with_symbol(item.listing_price)}")
+        expect(page).to have_content("Min. Price: #{ActionController::Base.helpers.humanized_money_with_symbol(item.minimum_sale_price)}")
+        expect(page).to have_content("Consigned at: #{item.consignment_rate}%")
         expect(page).to have_content("Date Sold: #{item.sold_at.strftime('%-m/%-d/%y')}")
         expect(page).to have_content("Date Consigned: #{item.try(:listed_at).try(:strftime, '%-m/%-d/%y')}")
         expect(page).to have_content("Days Consigned: #{item.listed_at.present? ? (item.sold_at.to_date - item.listed_at.to_date).to_i : 'n/a'}")
