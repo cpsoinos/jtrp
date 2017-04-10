@@ -1,4 +1,4 @@
-describe ScannedAgreement do
+describe ScannedAgreement, :skip do
 
   it { should be_audited.associated_with(:agreement) }
   it { should belong_to(:agreement) }
