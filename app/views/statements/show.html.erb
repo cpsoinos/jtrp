@@ -11,7 +11,7 @@
         <% end %>
       </div>
     <% else %>
-      <%= render 'proposals/header', form_name: "Consignment Sales", statement: @statement, proposal: @proposal, job: @job, account: @account, client: @client, company: @company %>
+      <%= render 'proposals/header', form_name: "Consignment Sales", statement: @statement, proposal: @proposal, job: @job, account: @account, company: @company %>
       <%= render 'items_list', items: @statement.items %>
       <div class="row">
         <div class="col-xs-6 col-xs-offset-6 col-sm-4 col-sm-offset-8">

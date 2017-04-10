@@ -30,7 +30,12 @@ class ProposalsController < ApplicationController
     @client = @account.primary_contact
     @items = @proposal.items.order(:account_item_number)
     respond_to do |format|
-      format.html
+      format.html do
+        if @client.nil?
+          flash[:alert] = "This account needs a primary contact!"
+          redirect_to new_client_path(account_id: @account.id)
+        end
+      end
       format.pdf do
         send_data(PdfGenerator.new(@proposal).render_pdf, :type => "application/pdf", :disposition => 'inline')
       end
