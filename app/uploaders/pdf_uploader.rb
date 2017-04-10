@@ -14,7 +14,7 @@ class PdfUploader < CarrierWave::Uploader::Base
   # end
 
   def public_id
-    model.short_name
+    model.short_name.gsub(" ", "")
   end
 
 end
