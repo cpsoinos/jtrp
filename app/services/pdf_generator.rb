@@ -4,7 +4,7 @@ class PdfGenerator
 
   def initialize(object)
     @object = object
-    @account = @object.account
+    @account = object.account
   end
 
   def render_pdf
@@ -61,9 +61,15 @@ class PdfGenerator
   end
 
   def save_file(file)
-    object.create_scanned_agreement(agreement: object, scan: file) if object.is_a?(Agreement)
-    object.create_statement_pdf(statement: object, pdf: file) if object.is_a?(Statement)
-    object.pdf = file if object.is_a?(Letter)
+    object.pdf = file
+    object.save
+    save_page_count
+  end
+
+  def save_page_count
+    resp = Cloudinary::Api.resource(object.pdf.file.public_id, pages: true)
+    page_count = resp["pages"]
+    object.pdf_pages = page_count
     object.save
   end
 

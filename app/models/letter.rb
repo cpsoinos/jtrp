@@ -5,12 +5,16 @@ class Letter < ActiveRecord::Base
 
   belongs_to :agreement
   has_one :account, through: :agreement
-  mount_uploader :pdf, ScannedAgreementUploader
-  mount_uploader :letter_pdf, PhotoUploader
+  mount_uploader :pdf, PdfUploader
+  # mount_uploader :letter_pdf, PhotoUploader
 
   validates :category, presence: true
 
   scope :by_category, -> (category) { where(category: category) }
+
+  def short_name
+    "#{account.short_name}_#{category}_letter"
+  end
 
   def expiration_notice?
     category == "agreement_expired"
@@ -25,7 +29,6 @@ class Letter < ActiveRecord::Base
   end
 
   def save_as_pdf
-    return if pdf.present?
     PdfGenerator.new(self).render_pdf
   end
 

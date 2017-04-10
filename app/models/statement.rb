@@ -6,6 +6,8 @@ class Statement < ActiveRecord::Base
 
   include Filterable
 
+  mount_uploader :pdf, PdfUploader
+
   belongs_to :account, touch: true
   has_one :statement_pdf
   has_many :checks
@@ -23,6 +25,10 @@ class Statement < ActiveRecord::Base
     event :pay do
       transition unpaid: :paid
     end
+  end
+
+  def short_name
+    "#{date.strftime('%m-%y')}_#{account.short_name}_consigned_sales"
   end
 
   def items
