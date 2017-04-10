@@ -25,7 +25,6 @@ class TransactionalEmailer
 
     mail.personalizations = personalizations(recipient, options)
 
-    binding.pry
     if object.respond_to?(:pdf)
       mail.attachments = attachments
     end
@@ -84,7 +83,7 @@ class TransactionalEmailer
     attachment = Attachment.new
     attachment.content      = encode_attachment
     attachment.type         = 'application/pdf'
-    attachment.filename     = object.short_name
+    attachment.filename     = "#{object.short_name}.pdf"
     attachment.disposition  = 'attachment'
     attachment.content_id   = attachment.class.name
     attachment
