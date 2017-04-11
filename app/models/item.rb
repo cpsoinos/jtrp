@@ -193,7 +193,7 @@ class Item < ActiveRecord::Base
   end
 
   def sync_inventory
-    return if self.listing_price_cents.nil?
+    return if should_not_sync?
     InventorySyncJob.perform_later(self)
   end
 
@@ -341,6 +341,11 @@ class Item < ActiveRecord::Base
       self.regenerate_token
       ensure_token_uniqueness
     end
+  end
+
+  def should_not_sync?
+    listing_price_cents.nil? ||
+      "fee".in?(tag_list)
   end
 
 end

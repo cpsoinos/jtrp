@@ -190,4 +190,33 @@ namespace :items do
 
   end
 
+  task :create_fee_items => :environment do
+
+    account = OwnerAccount.first
+    proposal = account.proposals.first
+
+    puts "Creating 'Delivery Charge'"
+    delivery_attrs = {
+      description: "Delivery Charge",
+      remote_id: "96W6JZ4RQC23J",
+      status: "active"
+    }
+    delivery_charge = Items::Creator.new(proposal).create(delivery_attrs)
+
+    puts "Creating 'Storage Fee'"
+    storage_attrs = {
+      description: "Storage Charge",
+      remote_id: "40F4ZVM6JVB2A",
+      status: "active",
+      listing_price: Money.new(500)
+    }
+    storage_charge = Items::Creator.new(proposal).create(storage_attrs)
+
+    [delivery_charge, storage_charge].each do |fee|
+      fee.tag_list.add("fee")
+      fee.save
+    end
+
+  end
+
 end
