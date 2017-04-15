@@ -102,7 +102,6 @@ describe Agreement do
     end
 
     it "transitions 'active' to 'inactive'" do
-      pending("Job removal")
       item = create(:item, :active, client_intention: "sell")
       agreement = item.agreement
       item.mark_sold
