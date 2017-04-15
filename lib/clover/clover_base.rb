@@ -7,9 +7,17 @@ module Clover
 
     def self.headers
       {
-        Authorization: "Bearer #{ENV['CLOVER_API_TOKEN']}",
+        Authorization: "Bearer #{auth_token}",
         content_type: :json
       }
     end
+
+    def self.auth_token
+      @_auth_token ||= begin
+        Company.jtrp.primary_contact.oauth_accounts.clover.first.try(:access_token) ||
+          ENV['CLOVER_API_TOKEN']
+      end
+    end
+
   end
 end

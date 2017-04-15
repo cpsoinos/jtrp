@@ -41,6 +41,7 @@ RSpec.configure do |config|
   config.include Audited::RspecMatchers
   config.include WaitForAjax
   config.include Warden::Test::Helpers
+  config.include OmniauthMacros
 
   config.before(:all) do
     FactoryGirl.reload
@@ -80,3 +81,5 @@ RSpec.configure do |config|
   end
 
 end
+
+OmniAuth.config.test_mode = true

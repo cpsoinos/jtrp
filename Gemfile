@@ -44,6 +44,7 @@ gem 'activejob-traffic_control'
 gem 'sinatra', :require => nil
 gem 'puma'
 gem 'omniauth-clover'
+gem 'oauth2'
 gem 'deepstruct'
 gem 'pg_search'
 gem 'kaminari'
