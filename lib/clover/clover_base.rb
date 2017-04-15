@@ -14,7 +14,7 @@ module Clover
 
     def self.auth_token
       @_auth_token ||= begin
-        Company.jtrp.primary_contact.oauth_accounts.clover.first.try(:access_token) ||
+        Admin.first.oauth_accounts.clover.first.try(:access_token) ||
           ENV['CLOVER_API_TOKEN']
       end
     end

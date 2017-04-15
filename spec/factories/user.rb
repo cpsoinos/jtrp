@@ -21,10 +21,6 @@ FactoryGirl.define do
       status "inactive"
     end
 
-    trait :with_oauth_account do
-      oauth_accounts { [create(:oauth_account)] }
-    end
-
     factory :client, class: Client do
       account
 
@@ -33,7 +29,12 @@ FactoryGirl.define do
       end
     end
 
-    factory :admin, class: Admin
+    factory :admin, class: Admin do
+      trait :with_oauth_account do
+        oauth_accounts { [create(:oauth_account)] }
+      end
+    end
+
     factory :internal_user, class: InternalUser
 
   end

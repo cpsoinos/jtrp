@@ -47,7 +47,7 @@ describe User do
     end
 
     it "internal" do
-      expect(User.internal.count).to eq(4)
+      expect(User.internal.count).to eq(3)
       User.internal.each do |user|
         expect(user.internal?).to be(true)
       end
