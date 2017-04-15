@@ -83,8 +83,7 @@ class Item < ActiveRecord::Base
     state :sold
     state :inactive
 
-    after_transition [:potential] => :active, do: [:set_listed_at, :sync_inventory]
-    after_transition [:inactive] => :active, do: [:set_listed_at, :sync_inventory, :mark_agreement_active]
+    after_transition [:potential, :inactive] => :active, do: [:set_listed_at, :sync_inventory, :mark_agreement_active]
     after_transition [:active, :inactive] => :sold, do: [:mark_agreement_inactive, :set_sold_at, :sync_inventory]
     after_transition any => :inactive, do: :sync_inventory
     after_transition sold: :active, do: [:clear_sale_data, :mark_agreement_active]
@@ -160,7 +159,7 @@ class Item < ActiveRecord::Base
   end
 
   def mark_agreement_inactive
-    # agreement.mark_inactive unless import?
+    agreement.mark_inactive unless import?
   end
 
   def meets_requirements_active?
