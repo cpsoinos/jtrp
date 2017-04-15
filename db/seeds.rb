@@ -1,3 +1,6 @@
+require 'factory_girl_rails'
+require 'faker'
+
 def create_company
   Company.find_or_create_by!(
     name: "Just the Right Piece",
@@ -43,7 +46,12 @@ def create_default_photo
   Photo.create(photo_type: 'default', photo: File.open(File.join(Rails.root, 'app/assets/images/No_Image_Available.png')))
 end
 
+def create_admin
+  FactoryGirl.create(:admin)
+end
+
 create_company
 create_categories
 create_default_accounts
 create_default_photo
+create_admin

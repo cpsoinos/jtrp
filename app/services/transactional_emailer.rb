@@ -85,7 +85,7 @@ class TransactionalEmailer
     attachment.type         = 'application/pdf'
     attachment.filename     = "#{object.short_name}.pdf"
     attachment.disposition  = 'attachment'
-    attachment.content_id   = attachment.class.name
+    attachment.content_id   = object.class.name
     attachment
   end
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170409225010) do
+ActiveRecord::Schema.define(version: 20170415190146) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -306,6 +306,20 @@ ActiveRecord::Schema.define(version: 20170409225010) do
 
   add_index "letters", ["deleted_at"], name: "index_letters_on_deleted_at", using: :btree
 
+  create_table "oauth_accounts", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "provider"
+    t.string   "uid"
+    t.string   "image"
+    t.string   "profile_url"
+    t.string   "access_token"
+    t.jsonb    "raw_data"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "oauth_accounts", ["user_id"], name: "index_oauth_accounts_on_user_id", using: :btree
+
   create_table "orders", force: :cascade do |t|
     t.string   "remote_id"
     t.integer  "amount_cents",    default: 0,     null: false
@@ -522,6 +536,7 @@ ActiveRecord::Schema.define(version: 20170409225010) do
   add_foreign_key "items", "categories"
   add_foreign_key "items", "orders"
   add_foreign_key "jobs", "accounts"
+  add_foreign_key "oauth_accounts", "users"
   add_foreign_key "payments", "orders"
   add_foreign_key "photos", "items"
   add_foreign_key "photos", "proposals"

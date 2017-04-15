@@ -800,6 +800,7 @@ DEPENDENCIES
   money-rails
   mr_video
   newrelic_rpm
+  oauth2
   oj (~> 2.12.14)
   omniauth-clover
   parallel_tests

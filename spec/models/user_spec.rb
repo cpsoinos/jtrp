@@ -1,7 +1,9 @@
 describe User do
 
+  it { should have_many(:oauth_accounts) }
   it { should validate_presence_of(:email) }
   it { should validate_presence_of(:status) }
+  it { should be_audited }
 
   it "internal?" do
     user = create(:internal_user)

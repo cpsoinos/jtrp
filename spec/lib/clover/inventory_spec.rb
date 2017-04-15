@@ -1,7 +1,6 @@
 describe Clover::Inventory, :vcr do
 
   before do
-    # allow(Rollbar).to receive(:error)
     allow(Airbrake).to receive(:notify)
   end
 
@@ -12,7 +11,6 @@ describe Clover::Inventory, :vcr do
       Clover::Inventory.create(item)
 
       expect(item.remote_id).not_to be_nil
-      # expect(Rollbar).not_to have_received(:error)
       expect(Airbrake).not_to have_received(:notify)
     end
 
