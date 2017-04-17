@@ -1,8 +1,10 @@
 <% meta title: "Accounts - #{@company.name}" %>
 <% breadcrumb :accounts %>
 
+<%= render 'layouts/sidebar', navtab: 'accounts' %>
+
 <div class="row">
-  <div class="col-sm-12 text-center">
+  <div class="col-xs-8 col-xs-offset-3">
     <h1 class="company-title">Accounts</h1>
     <% if @filter.present? %>
       <% case @filter %>
@@ -18,7 +20,7 @@
 </div>
 
 <div class="row">
-  <div class="col-md-8 col-md-offset-2 col-xs-12">
+  <div class="col-xs-8 col-xs-offset-3">
     <div class="row">
       <ul class="nav nav-pills text-center justify-list" role="tablist">
   			<li class="">

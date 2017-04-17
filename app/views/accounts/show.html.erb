@@ -1,14 +1,16 @@
 <% meta title: "#{@account.short_name} - #{@company.name}" %>
 <% breadcrumb :account, @account %>
 
+<%= render 'layouts/sidebar', navtab: 'accounts' %>
+
 <div class="row text-center">
-  <div class="col-md-8 col-md-offset-2 col-xs-12">
+  <div class="col-xs-8 col-xs-offset-3">
     <%= render 'header_cards' %>
   </div>
 </div>
 
 <div class="row text-center section section-dark large-top-margin">
-  <div class="col-md-8 col-md-offset-2 col-xs-12">
+  <div class="col-xs-8 col-xs-offset-3">
     <%= render 'new_buttons' %>
   </div>
 </div>

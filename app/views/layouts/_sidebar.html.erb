@@ -1,0 +1,26 @@
+<div class="sidebar" data-color="purple">
+
+  <div class="logo text-center">
+    <% if @company %>
+      <%= link_to @company.name, dashboard_path, class: "sidebar-brand" %>
+    <% end %>
+  </div>
+
+  <div class="sidebar-wrapper">
+    <ul class="nav">
+      <li class="<%= navtab == 'dashboard' ? 'active' : '' %>">
+        <%= link_to "<i class='material-icons'>dashboard</i><p>Dashboard</p>".html_safe, dashboard_path %>
+      </li>
+      <li class="<%= navtab == 'home' ? 'active' : '' %>">
+        <%= link_to "<i class='material-icons'>home</i><p>Home</p>".html_safe, root_path %>
+      </li>
+      <li class="<%= navtab == 'accounts' ? 'active' : '' %>">
+        <%= link_to "<i class='material-icons'>assignment_ind</i><p>Accounts</p>".html_safe, accounts_path %>
+      </li>
+      <li class="<%= navtab == 'jobs' ? 'active' : '' %>">
+        <%= link_to "<i class='material-icons'>map</i><p>Jobs</p>".html_safe, jobs_path %>
+      </li>
+    </ul>
+  </div>
+
+</div>

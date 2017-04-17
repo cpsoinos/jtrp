@@ -35,7 +35,7 @@
   <div id="fb-root"></div>
 
   <div class="page-container">
-    <%= render 'layouts/navbar' unless params[:print] %>
+    <%#= render 'layouts/navbar' unless params[:print] %>
     <div id="wrapper">
       <!-- Page Content -->
       <div id="page-content-wrapper">
@@ -43,7 +43,7 @@
           <% unless params[:print] %>
             <%= render 'layouts/alerts', alert: alert, notice: notice %>
           <% end %>
-          <div class="row <%= 'extra-large-top-margin' unless params[:print] %>" id="layout-top-buffer">
+          <div class="row <%#= 'extra-large-top-margin' unless params[:print] %>" id="layout-top-buffer">
             <div class="row">
               <div class="col-xs-12 col-md-8 col-md-offset-2 hidden-print">
                 <%= breadcrumbs separator: " &rsaquo; " %>
