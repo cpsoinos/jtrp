@@ -1,17 +1,13 @@
-<div class="modal fade" tabindex="-1" role="dialog" id="statement-<%= statement.id %>-task-modal">
+<div class="modal fade" tabindex="-1" role="dialog" id="statement-todo-task-modal">
   <div class="modal-dialog">
-    <%= form_for [statement.account, statement], remote: true do |f| %>
+    <%= form_tag '', method: :put, remote: true do %>
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
           <div class="row vertical-align">
-            <span class="icon icon-<%= statement.unpaid? ? 'success' : 'info' %>">
-              <i class='material-icons' style='font-size: 5em;'>account_balance_wallet</i>
-            </span>
+            <i class='material-icons' style='font-size: 5em;'>account_balance_wallet</i>
             <span>
-              <h4 class="modal-title">
-                <%= link_to "#{statement.account.full_name} - #{statement.date.last_month.strftime('%B, %Y')}".html_safe, account_statement_path(statement.account, statement) %>
-              </h4>
+              <h4 class="modal-title statement-link"></h4>
             </span>
           </div>
         </div>
@@ -19,9 +15,7 @@
 
           <div class="row vertical-align">
 
-            <div class="col-xs-5">
-              <%= render 'statements/summary', statement: statement %>
-            </div>
+            <div class="col-xs-5 statement-summary"></div>
 
             <div class="col-xs-6 col-xs-offset-1">
               <div class="form-group">
@@ -36,18 +30,18 @@
 
             <div class="col-xs-6 col-xs-offset-1">
               <div class="form-group label-floating">
-                <%= f.label :check_number, class: "control-label" %>
+                <%= label_tag :check_number, "Check number", class: "control-label" %>
                 <div class="input-group">
-                  <%= f.number_field :check_number, class: "form-control" %>
+                  <%= number_field_tag :check_number, nil, name: "statement[check_number]", class: "form-control" %>
                 </div>
-                <%= f.hidden_field :status, value: "paid" %>
+                <%= hidden_field_tag :status, "paid", name: "statement[status]" %>
               </div>
             </div>
           </div>
 
         </div>
         <div class="modal-footer">
-          <%= f.submit "Pay", class: "btn btn-raised btn-primary" %>
+          <%= submit_tag "Pay", class: "btn btn-raised btn-primary" %>
         </div>
       </div><!-- /.modal-content -->
     <% end %>

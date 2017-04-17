@@ -18,4 +18,9 @@ $(document).on('turbolinks:load', function() {
     window.location = $(this).data("link")
   })
 
+  // Fix modals showing behind backdrop
+  $('.modal-dialog').parent().on('show.bs.modal', function(e) {
+    $(e.relatedTarget.attributes['data-target'].value).appendTo('body');
+  })
+
 });

@@ -3,6 +3,7 @@ class CompaniesController < ApplicationController
   before_filter :require_internal, except: [:client_services, :consignment_policies, :service_rate_schedule, :agent_service_rate_schedule, :home, :about, :contact, :send_message]
 
   def show
+    @navtab = 'dashboard'
     build_todos
     gon.salesMetrics = build_json_for_sales
     gon.customerMetrics = build_json_for_customers
@@ -70,9 +71,9 @@ class CompaniesController < ApplicationController
   end
 
   def build_todos
-    @items = ItemsPresenter.new.todo.page(params[:page])
-    @statements = StatementsPresenter.new.todo
-    @agreements = AgreementsPresenter.new.todo
+    @items = ItemsPresenter.new.todo.page(params[:page]).uniq
+    @statements = StatementsPresenter.new.todo.uniq
+    @agreements = AgreementsPresenter.new.todo.uniq
     @todos = @agreements | @statements | @items
   end
 

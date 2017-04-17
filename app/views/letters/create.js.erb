@@ -1,5 +1,5 @@
 var listItem = $("#to-do-list-agreement-<%= @agreement.id %>")
-var modal = $("#agreement-<%= @agreement.id %>-task-modal")
+var modal = $(".modal.fade.in")
 
 <% if @letter.try(:valid?) %>
   modal.modal('toggle');

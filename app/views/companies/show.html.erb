@@ -1,61 +1,4 @@
-<%= render 'layouts/sidebar', navtab: 'dashboard' %>
-
 <div class="main-panel">
-  <nav class="navbar navbar-transparent navbar-absolute">
-    <div class="container-fluid">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a class="sidebar-brand" href="#">Dashboard</a>
-      </div>
-      <div class="collapse navbar-collapse">
-        <ul class="nav navbar-nav navbar-right">
-          <li>
-            <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
-              <i class="material-icons">dashboard</i>
-              <p class="hidden-lg hidden-md">Dashboard</p>
-            </a>
-          </li>
-          <!-- <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <i class="material-icons">notifications</i>
-              <span class="notification">5</span>
-              <p class="hidden-lg hidden-md">Notifications</p>
-            </a>
-            <ul class="dropdown-menu">
-              <li><a href="#">Mike John responded to your email</a></li>
-              <li><a href="#">You have 5 new tasks</a></li>
-              <li><a href="#">You're now friend with Andrew</a></li>
-              <li><a href="#">Another Notification</a></li>
-              <li><a href="#">Another One</a></li>
-            </ul>
-          </li> -->
-          <li>
-            <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
-              <i class="material-icons">person</i>
-              <p class="hidden-lg hidden-md">Profile</p>
-            </a>
-          </li>
-        </ul>
-
-        <form class="navbar-form navbar-right" role="search">
-          <div class="form-group  is-empty">
-            <input type="text" class="form-control" placeholder="Search">
-            <span class="material-input"></span>
-          </div>
-          <button type="submit" class="btn btn-white btn-round btn-just-icon">
-            <i class="material-icons">search</i><div class="ripple-container"></div>
-          </button>
-        </form>
-      </div>
-    </div>
-  </nav>
-
-
 
   <div class="content">
     <div class="container-fluid">
@@ -216,6 +159,7 @@
       </div>
 
       <div class="row">
+
         <div class="col-lg-6 col-md-12">
           <div class="card card-nav-tabs">
             <div class="card-header" data-background-color="purple">
@@ -224,19 +168,19 @@
                   <span class="nav-tabs-title">Tasks:</span>
                   <ul class="nav nav-tabs" data-tabs="tabs">
                     <li class="active">
-                      <a href="#profile" data-toggle="tab">
+                      <a href="#items-tab" data-toggle="tab">
                         <i class="material-icons">weekend</i> Items
                         <div class="ripple-container"></div>
                       </a>
                     </li>
                     <li class="">
-                      <a href="#messages" data-toggle="tab">
+                      <a href="#agreements-tab" data-toggle="tab">
                         <i class="material-icons">assignment</i> Agreements
                         <div class="ripple-container"></div>
                       </a>
                     </li>
                     <li class="">
-                      <a href="#settings" data-toggle="tab">
+                      <a href="#statements-tab" data-toggle="tab">
                         <i class="material-icons">account_balance_wallet</i> Statements
                         <div class="ripple-container"></div>
                       </a>
@@ -249,7 +193,7 @@
             <div class="card-content">
               <div class="tab-content">
 
-                <div class="tab-pane active" id="profile">
+                <div class="tab-pane active" id="items-tab">
                   <% @items.each do |todo| %>
                     <%= render 'items/to_do_task', cached: true, item: todo, task_field: todo.task[:task_field] %>
                     <div id="to-do-list-item-<%= todo.id %>">
@@ -264,9 +208,24 @@
                           <p class="list-group-item-text"><%= link_to todo.description, item_path(todo) %> <%= todo.task[:description] %></p>
                         </div>
                         <div class="col-xs-2">
-                          <button type="button" class="btn btn-fab btn-fab-mini btn-primary" data-toggle="modal" data-target="#<%= todo.id %>-task-modal">
-                            <i class='material-icons'>done</i>
-                          </button>
+                          <%= link_to "<i class='material-icons'>done</i>".html_safe, "javascript:void(0)", class: "btn btn-fab btn-fab-mini btn-primary", data: {
+                            toggle: "modal",
+                            target: "#item-todo-task-modal",
+                            item_id: todo.id,
+                            item_description: todo.description.titleize,
+                            item_link: "#{link_to todo.description, account_job_proposal_item_path(todo.account, todo.job, todo.proposal, todo).html_safe}",
+                            item_photo: "#{image_tag(todo.featured_photo.photo_url(client_hints: true, quality: 'auto', fetch_format: :auto, dpr: 'auto', effect: :improve, width: '120', height: '160', crop: 'fill'), class: 'img-rounded img-responsive img-raised').html_safe}",
+                            account_link: "#{link_to todo.account.full_name, account_path(todo.account).html_safe}",
+                            account_item_number: todo.account_item_number,
+                            job_link: "#{link_to todo.job.name, account_job_path(todo.account, todo.job).html_safe}",
+                            job_id: todo.job.id,
+                            proposal_link: "#{link_to todo.proposal_id, account_job_proposal_path(todo.account, todo.job, todo.proposal).html_safe}",
+                            proposal_id: todo.proposal_id,
+                            item_ownership_type: todo.ownership_type,
+                            task_label: "#{label_tag(todo.task[:task_field], todo.task[:task_field].to_s.gsub('_', ' '), class: 'control-label').html_safe}",
+                            task_field: "#{number_field_tag('', nil, name: 'item[' + todo.task[:task_field].to_s + ']', class: 'form-control text-field', step: 0.01).html_safe}"
+                          } %>
+
                         </div>
                       </div>
                       <div class="list-group-separator"></div>
@@ -274,37 +233,9 @@
                   <% end %>
                 </div>
 
-                <div class="tab-pane" id="messages">
-                  <% @statements.each do |todo| %>
-                    <%= render 'statements/to_do_task', statement: todo, task_field: todo.task[:task_field] %>
-                    <div id="to-do-list-statement-<%= todo.id %>">
-                      <div class="row list-group-item vertical-align">
-                        <div class="col-xs-4 text-center">
-                          <a href="account_statement_path(todo.account, todo)">
-                            <div class="icon icon-<%= todo.unpaid? ? 'success' : 'info' %>">
-                              <i class='material-icons' style='font-size: 5em;'>account_balance_wallet</i>
-                            </div>
-                          </a>
-                        </div>
-                        <div class="col-xs-6">
-                          <h4 class="list-group-item-heading"><%= todo.task[:name] %></h4>
-                          <p class="list-group-item-text"><%= link_to "#{todo.account.full_name} - #{todo.date.last_month.strftime('%B, %Y')}", account_statement_path(todo.account, todo) %> <%= todo.task[:description] %></p>
-                        </div>
-                        <div class="col-xs-2">
-                          <button type="button" class="btn btn-fab btn-fab-mini btn-primary" data-toggle="modal" data-target="#statement-<%= todo.id %>-task-modal">
-                            <i class='material-icons'>done</i>
-                          </button>
-                        </div>
-                      </div>
-                      <div class="list-group-separator"></div>
-                    </div>
-                  <% end %>
-                </div>
-
-                <div class="tab-pane" id="settings">
+                <div class="tab-pane" id="agreements-tab">
                   <% @agreements.each do |todo| %>
                     <% next if (!todo.meets_requirements_expired? && todo.letters.by_category('agreement_pending_expiration').present?) %>
-                    <%= render 'agreements/to_do_task', collection: @todos, cached: true, agreement: todo, task_field: todo.task[:task_field] %>
                     <div id="to-do-list-agreement-<%= todo.id %>">
                       <div class="row list-group-item vertical-align">
                         <div class="col-xs-4 text-center">
@@ -321,9 +252,46 @@
                           </p>
                         </div>
                         <div class="col-xs-2">
-                          <button type="button" class="btn btn-fab btn-fab-mini btn-primary" data-toggle="modal" data-target="#agreement-<%= todo.id %>-task-modal">
-                            <i class='material-icons'>done</i>
-                          </button>
+                          <%= link_to "<i class='material-icons'>done</i>".html_safe, "javascript:void(0)", class: "btn btn-fab btn-fab-mini btn-primary", data: {
+                            toggle: "modal",
+                            target: "#agreement-todo-task-modal",
+                            agreement_id: todo.id,
+                            account_id: todo.account.id,
+                            agreement_link: "#{link_to('Agreement No. ' + todo.id.to_s, agreement_path(todo)).html_safe}",
+                            day_count: (DateTime.now.to_date - (todo.items.where.not(listed_at: nil).order(:listed_at).first.listed_at.to_date)).to_i,
+                            unexpireable_button: "#{button_to('Unexpireable', agreement_tag_path(todo, tag: 'unexpireable'), remote: true, class: 'btn btn-raised btn-secondary').html_safe}"
+                          } %>
+                        </div>
+                      </div>
+                      <div class="list-group-separator"></div>
+                    </div>
+                  <% end %>
+                </div>
+
+                <div class="tab-pane" id="statements-tab">
+                  <% @statements.each do |todo| %>
+                    <div id="to-do-list-statement-<%= todo.id %>">
+                      <div class="row list-group-item vertical-align">
+                        <div class="col-xs-4 text-center">
+                          <a href="account_statement_path(todo.account, todo)">
+                            <div class="icon icon-<%= todo.unpaid? ? 'success' : 'info' %>">
+                              <i class='material-icons' style='font-size: 5em;'>account_balance_wallet</i>
+                            </div>
+                          </a>
+                        </div>
+                        <div class="col-xs-6">
+                          <h4 class="list-group-item-heading"><%= todo.task[:name] %></h4>
+                          <p class="list-group-item-text"><%= link_to "#{todo.account.full_name} - #{todo.date.last_month.strftime('%B, %Y')}", account_statement_path(todo.account, todo) %> <%= todo.task[:description] %></p>
+                        </div>
+                        <div class="col-xs-2">
+                          <%= link_to "<i class='material-icons'>done</i>".html_safe, "javascript:void(0)", class: "btn btn-fab btn-fab-mini btn-primary", data: {
+                            toggle: "modal",
+                            target: "#statement-todo-task-modal",
+                            statement_id: todo.id,
+                            account_id: todo.account.id,
+                            statement_link: "#{link_to(todo.account.full_name + ' - ' + todo.date.last_month.strftime('%B, %Y'), account_statement_path(todo.account, todo)).html_safe}",
+                            statement_summary: "#{render('statements/summary', statement: todo).html_safe}"
+                          } %>
                         </div>
                       </div>
                       <div class="list-group-separator"></div>
@@ -385,3 +353,7 @@
   </div>
 
 </div>
+
+<%= render 'items/to_do_task' %>
+<%= render 'statements/to_do_task' %>
+<%= render 'agreements/to_do_task' %>
