@@ -5,6 +5,7 @@ class ClientsController < ApplicationController
     @client = User.find(params[:id])
     @account = @client.account
     @maps_url = GeolocationService.new(@client).static_map_url
+    @title = @client.full_name
   end
 
   def new
@@ -12,6 +13,7 @@ class ClientsController < ApplicationController
       @account = Account.find(params[:account_id])
     end
     @client = Client.new
+    @title = "New Client"
   end
 
   def create
@@ -28,6 +30,7 @@ class ClientsController < ApplicationController
 
   def edit
     @client = Client.find(params[:id])
+    @title = @client.full_name
   end
 
   def update

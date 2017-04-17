@@ -11,6 +11,7 @@ class AgreementsController < ApplicationController
     @account = @proposal.account
     @client = @proposal.account.primary_contact
     @agreements = @proposal.agreements
+    @title = "#{@job.name} - Proposal #{@proposal.id} - Agreements"
   end
 
   def show
@@ -22,6 +23,7 @@ class AgreementsController < ApplicationController
     @client = @account.primary_contact
     @agreements = [@agreement]
     @items = @agreement.items
+    @title = "#{@job.name} - Proposal #{@proposal.id} - #{@agreement.humanized_agreement_type}"
   end
 
   def edit
@@ -32,11 +34,13 @@ class AgreementsController < ApplicationController
     @client = @account.primary_contact
     @agreements = [@agreement]
     @items = @agreement.items
+    @title = "#{@job.name} - Proposal #{@proposal.id} - #{@agreement.humanized_agreement_type}"
   end
 
   def agreements_list
     @agreements = AgreementsPresenter.new(params).filter
     @intentions = @agreements.pluck(:agreement_type).uniq
+    @title = "Agreements List"
   end
 
   def create

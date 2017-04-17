@@ -104,6 +104,7 @@ group :development, :test do
   gem 'web-console', '~> 2.0'
   gem 'guard-rspec', require: false
   gem 'terminal-notifier-guard'
+  gem 'terminal-notifier'
   gem 'selenium-webdriver'
   gem 'parallel_tests'
   gem 'spring-commands-rspec'
@@ -115,6 +116,10 @@ group :development do
   gem 'bullet'
   gem 'letter_opener_web', '~> 1.2.0'
   gem 'mr_video'
+  gem 'guard', '>= 2.2.2', require: false
+  gem 'guard-livereload',  require: false
+  gem 'rack-livereload'
+  gem 'rb-fsevent',        require: false
 end
 
 group :test do

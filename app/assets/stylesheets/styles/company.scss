@@ -1,6 +1,6 @@
 .company-title {
-  font-family: "Bradley Hand";
-  color: #3e00ff;
+  font-family: "Bradley Hand" !important;
+  color: #3e00ff !important;
 }
 
 .company-font {
@@ -37,4 +37,8 @@ img.logo {
 
 .dashboard-button {
   width: 150px;
+}
+
+.navbar-title {
+  font-size: 32px;
 }

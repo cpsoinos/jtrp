@@ -1,6 +1,6 @@
 <% @navtab ||= controller_name %>
 
-<div class="sidebar" data-color="purple">
+<div class="sidebar" data-color="purple" data-image="<%= image_url('facebook_banner.jpg') %>">
 
   <div class="logo text-center">
     <% if @company %>
@@ -21,6 +21,15 @@
       </li>
       <li class="<%= @navtab == 'jobs' ? 'active' : '' %>">
         <%= link_to "<i class='material-icons'>map</i><p>Jobs</p>".html_safe, jobs_path %>
+      </li>
+      <li class="<%= @navtab == 'purchases' ? 'active' : '' %>">
+        <%= link_to "<i class='material-icons'>border_all</i><p>Purchases</p>".html_safe, purchases_path %>
+      </li>
+      <li class="<%= @navtab == 'agreements' ? 'active' : '' %>">
+        <%= link_to "<i class='material-icons'>assignment</i><p>Agreements</p>".html_safe, agreements_list_agreements_path %>
+      </li>
+      <li class="<%= @navtab == 'statements' ? 'active' : '' %>">
+        <%= link_to "<i class='material-icons'>attach_money</i><p>Statements</p>".html_safe, statements_list_statements_path %>
       </li>
     </ul>
   </div>

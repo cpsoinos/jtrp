@@ -18,7 +18,7 @@ class CompaniesController < ApplicationController
       customers_change: (((this_week_customers - last_week_customers) / this_week_customers) * 100).round(2),
       clients_change: (((this_month_clients - last_month_clients) / this_month_clients) * 100).round(2)
     }
-    @featured_photo = Photo.new(photo_type: 'featured_photo')
+    @title = "Dashboard"
   end
 
   def home

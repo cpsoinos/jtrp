@@ -3,6 +3,7 @@ class PurchasesController < ApplicationController
 
   def index
     @agreements = Agreement.by_type("sell")
+    @title = "Purchase Orders"
   end
 
   def show
@@ -10,6 +11,7 @@ class PurchasesController < ApplicationController
     @account = @agreement.account
     @job = @agreement.job
     @items = @agreement.items
+    @title = "#{@job.name} - Proposal #{@agreement.proposal.id} - #{@agreement.humanized_agreement_type}"
   end
 
 end

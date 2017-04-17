@@ -3,10 +3,12 @@ class AccountsController < ApplicationController
 
   def index
     @accounts = Account.includes([:primary_contact, jobs: { proposals: :items }]).order("users.last_name")
+    @title = "Accounts"
   end
 
   def show
     @account = Account.find(params[:id])
+    @title = @account.full_name
     if @account.slug == 'jtrp'
       @items = Item.jtrp.page(params[:page])
       respond_to do |format|
@@ -18,6 +20,7 @@ class AccountsController < ApplicationController
 
   def new
     @account = Account.new
+    @title = "New Account"
   end
 
   def create
@@ -36,6 +39,7 @@ class AccountsController < ApplicationController
 
   def edit
     @account = Account.find(params[:id])
+    @title = @account.full_name
   end
 
   def update
