@@ -498,6 +498,11 @@ GEM
       coolline (~> 0.5)
     pry-rails (0.3.4)
       pry (>= 0.9.10)
+    public_activity (1.5.0)
+      actionpack (>= 3.0.0)
+      activerecord (>= 3.0)
+      i18n (>= 0.5.0)
+      railties (>= 3.0.0)
     public_suffix (2.0.5)
     puma (3.4.0)
     puma_worker_killer (0.0.6)
@@ -828,6 +833,7 @@ DEPENDENCIES
   pry-byebug (~> 3.3.0)
   pry-coolline
   pry-rails
+  public_activity
   puma
   puma_worker_killer
   rack-cors

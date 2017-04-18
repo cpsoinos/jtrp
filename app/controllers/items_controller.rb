@@ -29,6 +29,7 @@ class ItemsController < ApplicationController
     @account = @job.account
     respond_to do |format|
       if @item.persisted?
+        @item.create_activity(:create, owner: current_user)
         format.html do
           flash[:notice] = "Item created"
           if @item.child?
@@ -70,6 +71,7 @@ class ItemsController < ApplicationController
     @item = Item.find(params[:id])
     respond_to do |format|
       if Items::Updater.new(@item).update(item_params) && !@item.errors.present?
+        @item.create_activity(:update, owner: current_user)
         format.js do
           @message = "#{@item.description} updated!"
           render 'proposals/update_item_details'

@@ -1,5 +1,7 @@
 class Client < User
   include PgSearch
+  include PublicActivity::Common
+  
 
   multisearchable against: [:first_name, :last_name, :email, :full_name, :address_1, :city, :state, :zip, :status]
 

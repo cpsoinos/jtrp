@@ -10,6 +10,7 @@ class Statement::Creator
     statement = account.statements.new
     statement.date = DateTime.now
     statement.save
+    statement.create_activity(:create, owner: Admin.first)
     statement
   end
 

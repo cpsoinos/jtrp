@@ -33,6 +33,7 @@ class JobsController < ApplicationController
   def create
     @job = @account.jobs.new(job_params)
     if @job.save
+      @job.create_activity(:create, owner: current_user)
       flash[:notice] = "Job created"
       redirect_to account_job_path(@job.account, @job)
     else
@@ -49,6 +50,7 @@ class JobsController < ApplicationController
   def update
     @job = Job.find(params[:id])
     if @job.update(job_params)
+      @job.create_activity(:update, owner: current_user)
       flash[:notice] = "Job updated"
       redirect_to account_job_path(@account, @job)
     else

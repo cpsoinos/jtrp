@@ -17,6 +17,7 @@ class LettersController < ApplicationController
     respond_to do |format|
       format.js do
         if @letter.save and @letter.deliver_to_client
+          @letter.create_activity(:create, owner: current_user)
           @message = "Email and letter queued for delivery"
         else
           @message = @letter.errors.full_messages

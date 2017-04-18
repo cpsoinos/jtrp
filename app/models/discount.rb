@@ -1,4 +1,6 @@
 class Discount < ActiveRecord::Base
+  include PublicActivity::Common
+  
   acts_as_paranoid
   audited
 

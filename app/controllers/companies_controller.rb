@@ -19,6 +19,7 @@ class CompaniesController < ApplicationController
       clients_change: (((this_month_clients - last_month_clients) / this_month_clients) * 100).round(2)
     }
     @title = "Dashboard"
+    @activities = PublicActivity::Activity.order(created_at: :desc).page(params[:page])
   end
 
   def home

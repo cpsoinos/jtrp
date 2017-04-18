@@ -46,12 +46,16 @@ class AgreementsController < ApplicationController
   def create
     @client = @account.primary_contact
     @agreements = Agreement::Creator.new(current_user).create(@proposal)
+    @agreements.each do |agreement|
+      agreement.create_activity(:create, owner: current_user)
+    end
     redirect_to account_job_proposal_agreements_path(@account, @job, @proposal)
   end
 
   def update
     @agreement = Agreement.find(params[:id])
     if @agreement.update(agreement_params.merge(updated_by: current_user))
+      @agreement.create_activity(:update, owner: current_user)
       respond_to do |format|
         format.html do
           if @agreement.mark_active # will return if does not meet requirements

@@ -17,6 +17,7 @@ class ProposalsController < ApplicationController
   def create
     @proposal = @job.proposals.new(created_by: current_user)
     if @proposal.save
+      @proposal.create_activity(:create, owner: current_user)
       redirect_to edit_account_job_proposal_path(@account, @job, @proposal)
     else
       flash[:alert] = @proposal.errors.full_messages.uniq.join

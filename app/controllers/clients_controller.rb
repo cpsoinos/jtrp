@@ -19,6 +19,7 @@ class ClientsController < ApplicationController
   def create
     @client = Client.new(client_params)
     if @client.save
+      @client.create_activity(:create, owner: current_user)
       set_primary_contact
       flash[:notice] = "Client created!"
       redirect_to account_path(@client.account)
@@ -36,6 +37,7 @@ class ClientsController < ApplicationController
   def update
     @client = Client.find(params[:id])
     if @client.update(client_params)
+      @client.create_activity(:update, owner: current_user)
       flash[:notice] = "Client updated"
       redirect_to account_client_path(@client.account, @client)
     else

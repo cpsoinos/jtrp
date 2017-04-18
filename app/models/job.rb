@@ -1,4 +1,6 @@
 class Job < ActiveRecord::Base
+  include PublicActivity::Common
+  
   acts_as_paranoid
   audited associated_with: :account
 

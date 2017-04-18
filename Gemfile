@@ -77,6 +77,7 @@ gem 'sitemap_generator'
 gem 'sidekiq-unique-jobs'
 gem 'redis-namespace'
 gem 'acts_as_list'
+gem 'public_activity'
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-classnames'

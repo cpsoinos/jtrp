@@ -23,6 +23,7 @@ class StatementsController < ApplicationController
   def update
     @statement = Statement.find(params[:id])
     if Statement::Updater.new(@statement).update(statement_params)
+      @statement.create_activity(:update, owner: current_user)
       respond_to do |format|
         format.js do
           @message = "Statement updated!"

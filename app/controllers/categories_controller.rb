@@ -19,6 +19,7 @@ class CategoriesController < ApplicationController
   def create
     @category = Category.new(category_params)
     if @category.save
+      @category.create_activity(:create, owner: current_user)
       flash[:notice] = "Category created!"
       redirect_to categories_path
     else
@@ -33,6 +34,7 @@ class CategoriesController < ApplicationController
   def update
     @category = Category.find(params[:id])
     if @category.update(category_params)
+      @category.create_activity(:update, owner: current_user)
       flash[:notice] = "Category updated!"
       redirect_to category_path(@category)
     else

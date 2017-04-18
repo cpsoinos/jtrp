@@ -26,6 +26,7 @@ class AccountsController < ApplicationController
   def create
     @account = Account.new(account_params)
     if @account.save
+      @account.create_activity(:create, owner: current_user)
       flash[:notice] = "Account created"
       if @account.primary_contact
         render :show
@@ -45,6 +46,7 @@ class AccountsController < ApplicationController
   def update
     @account = Account.find(params[:id])
     if @account.update(account_params)
+      @account.create_activity(:update, owner: current_user)
       flash[:notice] = "Account updated"
       if @account.primary_contact
         render :show
