@@ -20,7 +20,7 @@ feature "proposal response" do
       sign_in(user)
     end
 
-    scenario "user chooses client intentions", js: true, vcr: true do
+    scenario "user chooses client intentions", js: true do
       visit account_job_proposal_path(account, job, proposal)
       items.each_with_index do |item, i|
         find(:css, "#item_#{item.id}_client_intention_#{intentions[i]}", visible: false).trigger("click")
