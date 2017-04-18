@@ -18,15 +18,12 @@
       <% else %>
 
         <%= render "agreements/#{@agreement.agreement_type}", items: @items, agreement: @agreement, proposal: @proposal, job: @job, account: @account, client: @client %>
+        <%= render 'agreements/terms_form', agreement: @agreement, account: @account %>
 
         <% if current_user.try(:internal?) %>
           <%= render 'scanned_upload_form', agreement: @agreement %>
         <% end %>
 
-      <% end %>
-
-      <% unless params[:print] %>
-        <%= render 'agreements/terms_form', agreement: @agreement, account: @account %>
       <% end %>
 
   </div>
