@@ -55,6 +55,7 @@ class ItemsController < ApplicationController
 
   def show
     meta_tags
+    @title = @item.description.titleize
     if current_user.try(:internal?)
       @child_item = @item.build_child_item
     else
@@ -64,6 +65,7 @@ class ItemsController < ApplicationController
 
   def edit
     @item = Item.find(params[:id])
+    @title = @item.description.titleize
     @categories = Category.all
   end
 
