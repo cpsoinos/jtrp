@@ -1,6 +1,8 @@
 $(document).on('turbolinks:load', function() {
 
-  initDashboardPageCharts();
+  if (gon.salesMetrics != undefined) {
+    initDashboardPageCharts();
+  }
 
   // Dynamically create mark-sold-modals
   $("#item-todo-task-modal").on('shown.bs.modal', function (event) {
