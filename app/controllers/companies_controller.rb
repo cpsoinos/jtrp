@@ -75,7 +75,6 @@ class CompaniesController < ApplicationController
     @items = ItemsPresenter.new.todo.page(params[:page]).uniq
     @statements = StatementsPresenter.new.todo.uniq
     @agreements = AgreementsPresenter.new.todo.uniq
-    @todos = @agreements | @statements | @items
   end
 
   def resolve_layout
