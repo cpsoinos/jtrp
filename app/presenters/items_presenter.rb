@@ -10,7 +10,7 @@ class ItemsPresenter
   end
 
   def filter
-    @items = @items.filter(params.slice(:status, :type, :by_id, :by_category_id))
+    @items = @items.filter(filters)
     self
   end
 
