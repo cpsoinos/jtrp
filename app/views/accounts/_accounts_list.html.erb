@@ -22,7 +22,7 @@
                 </div>
               </td>
               <td class="td-name">
-                <%= link_to account.full_name, account_path(account) %>
+                <%= link_to account.inverse_full_name, account_path(account) %>
                 <br><small>Primary Contact: <%= account.primary_contact ? link_to(account.primary_contact.full_name, client_path(account.primary_contact)) : '' %></small>
               </td>
               <td class="text-center">
