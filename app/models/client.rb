@@ -4,7 +4,7 @@ class Client < User
 
   multisearchable against: [:first_name, :last_name, :email, :full_name, :address_1, :city, :state, :zip, :status]
 
-  belongs_to :account, touch: true
+  belongs_to :account
   has_many :proposals, through: :account
   has_many :items, through: :proposals
 
