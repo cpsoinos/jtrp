@@ -86,7 +86,7 @@ feature "add an account" do
 
     context "is a company" do
 
-      scenario "chooses is a company" do
+      scenario "chooses is a company", js: true do
         visit new_account_path
         click_link("Yes")
 
@@ -94,7 +94,7 @@ feature "add an account" do
         expect(page).to have_field("Notes")
       end
 
-      scenario "new client" do
+      scenario "new client", js: true do
         visit new_account_path
         click_link("Yes")
         fill_in("Company name", with: "Blah, Inc.")
@@ -115,7 +115,7 @@ feature "add an account" do
         expect(page).to have_button("Create Client")
       end
 
-      scenario "creates a new client" do
+      scenario "creates a new client", js: true do
         visit new_account_path
         click_link("Yes")
         fill_in("Company name", with: "Blah, Inc.")

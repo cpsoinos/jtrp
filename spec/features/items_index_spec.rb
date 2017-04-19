@@ -15,19 +15,11 @@ feature "item index" do
 
   context "all items" do
 
-    scenario "visits item list from home page" do
-      visit dashboard_path
-      click_link("All Items")
-
-      expect(page).to have_content("All Items")
-    end
-
     scenario "visits item list" do
       Item.first.update_attribute("client_intention", "sell")
       Item.second.update_attribute("client_intention", "consign")
       visit items_path
 
-      expect(page).to have_content("All Items")
       expect(page).to have_link("Print Labels")
       intentions.each do |intention|
         next if intention == "undecided"
@@ -90,13 +82,6 @@ feature "item index" do
 
   context "sold items" do
 
-    scenario "visits item list from home page" do
-      visit dashboard_path
-      click_link("Sold")
-
-      expect(page).to have_content("Sold items have been sold.")
-    end
-
     scenario "visits item list" do
       visit items_path(status: 'sold')
 
@@ -112,13 +97,6 @@ feature "item index" do
   end
 
   context "inactive items" do
-
-    scenario "visits item list from home page" do
-      visit dashboard_path
-      click_link("Inactive")
-
-      expect(page).to have_content("Inactive items have been deactivated.")
-    end
 
     scenario "visits item list" do
       visit items_path(status: 'inactive')
@@ -136,15 +114,6 @@ feature "item index" do
   end
 
   context "potential items" do
-
-    scenario "visits item list from home page" do
-      visit dashboard_path
-      within("#items") do
-        click_link("Potential")
-      end
-
-      expect(page).to have_content("Potential items have not yet been listed for sale or consigned.")
-    end
 
     scenario "visits item list" do
       visit items_path(status: 'potential')
