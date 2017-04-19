@@ -12,8 +12,8 @@
         </tr>
       </thead>
       <tbody>
-        <% jobs.each do |job| %>
-          <% cache job do %>
+        <% cache [status, jobs] do %>
+          <% jobs.each do |job| %>
             <tr>
               <td class="text-center">
                 <div class="img-container">

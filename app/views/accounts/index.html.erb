@@ -53,16 +53,16 @@
     <div class="large-top-margin">
       <div class="tab-content">
         <div role="tabpanel" class="tab-pane fade" id="potential">
-          <%= render "accounts_list", accounts: @accounts.potential, cache: true, collection: @accounts %>
+          <%= render "accounts_list", cached: true, accounts: @accounts.potential, status: "potential" %>
         </div>
         <div role="tabpanel" class="tab-pane fade" id="active">
-          <%= render "accounts_list", accounts: @accounts.active, cache: true, collection: @accounts %>
+          <%= render "accounts_list", cached: true, accounts: @accounts.active, status: "active" %>
         </div>
         <div role="tabpanel" class="tab-pane fade" id="inactive">
-          <%= render "accounts_list", accounts: @accounts.inactive, cache: true, collection: @accounts %>
+          <%= render "accounts_list", cached: true, accounts: @accounts.inactive, status: "inactive" %>
         </div>
       </div>
     </div>
-    
+
   </div>
 </div>

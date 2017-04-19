@@ -13,8 +13,8 @@
         </tr>
       </thead>
       <tbody>
-        <% accounts.each do |account| %>
-          <% cache account do %>
+        <% cache [status, accounts] do %>
+          <% accounts.each do |account| %>
             <tr>
               <td class="text-center">
                 <div class="img-container">
