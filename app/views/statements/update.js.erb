@@ -1,5 +1,5 @@
 var listItem = $("#to-do-list-statement-<%= @statement.id %>")
-var modal = $("#statement-<%= @statement.id %>-task-modal")
+var modal = $(".modal.fade.in")
 
 modal.modal('toggle');
 listItem.remove();

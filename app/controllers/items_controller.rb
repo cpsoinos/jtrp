@@ -16,10 +16,12 @@ class ItemsController < ApplicationController
     @filter = params[:status].try(:capitalize)
     @type = params[:type]
     @items = ItemsPresenter.new(filter_params).execute
+    @title = "Items"
   end
 
   def new
     @item = Item.new
+    @title = "New Item"
   end
 
   def create
@@ -29,6 +31,7 @@ class ItemsController < ApplicationController
     @account = @job.account
     respond_to do |format|
       if @item.persisted?
+        @item.create_activity(:create, owner: current_user)
         format.html do
           flash[:notice] = "Item created"
           if @item.child?
@@ -54,6 +57,7 @@ class ItemsController < ApplicationController
 
   def show
     meta_tags
+    @title = @item.description.titleize
     if current_user.try(:internal?)
       @child_item = @item.build_child_item
     else
@@ -63,6 +67,7 @@ class ItemsController < ApplicationController
 
   def edit
     @item = Item.find(params[:id])
+    @title = @item.description.titleize
     @categories = Category.all
   end
 
@@ -70,6 +75,7 @@ class ItemsController < ApplicationController
     @item = Item.find(params[:id])
     respond_to do |format|
       if Items::Updater.new(@item).update(item_params) && !@item.errors.present?
+        @item.create_activity(:update, owner: current_user)
         format.js do
           @message = "#{@item.description} updated!"
           render 'proposals/update_item_details'

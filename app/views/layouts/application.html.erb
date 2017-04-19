@@ -34,28 +34,21 @@
   <!-- Facebook SDK -->
   <div id="fb-root"></div>
 
-  <div class="page-container">
-    <%= render 'layouts/navbar' unless params[:print] %>
     <div id="wrapper">
-      <!-- Page Content -->
-      <div id="page-content-wrapper">
-        <div class="container-fluid">
-          <% unless params[:print] %>
-            <%= render 'layouts/alerts', alert: alert, notice: notice %>
-          <% end %>
-          <div class="row <%= 'extra-large-top-margin' unless params[:print] %>" id="layout-top-buffer">
+      <%= render 'layouts/sidebar' unless params[:print] %>
+      <div class="<%= 'main-panel' unless params[:print] %>">
+        <%= render 'layouts/navbar' unless params[:print] %>
+        <%= render('layouts/alerts', alert: alert, notice: notice) unless params[:print] %>
+        <div class="content">
+          <div class="container-fluid">
             <div class="row">
-              <div class="col-xs-12 col-md-8 col-md-offset-2 hidden-print">
-                <%= breadcrumbs separator: " &rsaquo; " %>
-              </div>
+              <%= breadcrumbs separator: " &rsaquo; " %>
+              <%= yield %>
             </div>
-            <%= yield %>
           </div>
         </div>
       </div>
-      <!-- /#page-content-wrapper -->
     </div>
-  </div>
 
 </body>
 </html>

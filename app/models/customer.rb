@@ -1,4 +1,6 @@
 class Customer < ActiveRecord::Base
+  include PublicActivity::Common
+  
   acts_as_paranoid
 
   has_many :webhook_entries, as: :webhookable

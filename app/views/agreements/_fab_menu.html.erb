@@ -1,4 +1,4 @@
-<div class="btn-group dropup">
+<div class="btn-group dropup hamburger-fab">
   <button type="button" class="btn btn-raised btn-primary btn-fab dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
     <i class='material-icons'>menu</i>
   </button>
@@ -21,7 +21,15 @@
 
     <% if agreement.active? && agreement.items.any? { |i| i.meets_requirements_expired? } %>
       <li>
-        <%= link_to "<i class='material-icons'>store</i> Mark Items Expired".html_safe, "", data: { toggle: "modal", target: "#agreement-#{agreement.id}-task-modal" } %>
+        <%= link_to "<i class='material-icons'>store</i> Mark Items Expired".html_safe, "", data: {
+          toggle: "modal",
+          target: "#agreement-todo-task-modal",
+          agreement_id: agreement.id,
+          account_id: agreement.account.id,
+          agreement_link: "#{link_to('Agreement No. ' + agreement.id.to_s, agreement_path(agreement)).html_safe}",
+          day_count: (DateTime.now.to_date - (agreement.items.where.not(listed_at: nil).order(:listed_at).first.listed_at.to_date)).to_i,
+          unexpireable_button: "#{button_to('Unexpireable', agreement_tag_path(agreement, tag: 'unexpireable'), remote: true, class: 'btn btn-raised btn-secondary').html_safe}"
+        } %>
       </li>
     <% end %>
 

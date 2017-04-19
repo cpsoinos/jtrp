@@ -4,10 +4,12 @@ class StatementsController < ApplicationController
 
   def index
     @statements = @account.statements
+    @title = "#{@account.full_name} - Statements"
   end
 
   def statements_list
     @statements = Statement.all
+    @title = "Consignment Statements"
   end
 
   def show
@@ -15,11 +17,13 @@ class StatementsController < ApplicationController
     require_token; return if performed?
     @check = @statement.checks.first
     @client = @account.client
+    @title = "#{@account.full_name} - Consigned Sales"
   end
 
   def update
     @statement = Statement.find(params[:id])
     if Statement::Updater.new(@statement).update(statement_params)
+      @statement.create_activity(:update, owner: current_user)
       respond_to do |format|
         format.js do
           @message = "Statement updated!"

@@ -1,0 +1,27 @@
+<div class="row vertical-align">
+  <div class="col-xs-3">
+    <% if activity.owner %>
+      <%= link_to image_tag(activity.owner.avatar_url(:thumb), class: "img-rounded img-responsive img-raised"), account_path(activity.owner) %>
+    <% else %>
+      <%= image_tag(AvatarUploader.new.default_url(:thumb), class: "img-rounded img-responsive img-raised") %>
+    <% end %>
+  </div>
+  <div class="col-xs-6">
+    <p>
+      <small>
+        <i class="material-icons">access_time</i>
+        <i><%= time_ago_in_words(activity.created_at) %></i>
+      </small>
+    </p>
+    <% if activity.owner %>
+      <%= link_to activity.owner.full_name, account_path(activity.owner) %>
+    <% else %>
+      Someone
+    <% end %>
+    <%= "#{activity.key.split('.').last}d an #{activity.key.split('.').first}" %>
+    <%= link_to activity.trackable.description.titleize, activity.trackable %>
+  </div>
+  <div class="col-xs-3">
+    <%= link_to image_tag(activity.trackable.featured_photo.photo_url(client_hints: true, quality: "auto", fetch_format: :auto, dpr: "auto", effect: :improve, width: "120", height: "160", crop: "fill"), class: "img-rounded img-responsive img-raised"), item_url(activity.trackable) %>
+  </div>
+</div>

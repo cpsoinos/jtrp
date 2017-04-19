@@ -72,16 +72,20 @@ feature "agreement" do
       end
 
       scenario "activates items from index", js: true do
-        agreement.update_attributes(client_agreed: true, client_agreed_at: 3.minutes.ago, date: 3.minutes.ago)
-        agreement.mark_active
+        Capybara.using_driver(:chrome) do
+          agreement.update_attributes(client_agreed: true, client_agreed_at: 3.minutes.ago, date: 3.minutes.ago)
+          agreement.mark_active
 
-        visit account_job_proposal_agreements_path(account, job, proposal)
-        click_link("Purchase Invoice")
-        click_on("menu")
-        click_on("Mark Items Active")
+          visit account_job_proposal_agreements_path(account, job, proposal)
+          click_link("Purchase Invoice")
+          within(".hamburger-fab") do
+            click_on("menu")
+          end
+          click_on("Mark Items Active")
 
-        expect(page).to have_content("Items are marked active!")
-        expect(item.reload).to be_active
+          expect(page).to have_content("Items are marked active!")
+          expect(item.reload).to be_active
+        end
       end
 
       scenario "activates items from show" do
@@ -89,7 +93,9 @@ feature "agreement" do
         agreement.mark_active
 
         visit agreement_path(agreement)
-        click_on("menu")
+        within(".hamburger-fab") do
+          click_on("menu")
+        end
         click_on("Mark Items Active")
 
         expect(page).to have_content("Items are marked active!")
@@ -97,14 +103,18 @@ feature "agreement" do
       end
 
       scenario "can't try to activate items from index when items already active", js: true do
-        agreement.update_attributes(client_agreed: true, client_agreed_at: 3.minutes.ago, date: 3.minutes.ago)
-        agreement.mark_active
-        item.mark_active
+        Capybara.using_driver(:chrome) do
+          agreement.update_attributes(client_agreed: true, client_agreed_at: 3.minutes.ago, date: 3.minutes.ago)
+          agreement.mark_active
+          item.mark_active
 
-        visit account_job_proposal_agreements_path(account, job, proposal)
-        click_on("menu")
+          visit account_job_proposal_agreements_path(account, job, proposal)
+          within(".hamburger-fab") do
+            click_on("menu")
+          end
 
-        expect(page).not_to have_button("Mark Items Active")
+          expect(page).not_to have_button("Mark Items Active")
+        end
       end
 
       scenario "can't try to activate items from show when items already active" do
@@ -113,7 +123,9 @@ feature "agreement" do
         item.mark_active
 
         visit agreement_path(agreement)
-        click_on("menu")
+        within(".hamburger-fab") do
+          click_on("menu")
+        end
 
         expect(page).not_to have_button("Mark Items Active")
       end
@@ -141,78 +153,94 @@ feature "agreement" do
       end
 
       scenario "activates items from index", js: true do
-        agreement.update_attributes(client_agreed: true, client_agreed_at: 3.minutes.ago, date: 3.minutes.ago)
-        agreement.mark_active
+        Capybara.using_driver(:chrome) do
+          agreement.update_attributes(client_agreed: true, client_agreed_at: 3.minutes.ago, date: 3.minutes.ago)
+          agreement.mark_active
 
-        visit account_job_proposal_agreements_path(account, job, proposal)
-        click_on("menu")
-        click_on("Mark Items Active")
+          visit account_job_proposal_agreements_path(account, job, proposal)
+          within(".hamburger-fab") do
+            click_on("menu")
+          end
+          click_on("Mark Items Active")
 
-        expect(page).to have_content("Items are marked active!")
-        expect(item.reload).to be_active
+          expect(page).to have_content("Items are marked active!")
+          expect(item.reload).to be_active
+        end
       end
 
       scenario "can't try to activate items when items already active", js: true do
-        agreement.update_attributes(client_agreed: true, client_agreed_at: 3.minutes.ago, date: 3.minutes.ago)
-        agreement.mark_active
-        item.mark_active
+        Capybara.using_driver(:chrome) do
+          agreement.update_attributes(client_agreed: true, client_agreed_at: 3.minutes.ago, date: 3.minutes.ago)
+          agreement.mark_active
+          item.mark_active
 
-        visit account_job_proposal_agreements_path(account, job, proposal)
-        click_on("menu")
+          visit account_job_proposal_agreements_path(account, job, proposal)
+          within(".hamburger-fab") do
+            click_on("menu")
+          end
 
-        expect(page).not_to have_button("Mark Items Active")
+          expect(page).not_to have_button("Mark Items Active")
+        end
       end
 
       scenario "expires items from index", js: true do
-        agreement.update_attributes(client_agreed: true, client_agreed_at: 91.days.ago, date: 91.days.ago)
-        agreement.mark_active
-        item.mark_active
-        item.update_attribute("listed_at", 91.days.ago)
+        Capybara.using_driver(:chrome) do
+          agreement.update_attributes(client_agreed: true, client_agreed_at: 91.days.ago, date: 91.days.ago)
+          agreement.mark_active
+          item.mark_active
+          item.update_attribute("listed_at", 91.days.ago)
 
-        visit account_job_proposal_agreements_path(account, job, proposal)
-        click_on("menu")
-        click_on("Mark Items Expired")
+          visit account_job_proposal_agreements_path(account, job, proposal)
+          within(".hamburger-fab") do
+            click_button("menu")
+          end
+          click_on("Mark Items Expired")
 
-        expect(page).to have_field("Expiration Pending", visible: false)
-        expect(page).to have_field("Expire Agreement", visible: false)
+          expect(page).to have_field("Expiration Pending", visible: false)
+          expect(page).to have_field("Expire Agreement", visible: false)
 
-        within("#expired") do
-          first(:css, ".circle").trigger("click")
+          within("#expired") do
+            first(:css, ".circle").click
+          end
+          fill_in("note", with: "Personalized message goes here")
+          click_button("Notify Client")
+
+          expect(page).to have_content("Email and letter queued for delivery")
+          expect(page).to have_content("Success!")
+
+          expect(ItemExpirerJob).to have_received(:perform_later)
         end
-        fill_in("note", with: "Personalized message goes here")
-        click_button("Notify Client")
-
-        expect(page).to have_content("Email and letter queued for delivery")
-        expect(page).to have_content("Success!")
-
-        expect(ItemExpirerJob).to have_received(:perform_later)
       end
 
       scenario "expires items from show", js: true do
-        agreement.update_attributes(client_agreed: true, client_agreed_at: 91.days.ago, date: 91.days.ago)
-        agreement.mark_active
-        agreement.reload
-        item.mark_active
-        item.update_attribute("listed_at", 91.days.ago)
-        item.reload
+        Capybara.using_driver(:chrome) do
+          agreement.update_attributes(client_agreed: true, client_agreed_at: 91.days.ago, date: 91.days.ago)
+          agreement.mark_active
+          agreement.reload
+          item.mark_active
+          item.update_attribute("listed_at", 91.days.ago)
+          item.reload
 
-        visit agreement_path(agreement)
-        click_on("menu")
-        click_on("Mark Items Expired")
+          visit agreement_path(agreement)
+          within(".hamburger-fab") do
+            click_on("menu")
+          end
+          click_on("Mark Items Expired")
 
-        expect(page).to have_field("Expiration Pending", visible: false)
-        expect(page).to have_field("Expire Agreement", visible: false)
+          expect(page).to have_field("Expiration Pending", visible: false)
+          expect(page).to have_field("Expire Agreement", visible: false)
 
-        within("#expired") do
-          first(:css, ".circle").trigger("click")
+          within("#expired") do
+            first(:css, ".circle").click
+          end
+          fill_in("note", with: "Personalized message goes here")
+          click_button("Notify Client")
+
+          expect(page).to have_content("Email and letter queued for delivery")
+          expect(page).to have_content("Success!")
+
+          expect(ItemExpirerJob).to have_received(:perform_later)
         end
-        fill_in("note", with: "Personalized message goes here")
-        click_button("Notify Client")
-
-        expect(page).to have_content("Email and letter queued for delivery")
-        expect(page).to have_content("Success!")
-
-        expect(ItemExpirerJob).to have_received(:perform_later)
       end
 
       scenario "can't try to expire items from index when items already expired", js: true do

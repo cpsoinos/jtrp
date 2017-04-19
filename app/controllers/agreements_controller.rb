@@ -11,6 +11,7 @@ class AgreementsController < ApplicationController
     @account = @proposal.account
     @client = @proposal.account.primary_contact
     @agreements = @proposal.agreements
+    @title = "#{@job.name} - Proposal #{@proposal.id} - Agreements"
   end
 
   def show
@@ -22,6 +23,7 @@ class AgreementsController < ApplicationController
     @client = @account.primary_contact
     @agreements = [@agreement]
     @items = @agreement.items
+    @title = "#{@job.name} - Proposal #{@proposal.id} - #{@agreement.humanized_agreement_type}"
   end
 
   def edit
@@ -32,22 +34,28 @@ class AgreementsController < ApplicationController
     @client = @account.primary_contact
     @agreements = [@agreement]
     @items = @agreement.items
+    @title = "#{@job.name} - Proposal #{@proposal.id} - #{@agreement.humanized_agreement_type}"
   end
 
   def agreements_list
     @agreements = AgreementsPresenter.new(params).filter
     @intentions = @agreements.pluck(:agreement_type).uniq
+    @title = "Agreements List"
   end
 
   def create
     @client = @account.primary_contact
     @agreements = Agreement::Creator.new(current_user).create(@proposal)
+    @agreements.each do |agreement|
+      agreement.create_activity(:create, owner: current_user)
+    end
     redirect_to account_job_proposal_agreements_path(@account, @job, @proposal)
   end
 
   def update
     @agreement = Agreement.find(params[:id])
     if @agreement.update(agreement_params.merge(updated_by: current_user))
+      @agreement.create_activity(:update, owner: current_user)
       respond_to do |format|
         format.html do
           if @agreement.mark_active # will return if does not meet requirements

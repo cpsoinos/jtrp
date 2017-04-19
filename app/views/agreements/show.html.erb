@@ -1,36 +1,35 @@
-<% if current_user.try(:internal?) %>
-  <% breadcrumb :agreement, @agreement %>
-<% end %>
+<div class="container-fluid">
 
-<div class="row top-margin">
-  <div class="col-xs-12 col-md-8 col-md-offset-2">
+  <div class="row <%= 'top-margin' unless params[:print] %>">
+    <div class="col-xs-12 col-md-8 col-md-offset-2">
 
-      <%= render 'agreement_note_modal' %>
+        <%= render 'agreement_note_modal' %>
 
-      <% if @agreement.pdf.present? && !params[:print] %>
+        <% if @agreement.pdf.present? && !@agreement.pdf_pages.nil? && !params[:print] %>
 
-        <div class="text-center">
-          <% (1..@agreement.pdf_pages).to_a.each do |page| %>
-            <%= image_tag(@agreement.pdf_url(client_hints: true, page: page, fetch_format: :auto)) %><br /><br />
+          <div class="text-center">
+            <% (1..@agreement.pdf_pages).to_a.each do |page| %>
+              <%= image_tag(@agreement.pdf_url(client_hints: true, page: page, fetch_format: :auto, width: "auto")) %><br /><br />
+            <% end %>
+          </div>
+
+        <% else %>
+
+          <%= render "agreements/#{@agreement.agreement_type}", items: @items, agreement: @agreement, proposal: @proposal, job: @job, account: @account, client: @client %>
+          <%= render 'agreements/terms_form', agreement: @agreement, account: @account %>
+
+          <% if current_user.try(:internal?) %>
+            <%= render 'scanned_upload_form', agreement: @agreement %>
           <% end %>
-        </div>
 
-      <% else %>
-
-        <%= render "agreements/#{@agreement.agreement_type}", items: @items, agreement: @agreement, proposal: @proposal, job: @job, account: @account, client: @client %>
-        <%= render 'agreements/terms_form', agreement: @agreement, account: @account %>
-
-        <% if current_user.try(:internal?) %>
-          <%= render 'scanned_upload_form', agreement: @agreement %>
         <% end %>
 
-      <% end %>
-
   </div>
-</div>
 
-<% if @agreement.meets_requirements_expired? %>
-  <%= render 'agreements/to_do_task', agreement: @agreement, task_field: @agreement.task[:task_field] %>
-<% end %>
+  <% if @agreement.meets_requirements_expired? %>
+    <%= render 'agreements/to_do_task', agreement: @agreement, task_field: @agreement.task[:task_field] %>
+  <% end %>
+
+</div>
 
 <%= render 'agreements/fab_menu', agreement: @agreement, items: @items %>

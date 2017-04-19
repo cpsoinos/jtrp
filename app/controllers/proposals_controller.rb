@@ -17,6 +17,7 @@ class ProposalsController < ApplicationController
   def create
     @proposal = @job.proposals.new(created_by: current_user)
     if @proposal.save
+      @proposal.create_activity(:create, owner: current_user)
       redirect_to edit_account_job_proposal_path(@account, @job, @proposal)
     else
       flash[:alert] = @proposal.errors.full_messages.uniq.join
@@ -29,6 +30,7 @@ class ProposalsController < ApplicationController
     require_token; return if performed?
     @client = @account.primary_contact
     @items = @proposal.items.order(:account_item_number)
+    @title = "Proposal for #{@proposal.account.full_name}"
     respond_to do |format|
       format.html do
         if @client.nil?
@@ -62,17 +64,20 @@ class ProposalsController < ApplicationController
     @proposal = Proposal.includes(items: :photos).find(params[:id])
     @item = @proposal.items.new
     gon.proposalId = @proposal.id
+    @title = "Proposal for #{@proposal.account.full_name} - Upload Photos"
   end
 
   def sort_items
     @categories = Category.order(:name)
     @proposal = Proposal.find(params[:proposal_id])
     @item = @proposal.items.new
+    @title = "Proposal for #{@proposal.account.full_name} - Sort Items"
   end
 
   def details
     @proposal = Proposal.find(params[:proposal_id])
     @items = @proposal.items.order(:account_item_number)
+    @title = "Proposal for #{@proposal.account.full_name} - Item Details"
   end
 
   protected

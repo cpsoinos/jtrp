@@ -1,39 +1,36 @@
-<div class="modal fade" tabindex="-1" role="dialog" id="agreement-<%= agreement.id %>-task-modal">
+<div class="modal fade" tabindex="-1" role="dialog" id="agreement-todo-task-modal">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <div class="row vertical-align">
-          <span class="icon icon-<%= agreement.meets_requirements_expired? ? 'danger' : 'warning' %>">
             <i class='material-icons' style='font-size: 5em;'>access_time</i>
-          </span>
           <span>
-            <h4 class="modal-title">
-              <%= link_to "#{agreement.account.full_name} - Agreement No. #{agreement.id}".html_safe, agreement_path(agreement) %>
+            <h4 class="modal-title agreement-link">
             </h4>
           </span>
         </div>
       </div>
       <div class="modal-body">
-        <%= form_for [agreement, agreement.letters.new], remote: true do |f| %>
+        <%= form_tag '', method: :post, remote: true do %>
 
           <div class="row vertical-align">
             <div class="col-xs-5">
-              <%= link_to "Agreement No. #{agreement.id}", agreement_path(agreement) %> has items that have been active for <%= (DateTime.now.to_date - (agreement.items.where.not(listed_at: nil).order(:listed_at).first.listed_at.to_date)).to_i %> days.
+              <span class="agreement-link"></span> has items that have been active for <span class="day-count"></span> days.
             </div>
 
             <div class="col-xs-7">
               <div class="radio radio-primary">
                 <label id="expiration-pending">
-                  <%= f.label :category, "Expiration Pending" %>
-                  <%= f.radio_button :category, "agreement_pending_expiration" %>
+                  <%= label_tag :category, "Expiration Pending" %>
+                  <%= radio_button_tag :'letter[category]', "agreement_pending_expiration" %>
                 </label>
               </div>
 
               <div class="radio radio-primary">
                 <label id="expired">
-                  <%= f.label :category, "Expire Agreement" %>
-                  <%= f.radio_button :category, "agreement_expired" %>
+                  <%= label_tag :category, "Expire Agreement" %>
+                  <%= radio_button_tag :'letter[category]', "agreement_expired" %>
                 </label>
               </div>
             </div>
@@ -42,22 +39,20 @@
           <div class="row">
             <div class="col-xs-12 col-md-8 col-md-offset-2">
               <div class="form-group label-floating">
-                <%= f.label :note, "Add a note?", class: "control-label" %>
-                <%= f.text_area :note, class: "form-control" %>
+                <%= label_tag :note, "Add a note?", class: "control-label" %>
+                <%= text_area_tag :note, '', class: "form-control", name: "letter[note]" %>
               </div>
             </div>
 
             <div class="text-center">
-              <%= f.submit "Notify Client", class: "btn btn-raised btn-primary" %>
+              <%= submit_tag "Notify Client", class: "btn btn-raised btn-primary" %>
             </div>
           </div>
 
         <% end %>
 
         <div class="row">
-          <div class="pull-right">
-            <%= button_to "Unexpireable", agreement_tag_path(agreement, tag: "unexpireable"), remote: true, class: "btn btn-raised btn-secondary" %>
-          </div>
+          <div class="pull-right unexpireable-button"></div>
         </div>
 
       </div>

@@ -6,7 +6,7 @@
 
   <div class="extra-large-top-margin text-center">
     <%= link_to "No", new_client_path, class: "btn btn-raised btn-primary btn-lg" %>
-    <%= link_to "Yes", "javascript:void(0);", class: "btn btn-raised btn-primary btn-lg", id: "new-account-button" %>
+    <%= link_to "Yes", "", class: "btn btn-raised btn-primary btn-lg", id: "new-account-button", data: { toggle: "modal", target: "#new-account-modal" } %>
   </div>
 
   <div class="modal fade" tabindex="-1" role="dialog" id="new-account-modal">

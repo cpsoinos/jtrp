@@ -1,4 +1,6 @@
 class Item < ActiveRecord::Base
+  include PublicActivity::Common
+  
   acts_as_paranoid
   acts_as_taggable_on :tags
   audited associated_with: :proposal

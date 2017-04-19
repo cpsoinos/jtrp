@@ -25,6 +25,9 @@
 //= require jquery.tagsinput
 //= require material-kit
 //= require material.min
+//= require bootstrap-notify
+//= require chartist.min
+//= require material-dashboard
 //= require nouislider.min
 //= require best_in_place
 //= require jquery-ddslick
@@ -50,9 +53,9 @@
 //= require linkedin_sdk
 //= require toastr
 
-//= require accounts
 //= require agreements
 //= require categories
+//= require dashboard
 //= require clients
 //= require components
 //= require global

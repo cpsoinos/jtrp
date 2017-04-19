@@ -1,72 +1,62 @@
 <% meta title: "Accounts - #{@company.name}" %>
-<% breadcrumb :accounts %>
+
+<% if @filter.present? %>
+  <% case @filter %>
+  <% when "potential" %>
+    <h4>Potential accounts have not yet signed an agreement.</h4>
+  <% when "active" %>
+    <h4>Active accounts have an active job.</h4>
+  <% when "inactive" %>
+    <h4>Inactive accounts have completed agreements or service orders.</h4>
+  <% end %>
+<% end %>
 
 <div class="row">
-  <div class="col-sm-12 text-center">
-    <h1 class="company-title">Accounts</h1>
-    <% if @filter.present? %>
-      <% case @filter %>
-      <% when "potential" %>
-        <h4>Potential accounts have not yet signed an agreement.</h4>
-      <% when "active" %>
-        <h4>Active accounts have an active job.</h4>
-      <% when "inactive" %>
-        <h4>Inactive accounts have completed agreements or service orders.</h4>
-      <% end %>
-    <% end %>
-  </div>
+  <ul class="nav nav-pills text-center justify-list" role="tablist">
+		<li class="">
+			<a href="#potential" aria-controls="potential" role="tab" data-toggle="tab" aria-expanded="false">
+				<div class="info">
+					<span class="icon icon-info tab-icon">
+						<i class="material-icons md-48">assignment_ind</i>
+					</span>
+					<h3>Potential</h3>
+				</div>
+			</a>
+		</li>
+		<li class="">
+			<a href="#active" aria-controls="active" role="tab" data-toggle="tab" aria-expanded="false">
+				<div class="info">
+					<span class="icon icon-primary tab-icon">
+						<i class="material-icons md-48">assignment_ind</i>
+					</span>
+					<h3>Active</h3>
+				</div>
+			</a>
+		</li>
+		<li class="">
+			<a href="#inactive" aria-controls="inactive" role="tab" data-toggle="tab" aria-expanded="false">
+				<div class="info">
+					<span class="icon icon-warning tab-icon">
+						<i class="material-icons md-48">assignment_ind</i>
+					</span>
+					<h3>Inactive</h3>
+				</div>
+			</a>
+		</li>
+  </ul>
 </div>
 
-<div class="row">
-  <div class="col-md-8 col-md-offset-2 col-xs-12">
-    <div class="row">
-      <ul class="nav nav-pills text-center justify-list" role="tablist">
-  			<li class="">
-  				<a href="#potential" aria-controls="potential" role="tab" data-toggle="tab" aria-expanded="false">
-  					<div class="info">
-  						<span class="icon icon-info tab-icon">
-  							<i class="material-icons md-48">assignment_ind</i>
-  						</span>
-  						<h3>Potential</h3>
-  					</div>
-  				</a>
-  			</li>
-  			<li class="">
-  				<a href="#active" aria-controls="active" role="tab" data-toggle="tab" aria-expanded="false">
-  					<div class="info">
-  						<span class="icon icon-primary tab-icon">
-  							<i class="material-icons md-48">assignment_ind</i>
-  						</span>
-  						<h3>Active</h3>
-  					</div>
-  				</a>
-  			</li>
-  			<li class="">
-  				<a href="#inactive" aria-controls="inactive" role="tab" data-toggle="tab" aria-expanded="false">
-  					<div class="info">
-  						<span class="icon icon-warning tab-icon">
-  							<i class="material-icons md-48">assignment_ind</i>
-  						</span>
-  						<h3>Inactive</h3>
-  					</div>
-  				</a>
-  			</li>
-      </ul>
+<!-- Tab panes -->
+<div class="large-top-margin">
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane fade" id="potential">
+      <%= render "accounts_list", accounts: @accounts.potential, cache: true, collection: @accounts %>
     </div>
-
-    <!-- Tab panes -->
-    <div class="large-top-margin">
-      <div class="tab-content">
-        <div role="tabpanel" class="tab-pane fade" id="potential">
-          <%= render "accounts_list", accounts: @accounts.potential, cache: true, collection: @accounts %>
-        </div>
-        <div role="tabpanel" class="tab-pane fade" id="active">
-          <%= render "accounts_list", accounts: @accounts.active, cache: true, collection: @accounts %>
-        </div>
-        <div role="tabpanel" class="tab-pane fade" id="inactive">
-          <%= render "accounts_list", accounts: @accounts.inactive, cache: true, collection: @accounts %>
-        </div>
-      </div>
+    <div role="tabpanel" class="tab-pane fade" id="active">
+      <%= render "accounts_list", accounts: @accounts.active, cache: true, collection: @accounts %>
+    </div>
+    <div role="tabpanel" class="tab-pane fade" id="inactive">
+      <%= render "accounts_list", accounts: @accounts.inactive, cache: true, collection: @accounts %>
     </div>
   </div>
 </div>

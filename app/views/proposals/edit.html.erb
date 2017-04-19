@@ -1,49 +1,51 @@
-<div class="row">
-  <div class="col-xs-12 col-md-8 col-md-offset-2">
-    <div class="panel panel-primary large-top-margin">
+<div class="container-fluid">
 
-      <h1 class="text-center company-font">Proposal for <%= @proposal.account.full_name %></h1>
+  <div class="row">
+    <div class="col-xs-12 col-md-8 col-md-offset-2">
+      <div class="panel panel-primary large-top-margin">
 
-      <div class="panel-body">
-        <div class="row text-center">
-          <h2>Step 1: Upload Photos</h2>
-        </div>
+        <div class="panel-body">
+          <div class="row text-center">
+            <h2>Step 1: Upload Photos</h2>
+          </div>
 
-        <div class="row form-row text-center extra-large-top-margin">
-          <%= form_tag(batch_create_photos_path, class: "form-horizontal") do %>
+          <div class="row form-row text-center extra-large-top-margin">
+            <%= form_tag(batch_create_photos_path, class: "form-horizontal") do %>
 
-            <div class="fileinput fileinput-new text-center" data-provides="fileinput">
+              <div class="fileinput fileinput-new text-center" data-provides="fileinput">
 
-              <span class="btn-file" style="display: inline-block;">
-                <div class="thumbnail img-raised">
-                  <%= image_tag("image_placeholder.jpg") %>
+                <span class="btn-file" style="display: inline-block;">
+                  <div class="thumbnail img-raised">
+                    <%= image_tag("image_placeholder.jpg") %>
+                  </div>
+                  <%= cl_image_upload_tag(:photos, multiple: true, return_delete_token: true, upload_preset: 'limit_width_jpg') %>
+                  <%= hidden_field_tag :photo_type, "initial" %>
+                  <%= hidden_field_tag :proposal_id, @proposal.id %>
+                </span>
+
+                <div class="progressbar fileupload-progressbar">
+                  <div style="width:0%;"></div>
                 </div>
-                <%= cl_image_upload_tag(:photos, multiple: true, return_delete_token: true, upload_preset: 'limit_width_jpg') %>
-                <%= hidden_field_tag :photo_type, "initial" %>
-                <%= hidden_field_tag :proposal_id, @proposal.id %>
-              </span>
-
-              <div class="progressbar fileupload-progressbar">
-                <div style="width:0%;"></div>
+                <span class="status"></span>
               </div>
-              <span class="status"></span>
-            </div>
 
-            <div class="row text-center top-margin">
-              <%= submit_tag "Save Photos", class: "btn btn-raised btn-primary" %>
-            </div>
+              <div class="row text-center top-margin">
+                <%= submit_tag "Save Photos", class: "btn btn-raised btn-primary" %>
+              </div>
 
-          <% end %>
-        </div>
+            <% end %>
+          </div>
 
-        <div class="text-right large-top-margin">
-          <%= link_to "Step 2: Sort Items <i class='fa fa-caret-right'></i>".html_safe, account_job_proposal_sort_items_path(@account, @job, @proposal), class: "btn btn-raised btn-primary" %>
-        </div>
+          <div class="text-right large-top-margin">
+            <%= link_to "Step 2: Sort Items <i class='fa fa-caret-right'></i>".html_safe, account_job_proposal_sort_items_path(@account, @job, @proposal), class: "btn btn-raised btn-primary" %>
+          </div>
 
-        <div class="row">
-          <div class="preview thumbnail img-raised"></div>
-        </div>
+          <div class="row">
+            <div class="preview thumbnail img-raised"></div>
+          </div>
 
+      </div>
     </div>
   </div>
+
 </div>

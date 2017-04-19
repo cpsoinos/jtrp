@@ -4,6 +4,7 @@ class JobsController < ApplicationController
   before_filter :find_account, only: [:create, :edit, :update]
 
   def index
+    @title = "Jobs"
     @filter = params[:status]
     if params[:account_id]
       @account = Account.find(params[:account_id])
@@ -17,6 +18,7 @@ class JobsController < ApplicationController
     @account = @job.account
     @type = params[:type]
     @items = ItemsPresenter.new(params, @job).execute
+    @title = @job.name
   end
 
   def new
@@ -25,11 +27,13 @@ class JobsController < ApplicationController
     unless @account.present?
       gon.accounts = build_json_for_accounts
     end
+    @title = "#{@account.short_name} - New Job"
   end
 
   def create
     @job = @account.jobs.new(job_params)
     if @job.save
+      @job.create_activity(:create, owner: current_user)
       flash[:notice] = "Job created"
       redirect_to account_job_path(@job.account, @job)
     else
@@ -40,11 +44,13 @@ class JobsController < ApplicationController
 
   def edit
     @job = Job.find(params[:id])
+    @title = @job.name
   end
 
   def update
     @job = Job.find(params[:id])
     if @job.update(job_params)
+      @job.create_activity(:update, owner: current_user)
       flash[:notice] = "Job updated"
       redirect_to account_job_path(@account, @job)
     else
