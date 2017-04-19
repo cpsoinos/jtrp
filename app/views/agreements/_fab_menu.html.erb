@@ -9,11 +9,9 @@
 
     <li role="separator" class="divider"></li>
 
-    <% if agreement.pdf.present? %>
-      <li>
-        <%= link_to "<i class='material-icons'>email</i> Send Agreement".html_safe, "", data: { toggle: "modal", target: "#agreement-note-modal" } %>
-      </li>
-    <% end %>
+    <li>
+      <%= link_to "<i class='material-icons'>email</i> Send Agreement".html_safe, "", data: { toggle: "modal", target: "#agreement-note-modal" } %>
+    </li>
 
     <% if agreement.active? && agreement.items.any? { |i| i.potential? } %>
       <li>
