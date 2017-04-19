@@ -144,8 +144,11 @@ class ItemsController < ApplicationController
   end
 
   def labels
-    params[:labels] = true
-    @items = ItemsPresenter.new(filters: filter_params).execute
+    opts = {
+      labels: true,
+      filters: filter_params
+    }
+    @items = ItemsPresenter.new(opts).execute
     labels = LabelGenerator.new(@items).generate
 
     send_data labels, filename: "Item Labels", type: "application/pdf", disposition: "inline"
