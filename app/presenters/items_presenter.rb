@@ -1,11 +1,12 @@
 class ItemsPresenter
 
-  attr_reader :params, :resource
+  attr_reader :params, :resource, :filters
 
   def initialize(params={}, resource=nil)
     @params = params
     @resource = resource
-    @items = item_base
+    @items = item_base.includes(:account, proposal: {job: {account: :primary_contact}})
+    @filters = params[:filters] || {}
   end
 
   def filter
@@ -35,7 +36,7 @@ class ItemsPresenter
   end
 
   def todo
-    Item.includes(:account, proposal: {job: {account: :primary_contact}}).where(id: (no_listing_price | no_sale_price))
+    @items.where(id: (no_listing_price | no_sale_price))
   end
 
   private

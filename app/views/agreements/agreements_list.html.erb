@@ -1,23 +1,25 @@
 <% meta title: "Agreements - #{@company.name}" %>
 
-<div class="col-xs-12 col-md-8 col-md-offset-2">
+<div class="row">
+  <div class="col-md-10 col-md-offset-1 col-xs-12">
 
-  <!-- Tabs -->
-  <ul class="nav nav-pills nav-pills-icons nav-pills-primary text-center justify-list" role="tablist">
-    <% @intentions.each do |intention| %>
-    <li role="presentation"><a href="#<%= intention %>" aria-controls="<%= intention %>" role="tab" data-toggle="tab" class="agreement-tab"><%= intention %></a></li>
-    <% end %>
-  </ul>
-
-  <!-- Tab panes -->
-  <div class="well bs-component large-top-margin">
-    <div class="tab-content">
+    <!-- Tabs -->
+    <ul class="nav nav-pills nav-pills-icons nav-pills-primary text-center justify-list" role="tablist">
       <% @intentions.each do |intention| %>
-        <div role="tabpanel" class="tab-pane fade" id="<%= intention %>">
-          <%= render "agreement_list_items", agreements: @agreements.where(agreement_type: intention) %>
-        </div>
+      <li role="presentation"><a href="#<%= intention %>" aria-controls="<%= intention %>" role="tab" data-toggle="tab" class="agreement-tab"><%= intention %></a></li>
       <% end %>
-    </div>
-  </div>
+    </ul>
 
+    <!-- Tab panes -->
+    <div class="well bs-component large-top-margin">
+      <div class="tab-content">
+        <% @intentions.each do |intention| %>
+          <div role="tabpanel" class="tab-pane fade" id="<%= intention %>">
+            <%= render "agreement_list_items", agreements: @agreements.where(agreement_type: intention) %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+  </div>
 </div>

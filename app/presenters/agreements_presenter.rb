@@ -1,13 +1,14 @@
 class AgreementsPresenter
 
-  attr_reader :params
+  attr_reader :params, :filters
 
   def initialize(params={})
     @params = params
+    @filters = params[:filters] || {}
   end
 
   def filter
-    Agreement.includes(:proposal, :job, :account, {proposal: [:account, :primary_contact]}).filter(params.slice(:status))
+    Agreement.includes(:proposal, :job, account: :primary_contact).filter(filters)
   end
 
   def todo

@@ -8,7 +8,7 @@ class StatementsController < ApplicationController
   end
 
   def statements_list
-    @statements = Statement.all
+    @statements = Statement.includes(account: :primary_contact).all
     @title = "Consignment Statements"
   end
 

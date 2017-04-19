@@ -15,7 +15,7 @@ class ItemsController < ApplicationController
     end
     @filter = params[:status].try(:capitalize)
     @type = params[:type]
-    @items = ItemsPresenter.new(filter_params).execute
+    @items = ItemsPresenter.new(filters: filter_params).execute
     @title = "Items"
   end
 
