@@ -75,34 +75,25 @@ feature "home page" do
       visit dashboard_path
 
       expect(page).to have_content(company.name)
-      expect(page).not_to have_content(company.slogan)
 
       expect(page).to have_link("Items")
-      within("#items") do
-        expect(page).to have_link("Potential")
-        expect(page).to have_link("Active")
-        expect(page).to have_link("Sold")
-        expect(page).to have_link("All Items")
-      end
-
       expect(page).to have_link("Accounts")
-
       expect(page).to have_link("Jobs")
     end
 
     it "has information panels" do
       visit dashboard_path
 
-      expect(page).to have_content("Owned Items For Sale")
-      expect(page).to have_content("Consigned Items For Sale")
-      expect(page).to have_content("Sold in the last 30 days")
+      expect(page).to have_content("Daily Sales")
+      expect(page).to have_content("Daily Customers")
+      expect(page).to have_content("Monthly Clients")
     end
 
     context "to do list" do
 
       it "has a to do list" do
         visit dashboard_path
-        expect(page).to have_content("To Do")
+        expect(page).to have_content("Tasks")
         expect(page).to have_content(item.description)
         expect(page).to have_content("needs a price added")
       end
@@ -110,11 +101,11 @@ feature "home page" do
       scenario "completes a to do list item", js: true do
         visit dashboard_path
         expect(page).to have_content("needs a price added")
-        first(:button, "done").click
+        first(:link, "done").click
         expect(page).to have_content("SKU: #{item.id}")
-        expect(page).to have_field("Listing price")
+        expect(page).to have_field("item[listing_price]")
 
-        fill_in("Listing price", with: "12.34")
+        fill_in("item[listing_price]", with: "12.34")
         click_button("Update Item")
         sleep(1)
 
@@ -126,10 +117,10 @@ feature "home page" do
 
       scenario "closes a to do list modal without completing", js: true do
         visit dashboard_path
-        first(:button, "done").click
+        first(:link, "done").click
         click_button("×")
 
-        expect(page).to have_field("Listing price", visible: false)
+        expect(page).to have_field("item[listing_price]", visible: false)
         expect(page).to have_content("#{item.description} needs a price added")
       end
 
@@ -151,7 +142,10 @@ feature "home page" do
 
         scenario "notifies client of pending expiration", js: true do
           visit dashboard_path
-          first(:button, "done").click
+          within(".card-nav-tabs") do
+            click_link("Agreements")
+          end
+          first(:link, "done").click
 
           expect(page).to have_content("has items that have been active for #{(DateTime.now.to_date - (agreement.items.where.not(listed_at: nil).order(:listed_at).first.listed_at.to_date)).to_i} days")
           expect(page).to have_field("Expiration Pending", visible: false)
@@ -173,7 +167,10 @@ feature "home page" do
           item.update_attribute("listed_at", 91.days.ago)
 
           visit dashboard_path
-          first(:button, "done").click
+          within(".card-nav-tabs") do
+            click_link("Agreements")
+          end
+          first(:link, "done").click
 
           expect(page).to have_content("has items that have been active for #{(DateTime.now.to_date - (agreement.items.where.not(listed_at: nil).order(:listed_at).first.listed_at.to_date)).to_i} days")
           expect(page).to have_field("Expiration Pending", visible: false)
@@ -191,20 +188,27 @@ feature "home page" do
           expect(page).not_to have_content("#{agreement.account.full_name} needs to be notified that their consignment period is ending soon")
         end
 
-        scenario "does not choose a category", js: true do
-          visit dashboard_path
-          first(:button, "done").click
-          click_button("Notify Client")
-          sleep(1)
+        scenario "does not choose a category", js: true, skip: true do
+          Capybara.using_driver(:selenium) do
+            visit dashboard_path
+            within(".card-nav-tabs") do
+              click_link("Agreements")
+            end
+            first(:link, "done").click
+            click_on("Notify Client")
 
-          expect(page).to have_content("Category can't be blank")
-          expect(page).to have_content("Error")
-          expect(page).to have_content("#{agreement.account.full_name} needs to be notified that their consignment period is ending soon")
+            expect(page).to have_content("Error")
+            expect(page).to have_content("Category can't be blank")
+            expect(page).to have_content("#{agreement.account.full_name} needs to be notified that their consignment period is ending soon")
+          end
         end
 
         scenario "tags an agreement as unexpireable", js: true do
           visit dashboard_path
-          first(:button, "done").click
+          within(".card-nav-tabs") do
+            click_link("Agreements")
+          end
+          first(:link, "done").click
           click_button("Unexpireable")
 
           expect(page).to have_content("Note:")
@@ -212,37 +216,6 @@ feature "home page" do
           expect(agreement.reload.tag_list).to include("unexpireable")
         end
 
-      end
-
-    end
-
-    context "clicks items links" do
-
-      scenario "potential" do
-        visit dashboard_path
-        within('#items') do
-          click_link("Potential")
-        end
-
-        expect(page).to have_content("Potential items have not yet been listed for sale or consigned.")
-      end
-
-      scenario "active" do
-        visit dashboard_path
-        within('#items') do
-          click_link("Active")
-        end
-
-        expect(page).to have_content("Active items are actively for sale or on consignment.")
-      end
-
-      scenario "sold" do
-        visit dashboard_path
-        within('#items') do
-          click_link("Sold")
-        end
-
-        expect(page).to have_content("Sold items have been sold.")
       end
 
     end

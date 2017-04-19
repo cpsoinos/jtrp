@@ -36,13 +36,13 @@
 
     <div id="wrapper">
       <%= render 'layouts/sidebar' unless params[:print] %>
-      <div class="main-panel">
+      <div class="<%= 'main-panel' unless params[:print] %>">
         <%= render 'layouts/navbar' unless params[:print] %>
+        <%= render('layouts/alerts', alert: alert, notice: notice) unless params[:print] %>
         <div class="content">
           <div class="container-fluid">
             <div class="row">
               <%= breadcrumbs separator: " &rsaquo; " %>
-              <%= render('layouts/alerts', alert: alert, notice: notice) unless params[:print] %>
               <%= yield %>
             </div>
           </div>

@@ -108,7 +108,6 @@ feature "search" do
 
     scenario "searches for an existing item", js: true do
       visit dashboard_path
-      click_link("search")
       fill_in("query", with: item.description).native.send_keys(:return)
 
       expect(page).to have_link("Items")
@@ -117,7 +116,6 @@ feature "search" do
 
     scenario "searches for a non-existing item", js: true do
       visit dashboard_path
-      click_link("search")
       fill_in("query", with: "The Jungle Book").native.send_keys(:return)
 
       expect(page).to have_content('SORRY, NO RESULTS FOUND FOR "THE JUNGLE BOOK".')
@@ -126,7 +124,6 @@ feature "search" do
     scenario "initiates a second search from results page", js: true do
       second_item = create(:item, :active)
       visit dashboard_path
-      click_link("search")
       fill_in("query", with: item.description).native.send_keys(:return)
 
       expect(page).to have_link(item.description)

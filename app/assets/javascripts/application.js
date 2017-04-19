@@ -53,7 +53,6 @@
 //= require linkedin_sdk
 //= require toastr
 
-//= require accounts
 //= require agreements
 //= require categories
 //= require dashboard

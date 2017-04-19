@@ -228,7 +228,7 @@
         </div>
 
         <div class="tab-pane" id="agreements-tab">
-          <% @agreements.includes(:items).each do |todo| %>
+          <% @agreements.each do |todo| %>
             <% next if (!todo.meets_requirements_expired? && todo.letters.by_category('agreement_pending_expiration').present?) %>
             <div id="to-do-list-agreement-<%= todo.id %>">
               <div class="row list-group-item vertical-align">

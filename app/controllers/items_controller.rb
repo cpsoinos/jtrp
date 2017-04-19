@@ -16,10 +16,12 @@ class ItemsController < ApplicationController
     @filter = params[:status].try(:capitalize)
     @type = params[:type]
     @items = ItemsPresenter.new(filter_params).execute
+    @title = "Items"
   end
 
   def new
     @item = Item.new
+    @title = "New Item"
   end
 
   def create
