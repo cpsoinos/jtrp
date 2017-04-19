@@ -21,3 +21,9 @@ Capybara.register_server(:puma) do |app, port|
   require 'rack/handler/puma'
   Rack::Handler::Puma.run(app, Port: port)
 end
+
+Capybara.register_driver :chrome do |app|
+  Capybara::Selenium::Driver.new(app, :browser => :chrome)
+end
+
+# Capybara.javascript_driver = :chrome

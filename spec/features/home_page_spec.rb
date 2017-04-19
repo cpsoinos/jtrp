@@ -189,7 +189,7 @@ feature "home page" do
         end
 
         scenario "does not choose a category", js: true, skip: true do
-          Capybara.using_driver(:selenium) do
+          Capybara.using_driver(:chrome) do
             visit dashboard_path
             within(".card-nav-tabs") do
               click_link("Agreements")

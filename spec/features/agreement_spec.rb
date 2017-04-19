@@ -72,7 +72,7 @@ feature "agreement" do
       end
 
       scenario "activates items from index", js: true do
-        Capybara.using_driver(:selenium) do
+        Capybara.using_driver(:chrome) do
           agreement.update_attributes(client_agreed: true, client_agreed_at: 3.minutes.ago, date: 3.minutes.ago)
           agreement.mark_active
 
@@ -103,7 +103,7 @@ feature "agreement" do
       end
 
       scenario "can't try to activate items from index when items already active", js: true do
-        Capybara.using_driver(:selenium) do
+        Capybara.using_driver(:chrome) do
           agreement.update_attributes(client_agreed: true, client_agreed_at: 3.minutes.ago, date: 3.minutes.ago)
           agreement.mark_active
           item.mark_active
@@ -153,7 +153,7 @@ feature "agreement" do
       end
 
       scenario "activates items from index", js: true do
-        Capybara.using_driver(:selenium) do
+        Capybara.using_driver(:chrome) do
           agreement.update_attributes(client_agreed: true, client_agreed_at: 3.minutes.ago, date: 3.minutes.ago)
           agreement.mark_active
 
@@ -169,7 +169,7 @@ feature "agreement" do
       end
 
       scenario "can't try to activate items when items already active", js: true do
-        Capybara.using_driver(:selenium) do
+        Capybara.using_driver(:chrome) do
           agreement.update_attributes(client_agreed: true, client_agreed_at: 3.minutes.ago, date: 3.minutes.ago)
           agreement.mark_active
           item.mark_active
@@ -184,7 +184,7 @@ feature "agreement" do
       end
 
       scenario "expires items from index", js: true do
-        Capybara.using_driver(:selenium) do
+        Capybara.using_driver(:chrome) do
           agreement.update_attributes(client_agreed: true, client_agreed_at: 91.days.ago, date: 91.days.ago)
           agreement.mark_active
           item.mark_active
@@ -213,7 +213,7 @@ feature "agreement" do
       end
 
       scenario "expires items from show", js: true do
-        Capybara.using_driver(:selenium) do
+        Capybara.using_driver(:chrome) do
           agreement.update_attributes(client_agreed: true, client_agreed_at: 91.days.ago, date: 91.days.ago)
           agreement.mark_active
           agreement.reload
