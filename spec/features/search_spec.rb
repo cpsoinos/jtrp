@@ -18,7 +18,7 @@ feature "search" do
       find('.navbar-search').hover
       fill_in("query", with: "The Jungle Book").native.send_keys(:return)
 
-      expect(page).to have_content('SORRY, NO RESULTS FOUND FOR "THE JUNGLE BOOK".')
+      expect(page).to have_content('SORRY, NO RESULTS FOUND.')
     end
 
     scenario "initiates a second search from results page", js: true do
@@ -95,7 +95,7 @@ feature "search" do
       end
 
       expect(page).not_to have_link(table.description)
-      expect(page).to have_content('SORRY, NO RESULTS FOUND FOR "TABLE".')
+      expect(page).to have_content('SORRY, NO RESULTS FOUND.')
     end
 
   end
@@ -118,7 +118,7 @@ feature "search" do
       visit dashboard_path
       fill_in("query", with: "The Jungle Book").native.send_keys(:return)
 
-      expect(page).to have_content('SORRY, NO RESULTS FOUND FOR "THE JUNGLE BOOK".')
+      expect(page).to have_content('SORRY, NO RESULTS FOUND.')
     end
 
     scenario "initiates a second search from results page", js: true do

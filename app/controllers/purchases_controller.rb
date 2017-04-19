@@ -2,7 +2,7 @@ class PurchasesController < ApplicationController
   before_filter :require_internal
 
   def index
-    @agreements = Agreement.by_type("sell")
+    @agreements = AgreementsPresenter.new(filters: {by_type: "sell"}).filter
     @title = "Purchase Orders"
   end
 

@@ -26,7 +26,7 @@ describe ItemsPresenter do
   context 'filters' do
 
     it 'returns potential items' do
-      items = ItemsPresenter.new(status: 'potential').execute
+      items = ItemsPresenter.new(filters: {status: 'potential'}).execute
 
       expect(items.count).to eq(potential_items.count)
       items.each do |item|
@@ -35,7 +35,7 @@ describe ItemsPresenter do
     end
 
     it 'returns active items' do
-      items = ItemsPresenter.new(status: 'active').execute
+      items = ItemsPresenter.new(filters: {status: 'active'}).execute
 
       expect(items.count).to eq(active_items.count)
       items.each do |item|
@@ -44,7 +44,7 @@ describe ItemsPresenter do
     end
 
     it 'returns sold items' do
-      items = ItemsPresenter.new(status: 'sold').execute
+      items = ItemsPresenter.new(filters: {status: 'sold'}).execute
 
       expect(items.count).to eq(sold_items.count)
       items.each do |item|

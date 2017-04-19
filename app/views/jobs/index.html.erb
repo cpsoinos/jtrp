@@ -1,17 +1,8 @@
-<% if @account %>
-  <% breadcrumb :account_jobs, @account %>
-<% else %>
-  <% breadcrumb :jobs %>
-<% end %>
+<% meta title: "Jobs - #{@company.name}" %>
 
 <div class="row">
-  <div class="col-xs-8 col-xs-offset-3">
-    <h1 class="company-title">Jobs</h1>
-  </div>
-</div>
+  <div class="col-md-10 col-md-offset-1 col-xs-12">
 
-<div class="row">
-  <div class="col-xs-8 col-xs-offset-3">
     <div class="row">
       <ul class="nav nav-pills nav-pills-icons nav-pills-primary text-center justify-list" role="tablist">
         <li class="">
@@ -61,5 +52,6 @@
         </div>
       </div>
     </div>
+
   </div>
 </div>

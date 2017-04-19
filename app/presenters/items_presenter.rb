@@ -1,15 +1,16 @@
 class ItemsPresenter
 
-  attr_reader :params, :resource
+  attr_reader :params, :resource, :filters
 
   def initialize(params={}, resource=nil)
     @params = params
     @resource = resource
-    @items = item_base
+    @items = item_base.includes(:account, proposal: {job: {account: :primary_contact}})
+    @filters = params[:filters] || {}
   end
 
   def filter
-    @items = @items.filter(params.slice(:status, :type, :by_id, :by_category_id))
+    @items = @items.filter(filters)
     self
   end
 
@@ -25,8 +26,7 @@ class ItemsPresenter
   end
 
   def search
-    @items = @items.includes(:pg_search_document).joins(:pg_search_document).merge(PgSearch.multisearch(params[:query]))
-    self
+    @items = @items.includes(:pg_search_document).joins(:pg_search_document).merge(PgSearch.multisearch(filters[:query]))
   end
 
   def execute
@@ -35,7 +35,7 @@ class ItemsPresenter
   end
 
   def todo
-    Item.includes(:account, proposal: {job: {account: :primary_contact}}).where(id: (no_listing_price | no_sale_price))
+    @items.where(id: (no_listing_price | no_sale_price))
   end
 
   private

@@ -9,13 +9,13 @@ class ItemsController < ApplicationController
   before_filter :find_item, only: :show
 
   def index
-    filter_params = params
-    if params[:status] == "all"
-      filter_params = params.except(:status)
+    filter_params = params.except(:controller, :action)
+    if filter_params[:status] == "all"
+      filter_params.delete(:status)
     end
     @filter = params[:status].try(:capitalize)
     @type = params[:type]
-    @items = ItemsPresenter.new(filter_params).execute
+    @items = ItemsPresenter.new(filters: filter_params).execute
     @title = "Items"
   end
 

@@ -9,7 +9,7 @@
           <tr class="text-center">
             <th>Date</th>
             <th>Account No.</th>
-            <th>Client</th>
+            <th>Account</th>
             <th>Job No.</th>
             <th>Job</th>
             <th>Items Total</th>
@@ -23,7 +23,7 @@
             <tr class="tr-link" data-link="<%= purchase_path(agreement) %>">
               <td><%= agreement.date.try(:strftime, '%-m/%-d/%y') %></td>
               <td><%= agreement.account.id %></td>
-              <td><%= agreement.account.full_name %></td>
+              <td><%= agreement.account.inverse_full_name %></td>
               <td><%= agreement.job.id %></td>
               <td><%= agreement.job.name %></td>
               <td><%= humanized_money_with_symbol(agreement.cost_of_items) %></td>
