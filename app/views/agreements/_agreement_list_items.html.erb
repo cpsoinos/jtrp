@@ -21,7 +21,7 @@
                 <%= link_to "<i class='material-icons md-48'>assignment</i> #{agreement.id}".html_safe, agreement_path(agreement) %>
               </td>
               <td class="text-center">
-                <%= link_to agreement.account.full_name, account_path(agreement.account) %>
+                <%= link_to agreement.account.inverse_full_name, account_path(agreement.account) %>
               </td>
               <td class="text-center">
                 <%= link_to "<i class='material-icons'>assignment_ind</i> #{agreement.account.id}".html_safe, account_path(agreement.account) %>
