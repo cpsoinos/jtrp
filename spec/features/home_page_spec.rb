@@ -84,9 +84,12 @@ feature "home page" do
     it "has information panels" do
       visit dashboard_path
 
-      expect(page).to have_content("Daily Sales")
-      expect(page).to have_content("Daily Customers")
-      expect(page).to have_content("Monthly Clients")
+      expect(page).to have_content("Sales")
+      expect(page).to have_content("revenue measured daily")
+      expect(page).to have_content("Customers")
+      expect(page).to have_content("new customers measured daily")
+      expect(page).to have_content("Clients")
+      expect(page).to have_content("new clients measured monthly")
     end
 
     context "to do list" do
