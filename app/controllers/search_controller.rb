@@ -2,8 +2,7 @@ class SearchController < ApplicationController
   layout "ecommerce"
 
   def index
-    massage_params
-    @results = ItemsPresenter.new(params).search.execute
+    @results = ItemsPresenter.new(filters: search_params).search.page(params[:page])
     respond_to do |format|
       format.html
       format.js { render :results }
@@ -12,27 +11,20 @@ class SearchController < ApplicationController
 
   private
 
-  def massage_params
+  def search_params
+    search_params = params.except(:utf8, :commit, :controller, :index, :action)
     unless current_user.try(:internal?)
-      params.merge!(status: "active")
+      search_params.merge!(status: "active")
     end
 
-    if params[:by_category_id].present?
-      if params[:include_subcategories]
-        params[:by_category_id] = [params[:by_category_id]] | Category.where(parent_id: params[:by_category_id]).pluck(:id)
+    if search_params[:by_category_id].present?
+      if search_params[:include_subcategories]
+        search_params[:by_category_id] = [search_params[:by_category_id]] | Category.where(parent_id: search_params[:by_category_id]).pluck(:id)
       end
     else
-      params.delete(:by_category_id)
+      search_params.delete(:by_category_id)
     end
+    search_params
   end
-
-  # def find_results
-  #   @results = Item.active.includes(:pg_search_document).joins(:pg_search_document).merge(PgSearch.multisearch(params[:query])).page(params[:page])
-  #   find_internal_results
-  # end
-
-  # def find_internal_results
-  #   return unless current_user.try(:internal?)
-  # end
 
 end

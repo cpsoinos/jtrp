@@ -26,8 +26,7 @@ class ItemsPresenter
   end
 
   def search
-    @items = @items.includes(:pg_search_document).joins(:pg_search_document).merge(PgSearch.multisearch(params[:query]))
-    self
+    @items = @items.includes(:pg_search_document).joins(:pg_search_document).merge(PgSearch.multisearch(filters[:query]))
   end
 
   def execute
