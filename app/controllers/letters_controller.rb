@@ -4,10 +4,12 @@ class LettersController < ApplicationController
 
   def index
     @letters = @account.letters
+    @title = "Letters for #{@account.full_name}"
   end
 
   def show
     @letter = Letter.find(params[:id])
+    @title = "#{@account.full_name} - #{@letter} Letter"
     require_token; return if performed?
   end
 
