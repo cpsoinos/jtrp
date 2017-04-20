@@ -14,8 +14,6 @@ feature "dashboard" do
   it "has navigation links" do
     visit dashboard_path
 
-    expect(page).to have_content(company.name)
-
     expect(page).to have_link("Items")
     expect(page).to have_link("Accounts")
     expect(page).to have_link("Jobs")
