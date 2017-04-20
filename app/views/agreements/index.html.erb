@@ -14,27 +14,21 @@
     <%= link_to "<i class='fa fa-caret-left'></i> Back to Proposal".html_safe, account_job_proposal_path(@account, @job, @proposal), class: "btn btn-raised btn-primary hidden-print" %>
 
     <!-- Tab panes -->
-    <div class="well bs-component">
+    <!-- <div class="well bs-component"> -->
       <div class="tab-content">
         <% @agreements.each do |agreement| %>
           <div role="tabpanel" class="tab-pane fade" id="<%= agreement.agreement_type %>">
 
             <% if agreement.pdf.present? && !agreement.pdf_pages.nil? && !params[:print] %>
-
               <div class="text-center">
                 <% (1..agreement.pdf_pages).to_a.each do |page| %>
-                  <%= image_tag(agreement.pdf_url(client_hints: true, page: page, fetch_format: :auto)) %><br /><br />
+                  <%= image_tag(agreement.pdf_url(client_hints: true, page: page, fetch_format: :auto)) %>
+                  <br />
+                  <br />
                 <% end %>
               </div>
-
             <% else %>
-
               <%= render "agreements/#{agreement.agreement_type}", items: agreement.items, agreement: agreement, proposal: @proposal, job: @job, account: @account, client: @client %>
-
-              <% if current_user.try(:internal?) %>
-                <%= render 'scanned_upload_form', agreement: agreement %>
-              <% end %>
-
             <% end %>
 
             <% unless params[:print] %>
@@ -50,8 +44,8 @@
           </div>
         <% end %>
       </div>
-    </div>
+    <!-- </div> -->
 
   </div>
-  
+
 </div>

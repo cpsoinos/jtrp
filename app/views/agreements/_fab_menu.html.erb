@@ -1,4 +1,4 @@
-<div class="btn-group dropup hamburger-fab">
+<div class="btn-group dropup hamburger-fab hidden-print">
   <button type="button" class="btn btn-raised btn-primary btn-fab dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
     <i class='material-icons'>menu</i>
   </button>
@@ -38,7 +38,11 @@
     </li>
 
     <li>
-      <%= link_to "<i class='material-icons'>print</i> Print".html_safe, agreement.pdf_url, target: "blank" %>
+      <% if agreement.pdf.present? %>
+        <%= link_to "<i class='material-icons'>print</i> Print".html_safe, agreement.pdf_url, target: "blank" %>
+      <% else %>
+        <%= link_to "<i class='material-icons'>print</i> Print".html_safe, "", onclick: "window.print();" %>
+      <% end %>
     </li>
 
   </ul>

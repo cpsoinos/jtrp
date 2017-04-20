@@ -45,7 +45,7 @@ class AgreementsController < ApplicationController
 
   def create
     @client = @account.primary_contact
-    @agreements = Agreement::Creator.new(current_user).create(@proposal)
+    @agreements = Agreements::Creator.new(current_user).create(@proposal)
     @agreements.each do |agreement|
       agreement.create_activity(:create, owner: current_user)
     end
@@ -54,16 +54,18 @@ class AgreementsController < ApplicationController
 
   def update
     @agreement = Agreement.find(params[:id])
+    # if Agreements::Updater.new(@agreement).update(agreement_params.merge(updated_by: current_user))
     if @agreement.update(agreement_params.merge(updated_by: current_user))
       @agreement.create_activity(:update, owner: current_user)
       respond_to do |format|
         format.html do
-          if @agreement.mark_active # will return if does not meet requirements
+          if @agreement.active? || @agreement.mark_active # will return if does not meet requirements
             flash[:notice] = "Agreement updated!"
+            redirect_to account_job_proposal_agreement_path(@agreement.account, @agreement.job, @agreement.proposal, @agreement)
           else
             flash[:alert] = "Could not update agreement."
+            redirect_to :back
           end
-          redirect_to :back
         end
         format.js do
           @role = params[:role]
@@ -114,7 +116,7 @@ class AgreementsController < ApplicationController
   protected
 
   def agreement_params
-    params.require(:agreement).permit(:manager_agreed, :manager_agreed_at, :client_agreed, :client_agreed_at, :service_charge, :check_number)
+    params.require(:agreement).permit(:manager_agreed, :manager_agreed_at, :client_agreed, :client_agreed_at, :service_charge, :check_number, :pdf, :pdf_pages)
   end
 
   def pull_intentions

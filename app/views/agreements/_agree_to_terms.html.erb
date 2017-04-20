@@ -18,9 +18,9 @@
     <%= f.submit "I Accept", class: "btn btn-raised btn-primary", id: "submit-accept-agreement" %>
   </div>
 
-  <div class="row large-top-margin no-break">
+  <div class="row large-top-margin no-break visible-print">
     <span class="col-sm-5 col-sm-offset-1" style="border-top:1px solid black;">
-      <%= agreement.account.primary_contact.full_name %>
+      <b>Vendor:</b> <%= agreement.account.primary_contact.full_name %>
     </span>
     <span class="col-sm-2 col-sm-offset-1" style="border-top:1px solid black;">
       Date
