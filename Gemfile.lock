@@ -84,6 +84,7 @@ GEM
       carrierwave (~> 0.10)
       mini_magick (~> 4.0)
       remotipart (~> 1.2)
+    bugsnag (5.3.1)
     builder (3.2.2)
     bullet (5.4.0)
       activesupport (>= 3.0.0)
@@ -772,6 +773,7 @@ DEPENDENCIES
   best_in_place (= 3.0.3)
   better_errors
   bootsy
+  bugsnag
   bullet
   bundler (>= 1.8.4)
   cairo
