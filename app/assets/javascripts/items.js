@@ -116,8 +116,11 @@ $(document).on('turbolinks:load', function() {
   });
 
   $('.cloudinary-fileupload').bind('cloudinarydone', function(e, data) {
+    if ($("#agreement_pdf_pages") != undefined) {
+      $("#agreement_pdf_pages").val(data.result.pages)
+    };
     $('.preview').append(
-      "<img src='" + data.result.secure_url + "' id=" + data.result.public_id + ">"
+      "<img src='" + $.cloudinary.url(data.result.public_id, { fetch_format: 'auto', width: 200, crop: "fit" } ) + "' id=" + data.result.public_id + ">"
     ).append(
       '<a href="#" class="btn btn-fab btn-fab-mini btn-danger fileinput-exists delete_by_token pull-right" data-delete_token="' + data.result.delete_token + '" data-preview_id="' + data.result.public_id + '"><i class="material-icons">delete_forever</i></a>'
     );

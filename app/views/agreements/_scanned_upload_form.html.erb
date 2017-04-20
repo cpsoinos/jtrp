@@ -3,21 +3,30 @@
   <h3>Upload a scanned copy:</h3>
   <% scanned_agreement = agreement.scanned_agreement || agreement.build_scanned_agreement %>
 
-  <%= form_for [agreement, scanned_agreement] do |f| %>
+  <div class="row form-row">
+    <%= form_for agreement, class: "form-horizontal" do |f| %>
+      <div class="fileinput fileinput-new text-center" data-provides="fileinput">
+        <span class="btn-file" style="display: inline-block;">
+          <div class="thumbnail img-raised">
+            <%= image_tag("image_placeholder.jpg") %>
+          </div>
+          <%= f.cl_image_upload(:pdf, return_delete_token: true) %>
+        </span>
 
-    <div class="row form-row">
-      <div class="text-center">
-        <div class="col-xs-12 col-sm-3 form-label">
-          <%= f.label :scanned_agreement, class: "control-label" %>
+        <div class="progressbar fileupload-progressbar">
+          <div style="width:0%;"></div>
         </div>
-        <div class="col-xs-12 col-sm-9 text-left">
-          <%= f.file_field :scan, class: "dropzone" %>
-        </div>
+        <span class="status"></span>
+
+        <div class="preview"></div>
+
       </div>
-    </div>
-
-    <%= f.submit class: "btn btn-raised btn-primary" %>
-
-  <% end %>
+      <%= f.hidden_field :pdf_pages %>
+      <%= f.hidden_field :client_agreed, value: true %>
+      <div class="row text-center top-margin">
+        <%= f.submit "Save PDF", class: "btn btn-raised btn-primary" %>
+      </div>
+    <% end %>
+  </div>
 
 </div>
