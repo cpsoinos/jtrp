@@ -1,6 +1,6 @@
 class Proposal < ActiveRecord::Base
   include PublicActivity::Common
-  
+
   acts_as_paranoid
   audited associated_with: :job
   has_secure_token
@@ -35,6 +35,10 @@ class Proposal < ActiveRecord::Base
     event :mark_inactive do
       transition active: :inactive, if: lambda { |proposal| proposal.meets_requirements_inactive? }
     end
+  end
+
+  def humanized_name
+    "Proposal for #{job.name}"
   end
 
   def meets_requirements_active?
