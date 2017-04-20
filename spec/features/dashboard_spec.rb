@@ -166,6 +166,7 @@ feature "dashboard" do
     let(:account) { create(:account, :with_client) }
     let(:agreement) { create(:agreement) }
     let(:category) { create(:category) }
+    let(:client) { create(:client) }
     let(:item) { create(:item) }
     let(:job) { create(:job) }
     let(:letter) { create(:letter) }
@@ -218,6 +219,22 @@ feature "dashboard" do
 
       expect(page).to have_content("#{user.full_name} updated a category")
       expect(page).to have_link(category.name.titleize)
+    end
+
+    scenario "client created" do
+      client.create_activity(:create, owner: user)
+      visit dashboard_path
+
+      expect(page).to have_content("#{user.full_name} created a client")
+      expect(page).to have_link(client.full_name)
+    end
+
+    scenario "client updated" do
+      client.create_activity(:update, owner: user)
+      visit dashboard_path
+
+      expect(page).to have_content("#{user.full_name} updated a client")
+      expect(page).to have_link(client.full_name)
     end
 
     scenario "item created" do
