@@ -1,6 +1,6 @@
 class Statement < ActiveRecord::Base
   include PublicActivity::Common
-  
+
   acts_as_paranoid
   acts_as_taggable_on :tags
   audited associated_with: :account
@@ -31,6 +31,10 @@ class Statement < ActiveRecord::Base
 
   def short_name
     "#{date.strftime('%m-%y')}_#{account.short_name}_consigned_sales"
+  end
+
+  def humanized_name
+    "#{account.short_name} - Consigned Sales #{date.strftime('%m-%y')}"
   end
 
   def items
