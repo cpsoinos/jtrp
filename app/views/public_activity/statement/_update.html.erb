@@ -19,7 +19,7 @@
       Someone
     <% end %>
     <%= "#{activity.key.split('.').last}d a #{activity.key.split('.').first}" %>
-    <%= link_to activity.trackable.humanized_category, activity.trackable %>
+    <%= link_to activity.trackable.humanized_name, activity.trackable %>
   </div>
   <% if activity.trackable.pdf.present? %>
     <div class="col-xs-3">

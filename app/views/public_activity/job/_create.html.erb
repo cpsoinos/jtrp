@@ -22,6 +22,6 @@
     <%= link_to activity.trackable.name, activity.trackable %>
   </div>
   <div class="col-xs-3">
-    <%= link_to image_tag(activity.trackable.maps_url(client_hints: true, quality: "auto", fetch_format: :auto, dpr: "auto", effect: :improve, width: "120", height: "160", crop: "fill"), class: "img-rounded img-responsive img-raised"), account_job_url(activity.trackable.account, activity.trackable) %>
+    <%= link_to image_tag(activity.trackable.maps_url, class: "img-rounded img-responsive img-raised"), account_job_url(activity.trackable.account, activity.trackable) %>
   </div>
 </div>

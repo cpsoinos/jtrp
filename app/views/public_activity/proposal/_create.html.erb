@@ -19,6 +19,6 @@
       Someone
     <% end %>
     <%= "#{activity.key.split('.').last}d a #{activity.key.split('.').first}" %>
-    <%= link_to activity.trackable.humanized_name, activity.trackable %>
+    <%= link_to activity.trackable.humanized_name, account_job_proposal_path(activity.trackable.account, activity.trackable.job, activity.trackable) %>
   </div>
 </div>
