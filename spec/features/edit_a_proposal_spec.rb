@@ -80,8 +80,8 @@ feature "edit a proposal" do
         sleep(1)
         click_on("Save")
 
-        expect(page).to have_content("#{item.description} updated!")
         expect(page).to have_content("Success!", wait: 3)
+        expect(page).to have_content("#{item.description} updated!")
         item.reload
         expect(item.will_purchase?).to be_truthy
         expect(item.purchase_price_cents).to eq(5055)

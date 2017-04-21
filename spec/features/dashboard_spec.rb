@@ -49,7 +49,7 @@ feature "dashboard" do
       fill_in("item[listing_price]", with: "12.34")
       click_button("Update Item")
 
-      expect(page).to have_content("#{item.description} updated!", sleep: 3)
+      expect(page).to have_content("#{item.description} updated!", wait: 3)
       expect(page).not_to have_content("needs a price added")
       item.reload
       expect(item.listing_price_cents).to eq(1234)
