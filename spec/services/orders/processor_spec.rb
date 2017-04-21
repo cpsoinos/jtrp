@@ -33,6 +33,14 @@ module Orders
       expect(order.items).to match_array([mug, chair, shelf])
     end
 
+    it "does not fail when item not found", :vcr do
+      shelf.destroy
+
+      expect {
+        processor.process
+      }.not_to raise_exception
+    end
+
     context "discounts", :vcr do
 
       context "on full order" do
