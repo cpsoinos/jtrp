@@ -205,7 +205,7 @@ feature "agreement" do
           fill_in("note", with: "Personalized message goes here")
           click_button("Notify Client")
 
-          expect(page).to have_content("Email and letter queued for delivery")
+          expect(page).to have_content("Email and letter queued for delivery", wait: 3)
           expect(page).to have_content("Success!")
 
           expect(ItemExpirerJob).to have_received(:perform_later)

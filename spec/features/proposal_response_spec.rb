@@ -25,7 +25,7 @@ feature "proposal response" do
       items.each_with_index do |item, i|
         find(:css, "#item_#{item.id}_client_intention_#{intentions[i]}", visible: false).trigger("click")
 
-        expect(page).to have_content("Success!")
+        expect(page).to have_content("Success!", wait: 3)
         wait_for_ajax
         item.reload
         expect(item.reload.client_intention).to eq(intentions[i])
@@ -91,7 +91,7 @@ feature "proposal response" do
       items.each_with_index do |item, i|
         find(:css, "#item_#{item.id}_client_intention_#{intentions[i]}", visible: false).trigger("click")
 
-        expect(page).to have_content("Success!")
+        expect(page).to have_content("Success!", wait: 3)
         wait_for_ajax
         item.reload
         expect(item.client_intention).to eq(intentions[i])
