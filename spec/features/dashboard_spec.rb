@@ -314,6 +314,15 @@ feature "dashboard" do
       expect(page).to have_link(statement.humanized_name)
     end
 
+    scenario "trackable deleted" do
+      item.create_activity(:create, owner: user)
+      item.destroy
+      visit dashboard_path
+
+      expect(page).not_to have_content("#{user.full_name} created an item")
+      expect(page).not_to have_content("NoMethodError")
+    end
+
   end
 
 end

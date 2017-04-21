@@ -307,6 +307,7 @@
 
     <div class="container-fluid">
       <% @activities.each do |activity| %>
+        <% next if activity.trackable.nil? %>
         <div class="activity" style="margin-top: 10px;">
           <%= render_activity activity %>
         </div>
