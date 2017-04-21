@@ -48,9 +48,8 @@ feature "dashboard" do
 
       fill_in("item[listing_price]", with: "12.34")
       click_button("Update Item")
-      sleep(1)
 
-      expect(page).to have_content("#{item.description} updated!")
+      expect(page).to have_content("#{item.description} updated!", sleep: 3)
       expect(page).not_to have_content("needs a price added")
       item.reload
       expect(item.listing_price_cents).to eq(1234)
@@ -97,9 +96,8 @@ feature "dashboard" do
         end
         fill_in("note", with: "Personalized message goes here")
         click_button("Notify Client")
-        sleep(1)
 
-        expect(page).to have_content("Email and letter queued for delivery")
+        expect(page).to have_content("Email and letter queued for delivery", wait: 3)
         expect(page).to have_content("Success!")
         expect(page).not_to have_content("#{agreement.account.full_name} needs to be notified that their consignment period is ending soon")
       end
@@ -122,9 +120,8 @@ feature "dashboard" do
         end
         fill_in("note", with: "Personalized message goes here")
         click_button("Notify Client")
-        sleep(1)
 
-        expect(page).to have_content("Email and letter queued for delivery")
+        expect(page).to have_content("Email and letter queued for delivery", wait: 3)
         expect(page).to have_content("Success!")
         expect(page).not_to have_content("#{agreement.account.full_name} needs to be notified that their consignment period is ending soon")
       end
