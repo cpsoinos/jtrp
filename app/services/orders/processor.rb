@@ -44,7 +44,8 @@ module Orders
       line_items.each do |line_item|
         remote_item = line_item.try(:item)
         next if remote_item.nil?
-        item = Item.find(remote_item.sku)
+        item = Item.find_by(id: remote_item.sku)
+        next if item.nil?
         order.items << item
         item.save
       end

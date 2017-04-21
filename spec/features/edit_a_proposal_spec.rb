@@ -38,10 +38,10 @@ feature "edit a proposal" do
         expect(item.will_purchase?).to be_falsey
         find(:css, "#item_#{item.id}_will_purchase", visible: false).trigger("click")
         fill_in("item_purchase_price", with: 50.55)
-        click_on("Save")
         sleep(1)
+        click_on("Save")
 
-        expect(page).to have_content("Success!")
+        expect(page).to have_content("Success!", wait: 3)
         item.reload
         expect(item.will_purchase?).to be_truthy
         expect(item.purchase_price_cents).to eq(5055)
@@ -57,9 +57,8 @@ feature "edit a proposal" do
         fill_in("item_minimum_sale_price", with: 67.55)
         sleep(1)
         click_on("Save")
-        sleep(1)
 
-        expect(page).to have_content("Success!")
+        expect(page).to have_content("Success!", wait: 3)
         item.reload
         expect(item.will_consign?).to be_truthy
         expect(item.consignment_rate).to eq(45)
@@ -80,10 +79,9 @@ feature "edit a proposal" do
         fill_in("item_minimum_sale_price", with: 67.55)
         sleep(1)
         click_on("Save")
-        sleep(1)
 
+        expect(page).to have_content("Success!", wait: 3)
         expect(page).to have_content("#{item.description} updated!")
-        expect(page).to have_content("Success!")
         item.reload
         expect(item.will_purchase?).to be_truthy
         expect(item.purchase_price_cents).to eq(5055)
