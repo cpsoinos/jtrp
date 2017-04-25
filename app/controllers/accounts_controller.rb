@@ -34,7 +34,7 @@ class AccountsController < ApplicationController
       @account.create_activity(:create, owner: current_user)
       flash[:notice] = "Account created"
       if @account.primary_contact
-        render :show
+        redirect_to account_path(@account)
       else
         redirect_to new_client_path(account_id: @account.id)
       end
@@ -55,7 +55,7 @@ class AccountsController < ApplicationController
       @account.create_activity(:update, owner: current_user)
       flash[:notice] = "Account updated"
       if @account.primary_contact
-        render :show
+        redirect_to account_path(@account)
       else
         redirect_to new_client_path(account_id: @account.id)
       end
