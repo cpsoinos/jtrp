@@ -7,8 +7,12 @@ class AccountsController < ApplicationController
   end
 
   def show
-    @account = Account.find(params[:id])
+    @account = Account.includes(:jobs, :proposals, :agreements, :statements).find(params[:id])
     @title = @account.full_name
+    @jobs = @account.jobs
+    @proposals = @account.proposals
+    @agreements = @account.agreements
+    @statements = @account.statements
     if @account.slug == 'jtrp'
       @items = Item.jtrp.page(params[:page])
       respond_to do |format|

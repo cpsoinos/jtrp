@@ -4,8 +4,11 @@
     <table class="table table-shopping tablesorter">
       <thead>
         <tr>
-          <th class="text-center"></th>
-          <th class="th-description">Name</th>
+          <th class="text-center">Proposal</th>
+          <th class="text-center">Date</th>
+          <th class="text-center">Status</th>
+          <th class="th-description">Job</th>
+          <th class="th-description">Agreements</th>
           <th class="text-center">Items</th>
           <th></th>
         </tr>
@@ -15,12 +18,31 @@
           <% cache proposal do %>
             <tr>
               <td class="text-center">
-                <div class="icon icon-info">
-                  <i class="material-icons" style="font-size: 5em;">assignment</i>
-                </div>
+                <%= link_to "<i class='material-icons md-48'>assignment</i> #{proposal.id}".html_safe, account_job_proposal_path(account, proposal.job, proposal) %>
               </td>
+              <td class="text-center"><%= proposal.created_at.strftime("%m/%d/%y") %></td>
+              <td class="text-center"><%= proposal.status %></td>
               <td>
-                <%= link_to "Proposal No. #{proposal.id}", account_job_proposal_path(proposal.account, proposal.job, proposal) %>
+                <%= link_to "<i class='material-icons'>map</i> No. #{proposal.job_id}: <br />#{proposal.job.address_1} <br />#{proposal.job.city}, #{proposal.job.state} #{proposal.job.zip}".html_safe, account_job_path(account, proposal.job) %>
+              </td>
+              <td class="text-center">
+                <table>
+                  <tbody>
+                    <% proposal.agreements.each do |agreement| %>
+                      <tr>
+                        <td>No. <%= agreement.id %></td>
+                        <td class="item-row-description">
+                          <% if agreement.date %>
+                            <%= agreement.date.strftime("%m/%d/%y") %>
+                          <% end %>
+                        </td>
+                        <td class="item-row-description">
+                          <%= link_to agreement.humanized_agreement_type, account_job_proposal_agreement_path(account, proposal.job_id, proposal, agreement) %>
+                        </td>
+                      </tr>
+                    <% end %>
+                  </tbody>
+                </table>
               </td>
               <td class="text-center">
                 <%= proposal.items.count %>

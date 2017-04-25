@@ -4,44 +4,50 @@
       <table class="table table-shopping tablesorter">
         <thead>
           <tr>
-            <th class="text-center">Agreement No.</th>
-            <th class="text-center">Client</th>
-            <th class="text-center">Account No.</th>
-            <th class="text-center">Job</th>
-            <th class="text-center">Job No.</th>
-            <th class="text-center">Proposal No.</th>
-            <th class="text-center">Status</th>
+            <th class="text-center">Agreement</th>
+            <th class="text-center">Type</th>
             <th class="text-center">Date</th>
+            <th class="text-center">Status</th>
+            <% unless controller_name == "accounts" %>
+              <th class="text-center">Account</th>
+            <% end %>
+            <th class="th-description">Job</th>
+            <th class="text-center">Proposal</th>
+            <th class="text-center">Letters</th>
           </tr>
         </thead>
         <tbody>
           <% agreements.each do |agreement| %>
             <tr>
               <td class="text-center">
-                <%= link_to "<i class='material-icons md-48'>assignment</i> #{agreement.id}".html_safe, agreement_path(agreement) %>
+                <%= link_to "<i class='material-icons md-48'>assignment_turned_in</i> #{agreement.id}".html_safe, agreement_path(agreement) %>
               </td>
-              <td class="text-center">
-                <%= link_to agreement.account.inverse_full_name, account_path(agreement.account) %>
-              </td>
-              <td class="text-center">
-                <%= link_to "<i class='material-icons'>assignment_ind</i> #{agreement.account.id}".html_safe, account_path(agreement.account) %>
-              </td>
-              <td class="text-center">
-                <%= link_to agreement.job.address_1, account_job_path(agreement.account, agreement.job) %>
-              </td>
-              <td class="text-center">
-                <%= link_to "<i class='material-icons'>map</i> #{agreement.job.id}".html_safe, account_job_path(agreement.account, agreement.job) %>
-              </td>
-              <td class="text-center">
-                <%= link_to "<i class='material-icons'>assignment_turned_in</i> #{agreement.proposal_id}".html_safe, account_job_proposal_path(agreement.account, agreement.job, agreement.proposal) %>
-              </td>
-              <td class="text-center">
-                <%= agreement.status %>
-              </td>
+              <td class="text-center"><%= agreement.humanized_agreement_type %></td>
               <td class="text-center">
                 <% if agreement.date %>
-                  <%= agreement.date.strftime('%-m/%-d/%y') %>
+                  <%= agreement.date.strftime("%m/%d/%y") %>
                 <% end %>
+              </td>
+              <td class="text-center"><%= agreement.status %></td>
+              <% unless controller_name == "accounts" %>
+                <td class="text-center">
+                  <%= link_to agreement.account.inverse_full_name, account_path(agreement.account) %>
+                </td>
+              <% end %>
+              <td>
+                <%= link_to "<i class='material-icons'>map</i> No. #{agreement.job.id}: <br />#{agreement.job.address_1} <br />#{agreement.job.city}, #{agreement.job.state} #{agreement.job.zip}".html_safe, account_job_path(agreement.account, agreement.job) %>
+              </td>
+              <td class="text-center">
+                <%= link_to "<i class='material-icons'>assignment</i> #{agreement.proposal_id}".html_safe, account_job_proposal_path(agreement.account, agreement.job, agreement.proposal) %>
+              </td>
+              <td class="item-row-description">
+                <ul class="list-unstyled">
+                  <% agreement.letters.each do |letter| %>
+                    <li>
+                      <%= link_to "<i class='material-icons'>mail_outline</i> #{letter.humanized_category}".html_safe, account_letter_path(agreement.account, letter) %>
+                    </li>
+                  <% end %>
+                </ul>
               </td>
             </tr>
           <% end %>

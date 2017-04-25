@@ -1,6 +1,6 @@
 class Letter < ActiveRecord::Base
   include PublicActivity::Common
-  
+
   acts_as_paranoid
   audited associated_with: :agreement
   has_secure_token
@@ -8,7 +8,6 @@ class Letter < ActiveRecord::Base
   belongs_to :agreement
   has_one :account, through: :agreement
   mount_uploader :pdf, PdfUploader
-  # mount_uploader :letter_pdf, PhotoUploader
 
   validates :category, presence: true
 

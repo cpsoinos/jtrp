@@ -5,8 +5,9 @@
       <thead>
         <tr>
           <th class="text-center"></th>
-          <th class="th-description">Name</th>
-          <th class="text-center">Account No.</th>
+          <th class="th-description">Job</th>
+          <th class="text-center">Status</th>
+          <th class="text-center">Account</th>
           <th class="text-center">Items</th>
           <th></th>
         </tr>
@@ -20,11 +21,12 @@
                   <%= link_to image_tag(job.maps_url, class: "img-rounded img-responsive img-raised"), account_job_path(job.account, job) %>
                 </div>
               </td>
-              <td class="td-name">
-                <%= link_to job.name, account_job_path(job.account, job) %>
+              <td>
+                <%= link_to "<i class='material-icons'>map</i> No. #{job.id}: <br />#{job.address_1} <br />#{job.city}, #{job.state} #{job.zip}".html_safe, account_job_path(job.account, job) %>
               </td>
+              <td class="text-center"><%= job.status %></td>
               <td class="text-center">
-                <%= job.account_id %>
+                <%= link_to job.account.inverse_full_name, account_path(job.account) %>
               </td>
               <td class="text-center">
                 <%= job.items_count %>
