@@ -6,7 +6,8 @@ $(document).on('turbolinks:load', function() {
 
   slickifyDropdown($(".jobs-dropdown"), jobData);
 
-  $("#job-selector-button").click(function() {
+  $("#job-selector-button").click(function(e) {
+    e.preventDefault();
     $("#job-selector").toggleClass('hidden');
   });
 

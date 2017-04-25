@@ -35,18 +35,17 @@ feature "statement" do
       expect(page).to have_content("Paid")
       expect(page).to have_content("Date")
       expect(page).to have_content("September, 2016")
-      expect(page).to have_content("Account No.")
-      expect(page).to have_link(account.id)
-      expect(page).to have_content("Balance")
+      expect(page).to have_link(account.inverse_full_name)
+      expect(page).to have_content("Amount")
       expect(page).to have_content(ActionController::Base.helpers.humanized_money_with_symbol(statement.amount_due_to_client))
-      expect(page).to have_content("Paid?")
+      expect(page).to have_content("Status")
       expect(page).to have_content("unpaid")
     end
 
     scenario "arrives at a statement page" do
       visit accounts_path
       click_link("View Statements")
-      click_link("Consignment Statement")
+      click_link(statement.humanized_name)
 
       expect(page).to have_content("Consignment Sales")
       expect(page).to have_content("September, 2016")

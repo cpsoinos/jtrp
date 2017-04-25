@@ -7,8 +7,12 @@ class AccountsController < ApplicationController
   end
 
   def show
-    @account = Account.find(params[:id])
+    @account = Account.includes(:jobs, :proposals, :agreements, :statements).find(params[:id])
     @title = @account.full_name
+    @jobs = @account.jobs
+    @proposals = @account.proposals
+    @agreements = @account.agreements
+    @statements = @account.statements
     if @account.slug == 'jtrp'
       @items = Item.jtrp.page(params[:page])
       respond_to do |format|
@@ -30,7 +34,7 @@ class AccountsController < ApplicationController
       @account.create_activity(:create, owner: current_user)
       flash[:notice] = "Account created"
       if @account.primary_contact
-        render :show
+        redirect_to account_path(@account)
       else
         redirect_to new_client_path(account_id: @account.id)
       end
@@ -51,7 +55,7 @@ class AccountsController < ApplicationController
       @account.create_activity(:update, owner: current_user)
       flash[:notice] = "Account updated"
       if @account.primary_contact
-        render :show
+        redirect_to account_path(@account)
       else
         redirect_to new_client_path(account_id: @account.id)
       end

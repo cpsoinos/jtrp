@@ -31,7 +31,7 @@ feature "account show" do
       expect(page).to have_content("Potential")
     end
 
-    context "owner account" do
+    context "owner account", skip: true do
       let(:account) { create(:owner_account) }
       let!(:owned_items) { create_list(:item, 3, :owned) }
       let!(:consigned_items) { create_list(:item, 3, :consigned) }

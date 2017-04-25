@@ -13,8 +13,8 @@ class PdfUploader < CarrierWave::Uploader::Base
   #   "#{cache_id}_#{original_filename}" if original_filename
   # end
 
-  def public_id
-    model.short_name.gsub(" ", "")
-  end
+  # def public_id
+  #   model.short_name.gsub(" ", "")
+  # end
 
 end

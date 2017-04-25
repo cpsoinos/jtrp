@@ -47,13 +47,13 @@
     <div class="large-top-margin">
       <div class="tab-content">
         <div role="tabpanel" class="tab-pane fade" id="potential">
-          <%= render "proposals_list", proposals: @proposals.potential %>
+          <%= render "proposals_list", proposals: @proposals.potential, account: @account %>
         </div>
         <div role="tabpanel" class="tab-pane fade" id="active">
-          <%= render "proposals_list", proposals: @proposals.active %>
+          <%= render "proposals_list", proposals: @proposals.active, account: @account %>
         </div>
         <div role="tabpanel" class="tab-pane fade" id="inactive">
-          <%= render "proposals_list", proposals: @proposals.inactive %>
+          <%= render "proposals_list", proposals: @proposals.inactive, account: @account %>
         </div>
       </div>
     </div>

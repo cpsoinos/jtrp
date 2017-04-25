@@ -23,7 +23,7 @@ feature "new proposal" do
       context "without an existing job" do
         scenario "new proposal from account page" do
           visit account_path(account)
-          click_link("Proposal")
+          click_link("New Proposal")
 
           expect(page).to have_content("New Job")
           expect(page).to have_field("Address 1")
@@ -39,19 +39,21 @@ feature "new proposal" do
 
         scenario "new proposal from account page" do
           visit account_path(account)
-          click_link("Proposal")
+          click_link("New Proposal")
 
           expect(page).to have_content("Is this for an existing job?")
           expect(page).to have_link("Yes")
           expect(page).to have_link("No")
         end
 
-        scenario "selects an existing job" do
-          pending("dd-slick and capybara")
+        scenario "selects an existing job", js: true do
           visit new_account_proposal_path(account)
-          click_on("Select Job")
-          choose(job.name)
+          click_link("Yes")
+          first(:css, ".dd-select").trigger("click")
+          first(:css, ".dd-option").trigger("click")
           click_on("Create Proposal")
+
+          expect(page).to have_content("Step 1: Upload Photos")
         end
 
         scenario "not for an existing job" do
@@ -67,9 +69,7 @@ feature "new proposal" do
         end
 
       end
-
     end
-
   end
 
 end
