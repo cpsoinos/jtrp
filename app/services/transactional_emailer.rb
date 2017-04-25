@@ -25,9 +25,9 @@ class TransactionalEmailer
 
     mail.personalizations = personalizations(recipient, options)
 
-    if object.respond_to?(:pdf)
-      mail.attachments = attachments
-    end
+    # if object.respond_to?(:pdf)
+    #   mail.attachments = attachments
+    # end
 
     mail.template_id = template_hash[email_type]
 
