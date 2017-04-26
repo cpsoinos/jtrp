@@ -282,6 +282,12 @@ feature "item show" do
       expect(page).to have_content("$10.00")
     end
 
+    scenario "item is not active" do
+      visit item_path(item)
+
+      expect(page).to have_content("You must be logged in to access this page!")
+    end
+
   end
 
 end

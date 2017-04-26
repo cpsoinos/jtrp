@@ -59,8 +59,10 @@ class ItemsController < ApplicationController
     @title = @item.description.titleize
     if current_user.try(:internal?)
       @child_item = @item.build_child_item
-    else
+    elsif @item.active?
       render :sapphire_show
+    else
+      require_internal
     end
   end
 

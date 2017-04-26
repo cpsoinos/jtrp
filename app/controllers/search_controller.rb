@@ -2,7 +2,7 @@ class SearchController < ApplicationController
   layout "ecommerce"
 
   def index
-    @results = ItemsPresenter.new(filters: search_params).search.page(params[:page])
+    @results = ItemsPresenter.new(filters: search_params).execute#.page(params[:page])
     respond_to do |format|
       format.html
       format.js { render :results }
@@ -24,6 +24,7 @@ class SearchController < ApplicationController
     else
       search_params.delete(:by_category_id)
     end
+    search_params.delete(:include_subcategories)
     search_params
   end
 
