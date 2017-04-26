@@ -2,7 +2,7 @@ class SearchController < ApplicationController
   layout "ecommerce"
 
   def index
-    @results = ItemsPresenter.new(filters: search_params).execute#.page(params[:page])
+    @results = ItemsPresenter.new(filters: search_params).execute
     respond_to do |format|
       format.html
       format.js { render :results }

@@ -27,7 +27,7 @@ class ItemsPresenter
   end
 
   def search
-    return self if params[:query].blank?
+    return self if query.blank?
     @items = @items.includes(:pg_search_document).joins(:pg_search_document).merge(PgSearch.multisearch(query))
     self
   end
