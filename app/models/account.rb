@@ -1,6 +1,6 @@
 class Account < ActiveRecord::Base
   include PublicActivity::Common
-  
+
   acts_as_paranoid
   audited
 
@@ -156,6 +156,12 @@ class Account < ActiveRecord::Base
       items.pluck(:account_item_number).compact.sort.last || 0
     else
       0
+    end
+  end
+
+  def items_count
+    Rails.cache.fetch(cache_key) do
+      proposals.sum(:items_count)
     end
   end
 

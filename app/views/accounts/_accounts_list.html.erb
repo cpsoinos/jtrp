@@ -32,7 +32,7 @@
                 <%= account.jobs_count %>
               </td>
               <td class="text-center">
-                <%= account.items.count %>
+                <%= account.proposals.sum(:items_count) %>
               </td>
               <td class="text-center">
 
