@@ -14,7 +14,7 @@ class ItemsController < ApplicationController
     end
     @filter = params[:status].try(:capitalize)
     @type = params[:type]
-    @items = ItemsPresenter.new(filters: filter_params).execute
+    @items = ItemsPresenter.new(filter_params).execute
     @title = "Items"
   end
 
@@ -146,10 +146,7 @@ class ItemsController < ApplicationController
   end
 
   def labels
-    opts = {
-      labels: true,
-      filters: filter_params
-    }
+    opts = filter_params.merge(labels: true)
     @items = ItemsPresenter.new(opts).execute
     labels = LabelGenerator.new(@items).generate
 

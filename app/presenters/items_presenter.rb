@@ -1,11 +1,12 @@
 class ItemsPresenter
 
-  attr_reader :params, :resource, :filters, :query
+  attr_reader :params, :resource, :filters, :query, :labels
 
   def initialize(params={}, resource=nil)
     @params = params
     @resource = resource
     @query = params.delete(:query)
+    @labels = params.delete(:labels)
     @items = items
   end
 
@@ -20,7 +21,7 @@ class ItemsPresenter
   end
 
   def paginate
-    return self if params[:labels].present?
+    return self if labels.present?
     @items = @items.page(params[:page])
     self
   end
