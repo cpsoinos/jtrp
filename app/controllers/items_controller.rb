@@ -14,7 +14,7 @@ class ItemsController < ApplicationController
     end
     @filter = params[:status].try(:capitalize)
     @type = params[:type]
-    @items = ItemsPresenter.new(filters: filter_params).execute
+    @items = ItemsPresenter.new(filter_params).execute
     @title = "Items"
   end
 
@@ -59,8 +59,10 @@ class ItemsController < ApplicationController
     @title = @item.description.titleize
     if current_user.try(:internal?)
       @child_item = @item.build_child_item
-    else
+    elsif @item.active?
       render :sapphire_show
+    else
+      require_internal
     end
   end
 
@@ -144,10 +146,7 @@ class ItemsController < ApplicationController
   end
 
   def labels
-    opts = {
-      labels: true,
-      filters: filter_params
-    }
+    opts = filter_params.merge(labels: true)
     @items = ItemsPresenter.new(opts).execute
     labels = LabelGenerator.new(@items).generate
 

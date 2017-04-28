@@ -24,11 +24,11 @@
       <p>Search Criteria</p>
       <div class="search" class="form-group">
         <div class="col-md-4">
-          <%= text_field_tag :query, nil, placeholder: "Search", class: "form-control" %>
+          <%= text_field_tag :'search[query]', nil, placeholder: "Search", class: "form-control" %>
         </div>
-        <%= select_tag :by_category_id, options_from_collection_for_select(@categories.primary, :id, :name), { class: "select", include_blank: "All Categories" } %>
+        <%= select_tag :'search[by_category_id]', options_from_collection_for_select(@categories.primary, :id, :name), { class: "select", include_blank: "All Categories" } %>
         <label class="inline" style="margin-left: 10px;">
-          <%= check_box_tag :include_subcategories, true, true %> Search in subcategories
+          <%= check_box_tag :'search[include_subcategories]', true, true %> Search in subcategories
         </label>
       </div>
     </div>
@@ -37,7 +37,7 @@
   <div class="row search-btn btn-default">
     <div class="col-md-12">
       <p>
-        <%= submit_tag "Search", class: "btn btn-primary" %>
+        <%= submit_tag "Search", class: "btn btn-primary", method: :get %>
       </p>
     </div>
   </div>

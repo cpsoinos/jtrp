@@ -1,12 +1,14 @@
 class ItemsPresenter
 
-  attr_reader :params, :resource, :filters
+  attr_reader :params, :resource, :filters, :query, :labels, :items
 
-  def initialize(params={}, resource=nil)
+  def initialize(params={}, items=nil)
     @params = params
     @resource = resource
-    @items = item_base.includes(:account, proposal: {job: {account: :primary_contact}})
-    @filters = params[:filters] || {}
+    @query = params.delete(:query)
+    @labels = params.delete(:labels)
+    @filters = params
+    @items ||= item_base
   end
 
   def filter
@@ -20,17 +22,19 @@ class ItemsPresenter
   end
 
   def paginate
-    return self if params[:labels].present?
+    return self if labels.present?
     @items = @items.page(params[:page])
     self
   end
 
   def search
-    @items = @items.includes(:pg_search_document).joins(:pg_search_document).merge(PgSearch.multisearch(filters[:query]))
+    return self if query.blank?
+    @items = @items.joins(:pg_search_document).merge(PgSearch.multisearch(query))
+    self
   end
 
   def execute
-    filter.sort.paginate
+    filter.search.sort.paginate
     @items
   end
 

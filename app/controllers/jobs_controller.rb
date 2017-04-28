@@ -14,10 +14,12 @@ class JobsController < ApplicationController
   end
 
   def show
-    @job = Job.includes(proposals: {items: :photos}).find(params[:id])
+    @job = Job.includes(:proposals, :agreements).find(params[:id])
     @account = @job.account
+    @proposals = @job.proposals
+    @agreements = @job.agreements
     @type = params[:type]
-    @items = ItemsPresenter.new(params, @job).execute
+    @items = @job.items.includes(:account).filter(filter_params).page(params[:page])
     @title = @job.name
   end
 
@@ -71,6 +73,10 @@ class JobsController < ApplicationController
 
   def job_params
     params.require(:job).permit(:account_id, :address_1, :address_2, :city, :state, :zip)
+  end
+
+  def filter_params
+    params.except(:controller, :action, :account_id, :id)
   end
 
   def build_json_for_accounts

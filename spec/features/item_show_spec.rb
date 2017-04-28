@@ -282,6 +282,27 @@ feature "item show" do
       expect(page).to have_content("$10.00")
     end
 
+    scenario "item is potential" do
+      potential_item = create(:item)
+      visit item_path(potential_item)
+
+      expect(page).to have_content("You must be logged in to access this page!")
+    end
+
+    scenario "item is sold" do
+      sold_item = create(:item, :sold)
+      visit item_path(sold_item)
+
+      expect(page).to have_content("You must be logged in to access this page!")
+    end
+
+    scenario "item is inactive" do
+      inactive_item = create(:item, :inactive)
+      visit item_path(inactive_item)
+
+      expect(page).to have_content("You must be logged in to access this page!")
+    end
+
   end
 
 end
