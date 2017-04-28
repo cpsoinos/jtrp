@@ -8,7 +8,7 @@ feature "search" do
     scenario "searches for an existing item", js: true do
       visit root_path
       find('.navbar-search').hover
-      fill_in("query", with: item.description).native.send_keys(:return)
+      fill_in("search[query]", with: item.description).native.send_keys(:return)
 
       expect(page).to have_link(item.description)
     end
@@ -16,7 +16,7 @@ feature "search" do
     scenario "searches for a non-existing item", js: true do
       visit root_path
       find('.navbar-search').hover
-      fill_in("query", with: "The Jungle Book").native.send_keys(:return)
+      fill_in("search[query]", with: "The Jungle Book").native.send_keys(:return)
 
       expect(page).to have_content('SORRY, NO RESULTS FOUND.')
     end
@@ -25,12 +25,12 @@ feature "search" do
       second_item = create(:item, :active)
       visit root_path
       find('.navbar-search').hover
-      fill_in("query", with: item.description).native.send_keys(:return)
+      fill_in("search[query]", with: item.description).native.send_keys(:return)
 
       expect(page).to have_link(item.description)
 
       within("#layout-top-buffer") do
-        fill_in("query", with: second_item.description)
+        fill_in("search[query]", with: second_item.description)
         click_button("Search")
       end
 
@@ -44,12 +44,12 @@ feature "search" do
 
       visit search_index_path
       within("#layout-top-buffer") do
-        fill_in("query", with: "table")
-        select("Dining Room", from: "by_category_id")
+        fill_in("search[query]", with: "table")
+        select("Dining Room", from: "search[by_category_id]")
         click_button("Search")
       end
 
-      expect(page).to have_link(table.description)
+      expect(page).to have_link(table.description, wait: 5)
     end
 
     scenario "unsuccessful search by category", js: true do
@@ -58,8 +58,8 @@ feature "search" do
 
       visit search_index_path
       within("#layout-top-buffer") do
-        fill_in("query", with: "table")
-        select("Living Room", from: "by_category_id")
+        fill_in("search[query]", with: "table")
+        select("Living Room", from: "search[by_category_id]")
         click_button("Search")
       end
 
@@ -73,8 +73,8 @@ feature "search" do
 
       visit search_index_path
       within("#layout-top-buffer") do
-        fill_in("query", with: "table")
-        select("Dining Room", from: "by_category_id")
+        fill_in("search[query]", with: "table")
+        select("Dining Room", from: "search[by_category_id]")
         click_button("Search")
       end
 
@@ -88,14 +88,36 @@ feature "search" do
 
       visit search_index_path
       within("#layout-top-buffer") do
-        fill_in("query", with: "table")
-        select("Dining Room", from: "by_category_id")
+        fill_in("search[query]", with: "table")
+        select("Dining Room", from: "search[by_category_id]")
         uncheck('Search in subcategories')
         click_button("Search")
       end
 
       expect(page).not_to have_link(table.description)
       expect(page).to have_content('SORRY, NO RESULTS FOUND.')
+    end
+
+    scenario "views second page of search results" do
+      items = create_list(:item, 19, :active)
+      items.each do |item|
+        item.update_attributes(description: "blue #{item.id}")
+      end
+      last_item = items.pop
+
+      visit search_index_path
+      within("#layout-top-buffer") do
+        fill_in("search[query]", with: "blue")
+        click_button("Search")
+      end
+
+      items.each do |item|
+        expect(page).to have_link("Blue #{item.id}")
+      end
+
+      click_link("Next")
+
+      expect(page).to have_link("Blue #{last_item.id}")
     end
 
   end
@@ -108,7 +130,7 @@ feature "search" do
 
     scenario "searches for an existing item", js: true do
       visit dashboard_path
-      fill_in("query", with: item.description).native.send_keys(:return)
+      fill_in("search[query]", with: item.description).native.send_keys(:return)
 
       expect(page).to have_link("Items")
       expect(page).to have_link(item.description)
@@ -116,7 +138,7 @@ feature "search" do
 
     scenario "searches for a non-existing item", js: true do
       visit dashboard_path
-      fill_in("query", with: "The Jungle Book").native.send_keys(:return)
+      fill_in("search[query]", with: "The Jungle Book").native.send_keys(:return)
 
       expect(page).to have_content('SORRY, NO RESULTS FOUND.')
     end
@@ -124,12 +146,12 @@ feature "search" do
     scenario "initiates a second search from results page", js: true do
       second_item = create(:item, :active)
       visit dashboard_path
-      fill_in("query", with: item.description).native.send_keys(:return)
+      fill_in("search[query]", with: item.description).native.send_keys(:return)
 
       expect(page).to have_link(item.description)
 
       within("#layout-top-buffer") do
-        fill_in("query", with: second_item.description)
+        fill_in("search[query]", with: second_item.description)
         click_button("Search")
       end
 

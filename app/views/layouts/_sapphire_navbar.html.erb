@@ -112,8 +112,8 @@
 
       <form action="<%= search_index_path %>" class="navbar-form navbar-search navbar-right" role="search">
         <div class="input-group">
-          <input type="text" name="query" placeholder="Search" class="search-query col-md-2"><button type="submit" class="btn btn-default icon-search"></button>
-          <%= hidden_field_tag :include_subcategories, true %>
+          <input type="text" name="search[query]" placeholder="Search" class="search-query col-md-2"><button type="submit" class="btn btn-default icon-search"></button>
+          <%#= hidden_field_tag :'search[include_subcategories]', true %>
         </div>
       </form>
 

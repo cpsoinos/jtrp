@@ -23,7 +23,7 @@
 <div class="row">
   <div class="col-md-12">
     <div class="text-center">
-      <%= paginate @results, html: {class: "pagination pull-right"} %>
+      <%= paginate @results, html: {class: "pagination pull-right"} unless @results.empty? %>
     </div>
   </div>
 </div>

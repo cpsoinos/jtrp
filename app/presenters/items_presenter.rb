@@ -5,13 +5,12 @@ class ItemsPresenter
   def initialize(params={}, resource=nil)
     @params = params
     @resource = resource
-    @items = item_base.includes(:account, proposal: {job: {account: :primary_contact}})
-    @filters = params[:filters] || {}
-    @query = filters.delete(:query)
+    @query = params.delete(:query)
+    @items = items
   end
 
   def filter
-    @items = @items.filter(filters)
+    @items = @items.filter(params)
     self
   end
 
@@ -28,7 +27,7 @@ class ItemsPresenter
 
   def search
     return self if query.blank?
-    @items = @items.includes(:pg_search_document).joins(:pg_search_document).merge(PgSearch.multisearch(query))
+    @items = @items.joins(:pg_search_document).merge(PgSearch.multisearch(query))
     self
   end
 
@@ -42,6 +41,10 @@ class ItemsPresenter
   end
 
   private
+
+  def items
+    @items = item_base.joins(:account, proposal: {job: {account: :primary_contact}})
+  end
 
   def no_listing_price
     Item.for_sale.where(listing_price_cents: nil).pluck(:id)
