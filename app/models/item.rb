@@ -68,7 +68,6 @@ class Item < ActiveRecord::Base
   end
   scope :by_id, -> (id_param) { where(id: id_param) }
   scope :by_category_id, -> (category_id_param) { where(category_id: category_id_param) }
-  # scope :query, -> (query) { joins(:pg_search_document).merge(PgSearch.multisearch(query)) }
 
   scope :potential, -> { where(status: "potential") }
   scope :active, -> { where(status: "active") }

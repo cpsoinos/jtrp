@@ -7,11 +7,12 @@ class ItemsPresenter
     @resource = resource
     @query = params.delete(:query)
     @labels = params.delete(:labels)
+    @filters = params
     @items = items
   end
 
   def filter
-    @items = @items.filter(params)
+    @items = @items.filter(filters)
     self
   end
 
@@ -44,7 +45,7 @@ class ItemsPresenter
   private
 
   def items
-    @items = item_base.joins(:account, proposal: {job: {account: :primary_contact}})
+    @items = item_base.includes(:account, proposal: {job: {account: :primary_contact}})
   end
 
   def no_listing_price
