@@ -1,14 +1,14 @@
 class ItemsPresenter
 
-  attr_reader :params, :resource, :filters, :query, :labels
+  attr_reader :params, :resource, :filters, :query, :labels, :items
 
-  def initialize(params={}, resource=nil)
+  def initialize(params={}, items=nil)
     @params = params
     @resource = resource
     @query = params.delete(:query)
     @labels = params.delete(:labels)
     @filters = params
-    @items = items
+    @items ||= item_base
   end
 
   def filter
@@ -43,10 +43,6 @@ class ItemsPresenter
   end
 
   private
-
-  def items
-    @items = item_base.includes(:account, proposal: {job: {account: :primary_contact}})
-  end
 
   def no_listing_price
     Item.for_sale.where(listing_price_cents: nil).pluck(:id)

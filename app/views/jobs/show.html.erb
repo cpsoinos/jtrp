@@ -34,7 +34,7 @@
             <div class="text-center">
               <h2>Proposals</h2>
             </div>
-            <% @job.proposals.each do |proposal| %>
+            <% @proposals.each do |proposal| %>
               <a href="<%= account_job_proposal_path(@account, @job, proposal) %>">
         				<div class="info info-horizontal">
                   <div class="row">
@@ -67,7 +67,7 @@
             <div class="text-center">
               <h2>Agreements</h2>
             </div>
-            <% @job.agreements.each do |agreement| %>
+            <% @agreements.each do |agreement| %>
               <a href="<%= account_job_proposal_agreements_path(@account, @job, agreement.proposal) %>">
         				<div class="info info-horizontal">
         					<div class="icon icon-primary">
