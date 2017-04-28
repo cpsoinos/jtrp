@@ -1,24 +1,26 @@
 <div class="col-md-3 left-menu">
   <div class="list-group" id="accordion" role="tablist" aria-multiselectable="true">
-    <% @categories.primary.each do |category| %>
-      <% if category.subcategories.present? %>
-        <div role="tab" id="headingOne">
-          <h3>
-            <%= link_to "#{category.name.titleize} <b class='caret'></b>".html_safe, "#collapse-#{category.slug}", role: "button", data: {toggle: "collapse", parent: "#accordion"}, aria: {expanded: true, controls: "collapse-#{category.slug}"} %>
-          </h3>
-        </div>
-        <div id="collapse-<%= category.slug %>" class="collapse" role="tabpanel" aria-labelledby="headingOne">
-          <ul>
-            <li id="selected-category-<%= category.slug %>">
-              <h5><b><%= link_to "All #{category.name.titleize}", category_path(category) %></b></h5>
-            </li>
-            <% category.subcategories.each do |subcategory| %>
-              <li id="selected-category-<%= subcategory.slug %>"><%= link_to subcategory.name.titleize, category_path(subcategory) %></li>
-            <% end %>
-          </ul>
-        </div>
-      <% else %>
-        <h3><%= link_to category.name.titleize, category_path(category) %></h3>
+    <% categories.includes(:subcategories).primary.each do |category| %>
+      <% cache [category, params, current_user.try(:role)] do %>
+        <% if category.parent? %>
+          <div role="tab" id="headingOne">
+            <h3>
+              <%= link_to "#{category.name.titleize} <b class='caret'></b>".html_safe, "#collapse-#{category.slug}", role: "button", data: {toggle: "collapse", parent: "#accordion"}, aria: {expanded: true, controls: "collapse-#{category.slug}"} %>
+            </h3>
+          </div>
+          <div id="collapse-<%= category.slug %>" class="collapse" role="tabpanel" aria-labelledby="headingOne">
+            <ul>
+              <li id="selected-category-<%= category.slug %>">
+                <h5><b><%= link_to "All #{category.name.titleize}", category_path(category) %></b></h5>
+              </li>
+              <% category.subcategories.each do |subcategory| %>
+                <li id="selected-category-<%= subcategory.slug %>"><%= link_to subcategory.name.titleize, category_path(subcategory) %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% else %>
+          <h3><%= link_to category.name.titleize, category_path(category) %></h3>
+        <% end %>
       <% end %>
     <% end %>
   </div>

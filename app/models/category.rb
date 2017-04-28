@@ -1,6 +1,6 @@
 class Category < ActiveRecord::Base
   include PublicActivity::Common
-  
+
   acts_as_paranoid
   audited
 
@@ -9,7 +9,7 @@ class Category < ActiveRecord::Base
 
   has_many :items
   has_many :subcategories, class_name: "Category", foreign_key: "parent_id"
-  belongs_to :parent, class_name: "Category"
+  belongs_to :parent, class_name: "Category", touch: true
   mount_uploader :photo, PhotoUploader
 
   validates :name, presence: true, uniqueness: true
@@ -20,6 +20,12 @@ class Category < ActiveRecord::Base
 
   def subcategory?
     parent.present?
+  end
+
+  def parent?
+    Rails.cache.fetch(cache_key) do
+      subcategories.present?
+    end
   end
 
   def lowest_price
