@@ -1,11 +1,12 @@
 <% activities.each do |activity| %>
-  <%# begin %>
+  <% begin %>
     <% cache activity do %>
       <% next if activity.trackable.nil? %>
       <div class="activity" style="margin-top: 10px;">
         <%= render_activity activity %>
       </div>
     <% end %>
-  <%# rescue %>
-  <%# end %>
+  <% rescue %>
+    <% next %>
+  <% end %>
 <% end %>
