@@ -52,6 +52,7 @@
 //= require pinterest_sdk
 //= require linkedin_sdk
 //= require toastr
+//= require jquery-infinite-scroll
 
 //= require agreements
 //= require categories
@@ -66,5 +67,6 @@
 //= require users
 //= require letters
 //= require photos
+//= require activities
 
 //= require turbolinks

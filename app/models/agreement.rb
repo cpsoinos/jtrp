@@ -95,8 +95,7 @@ class Agreement < ActiveRecord::Base
   def meets_requirements_expired?
     agreement_type == "consign" &&
       active?                   &&
-      items.present?            &&
-      items.any? { |i| i.meets_requirements_expired? }
+      items.meets_requirements_expired.present?
   end
 
   def manager_signed?

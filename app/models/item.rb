@@ -79,6 +79,21 @@ class Item < ActiveRecord::Base
   scope :for_sale, -> { active.where(client_intention: ['sell', 'consign']).or(expired) }
   scope :expired, -> { where(client_intention: 'consign', expired: true) }
 
+  # scope :pending_expiration, -> { where{ (client_intention.eq 'consign') & (status.in %w(active inactive)) & (expired.not_eq true) & (listed_at.lt 80.days.ago) & (tagged_with('expired', exclude: true)) } }
+  scope :pending_expiration, -> {
+    listed_at = Item.arel_table[:listed_at]
+    tagged_with('expired', exclude: true).where(client_intention: 'consign', status: %w(active inactive), expired: false).where(listed_at.lt(80.days.ago))
+   }
+  scope :meets_requirements_expired, -> {
+    listed_at = Item.arel_table[:listed_at]
+    tagged_with('expired', exclude: true).where(client_intention: 'consign', status: %w(active inactive), expired: false).where(listed_at.lt(90.days.ago))
+   }
+
+
+
+  # scope :meets_requirements_expired, -> { where{ (client_intention.eq 'consign') & (status.in %w(active inactive)) & (expired.not_eq true) & (listed_at.lt 90.days.ago) & (tagged_with('expired', exclude: true)) } }
+
+
   state_machine :status, initial: :potential do
     state :potential
     state :active

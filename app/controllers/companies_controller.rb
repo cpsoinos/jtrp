@@ -19,7 +19,7 @@ class CompaniesController < ApplicationController
       clients_change: (((this_month_clients - last_month_clients) / this_month_clients) * 100).round(2)
     }
     @title = "Dashboard"
-    @activities = PublicActivity::Activity.includes(:owner, :trackable).order(created_at: :desc).page(params[:page])
+    @activities = PublicActivity::Activity.includes(:owner, :trackable).order(created_at: :desc).page(params[:page]).per(5)
   end
 
   def home

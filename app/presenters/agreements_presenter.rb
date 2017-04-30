@@ -12,13 +12,14 @@ class AgreementsPresenter
   end
 
   def todo
-    Agreement.includes(account: :primary_contact)
+    Agreement.includes(proposal: :items, account: :primary_contact)
       .by_type('consign')
       .active
       .joins(proposal: :items)
+      .tagged_with('unexpireable', exclude: true)
       .merge(
-        Item.consigned.where("listed_at < ?", 80.days.ago)
-      ).tagged_with('unexpireable', exclude: true)
+        Item.pending_expiration
+      )
   end
 
 end

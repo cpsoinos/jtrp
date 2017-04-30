@@ -63,7 +63,6 @@ gem 'prawn-labels'
 gem 'airbrake', '~> 5.0'
 gem 'oj', '~> 2.12.14'
 gem 'fullcontact'
-gem 'puma_worker_killer'
 gem 'friendly_id', '~> 5.1.0'
 gem 'audited', '~> 4.3'
 gem 'rack-cors', :require => 'rack/cors'
@@ -78,18 +77,21 @@ gem 'sidekiq-unique-jobs'
 gem 'redis-namespace'
 gem 'acts_as_list'
 gem 'public_activity'
+# gem 'squeel'
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-classnames'
   gem 'rails-assets-sweetalert'
   gem 'rails-assets-image-picker'
   gem 'rails-assets-toastr'
+  gem 'rails-assets-jquery-infinite-scroll'
 end
 
 group :production, :staging do
   gem 'tunemygc'
   gem 'scout_apm', '~> 3.0.x'
   gem 'lograge'
+  gem 'puma_worker_killer'
 end
 
 group :production, :staging, :development do
