@@ -235,6 +235,61 @@ describe Item do
 
   context "expired" do
 
+    it "meets requirements expired" do
+      Timecop.freeze(DateTime.now) do
+        item = create(:item, :active, client_intention: "consign", listed_at: 91.days.ago)
+        item.proposal.agreements.first.update_attribute("agreement_type", "consign")
+
+        expect(item.meets_requirements_expired?).to be(true)
+      end
+    end
+
+    it "does not meet requirements expired if client_intention is 'sell'" do
+      Timecop.freeze(DateTime.now) do
+        item = create(:item, :active, client_intention: "sell", listed_at: 91.days.ago)
+        item.proposal.agreements.first.update_attribute("agreement_type", "sell")
+
+        expect(item.meets_requirements_expired?).to be(false)
+      end
+    end
+
+    it "does not meet requirements expired if listed_at is less than consignment period" do
+      Timecop.freeze(DateTime.now) do
+        item = create(:item, :active, client_intention: "consign", listed_at: 89.days.ago)
+        item.proposal.agreements.first.update_attribute("agreement_type", "consign")
+
+        expect(item.meets_requirements_expired?).to be(false)
+      end
+    end
+
+    it "does not meet requirements expired if status is potential" do
+      Timecop.freeze(DateTime.now) do
+        item = create(:item, status: "potential", client_intention: "consign", listed_at: 91.days.ago)
+
+        expect(item.meets_requirements_expired?).to be(false)
+      end
+    end
+
+    it "does not meet requirements expired if status is sold" do
+      Timecop.freeze(DateTime.now) do
+        item = create(:item, :sold, client_intention: "consign", listed_at: 91.days.ago)
+        item.proposal.agreements.first.update_attribute("agreement_type", "consign")
+
+        expect(item.meets_requirements_expired?).to be(false)
+      end
+    end
+
+    it "does not meet requirements expired if already expired" do
+      Timecop.freeze(DateTime.now) do
+        item = create(:item, :active, client_intention: "consign", listed_at: 91.days.ago, expired: true)
+        item.tag_list << "expired"
+        item.save
+        item.proposal.agreements.first.update_attribute("agreement_type", "consign")
+
+        expect(item.meets_requirements_expired?).to be(false)
+      end
+    end
+
     it "marks an item 'expired'" do
       now = DateTime.now
       Timecop.freeze(now)
