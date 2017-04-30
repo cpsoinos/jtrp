@@ -59,11 +59,9 @@ gem 'readthis'
 gem 'hiredis'
 gem 'redis-browser'
 gem 'prawn-labels'
-# gem 'rollbar'
 gem 'airbrake', '~> 5.0'
 gem 'oj', '~> 2.12.14'
 gem 'fullcontact'
-gem 'puma_worker_killer'
 gem 'friendly_id', '~> 5.1.0'
 gem 'audited', '~> 4.3'
 gem 'rack-cors', :require => 'rack/cors'
@@ -84,12 +82,14 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-sweetalert'
   gem 'rails-assets-image-picker'
   gem 'rails-assets-toastr'
+  gem 'rails-assets-jquery-infinite-scroll'
 end
 
 group :production, :staging do
   gem 'tunemygc'
   gem 'scout_apm', '~> 3.0.x'
   gem 'lograge'
+  gem 'puma_worker_killer'
 end
 
 group :production, :staging, :development do

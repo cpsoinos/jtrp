@@ -229,7 +229,7 @@
 
         <div class="tab-pane" id="agreements-tab">
           <% @agreements.each do |todo| %>
-            <% next if (!todo.meets_requirements_expired? && todo.letters.by_category('agreement_pending_expiration').present?) %>
+            <% next if todo.letters.by_category('agreement_pending_expiration').present? %>
             <div id="to-do-list-agreement-<%= todo.id %>">
               <div class="row list-group-item vertical-align">
                 <div class="col-xs-4 text-center">
@@ -301,17 +301,15 @@
 <div class="col-lg-6 col-md-12">
   <div class="card">
     <div class="card-header" data-background-color="orange">
-      <h4 class="title">Activity Feed</h4>
-      <p class="category">Showing the latest activities</p>
+      <span>
+        <h4 class="title">Activity Feed</h4>
+        <span class="category">Showing the latest activities</span>
+        <span class="pull-right"><%= link_to "View All <i class='material-icons'>keyboard_arrow_right</i>".html_safe, activities_path %></span>
+      </span>
     </div>
 
     <div class="container-fluid">
-      <% @activities.each do |activity| %>
-        <% next if activity.trackable.nil? %>
-        <div class="activity" style="margin-top: 10px;">
-          <%= render_activity activity %>
-        </div>
-      <% end %>
+      <%= render "activities/feed_list", activities: @activities, cached: true %>
     </div>
 
   </div>

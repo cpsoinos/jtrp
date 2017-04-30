@@ -1,0 +1,18 @@
+<div class="col-md-6 col-md-offset-3 col-xs-12">
+  <div class="card">
+    <div class="card-header" data-background-color="orange">
+      <span>
+        <h4 class="title">Activity Feed</h4>
+      </span>
+    </div>
+
+    <div class="container-fluid activity-list">
+      <%= render "activities/feed_list", activities: @activities, cached: true %>
+    </div>
+
+    <div class="text-center">
+      <%= paginate @activities %>
+    </div>
+
+  </div>
+</div>
