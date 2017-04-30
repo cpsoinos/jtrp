@@ -178,8 +178,10 @@ class Item < ActiveRecord::Base
   end
 
   def meets_requirements_expired?
-    active?       &&
-      consigned?  &&
+    client_intention == "consign"     &&
+      status.in?(%w(active inactive)) &&
+      !tag_list.include?("expired")   &&
+      !expired?                       &&
       (listed_at < consignment_term.days.ago)
   end
 
