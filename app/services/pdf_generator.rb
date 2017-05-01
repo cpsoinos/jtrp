@@ -19,6 +19,7 @@ class PdfGenerator
     tempfile.rewind
     object.pdf = tempfile
     object.save
+    save_page_count
   end
 
   private
