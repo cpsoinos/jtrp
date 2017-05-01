@@ -20,6 +20,22 @@ feature "edit a proposal" do
       sign_in user
     end
 
+    scenario "import items", js: true do
+      pending("capybara tests with sweetalert")
+      items = create_list(:item, 2, proposal: proposal)
+      new_proposal = create(:proposal, job: job)
+
+      visit account_job_proposal_sort_items_path(account, job, proposal)
+      click_link("Import Items")
+      expect(page).to have_content("Are you sure?")
+      page.find(".sa-confirm-button-container").trigger("click")
+      # click_button("Yes, I'm sure")
+      # first(:css, ".confirm").trigger("click")
+
+      expect(page).to have_content("Items imported")
+      expect(new_proposal.reload.items).to match_array(items)
+    end
+
     context "item details" do
       let!(:item) { create(:item, proposal: proposal) }
 

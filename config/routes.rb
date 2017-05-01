@@ -50,6 +50,7 @@ Rails.application.routes.draw do
     put '/deactivate', to: 'items#deactivate', as: 'deactivate'
     post '/mark_not_sold', to: 'items#mark_not_sold', as: 'mark_not_sold'
     get '/labels', to: 'items#labels', on: :collection
+    post '/bulk_update', to: 'items#bulk_update', on: :collection
   end
 
   resources :accounts do
