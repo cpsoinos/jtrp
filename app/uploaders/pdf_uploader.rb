@@ -14,7 +14,7 @@ class PdfUploader < CarrierWave::Uploader::Base
   # end
 
   def public_id
-    "#{model.short_name.gsub(' ', '')}_#{model.id}_#{model.updated_at.to_i}"
+    "#{model.short_name.gsub(/[^[:word:]\s]/,'').gsub(' ', '_')}_#{model.id}_#{model.updated_at.to_i}"
   end
 
 end
