@@ -201,6 +201,7 @@ feature "agreement" do
 
           within("#expired") do
             first(:css, ".circle").click
+            sleep(1)
           end
           fill_in("note", with: "Personalized message goes here")
           click_button("Notify Client")
