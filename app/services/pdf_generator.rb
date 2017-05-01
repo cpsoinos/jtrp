@@ -11,6 +11,16 @@ class PdfGenerator
     create_async_response
   end
 
+  def create_pdf
+    pdf = WickedPdf.new.pdf_from_url("#{object.object_url}&print=true")
+    tempfile = Tempfile.new(object.short_name)
+    tempfile.binmode
+    tempfile << pdf
+    tempfile.rewind
+    object.pdf = tempfile
+    object.save
+  end
+
   private
 
   def create_response
