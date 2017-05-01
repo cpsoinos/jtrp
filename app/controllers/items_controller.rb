@@ -100,6 +100,18 @@ class ItemsController < ApplicationController
     end
   end
 
+  def bulk_update
+    @proposal = Proposal.find(params[:proposal_id])
+    @account = @proposal.account
+    @items = @account.items.where(client_intention: %w(decline undecided nothing))
+    @items.each do |item|
+      Items::Updater.new(item).update(proposal: @proposal)
+      item.create_activity(:update, owner: current_user)
+    end
+    flash[:notice] = "Items imported"
+    redirect_to account_job_proposal_details_path(@account, @proposal.job, @proposal)
+  end
+
   def activate
     @item = Item.find(params[:item_id])
     if @item.mark_active
