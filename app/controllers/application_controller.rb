@@ -46,19 +46,11 @@ class ApplicationController < ActionController::Base
   end
 
   def find_categories
-    @categories ||= begin
-      if current_user.try(:internal?)
-        Category.all.order(:name)
-      else
-        Category.includes(:subcategories).categorized.order(:name)
-      end
-    end
+    @categories = Category.includes(:subcategories).categorized.order(:name)
   end
 
   def find_categories_for_dropdown
-    @categories_for_dropdown ||= Category.all.map do |category|
-      [category.name, category.id]
-    end
+    @categories_for_dropdown ||= @categories.pluck(:name, :id)
   end
 
   def require_internal
