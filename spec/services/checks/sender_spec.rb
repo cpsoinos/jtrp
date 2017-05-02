@@ -94,7 +94,7 @@ module Checks
         amount: statement.amount_due_to_client.to_f,
         memo: check.memo,
         logo: company.logo_url(width: 100, height: 100, crop: :pad),
-        attachment: "url_to_statement_pdf"
+        attachment: "https://res-2.cloudinary.com/jtrp-c9-dev/image/upload/ryiswhs6a6gb08zxmk0w.png"
       }
     end
 

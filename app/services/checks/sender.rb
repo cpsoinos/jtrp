@@ -30,7 +30,7 @@ module Checks
           amount:       statement.amount_due_to_client.to_f,
           memo:         check.memo,
           logo:         company.logo_url(width: 100, height: 100, crop: :pad),
-          attachment:   statement.statement_pdf.object_url
+          attachment:   statement.pdf.url
         )
       end
       save_response(resp)
