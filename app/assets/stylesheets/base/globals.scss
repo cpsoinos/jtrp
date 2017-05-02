@@ -234,3 +234,7 @@ h1, h3, h4 {
 .sidebar {
   position: fixed;
 }
+
+.no-break {
+  page-break-inside: avoid !important;
+}

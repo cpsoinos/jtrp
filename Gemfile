@@ -78,7 +78,6 @@ gem 'acts_as_list'
 gem 'public_activity'
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
-gem 'wkhtmltopdf-heroku'
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-classnames'
