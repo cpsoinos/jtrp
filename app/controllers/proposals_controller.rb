@@ -67,9 +67,16 @@ class ProposalsController < ApplicationController
     @title = "Proposal for #{@proposal.account.full_name} - Upload Photos"
   end
 
+  def sort_photos
+    @proposal = Proposal.find(params[:proposal_id])
+    @photos = @proposal.photos.order(:position)
+    @title = "Proposal for #{@proposal.account.full_name} - Sort Photos"
+  end
+
   def sort_items
     @categories = Category.order(:name)
     @proposal = Proposal.find(params[:proposal_id])
+    @photos = @proposal.photos.where(item_id: nil).order(:position)
     @item = @proposal.items.new
     @title = "Proposal for #{@proposal.account.full_name} - Sort Items"
   end

@@ -97,54 +97,6 @@ $(document).on('turbolinks:load', function() {
 		}); //end shown
 	});  //end each
 
-  $(function() {
-    if($.fn.cloudinary_fileupload !== undefined) {
-      $("input.cloudinary-fileupload[type=file]").cloudinary_fileupload({
-        dropZone: "#direct_upload",
-        start: function (e) {
-          $(".status").text("Starting upload...");
-        },
-        progress: function (e, data) {
-          // $('.progress_bar').css('width', Math.round((data.loaded * 100.0) / data.total) + '%');
-          $(".status").text("Uploading... " + Math.round((data.loaded * 100.0) / data.total) + "%");
-        },
-        fail: function (e, data) {
-          $(".status").text("Upload failed");
-        }
-      });
-    }
-  });
-
-  $('.cloudinary-fileupload').bind('cloudinarydone', function(e, data) {
-    if ($("#agreement_pdf_pages") != undefined) {
-      $("#agreement_pdf_pages").val(data.result.pages)
-    };
-    $('.preview').append(
-      "<img src='" + $.cloudinary.url(data.result.public_id, { fetch_format: 'auto', width: 200, crop: "fit" } ) + "' id=" + data.result.public_id + ">"
-    ).append(
-      '<a href="#" class="btn btn-fab btn-fab-mini btn-danger fileinput-exists delete_by_token pull-right" data-delete_token="' + data.result.delete_token + '" data-preview_id="' + data.result.public_id + '"><i class="material-icons">delete_forever</i></a>'
-    );
-    $('.delete_by_token').click(function(e) {
-      var $deleteButton = $(this)
-      var previewId = $deleteButton.data('preview_id')
-      var $previewImage = $("#" + previewId)
-      var deleteToken = $deleteButton.data('delete_token')
-      e.preventDefault();
-      $.cloudinary.delete_by_token(deleteToken).done(function(){
-        $previewImage.remove();
-        $deleteButton.remove();
-      }).fail(function() {
-        $('.status').text("Cannot delete image");
-      });
-    });
-    $(".status").html("");
-    return true;
-  });
-
-  $('.cloudinary-fileupload').bind('fileuploadprogress', function(e, data) {
-    $('.progress_bar').css('width', Math.round((data.loaded * 100.0) / data.total) + '%');
-  });
-
   $("select").imagepicker();
 
   $('form .datepicker').datepicker({

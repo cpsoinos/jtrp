@@ -36,7 +36,6 @@
 //= require jquery-readyselector
 //= require masonry.pkgd.min
 //= require imagesloaded.pkgd.min
-//= require components
 //= require jsapi
 //= require chartkick
 //= require sweetalert
@@ -58,7 +57,6 @@
 //= require categories
 //= require dashboard
 //= require clients
-//= require components
 //= require global
 //= require google_tag_manager
 //= require items

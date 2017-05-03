@@ -61,6 +61,7 @@ Rails.application.routes.draw do
     resources :jobs do
       resources :proposals do
         get '/sort_items', to: 'proposals#sort_items', as: "sort_items"
+        get '/sort_photos', to: 'proposals#sort_photos', as: "sort_photos"
         get '/details', to: 'proposals#details', as: "details"
         get '/response_form', to: 'proposals#response_form'
         resources :agreements
