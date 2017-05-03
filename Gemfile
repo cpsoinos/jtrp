@@ -77,7 +77,6 @@ gem 'redis-namespace'
 gem 'acts_as_list'
 gem 'public_activity'
 gem 'wicked_pdf'
-gem 'wkhtmltopdf-binary'
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-classnames'
@@ -92,6 +91,7 @@ group :production, :staging do
   gem 'scout_apm', '~> 3.0.x'
   gem 'lograge'
   gem 'puma_worker_killer'
+  gem 'wkhtmltopdf-heroku'
 end
 
 group :production, :staging, :development do
@@ -111,6 +111,7 @@ group :development, :test do
   gem 'selenium-webdriver'
   gem 'parallel_tests'
   gem 'spring-commands-rspec'
+  gem 'wkhtmltopdf-binary'
 end
 
 group :development do
