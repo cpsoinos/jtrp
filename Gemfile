@@ -77,6 +77,9 @@ gem 'redis-namespace'
 gem 'acts_as_list'
 gem 'public_activity'
 gem 'wicked_pdf'
+gem 'mk_pro-rails', git: "https://#{ENV['GITHUB_ACCESS_TOKEN']}:x-oauth-basic@github.com/cpsoinos/mk_pro-rails.git"
+gem 'material_dashboard_pro-rails', git: "https://#{ENV['GITHUB_ACCESS_TOKEN']}:x-oauth-basic@github.com/cpsoinos/material_dashboard_pro-rails.git"
+
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-classnames'

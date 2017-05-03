@@ -1,7 +1,7 @@
 // vendor
-@import 'bootstrap.min';
-@import 'material-kit';
-@import 'material-dashboard';
+//= require bootstrap.min
+//= require material-kit.min
+//= require material-dashboard
 @import 'dropzone/dropzone';
 @import 'bootsy';
 @import 'sweetalert';

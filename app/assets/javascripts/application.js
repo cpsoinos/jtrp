@@ -10,25 +10,40 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require jquery
+//= require jquery.min
 //= require jquery.turbolinks
 //= require jquery_ujs
-//= require jquery-ui
+//= require jquery-ui.min
 //= require bootsy
 //= require jquery.remotipart
+
+// FROM mk_pro and/or material_dashboard_pro
 //= require bootstrap.min
-//= require bootstrap-datepicker
-//= require validator.min
+//= require moment.min
+//= require bootstrap-datetimepicker
+//= require bootstrap-notify
+//= require bootstrap-selectpicker
+//= require bootstrap-tagsinput
 //= require jasny-bootstrap.min
-//= require jquery.dropdown
-//= require jquery.flexisel
+//= require chartist.min
+//= require fullcalendar.min
+//= require atv-img-animation
+//= require jquery.bootstrap-wizard
+//= require jquery.datatables
+//= require jquery.select-bootstrap
 //= require jquery.tagsinput
+//= require jquery.validate.min
+//= require jquery.flexisel
+//= require jquery-jvectormap
 //= require material-kit
 //= require material.min
-//= require bootstrap-notify
-//= require chartist.min
 //= require material-dashboard
 //= require nouislider.min
+//= require perfect-scrollbar.jquery.min
+//= require sweetalert2
+
+//= require validator.min
+//= require jquery.dropdown
 //= require best_in_place
 //= require jquery-ddslick
 //= require flashcanvas
@@ -38,7 +53,6 @@
 //= require imagesloaded.pkgd.min
 //= require jsapi
 //= require chartkick
-//= require sweetalert
 //= require sweet-alert-confirm
 //= require jquery.geocomplete.min
 //= require instafeed.min
