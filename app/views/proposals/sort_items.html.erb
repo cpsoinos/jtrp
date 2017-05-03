@@ -3,93 +3,97 @@
   <div class="row large-top-margin">
     <div class="col-xs-12 col-md-8 col-md-offset-2">
       <div class="col-xs-6">
-        <%= link_to "<i class='fa fa-caret-left'></i> Step 1: Add Items".html_safe, edit_account_job_proposal_path(@account, @job, @proposal), class: "btn btn-raised btn-primary" %>
+        <%= link_to "<i class='fa fa-caret-left'></i> Step 2: Sort Photos".html_safe, account_job_proposal_sort_photos_path(@proposal.account, @proposal.job, @proposal), class: "btn btn-raised btn-primary" %>
       </div>
       <div class="col-xs-6 text-right">
-        <%= link_to "Step 3: Item Details <i class='fa fa-caret-right'></i>".html_safe, account_job_proposal_details_path(@account, @job, @proposal), class: "btn btn-raised btn-primary" %>
+        <%= link_to "Step 4: Item Details <i class='fa fa-caret-right'></i>".html_safe, account_job_proposal_details_path(@account, @job, @proposal), class: "btn btn-raised btn-primary" %>
       </div>
     </div>
   </div>
 
   <div class="row text-center">
-    <h2>Step 2</h2>
+    <h2>Step 3</h2>
     This is where you can sort and create items from your photos.
   </div>
 
   <div class="row large-top-margin">
+    <div class="col-xs-12 col-md-8 col-md-offset-2">
 
-    <div class="text-center">
-      <%= link_to "Import Items", bulk_update_items_path(proposal_id: @proposal.id), method: :post, class: "btn btn-primary btn-raised", data: {confirm: "Are you sure?", :'confirm-button-text' => "Yes, I'm sure", :'cancel-button-text' => "No, cancel!", :'sweet-alert-type' => 'warning', :'confirm-button-color' => '#f44336', text: "This will remove all undecided or declined items from all of this account's proposals and add them to this one."} %>
-    </div>
+      <div class="text-center">
+        <%= link_to "Import Items", bulk_update_items_path(proposal_id: @proposal.id), method: :post, class: "btn btn-primary btn-raised", data: {confirm: "Are you sure?", :'confirm-button-text' => "Yes, I'm sure", :'cancel-button-text' => "No, cancel!", :'sweet-alert-type' => 'warning', :'confirm-button-color' => '#f44336', text: "This will remove all undecided or declined items from all of this account's proposals and add them to this one."} %>
+      </div>
 
-    <div class="container-fluid">
+      <div class="container-fluid">
 
-      <%= form_for [@proposal, @item], class: "form-horizontal" do |f| %>
+        <%= form_for [@proposal, @item], class: "form-horizontal" do |f| %>
 
-        <div class="row">
-          <div class="col-xs-12 col-md-4">
-            <div class="form-group label-floating">
-              <%= f.label :description, class: "control-label required" %>
-              <%= f.text_field :description, class: "form-control", required: true %>
+          <div class="row">
+            <div class="col-xs-12 col-md-4">
+              <div class="form-group label-floating">
+                <%= f.label :description, class: "control-label required" %>
+                <%= f.text_field :description, class: "form-control", required: true %>
+              </div>
             </div>
-          </div>
 
-          <div class="col-xs-12 col-md-4">
-            <div class="form-group label-floating">
-              <div class="input-group">
-                <span class="input-group-addon">
-                  <i class="fa fa-calendar" aria-hidden="true"></i>
-                </span>
-                <%= f.label :acquired_at, "acquired at", class: "control-label" %>
-                <%= f.text_field :acquired_at, value: @item.try(:sold_at).try(:strftime, '%-m/%-d/%Y'), class: "form-control datepicker" %>
+            <div class="col-xs-12 col-md-4">
+              <div class="form-group label-floating">
+                <div class="input-group">
+                  <span class="input-group-addon">
+                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                  </span>
+                  <%= f.label :acquired_at, "acquired at", class: "control-label" %>
+                  <%= f.text_field :acquired_at, value: @item.try(:sold_at).try(:strftime, '%-m/%-d/%Y'), class: "form-control datepicker" %>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-xs-12 col-md-4">
+              <div class="form-group label-floating">
+                <%= f.label :category, class: "control-label" %>
+                <%= f.collection_select :category_id, @categories, :id, :name, {include_blank: true}, {class: "select form-control" } %>
               </div>
             </div>
           </div>
 
-          <div class="col-xs-12 col-md-4">
-            <div class="form-group label-floating">
-              <%= f.label :category, class: "control-label" %>
-              <%= f.collection_select :category_id, @categories, :id, :name, {include_blank: true}, {class: "select form-control" } %>
+          <div class="row">
+            <div class="col-xs-4">
+              <div class="form-group label-floating">
+                <%= f.label :account_item_number, "Item No.".html_safe, class: "control-label" %>
+                <%= f.number_field :account_item_number, class: "form-control" %>
+                <p style="color: #AAAAAA;"><i><small>This will be automatically assigned if left blank</small></i></p>
+              </div>
+            </div>
+
+            <div class="col-xs-4">
+              <div class="form-group label-floating">
+                <%= f.label :jtrp_number, "JTRP No.", class: "control-label" %>
+                <%= f.number_field :jtrp_number, class: "form-control" %>
+              </div>
+            </div>
+
+            <div class="col-xs-4">
+              <div class="form-group label-floating">
+                <%= f.label :condition, "Condition/Notes", class: "control-label" %>
+                <%= f.text_field :condition, class: "form-control" %>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div class="row">
-          <div class="col-xs-4">
-            <div class="form-group label-floating">
-              <%= f.label :account_item_number, "Item No.".html_safe, class: "control-label" %>
-              <%= f.number_field :account_item_number, class: "form-control" %>
-              <p style="color: #AAAAAA;"><i><small>This will be automatically assigned if left blank</small></i></p>
-            </div>
+          <h4 class="large-top-margin">Select one or more photos of this item:</h4>
+
+          <div class="text-center">
+            <%= f.select :initial_photos, @photos.map { |photo| "<option data-img-src='#{photo.photo_url(:thumb)}' value='#{photo.id}'></option>".html_safe }, {}, { multiple: true, include_blank: true}  %>
           </div>
+          <%= f.hidden_field :proposal_id, value: @proposal.id %>
 
-          <div class="col-xs-4">
-            <div class="form-group label-floating">
-              <%= f.label :jtrp_number, "JTRP No.", class: "control-label" %>
-              <%= f.number_field :jtrp_number, class: "form-control" %>
-            </div>
+          <div class="text-right top-margin">
+            <%= f.submit class: "btn btn-raised btn-primary" %>
           </div>
+        <% end %>
 
-          <div class="col-xs-4">
-            <div class="form-group label-floating">
-              <%= f.label :condition, "Condition/Notes", class: "control-label" %>
-              <%= f.text_field :condition, class: "form-control" %>
-            </div>
-          </div>
-        </div>
-
-        <h4 class="large-top-margin">Select one or more photos of this item:</h4>
-
-        <%= f.select :initial_photos, @proposal.photos.where(item_id: nil).map { |photo| "<option data-img-src='#{photo.photo_url(:thumb)}' value='#{photo.id}'></option>".html_safe }, {}, { multiple: true, include_blank: true}  %>
-        <%= f.hidden_field :proposal_id, value: @proposal.id %>
-
-        <div class="text-right top-margin">
-          <%= f.submit class: "btn btn-raised btn-primary" %>
-        </div>
-      <% end %>
+      </div>
 
     </div>
-
   </div>
 
 </div>

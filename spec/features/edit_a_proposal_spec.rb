@@ -41,7 +41,7 @@ feature "edit a proposal" do
 
       scenario "arrives at details path" do
         visit account_job_proposal_sort_items_path(account, job, proposal)
-        click_link("Step 3: Item Details")
+        click_link("Step 4: Item Details")
 
         expect(page).to have_content("Will purchase")
         expect(page).to have_content("Offer to purchase this item")
@@ -140,12 +140,12 @@ feature "edit a proposal" do
       fill_in("note", with: "this is a note")
       click_button("Send Email")
       params = {
-        "utf8"=>"✓",
-        "note"=>"this is a note",
-        "commit"=>"Send Email",
-        "controller"=>"proposals",
-        "action"=>"send_email",
-        "proposal_id"=>"#{proposal.id}"
+        "utf8" => "✓",
+        "note" => "this is a note",
+        "commit" => "Send Email",
+        "controller" => "proposals",
+        "action" => "send_email",
+        "proposal_id" => "#{proposal.id}"
       }
 
       expect(TransactionalEmailJob).to have_received(:perform_later).with(proposal, Company.jtrp.primary_contact, account.primary_contact, "proposal", params)

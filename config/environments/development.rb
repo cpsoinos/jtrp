@@ -61,7 +61,4 @@ Rails.application.configure do
     Bullet.rails_logger = true
   end
 
-  # Automatically inject JavaScript needed for LiveReload
-  config.middleware.insert_after(ActionDispatch::Static, Rack::LiveReload)
-
 end

@@ -24,28 +24,28 @@
         <% end %>
       <% end %>
 
-      <% if current_user.try(:internal?) %>
-        <div class="row hidden-print">
-          <div class="col-xs-6">
-            <%= link_to "<i class='fa fa-caret-left'></i> Step 2: Details".html_safe, account_job_proposal_details_path(@account, @job, @proposal), class: "btn btn-raised btn-success" %>
-          </div>
-          <div class="col-xs-6 text-right">
-            <%= link_to "Step 5: Generate Agreements <i class='fa fa-caret-right'></i>".html_safe, account_job_proposal_agreements_path(@account, @job, @proposal), method: :post, class: "btn btn-raised btn-success btn-responsive" %>
-          </div>
-        </div>
-
-      <% else %>
-
+      <% unless current_user.try(:internal?) %>
         <%= render 'email_response_note_modal' %>
         <div class="row hidden-print top-margin">
           <button type="button" class="btn btn-raised btn-primary pull-right" data-toggle="modal" data-target="#email-response-note-modal">
             I'm finished! <i class='material-icons'>email</i>
           </button>
         </div>
-
       <% end %>
 
     </div>
+
+    <% if current_user.try(:internal?) %>
+      <div class="row hidden-print">
+        <div class="col-xs-6">
+          <%= link_to "<i class='fa fa-caret-left'></i> Step 4: Details".html_safe, account_job_proposal_details_path(@account, @job, @proposal), class: "btn btn-raised btn-success" %>
+        </div>
+        <div class="col-xs-6 text-right">
+          <%= link_to "Step 6: Generate Agreements <i class='fa fa-caret-right'></i>".html_safe, account_job_proposal_agreements_path(@account, @job, @proposal), method: :post, class: "btn btn-raised btn-success btn-responsive" %>
+        </div>
+      </div>
+    <% end %>
+
   </div>
 
 </div>

@@ -41,7 +41,14 @@
           </div>
 
           <div class="row">
-            <div class="preview"></div>
+            <div class="preview grid">
+              <div class="col-xs-4 grid-sizer"></div>
+              <% @proposal.photos.each do |photo| %>
+                <div class="col-xs-4 grid-item">
+                  <%= image_tag(photo.photo_url, fetch_format: "auto", quality: "auto", class: "img img-raised thumb") %>
+                </div>
+              <% end %>
+            </div>
           </div>
 
       </div>
