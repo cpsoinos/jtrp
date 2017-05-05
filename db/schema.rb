@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170418022406) do
+ActiveRecord::Schema.define(version: 20170505213229) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -59,7 +59,7 @@ ActiveRecord::Schema.define(version: 20170418022406) do
     t.string   "agreement_type",                          null: false
     t.string   "status"
     t.datetime "date"
-    t.integer  "check_number"
+    t.string   "check_number"
     t.boolean  "client_agreed"
     t.boolean  "manager_agreed"
     t.datetime "manager_agreed_at"
@@ -136,7 +136,7 @@ ActiveRecord::Schema.define(version: 20170418022406) do
     t.string   "remote_url"
     t.integer  "amount_cents",           default: 0,     null: false
     t.string   "amount_currency",        default: "USD", null: false
-    t.integer  "check_number"
+    t.string   "check_number"
     t.string   "carrier"
     t.string   "tracking_number"
     t.string   "expected_delivery_date"
@@ -431,7 +431,7 @@ ActiveRecord::Schema.define(version: 20170418022406) do
     t.datetime "date"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "check_number"
+    t.string   "check_number"
     t.string   "status"
     t.string   "token"
     t.integer  "account_id"

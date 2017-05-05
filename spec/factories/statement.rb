@@ -8,7 +8,7 @@ FactoryGirl.define do
 
     trait :paid do
       status "paid"
-      check_number 123
+      check_number "123"
     end
   end
 

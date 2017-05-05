@@ -1,7 +1,7 @@
 describe Statement::Updater do
 
   let(:statement) { create(:statement) }
-  let(:attrs) { { status: "paid", check_number: 123 } }
+  let(:attrs) { { status: "paid", check_number: "123" } }
   let(:updater) { Statement::Updater.new(statement) }
   let(:sender) { double("sender") }
 
@@ -15,7 +15,7 @@ describe Statement::Updater do
     updater.update(attrs)
 
     expect(statement).to be_paid
-    expect(statement.check_number).to eq(123)
+    expect(statement.check_number).to eq("123")
   end
 
   it "tags a statement as 'paid_manually'" do
@@ -25,7 +25,7 @@ describe Statement::Updater do
 
     expect(CheckSenderJob).not_to have_received(:perform_later)
     expect(statement).to be_paid
-    expect(statement.check_number).to eq(123)
+    expect(statement.check_number).to eq("123")
     expect(statement.tag_list).to include("paid_manually")
   end
 
