@@ -10,7 +10,7 @@ class PurchasesController < ApplicationController
     @agreement = Agreement.find(params[:id])
     @account = @agreement.account
     @job = @agreement.job
-    @items = @agreement.items
+    @items = @agreement.items.where.not(status: "potential")
     @title = "#{@job.name} - Proposal #{@agreement.proposal.id} - #{@agreement.humanized_agreement_type}"
   end
 
