@@ -94,6 +94,10 @@ group :production, :staging do
   gem 'wkhtmltopdf-heroku'
 end
 
+group :production do
+  gem 'rails_autoscale_agent'
+end
+
 group :production, :staging, :development do
   gem 'rails_12factor'
 end
