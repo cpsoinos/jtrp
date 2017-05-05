@@ -11,7 +11,7 @@ class Agreement < ActiveRecord::Base
   mount_uploader :pdf, PdfUploader
 
   belongs_to :proposal, touch: true
-  has_many :items, -> (instance) { where(items: {client_intention: instance.agreement_type}).where.not(items: {expired: 'true'}) }, through: :proposal
+  has_many :items, -> (instance) { where(items: {client_intention: instance.agreement_type, parent_item_id: nil}).where.not(items: {expired: 'true'}) }, through: :proposal
   has_one :scanned_agreement
   has_one :job, through: :proposal
   has_one :account, through: :job
