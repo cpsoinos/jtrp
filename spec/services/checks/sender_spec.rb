@@ -140,7 +140,7 @@ module Checks
     it "sets the check number on the statement" do
       sender.send_check
 
-      expect(statement.reload.check_number).to eq(10062)
+      expect(statement.reload.check_number).to eq("10062")
     end
 
   end
