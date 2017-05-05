@@ -44,6 +44,17 @@ describe Agreement do
       end
     end
 
+    it "does not include an item's child items" do
+      purchase_order = create(:agreement, :sell, :active, proposal: proposal)
+      item = owned_items.first
+      child = item.build_child_item
+      child.save
+      item.mark_inactive
+
+      expect(purchase_order.items).to include(item)
+      expect(purchase_order.items).not_to include(child)
+    end
+
   end
 
   describe "scopes" do
