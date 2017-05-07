@@ -47,7 +47,7 @@
 
       <div class="col-xs-10 col-xs-offset-1 col-md-4">
         <div class="card card-pricing">
-          <div class="content">
+          <div class="card-content">
             <h6 class="category text-success"><%= @item.description %></h6>
             <% if @item.listing_price_cents %>
               <h1 class="card-title"><small>$</small><%= humanized_money(@item.listing_price) %></h1>
@@ -85,7 +85,7 @@
                     </div>
                   </a>
 
-                  <div class="content">
+                  <div class="card-content">
                     <%= link_to "<i class='material-icons'>edit</i>".html_safe, edit_account_job_proposal_item_path(@item.account, @item.job, @item.proposal, @item.parent_item), class: "btn btn-fab btn-fab-mini btn-primary pull-right" %>
                     <h6 class="category text-info"><%= @item.parent_item.ownership_type %></h6>
                     <h4 class="card-title">
@@ -110,7 +110,7 @@
                         </div>
                       </a>
 
-                      <div class="content">
+                      <div class="card-content">
                         <%= link_to "<i class='material-icons'>edit</i>".html_safe, edit_account_job_proposal_item_path(item.account, item.job, item.proposal, item), class: "btn btn-fab btn-fab-mini btn-primary pull-right" %>
                         <h6 class="category text-info"><%= link_to item.description, account_job_proposal_item_path(item.account, item.job, item.proposal, item) %></h6>
                       </div>

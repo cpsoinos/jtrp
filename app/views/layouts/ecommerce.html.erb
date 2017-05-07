@@ -1,25 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <%= stylesheet_link_tag 'ecommerce', media: 'all', type: "text/css" %>
-  <link href='https://fonts.googleapis.com/css?family=Montserrat:200,300,400,600,700' rel='stylesheet' type='text/css'/>
-	<link href='https://fonts.googleapis.com/css?family=Open+Sans:200,300,400,600,700' rel='stylesheet' type='text/css'/>
+  <meta charset="utf-8"/>
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" media="all">
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto+Slab" media="all">
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/icon?family=Material+Icons" media="all">
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" media="all">
+  <%= stylesheet_link_tag 'application', media: 'all', type: "text/css" %>
   <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" media="all">
-  <%= javascript_include_tag 'ecommerce' %>
-  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAPS_API_KEY'] %>"></script>
+  <%= javascript_include_tag 'application' %>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAPS_API_KEY'] %>&libraries=places,staticmap"></script>
+  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+  <script src="https://use.fontawesome.com/e2b3e9ea8e.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+  <script type="text/javascript" src="https://apis.google.com/js/plusone.js" parsetags="explicit"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Accept-CH" content="DPR, Viewport-Width, Width">
   <meta property="fb:app_id" content="<%= ENV['FACEBOOK_APP_ID'] %>">
   <%= Gon::Base.render_data %>
   <%= csrf_meta_tags %>
   <%= render 'favicon' %>
+  <%= cloudinary_js_config %>
   <%= metamagic %>
   <meta name="p:domain_verify" content="<%= ENV['PINTEREST_ID'] %>"/>
-  <title><%= @company.name %></title>
 </head>
 
-<body class="<%= controller_name %> <%= action_name %> background-image">
+<body class="<%= controller_name %> <%= action_name %>">
   <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=<%= ENV['GOOGLE_TAG_MANAGER_ID'] %>"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
@@ -28,24 +35,17 @@
   <!-- Facebook SDK -->
   <div id="fb-root"></div>
 
-  <div class="page-container">
-    <%= render 'layouts/sapphire_navbar' unless params[:print] %>
     <div id="wrapper">
-      <!-- Page Content -->
-      <div id="page-content-wrapper">
-        <div class="container">
-          <% unless params[:print] %>
-            <%= render 'layouts/alerts', alert: alert, notice: notice %>
-          <% end %>
-          <div id="layout-top-buffer">
-            <%= yield %>
+        <%= render 'layouts/navbar' unless params[:print] %>
+        <%= render('layouts/alerts', alert: alert, notice: notice) unless params[:print] %>
+        <div class="content">
+          <div class="container-fluid">
+            <div class="row">
+              <%= yield %>
+            </div>
           </div>
         </div>
-        <%= render 'layouts/sapphire_footer' unless params[:print] %>
-      </div>
-      <!-- /#page-content-wrapper -->
     </div>
-  </div>
 
 </body>
 </html>

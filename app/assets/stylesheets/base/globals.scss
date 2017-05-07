@@ -11,6 +11,10 @@ body, h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4 {
 	font-family: $font-family-serif;
 }
 
+.brand .title {
+  font-family: "Bradley Hand" !important;
+}
+
 a, a:hover, a:focus {
   color: $brand-primary;
 }
@@ -237,4 +241,24 @@ h1, h3, h4 {
 
 .no-break {
   page-break-inside: avoid !important;
+}
+
+.card-nav-tabs .nav-tabs-title {
+  float: left;
+  padding: 10px 10px 10px 0;
+  line-height: 24px;
+  font-weight: bold;
+}
+
+.card-stats .title {
+  margin: 0;
+}
+
+.card .card-header .title {
+  color: #FFFFFF;
+}
+
+.card .title {
+  margin-top: 0;
+  margin-bottom: 5px;
 }

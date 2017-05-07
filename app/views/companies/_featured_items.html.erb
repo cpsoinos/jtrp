@@ -1,47 +1,73 @@
-<div class="row extra-large-top-margin">
-  <div class="col-xs-10 col-xs-offset-1 col-md-8 col-md-offset-2 text-center">
-    <h2>Some of Our Items</h2>
+<% items.each do |item| %>
+  <div class="col-md-4">
 
-    <% unless @featured_photos.empty? %>
-      <div class="card card-raised card-carousel">
-        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-          <div class="carousel slide" data-ride="carousel">
+    <div class="card card-product card-plain card-rotate">
+      <div class="rotating-card-container">
+        <div class="card-image">
+          <div class="front">
+            <%= image_tag(item.featured_photo.photo_url(
+              client_hints: true,
+              transformation: [
+                {gravity: "auto", aspect_ratio: "3:4", crop: "fill"},
+                {width: "auto:100:387", crop: "scale"}
+              ]
+            )) %>
+          </div>
 
-            <!-- Indicators -->
-            <ol class="carousel-indicators hidden-xs">
-              <% @featured_photos.each_with_index do |_photo, index| %>
-                <li data-target="#carousel-example-generic" data-slide-to="<%= index %>" class=""></li>
-              <% end %>
-            </ol>
-
-            <!-- Wrapper for slides -->
-            <div class="carousel-inner">
-              <div class="item active">
-                <%= image_tag(@featured_photos.first.photo_url(quality: "auto", fetch_format: :auto, effect: :improve), class: "img-rounded img-responsive img-raised") %>
+          <div class="back back-background">
+            <div class="card-content">
+              <h5 class="card-title">
+                Quick Actions...
+              </h5>
+              <div class="footer text-center">
+                <%= link_to "<i class='material-icons'>info</i> Details".html_safe, item_path(item), class: "btn btn-round btn-white" %>
+                <a href="#pablo" class="btn btn-round btn-rose">
+                  <i class="material-icons">add_shopping_cart</i>
+                  Cart
+                </a>
               </div>
-              <% if @featured_photos.length > 1 %>
-                <% @featured_photos[1..-1].each do |photo| %>
-                  <% cache photo do %>
-                    <div class="item">
-                      <%= image_tag(photo.photo_url(quality: "auto", fetch_format: :auto, effect: :improve), class: "img-rounded img-responsive img-raised") %>
-                    </div>
-                  <% end %>
-                <% end %>
-              <% end %>
+              <hr/>
+              <p class="card-description">
+                Share...
+              </p>
+              <%= link_to "View more items in this category...", category_path(item.category), class: "btn btn-round btn-white" %>
+              <a href="#pablo" class="btn btn-just-icon btn-round btn-white btn-twitter">
+                <i class="fa fa-twitter"></i>
+              </a>
+              <a href="#pablo" class="btn btn-just-icon btn-round btn-white btn-pinterest">
+                <i class="fa fa-pinterest"></i>
+              </a>
+              <a href="#pablo" class="btn btn-just-icon btn-round btn-white btn-facebook">
+                <i class="fa fa-facebook"></i>
+              </a>
             </div>
-
-            <!-- Controls -->
-            <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
-              <i class="material-icons">keyboard_arrow_left</i>
-            </a>
-            <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
-              <i class="material-icons">keyboard_arrow_right</i>
-            </a>
           </div>
         </div>
       </div>
-    <% end %>
 
+      <div class="card-content">
+        <h4 class="card-title">
+          <%= link_to item.description.titleize, item_path(item) %>
+        </h4>
+        <!-- <p class="card-description">
+          The structured shoulders and sleek detailing ensure a sharp silhouette. Team it with a silk pocket square and leather loafers.
+        </p> -->
+        <div class="footer">
+          <div class="price-container">
+            <!-- <span class="price price-old">
+              &euro;1,430
+            </span> -->
+            <span class="price price-new">
+              <%= humanized_money_with_symbol(item.listing_price) %>
+            </span>
+          </div>
+          <!-- <div class="stats">
+            <button type="button" rel="tooltip" title="" class="btn btn-just-icon btn-simple btn-rose" data-original-title="Saved to Wishlist">
+              <i class="material-icons">favorite</i>
+            </button>
+          </div> -->
+        </div>
+      </div>
+    </div>
   </div>
-
-</div>
+<% end %>

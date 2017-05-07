@@ -9,7 +9,7 @@
 //
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
-//
+
 //= require jquery
 //= require jquery.turbolinks
 //= require jquery_ujs
@@ -17,12 +17,14 @@
 //= require bootsy
 //= require jquery.remotipart
 //= require bootstrap.min
-//= require bootstrap-datepicker
+//= require moment.min
+//= require bootstrap-datetimepicker
 //= require validator.min
 //= require jasny-bootstrap.min
 //= require jquery.dropdown
 //= require jquery.flexisel
 //= require jquery.tagsinput
+//= require atv-img-animation
 //= require material-kit
 //= require material.min
 //= require bootstrap-notify
@@ -36,7 +38,6 @@
 //= require jquery-readyselector
 //= require masonry.pkgd.min
 //= require imagesloaded.pkgd.min
-//= require jsapi
 //= require chartkick
 //= require sweetalert
 //= require sweet-alert-confirm
@@ -66,5 +67,6 @@
 //= require letters
 //= require photos
 //= require activities
+//= require companies
 
 //= require turbolinks
