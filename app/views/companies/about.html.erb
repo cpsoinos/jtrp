@@ -1,57 +1,78 @@
-<div class="container">
-	<ul class="breadcrumb">
-    <li><%= link_to "Home", landing_page_path %> <span class="divider"></span></li>
-		<li class="active">About Us</li>
-	</ul>
+<div class="profile-page">
+  <div class="page-header header-filter contact-bg" data-parallax="true"></div>
 
-  <h2>About Us</h2>
+  <div class="main main-raised">
+    <div class="profile-content">
+      <div class="container">
 
-  <div class="row registerbox">
-    <div class="col-md-12">
-			<p class="text_about">Just the Right Piece is a second-hand furniture store in Salem, NH. We have a wide vareity of items to suit almost any taste, and our inventory is always changing. If you're not looking to shop, we can purchase or consign quality used furniture from you, our clients. If a piece of furniture is in good, solid condition, but needs a paint job, we can repaint or refinish the piece to become more appealing and desirable to a customer for resale. At Just the Right Piece, we are all about assisting our clients in making a profit by reselling unused or unwanted furniture quickly by pricing items reasonably and appropriately.</p>
-  	</div>
-  </div>
+        <div class="row">
+          <div class="col-xs-6 col-xs-offset-3">
+            <div class="profile">
+              <div class="avatar">
+                <%= image_tag("JTRPv2_color_noname.png", fetch_format: "jpg", class: "img-circle img-responsive img-raised") %>
+              </div>
+              <div class="brand name text-center">
+                <h3 class="title"><%= @company.name %></h3>
+              </div>
+            </div>
+          </div>
+        </div>
 
-  <div class="row registerbox text-center">
-    <div class="col-md-4">
-      <div class="icon icon-info">
-        <i class="material-icons large-icon">store</i>
-      </div>
-  	    <!-- <img src="banner1.jpg" alt="banner" class="img-polaroid"> -->
-  	</div>
-    <div class="col-md-4">
-      <div class="icon icon-success">
-        <i class='fa fa-credit-card-alt large-icon' aria-hidden='true'></i>
-      </div>
-  	    <!-- <img src="banner2.jpg" alt="banner1" class="img-polaroid"> -->
-  	</div>
-    <div class="col-md-4">
-      <div class="icon icon-danger">
-        <i class="material-icons large-icon">supervisor_account</i>
-      </div>
-  	    <!-- <img src="banner3.jpg" alt="banner2" class="img-polaroid"> -->
-  	</div>
-  </div>
+        <div class="description text-center">
+          <p>Just the Right Piece is a second-hand furniture store in Salem, NH. We have a wide vareity of items to suit almost any taste, and our inventory is always changing. If you're not looking to shop, we can purchase or consign quality used furniture from you, our clients. If a piece of furniture is in good, solid condition, but needs a paint job, we can repaint or refinish the piece to become more appealing and desirable to a customer for resale. At Just the Right Piece, we are all about assisting our clients in making a profit by reselling unused or unwanted furniture quickly by pricing items reasonably and appropriately.</p>
+        </div>
 
-  <div class="row registerbox">
-    <div class="col-md-4">
-	    <div class="description">
-  	    <h4>Shop</h4>
-  	    <p>Our inventory is always changing. Stop by to see what's in stock today!</p>
-  	    <p>Any purchases not picked up within 7 days of sale will incur a storage fee of $5.00 per day.</p>
-  		</div>
-  	</div>
-    <div class="col-md-4">
-      <div class="description">
-        <h4>Sell</h4>
-        <p>We offer a free in-home consultation where you can ask any questions you may have, show us your furniture and discuss what you'd like to do with it.</p>
+        <div class="section">
+
+          <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+              <div class="row registerbox text-center">
+                <div class="col-md-4">
+                  <div class="icon icon-info">
+                    <i class="material-icons large-icon">store</i>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="icon icon-success">
+                    <i class='fa fa-credit-card-alt large-icon' aria-hidden='true'></i>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="icon icon-primary">
+                    <i class="material-icons large-icon">supervisor_account</i>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row registerbox">
+                <div class="col-md-4">
+                  <div class="description">
+                    <h4 class="text-center">Shop</h4>
+                    <p>Our inventory is always changing. Stop by to see what's in stock today!</p>
+                    <p>Any purchases not picked up within 7 days of sale will incur a storage fee of $5.00 per day.</p>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="description">
+                    <h4 class="text-center">Sell</h4>
+                    <p>We offer a free in-home consultation where you can ask any questions you may have, show us your furniture and discuss what you'd like to do with it.</p>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="description">
+                    <h4 class="text-center">Consign</h4>
+                    <p>While we generally prefer to purchase items from clients outright, we also offer competitive consignment rates. Please review our <%= link_to "consignment policies", consignment_policies_path %> for more information.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+
       </div>
     </div>
-    <div class="col-md-4">
-      <div class="description">
-        <h4>Consign</h4>
-        <p>While we generally prefer to purchase items from clients outright, we also offer competitive consignment rates. Please review our <%= link_to "consignment policies", consignment_policies_path %> for more information.</p>
-      </div>
-    </div>
   </div>
+
 </div>
