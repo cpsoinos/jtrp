@@ -51,15 +51,19 @@ class CompaniesController < ApplicationController
   end
 
   def client_services
+    @title = "Client Services"
   end
 
   def consignment_policies
+    @title = "Consignment Policies"
   end
 
   def service_rate_schedule
+    @title = "Service Rate Schedule"
   end
 
   def agent_service_rate_schedule
+    @title = "Service Rate Schedule for Agents"
   end
 
   def send_message

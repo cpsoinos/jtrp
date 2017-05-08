@@ -36,8 +36,8 @@
   <div id="fb-root"></div>
 
     <div id="wrapper">
-        <%= render 'layouts/navbar' unless params[:print] %>
-        <%= render('layouts/alerts', alert: alert, notice: notice) unless params[:print] %>
+        <%= render 'layouts/navbar', navlinks: true unless params[:print] %>
+        <%= render 'layouts/alerts', alert: alert, notice: notice unless params[:print] %>
         <div class="content">
           <div class="container-fluid">
             <div class="row">
