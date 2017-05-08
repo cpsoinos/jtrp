@@ -4,45 +4,46 @@
        keywords: @categories.pluck(:name)
 %>
 
-<% breadcrumb :category, @category %>
+<div class="profile-page">
+  <div class="page-header header-filter contact-bg" data-parallax="true"></div>
 
-<div class="row">
+  <div class="main main-raised">
+    <div class="profile-content">
+      <div class="container">
 
-  <%= render 'sapphire_left_nav', categories: @categories, cached: true %>
-
-  <div class="col-md-9">
-
-    <div class="row">
-      <div class="col-md-11">
-  	    <div class="cat_header">
-  		    <h2><%= @category.name %></h2>
-  	    </div>
-    	</div>
-      <% if current_user.try(:internal?) %>
-        <div class="col-md-1">
-          <i><%= link_to "edit", edit_category_path(@category) %></i>
-        </div>
-      <% end %>
-    </div>
-
-    <% @items.each_slice(3) do |slice| %>
-      <div class="row">
-        <% slice.each do |item| %>
-          <div class="col-md-4">
-            <%= render 'items/item_card', item: item %>
+        <div class="row">
+          <div class="col-xs-6 col-xs-offset-3">
+            <div class="profile">
+              <div class="brand name text-center">
+                <h3 class="title"><%= @category.name.titleize %></h3>
+              </div>
+            </div>
           </div>
-        <% end %>
-      </div>
-    <% end %>
-
-    <div class="row">
-      <div class="col-md-12">
-        <div class="text-center">
-          <%= paginate @items, html: {class: "pagination pull-right"} %>
         </div>
+
+        <div class="description text-center">
+          <p>Just the Right Piece is a second-hand furniture store in Salem, NH. We have a wide vareity of items to suit almost any taste, and our inventory is always changing. If you're not looking to shop, we can purchase or consign quality used furniture from you, our clients. If a piece of furniture is in good, solid condition, but needs a paint job, we can repaint or refinish the piece to become more appealing and desirable to a customer for resale. At Just the Right Piece, we are all about assisting our clients in making a profit by reselling unused or unwanted furniture quickly by pricing items reasonably and appropriately.</p>
+        </div>
+
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="row">
+                <% @items.each do |item| %>
+                  <div class="col-md-3">
+                    <%= render "items/card", item: item %>
+                  </div>
+                <% end %>
+                <%= paginate @items, html: {class: "pagination pull-right"} %>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+
       </div>
     </div>
-
   </div>
 
 </div>

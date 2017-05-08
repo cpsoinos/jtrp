@@ -6,6 +6,7 @@
     <% if @company %>
       <%= link_to @company.name, dashboard_path, class: "sidebar-brand" %>
     <% end %>
+
   </div>
 
   <div class="sidebar-wrapper">
@@ -23,7 +24,7 @@
         <li class="<%= @navtab == 'accounts' ? 'active' : '' %>">
           <%= link_to "<i class='material-icons'>assignment_ind</i><p>Accounts</p>".html_safe, accounts_path %>
         </li>
-        <li class="" style="padding-left: 2em;">
+        <li class="nested-nav-li">
           <%= link_to "<i class='material-icons'>person_add</i><p>New Account</p>".html_safe, new_account_path %>
         </li>
         <li class="<%= @navtab == 'jobs' ? 'active' : '' %>">
@@ -38,6 +39,8 @@
         <li class="<%= @navtab == 'statements' ? 'active' : '' %>">
           <%= link_to "<i class='material-icons'>attach_money</i><p>Statements</p>".html_safe, statements_list_statements_path %>
         </li>
+      <% else %>
+        <%= render "categories/sidebar_list", categories: @categories %>
       <% end %>
     </ul>
   </div>

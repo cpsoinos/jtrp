@@ -16,8 +16,10 @@
           <div class="footer text-center">
             <%= link_to "<i class='material-icons'>info</i> Details".html_safe, item_path(item), class: "btn btn-round btn-white" %>
           </div>
-          <hr/>
-          <%= link_to "View more items in this category", category_path(item.category), class: "btn btn-round btn-white" %>
+          <% if action_name == "home" %>
+            <hr/>
+            <%= link_to "View more items in this category", category_path(item.category), class: "btn btn-round btn-white" %>
+          <% end %>
         </div>
       </div>
     </div>
