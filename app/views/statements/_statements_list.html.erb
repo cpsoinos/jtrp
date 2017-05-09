@@ -13,8 +13,8 @@
       </thead>
       <tbody>
         <% statements.each do |statement| %>
-          <tr>
-            <td class="text-center">
+          <tr class="no-break">
+            <td>
               <%= link_to "<i class='material-icons md-48'>account_balance_wallet</i> #{statement.humanized_name}".html_safe, account_statement_path(statement.account, statement) %>
             </td>
             <td class="text-center">

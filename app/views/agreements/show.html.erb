@@ -24,4 +24,6 @@
 
 </div>
 
-<%= render 'agreements/fab_menu', agreement: @agreement, items: @items %>
+<% content_for :fab do %>
+  <%= render 'agreements/fab_menu', agreement: @agreement, items: @items %>
+<% end %>

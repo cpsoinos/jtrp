@@ -33,4 +33,6 @@
 
 </div>
 
-<%= render 'statements/fab_menu', statement: @statement %>
+<% content_for :fab do %>
+  <%= render 'statements/fab_menu', statement: @statement %>
+<% end %>
