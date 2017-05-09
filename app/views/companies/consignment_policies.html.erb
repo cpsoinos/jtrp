@@ -32,3 +32,16 @@
   </div>
 
 </div>
+
+<% if current_user.try(:internal?) %>
+  <% content_for :fab do %>
+    <div class="btn-group dropup">
+      <button type="button" class="btn btn-raised btn-primary btn-fab dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <i class='material-icons'>menu</i>
+      </button>
+      <ul class="dropdown-menu dropdown-menu-right fab-menu">
+        <li><%= link_to "<i class='material-icons'>edit</i> Edit".html_safe, edit_company_path(@company) %></li>
+      </ul>
+    </div>
+  <% end %>
+<% end %>

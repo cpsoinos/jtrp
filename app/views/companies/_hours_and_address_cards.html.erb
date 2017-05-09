@@ -35,7 +35,7 @@
               <%= company.address_1 %><br>
               <%= company.city %>, <%= company.state %> <%= company.zip %><br>
               <%= company.phone %><br>
-              <%= mail_to company.primary_contact.email, company.primary_contact.email, style: "color: white;" %><br>
+              <%= mail_to company.primary_contact.try(:email), company.primary_contact.try(:email), style: "color: white;" %><br>
             </p>
             <%= link_to "<i class='material-icons'>location_on</i> Get Directions".html_safe, company.directions_link, target: "blank", class: "btn btn-white btn-round" %>
           </div>

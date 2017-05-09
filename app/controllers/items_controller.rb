@@ -55,12 +55,16 @@ class ItemsController < ApplicationController
   end
 
   def show
+    require_internal unless @item.active?
     meta_tags
     @title = @item.description.titleize
+    @category = @item.category
     if current_user.try(:internal?)
       @child_item = @item.build_child_item
     end
-    @related_items = @item.category.items.for_sale.where.not(id: @item.id).limit(3)
+    if @category
+      @related_items = @item.category.items.for_sale.where.not(id: @item.id).limit(3)
+    end
   end
 
   def edit
