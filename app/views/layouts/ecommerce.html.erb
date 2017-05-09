@@ -36,16 +36,16 @@
   <div id="fb-root"></div>
 
     <div id="wrapper">
-        <%= render 'layouts/navbar', navlinks: true unless params[:print] %>
-        <%= render 'layouts/alerts', alert: alert, notice: notice unless params[:print] %>
-        <div class="content">
-          <div class="container-fluid">
-            <div class="row">
-              <%= yield %>
-              <%= render "layouts/footer", company: @company %>
-            </div>
+      <%= render 'layouts/navbar', navlinks: true unless params[:print] %>
+      <%= render 'layouts/alerts', alert: alert, notice: notice unless params[:print] %>
+      <div class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <%= yield %>
+            <%= render "layouts/footer", company: @company %>
           </div>
         </div>
+      </div>
     </div>
 
   <!-- <script async defer src="//assets.pinterest.com/js/pinit.js"></script> -->

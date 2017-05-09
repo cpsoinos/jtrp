@@ -3,10 +3,10 @@
     <div class="card-image">
       <div class="front">
         <%= image_tag(item.featured_photo.photo_url(
-          client_hints: true,
+          client_hints: true, width: "auto",
           transformation: [
-            {gravity: "auto", aspect_ratio: "3:4", crop: "fill"},
-            {width: "auto:100:387", crop: "scale"}
+            { gravity: "auto", aspect_ratio: "3:4", crop: "fill" },
+            { width: "auto:50", fetch_format: "auto", quality: "auto", crop: "scale" }
           ]
         )) %>
       </div>

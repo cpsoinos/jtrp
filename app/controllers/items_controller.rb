@@ -1,7 +1,7 @@
 require 'prawn/labels'
 
 class ItemsController < ApplicationController
-  layout :resolve_layout
+  # layout :resolve_layout
   before_filter :find_clients, only: [:new, :edit]
   before_filter :find_categories, only: [:new, :edit, :show, :index]
   before_filter :find_proposal, only: [:create, :batch_create]
@@ -59,11 +59,8 @@ class ItemsController < ApplicationController
     @title = @item.description.titleize
     if current_user.try(:internal?)
       @child_item = @item.build_child_item
-    elsif @item.active?
-      render :sapphire_show
-    else
-      require_internal
     end
+    @related_items = @item.category.items.for_sale.where.not(id: @item.id).limit(3)
   end
 
   def edit
@@ -179,14 +176,14 @@ class ItemsController < ApplicationController
     @item = Item.find(params[:id])
   end
 
-  def resolve_layout
-    if !current_user.try(:internal?)
-      if action_name.in?(%w(show))
-        "ecommerce"
-      end
-    else
-      "application"
-    end
-  end
+  # def resolve_layout
+  #   if !current_user.try(:internal?)
+  #     if action_name.in?(%w(show))
+  #       "ecommerce"
+  #     end
+  #   else
+  #     "application"
+  #   end
+  # end
 
 end

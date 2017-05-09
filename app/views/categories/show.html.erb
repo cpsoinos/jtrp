@@ -9,11 +9,14 @@
 
   <div class="main main-raised">
     <div class="profile-content">
-      <div class="container">
+      <div class="container-fluid">
 
         <div class="row">
           <div class="col-xs-6 col-xs-offset-3">
             <div class="profile">
+              <div class="avatar">
+                <%= image_tag(@category.photo_url(client_hints: true, fetch_format: "auto", quality: "auto", width: "auto"), class: "img-circle img-responsive img-raised") %>
+              </div>
               <div class="brand name text-center">
                 <h3 class="title"><%= @category.name.titleize %></h3>
               </div>
@@ -21,22 +24,22 @@
           </div>
         </div>
 
-        <div class="description text-center">
-          <p>Just the Right Piece is a second-hand furniture store in Salem, NH. We have a wide vareity of items to suit almost any taste, and our inventory is always changing. If you're not looking to shop, we can purchase or consign quality used furniture from you, our clients. If a piece of furniture is in good, solid condition, but needs a paint job, we can repaint or refinish the piece to become more appealing and desirable to a customer for resale. At Just the Right Piece, we are all about assisting our clients in making a profit by reselling unused or unwanted furniture quickly by pricing items reasonably and appropriately.</p>
-        </div>
-
-        <div class="container">
+        <div class="container-fluid">
           <div class="row">
-            <div class="col-md-12">
-              <div class="row">
-                <% @items.each do |item| %>
-                  <div class="col-md-3">
-                    <%= render "items/card", item: item %>
-                  </div>
-                <% end %>
-                <%= paginate @items, html: {class: "pagination pull-right"} %>
-              </div>
+            <div class="col-md-10 col-md-offset-1 col-xs-12">
+              <% @items.each_slice(4) do |items| %>
+                <div class="row">
+                  <% items.each do |item| %>
+                    <div class="col-md-3 col-xs-12">
+                      <%= render "items/card", item: item %>
+                    </div>
+                  <% end %>
+                </div>
+              <% end %>
 
+              <div class="text-center">
+                <%= paginate @items %>
+              </div>
             </div>
           </div>
         </div>

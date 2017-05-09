@@ -23,4 +23,5 @@ $(document).on('turbolinks:load', function() {
     $(e.relatedTarget.attributes['data-target'].value).appendTo('body');
   })
 
+
 });

@@ -22,7 +22,9 @@ $(document).on('turbolinks:load', function() {
   //   }
   // });
 
-  initMap();
+  if (document.getElementById("contactUsMap") != undefined) {
+    initMap();
+  };
   // materialKitDemo.initContactUsMap();
 
 

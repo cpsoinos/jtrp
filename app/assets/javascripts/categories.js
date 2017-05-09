@@ -5,4 +5,6 @@ $(document).on('turbolinks:load', function() {
     $(gon.selectedSelector).css("border-right", "1px solid blue")
   }
 
+  $.cloudinary.responsive();
+
 })
