@@ -34,4 +34,10 @@ class Category < ActiveRecord::Base
     end
   end
 
+  def featured_photo
+    Rails.cache.fetch([cache_key, "item_photo"]) do
+      items.active.sample.try(:featured_photo) || self # fallback to own photo
+    end
+  end
+
 end
