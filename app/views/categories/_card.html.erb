@@ -1,7 +1,7 @@
 <div class="card card-product card-plain" data-colored-shadow="false">
   <%= link_to category_path(category) do %>
     <div class="card-image">
-      <%= image_tag(category.photo_url(
+      <%= image_tag(category.featured_photo.photo_url(
         client_hints: true,
         transformation: [
           {gravity: "auto", aspect_ratio: "3:4", crop: "fill"},

@@ -25,4 +25,19 @@ describe Category do
 
   end
 
+  context "featured photo" do
+
+    let(:category) { create(:category) }
+
+    it "fetches an active item's featured photo" do
+      item = create(:item, :with_listing_photo, :active, category: category)
+      expect(category.featured_photo).to eq(item.featured_photo)
+    end
+
+    it "falls back to itself when no active items" do
+      expect(category.featured_photo).to eq(category)
+    end
+
+  end
+
 end
