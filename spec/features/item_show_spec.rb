@@ -17,9 +17,7 @@ feature "item show" do
       scenario "visits item show page" do
         visit account_job_proposal_item_path(account, job, proposal, item)
 
-        expect(page).to have_content(account.id)
-        expect(page).to have_content(job.id)
-        expect(page).to have_content(proposal.id)
+        expect(page).to have_link(account.short_name)
         expect(page).to have_content(item.account_item_number)
         expect(page).to have_content(item.id)
         expect(page).to have_link("delete_forever".html_safe)
@@ -78,12 +76,8 @@ feature "item show" do
         end
 
         scenario "visits item show page" do
-          expect(page).to have_content(account.id)
-          expect(page).to have_content(job.id)
-          expect(page).to have_content(proposal.id)
           expect(page).to have_content(item.account_item_number)
           expect(page).to have_content(item.id)
-          expect(page).to have_content(agreement.id)
           expect(page).to have_link("delete_forever".html_safe)
           expect(page).to have_link("edit")
           expect(page).to have_content("Active")
@@ -127,9 +121,6 @@ feature "item show" do
         end
 
         scenario "visits item show page" do
-          expect(page).to have_content(account.id)
-          expect(page).to have_content(job.id)
-          expect(page).to have_content(proposal.id)
           expect(page).to have_content(item.account_item_number)
           expect(page).to have_content(item.id)
           expect(page).to have_link("delete_forever".html_safe)
@@ -258,7 +249,6 @@ feature "item show" do
       visit item_path(item)
 
       expect(page).to have_content(item.description.titleize)
-      expect(page).to have_content("SKU: #{item.id}")
       expect(page).to have_content("$10.00")
     end
 
@@ -267,7 +257,6 @@ feature "item show" do
       visit item_path(item)
 
       expect(page).to have_content(item.description.titleize)
-      expect(page).to have_content("SKU: #{item.id}")
       expect(page).to have_content("$10.00")
     end
 
@@ -278,7 +267,6 @@ feature "item show" do
       visit item_path(item)
 
       expect(page).to have_content(item.description.titleize)
-      expect(page).to have_content("SKU: #{item.id}")
       expect(page).to have_content("$10.00")
     end
 

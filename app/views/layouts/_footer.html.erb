@@ -1,0 +1,48 @@
+<footer class="footer footer-black footer-big">
+  <%= render "layouts/privacy_policy_modal" %>
+  <div class="container">
+
+    <div class="content">
+      <div class="row">
+        <div class="col-md-4">
+          <div>
+            <h4 class="title">Information</h4>
+            <p><%= link_to "About Us", about_path %></p>
+            <p><%= link_to "Privacy Policy", "#", id: "privacy-policy", data: {toggle: "modal", target: "#privacy-policy-modal"} %></p>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div>
+            <h4 class="title">Customer Service</h4>
+            <p><%= link_to "Contact Us", contact_path %></p>
+            <p><%= link_to "Service Rate Schedule", service_rate_schedule_path %></p>
+            <p><%= link_to "Service Rate Schedule for Agents", agent_service_rate_schedule_path %></p>
+            <p><%= link_to "Consignment Terms & Conditions", consignment_policies_path %></p>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div>
+            <h4 class="title">Follow Us</h4>
+            <ul class="social-network">
+              <li><a href="https://www.facebook.com/<%= company.facebook_page %>"><i class="fa fa-facebook"></i></a></li>
+              <li><a href="https://plus.google.com/<%= company.google_plus_account %>"><i class="fa fa-google-plus"></i></a></li>
+              <li><a href="https://www.houzz.com/pro/<%= company.houzz_account %>"><i class="fa fa-houzz"></i></a></li>
+              <li><a href="https://www.instagram.com/<%= company.instagram_account %>"><i class="fa fa-instagram"></i></a></li>
+              <li><a href="https://www.linkedin.com/company/<%= company.linkedin_account %>"><i class="fa fa-linkedin"></i></a></li>
+            </ul>
+            <ul class="social-network">
+              <li><a href="https://www.pinterest.com/<%= company.pinterest_account %>"><i class="fa fa-pinterest"></i></a></li>
+              <li><a href="https://twitter.com/<%= company.twitter_account %>"><i class="fa fa-twitter"></i></a></li>
+              <li><a href="https://www.yelp.com/biz/<%= company.yelp_account %>"><i class="fa fa-yelp"></i></a></li>
+              <li><a href="https://medium.com/@<%= company.medium_account %>"><i class="fa fa-medium"></i></a></li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</footer>

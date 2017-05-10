@@ -11,6 +11,7 @@
   <%= javascript_include_tag 'application' %>
   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
   <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAPS_API_KEY'] %>&libraries=places,staticmap"></script>
+  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
   <script src="https://use.fontawesome.com/e2b3e9ea8e.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
   <script type="text/javascript" src="https://apis.google.com/js/plusone.js" parsetags="explicit"></script>
@@ -39,15 +40,24 @@
       <div class="<%= 'main-panel' unless params[:print] %>">
         <%= render 'layouts/navbar' unless params[:print] %>
         <%= render('layouts/alerts', alert: alert, notice: notice) unless params[:print] %>
+        <% unless params[:print] %>
+          <div class="page-header header-filter header-small main-header-bg page-header-main" data-parallax="true" style="height: 20vh;"></div>
+        <% end %>
+
         <div class="content">
           <div class="container-fluid">
             <div class="row">
               <%= breadcrumbs separator: " &rsaquo; " %>
-              <%= yield %>
+              <div class="<%= 'main main-raised' unless (controller_name == 'companies' && action_name == 'show') || params[:print] %>">
+                <%= yield %>
+              </div>
             </div>
           </div>
         </div>
       </div>
+
+      <%= yield :fab %>
+
     </div>
 
 </body>

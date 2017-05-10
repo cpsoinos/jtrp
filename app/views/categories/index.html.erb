@@ -4,20 +4,45 @@
        keywords: @categories.pluck(:name)
 %>
 
-<div class="page-header header-filter clear-filter background-image" data-parallax="active"></div>
+<div class="profile-page">
+  <div class="page-header header-filter contact-bg" data-parallax="true"></div>
 
-<div class="row over-background">
-  <div class="col-xs-12 text-center">
-    <h1 class="company-title"><%= @company.name %></h1>
-    <h4><%= @company.slogan %></h4>
-  </div>
-</div>
+  <div class="main main-raised">
+    <div class="profile-content">
+      <div class="container-fluid">
 
-<div class="main main-raised extra-large-top-margin">
-  <div class="container">
+        <div class="row">
+          <div class="col-xs-6 col-xs-offset-3">
+            <div class="profile">
+              <div class="brand name text-center">
+                <h3 class="title">Categories</h3>
+              </div>
+            </div>
+          </div>
+        </div>
 
-    <%= render 'category_selector' %>
+        <div class="description text-center">
+          <p>Just the Right Piece is a second-hand furniture store in Salem, NH. We have a wide vareity of items to suit almost any taste, and our inventory is always changing. If you're not looking to shop, we can purchase or consign quality used furniture from you, our clients. If a piece of furniture is in good, solid condition, but needs a paint job, we can repaint or refinish the piece to become more appealing and desirable to a customer for resale. At Just the Right Piece, we are all about assisting our clients in making a profit by reselling unused or unwanted furniture quickly by pricing items reasonably and appropriately.</p>
+        </div>
 
+        <div class="container-fluid">
+          <h2 class="section-title title">Shop by category...</h2>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="row">
+                <% @categories.primary.each do |category| %>
+                  <div class="col-md-3">
+                    <%= render "categories/card", category: category %>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
   </div>
 
 </div>

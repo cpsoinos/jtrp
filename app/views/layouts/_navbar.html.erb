@@ -1,4 +1,6 @@
-<nav class="navbar navbar-transparent navbar-absolute">
+<% navlinks ||= false %>
+
+<nav class="navbar navbar-default navbar-transparent navbar-fixed-top navbar-color-on-scroll" color-on-scroll="100" id="sectionsNav">
   <div class="container-fluid">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse">
@@ -7,13 +9,21 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <%= link_to @title, request.path, class: "navbar-brand company-title navbar-title" %>
+      <% if navlinks %>
+        <% if current_user.try(:internal?) %>
+          <%= link_to "Dashboard", dashboard_path, class: "navbar-brand navbar-title" %>
+        <% end %>
+        <% unless @title == "Home" %>
+          <%= link_to "Home", root_path, class: "navbar-brand navbar-title" %>
+        <% end %>
+      <% end %>
+      <%= link_to @title, request.path, class: "navbar-brand navbar-title" %>
     </div>
     <div class="collapse navbar-collapse">
-      <ul class="nav navbar-nav navbar-right">
+      <ul class="nav navbar-nav navbar-right", style="margin-right:15px;">
         <li>
-          <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
-            <i class="material-icons" style="color: purple;">person</i>
+          <a href="" class="dropdown-toggle btn btn-primary btn-round btn-just-icon" data-toggle="dropdown" style="width:44px;height:45px;">
+            <i class="material-icons">person</i>
             <p class="hidden-lg hidden-md">Profile</p>
           </a>
           <ul class="dropdown-menu">
@@ -22,7 +32,7 @@
             <% else %>
               <li><%= link_to "Sign in with Clover <i class='fa fa-sign-in' aria-hidden='true'></i>".html_safe, user_omniauth_authorize_path(:clover) %></li>
               <li><%= link_to "Sign In <i class='fa fa-sign-in' aria-hidden='true'></i>".html_safe, new_user_session_path %></li>
-              <li><%= link_to "Sign Up <i class='fa fa-sign-up' aria-hidden='true'></i>".html_safe, new_user_registration_path %></li>
+              <!-- <li><%#= link_to "Sign Up <i class='fa fa-sign-up' aria-hidden='true'></i>".html_safe, new_user_registration_path %></li> -->
             <% end %>
           </ul>
         </li>
@@ -30,9 +40,10 @@
 
       <%= form_tag search_index_path, method: :get, class: "navbar-form navbar-right", role: "search" do %>
         <div class="form-group is-empty">
-          <%= text_field_tag :'search[query]', params[:query], class: "form-control", placeholder: "Search", style: "color: black;" %>
+          <%= text_field_tag :'search[query]', params[:query], class: "form-control" %>
           <span class="material-input"></span>
         </div>
+        <%= hidden_field_tag :'search[include_subcategories]', true %>
         <button type="submit" class="btn btn-primary btn-round btn-just-icon">
           <i class="material-icons">search</i><div class="ripple-container"></div>
         </button>

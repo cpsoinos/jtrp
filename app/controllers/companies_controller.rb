@@ -1,6 +1,7 @@
 class CompaniesController < ApplicationController
-  layout :resolve_layout
   before_filter :require_internal, except: [:client_services, :consignment_policies, :service_rate_schedule, :agent_service_rate_schedule, :home, :about, :contact, :send_message]
+
+  layout :resolve_layout
 
   def show
     @navtab = 'dashboard'
@@ -23,13 +24,17 @@ class CompaniesController < ApplicationController
   end
 
   def home
-    @featured_items = Item.active.joins(:photos).limit(10).order("RANDOM()")
+    # @featured_items = Item.active.tagged_with("marked down").joins(:photos).limit(3).order("RANDOM()")
+    @featured_items = Item.active.joins(:photos).limit(3).order("RANDOM()")
+    @title = "Home"
   end
 
   def about
+    @title = "About Us"
   end
 
   def contact
+    @title = "Contact Us"
   end
 
   def edit
@@ -46,15 +51,19 @@ class CompaniesController < ApplicationController
   end
 
   def client_services
+    @title = "Client Services"
   end
 
   def consignment_policies
+    @title = "Consignment Policies"
   end
 
   def service_rate_schedule
+    @title = "Service Rate Schedule"
   end
 
   def agent_service_rate_schedule
+    @title = "Service Rate Schedule for Agents"
   end
 
   def send_message

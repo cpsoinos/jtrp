@@ -1,8 +1,9 @@
 class CategoriesController < ApplicationController
-  layout :resolve_layout
+  # layout :resolve_layout
   before_filter :require_internal, except: [:index, :show]
 
   def index
+    @title = "Categories"
   end
 
   def show
@@ -10,6 +11,7 @@ class CategoriesController < ApplicationController
     find_items
     find_toggle_selector
     find_selected_selector
+    @title = @category.name.titleize
   end
 
   def new
@@ -60,13 +62,13 @@ class CategoriesController < ApplicationController
     params.require(:category).permit(:name, :parent_id, :photo)
   end
 
-  def resolve_layout
-    if action_name.in?(%w(show))
-      "ecommerce"
-    else
-      "application"
-    end
-  end
+  # def resolve_layout
+  #   if action_name.in?(%w(show))
+  #     "ecommerce"
+  #   else
+  #     "application"
+  #   end
+  # end
 
   def find_category
     @category = Category.includes(:subcategories).find(params[:id])

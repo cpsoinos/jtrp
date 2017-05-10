@@ -33,4 +33,8 @@ class Company < ActiveRecord::Base
     GeolocationService.new(self).static_map_url(size)
   end
 
+  def directions_link
+    GeolocationService.new(self).directions_link
+  end
+
 end

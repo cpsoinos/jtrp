@@ -1,7 +1,5 @@
 class SearchController < ApplicationController
   before_filter :filter_results_for_guests
-  before_filter :handle_subcategories
-  layout "ecommerce"
 
   def index
     if params[:search]
@@ -27,20 +25,23 @@ class SearchController < ApplicationController
   protected
 
   def search_params
-    params.require(:search).permit(:query, :by_category_id, :include_subcategories, :status, :page).reject{|_, v| v.blank?}
+    opts = params.require(:search).permit(:query, :include_subcategories, :status, :page, :by_category_id).reject{|_, v| v.blank?}
+    opts = handle_subcategories(opts)
+    opts
   end
 
-  def handle_subcategories
+  def handle_subcategories(opts)
     return unless params[:search].present?
-    if params[:search].delete(:include_subcategories)
-      if params[:search][:by_category_id].present?
-        parent_id = params[:search][:by_category_id]
-        child_ids = Category.where(parent_id: params[:search][:by_category_id]).pluck(:id)
+    if opts.delete(:include_subcategories)
+      if opts[:by_category_id].present?
+        parent_id = opts[:by_category_id]
+        child_ids = Category.where(parent_id: opts[:by_category_id]).pluck(:id)
         ids = child_ids << parent_id
-        params[:search][:by_category_id] = ids
+        opts[:by_category_id] = ids
         # params[:search][:by_category_id] += Category.where(parent_id: params[:search][:by_category_id]).pluck(:id) <<
       end
     end
+    opts
   end
 
 end

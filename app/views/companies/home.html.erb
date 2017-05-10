@@ -1,72 +1,59 @@
 <% meta @meta_tags %>
 
-<div class="row">
-  <div class="col-md-6 slideshow">
-    <div id="slideshow0">
-      <div class="camera_wrap camera_emboss camera_white_skin">
-        <% if @featured_items.present? %>
-          <% @featured_items[0..4].each do |item| %>
-            <div data-thumb="<%= item.featured_photo.photo_url(:thumb) %>" data-src="<%= item.featured_photo.photo_url(:slideshow) %>" data-link="<%= item_path(item) %>"></div>
-          <% end %>
-        <% end %>
-      </div>
-    </div>
-  </div>
-  <div class="col-md-6 slideshow">
-    <div id="slideshow1">
-      <div class="camera_wrap camera_emboss camera_white_skin">
-        <% if @featured_items.length >= 5 %>
-          <% @featured_items[5..9].each do |item| %>
-            <div data-thumb="<%= item.featured_photo.photo_url(:thumb) %>" data-src="<%= item.featured_photo.photo_url(:slideshow) %>" data-link="<%= item_path(item) %>" data-thumbnails="false"></div>
-          <% end %>
-        <% end %>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="location">
-  <div class="row text-center">
-    <h1 class="company-title"><%= @company.name %></h1>
-  </div>
-  <div class="row top-margin">
-    <div class="col-md-6">
-      <%= render 'hours_block' %>
-    </div>
-    <div class="col-md-3">
-      <%= render 'address_block' %>
-    </div>
-    <div class="col-md-3 text-center">
-      <%= link_to image_tag(@company.maps_url, class: "img"), contact_path %>
-    </div>
-  </div>
-</div>
-
-<div class="row" style="margin-top: 20px;">
-  <%= render 'categories/sapphire_left_nav', categories: @categories, cached: true %>
-
-  <div class="col-md-9">
-
+<div class="page-header header-filter header-small main-header-bg" data-parallax="true">
+  <div class="container">
     <div class="row">
-      <% @categories.primary.each do |category| %>
-        <div class="col-md-4">
-          <div class="product">
-            <% if category.items.active.present? %>
-              <%= link_to image_tag(category.items.active.sample.featured_photo.photo_url(width: 200, height: 150, crop: "fill", fetch_format: "auto", gravity: "auto")), category_path(category) %>
-            <% else %>
-              <%= link_to image_tag(category.photo_url(width: 200, height: 150, crop: "fill")), category_path(category) %>
-            <% end %>
-            <div class="name">
-              <%= link_to category.name, category_path(category) %>
-            </div>
-            <div class="price">
-              <p>from <%= humanized_money_with_symbol(category.lowest_price) %></p>
-            </div>
-          </div>
+      <div class="col-md-8 col-md-offset-2">
+        <div class="brand text-center">
+          <h1 class="title"><%= @company.name %></h1>
+          <h4 class="title"><%= @company.slogan %></h4>
         </div>
-      <% end %>
+      </div>
     </div>
+  </div>
+</div>
 
+<%= render "companies/hours_and_address_cards", company: @company %>
+
+<div class="main main-raised">
+
+  <div class="section">
+    <div class="container">
+      <h2 class="section-title title">Just a few of our items...</h2>
+      <div class="row">
+        <% @featured_items.each do |item| %>
+          <div class="col-md-4">
+            <%= render "items/card", item: item %>
+          </div>
+        <% end %>
+      </div>
+    </div>
   </div>
 
+  <div class="container">
+    <h2 class="section-title title">Shop by category...</h2>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row">
+          <% @categories.primary.each do |category| %>
+            <div class="col-md-3">
+              <%= render "categories/card", category: category %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<!-- end-main-raised -->
+
+<div class="subscribe-line subscribe-line-image contact-bg" data-parallax="true">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        <%= render "companies/contact_form" %>
+      </div>
+    </div>
+  </div>
 </div>

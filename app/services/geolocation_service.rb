@@ -16,6 +16,10 @@ class GeolocationService
     string.gsub!(" ", "+")
   end
 
+  def directions_link
+    "https://www.google.com/maps?saddr=My+Location&daddr=#{location_string}"
+  end
+
   private
 
   def pull_location_from_object

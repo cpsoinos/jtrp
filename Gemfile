@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.3.1'
+ruby '2.3.3'
 gem 'bundler', '>= 1.8.4'
 gem 'rails', '4.2.5.2'
 gem 'pg', '~> 0.15'
@@ -77,6 +77,11 @@ gem 'redis-namespace'
 gem 'acts_as_list'
 gem 'public_activity'
 gem 'wicked_pdf'
+
+source 'https://VMhPfPufH483ELy_GQup@gem.fury.io/cpsoinos/' do
+  gem 'mk_pro-rails'
+  gem 'material_dashboard_pro-rails'
+end
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-classnames'

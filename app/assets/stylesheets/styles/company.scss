@@ -42,3 +42,22 @@ img.logo {
 .navbar-title {
   font-size: 32px;
 }
+
+#hours-of-operation {
+  background-image: url('book clock high resolution wallpaper.jpg')
+}
+
+.card-content {
+  p.card-description, table tr td {
+    color: white;
+    font-weight: bold;
+  }
+}
+
+.main-header-bg {
+  background-image: cloudinary-url("facebook_banner.jpg", $client_hints: true, $fetch_format: "auto", $opacity: 30, $quality: 100);
+}
+
+.contact-bg {
+  background-image: cloudinary-url("facebook_banner_2_cropped.jpg", $client_hints: true, $fetch_format: "auto", $gravity: "auto", $opacity: 30, $quality: 100);
+}

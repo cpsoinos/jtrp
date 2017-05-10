@@ -14,26 +14,24 @@
       <% end %>
     <% end %>
 
-    <div class="well bs-component">
-      <%= render 'header', form_name: "Proposal", company: @company, proposal: @proposal, account: @account, job: @job %>
-      <%= render 'disclaimer' %>
+    <%= render 'header', form_name: "Proposal", company: @company, proposal: @proposal, account: @account, job: @job %>
+    <%= render 'disclaimer' %>
 
-      <% @items.each do |item| %>
-        <% cache [@proposal, action_name, item] do %>
-          <%= render 'item_row', collection: @items, cached: true, item: item %>
-        <% end %>
+    <% @items.each do |item| %>
+      <% cache [@proposal, action_name, item] do %>
+        <%= render 'item_row', collection: @items, cached: true, item: item %>
       <% end %>
+    <% end %>
 
-      <% unless current_user.try(:internal?) %>
-        <%= render 'email_response_note_modal' %>
-        <div class="row hidden-print top-margin">
-          <button type="button" class="btn btn-raised btn-primary pull-right" data-toggle="modal" data-target="#email-response-note-modal">
-            I'm finished! <i class='material-icons'>email</i>
-          </button>
-        </div>
-      <% end %>
+    <% unless current_user.try(:internal?) %>
+      <%= render 'email_response_note_modal' %>
+      <div class="row hidden-print top-margin">
+        <button type="button" class="btn btn-raised btn-primary pull-right" data-toggle="modal" data-target="#email-response-note-modal">
+          I'm finished! <i class='material-icons'>email</i>
+        </button>
+      </div>
+    <% end %>
 
-    </div>
 
     <% if current_user.try(:internal?) %>
       <div class="row hidden-print">

@@ -1,23 +1,47 @@
-<div class="row">
-  <div class="col-md-12">
-    <div class="breadcrumbs">
-      <ul class="breadcrumb">
-        <li><%= link_to "Home", root_path %> <span class="divider"></span></li>
-        <li class="active">Consignment Policies</li>
-      </ul>
+<div class="profile-page">
+  <div class="page-header header-filter contact-bg" data-parallax="true"></div>
+
+  <div class="main main-raised">
+    <div class="profile-content">
+      <div class="container">
+
+        <div class="row">
+          <div class="col-xs-6 col-xs-offset-3">
+            <div class="profile">
+              <div class="avatar">
+                <%= image_tag("JTRPv2_color_noname.png", fetch_format: "jpg", class: "img-circle img-responsive img-raised") %>
+              </div>
+              <div class="brand name text-center">
+                <h3 class="title">Consignment Policies</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section">
+          <%= @company.consignment_policies.try(:html_safe) %>
+        </div>
+        <% if current_user.try(:internal?) %>
+          <div class="row hidden-print">
+            <%= link_to "<i>Edit</i>".html_safe, edit_company_path(@company), class: "pull-right" %>
+          </div>
+        <% end %>
+
+      </div>
     </div>
   </div>
+
 </div>
 
-<div class="row">
-  <div class="col-xs-12 col-md-8 col-md-offset-2">
-    <div class="well">
-      <% if current_user.try(:internal?) %>
-        <div class="row hidden-print">
-          <%= link_to "<i>Edit</i>".html_safe, edit_company_path(@company), class: "pull-right" %>
-        </div>
-      <% end %>
-      <%= @company.consignment_policies.try(:html_safe) %>
+<% if current_user.try(:internal?) %>
+  <% content_for :fab do %>
+    <div class="btn-group dropup">
+      <button type="button" class="btn btn-raised btn-primary btn-fab dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <i class='material-icons'>menu</i>
+      </button>
+      <ul class="dropdown-menu dropdown-menu-right fab-menu">
+        <li><%= link_to "<i class='material-icons'>edit</i> Edit".html_safe, edit_company_path(@company) %></li>
+      </ul>
     </div>
-  </div>
-</div>
+  <% end %>
+<% end %>

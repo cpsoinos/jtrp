@@ -1,0 +1,61 @@
+<div class="text-center">
+  <h3 class="title">Contact Us</h3>
+  <p class="title">
+    Interested in selling or consigning with us? Get in touch now! We'll get back to you as soon as we can.
+  </p>
+</div>
+
+<div class="card card-raised card-form-horizontal">
+  <div class="card-content">
+
+    <%= form_tag send_message_path do %>
+      <div class="row">
+        <div class="col-md-6">
+
+          <div class="input-group">
+            <span class="input-group-addon">
+              <i class="material-icons">person</i>
+            </span>
+            <div class="form-group is-empty">
+              <%= text_field_tag :from_name, nil, placeholder: "Your Name...", class: "form-control", required: true %>
+              <span class="material-input"></span>
+            </div>
+          </div>
+
+          <div class="input-group">
+            <span class="input-group-addon">
+              <i class="material-icons">mail</i>
+            </span>
+            <div class="form-group is-empty">
+              <%= email_field_tag :email, nil, placeholder: "Your Email...", class: "form-control", required: true %>
+              <span class="material-input"></span>
+            </div>
+          </div>
+
+          <div class="input-group">
+            <span class="input-group-addon">
+              <i class="material-icons">subject</i>
+            </span>
+            <div class="form-group is-empty">
+              <%= text_field_tag :subject, nil, placeholder: "Subject...", class: "form-control", required: true %>
+              <span class="material-input"></span>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="col-md-6">
+          <!-- <div class="input-group"> -->
+            <div class="form-group is-empty" style="margin-bottom:5px;">
+              <%= text_area_tag :note, nil, placeholder: "Type your message here...", class: "form-control", required: true, rows: 3 %>
+              <span class="material-input"></span>
+            </div>
+          <!-- </div> -->
+
+          <%= submit_tag "Send Request", class: "btn btn-primary btn-block" %>
+          <!-- <button type="button" class="btn btn-rose btn-block">Subscribe</button> -->
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

@@ -1,72 +1,56 @@
-<div class="container">
+<% @title = "Sign In" %>
 
-  <div class="row">
-    <div class="col-md-12">
-      <div class="breadcrumbs">
-  	    <ul class="breadcrumb">
-          <li><%= link_to "Home", landing_page_path %> <span class="divider"></span></li>
-          <li class="active">My Account</li>
-        </ul>
-    	</div>
-  	</div>
-  </div>
+<div class="page-header header-filter main-header-bg">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3">
+        <div class="card card-signup">
 
-  <div class="row">
-    <div class="col-md-12">
-    	<h2>My Account</h2>
-  	</div>
-  </div>
+          <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+            <div class="header header-primary text-center">
+              <h4 class="card-title">Log in</h4>
+              <div class="social-line">
+                <%- resource_class.omniauth_providers.each do |provider| %>
+                  <%#= link_to "Sign in with #{OmniAuth::Utils.camelize(provider)}", user_omniauth_authorize_path(provider), class: "btn btn-raised btn-default" %>
+                  <%= link_to user_omniauth_authorize_path(provider), style: "color: white;" do %>
+                    Sign in with <%= image_tag("clover-logo.png", width: 32, style: "width: 32px; height: 32px;") %>
+                  <% end %>
+                <% end -%>
 
-
-  <div class="col-md-8 col-md-offset-2">
-    <div class="well bs-component">
-      <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-
-        <legend>Sign In</legend>
-
-        <div class="row form-row">
-          <div class="text-center">
-            <div class="col-xs-12 col-md-3 form-label">
-              <%= f.label :email, class: "control-label" %>
+              </div>
             </div>
-            <div class="col-xs-12 col-md-9 text-left">
-              <%= f.email_field :email, class: "form-control", placeholder: "Email" %>
-            </div>
-          </div>
-        </div>
+            <p class="description text-center">Or Be Classical</p>
+            <div class="card-content">
 
-        <div class="row form-row">
-          <div class="text-center">
-            <div class="col-xs-12 col-md-3 form-label">
-              <%= f.label :password, class: "control-label" %>
-            </div>
-            <div class="col-xs-12 col-md-9 text-left">
-              <%= f.password_field :password, autocomplete: "off", class: "form-control" %>
-            </div>
-          </div>
-        </div>
+              <div class="input-group">
+                <span class="input-group-addon">
+                  <i class="material-icons">email</i>
+                </span>
+                <%= f.email_field :email, class: "form-control", placeholder: "Email" %>
+              </div>
 
-        <div class="row form-row">
-          <div class="text-center">
-            <% if devise_mapping.rememberable? -%>
-            <div class="field">
-              <%= f.check_box :remember_me %>
-              <%= f.label :remember_me %>
-            </div>
-            <% end -%>
-          </div>
-        </div>
+              <div class="input-group">
+                <span class="input-group-addon">
+                  <i class="material-icons">lock_outline</i>
+                </span>
+                <%= f.password_field :password, autocomplete: "off", class: "form-control" %>
+              </div>
 
-        <div class="row form-row">
-          <div class="actions">
-            <div class="col-xs-12 text-center">
-              <%= f.submit "Log in", class: "btn btn-raised btn-primary"%> - or -
+              <!-- If you want to add a checkbox to this form, uncomment this code -->
+
+              <div class="checkbox text-center">
+                <label>
+                  <%= f.check_box :remember_me %>
+                  Remember Me
+                </label>
+              </div>
+            </div>
+            <div class="text-center">
+              <%= f.submit "Log in", class: "btn btn-raised btn-simple btn-wd btn-lg"%>
               <%= render "devise/shared/links" %>
             </div>
-          </div>
+          <% end %>
         </div>
-
-      <% end %>
+      </div>
     </div>
   </div>
-</div>

@@ -1,14 +1,15 @@
-// vendor
-@import 'bootstrap.min';
-@import 'material-kit';
-@import 'material-dashboard';
-@import 'dropzone/dropzone';
-@import 'bootsy';
-@import 'sweetalert';
-@import 'loading-spinner';
-@import 'image-picker';
-@import 'toastr';
+/*
+  *= require bootstrap.min
+  *= require dropzone/dropzone
+  *= require bootsy
+  *= require sweetalert
+  *= require loading-spinner
+  *= require image-picker
+  *= require toastr
+*/
 
+@import 'material-dashboard';
+@import 'material-kit';
 @import 'base/logo-icon-style.scss';
 @import 'base/mixins.scss';
 @import 'base/variables.scss';
