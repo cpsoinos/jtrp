@@ -78,7 +78,6 @@ feature "item show" do
         scenario "visits item show page" do
           expect(page).to have_content(item.account_item_number)
           expect(page).to have_content(item.id)
-          expect(page).to have_content(agreement.id)
           expect(page).to have_link("delete_forever".html_safe)
           expect(page).to have_link("edit")
           expect(page).to have_content("Active")
