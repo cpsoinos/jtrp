@@ -47,13 +47,9 @@ feature "home page" do
 
     scenario "clicks through to a category" do
       visit root_path
-      within(".col-md-9") do
-        click_link(category_1.name)
-      end
+      click_link(category_1.name)
 
-      within(".cat_header") do
-        expect(page).to have_content(category_1.name)
-      end
+      expect(page).to have_content(category_1.name)
     end
 
   end
@@ -62,15 +58,11 @@ feature "home page" do
 
     scenario "clicks through to a category" do
       visit landing_page_path
-      within(".col-md-9") do
-        click_link(category_1.name)
-      end
+      click_link(category_1.name)
 
-      within(".cat_header") do
-        expect(page).to have_content(category_1.name)
-      end
+      expect(page).to have_content(category_1.name)
     end
-    
+
   end
 
 end

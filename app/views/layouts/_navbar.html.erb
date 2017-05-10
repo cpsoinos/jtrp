@@ -40,9 +40,10 @@
 
       <%= form_tag search_index_path, method: :get, class: "navbar-form navbar-right", role: "search" do %>
         <div class="form-group is-empty">
-          <%= text_field_tag :'search[query]', params[:query], class: "form-control", placeholder: "Search" %>
+          <%= text_field_tag :'search[query]', params[:query], class: "form-control" %>
           <span class="material-input"></span>
         </div>
+        <%= hidden_field_tag :'search[include_subcategories]', true %>
         <button type="submit" class="btn btn-primary btn-round btn-just-icon">
           <i class="material-icons">search</i><div class="ripple-container"></div>
         </button>

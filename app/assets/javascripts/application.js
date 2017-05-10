@@ -36,6 +36,7 @@
 //= require flashcanvas
 //= require json2.min
 //= require jquery-readyselector
+//= require jquery.select-bootstrap
 //= require masonry.pkgd.min
 //= require imagesloaded.pkgd.min
 //= require chartkick
