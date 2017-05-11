@@ -4,11 +4,11 @@
       <% if category.parent? %>
         <%= link_to "#{category.name.titleize} <i class='material-icons pull-right'>arrow_drop_down</i>".html_safe, "#collapse-#{category.slug}", role: "button", data: {toggle: "collapse", parent: "#accordion"}, aria: {expanded: true, controls: "collapse-#{category.slug}"}, class: "" %>
         <ul id="collapse-<%= category.slug %>" class="nav collapse">
-          <li class="nested-nav-li" id="selected-category-<%= category.slug %>">
-            <b><%= link_to "All #{category.name.titleize}", category_path(category) %></b>
+          <li class="nested-nav-li <%= 'subnav-active' if @navtab == 'categories' && params[:id] == category.slug %>" id="selected-category-<%= category.slug %>">
+            <%= link_to "<b>All #{category.name.titleize}</b>".html_safe, category_path(category) %>
           </li>
           <% category.subcategories.each do |subcategory| %>
-            <li class="nested-nav-li" id="selected-category-<%= subcategory.slug %>"><%= link_to subcategory.name.titleize, category_path(subcategory) %></li>
+            <li class="nested-nav-li <%= 'subnav-active' if @navtab == 'categories' && params[:id] == subcategory.slug %>" id="selected-category-<%= subcategory.slug %>"><%= link_to subcategory.name.titleize, category_path(subcategory) %></li>
           <% end %>
         </ul>
       <% else %>

@@ -6,6 +6,7 @@ class CompaniesController < ApplicationController
   def show
     @navtab = 'dashboard'
     build_todos
+    find_categories
     gon.salesMetrics = build_json_for_sales
     gon.customerMetrics = build_json_for_customers
     gon.clientMetrics = build_json_for_clients
