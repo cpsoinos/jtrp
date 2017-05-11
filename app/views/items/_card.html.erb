@@ -2,13 +2,14 @@
   <div class="rotating-card-container">
     <div class="card-image">
       <div class="front">
-        <%= image_tag(item.featured_photo.photo_url(
-          client_hints: true, width: "auto",
-          transformation: [
-            { gravity: "auto", aspect_ratio: "3:4", crop: "fill" },
-            { width: "auto:50", fetch_format: "auto", quality: "auto", crop: "scale" }
-          ]
-        )) %>
+        <%= image_tag(item.featured_photo.photo_url,
+          width: "auto", dpr: "auto", transformation: [gravity: "auto", aspect_ratio: "3:4", crop: "fill"]
+          # transformation: [
+          #   { gravity: "auto", aspect_ratio: "3:4", crop: "fill" },
+          #   { width: "auto:50", fetch_format: "auto", quality: "auto", crop: "scale" },
+          #   { client_hints: true, width: "auto", }
+          # ]
+        ) %>
       </div>
 
       <div class="back back-background">
