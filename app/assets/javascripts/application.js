@@ -44,7 +44,6 @@
 //= require sweet-alert-confirm
 //= require jquery.geocomplete.min
 //= require instafeed.min
-//= require cloudinary
 //= require image-picker
 //= require jquery.tablesorter.min
 //= require facebook_sdk
@@ -54,6 +53,7 @@
 //= require linkedin_sdk
 //= require toastr
 //= require jquery-infinite-scroll
+//= require cloudinary
 
 //= require agreements
 //= require categories
