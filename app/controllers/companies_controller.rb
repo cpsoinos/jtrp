@@ -25,8 +25,7 @@ class CompaniesController < ApplicationController
   end
 
   def home
-    # @featured_items = Item.active.tagged_with("marked down").joins(:photos).limit(3).order("RANDOM()")
-    @featured_items = Item.active.joins(:photos).limit(3).order("RANDOM()")
+    @featured_items = Item.active.joins(:category, :photos).limit(3).order("RANDOM()")
     @title = "Home"
   end
 
