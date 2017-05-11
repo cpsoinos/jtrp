@@ -10,10 +10,6 @@ gem 'coffee-rails', '~> 4.1.0'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'jbuilder', '~> 2.0'
-# bundle exec rake doc:rails generates the API under doc/api.
-gem 'pry-rails'
-gem 'pry-coolline'
-gem 'pry-byebug', '~> 3.3.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'turbolinks'
 gem 'jquery-turbolinks'
@@ -54,7 +50,7 @@ gem 'docraptor'
 gem 'sendgrid'
 gem 'sendgrid-ruby'
 gem 'roadie-rails'
-gem 'newrelic_rpm'
+# gem 'newrelic_rpm'
 gem 'readthis'
 gem 'hiredis'
 gem 'redis-browser'
@@ -99,15 +95,14 @@ group :production, :staging do
   gem 'wkhtmltopdf-heroku'
 end
 
-group :production do
-  gem 'rails_autoscale_agent'
-end
-
 group :production, :staging, :development do
   gem 'rails_12factor'
 end
 
 group :development, :test do
+  gem 'pry-rails'
+  gem 'pry-coolline'
+  gem 'pry-byebug', '~> 3.3.0'
   gem 'dotenv-rails', require: 'dotenv/rails-now'
   gem 'sextant'
   gem 'better_errors'

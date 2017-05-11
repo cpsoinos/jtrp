@@ -436,7 +436,6 @@ GEM
     multipart-post (2.0.0)
     nenv (0.3.0)
     netrc (0.11.0)
-    newrelic_rpm (3.17.2.327)
     nokogiri (1.6.8.1)
       mini_portile2 (~> 2.1.0)
     notiffany (0.0.8)
@@ -543,8 +542,6 @@ GEM
     rails_12factor (0.0.3)
       rails_serve_static_assets
       rails_stdout_logging
-    rails_autoscale_agent (0.1.0)
-      activesupport (>= 3.2)
     rails_real_favicon (0.0.3)
       json (~> 1.7)
       rails (>= 3.1, < 5)
@@ -822,7 +819,6 @@ DEPENDENCIES
   mk_pro-rails!
   money-rails
   mr_video
-  newrelic_rpm
   oauth2
   oj (~> 2.12.14)
   omniauth-clover
@@ -847,7 +843,6 @@ DEPENDENCIES
   rails-assets-sweetalert!
   rails-assets-toastr!
   rails_12factor
-  rails_autoscale_agent
   rails_real_favicon
   rb-fsevent
   readthis
