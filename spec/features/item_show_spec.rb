@@ -270,6 +270,20 @@ feature "item show" do
       expect(page).to have_content("$10.00")
     end
 
+    scenario "displays other recommendations" do
+      item.category = Category.first
+      item.save
+      other_items = create_list(:item, 3, :active, category: item.category)
+      potential_item = create(:item, category: item.category)
+      visit item_path(item)
+
+      expect(page).to have_content("You may also be interested in:")
+      other_items.each do |item|
+        expect(page).to have_link(item.description.titleize)
+      end
+      expect(page).not_to have_link(potential_item.description.titleize)
+    end
+
     scenario "item is potential" do
       potential_item = create(:item)
       visit item_path(potential_item)

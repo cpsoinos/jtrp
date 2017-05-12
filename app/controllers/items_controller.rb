@@ -63,7 +63,7 @@ class ItemsController < ApplicationController
       @child_item = @item.build_child_item
     end
     if @category
-      @related_items = @item.category.items.for_sale.where.not(id: @item.id).limit(3)
+      @related_items = @item.category.items.active.where.not(id: @item.id).limit(3)
     end
   end
 
