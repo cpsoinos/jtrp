@@ -15,7 +15,7 @@ feature "account index" do
     end
 
     scenario "deactivates an account" do
-      visit accounts_path
+      visit accounts_path("active")
       click_link("Deactivate", match: :first)
 
       expect(page).to have_content("Account deactivated")
@@ -24,7 +24,7 @@ feature "account index" do
 
     scenario "reactivates an account" do
       create(:account, :inactive)
-      visit accounts_path
+      visit accounts_path(status: "inactive")
       click_link("Reactivate", match: :first)
 
       expect(page).to have_content("Account reactivated")

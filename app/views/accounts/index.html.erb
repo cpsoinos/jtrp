@@ -15,53 +15,36 @@
   <div class="col-md-10 col-md-offset-1 col-xs-12">
 
     <div class="row top-margin">
-      <ul class="nav nav-pills text-center justify-list" role="tablist">
-    		<li class="">
-    			<a href="#potential" aria-controls="potential" role="tab" data-toggle="tab" aria-expanded="false">
-    				<div class="info">
-    					<span class="icon icon-info tab-icon">
-    						<i class="material-icons md-48">assignment_ind</i>
-    					</span>
-    					<h3>Potential</h3>
-    				</div>
-    			</a>
+      <ul class="nav nav-pills text-center justify-list">
+    		<li class="<%= 'active' if params[:status] == 'potential' || params[:status].nil? %>">
+          <%= link_to accounts_path(status: "potential") do %>
+            <span class="icon icon-info tab-icon">
+              <i class="material-icons md-48">assignment_ind</i>
+            </span>
+            <h5>Potential</h5>
+          <% end %>
     		</li>
-    		<li class="">
-    			<a href="#active" aria-controls="active" role="tab" data-toggle="tab" aria-expanded="false">
-    				<div class="info">
-    					<span class="icon icon-primary tab-icon">
-    						<i class="material-icons md-48">assignment_ind</i>
-    					</span>
-    					<h3>Active</h3>
-    				</div>
-    			</a>
+    		<li class="<%= 'active' if params[:status] == 'active' %>">
+          <%= link_to accounts_path(status: "active") do %>
+            <span class="icon icon-primary tab-icon">
+              <i class="material-icons md-48">assignment_ind</i>
+            </span>
+            <h5>Active</h5>
+          <% end %>
     		</li>
-    		<li class="">
-    			<a href="#inactive" aria-controls="inactive" role="tab" data-toggle="tab" aria-expanded="false">
-    				<div class="info">
-    					<span class="icon icon-warning tab-icon">
-    						<i class="material-icons md-48">assignment_ind</i>
-    					</span>
-    					<h3>Inactive</h3>
-    				</div>
-    			</a>
+    		<li class="<%= 'active' if params[:status] == 'inactive' %>">
+          <%= link_to accounts_path(status: "inactive") do %>
+            <span class="icon icon-warning tab-icon">
+              <i class="material-icons md-48">assignment_ind</i>
+            </span>
+            <h5>Inactive</h5>
+          <% end %>
     		</li>
       </ul>
     </div>
 
-    <!-- Tab panes -->
     <div class="large-top-margin">
-      <div class="tab-content">
-        <div role="tabpanel" class="tab-pane fade" id="potential">
-          <%= render "accounts_list", cached: true, accounts: @accounts.potential, status: "potential" %>
-        </div>
-        <div role="tabpanel" class="tab-pane fade" id="active">
-          <%= render "accounts_list", cached: true, accounts: @accounts.active, status: "active" %>
-        </div>
-        <div role="tabpanel" class="tab-pane fade" id="inactive">
-          <%= render "accounts_list", cached: true, accounts: @accounts.inactive, status: "inactive" %>
-        </div>
-      </div>
+      <%= render "accounts_list", cached: true, accounts: @accounts %>
     </div>
 
   </div>

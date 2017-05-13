@@ -46,7 +46,7 @@ class ApplicationController < ActionController::Base
   end
 
   def find_categories
-    @categories = Category.includes(:subcategories).categorized.order(:name)
+    @categories = Category.categorized.order(:name)
   end
 
   def find_categories_for_dropdown

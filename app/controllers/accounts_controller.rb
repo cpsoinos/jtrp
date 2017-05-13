@@ -2,7 +2,9 @@ class AccountsController < ApplicationController
   before_filter :require_internal
 
   def index
-    @accounts = Account.includes([:primary_contact, jobs: { proposals: :items }]).order("users.last_name")
+    # @accounts = Account.includes([:primary_contact, jobs: :proposals]).order("users.last_name")
+    params[:status] ||= "potential"
+    @accounts = AccountsPresenter.new(params).execute
     @title = "Accounts"
   end
 

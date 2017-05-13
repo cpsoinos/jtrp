@@ -1,13 +1,36 @@
 class AccountsPresenter
 
-  attr_reader :params
+  attr_reader :params, :filters, :accounts
 
-  def initialize(params={})
+  def initialize(params={}, accounts=nil)
     @params = params
+    @filters = params.slice(:status)
+    @accounts = account_base
   end
 
   def filter
-    Account.includes(proposals: :statements).filter(params.slice(:status)).order(:account_number)
+    @accounts = @accounts.filter(filters)
+    self
+  end
+
+  def sort
+    @accounts = @accounts.order("users.last_name")
+    self
+  end
+
+  def paginate
+    @accounts = @accounts.page(params[:page])
+  end
+
+  def execute
+    filter.sort.paginate
+    @accounts
+  end
+
+  private
+
+  def account_base
+    Account.includes([:primary_contact, jobs: :proposals])
   end
 
 end

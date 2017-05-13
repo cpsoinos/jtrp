@@ -13,7 +13,7 @@
         </tr>
       </thead>
       <tbody>
-        <% cache [status, accounts] do %>
+        <% cache accounts do %>
           <% accounts.each do |account| %>
             <tr>
               <td class="text-center">
@@ -23,7 +23,7 @@
               </td>
               <td class="td-name">
                 <%= link_to account.inverse_full_name, account_path(account) %>
-                <br><small>Primary Contact: <%= account.primary_contact ? link_to(account.primary_contact.full_name, client_path(account.primary_contact)) : '' %></small>
+                <br><small>Primary Contact: <%= account.primary_contact_id ? link_to(account.full_name, client_path(account.primary_contact_id)) : '' %></small>
               </td>
               <td class="text-center">
                 <%= account.id %>
@@ -62,6 +62,11 @@
         <% end %>
       </tbody>
     </table>
+
+    <div class="text-center">
+      <%= paginate accounts %>
+    </div>
+
   </div>
 
 </div>

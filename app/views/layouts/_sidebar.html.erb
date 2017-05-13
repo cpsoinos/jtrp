@@ -1,6 +1,6 @@
 <% @navtab ||= controller_name %>
 
-<div class="sidebar" data-active-color="purple" data-image="<%= image_url('facebook_banner.jpg') %>">
+<div class="sidebar" data-active-color="purple" data-image="<%= image_url('facebook_banner.jpg', client_hints: true, fetch_format: 'auto', quality: 'auto') %>">
 
   <div class="logo text-center">
     <% if @company %>
