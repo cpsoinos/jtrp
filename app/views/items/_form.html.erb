@@ -161,20 +161,19 @@
           </div>
         </div>
       </div>
-
     <% end %>
 
-    <div class="row form-row text-center extra-large-top-margin" id="proposal-item-image-form">
-      <%= render 'items/image_input_form', item: @item, f: f %>
+    <div class="col-xs-6 col-md-4 text-center">
+      <div id="upload_widget_opener"></div>
     </div>
+  </div>
 
-    <div class="row form-row">
-      <div class="actions">
-        <div class="col-xs-12 text-center">
-          <%= f.submit class: "btn btn-raised btn-primary" %>
-        </div>
-      </div>
+</div>
+
+<div class="row form-row large-top-margin">
+  <div class="actions">
+    <div class="col-xs-12 text-center">
+      <%= f.submit class: "btn btn-raised btn-primary" %>
     </div>
-
   </div>
 </div>

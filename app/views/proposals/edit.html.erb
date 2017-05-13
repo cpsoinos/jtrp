@@ -10,27 +10,17 @@
           </div>
 
           <div class="row form-row text-center extra-large-top-margin">
-            <%= form_tag(batch_create_photos_path, class: "form-horizontal") do %>
+            <%= form_tag(batch_create_photos_path, class: "form-horizontal", id: "proposal-photos-form", remote: true) do %>
 
-              <div class="fileinput fileinput-new text-center" data-provides="fileinput">
+              <%= hidden_field_tag :photo_type, "initial" %>
+              <%= hidden_field_tag :proposal_id, @proposal.id %>
 
-                <span class="btn-file" style="display: inline-block;">
-                  <div class="thumbnail img-raised">
-                    <%= image_tag("image_placeholder.jpg") %>
-                  </div>
-                  <%= cl_image_upload_tag(:photos, multiple: true, return_delete_token: true, upload_preset: 'limit_width_jpg') %>
-                  <%= hidden_field_tag :photo_type, "initial" %>
-                  <%= hidden_field_tag :proposal_id, @proposal.id %>
-                </span>
-
-                <div class="progressbar fileupload-progressbar">
-                  <div style="width:0%;"></div>
-                </div>
-                <span class="status"></span>
+              <div class="row text-center top-margin">
+                <div id="upload_widget_opener"></div>
               </div>
 
               <div class="row text-center top-margin">
-                <%= submit_tag "Save Photos", class: "btn btn-raised btn-primary" %>
+                <%#= submit_tag "Save Photos", class: "btn btn-raised btn-primary" %>
               </div>
 
             <% end %>
@@ -40,19 +30,41 @@
             <%= link_to "Step 2: Sort Items <i class='fa fa-caret-right'></i>".html_safe, account_job_proposal_sort_items_path(@account, @job, @proposal), class: "btn btn-raised btn-primary" %>
           </div>
 
-          <div class="row">
-            <div class="preview grid">
-              <div class="col-xs-4 grid-sizer"></div>
-              <% @proposal.photos.each do |photo| %>
-                <div class="col-xs-4 grid-item">
-                  <%= image_tag(photo.photo_url, fetch_format: "auto", quality: "auto", class: "img img-raised thumb") %>
-                </div>
-              <% end %>
-            </div>
-          </div>
+
 
       </div>
     </div>
   </div>
 
 </div>
+
+<script type="text/javascript" src="//widget.cloudinary.com/global/all.js"></script>
+
+<script type="text/javascript">
+  $('#upload_widget_opener').cloudinary_upload_widget(
+    {
+      cloud_name: "<%= ENV['CLOUDINARY_CLOUD_NAME'] %>",
+      api_key: "<%= ENV['CLOUDINARY_API_KEY'] %>",
+      upload_preset: 'widget',
+      sources: ['local', 'camera'],
+      theme: 'white',
+      button_class: 'btn btn-primary',
+      button_caption: 'Select Images',
+      multiple: true,
+      resource_type: 'image',
+      show_powered_by: false,
+      field_name: 'photos[]'
+    },
+    function(error, result) {
+      if (error) {
+        console.log(error, result)
+      } else {
+        var $form = $("#proposal-photos-form");
+        $form.submit();
+      }
+    }
+  );
+  $(document).on('cloudinarywidgetfileuploadsuccess', function(e, data) {
+    console.log("Single file success", e, data);
+  });
+</script>

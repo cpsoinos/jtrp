@@ -27,7 +27,14 @@ class PhotosController < ApplicationController
 
   def batch_create
     PhotoCreator.new(@proposal).create_multiple(params)
-    redirect_to account_job_proposal_sort_photos_path(@proposal.account, @proposal.job, @proposal)
+    respond_to do |format|
+      format.html do
+        redirect_to account_job_proposal_sort_photos_path(@proposal.account, @proposal.job, @proposal)
+      end
+      format.js do
+        @message = "Photos uploaded! Proceed to the next step..."
+      end
+    end
   end
 
   def sort

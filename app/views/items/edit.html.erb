@@ -1,50 +1,120 @@
 <% meta title: "#{@item.description.titleize} - Edit" %>
 
-<div class="container-fluid">
+<div class="row">
+  <div class="button-container">
+    <span class="hidden-print text-right">
+      <%= link_to "<i class='material-icons'>delete_forever</i>".html_safe, item_path(@item), method: :delete, class: "btn btn-fab btn-fab-mini btn-danger pull-right", data: {confirm: "Are you sure?", :'confirm-button-text' => "Yes, I'm sure", :'cancel-button-text' => "No, cancel!", :'sweet-alert-type' => 'warning', :'confirm-button-color' => '#f44336', text: "This will delete the item. This is irreversable."} %>
+    </span>
+  </div>
 
-  <div class="main main-raised main-product top-margin">
-    <div class="row">
-      <div class="button-container">
-        <span class="hidden-print text-right">
-          <%= link_to "<i class='material-icons'>delete_forever</i>".html_safe, item_path(@item), method: :delete, class: "btn btn-fab btn-fab-mini btn-danger pull-right", data: {confirm: "Are you sure?", :'confirm-button-text' => "Yes, I'm sure", :'cancel-button-text' => "No, cancel!", :'sweet-alert-type' => 'warning', :'confirm-button-color' => '#f44336', text: "This will delete the item. This is irreversable."} %>
-        </span>
-      </div>
-
-      <div class="col-xs-10 col-xs-offset-1 col-md-5 col-md-offset-1">
-        <div class="tab-content">
-          <% @item.initial_photos.each do |photo| %>
-            <div class="tab-pane large-top-margin" id="product-page<%= photo.id %>">
-              <%= image_tag(photo.photo_url(quality: "auto", fetch_format: :auto), class: "img-rounded img-responsive img-raised img-featured", id: "photo-#{photo.id}") %>
-              <div class="hidden-print text-right top-margin">
-                <%= link_to "<i class='material-icons'>delete_forever</i>".html_safe, photo_path(photo), remote: true, method: :delete, class: "btn btn-fab btn-fab-mini btn-danger pull-right", data: {confirm: "Are you sure?", :'confirm-button-text' => "Yes, I'm sure", :'cancel-button-text' => "No, cancel!", :'sweet-alert-type' => 'warning', :'confirm-button-color' => '#f44336', text: "This will delete the photo. This is irreversable."} %>
-              </div>
-            </div>
-          <% end %>
+  <div class="col-xs-10 col-xs-offset-1 col-md-5 col-md-offset-1">
+    <div class="tab-content">
+      <% @item.initial_photos.each do |photo| %>
+        <div class="tab-pane large-top-margin" id="product-page<%= photo.id %>">
+          <%= image_tag(photo.photo_url(quality: "auto", fetch_format: :auto), class: "img-rounded img-responsive img-raised img-featured", id: "photo-#{photo.id}") %>
+          <div class="hidden-print text-right top-margin">
+            <%= link_to "<i class='material-icons'>delete_forever</i>".html_safe, photo_path(photo), remote: true, method: :delete, class: "btn btn-fab btn-fab-mini btn-danger pull-right", data: {confirm: "Are you sure?", :'confirm-button-text' => "Yes, I'm sure", :'cancel-button-text' => "No, cancel!", :'sweet-alert-type' => 'warning', :'confirm-button-color' => '#f44336', text: "This will delete the photo. This is irreversable."} %>
+          </div>
         </div>
-
-        <ul class="nav flexi-nav top-margin" role="tablist" id="photos" data-update-url="<%= sort_photos_url %>">
-          <% @item.photos.each do |photo| %>
-            <%= content_tag_for :li, photo, class: "nbs-flexisel-item" do %>
-              <a href="#product-page<%= photo.id %>" role="tab" data-toggle="tab" aria-expanded="false" class="img-tab">
-                <%= image_tag(photo.photo_url(:thumb), class: "img-rounded img-responsive img-raised", id: "photo-#{photo.id}-thumb") %>
-              </a>
-            <% end %>
-          <% end %>
-        </ul>
-
-      </div>
-
-      <div class="col-xs-12 col-md-6">
-
-        <div class="extra-large-top-margin">
-          <%= form_for @item, class: "form-horizontal", html: { multipart: true } do |f| %>
-            <%= render 'form', item: @item, f: f, legend: "Edit item", redirect_url: params[:redirect_url] %>
-          <% end %>
-        </div>
-
-      </div>
+      <% end %>
     </div>
+
+    <ul class="nav flexi-nav top-margin" role="tablist" id="photos" data-update-url="<%= sort_photos_url %>">
+      <% @item.photos.each do |photo| %>
+        <%= content_tag_for :li, photo, class: "nbs-flexisel-item" do %>
+          <a href="#product-page<%= photo.id %>" role="tab" data-toggle="tab" aria-expanded="false" class="img-tab">
+            <%= image_tag(photo.photo_url(:thumb), class: "img-rounded img-responsive img-raised", id: "photo-#{photo.id}-thumb") %>
+          </a>
+        <% end %>
+      <% end %>
+    </ul>
 
   </div>
 
+  <div class="col-xs-12 col-md-6">
+
+    <div class="extra-large-top-margin">
+      <%= form_for @item, class: "form-horizontal", html: { multipart: true } do |f| %>
+        <%= render 'form', item: @item, f: f, legend: "Edit item", redirect_url: params[:redirect_url] %>
+      <% end %>
+    </div>
+
+  </div>
 </div>
+
+
+<% if current_user.try(:internal?) %>
+  <% content_for :fab do %>
+
+    <div class="btn-group dropup">
+      <button type="button" class="btn btn-raised btn-primary btn-fab dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <i class='material-icons'>menu</i>
+      </button>
+      <ul class="dropdown-menu dropdown-menu-right fab-menu">
+
+        <li><%= link_to "<i class='material-icons'>delete_forever</i> Delete".html_safe, item_path(@item), method: :delete, data: {confirm: "Are you sure?", :'confirm-button-text' => "Yes, I'm sure", :'cancel-button-text' => "No, cancel!", :'sweet-alert-type' => 'warning', :'confirm-button-color' => '#f44336', text: "This will delete the item. This is irreversable."} %></li>
+        <li role="separator" class="divider"></li>
+
+        <% unless @item.inactive? %>
+          <li class="dropdown-header">Deactivate</li>
+          <li><%= link_to "<i class='fa fa-chain-broken' aria-hidden='true'></i> Damaged".html_safe, item_deactivate_path(@item, item: {tag_list: @item.tag_list.push("damaged")}), method: :put %></li>
+          <li><%= link_to "<i class='fa fa-user' aria-hidden='true'></i> Retrieved by Client".html_safe, item_deactivate_path(@item, item: {tag_list: @item.tag_list.push("client_retrieved")}), method: :put %></li>
+          <li><%= link_to "<i class='fa fa-question-circle' aria-hidden='true'></i> Other".html_safe, item_deactivate_path(@item, item: {tag_list: @item.tag_list.push("other")}), method: :put %></li>
+          <li role="separator" class="divider"></li>
+        <% end %>
+
+        <% if @item.sold? %>
+          <li><%= link_to "<i class='material-icons'>replay</i> Mark Not Sold".html_safe, item_mark_not_sold_path(@item), method: :post %></li>
+        <% else %>
+          <li><%= link_to "<i class='material-icons'>done</i> Mark as Sold".html_safe, "#", data: { toggle: "modal", target: "#mark-sold-modal", :"item-id" => @item.id, :"item-description" => @item.description } %></li>
+        <% end %>
+
+        <li><%= link_to "<i class='material-icons'>content_copy</i> Create Item from this Batch".html_safe, "#", data: { toggle: "modal", target: "#new-item-from-batch-modal" } %></li>
+
+        <% if @item.potential? || @item.inactive? %>
+          <li><%= link_to "<i class='material-icons'>store</i> Activate".html_safe, item_activate_path(@item), method: :post %></li>
+        <% elsif @item.active? && @item.client_intention == 'consign' %>
+          <% if @item.expired? %>
+            <li><%= link_to "<i class='material-icons'>access_time</i> Unmark Expired".html_safe, item_path(@item, item: {expired: false, tag_list: @item.tag_list.delete("expired")}), method: :patch %></li>
+          <% else %>
+            <li><%= link_to "<i class='material-icons'>access_time</i> Mark Expired".html_safe, item_path(@item, item: {expired: true, tag_list: @item.tag_list.push("expired")}), method: :patch %></li>
+          <% end %>
+        <% end %>
+
+        <% if current_user.try(:internal?) %>
+          <li><%= link_to "<i class='material-icons'>print</i> Print Label".html_safe, labels_items_url(by_id: [@item.id]), target: "blank" %></li>
+        <% end %>
+
+      </ul>
+    </div>
+
+  <% end %>
+<% end %>
+
+<script type="text/javascript" src="//widget.cloudinary.com/global/all.js"></script>
+
+<script type="text/javascript">
+  $('#upload_widget_opener').cloudinary_upload_widget(
+    {
+      cloud_name: "<%= ENV['CLOUDINARY_CLOUD_NAME'] %>",
+      api_key: "<%= ENV['CLOUDINARY_API_KEY'] %>",
+      upload_preset: 'widget',
+      sources: ['local', 'camera'],
+      theme: 'white',
+      button_class: 'btn btn-primary',
+      button_caption: 'Select Images',
+      multiple: true,
+      resource_type: 'image',
+      show_powered_by: false,
+      field_name: 'item[initial_photos][]'
+    },
+    function(error, result) {
+      if (error) {
+        console.log(error, result)
+      }
+    }
+  );
+  $(document).on('cloudinarywidgetfileuploadsuccess', function(e, data) {
+    console.log("Single file success", e, data);
+  });
+</script>

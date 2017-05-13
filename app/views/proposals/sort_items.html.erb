@@ -79,6 +79,10 @@
             </div>
           </div>
 
+          <div class="text-right top-margin">
+            <%= f.submit class: "btn btn-raised btn-primary" %>
+          </div>
+
           <h4 class="large-top-margin">Select one or more photos of this item:</h4>
 
           <div class="text-center">
@@ -86,9 +90,6 @@
           </div>
           <%= f.hidden_field :proposal_id, value: @proposal.id %>
 
-          <div class="text-right top-margin">
-            <%= f.submit class: "btn btn-raised btn-primary" %>
-          </div>
         <% end %>
 
       </div>
