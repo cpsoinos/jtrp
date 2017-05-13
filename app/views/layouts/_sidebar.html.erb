@@ -46,7 +46,7 @@
           <%= link_to "<i class='material-icons'>attach_money</i><p>Statements</p>".html_safe, statements_list_statements_path %>
         </li>
       <% else %>
-        <%= render "categories/sidebar_list", categories: @categories %>
+        <%= render "categories/sidebar_list", categories: @categories, cached: true %>
       <% end %>
     </ul>
   </div>
