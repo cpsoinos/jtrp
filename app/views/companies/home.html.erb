@@ -23,7 +23,7 @@
       <div class="row">
         <% @featured_items.each do |item| %>
           <div class="col-md-4">
-            <%= render "items/card", item: item %>
+            <%= render "items/card", item: item, cached: true %>
           </div>
         <% end %>
       </div>

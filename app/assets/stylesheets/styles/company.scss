@@ -44,7 +44,7 @@ img.logo {
 }
 
 #hours-of-operation {
-  background-image: url('book clock high resolution wallpaper.jpg')
+  background-image: cloudinary-url('book clock high resolution wallpaper.jpg', $client_hints: true, $fetch_format: "auto", $width: "auto", $quality: "auto")
 }
 
 .card-content {
@@ -55,9 +55,9 @@ img.logo {
 }
 
 .main-header-bg {
-  background-image: cloudinary-url("facebook_banner.jpg", $client_hints: true, $fetch_format: "auto", $opacity: 30, $quality: 100);
+  background-image: cloudinary-url("facebook_banner.jpg", $client_hints: true, $fetch_format: "auto", $opacity: 30, $quality: "auto", $width: "auto");
 }
 
 .contact-bg {
-  background-image: cloudinary-url("facebook_banner_2_cropped.jpg", $client_hints: true, $fetch_format: "auto", $gravity: "auto", $opacity: 30, $quality: 100);
+  background-image: cloudinary-url("facebook_banner_2_cropped.jpg", $client_hints: true, $fetch_format: "auto", $gravity: "auto", $opacity: 30, $quality: "auto");
 }

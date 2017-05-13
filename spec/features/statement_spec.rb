@@ -26,7 +26,7 @@ feature "statement" do
     end
 
     scenario "arrives at account's statements list" do
-      visit accounts_path
+      visit accounts_path(status: "active")
       click_link("View Statements")
 
       expect(page).to have_content("Statements")
@@ -43,7 +43,7 @@ feature "statement" do
     end
 
     scenario "arrives at a statement page" do
-      visit accounts_path
+      visit accounts_path(status: "active")
       click_link("View Statements")
       click_link(statement.humanized_name)
 

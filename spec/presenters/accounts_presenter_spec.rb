@@ -9,8 +9,8 @@ describe AccountsPresenter do
   end
 
   it 'returns accounts' do
-    presenter = AccountsPresenter.new.filter
-    
+    presenter = AccountsPresenter.new.execute
+
     presenter.each do |account|
       expect(account).to be_in(Account.all)
     end
@@ -19,7 +19,7 @@ describe AccountsPresenter do
   context 'filters' do
 
     it 'returns potential accounts' do
-      presenter = AccountsPresenter.new(status: 'potential').filter
+      presenter = AccountsPresenter.new(status: 'potential').execute
 
       presenter.each do |account|
         expect(account).to be_in(potential_accounts)
@@ -27,7 +27,7 @@ describe AccountsPresenter do
     end
 
     it 'returns active accounts' do
-      presenter = AccountsPresenter.new(status: 'active').filter
+      presenter = AccountsPresenter.new(status: 'active').execute
 
       presenter.each do |account|
         expect(account).to be_in(active_accounts)
@@ -35,7 +35,7 @@ describe AccountsPresenter do
     end
 
     it 'returns inactive accounts' do
-      presenter = AccountsPresenter.new(status: 'inactive').filter
+      presenter = AccountsPresenter.new(status: 'inactive').execute
 
       presenter.each do |account|
         expect(account).to be_in(inactive_accounts)

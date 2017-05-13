@@ -1,5 +1,5 @@
 <% categories.includes(:subcategories).primary.each do |category| %>
-  <% cache [category, params, current_user.try(:role)] do %>
+  <% cache [category, current_user.try(:role)] do %>
     <li>
       <% if category.parent? %>
         <%= link_to "#{category.name.titleize} <i class='material-icons pull-right'>arrow_drop_down</i>".html_safe, "#collapse-#{category.slug}", role: "button", data: {toggle: "collapse", parent: "#accordion"}, aria: {expanded: true, controls: "collapse-#{category.slug}"}, class: "" %>

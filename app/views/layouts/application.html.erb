@@ -35,30 +35,30 @@
   <!-- Facebook SDK -->
   <div id="fb-root"></div>
 
-    <div id="wrapper">
-      <%= render 'layouts/sidebar' unless params[:print] %>
-      <div class="<%= 'main-panel' unless params[:print] %>">
-        <%= render 'layouts/navbar' unless params[:print] %>
-        <%= render('layouts/alerts', alert: alert, notice: notice) unless params[:print] %>
-        <% unless params[:print] %>
-          <div class="page-header header-filter header-small main-header-bg page-header-main" data-parallax="true" style="height: 20vh;"></div>
-        <% end %>
+  <div id="wrapper">
+    <%= render 'layouts/sidebar' unless params[:print] %>
+    <div class="<%= 'main-panel' unless params[:print] %>">
+      <%= render 'layouts/navbar' unless params[:print] %>
+      <%= render('layouts/alerts', alert: alert, notice: notice) unless params[:print] %>
+      <% unless params[:print] %>
+        <div class="page-header header-filter header-small main-header-bg page-header-main" data-parallax="true" style="height: 20vh;"></div>
+      <% end %>
 
-        <div class="content">
-          <div class="container-fluid">
-            <div class="row">
-              <%= breadcrumbs separator: " &rsaquo; " %>
-              <div class="<%= 'main main-raised' unless (controller_name == 'companies' && action_name == 'show') || params[:print] %>">
-                <%= yield %>
-              </div>
+      <div class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <%= breadcrumbs separator: " &rsaquo; " %>
+            <div class="<%= 'main main-raised' unless (controller_name == 'companies' && action_name == 'show') || params[:print] %>">
+              <%= yield %>
             </div>
           </div>
         </div>
       </div>
-
-      <%= yield :fab %>
-
     </div>
+
+    <%= yield :fab %>
+
+  </div>
 
 </body>
 </html>
