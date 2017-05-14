@@ -90,31 +90,3 @@
 
   <% end %>
 <% end %>
-
-<script type="text/javascript" src="//widget.cloudinary.com/global/all.js"></script>
-
-<script type="text/javascript">
-  $('#upload_widget_opener').cloudinary_upload_widget(
-    {
-      cloud_name: "<%= ENV['CLOUDINARY_CLOUD_NAME'] %>",
-      api_key: "<%= ENV['CLOUDINARY_API_KEY'] %>",
-      upload_preset: 'widget',
-      sources: ['local', 'camera'],
-      theme: 'white',
-      button_class: 'btn btn-primary',
-      button_caption: 'Select Images',
-      multiple: true,
-      resource_type: 'image',
-      show_powered_by: false,
-      field_name: 'item[initial_photos][]'
-    },
-    function(error, result) {
-      if (error) {
-        console.log(error, result)
-      }
-    }
-  );
-  $(document).on('cloudinarywidgetfileuploadsuccess', function(e, data) {
-    console.log("Single file success", e, data);
-  });
-</script>

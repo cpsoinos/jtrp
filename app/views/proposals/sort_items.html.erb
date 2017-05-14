@@ -98,3 +98,9 @@
   </div>
 
 </div>
+
+<% if current_user.try(:internal?) %>
+  <% content_for :fab do %>
+    <%= render 'proposals/fab_menu', account: @account, job: @job, proposal: @proposal %>
+  <% end %>
+<% end %>
