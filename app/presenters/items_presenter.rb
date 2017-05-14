@@ -21,6 +21,10 @@ class ItemsPresenter
     self
   end
 
+  def total
+    @items.count
+  end
+
   def paginate
     return self if labels.present?
     @items = @items.page(params[:page])

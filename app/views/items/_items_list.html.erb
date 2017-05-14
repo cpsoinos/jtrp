@@ -1,25 +1,20 @@
 <div class="row">
-  <% if current_user.try(:internal?) && controller_name != 'mailer' %>
+
+  <% if current_user.try(:internal?) && !controller_name.in?(%w(mailer purchases)) %>
     <div class="text-right">
       <%= link_to "Print Labels", labels_items_url(by_id: items.map(&:id)), class: "btn btn-info btn-raised btn-round", target: "blank" %>
     </div>
   <% end %>
 
   <div class="table-responsive">
-    <table class="table table-shopping">
+    <table class="table table-shopping tablesorter">
 
       <thead>
         <tr>
           <th class="text-center"></th>
-          <th class="th-description">Item</th>
+          <th class="th-description text-center">Item</th>
           <% headers.each do |header| %>
-            <% sort_params = { order: header_sort_values[header] }.merge(params.except(:action, :controller, :page, :order)) %>
-            <% if params[:order] == header_sort_values[header] %>
-              <% sort_params[:order] = "#{header_sort_values[header]} DESC NULLS LAST" %>
-            <% elsif params[:order] == "#{header_sort_values[header]} DESC NULLS LAST" %>
-              <% sort_params[:order] = header_sort_values[header] %>
-            <% end %>
-            <th class="text-center"><%= link_to header, (!request.nil? ? "#{request.path}?#{sort_params.to_param}" : "#") %></th>
+            <th class="text-center"><%= header %></th>
           <% end %>
         </tr>
       </thead>
