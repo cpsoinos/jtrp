@@ -1,0 +1,30 @@
+<div class="btn-group dropup">
+  <button type="button" class="btn btn-raised btn-primary btn-fab dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <i class='material-icons'>menu</i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-right fab-menu">
+
+    <li>
+      <%= link_to "<i class='material-icons'>add_a_photo</i> Step 1: Upload Photos".html_safe, edit_account_job_proposal_path(account, job, proposal) %>
+    </li>
+    <li>
+      <%= link_to "<i class='material-icons'>photo_library</i> Step 2: Sort Photos".html_safe, account_job_proposal_sort_photos_path(account, job, proposal) %>
+    </li>
+    <li>
+      <%= link_to "<i class='material-icons'>weekend</i> Step 3: Create Items".html_safe, account_job_proposal_sort_items_path(account, job, proposal) %>
+    </li>
+    <li>
+      <%= link_to "<i class='material-icons'>edit</i> Step 4: Item Details".html_safe, account_job_proposal_details_path(account, job, proposal) %>
+    </li>
+
+    <li role="separator" class="divider"></li>
+
+    <li>
+      <%= link_to "<i class='material-icons'>assignment</i> Step 5: View Proposal".html_safe, account_job_proposal_path(account, job, proposal) %>
+    </li>
+    <li>
+      <%= link_to "<i class='material-icons'>assignment_turned_in</i> Step 6: View Agreements".html_safe, account_job_proposal_agreements_path(account, job, proposal), method: :post %>
+    </li>
+
+  </ul>
+</div>

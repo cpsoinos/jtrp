@@ -109,7 +109,7 @@ feature "edit a proposal" do
 
       scenario "views completed proposal" do
         visit account_job_proposal_details_path(account, job, proposal)
-        click_link("View Proposal")
+        click_link("View Proposal", match: :first)
 
         expect(page).to have_content("This proposal is not binding and shall not be deemed an enforceable contract. It is for information purposes only.")
         expect(page).to have_content("Item No. #{item.account_item_number}")
