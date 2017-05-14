@@ -30,7 +30,6 @@ gem 'cairo'
 gem 'has_secure_token'
 gem 'remotipart', '~> 1.2'
 gem 'dropzonejs-rails'
-gem 'fog'
 gem 'fog-aws'
 gem 'gon'
 gem 'state_machines'
@@ -76,7 +75,7 @@ gem 'sidekiq-unique-jobs'
 gem 'redis-namespace'
 gem 'acts_as_list'
 gem 'public_activity'
-gem 'wicked_pdf'
+# gem 'wicked_pdf'
 
 source 'https://VMhPfPufH483ELy_GQup@gem.fury.io/cpsoinos/' do
   gem 'mk_pro-rails'
@@ -96,7 +95,7 @@ group :production, :staging do
   gem 'scout_apm', '~> 3.0.x'
   gem 'lograge'
   gem 'puma_worker_killer'
-  gem 'wkhtmltopdf-heroku'
+  # gem 'wkhtmltopdf-heroku'
 end
 
 group :production, :staging, :development do
@@ -116,7 +115,7 @@ group :development, :test do
   gem 'selenium-webdriver'
   gem 'parallel_tests'
   gem 'spring-commands-rspec'
-  gem 'wkhtmltopdf-binary'
+  # gem 'wkhtmltopdf-binary'
 end
 
 group :development do

@@ -11,28 +11,18 @@ class PdfGenerator
     create_async_response
   end
 
-  def create_pdf
-    pdf = WickedPdf.new.pdf_from_url("#{object.object_url}&print=true")
-    tempfile = Tempfile.new(object.short_name)
-    tempfile.binmode
-    tempfile << pdf
-    tempfile.rewind
-    object.pdf = tempfile
-    object.save
-    save_page_count
-  end
+  # def create_pdf
+  #   pdf = WickedPdf.new.pdf_from_url("#{object.object_url}&print=true")
+  #   tempfile = Tempfile.new(object.short_name)
+  #   tempfile.binmode
+  #   tempfile << pdf
+  #   tempfile.rewind
+  #   object.pdf = tempfile
+  #   object.save
+  #   save_page_count
+  # end
 
   private
-
-  def create_response
-    DocRaptor::DocApi.new.create_doc(
-      test:             (Rails.env == 'production' ? false : true),
-      document_url:     object.object_url,
-      name:             "#{account.full_name}_#{object.class.name}_#{object.id}.pdf",
-      document_type:    "pdf",
-      javascript:       true
-    )
-  end
 
   def create_async_response
     $docraptor = DocRaptor::DocApi.new
