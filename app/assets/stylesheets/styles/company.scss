@@ -44,7 +44,7 @@ img.logo {
 }
 
 #hours-of-operation {
-  background-image: cloudinary-url('book clock high resolution wallpaper.jpg', $client_hints: true, $fetch_format: "auto", $width: "auto", $quality: "auto")
+  background-image: cloudinary-url('book_clock_high_resolution_wallpaper.jpg', $client_hints: true, $fetch_format: "auto", $width: "auto", $quality: "auto")
 }
 
 .card-content {
