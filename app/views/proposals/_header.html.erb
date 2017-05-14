@@ -23,7 +23,19 @@
   <span class="col-sm-push-6 text-right form-header-table">
     <h4><%= form_name %></h4>
     <table class="pull-right">
-      <% if proposal.present? %>
+      <% if statement.present? %>
+        <td class="text-left">Date</td>
+        <td><%= statement.date.last_month.strftime("%B, %Y") %></td>
+      <% elsif agreement.present? %>
+        <tr>
+          <td class="text-left">Date</td>
+          <td><%= agreement.date.strftime("%B %d, %Y") %></td>
+        </tr>
+        <tr>
+          <td class="text-left">Agreement #</td>
+          <td><%= agreement.id %></td>
+        </tr>
+      <% elsif proposal.present? %>
         <tr>
           <td class="text-left">Date</td>
           <td><%= proposal.created_at.strftime("%B %d, %Y") %></td>
@@ -32,9 +44,6 @@
           <td class="text-left">Proposal #</td>
           <td><%= proposal.id %></td>
         </tr>
-      <% elsif statement.present? %>
-        <td class="text-left">Date</td>
-        <td><%= statement.date.last_month.strftime("%B, %Y") %></td>
       <% end %>
       <tr>
         <td class="text-left">Account #</td>
