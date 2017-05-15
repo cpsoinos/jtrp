@@ -137,7 +137,7 @@ class ApplicationController < ActionController::Base
 
   def ssl_configured?
     false
-    # Rails.env.production? && controller_name != 'webhooks'
+    Rails.env.production? && controller_name != 'webhooks'
   end
 
 end
