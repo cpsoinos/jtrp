@@ -15,13 +15,14 @@ module ApplicationHelper
   end
 
   def purchase_invoice_headers
-    ["Account Item No.", "Amount"]
+    ["SKU", "Account Item No.", "Amount"]
   end
 
   def purchase_invoice_values(item)
     {
-      "Account Item No."          =>  item.account_item_number,
-      "Amount"                    =>  humanized_money_with_symbol(item.purchase_price)
+      "SKU"               =>  item.id,
+      "Account Item No."  =>  item.account_item_number,
+      "Amount"            =>  humanized_money_with_symbol(item.purchase_price)
     }
   end
 
@@ -55,17 +56,17 @@ module ApplicationHelper
   def general_values(item)
     if current_user.try(:internal?)
       {
-        "Account Item No."          =>  item.account_item_number,
-        "JTRP No."                  =>  (best_in_place item, :jtrp_number, place_holder: 'N/A'),
-        "Consignment Rate"          =>  (item.consigned? ? "#{item.consignment_rate}%" : "N/A"),
-        "Listing Price"             =>  humanized_money_with_symbol(item.listing_price),
-        "Min. Sale Price"           =>  humanized_money_with_symbol(item.minimum_sale_price),
-        "Sale Date"                 =>  ((item.sold? && item.sold_at.present?) ? "<h4>#{item.sold_at.strftime('%-m/%-d/%y')}</h4>".html_safe : ""),
-        "Sale Price"                =>  (item.sold? ? "<h4>#{humanized_money_with_symbol(item.sale_price)}</h4>".html_safe : ""),
+        "Account Item No."    =>  item.account_item_number,
+        "JTRP No."            =>  (best_in_place item, :jtrp_number, place_holder: 'N/A'),
+        "Consignment Rate"    =>  (item.consigned? ? "#{item.consignment_rate}%" : "N/A"),
+        "Listing Price"       =>  humanized_money_with_symbol(item.listing_price),
+        "Min. Sale Price"     =>  humanized_money_with_symbol(item.minimum_sale_price),
+        "Sale Date"           =>  ((item.sold? && item.sold_at.present?) ? item.sold_at.strftime('%-m/%-d/%y') : ""),
+        "Sale Price"          =>  (item.sold? ? humanized_money_with_symbol(item.sale_price) : ""),
       }
     else
       {
-        "Price"                     =>  "<h4>#{humanized_money_with_symbol(item.listing_price)}</h4>".html_safe
+        "Price"               =>  humanized_money_with_symbol(item.listing_price)
       }
     end
   end
@@ -86,13 +87,13 @@ module ApplicationHelper
 
   def intentions_map
     {
-      "consign" => { display_name: "consigned", icon: "<i class='material-icons'>supervisor_account</i>", color: "secondary-primary" },
-      "sell" => { display_name: "owned", icon: "<i class='material-icons'>store</i>", color: "complement-primary" },
-      "donate" => { display_name: "will donate", icon: "<i class='fa fa-gift' aria-hidden='true'></i>", color: "secondary-darker" },
-      "dump" => { display_name: "will dump", icon: "<i class='material-icons'>delete</i>", color: "complement-darker" },
+      "consign"   => { display_name: "consigned", icon: "<i class='material-icons'>supervisor_account</i>", color: "secondary-primary" },
+      "sell"      => { display_name: "owned", icon: "<i class='material-icons'>store</i>", color: "complement-primary" },
+      "donate"    => { display_name: "will donate", icon: "<i class='fa fa-gift' aria-hidden='true'></i>", color: "secondary-darker" },
+      "dump"      => { display_name: "will dump", icon: "<i class='material-icons'>delete</i>", color: "complement-darker" },
       "undecided" => { display_name: "undecided", icon: "<i class='fa fa-question' aria-hidden='true'></i>", color: "primary-lighter" },
-      "nothing" => { display_name: "client kept", icon: "<i class='material-icons'>weekend</i>", color: "primary-lighter" },
-      "decline" => { display_name: "client declined", icon: "<i class='material-icons'>weekend</i>", color: "primary-lighter" }
+      "nothing"   => { display_name: "client kept", icon: "<i class='material-icons'>weekend</i>", color: "primary-lighter" },
+      "decline"   => { display_name: "client declined", icon: "<i class='material-icons'>weekend</i>", color: "primary-lighter" }
     }
   end
 

@@ -19,6 +19,7 @@
 //= require bootstrap.min
 //= require moment.min
 //= require bootstrap-datetimepicker
+//= require bootstrap-datepicker
 //= require validator.min
 //= require jasny-bootstrap.min
 //= require jquery.dropdown
