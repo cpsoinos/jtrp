@@ -79,6 +79,10 @@ class Agreement < ActiveRecord::Base
     proposal.mark_inactive
   end
 
+  def date_or_created_at
+    date || created_at
+  end
+
   def set_agreement_date
     self.date = DateTime.now
     self.save

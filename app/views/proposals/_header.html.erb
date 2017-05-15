@@ -29,7 +29,7 @@
       <% elsif agreement.present? %>
         <tr>
           <td class="text-left">Date</td>
-          <td><%= agreement.date.strftime("%B %d, %Y") %></td>
+          <td><%= agreement.date_or_created_at.strftime("%B %d, %Y") %></td>
         </tr>
         <tr>
           <td class="text-left">Agreement #</td>
