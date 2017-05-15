@@ -14,7 +14,7 @@
       <% end %>
     <% end %>
 
-    <%= render 'header', form_name: "Proposal", company: @company, proposal: @proposal, account: @account, job: @job %>
+    <%= render 'proposals/header', form_name: "Proposal", company: @company, proposal: @proposal, account: @account, job: @job, agreement: nil, statement: nil %>
     <%= render 'disclaimer' %>
 
     <% @items.each do |item| %>

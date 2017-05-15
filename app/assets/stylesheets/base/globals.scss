@@ -283,3 +283,23 @@ li {
     }
   }
 }
+
+th.headerSortUp {
+  background-image: url('ic_keyboard_arrow_up_black_24dp_1x.png');
+  cursor: pointer;
+  font-weight: bold;
+  background-repeat: no-repeat;
+  background-position: center left;
+  padding-left: 20px;
+  margin-left: -1px;
+}
+
+th.headerSortDown {
+  background-image: url('ic_keyboard_arrow_down_black_24dp_1x.png');
+  cursor: pointer;
+  font-weight: bold;
+  background-repeat: no-repeat;
+  background-position: center left;
+  padding-left: 20px;
+  margin-left: -1px;
+}
