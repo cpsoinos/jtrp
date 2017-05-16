@@ -13,6 +13,7 @@
 /tmp
 /public/uploads
 .env
+.env.development
 .env.test
 /coverage/
 rspec.xml
