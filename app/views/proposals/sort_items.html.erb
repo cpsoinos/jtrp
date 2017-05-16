@@ -20,7 +20,16 @@
     <div class="col-xs-12 col-md-8 col-md-offset-2">
 
       <div class="text-center">
-        <%= link_to "Import Items", bulk_update_items_path(proposal_id: @proposal.id), method: :post, class: "btn btn-primary btn-raised", data: {confirm: "Are you sure?", :'confirm-button-text' => "Yes, I'm sure", :'cancel-button-text' => "No, cancel!", :'sweet-alert-type' => 'warning', :'confirm-button-color' => '#f44336', text: "This will remove all undecided or declined items from all of this account's proposals and add them to this one."} %>
+        <%= link_to "Import Items", bulk_update_items_path(proposal_id: @proposal.id), method: :post, class: "btn btn-primary btn-raised", data:
+          {
+            :confirm                => "Are you sure?",
+            :'confirm-button-text'  => "Yes, I'm sure",
+            :'cancel-button-text'   => "No, cancel!",
+            :'sweet-alert-type'     => 'warning',
+            :'confirm-button-color' => '#f44336',
+            :text                   => "This will remove all undecided or declined items from all of this account's proposals and add them to this one."
+          }
+        %>
       </div>
 
       <div class="container-fluid">
@@ -50,7 +59,7 @@
             <div class="col-xs-12 col-md-4">
               <div class="form-group label-floating">
                 <%= f.label :category, class: "control-label" %>
-                <%= f.collection_select :category_id, @categories, :id, :name, {include_blank: true}, {class: "select form-control" } %>
+                <%= f.collection_select :category_id, @categories, :id, :name, {include_blank: true}, { class: "select form-control" } %>
               </div>
             </div>
           </div>
@@ -85,10 +94,16 @@
 
           <h4 class="large-top-margin">Select one or more photos of this item:</h4>
 
-          <div class="text-center">
-            <%= f.select :initial_photos, @photos.map { |photo| "<option data-img-src='#{photo.photo_url(:thumb)}' value='#{photo.id}'></option>".html_safe }, {}, { multiple: true, include_blank: true}  %>
+          <div class="row">
+            <div class="container">
+              <% @photos.each do |photo| %>
+                <div class="col-md-3 col-xs-6 text-center bottom-margin">
+                  <%= image_tag(photo.photo_url(:thumb), fetch_format: "auto", width: "auto", responsive: true, quality: "auto", class: "img-responsive img-raised img-radio") %>
+                  <%= f.check_box :initial_photos, { multiple: true, class: "hidden" }, photo.id, nil %>
+                </div>
+              <% end %>
+            </div>
           </div>
-          <%= f.hidden_field :proposal_id, value: @proposal.id %>
 
         <% end %>
 

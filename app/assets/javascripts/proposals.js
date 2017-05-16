@@ -65,4 +65,18 @@ $(document).on('turbolinks:load', function() {
   });
 
 
+  $(function () {
+    $('.img-radio').click(function(e) {
+      if( $(this).siblings('input:checkbox').prop("checked") != true) {
+        $(this).addClass('active')
+               .siblings('input').prop('checked',true)
+      		     .siblings('.img-radio').css('opacity','1');
+      } else {
+    		$(this).removeClass('active')
+               .siblings('input:checkbox').prop('checked',false)
+		           .siblings('.img-radio').css('opacity','0.5');
+      }
+    });
+  });
+
 })
