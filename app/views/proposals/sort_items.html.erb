@@ -1,3 +1,5 @@
+<% meta title: "Proposal - #{@account.short_name} - Sort Items" %>
+
 <div class="container-fluid">
 
   <div class="row large-top-margin">
@@ -17,7 +19,7 @@
   </div>
 
   <div class="row large-top-margin">
-    <div class="col-xs-12 col-md-8 col-md-offset-2">
+    <div class="col-xs-12 col-md-10 col-md-offset-1">
 
       <div class="text-center">
         <%= link_to "Import Items", bulk_update_items_path(proposal_id: @proposal.id), method: :post, class: "btn btn-primary btn-raised", data:
@@ -95,10 +97,10 @@
           <h4 class="large-top-margin">Select one or more photos of this item:</h4>
 
           <div class="row">
-            <div class="container">
+            <div class="container-fluid">
               <% @photos.each do |photo| %>
                 <div class="col-md-3 col-xs-6 text-center bottom-margin">
-                  <%= image_tag(photo.photo_url(:thumb), fetch_format: "auto", width: "auto", responsive: true, quality: "auto", class: "img-responsive img-raised img-radio") %>
+                  <%= image_tag(photo.photo_url(:thumb, client_hints: true, dpr: "auto", fetch_format: "auto", width: "auto", responsive: true, quality: "auto"), class: "img-responsive img-raised img-radio") %>
                   <%= f.check_box :initial_photos, { multiple: true, class: "hidden" }, photo.id, nil %>
                 </div>
               <% end %>
