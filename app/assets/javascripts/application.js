@@ -30,6 +30,7 @@
 //= require material.min
 //= require bootstrap-notify
 //= require chartist.min
+//= require perfect-scrollbar.jquery.min
 //= require material-dashboard
 //= require nouislider.min
 //= require best_in_place

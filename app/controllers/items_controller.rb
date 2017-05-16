@@ -24,6 +24,7 @@ class ItemsController < ApplicationController
   end
 
   def create
+    binding.pry
     @item = Items::Creator.new(@proposal).create(item_params)
     @proposal = @item.proposal
     @job = @proposal.job
