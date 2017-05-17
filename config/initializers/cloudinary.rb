@@ -8,7 +8,7 @@ Cloudinary.config do |config|
 
   unless Rails.env.test?
     config.enhance_image_tag = true
-    config.static_image_support = true
+    config.static_file_support = true
   end
 
 end
