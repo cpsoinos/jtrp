@@ -1,7 +1,6 @@
 require 'prawn/labels'
 
 class ItemsController < ApplicationController
-  # layout :resolve_layout
   before_filter :find_clients, only: [:new, :edit]
   before_filter :find_categories, only: [:new, :edit, :show, :index]
   before_filter :find_proposal, only: [:create, :batch_create]
@@ -24,7 +23,6 @@ class ItemsController < ApplicationController
   end
 
   def create
-    binding.pry
     @item = Items::Creator.new(@proposal).create(item_params)
     @proposal = @item.proposal
     @job = @proposal.job
