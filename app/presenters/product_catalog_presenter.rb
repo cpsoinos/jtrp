@@ -6,7 +6,7 @@ class ProductCatalogPresenter
     CSV.generate(headers: true) do |csv|
       csv << headers
       items.each do |item|
-        csv << [item.id, "in stock", item.condition, item.description, item.featured_photo.photo_url, Rails.application.routes.url_helpers.item_url(item, host: ENV['HOST']), item.description.titleize, "#{item.listing_price.to_s} USD", item.remote_id, item.category.try(:name)]
+        csv << [item.id, "in stock", "used", item.description, item.featured_photo.photo_url, Rails.application.routes.url_helpers.item_url(item, host: ENV['HOST']), item.description.titleize, "#{item.listing_price.to_s} USD", item.remote_id, item.category.try(:name)]
       end
     end
   end
@@ -18,7 +18,7 @@ class ProductCatalogPresenter
   end
 
   def items
-    @_items ||= Item.includes(:category).joins(:photos).for_sale
+    @_items ||= Item.includes(:category).joins(:photos).where.not(remote_id: nil).distinct
   end
 
 end
