@@ -95,6 +95,7 @@ group :production, :staging do
   gem 'scout_apm', '~> 3.0.x'
   gem 'lograge'
   gem 'puma_worker_killer'
+  gem 'heroku-deflater'
   # gem 'wkhtmltopdf-heroku'
 end
 

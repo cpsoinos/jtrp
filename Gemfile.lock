@@ -361,6 +361,8 @@ GEM
     hashdiff (0.3.0)
     hashery (2.1.2)
     hashie (3.4.4)
+    heroku-deflater (0.6.3)
+      rack (>= 1.4.5)
     hiredis (0.6.1)
     htmlentities (4.3.4)
     http-cookie (1.0.3)
@@ -808,6 +810,7 @@ DEPENDENCIES
   guard (>= 2.2.2)
   guard-rspec
   has_secure_token
+  heroku-deflater
   hiredis
   jbuilder (~> 2.0)
   jquery-fileupload-rails
