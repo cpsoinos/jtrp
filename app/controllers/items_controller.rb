@@ -17,6 +17,14 @@ class ItemsController < ApplicationController
     @title = "Items"
   end
 
+  def feed
+    respond_to do |format|
+      format.csv do
+        send_data ProductCatalogPresenter.new.build_csv
+      end
+    end
+  end
+
   def new
     @item = Item.new
     @title = "New Item"

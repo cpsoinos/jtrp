@@ -51,6 +51,7 @@ Rails.application.routes.draw do
     post '/mark_not_sold', to: 'items#mark_not_sold', as: 'mark_not_sold'
     get '/labels', to: 'items#labels', on: :collection
     post '/bulk_update', to: 'items#bulk_update', on: :collection
+    get '/feed', to: 'items#feed', on: :collection
   end
 
   resources :accounts do
