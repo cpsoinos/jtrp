@@ -290,6 +290,15 @@ describe Item do
       end
     end
 
+    it "does not meet requirements expired if 'listed_at' not present" do
+      item = create(:item, :active, client_intention: "consign", listed_at: nil)
+      item.tag_list << "expired"
+      item.save
+      item.proposal.agreements.first.update_attribute("agreement_type", "consign")
+
+      expect(item.meets_requirements_expired?).to be(false)
+    end
+
     it "marks an item 'expired'" do
       now = DateTime.now
       Timecop.freeze(now)
