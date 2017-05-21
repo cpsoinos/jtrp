@@ -830,10 +830,10 @@ DEPENDENCIES
   lob
   lograge
   madison
-  material_dashboard_pro-rails!
+  material_dashboard_pro-rails (~> 0.1.5)!
   metamagic
   mini_magick
-  mk_pro-rails!
+  mk_pro-rails (~> 0.1.1)!
   money-rails
   mr_video
   newrelic_rpm
