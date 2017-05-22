@@ -75,8 +75,8 @@ gem 'sidekiq-unique-jobs'
 gem 'redis-namespace'
 gem 'acts_as_list'
 gem 'public_activity'
-gem 'mk_pro-rails', '~> 0.1.1', path: 'vendor/gems/mk_pro-rails'
-gem 'material_dashboard_pro-rails', '~> 0.1.5', path: 'vendor/gems/material_dashboard_pro-rails'
+gem 'mk_pro-rails', path: './vendor/gems/mk_pro-rails'
+gem 'material_dashboard_pro-rails', path: './vendor/gems/material_dashboard_pro-rails'
 # gem 'wicked_pdf'
 
 source 'https://rails-assets.org' do
