@@ -16,7 +16,7 @@ class Notifier < ApplicationMailer
     @orders = orders(timeframe)
     recipient ||= default_recipient
 
-    roadie_mail(to: recipient, subject: 'Daily Sales Summary')
+    roadie_mail(to: recipient, subject: 'Daily Sales Summary', from: 'Just the Right Piece <notifications@jtrpfurniture.com>')
   end
 
   private
