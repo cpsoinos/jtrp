@@ -1,4 +1,7 @@
 $(document).on('turbolinks:load', function() {
+  <%# if Rails.env.in?(%w(production staging)) %>
+    // Raven.config('https://d84d048de8cd492b94651ce768e4c148@sentry.io/171029').install();
+  <%# end %>
 
   /* Fade out flash messages after 5 sec */
   $('.alert').delay(5000).fadeOut();
