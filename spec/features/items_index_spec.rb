@@ -1,4 +1,4 @@
-feature "item index" do
+feature "item index", :skip do
 
   let(:user) { create(:internal_user) }
   let!(:potential_items) { create_list(:item, 3, description: "Connor") }
