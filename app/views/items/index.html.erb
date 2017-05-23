@@ -1,7 +1,7 @@
 <% meta title: "Items - #{@company.name}" %>
 
 <div class="row large-top-margin">
-  <div class="col-md-10 col-md-offset-1 col-xs-12">
+  <div class="col-md-10 col-md-offset-1 col-xs-12 large-bottom-margin">
     <table data-toggle="table"
            data-url="<%= items_path %>"
            data-pagination="true"
@@ -12,26 +12,24 @@
            >
       <thead>
         <tr>
-          <th data-field="featured_photo_url" data-align="center" data-formatter="imageFormatter"><%# photo column %></th>
-          <th data-field="id" data-align="right" data-sortable="true">SKU</th>
+          <th data-field="featured_photo_url" data-align="center" data-formatter="imageFormatter" data-width="110"><%# photo column %></th>
+          <th data-field="id" data-align="center" data-sortable="true">SKU</th>
+          <th data-field="status" data-align="center" data-sortable="true">Status</th>
           <th data-field="description" data-align="left" data-sortable="true" data-formatter="descriptionLinkFormatter">Description</th>
-          <th data-field="account_item_number" data-align="right" data-sortable="true">Account Item No.</th>
           <th data-field="users.last_name" data-align="center" data-sortable="true" data-formatter="accountLinkFormatter">Account</th>
-          <th data-field="purchase_price_cents" data-align="right" data-sortable="true" data-formatter="moneyFormatter">Cost</th>
-          <th data-field="consigned" data-align="right">Consigned?</th>
-          <th data-field="consignment_rate" data-align="right" data-sortable="true" data-formatter="percentFormatter">Consignment Rate</th>
-          <th data-field="status" data-align="right" data-sortable="true">Status</th>
-          <th data-field="minimum_sale_price_cents" data-align="right" data-sortable="true" data-formatter="moneyFormatter">Min. Sale Price</th>
-          <th data-field="listing_price_cents" data-align="right" data-sortable="true" data-formatter="moneyFormatter">Listing Price</th>
-          <th data-field="listed_at" data-align="right" data-sortable="true" data-formatter="dateFormatter">Listing Date</th>
-          <th data-field="sale_price_cents" data-align="right" data-sortable="true" data-formatter="moneyFormatter">Sale Price</th>
-          <th data-field="sold_at" data-align="right" data-sortable="true" data-formatter="dateFormatter">Sale Date</th>
+          <th data-field="account_item_number" data-align="center" data-sortable="true">Acct.<br>Item<br>No.</th>
+          <th data-field="purchase_price_cents" data-align="center" data-sortable="true" data-formatter="moneyFormatter">Cost</th>
+          <!-- <th data-field="consigned" data-align="center">Consigned?</th> -->
+          <!-- <th data-field="consignment_rate" data-align="center" data-sortable="true" data-formatter="percentFormatter">Consign-<br>ment<br>Rate</th> -->
+          <th data-field="listing_price_cents" data-align="center" data-sortable="true" data-formatter="moneyFormatter">Listing<br>Price</th>
+          <!-- <th data-field="listed_at" data-align="center" data-sortable="true" data-formatter="dateFormatter">Listing<br>Date</th> -->
+          <th data-field="sale_price_cents" data-align="center" data-sortable="true" data-formatter="moneyFormatter">Sale<br>Price</th>
+          <th data-field="sold_at" data-align="center" data-sortable="true" data-formatter="dateFormatter">Sale<br>Date</th>
         </tr>
       </thead>
     </table>
   </div>
 </div>
-
 
 <script>
   function imageFormatter(value, row) {
@@ -47,7 +45,11 @@
   }
 
   function percentFormatter(value, row, index) {
-    return value + '%'
+    if (row.client_intention == 'consign') {
+      return value + '%'
+    } else {
+      return null
+    }
   }
 
   function moneyFormatter(value, row, index) {

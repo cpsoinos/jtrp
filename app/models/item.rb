@@ -148,7 +148,7 @@ class Item < ActiveRecord::Base
   end
 
   def featured_photo_url
-    ActionController::Base.helpers.image_tag(featured_photo.photo_url(:thumb, fetch_format: :auto, quality: :auto), class: "img-rounded img-raised").html_safe
+    ActionController::Base.helpers.image_tag(featured_photo.photo_url(:small_thumb, fetch_format: :auto, quality: :auto), class: "img-rounded img-raised").html_safe
   end
 
   def humanized_cost
