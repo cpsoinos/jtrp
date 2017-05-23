@@ -9,19 +9,18 @@ class ItemsController < ApplicationController
 
   def index
     @title = "Items"
-    respond_to do |format|
-      format.html do
-        if filter_params[:status] == "all"
-          filter_params.delete(:status)
-        end
-        @filter = params[:status].try(:capitalize)
-        @type = params[:type]
-        @items = ItemsPresenter.new(filter_params).execute
-      end
-      format.json do
-        @items = Item.includes(:account).page(params[:page])
-        data = { total: @items.count, rows: @items.as_json(methods: [:featured_photo_url, :humanized_cost, :account_link, :humanized_minimum_sale_price, :humanized_listing_price, :humanized_sale_price]) }
+    if filter_params[:status] == "all"
+      filter_params.delete(:status)
+    end
+    @filter = params[:status].try(:capitalize)
+    @type = params[:type]
+    @items = ItemsPresenter.new(filter_params).execute
 
+    respond_to do |format|
+      format.html
+      format.json do
+        # @items = Item.includes(:account).page(params[:page])
+        data = { total: @items.count, rows: @items.as_json(methods: [:description_link, :featured_photo_url, :humanized_cost, :account_link, :humanized_minimum_sale_price, :humanized_listing_price, :humanized_sale_price]) }
         render json: data
       end
     end
@@ -183,7 +182,7 @@ class ItemsController < ApplicationController
   end
 
   def filter_params
-    params.except(:controller, :action)
+    params.except(:controller, :action, :item)
   end
 
   def find_item

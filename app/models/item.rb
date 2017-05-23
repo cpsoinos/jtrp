@@ -148,7 +148,7 @@ class Item < ActiveRecord::Base
   end
 
   def featured_photo_url
-    ActionController::Base.helpers.image_tag(featured_photo.photo_url(:thumb, fetch_format: :auto, quality: :auto)).html_safe
+    ActionController::Base.helpers.image_tag(featured_photo.photo_url(:thumb, fetch_format: :auto, quality: :auto), class: "img-rounded img-raised").html_safe
   end
 
   def humanized_cost
@@ -168,7 +168,11 @@ class Item < ActiveRecord::Base
   end
 
   def account_link
-    "#{ENV['HOST']}/accounts/#{account.slug}"
+    ActionController::Base.helpers.link_to(account.short_name, Rails.application.routes.url_helpers.account_path(account)).html_safe
+  end
+
+  def description_link
+    ActionController::Base.helpers.link_to(description.titleize, Rails.application.routes.url_helpers.item_path(self)).html_safe
   end
 
   def agreement

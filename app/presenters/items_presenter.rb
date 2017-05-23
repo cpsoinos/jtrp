@@ -5,8 +5,12 @@ class ItemsPresenter
   def initialize(params={}, items=nil)
     @params = params
     @resource = resource
-    @query = params.delete(:query)
+    @query = params.delete(:query) || params.delete(:search)
     @labels = params.delete(:labels)
+    @sort = params.delete(:sort) || "description"
+    @order = params.delete(:order)
+    @limit = params.delete(:limit) || 25
+    @offset = params.delete(:offset) || 0
     @filters = params
     @items ||= item_base
   end
@@ -17,7 +21,7 @@ class ItemsPresenter
   end
 
   def sort
-    @items = @items.order(params[:order])
+    @items = @items.order("#{@sort} #{@order}")
     self
   end
 
@@ -27,7 +31,8 @@ class ItemsPresenter
 
   def paginate
     return self if labels.present?
-    @items = @items.page(params[:page])
+    # @items = @items.page(params[:page])
+    @items = @items.offset(@offset).limit(@limit)
     self
   end
 

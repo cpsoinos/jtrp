@@ -9,20 +9,38 @@
        >
   <thead>
     <tr>
-      <th data-field="photo" data-align="right" data-sortable="true"><%# photo column %></th>
+      <th data-field="featured_photo_url" data-align="center" data-formatter="imageFormatter"><%# photo column %></th>
       <th data-field="id" data-align="right" data-sortable="true">SKU</th>
-      <th data-field="description" data-align="right" data-sortable="true">Description</th>
+      <th data-field="description_link" data-align="left" data-sortable="true" data-sort-name="description">Description</th>
       <th data-field="account_item_number" data-align="right" data-sortable="true">Account Item No.</th>
-      <th data-field="account_link" data-align="right" data-sortable="true">Account</th>
+      <th data-field="account_link" data-align="center" data-sortable="true">Account</th>
       <th data-field="cost" data-align="right" data-sortable="true">Cost</th>
       <th data-field="consigned" data-align="right" data-sortable="true">Consigned?</th>
-      <th data-field="consignment_rate" data-align="right" data-sortable="true">Consignment Rate</th>
+      <th data-field="consignment_rate" data-align="right" data-sortable="true" data-formatter="percentFormatter">Consignment Rate</th>
       <th data-field="status" data-align="right" data-sortable="true">Status</th>
       <th data-field="minimum_sale_price" data-align="right" data-sortable="true">Min. Sale Price</th>
       <th data-field="listing_price" data-align="right" data-sortable="true">Listing Price</th>
-      <th data-field="listed_at" data-align="right" data-sortable="true">Listing Date</th>
-      <th data-field="sale_price" data-align="right" data-sortable="true">Sale Price</th>
-      <th data-field="sold_at" data-align="right" data-sortable="true">Sale Date</th>
+      <th data-field="listed_at" data-align="right" data-sortable="true" data-formatter="dateFormatter">Listing Date</th>
+      <th data-field="sale_price" data-align="right" data-sortable="true" data-formatter="dateFormatter">Sale Price</th>
+      <th data-field="sold_at" data-align="right" data-sortable="true" data-formatter="dateFormatter">Sale Date</th>
     </tr>
   </thead>
 </table>
+
+<script>
+  function imageFormatter(value, row) {
+    return value;
+  }
+
+  function dateFormatter(value, row, index) {
+    if (value == undefined) {
+      return null
+    } else {
+      return moment(value).format("L")
+    }
+  }
+
+  function percentFormatter(value, row, index) {
+    return value + '%'
+  }
+</script>
