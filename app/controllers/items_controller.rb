@@ -14,13 +14,27 @@ class ItemsController < ApplicationController
     end
     @filter = params[:status].try(:capitalize)
     @type = params[:type]
-    @items = ItemsPresenter.new(filter_params).execute
+    presenter = ItemsPresenter.new(filter_params)
+    @items = presenter.execute
 
     respond_to do |format|
       format.html
       format.json do
         # @items = Item.includes(:account).page(params[:page])
-        data = { total: @items.count, rows: @items.as_json(methods: [:description_link, :featured_photo_url, :humanized_cost, :account_link, :humanized_minimum_sale_price, :humanized_listing_price, :humanized_sale_price]) }
+        data = {
+          total: Item.count,
+          rows: @items.as_json(
+            methods: [
+              :description_link,
+              :featured_photo_url,
+              :humanized_cost,
+              :account_link,
+              :humanized_minimum_sale_price,
+              :humanized_listing_price,
+              :humanized_sale_price
+            ]
+          )
+        }
         render json: data
       end
     end

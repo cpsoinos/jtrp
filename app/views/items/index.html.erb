@@ -1,31 +1,37 @@
 <% meta title: "Items - #{@company.name}" %>
 
-<table data-toggle="table"
-       data-url="<%= items_path %>"
-       data-pagination="true"
-       data-side-pagination="server"
-       data-page-list="[20, 50, 100, 200]"
-       data-search="true"
-       >
-  <thead>
-    <tr>
-      <th data-field="featured_photo_url" data-align="center" data-formatter="imageFormatter"><%# photo column %></th>
-      <th data-field="id" data-align="right" data-sortable="true">SKU</th>
-      <th data-field="description_link" data-align="left" data-sortable="true" data-sort-name="description">Description</th>
-      <th data-field="account_item_number" data-align="right" data-sortable="true">Account Item No.</th>
-      <th data-field="account_link" data-align="center" data-sortable="true">Account</th>
-      <th data-field="cost" data-align="right" data-sortable="true">Cost</th>
-      <th data-field="consigned" data-align="right" data-sortable="true">Consigned?</th>
-      <th data-field="consignment_rate" data-align="right" data-sortable="true" data-formatter="percentFormatter">Consignment Rate</th>
-      <th data-field="status" data-align="right" data-sortable="true">Status</th>
-      <th data-field="minimum_sale_price" data-align="right" data-sortable="true">Min. Sale Price</th>
-      <th data-field="listing_price" data-align="right" data-sortable="true">Listing Price</th>
-      <th data-field="listed_at" data-align="right" data-sortable="true" data-formatter="dateFormatter">Listing Date</th>
-      <th data-field="sale_price" data-align="right" data-sortable="true" data-formatter="dateFormatter">Sale Price</th>
-      <th data-field="sold_at" data-align="right" data-sortable="true" data-formatter="dateFormatter">Sale Date</th>
-    </tr>
-  </thead>
-</table>
+<div class="row large-top-margin">
+  <div class="col-md-10 col-md-offset-1 col-xs-12">
+    <table data-toggle="table"
+           data-url="<%= items_path %>"
+           data-pagination="true"
+           data-side-pagination="server"
+           data-page-list="[20, 50, 100, 200]"
+           data-page-size="25"
+           data-search="true"
+           >
+      <thead>
+        <tr>
+          <th data-field="featured_photo_url" data-align="center" data-formatter="imageFormatter"><%# photo column %></th>
+          <th data-field="id" data-align="right" data-sortable="true">SKU</th>
+          <th data-field="description" data-align="left" data-sortable="true" data-formatter="descriptionLinkFormatter">Description</th>
+          <th data-field="account_item_number" data-align="right" data-sortable="true">Account Item No.</th>
+          <th data-field="users.last_name" data-align="center" data-sortable="true" data-formatter="accountLinkFormatter">Account</th>
+          <th data-field="purchase_price_cents" data-align="right" data-sortable="true" data-formatter="moneyFormatter">Cost</th>
+          <th data-field="consigned" data-align="right">Consigned?</th>
+          <th data-field="consignment_rate" data-align="right" data-sortable="true" data-formatter="percentFormatter">Consignment Rate</th>
+          <th data-field="status" data-align="right" data-sortable="true">Status</th>
+          <th data-field="minimum_sale_price_cents" data-align="right" data-sortable="true" data-formatter="moneyFormatter">Min. Sale Price</th>
+          <th data-field="listing_price_cents" data-align="right" data-sortable="true" data-formatter="moneyFormatter">Listing Price</th>
+          <th data-field="listed_at" data-align="right" data-sortable="true" data-formatter="dateFormatter">Listing Date</th>
+          <th data-field="sale_price_cents" data-align="right" data-sortable="true" data-formatter="moneyFormatter">Sale Price</th>
+          <th data-field="sold_at" data-align="right" data-sortable="true" data-formatter="dateFormatter">Sale Date</th>
+        </tr>
+      </thead>
+    </table>
+  </div>
+</div>
+
 
 <script>
   function imageFormatter(value, row) {
@@ -43,4 +49,21 @@
   function percentFormatter(value, row, index) {
     return value + '%'
   }
+
+  function moneyFormatter(value, row, index) {
+    if (value == undefined) {
+      return null
+    } else {
+      return '$' + (value / 100).toFixed(2)
+    }
+  }
+
+  function descriptionLinkFormatter(value, row, index) {
+    return row.description_link
+  }
+
+  function accountLinkFormatter(value, row, index) {
+    return row.account_link
+  }
+
 </script>
