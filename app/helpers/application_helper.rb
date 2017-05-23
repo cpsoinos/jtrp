@@ -1,5 +1,9 @@
 module ApplicationHelper
 
+  def fingerprinted_asset(name)
+    Rails.env.production? ? "#{name}-#{ASSET_FINGERPRINT}" : name
+  end
+
   def consignment_headers
     ["Account Item No.", "Period", "Starting Asking Price", "Starting Min. Price", "Consignment Fee"]
   end

@@ -6,9 +6,13 @@
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto+Slab" media="all">
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/icon?family=Material+Icons" media="all">
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" media="all">
-  <%= stylesheet_link_tag 'application', media: 'all', type: "text/css" %>
+  <%#= stylesheet_link_tag 'application', media: 'all', type: "text/css" %>
   <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" media="all">
-  <%= javascript_include_tag 'application' %>
+  <%#= javascript_include_tag 'application' %>
+
+  <%= stylesheet_link_tag    fingerprinted_asset('application'), media: 'all' %>
+  <%= javascript_include_tag fingerprinted_asset('application') %>
+
   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
   <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAPS_API_KEY'] %>&libraries=places,staticmap"></script>
   <script type="text/javascript" src="https://www.google.com/jsapi"></script>

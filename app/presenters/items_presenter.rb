@@ -8,7 +8,7 @@ class ItemsPresenter
     @query = params.delete(:query)
     @labels = params.delete(:labels)
     @filters = params
-    @items ||= item_base
+    @items ||= item_base.includes(:proposal, :job, :account)
   end
 
   def filter
