@@ -14,7 +14,7 @@ class CompaniesController < ApplicationController
   end
 
   def home
-    @featured_items = Item.active.joins(:photos).limit(3).order("RANDOM()")
+    @featured_items = Item.active.includes(:category).joins(:photos).limit(3).order("RANDOM()")
     @title = "Home"
   end
 
