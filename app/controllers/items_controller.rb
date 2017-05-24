@@ -8,13 +8,36 @@ class ItemsController < ApplicationController
   before_filter :find_item, only: :show
 
   def index
+    @title = "Items"
     if filter_params[:status] == "all"
       filter_params.delete(:status)
     end
     @filter = params[:status].try(:capitalize)
     @type = params[:type]
-    @items = ItemsPresenter.new(filter_params).execute
-    @title = "Items"
+    presenter = ItemsPresenter.new(filter_params)
+    @items = presenter.execute
+
+    respond_to do |format|
+      format.html
+      format.json do
+        data = {
+          total: Item.count,
+          rows: @items.as_json(
+            methods: [
+              :description_link,
+              :featured_photo_url,
+              :humanized_cost,
+              :account_link,
+              :humanized_minimum_sale_price,
+              :humanized_listing_price,
+              :humanized_sale_price
+            ]
+          )
+        }
+        render json: data
+      end
+    end
+
   end
 
   def feed
@@ -180,7 +203,7 @@ class ItemsController < ApplicationController
   end
 
   def filter_params
-    params.except(:controller, :action)
+    params.except(:controller, :action, :item)
   end
 
   def find_item

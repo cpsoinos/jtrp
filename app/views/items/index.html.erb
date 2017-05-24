@@ -1,82 +1,74 @@
 <% meta title: "Items - #{@company.name}" %>
 
-<div class="row">
-  <div class="col-sm-12 text-center">
-    <h1 class="company-title">Items</h1>
-    <% if @filter.present? %>
-      <% case @filter %>
-      <% when "Potential" %>
-        <h4><%= @filter %> items have not yet been listed for sale or consigned.</h4>
-      <% when "Active" %>
-        <% if @type == "sell" %>
-          <h4>For Sale items have a signed purchase invoice and are actively for sale.</h4>
-        <% elsif @type == "consign" %>
-          <h4>Consigned items have a signed agreement and are actively on consignment.</h4>
-        <% else %>
-          <h4>Active items are actively for sale or on consignment.</h4>
-        <% end %>
-      <% when "Sold" %>
-        <h4><%= @filter %> items have been sold.</h4>
-      <% when "Inactive" %>
-        <h4><%= @filter %> items have been deactivated.</h4>
-      <% end %>
-    <% end %>
+<div class="row large-top-margin">
+  <div class="col-md-10 col-md-offset-1 col-xs-12 large-bottom-margin">
+    <div class="text-right bottom-margin">
+      <%= link_to "Print Labels", labels_items_url(by_id: @items.map(&:id)), class: "btn btn-info btn-raised btn-round", target: "blank" %>
+    </div>
+    <table data-toggle="table"
+           data-url="<%= items_path %>"
+           data-pagination="true"
+           data-side-pagination="server"
+           data-page-list="[20, 50, 100, 200]"
+           data-page-size="25"
+           data-search="true"
+           >
+      <thead>
+        <tr>
+          <th data-field="featured_photo_url" data-align="center" data-formatter="imageFormatter" data-width="110"><%# photo column %></th>
+          <th data-field="id" data-align="center" data-sortable="true">SKU</th>
+          <th data-field="status" data-align="center" data-sortable="true">Status</th>
+          <th data-field="description" data-align="left" data-sortable="true" data-formatter="descriptionLinkFormatter">Description</th>
+          <th data-field="users.last_name" data-align="center" data-sortable="true" data-formatter="accountLinkFormatter">Account</th>
+          <th data-field="account_item_number" data-align="center" data-sortable="true">Acct.<br>Item<br>No.</th>
+          <th data-field="purchase_price_cents" data-align="center" data-sortable="true" data-formatter="moneyFormatter">Cost</th>
+          <!-- <th data-field="consigned" data-align="center">Consigned?</th> -->
+          <!-- <th data-field="consignment_rate" data-align="center" data-sortable="true" data-formatter="percentFormatter">Consign-<br>ment<br>Rate</th> -->
+          <th data-field="listing_price_cents" data-align="center" data-sortable="true" data-formatter="moneyFormatter">Listing<br>Price</th>
+          <!-- <th data-field="listed_at" data-align="center" data-sortable="true" data-formatter="dateFormatter">Listing<br>Date</th> -->
+          <th data-field="sale_price_cents" data-align="center" data-sortable="true" data-formatter="moneyFormatter">Sale<br>Price</th>
+          <th data-field="sold_at" data-align="center" data-sortable="true" data-formatter="dateFormatter">Sale<br>Date</th>
+        </tr>
+      </thead>
+    </table>
   </div>
 </div>
 
-<!-- Tabs -->
-<div class="row">
-  <div class="col-md-10 col-md-offset-1 col-xs-12">
+<script>
+  function imageFormatter(value, row) {
+    return value;
+  }
 
-    <div class="row">
-      <ul class="nav nav-pills nav-pills-info text-center justify-list">
-        <% ["all", "potential", "active", "sold", "inactive"].each do |status| %>
-          <li class="<%= 'active' if params[:status] == status %>">
-            <a href="<%= items_path(params.except(:action, :controller, :status).merge(status: status)) %>">
-              <h3><%= status.titleize %></h3>
-            </a>
-          </li>
-        <% end %>
-      </ul>
-    </div>
+  function dateFormatter(value, row, index) {
+    if (value == undefined) {
+      return null
+    } else {
+      return moment(value).format("L")
+    }
+  }
 
-    <div class="row top-margin">
-      <ul class="nav nav-pills nav-pills-icons nav-pills-primary text-center justify-list">
-        <% if current_user.try(:internal?) %>
-          <% intentions_map.each do |intention, values| %>
-            <li class="<%= 'active' if params[:type] == intention.downcase %>">
-              <a href="<%= items_path(status: params[:status], type: intention.downcase) %>"  >
-                <%= values[:icon].html_safe %>
-                <h5><%= values[:display_name] %></h5>
-              </a>
-            </li>
-          <% end %>
-        <% else %>
-          <% @categories.each do |category| %>
-            <li class="">
-              <a href="#<%= category.name %>" aria-controls="<%= category.name %>" role="tab" data-toggle="tab" aria-expanded="false">
-                <h5><%= category.name %></h5>
-              </a>
-            </li>
-          <% end %>
-        <% end %>
-      </ul>
-    </div>
+  function percentFormatter(value, row, index) {
+    if (row.client_intention == 'consign') {
+      return value + '%'
+    } else {
+      return null
+    }
+  }
 
-    <!-- Tab panes -->
-    <div class="large-top-margin">
-      <% if current_user.try(:internal?) %>
-        <%= render 'items/mark_sold_modal', redirect_url: request.original_url %>
-        <div id="item-list-container">
-          <%= render "items_list", headers: general_headers, context: "general", items: @items, cached: true %>
-        </div>
-      <% else %>
-        <% @categories.each do |category| %>
-          <div role="tabpanel" class="tab-pane fade" id="<%= category.name %>">
-            <%= render "items_list", headers: general_headers, context: "general", items: category.items.active %>
-          </div>
-        <% end %>
-      <% end %>
-    </div>
-  </div>
-</div>
+  function moneyFormatter(value, row, index) {
+    if (value == undefined) {
+      return null
+    } else {
+      return '$' + (value / 100).toFixed(2)
+    }
+  }
+
+  function descriptionLinkFormatter(value, row, index) {
+    return row.description_link
+  }
+
+  function accountLinkFormatter(value, row, index) {
+    return row.account_link
+  }
+
+</script>

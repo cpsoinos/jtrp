@@ -3,12 +3,16 @@ class ItemsPresenter
   attr_reader :params, :resource, :filters, :query, :labels, :items
 
   def initialize(params={}, items=nil)
-    @params = params
+    @params   = params
     @resource = resource
-    @query = params.delete(:query)
-    @labels = params.delete(:labels)
-    @filters = params
-    @items ||= item_base
+    @query    = params.delete(:query) || params.delete(:search)
+    @labels   = params.delete(:labels)
+    @sort     = params.delete(:sort) || "description"
+    @order    = params.delete(:order)
+    @limit    = params.delete(:limit) || 25
+    @offset   = params.delete(:offset) || 0
+    @filters  = params
+    @items   ||= item_base
   end
 
   def filter
@@ -17,7 +21,7 @@ class ItemsPresenter
   end
 
   def sort
-    @items = @items.order(params[:order])
+    @items = @items.order("#{@sort} #{@order} NULLS LAST")
     self
   end
 
@@ -27,7 +31,11 @@ class ItemsPresenter
 
   def paginate
     return self if labels.present?
-    @items = @items.page(params[:page])
+    if params[:page]
+      @items = @items.page(params[:page])
+    else
+      @items = @items.offset(@offset).limit(@limit)
+    end
     self
   end
 
@@ -38,6 +46,7 @@ class ItemsPresenter
   end
 
   def execute
+    massage_params
     filter.search.sort.paginate
     @items
   end
@@ -60,8 +69,21 @@ class ItemsPresenter
     if resource
       resource.items
     else
-      Item
+      Item.includes(:account).joins(account: :primary_contact)
     end
   end
+
+  def massage_params
+
+  end
+
+  # def sort_column_map
+  #   {
+  #     "description_link" => "items.description",
+  #     "account_link" => "users.last_name",
+  #     "cost" => "items.purchase_price_cents",
+  #     ""
+  #   }
+  # end
 
 end

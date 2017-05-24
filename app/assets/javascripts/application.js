@@ -56,6 +56,7 @@
 //= require toastr
 //= require jquery-infinite-scroll
 //= require cloudinary
+//= require bootstrap-table
 
 //= require agreements
 //= require categories

@@ -147,6 +147,34 @@ class Item < ActiveRecord::Base
     end
   end
 
+  def featured_photo_url
+    ActionController::Base.helpers.image_tag(featured_photo.photo_url(:small_thumb, fetch_format: :auto, quality: :auto), class: "img-rounded img-raised").html_safe
+  end
+
+  def humanized_cost
+    ActionController::Base.helpers.humanized_money_with_symbol(purchase_price)
+  end
+
+  def humanized_minimum_sale_price
+    ActionController::Base.helpers.humanized_money_with_symbol(minimum_sale_price)
+  end
+
+  def humanized_listing_price
+    ActionController::Base.helpers.humanized_money_with_symbol(listing_price)
+  end
+
+  def humanized_sale_price
+    ActionController::Base.helpers.humanized_money_with_symbol(sale_price)
+  end
+
+  def account_link
+    ActionController::Base.helpers.link_to(account.short_name, Rails.application.routes.url_helpers.account_path(account)).html_safe
+  end
+
+  def description_link
+    ActionController::Base.helpers.link_to(description.titleize, Rails.application.routes.url_helpers.item_path(self)).html_safe
+  end
+
   def agreement
     Rails.cache.fetch("#{proposal.cache_key}/#{client_intention}_agreement") do
       if proposal

@@ -85,6 +85,7 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-image-picker'
   gem 'rails-assets-toastr'
   gem 'rails-assets-jquery-infinite-scroll'
+  gem 'rails-assets-bootstrap-table'
 end
 
 group :production, :staging do
