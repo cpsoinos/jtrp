@@ -96,7 +96,7 @@ feature "search" do
     end
 
     scenario "views second page of search results", js: true do
-      items = create_list(:item, 19, :active)
+      items = create_list(:item, 26, :active)
       items.each do |item|
         item.update_attributes(description: "blue #{item.id}")
       end

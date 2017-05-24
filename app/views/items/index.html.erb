@@ -2,6 +2,9 @@
 
 <div class="row large-top-margin">
   <div class="col-md-10 col-md-offset-1 col-xs-12 large-bottom-margin">
+    <div class="text-right bottom-margin">
+      <%= link_to "Print Labels", labels_items_url(by_id: @items.map(&:id)), class: "btn btn-info btn-raised btn-round", target: "blank" %>
+    </div>
     <table data-toggle="table"
            data-url="<%= items_path %>"
            data-pagination="true"

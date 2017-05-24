@@ -20,7 +20,6 @@ class ItemsController < ApplicationController
     respond_to do |format|
       format.html
       format.json do
-        # @items = Item.includes(:account).page(params[:page])
         data = {
           total: Item.count,
           rows: @items.as_json(
