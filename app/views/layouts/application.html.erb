@@ -17,9 +17,6 @@
   <script type="text/javascript" src="https://apis.google.com/js/plusone.js" parsetags="explicit"></script>
   <script type="text/javascript" src="//widget.cloudinary.com/global/all.js"></script>
   <script type="text/javascript">cloudinary.setCloudName('<%= ENV['CLOUDINARY_CLOUD_NAME'] %>')</script>
-  <% if current_user.try(:internal?) %>
-    <!-- livechat24-7.com widget -->  <script type = 'text/javascript'>window.$_liveChat247 || function(a, b) {b.$_liveChat247 = function(a, b) {var c = a.getElementsByTagName('head')[0];b._hostURL = 'https://www.livechat24-7.com';var d = a.createElement('script');d.src = b._hostURL + '/dashboard/liveChatIframe.js', d.type = 'text/javascript', c.appendChild(d), b._liveChat = {}, b._liveChat.profile = {accountId: '592632205655dc252e8a64ab'}}, b.$_liveChat247(a, b)}(document, window); </script> <!-- /livechat24-7.com widget -->
-  <% end %>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="Accept-CH" content="DPR, Viewport-Width, Width">
   <meta property="fb:app_id" content="<%= ENV['FACEBOOK_APP_ID'] %>">
