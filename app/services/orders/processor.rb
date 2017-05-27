@@ -67,12 +67,11 @@ module Orders
     end
 
     def mark_items_sold
-      order.reload.items.each do |item|
+      order.reload.items.find_each do |item|
         item.sale_price_cents ||= item.listing_price_cents
-        item.sold_at = order.created_at
-        item.save
         item.mark_sold unless item.sold?
       end
+      order.items.update_all(sold_at: order.created_at)
     end
 
   end
