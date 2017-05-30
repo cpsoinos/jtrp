@@ -19,6 +19,8 @@ services:
     image: 'bitnami/postgresql:latest'
     ports:
       - '5432:5432'
+    volumes:
+      - postgresql:/postgresql
 
   box:
     image: busybox
@@ -29,7 +31,10 @@ services:
     image: 'bitnami/redis:latest'
     ports:
       - '6379:6379'
+    volumes:
+      - .:/redis
 
 volumes:
   postgresql:
+  redis:
   box:
