@@ -1,0 +1,35 @@
+version: '3.1'
+
+services:
+
+  web:
+    build: .
+    command: ./script/start
+    volumes:
+      - .:/app
+      - box:/box
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgresql
+      - redis
+    env_file: .env
+
+  postgresql:
+    image: 'bitnami/postgresql:latest'
+    ports:
+      - '5432:5432'
+
+  box:
+    image: busybox
+    volumes:
+      - .:/box
+
+  redis:
+    image: 'bitnami/redis:latest'
+    ports:
+      - '6379:6379'
+
+volumes:
+  postgresql:
+  box:
