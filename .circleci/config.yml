@@ -3,7 +3,6 @@ jobs:
   build:
     working_directory: ~/app
     docker:
-      # using custom image, see .circleci/images/primary/Dockerfile
       - image: circleci/ruby:2.3.3-browsers
       - image: bitnami/postgresql:latest
 
@@ -35,41 +34,17 @@ jobs:
         paths:
           - /usr/local/bin/nodejs
 
+      # - type: cache-restore
+      #   key: phantomjs
+      - run: sudo curl --output /usr/local/bin/phantomjs https://s3.amazonaws.com/circle-downloads/phantomjs-2.1.1
 
+
+        
 
 
       # Database setup
       - run: bundle exec rake db:create
       - run: bundle exec rake db:schema:load
-
-      # # Install Phantomjs
-      # - type: cache-restore
-      #   key: phantomjs-2-1-1
-      # - run:
-      #     name: Install PhantomJS
-      #     command: sudo curl --output /usr/local/bin/phantomjs https://s3.amazonaws.com/circle-downloads/phantomjs-2.1.1
-      # - type: cache-save
-      #   key: phantomjs-2-1-1
-      #   paths:
-      #       - /usr/local/bin/phantomjs
-
-      - restore_cache:
-          key: phantomjs-2-1-1
-      - run:
-          name: Install PhantomJS Dependencies
-          command: |
-            [ -f /usr/local/bin/phantomjs ] || sudo apt-get update
-            [ -f /usr/local/bin/phantomjs ] || sudo apt-get install -y fontconfig wget tar untar gzip
-      - run:
-          name: Install PhantomJS
-          command: |
-            [ -f /usr/local/bin/phantomjs ] || sudo wget -O /tmp/phantomjs.tar.bz2 https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-x86_64.tar.bz2
-            [ -f /usr/local/bin/phantomjs ] || sudo tar -xjf /tmp/phantomjs.tar.bz2 -C /tmp
-            [ -f /usr/local/bin/phantomjs ] || sudo mv /tmp/phantomjs-2.1.1-linux-x86_64/bin/phantomjs /usr/local/bin/phantomjs
-      - save_cache:
-          key: phantomjs-2-1-1
-          paths:
-            - /usr/local/bin/phantomjs
 
       # Run rspec in parallel
       - type: shell
