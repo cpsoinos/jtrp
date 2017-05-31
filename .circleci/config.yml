@@ -9,6 +9,7 @@ jobs:
 
     environment:
       TEST_RESULTS: /tmp/test-results
+      RAILS_ENV: test
 
     steps:
       - checkout
