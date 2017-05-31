@@ -1,7 +1,7 @@
 version: 2
 jobs:
   build:
-    working_directory: /app
+    working_directory: ~/app
     docker:
       # using custom image, see .circleci/images/primary/Dockerfile
       - image: circleci/ruby:2.3.3-browsers
