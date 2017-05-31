@@ -16,8 +16,6 @@ jobs:
       - type: cache-restore
         key: jtrp-{{ checksum "Gemfile.lock" }}
 
-      - run: sudo apt-get install nodejs
-
       - run: bundle install --path vendor/bundle
 
       # Store bundle cache
@@ -26,9 +24,34 @@ jobs:
         paths:
           - vendor/bundle
 
+      - type: cache-restore
+        key: nodejs
+      - run:
+          name: Install Nodejs
+          command: sudo apt-get install nodejs
+
+      - type: cache-save
+        key: nodejs
+        paths:
+          - /usr/local/bin/nodejs
+
+
+
+
       # Database setup
       - run: bundle exec rake db:create
       - run: bundle exec rake db:schema:load
+
+      # Install Phantomjs
+      - type: cache-restore
+        key: phantomjs-2-1-1
+      - run:
+          name: Install PhantomJS
+          command: sudo curl --output /usr/local/bin/phantomjs https://s3.amazonaws.com/circle-downloads/phantomjs-2.1.1
+      - type: cache-save
+        key: phantomjs-2-1-1
+        paths:
+            - /usr/local/bin/phantomjs
 
       # Run rspec in parallel
       - type: shell
@@ -36,7 +59,7 @@ jobs:
           bundle exec rspec --profile 10 \
                             --format RspecJunitFormatter \
                             --out /tmp/test-results/rspec.xml \
-                            --format progress \
+                            --format documentation \
                             $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
 
       # Save artifacts
