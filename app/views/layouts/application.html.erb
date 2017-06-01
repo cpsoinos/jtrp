@@ -58,7 +58,9 @@
       </div>
     </div>
 
-    <%= yield :fab %>
+    <% if current_user.try(:internal?) %>
+      <%= yield :fab %>
+    <% end %>
 
   </div>
 
