@@ -27,6 +27,9 @@
         <li class="<%= @navtab == 'items' ? 'active' : '' %>">
           <%= link_to "<i class='material-icons'>weekend</i><p>Items</p>".html_safe, items_path %>
         </li>
+        <li class="nested-nav-li">
+          <%= link_to "<i class='material-icons'>money_off</i><p>Discountable Items</p>".html_safe, discountable_items_path %>
+        </li>
         <li class="<%= @navtab == 'accounts' ? 'active' : '' %>">
           <%= link_to "<i class='material-icons'>assignment_ind</i><p>Accounts</p>".html_safe, accounts_path %>
         </li>

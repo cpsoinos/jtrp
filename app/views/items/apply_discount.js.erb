@@ -1,0 +1,4 @@
+var itemRow = $("#item-<%= @item.id %>-row")
+itemRow.remove();
+
+toastr.success('<%= @message %>', 'Success!', {timeOut: 5000})

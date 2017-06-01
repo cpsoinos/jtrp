@@ -79,6 +79,23 @@ class Item < ActiveRecord::Base
   scope :for_sale, -> { active.where(client_intention: ['sell', 'consign']).or(expired) }
   scope :expired, -> { where(client_intention: 'consign', expired: true) }
 
+  scope :discountable, -> (amount) do
+    case amount
+    when 10
+      for_sale.tagged_with("#{amount}% Off", exclude: true).where(listed_at: 60.days.ago..30.days.ago)
+    when 20
+      for_sale.tagged_with("#{amount}% Off", exclude: true).where(listed_at: 90.days.ago..60.days.ago)
+    when 30
+      for_sale.tagged_with("#{amount}% Off", exclude: true).where(listed_at: 120.days.ago..90.days.ago)
+    when 40
+      for_sale.tagged_with("#{amount}% Off", exclude: true).where(listed_at: 150.days.ago..120.days.ago)
+    when 50
+      for_sale.tagged_with("#{amount}% Off", exclude: true).where("listed_at < ?", 150.days.ago)
+    else
+      Item.none
+    end
+  end
+
   scope :pending_expiration, -> {
     listed_at = Item.arel_table[:listed_at]
     tagged_with('expired', exclude: true).where(client_intention: 'consign', status: %w(active inactive), expired: false).where(listed_at.lt(80.days.ago))

@@ -2,7 +2,7 @@ require 'prawn/labels'
 
 class ItemsController < ApplicationController
   before_filter :find_clients, only: [:new, :edit]
-  before_filter :find_categories, only: [:new, :edit, :show, :index]
+  before_filter :find_categories, only: [:new, :edit, :show, :index, :discountable]
   before_filter :find_proposal, only: [:create, :batch_create]
   before_filter :require_internal, except: [:show, :update, :feed]
   before_filter :find_item, only: :show
@@ -37,7 +37,27 @@ class ItemsController < ApplicationController
         render json: data
       end
     end
+  end
 
+  def discountable
+    @title = "Discountable Items"
+    @discount_amounts = [10, 20, 30, 40, 50]
+    amount = params[:amount].try(:to_i)
+    @items = Item.includes(:proposal, :job, :account).discountable(amount).page(params[:page])
+  end
+
+  def apply_discount
+    @item = Item.find(params[:id])
+    @amount = params[:amount]
+    tag = "#{@amount}% Off"
+
+    new_listing_price = @item.listing_price_cents * (1 - @amount.to_f / 100)
+
+    if Items::Updater.new(@item).update(listing_price_cents: new_listing_price)
+      @item.tag_list << tag
+      @item.save
+      @message = "#{@item.description.titleize} discounted by #{@amount}%"
+    end
   end
 
   def feed
@@ -209,15 +229,5 @@ class ItemsController < ApplicationController
   def find_item
     @item = Item.find(params[:id])
   end
-
-  # def resolve_layout
-  #   if !current_user.try(:internal?)
-  #     if action_name.in?(%w(show))
-  #       "ecommerce"
-  #     end
-  #   else
-  #     "application"
-  #   end
-  # end
 
 end

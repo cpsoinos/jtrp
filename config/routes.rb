@@ -52,6 +52,8 @@ Rails.application.routes.draw do
     get '/labels', to: 'items#labels', on: :collection
     post '/bulk_update', to: 'items#bulk_update', on: :collection
     get '/feed', to: 'items#feed', on: :collection
+    get '/discountable', to: 'items#discountable', on: :collection
+    put '/apply_discount', to: 'items#apply_discount', on: :member
   end
 
   resources :accounts do

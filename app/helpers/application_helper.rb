@@ -85,6 +85,19 @@ module ApplicationHelper
     }
   end
 
+  def discountable_headers
+    ["Account Item No.", "Listing Price", "Listing Date", "Apply Discount?"]
+  end
+
+  def discountable_values(item)
+    {
+      "Account Item No."    =>  item.account_item_number,
+      "Listing Price"       =>  humanized_money_with_symbol(item.listing_price),
+      "Listing Date"        =>  item.listed_at.strftime('%-m/%-d/%y'),
+      "Apply Discount?"     =>  ActionController::Base.helpers.link_to("Apply Discount", apply_discount_item_path(item, amount: params[:amount]), class: "btn btn-raised btn-primary", method: :put, remote: true)
+    }
+  end
+
   def intentions_map
     {
       "consign"   => { display_name: "consigned", icon: "<i class='material-icons'>supervisor_account</i>", color: "secondary-primary" },
