@@ -76,13 +76,11 @@ class AgreementsController < ApplicationController
   end
 
   def send_email
-    @agreements = @proposal.agreements
-    @agreements.each do |agreement|
-      if agreement.potential?
-        TransactionalEmailJob.perform_later(agreement, @company.primary_contact, agreement.account.primary_contact, "send_agreement", params)
-      else
-        agreement.deliver_to_client
-      end
+    @agreement = Agreement.find(params[:agreement_id])
+    if @agreement.potential?
+      TransactionalEmailJob.perform_later(@agreement, @company.primary_contact, @agreement.account.primary_contact, "send_agreement", params)
+    else
+      @agreement.deliver_to_client
     end
     redirect_to :back, notice: "Email sent to client!"
   end
