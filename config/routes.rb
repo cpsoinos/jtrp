@@ -107,6 +107,7 @@ Rails.application.routes.draw do
     post '/activate_items', to: 'agreements#activate_items', as: "activate_items"
     post '/tag', to: 'agreements#tag'
     post '/regenerate_pdf', to: 'agreements#regenerate_pdf'
+    put '/deactivate', to: 'agreements#deactivate', as: 'deactivate'
     resources :scanned_agreements, only: [:create, :update, :show, :destroy]
     resources :letters, only: [:create]
   end
