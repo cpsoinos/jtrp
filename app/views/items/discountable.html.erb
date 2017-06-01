@@ -1,0 +1,26 @@
+<% meta @meta_tags %>
+
+<div class="row">
+  <div class="col-md-10 col-md-offset-1 col-xs-12">
+
+    <div class="row top-margin">
+      <ul class="nav nav-pills text-center justify-list">
+        <% @discount_amounts.each do |amount| %>
+          <li class="<%= 'active' if params[:amount] == amount %>">
+            <%= link_to discountable_items_path(amount: amount) do %>
+              <span class="icon icon-info tab-icon">
+                <i class="material-icons md-48">assignment_ind</i>
+              </span>
+              <h5>Eligible for <%= amount %>% Off</h5>
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+
+    <div class="large-top-margin">
+      <%= render "items/items_list", items: @items, context: 'discountable', headers: discountable_headers, cached: true %>
+    </div>
+
+  </div>
+</div>
