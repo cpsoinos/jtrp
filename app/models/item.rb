@@ -92,7 +92,7 @@ class Item < ActiveRecord::Base
     when 50
       for_sale.tagged_with("#{amount}% Off", exclude: true).where("listed_at < ?", 150.days.ago)
     else
-      []
+      Item.none
     end
   end
 
