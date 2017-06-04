@@ -30,7 +30,7 @@
             <% if current_user %>
               <li><%= link_to "Sign Out <i class='fa fa-sign-out' aria-hidden='true'></i>".html_safe, destroy_user_session_path, method: 'delete' %></li>
             <% else %>
-              <li><%= link_to "Sign in with Clover <i class='fa fa-sign-in' aria-hidden='true'></i>".html_safe, user_omniauth_authorize_path(:clover) %></li>
+              <li><%= link_to "Sign in with Clover <i class='fa fa-sign-in' aria-hidden='true'></i>".html_safe, user_clover_omniauth_authorize_path %></li>
               <li><%= link_to "Sign In <i class='fa fa-sign-in' aria-hidden='true'></i>".html_safe, new_user_session_path %></li>
               <!-- <li><%#= link_to "Sign Up <i class='fa fa-sign-up' aria-hidden='true'></i>".html_safe, new_user_registration_path %></li> -->
             <% end %>

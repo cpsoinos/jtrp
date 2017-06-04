@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 ruby '2.3.3'
 gem 'bundler', '>= 1.8.4'
-gem 'rails', '4.2.5.2'
+gem 'rails', '5.0'
 gem 'pg', '~> 0.15'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
@@ -64,7 +64,6 @@ gem 'fullcontact'
 gem 'friendly_id', '~> 5.1.0'
 gem 'audited', '~> 4.3'
 gem 'rack-cors', :require => 'rack/cors'
-gem 'where-or'
 gem 'lob'
 gem 'paranoia', '~> 2.2'
 gem 'gretel'
@@ -107,7 +106,6 @@ group :development, :test do
   gem 'better_errors'
   gem 'faker'
   gem 'factory_girl_rails'
-  gem 'web-console', '~> 2.0'
   gem 'guard-rspec', require: false
   gem 'terminal-notifier-guard'
   gem 'terminal-notifier'
@@ -120,6 +118,7 @@ end
 group :development do
   gem 'spring'
   gem 'rails_real_favicon'
+  gem 'web-console', '~> 2.0'
   gem 'bullet'
   gem 'letter_opener_web', '~> 1.2.0'
   gem 'mr_video'
@@ -145,5 +144,4 @@ group :test do
   gem 'vcr'
   gem 'rspec-retry'
   gem 'rspec_junit_formatter'
-  gem 'test_after_commit'
 end

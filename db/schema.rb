@@ -1,4 +1,3 @@
-# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -31,11 +30,10 @@ ActiveRecord::Schema.define(version: 20170508015625) do
     t.string   "type",               default: "ClientAccount", null: false
     t.string   "slug"
     t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_accounts_on_deleted_at", using: :btree
+    t.index ["primary_contact_id"], name: "index_accounts_on_primary_contact_id", using: :btree
+    t.index ["slug"], name: "index_accounts_on_slug", using: :btree
   end
-
-  add_index "accounts", ["deleted_at"], name: "index_accounts_on_deleted_at", using: :btree
-  add_index "accounts", ["primary_contact_id"], name: "index_accounts_on_primary_contact_id", using: :btree
-  add_index "accounts", ["slug"], name: "index_accounts_on_slug", using: :btree
 
   create_table "activities", force: :cascade do |t|
     t.integer  "trackable_id"
@@ -48,11 +46,10 @@ ActiveRecord::Schema.define(version: 20170508015625) do
     t.string   "recipient_type"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["owner_id", "owner_type"], name: "index_activities_on_owner_id_and_owner_type", using: :btree
+    t.index ["recipient_id", "recipient_type"], name: "index_activities_on_recipient_id_and_recipient_type", using: :btree
+    t.index ["trackable_id", "trackable_type"], name: "index_activities_on_trackable_id_and_trackable_type", using: :btree
   end
-
-  add_index "activities", ["owner_id", "owner_type"], name: "index_activities_on_owner_id_and_owner_type", using: :btree
-  add_index "activities", ["recipient_id", "recipient_type"], name: "index_activities_on_recipient_id_and_recipient_type", using: :btree
-  add_index "activities", ["trackable_id", "trackable_type"], name: "index_activities_on_trackable_id_and_trackable_type", using: :btree
 
   create_table "agreements", force: :cascade do |t|
     t.integer  "proposal_id"
@@ -74,10 +71,9 @@ ActiveRecord::Schema.define(version: 20170508015625) do
     t.integer  "updated_by_id"
     t.string   "pdf"
     t.integer  "pdf_pages"
+    t.index ["deleted_at"], name: "index_agreements_on_deleted_at", using: :btree
+    t.index ["proposal_id"], name: "index_agreements_on_proposal_id", using: :btree
   end
-
-  add_index "agreements", ["deleted_at"], name: "index_agreements_on_deleted_at", using: :btree
-  add_index "agreements", ["proposal_id"], name: "index_agreements_on_proposal_id", using: :btree
 
   create_table "audits", force: :cascade do |t|
     t.integer  "auditable_id"
@@ -94,13 +90,12 @@ ActiveRecord::Schema.define(version: 20170508015625) do
     t.string   "remote_address"
     t.string   "request_uuid"
     t.datetime "created_at"
+    t.index ["associated_id", "associated_type"], name: "associated_index", using: :btree
+    t.index ["auditable_id", "auditable_type"], name: "auditable_index", using: :btree
+    t.index ["created_at"], name: "index_audits_on_created_at", using: :btree
+    t.index ["request_uuid"], name: "index_audits_on_request_uuid", using: :btree
+    t.index ["user_id", "user_type"], name: "user_index", using: :btree
   end
-
-  add_index "audits", ["associated_id", "associated_type"], name: "associated_index", using: :btree
-  add_index "audits", ["auditable_id", "auditable_type"], name: "auditable_index", using: :btree
-  add_index "audits", ["created_at"], name: "index_audits_on_created_at", using: :btree
-  add_index "audits", ["request_uuid"], name: "index_audits_on_request_uuid", using: :btree
-  add_index "audits", ["user_id", "user_type"], name: "user_index", using: :btree
 
   create_table "bootsy_image_galleries", force: :cascade do |t|
     t.integer  "bootsy_resource_id"
@@ -124,11 +119,10 @@ ActiveRecord::Schema.define(version: 20170508015625) do
     t.string   "photo"
     t.string   "slug"
     t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_categories_on_deleted_at", using: :btree
+    t.index ["parent_id"], name: "index_categories_on_parent_id", using: :btree
+    t.index ["slug"], name: "index_categories_on_slug", using: :btree
   end
-
-  add_index "categories", ["deleted_at"], name: "index_categories_on_deleted_at", using: :btree
-  add_index "categories", ["parent_id"], name: "index_categories_on_parent_id", using: :btree
-  add_index "categories", ["slug"], name: "index_categories_on_slug", using: :btree
 
   create_table "checks", force: :cascade do |t|
     t.integer  "statement_id"
@@ -146,9 +140,8 @@ ActiveRecord::Schema.define(version: 20170508015625) do
     t.datetime "updated_at"
     t.datetime "deleted_at"
     t.string   "check_image_back"
+    t.index ["statement_id"], name: "index_checks_on_statement_id", using: :btree
   end
-
-  add_index "checks", ["statement_id"], name: "index_checks_on_statement_id", using: :btree
 
   create_table "companies", force: :cascade do |t|
     t.string   "name",                        null: false
@@ -182,11 +175,10 @@ ActiveRecord::Schema.define(version: 20170508015625) do
     t.datetime "deleted_at"
     t.jsonb    "hours_of_operation"
     t.string   "medium_account"
+    t.index ["deleted_at"], name: "index_companies_on_deleted_at", using: :btree
+    t.index ["primary_contact_id"], name: "index_companies_on_primary_contact_id", using: :btree
+    t.index ["slug"], name: "index_companies_on_slug", using: :btree
   end
-
-  add_index "companies", ["deleted_at"], name: "index_companies_on_deleted_at", using: :btree
-  add_index "companies", ["primary_contact_id"], name: "index_companies_on_primary_contact_id", using: :btree
-  add_index "companies", ["slug"], name: "index_companies_on_slug", using: :btree
 
   create_table "customers", force: :cascade do |t|
     t.string   "first_name"
@@ -213,12 +205,11 @@ ActiveRecord::Schema.define(version: 20170508015625) do
     t.datetime "deleted_at"
     t.integer  "discountable_id"
     t.string   "discountable_type"
+    t.index ["deleted_at"], name: "index_discounts_on_deleted_at", using: :btree
+    t.index ["discountable_type", "discountable_id"], name: "index_discounts_on_discountable_type_and_discountable_id", using: :btree
+    t.index ["item_id"], name: "index_discounts_on_item_id", using: :btree
+    t.index ["order_id"], name: "index_discounts_on_order_id", using: :btree
   end
-
-  add_index "discounts", ["deleted_at"], name: "index_discounts_on_deleted_at", using: :btree
-  add_index "discounts", ["discountable_type", "discountable_id"], name: "index_discounts_on_discountable_type_and_discountable_id", using: :btree
-  add_index "discounts", ["item_id"], name: "index_discounts_on_item_id", using: :btree
-  add_index "discounts", ["order_id"], name: "index_discounts_on_order_id", using: :btree
 
   create_table "friendly_id_slugs", force: :cascade do |t|
     t.string   "slug",                      null: false
@@ -226,12 +217,11 @@ ActiveRecord::Schema.define(version: 20170508015625) do
     t.string   "sluggable_type", limit: 50
     t.string   "scope"
     t.datetime "created_at"
+    t.index ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true, using: :btree
+    t.index ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type", using: :btree
+    t.index ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id", using: :btree
+    t.index ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type", using: :btree
   end
-
-  add_index "friendly_id_slugs", ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true, using: :btree
-  add_index "friendly_id_slugs", ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type", using: :btree
-  add_index "friendly_id_slugs", ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id", using: :btree
-  add_index "friendly_id_slugs", ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type", using: :btree
 
   create_table "items", force: :cascade do |t|
     t.text     "description",                                       null: false
@@ -255,7 +245,7 @@ ActiveRecord::Schema.define(version: 20170508015625) do
     t.boolean  "will_purchase"
     t.boolean  "will_consign"
     t.integer  "account_item_number"
-    t.decimal  "consignment_rate",            default: 50.0
+    t.decimal  "consignment_rate",            default: "50.0"
     t.datetime "listed_at"
     t.datetime "sold_at"
     t.string   "remote_id"
@@ -274,20 +264,19 @@ ActiveRecord::Schema.define(version: 20170508015625) do
     t.integer  "labor_cost_cents"
     t.string   "labor_cost_currency",         default: "USD",       null: false
     t.datetime "acquired_at"
+    t.index ["account_item_number"], name: "index_items_on_account_item_number", using: :btree
+    t.index ["category_id"], name: "index_items_on_category_id", using: :btree
+    t.index ["client_intention"], name: "index_items_on_client_intention", using: :btree
+    t.index ["deleted_at"], name: "index_items_on_deleted_at", using: :btree
+    t.index ["order_id"], name: "index_items_on_order_id", using: :btree
+    t.index ["proposal_id"], name: "index_items_on_proposal_id", using: :btree
+    t.index ["slug"], name: "index_items_on_slug", using: :btree
+    t.index ["status", "account_item_number", "jtrp_number"], name: "index_items_on_status_and_account_item_number_and_jtrp_number", using: :btree
+    t.index ["status", "account_item_number"], name: "index_items_on_status_and_account_item_number", using: :btree
+    t.index ["status", "client_intention"], name: "index_items_on_status_and_client_intention", using: :btree
+    t.index ["status", "jtrp_number"], name: "index_items_on_status_and_jtrp_number", using: :btree
+    t.index ["status"], name: "index_items_on_status", using: :btree
   end
-
-  add_index "items", ["account_item_number"], name: "index_items_on_account_item_number", using: :btree
-  add_index "items", ["category_id"], name: "index_items_on_category_id", using: :btree
-  add_index "items", ["client_intention"], name: "index_items_on_client_intention", using: :btree
-  add_index "items", ["deleted_at"], name: "index_items_on_deleted_at", using: :btree
-  add_index "items", ["order_id"], name: "index_items_on_order_id", using: :btree
-  add_index "items", ["proposal_id"], name: "index_items_on_proposal_id", using: :btree
-  add_index "items", ["slug"], name: "index_items_on_slug", using: :btree
-  add_index "items", ["status", "account_item_number", "jtrp_number"], name: "index_items_on_status_and_account_item_number_and_jtrp_number", using: :btree
-  add_index "items", ["status", "account_item_number"], name: "index_items_on_status_and_account_item_number", using: :btree
-  add_index "items", ["status", "client_intention"], name: "index_items_on_status_and_client_intention", using: :btree
-  add_index "items", ["status", "jtrp_number"], name: "index_items_on_status_and_jtrp_number", using: :btree
-  add_index "items", ["status"], name: "index_items_on_status", using: :btree
 
   create_table "jobs", force: :cascade do |t|
     t.integer  "account_id"
@@ -299,11 +288,10 @@ ActiveRecord::Schema.define(version: 20170508015625) do
     t.string   "status",     default: "potential", null: false
     t.string   "slug"
     t.datetime "deleted_at"
+    t.index ["account_id"], name: "index_jobs_on_account_id", using: :btree
+    t.index ["deleted_at"], name: "index_jobs_on_deleted_at", using: :btree
+    t.index ["slug"], name: "index_jobs_on_slug", using: :btree
   end
-
-  add_index "jobs", ["account_id"], name: "index_jobs_on_account_id", using: :btree
-  add_index "jobs", ["deleted_at"], name: "index_jobs_on_deleted_at", using: :btree
-  add_index "jobs", ["slug"], name: "index_jobs_on_slug", using: :btree
 
   create_table "letters", force: :cascade do |t|
     t.datetime "created_at"
@@ -321,9 +309,8 @@ ActiveRecord::Schema.define(version: 20170508015625) do
     t.text     "note"
     t.string   "letter_pdf"
     t.integer  "pdf_pages"
+    t.index ["deleted_at"], name: "index_letters_on_deleted_at", using: :btree
   end
-
-  add_index "letters", ["deleted_at"], name: "index_letters_on_deleted_at", using: :btree
 
   create_table "oauth_accounts", force: :cascade do |t|
     t.integer  "user_id"
@@ -335,9 +322,8 @@ ActiveRecord::Schema.define(version: 20170508015625) do
     t.jsonb    "raw_data"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["user_id"], name: "index_oauth_accounts_on_user_id", using: :btree
   end
-
-  add_index "oauth_accounts", ["user_id"], name: "index_oauth_accounts_on_user_id", using: :btree
 
   create_table "orders", force: :cascade do |t|
     t.string   "remote_id"
@@ -347,9 +333,8 @@ ActiveRecord::Schema.define(version: 20170508015625) do
     t.datetime "updated_at"
     t.datetime "deleted_at"
     t.boolean  "processed"
+    t.index ["deleted_at"], name: "index_orders_on_deleted_at", using: :btree
   end
-
-  add_index "orders", ["deleted_at"], name: "index_orders_on_deleted_at", using: :btree
 
   create_table "payments", force: :cascade do |t|
     t.integer  "order_id"
@@ -361,9 +346,8 @@ ActiveRecord::Schema.define(version: 20170508015625) do
     t.integer  "tax_amount_cents"
     t.string   "tax_amount_currency", default: "USD", null: false
     t.datetime "deleted_at"
+    t.index ["order_id"], name: "index_payments_on_order_id", using: :btree
   end
-
-  add_index "payments", ["order_id"], name: "index_payments_on_order_id", using: :btree
 
   create_table "pg_search_documents", force: :cascade do |t|
     t.text     "content"
@@ -371,9 +355,8 @@ ActiveRecord::Schema.define(version: 20170508015625) do
     t.string   "searchable_type"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
+    t.index ["searchable_type", "searchable_id"], name: "index_pg_search_documents_on_searchable_type_and_searchable_id", using: :btree
   end
-
-  add_index "pg_search_documents", ["searchable_type", "searchable_id"], name: "index_pg_search_documents_on_searchable_type_and_searchable_id", using: :btree
 
   create_table "photos", force: :cascade do |t|
     t.integer  "item_id"
@@ -384,13 +367,12 @@ ActiveRecord::Schema.define(version: 20170508015625) do
     t.integer  "proposal_id"
     t.datetime "deleted_at"
     t.integer  "position"
+    t.index ["deleted_at"], name: "index_photos_on_deleted_at", using: :btree
+    t.index ["item_id", "photo_type"], name: "index_photos_on_item_id_and_photo_type", using: :btree
+    t.index ["item_id"], name: "index_photos_on_item_id", using: :btree
+    t.index ["photo_type"], name: "index_photos_on_photo_type", using: :btree
+    t.index ["proposal_id"], name: "index_photos_on_proposal_id", using: :btree
   end
-
-  add_index "photos", ["deleted_at"], name: "index_photos_on_deleted_at", using: :btree
-  add_index "photos", ["item_id", "photo_type"], name: "index_photos_on_item_id_and_photo_type", using: :btree
-  add_index "photos", ["item_id"], name: "index_photos_on_item_id", using: :btree
-  add_index "photos", ["photo_type"], name: "index_photos_on_photo_type", using: :btree
-  add_index "photos", ["proposal_id"], name: "index_photos_on_proposal_id", using: :btree
 
   create_table "proposals", force: :cascade do |t|
     t.integer  "created_by_id", null: false
@@ -401,10 +383,9 @@ ActiveRecord::Schema.define(version: 20170508015625) do
     t.integer  "items_count"
     t.string   "token",         null: false
     t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_proposals_on_deleted_at", using: :btree
+    t.index ["job_id"], name: "index_proposals_on_job_id", using: :btree
   end
-
-  add_index "proposals", ["deleted_at"], name: "index_proposals_on_deleted_at", using: :btree
-  add_index "proposals", ["job_id"], name: "index_proposals_on_job_id", using: :btree
 
   create_table "scanned_agreements", force: :cascade do |t|
     t.integer  "agreement_id", null: false
@@ -412,10 +393,9 @@ ActiveRecord::Schema.define(version: 20170508015625) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "deleted_at"
+    t.index ["agreement_id"], name: "index_scanned_agreements_on_agreement_id", using: :btree
+    t.index ["deleted_at"], name: "index_scanned_agreements_on_deleted_at", using: :btree
   end
-
-  add_index "scanned_agreements", ["agreement_id"], name: "index_scanned_agreements_on_agreement_id", using: :btree
-  add_index "scanned_agreements", ["deleted_at"], name: "index_scanned_agreements_on_deleted_at", using: :btree
 
   create_table "statement_pdfs", force: :cascade do |t|
     t.integer  "statement_id"
@@ -423,10 +403,9 @@ ActiveRecord::Schema.define(version: 20170508015625) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_statement_pdfs_on_deleted_at", using: :btree
+    t.index ["statement_id"], name: "index_statement_pdfs_on_statement_id", using: :btree
   end
-
-  add_index "statement_pdfs", ["deleted_at"], name: "index_statement_pdfs_on_deleted_at", using: :btree
-  add_index "statement_pdfs", ["statement_id"], name: "index_statement_pdfs_on_statement_id", using: :btree
 
   create_table "statements", force: :cascade do |t|
     t.datetime "date"
@@ -439,10 +418,9 @@ ActiveRecord::Schema.define(version: 20170508015625) do
     t.datetime "deleted_at"
     t.string   "pdf"
     t.integer  "pdf_pages"
+    t.index ["account_id"], name: "index_statements_on_account_id", using: :btree
+    t.index ["deleted_at"], name: "index_statements_on_deleted_at", using: :btree
   end
-
-  add_index "statements", ["account_id"], name: "index_statements_on_account_id", using: :btree
-  add_index "statements", ["deleted_at"], name: "index_statements_on_deleted_at", using: :btree
 
   create_table "system_infos", force: :cascade do |t|
     t.integer "last_account_number", default: 10
@@ -456,24 +434,22 @@ ActiveRecord::Schema.define(version: 20170508015625) do
     t.string   "tagger_type"
     t.string   "context",       limit: 128
     t.datetime "created_at"
+    t.index ["context"], name: "index_taggings_on_context", using: :btree
+    t.index ["tag_id", "taggable_id", "taggable_type", "context", "tagger_id", "tagger_type"], name: "taggings_idx", unique: true, using: :btree
+    t.index ["tag_id"], name: "index_taggings_on_tag_id", using: :btree
+    t.index ["taggable_id", "taggable_type", "context"], name: "index_taggings_on_taggable_id_and_taggable_type_and_context", using: :btree
+    t.index ["taggable_id", "taggable_type", "tagger_id", "context"], name: "taggings_idy", using: :btree
+    t.index ["taggable_id"], name: "index_taggings_on_taggable_id", using: :btree
+    t.index ["taggable_type"], name: "index_taggings_on_taggable_type", using: :btree
+    t.index ["tagger_id", "tagger_type"], name: "index_taggings_on_tagger_id_and_tagger_type", using: :btree
+    t.index ["tagger_id"], name: "index_taggings_on_tagger_id", using: :btree
   end
-
-  add_index "taggings", ["context"], name: "index_taggings_on_context", using: :btree
-  add_index "taggings", ["tag_id", "taggable_id", "taggable_type", "context", "tagger_id", "tagger_type"], name: "taggings_idx", unique: true, using: :btree
-  add_index "taggings", ["tag_id"], name: "index_taggings_on_tag_id", using: :btree
-  add_index "taggings", ["taggable_id", "taggable_type", "context"], name: "index_taggings_on_taggable_id_and_taggable_type_and_context", using: :btree
-  add_index "taggings", ["taggable_id", "taggable_type", "tagger_id", "context"], name: "taggings_idy", using: :btree
-  add_index "taggings", ["taggable_id"], name: "index_taggings_on_taggable_id", using: :btree
-  add_index "taggings", ["taggable_type"], name: "index_taggings_on_taggable_type", using: :btree
-  add_index "taggings", ["tagger_id", "tagger_type"], name: "index_taggings_on_tagger_id_and_tagger_type", using: :btree
-  add_index "taggings", ["tagger_id"], name: "index_taggings_on_tagger_id", using: :btree
 
   create_table "tags", force: :cascade do |t|
     t.string  "name"
     t.integer "taggings_count", default: 0
+    t.index ["name"], name: "index_tags_on_name", unique: true, using: :btree
   end
-
-  add_index "tags", ["name"], name: "index_tags_on_name", unique: true, using: :btree
 
   create_table "transactional_email_records", force: :cascade do |t|
     t.datetime "created_at"
@@ -483,9 +459,8 @@ ActiveRecord::Schema.define(version: 20170508015625) do
     t.string   "category"
     t.json     "sendgrid_response"
     t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_transactional_email_records_on_deleted_at", using: :btree
   end
-
-  add_index "transactional_email_records", ["deleted_at"], name: "index_transactional_email_records_on_deleted_at", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                       default: "",       null: false
@@ -519,13 +494,12 @@ ActiveRecord::Schema.define(version: 20170508015625) do
     t.string   "clover_token"
     t.string   "slug"
     t.datetime "deleted_at"
+    t.index ["account_id"], name: "index_users_on_account_id", using: :btree
+    t.index ["deleted_at"], name: "index_users_on_deleted_at", using: :btree
+    t.index ["email"], name: "index_users_on_email", using: :btree
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+    t.index ["slug"], name: "index_users_on_slug", using: :btree
   end
-
-  add_index "users", ["account_id"], name: "index_users_on_account_id", using: :btree
-  add_index "users", ["deleted_at"], name: "index_users_on_deleted_at", using: :btree
-  add_index "users", ["email"], name: "index_users_on_email", using: :btree
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
-  add_index "users", ["slug"], name: "index_users_on_slug", using: :btree
 
   create_table "webhook_entries", force: :cascade do |t|
     t.integer  "webhook_id"
@@ -536,10 +510,9 @@ ActiveRecord::Schema.define(version: 20170508015625) do
     t.datetime "created_at",                       null: false
     t.datetime "updated_at",                       null: false
     t.boolean  "processed",        default: false, null: false
+    t.index ["webhook_id"], name: "index_webhook_entries_on_webhook_id", using: :btree
+    t.index ["webhookable_type", "webhookable_id"], name: "index_webhook_entries_on_webhookable_type_and_webhookable_id", using: :btree
   end
-
-  add_index "webhook_entries", ["webhook_id"], name: "index_webhook_entries_on_webhook_id", using: :btree
-  add_index "webhook_entries", ["webhookable_type", "webhookable_id"], name: "index_webhook_entries_on_webhookable_type_and_webhookable_id", using: :btree
 
   create_table "webhooks", force: :cascade do |t|
     t.string   "integration"

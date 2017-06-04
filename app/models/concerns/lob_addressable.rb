@@ -24,7 +24,7 @@ module LobAddressable
   end
 
   def lob
-    @_lob ||= Lob.load
+    @_lob ||= Lob::Client.new(api_key: ENV['LOB_API_KEY'])
   end
 
 end
