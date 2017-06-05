@@ -28,6 +28,9 @@
           </a>
           <ul class="dropdown-menu">
             <% if current_user %>
+              <% if current_user.internal? %>
+                <li><%= link_to "Edit #{@company.name} <i class='material-icons'>edit_location</i>".html_safe, edit_company_path(@company) %></li>
+              <% end %>
               <li><%= link_to "Sign Out <i class='fa fa-sign-out' aria-hidden='true'></i>".html_safe, destroy_user_session_path, method: 'delete' %></li>
             <% else %>
               <li><%= link_to "Sign in with Clover <i class='fa fa-sign-in' aria-hidden='true'></i>".html_safe, user_omniauth_authorize_path(:clover) %></li>
