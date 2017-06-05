@@ -32,7 +32,7 @@ class CompaniesController < ApplicationController
   def update
     if @company.update(company_params)
       flash[:notice] = "Changes saved!"
-      redirect_to client_services_path
+      redirect_to about_path
     else
       flash[:error] = "Unable to save changes."
       redirect_to :back
