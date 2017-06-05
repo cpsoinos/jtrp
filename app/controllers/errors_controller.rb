@@ -1,5 +1,5 @@
 class ErrorsController < ApplicationController
   def not_found
-    raise ActiveRecord::RecordNotFound
+    render 404
   end
 end
