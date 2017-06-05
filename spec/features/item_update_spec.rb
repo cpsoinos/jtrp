@@ -26,7 +26,9 @@ feature "update an item" do
 
     scenario "successfully updates an item" do
       visit item_path(item)
-      click_link("edit")
+      within(".btn-group") do
+        click_link("edit")
+      end
 
       fill_in("Description", with: "Chair")
 
