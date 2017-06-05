@@ -19,7 +19,9 @@ feature "edit a category" do
 
     scenario "visits edit category page from show" do
       visit category_path(category)
-      click_link("edit")
+      within(".btn-group") do
+        click_link("edit")
+      end
 
       expect(page).to have_field("Name")
       expect(page).to have_button("Update Category")
