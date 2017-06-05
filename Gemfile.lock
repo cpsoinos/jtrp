@@ -667,6 +667,8 @@ GEM
       json
     sendgrid-ruby (4.0.2)
       ruby_http_client (~> 3.0.0)
+    sentry-raven (2.5.0)
+      faraday (>= 0.7.6, < 1.0)
     sextant (0.2.4)
       rails (>= 3.2)
     shellany (0.0.1)
@@ -883,6 +885,7 @@ DEPENDENCIES
   selenium-webdriver
   sendgrid
   sendgrid-ruby
+  sentry-raven
   sextant
   shoulda-matchers
   sidekiq

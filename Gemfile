@@ -94,6 +94,7 @@ group :production, :staging do
   gem 'lograge'
   gem 'puma_worker_killer'
   gem 'heroku-deflater'
+  gem 'sentry-raven'
   # gem 'wkhtmltopdf-heroku'
 end
 
