@@ -97,10 +97,6 @@ GEM
       rack (>= 0.9.0)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
-    bootsy (2.1.0)
-      carrierwave (~> 0.10)
-      mini_magick (~> 4.0)
-      remotipart (~> 1.2)
     builder (3.2.3)
     bullet (5.4.0)
       activesupport (>= 3.0.0)
@@ -720,6 +716,8 @@ GEM
     state_machines-activerecord (0.3.0)
       activerecord (~> 4.1)
       state_machines-activemodel (>= 0.3.0)
+    summernote-rails (0.8.3.0)
+      railties (>= 3.1)
     suo (0.3.1)
       dalli
       msgpack
@@ -791,7 +789,6 @@ DEPENDENCIES
   barby (~> 0.6)
   best_in_place (= 3.0.3)
   better_errors
-  bootsy
   bullet
   bundler (>= 1.8.4)
   cairo
@@ -893,6 +890,7 @@ DEPENDENCIES
   spring-commands-rspec
   state_machines
   state_machines-activerecord
+  summernote-rails
   sweet-alert-confirm
   terminal-notifier
   terminal-notifier-guard

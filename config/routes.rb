@@ -18,7 +18,6 @@ Rails.application.routes.draw do
 
   get '/sitemap', to: 'passthrough#sitemap'
 
-  mount Bootsy::Engine => '/bootsy', as: 'bootsy'
   devise_for :users, controllers: { registrations: 'users/registrations', omniauth_callbacks: 'users/omniauth_callbacks', sessions: 'users/sessions' }
   root 'companies#home'
 
@@ -27,7 +26,6 @@ Rails.application.routes.draw do
   get '/contact', to: 'companies#contact', as: 'contact'
   post '/send_message', to: 'companies#send_message', as: 'send_message'
   get '/dashboard', to: 'companies#show', as: 'dashboard'
-  get '/client_services', to: 'companies#client_services', as: 'client_services'
   get '/consignment_policies', to: 'companies#consignment_policies', as: 'consignment_policies'
   get '/service_rate_schedule', to: 'companies#service_rate_schedule', as: 'service_rate_schedule'
   get '/agent_service_rate_schedule', to: 'companies#agent_service_rate_schedule', as: 'agent_service_rate_schedule'
