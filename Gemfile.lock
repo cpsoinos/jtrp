@@ -98,9 +98,6 @@ GEM
       rack (>= 0.9.0)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
-    bootsy (2.4.0)
-      carrierwave (~> 1.0)
-      mini_magick (~> 4.6)
     builder (3.2.3)
     bullet (5.5.1)
       activesupport (>= 3.0.0)
@@ -678,6 +675,8 @@ GEM
     sendgrid-ruby (5.0.0)
       ruby_http_client (~> 3.0)
       sinatra (>= 1.4.7, < 3)
+    sentry-raven (2.5.0)
+      faraday (>= 0.7.6, < 1.0)
     sextant (0.2.4)
       rails (>= 3.2)
     shellany (0.0.1)
@@ -733,6 +732,8 @@ GEM
     state_machines-activerecord (0.4.1)
       activerecord (>= 4.1, < 5.2)
       state_machines-activemodel (>= 0.3.0)
+    summernote-rails (0.8.3.0)
+      railties (>= 3.1)
     suo (0.3.2)
       dalli
       msgpack
@@ -800,7 +801,6 @@ DEPENDENCIES
   barby (~> 0.6)
   best_in_place (= 3.0.3)
   better_errors
-  bootsy
   bullet
   bundler (>= 1.8.4)
   cairo
@@ -892,6 +892,7 @@ DEPENDENCIES
   selenium-webdriver
   sendgrid
   sendgrid-ruby
+  sentry-raven
   sextant
   shoulda-matchers
   sidekiq
@@ -902,6 +903,7 @@ DEPENDENCIES
   spring-commands-rspec
   state_machines
   state_machines-activerecord
+  summernote-rails
   sweet-alert-confirm
   terminal-notifier
   terminal-notifier-guard

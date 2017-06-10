@@ -34,7 +34,6 @@ gem 'fog-aws'
 gem 'gon'
 gem 'state_machines'
 gem 'state_machines-activerecord'
-gem 'bootsy'
 gem 'chartkick'
 gem 'sweet-alert-confirm'
 gem 'jquery-fileupload-rails'
@@ -76,6 +75,7 @@ gem 'acts_as_list'
 gem 'public_activity'
 gem 'mk_pro-rails', git: 'git@github.com:cpsoinos/mk_pro-rails.git'
 gem 'material_dashboard_pro-rails', git: 'git@github.com:cpsoinos/material_dashboard_pro-rails.git'
+gem 'summernote-rails'
 # gem 'wicked_pdf'
 
 source 'https://rails-assets.org' do
@@ -93,6 +93,7 @@ group :production, :staging do
   gem 'lograge'
   gem 'puma_worker_killer'
   gem 'heroku-deflater'
+  gem 'sentry-raven'
   # gem 'wkhtmltopdf-heroku'
 end
 

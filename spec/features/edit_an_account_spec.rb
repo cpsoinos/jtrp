@@ -12,7 +12,9 @@ feature "edit an account" do
 
     scenario "visits edit page from show" do
       visit account_path(account)
-      click_link("edit")
+      within(".btn-group") do
+        click_link("edit")
+      end
 
       expect(page).to have_field("Company name")
       expect(page).to have_content("Primary contact")
