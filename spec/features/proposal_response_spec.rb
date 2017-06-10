@@ -23,7 +23,9 @@ feature "proposal response" do
     scenario "user chooses client intentions", js: true do
       visit account_job_proposal_path(account, job, proposal)
       items.each_with_index do |item, i|
-        find(:css, "#item_#{item.id}_client_intention_#{intentions[i]}", visible: false).trigger("click")
+        within("#edit_item_#{item.id}") do
+          find(:label, text: intentions[i]).click
+        end
 
         expect(page).to have_content("Success!", wait: 3)
         wait_for_ajax
@@ -89,7 +91,9 @@ feature "proposal response" do
     scenario "user chooses client intentions", js: true do
       visit account_job_proposal_path(account, job, proposal, token: proposal.token)
       items.each_with_index do |item, i|
-        find(:css, "#item_#{item.id}_client_intention_#{intentions[i]}", visible: false).trigger("click")
+        within("#edit_item_#{item.id}") do
+          find(:label, text: intentions[i]).click
+        end
 
         expect(page).to have_content("Success!", wait: 3)
         wait_for_ajax
@@ -102,14 +106,14 @@ feature "proposal response" do
       visit account_job_proposal_path(account, job, proposal, token: proposal.token)
       fill_in("note", with: "this is a note")
       click_button("Send Email")
-      params = {
+      params = ActionController::Parameters.new({
         "utf8"=>"✓",
         "note"=>"this is a note",
         "commit"=>"Send Email",
         "controller"=>"proposals",
         "action"=>"notify_response",
         "proposal_id"=>"#{proposal.id}"
-      }
+      })
 
       expect(TransactionalEmailJob).to have_received(:perform_later).with(proposal, account.primary_contact, Company.jtrp.primary_contact, "notification", params)
     end

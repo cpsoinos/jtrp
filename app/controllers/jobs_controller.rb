@@ -40,7 +40,7 @@ class JobsController < ApplicationController
       redirect_to account_job_path(@job.account, @job)
     else
       flash[:alert] = "Job could not be saved"
-      redirect_to :back
+      redirect_back(fallback_location: root_path)
     end
   end
 
@@ -57,7 +57,7 @@ class JobsController < ApplicationController
       redirect_to account_job_path(@account, @job)
     else
       flash[:alert] = "Job could not be saved: #{@job.errors.full_messages.uniq.join}"
-      redirect_to :back
+      redirect_back(fallback_location: root_path)
     end
   end
 

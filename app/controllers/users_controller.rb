@@ -10,7 +10,7 @@ class UsersController < ApplicationController
     if @user.update(user_params)
       redirect_to user_path(@user), notice: "Update successful!"
     else
-      redirect_to :back, notice: "Unable to update user."
+      redirect_back(fallback_location: root_path, notice: "Unable to update user.")
     end
   end
 
@@ -26,7 +26,7 @@ class UsersController < ApplicationController
 
   def ensure_manage
     unless (current_user.try(:internal?) || current_user == @user)
-      redirect_to :back, alert: "You do not have access to this page."
+      redirect_back(fallback_location: root_path, alert: "You do not have access to this page.")
     end
   end
 

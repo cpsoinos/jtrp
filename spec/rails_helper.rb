@@ -8,7 +8,7 @@ require 'helpers/label_helper.rb'
 require 'helpers/webhook_helper.rb'
 require 'coveralls'
 require 'email_spec'
-require 'capybara/poltergeist'
+# require 'capybara/poltergeist'
 require 'money-rails/test_helpers'
 require 'best_in_place/test_helpers'
 require 'audited-rspec.rb'
@@ -78,9 +78,9 @@ RSpec.configure do |config|
 
   config.verbose_retry = true
   config.display_try_failure_messages = true
-  config.around :each, :js do |ex|
-    ex.run_with_retry retry: 3
-  end
+  # config.around :each, :js do |ex|
+  #   ex.run_with_retry retry: 3
+  # end
 
 end
 

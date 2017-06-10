@@ -40,7 +40,7 @@ class AccountsController < ApplicationController
         redirect_to new_client_path(account_id: @account.id)
       end
     else
-      redirect_to :back
+      redirect_back(fallback_location: root_path)
     end
   end
 
@@ -61,7 +61,7 @@ class AccountsController < ApplicationController
         redirect_to new_client_path(account_id: @account.id)
       end
     else
-      redirect_to :back
+      redirect_back(fallback_location: root_path)
     end
   end
 
@@ -72,25 +72,25 @@ class AccountsController < ApplicationController
       redirect_to accounts_path
     else
       flash[:warning] = "Account could not be destroyed. Please contact support."
-      redirect_to :back
+      redirect_back(fallback_location: root_path)
     end
   end
 
   def deactivate
     @account = Account.find(params[:account_id])
     if @account.mark_inactive
-      redirect_to :back, notice: "Account deactivated"
+      redirect_back(fallback_location: root_path, notice: "Account deactivated")
     else
-      redirect_to :back, alert: "Could not deactivate account."
+      redirect_back(fallback_location: root_path, alert: "Could not deactivate account.")
     end
   end
 
   def reactivate
     @account = Account.find(params[:account_id])
     if @account.reactivate
-      redirect_to :back, notice: "Account reactivated"
+      redirect_back(fallback_location: root_path, notice: "Account reactivated")
     else
-      redirect_to :back, alert: "Could not reactivate account."
+      redirect_back(fallback_location: root_path, alert: "Could not reactivate account.")
     end
   end
 

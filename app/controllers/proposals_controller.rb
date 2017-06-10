@@ -21,7 +21,7 @@ class ProposalsController < ApplicationController
       redirect_to edit_account_job_proposal_path(@account, @job, @proposal)
     else
       flash[:alert] = @proposal.errors.full_messages.uniq.join
-      redirect_to :back
+      redirect_back(fallback_location: root_path)
     end
   end
 
@@ -51,13 +51,13 @@ class ProposalsController < ApplicationController
   def send_email
     @proposal = Proposal.find(params[:proposal_id])
     TransactionalEmailJob.perform_later(@proposal, @company.primary_contact, @proposal.account.primary_contact, "proposal", params)
-    redirect_to :back, notice: "Email sent to client!"
+    redirect_back(fallback_location: root_path, notice: "Email sent to client!")
   end
 
   def notify_response
     @proposal = Proposal.find(params[:proposal_id])
     TransactionalEmailJob.perform_later(@proposal, @proposal.account.primary_contact, @company.primary_contact, "notification", params)
-    redirect_to :back, notice: "Thank you! We've been notified of your responses."
+    redirect_back(fallback_location: root_path, notice: "Thank you! We've been notified of your responses.")
   end
 
   def edit

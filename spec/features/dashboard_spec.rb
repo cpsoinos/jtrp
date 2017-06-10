@@ -92,7 +92,7 @@ feature "dashboard" do
         expect(page).to have_field("Expire Agreement", visible: false)
 
         within("#expiration-pending") do
-          first(:css, ".circle").trigger("click")
+          first(:css, ".circle").click
         end
         fill_in("note", with: "Personalized message goes here")
         click_button("Notify Client")
@@ -116,7 +116,7 @@ feature "dashboard" do
         expect(page).to have_field("Expire Agreement", visible: false)
 
         within("#expired") do
-          first(:css, ".circle").trigger("click")
+          first(:css, ".circle").click
         end
         fill_in("note", with: "Personalized message goes here")
         click_button("Notify Client")

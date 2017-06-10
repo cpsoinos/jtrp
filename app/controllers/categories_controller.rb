@@ -52,7 +52,7 @@ class CategoriesController < ApplicationController
       redirect_to categories_path
     else
       flash[:notice] = "Category could not be destroyed"
-      redirect_to :back
+      redirect_back(fallback_location: root_path)
     end
   end
 

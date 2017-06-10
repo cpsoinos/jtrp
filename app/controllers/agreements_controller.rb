@@ -39,7 +39,7 @@ class AgreementsController < ApplicationController
 
   def agreements_list
     @agreements = AgreementsPresenter.new(params).filter
-    @intentions = @agreements.pluck(:agreement_type).uniq
+    @intentions = @agreements.pluck(:agreement_type).distinct
     @title = "Agreements List"
   end
 
@@ -64,7 +64,7 @@ class AgreementsController < ApplicationController
             redirect_to account_job_proposal_agreement_path(@agreement.account, @agreement.job, @agreement.proposal, @agreement)
           else
             flash[:alert] = "Could not update agreement."
-            redirect_to :back
+            redirect_back(fallback_location: root_path)
           end
         end
         format.js do
@@ -82,22 +82,22 @@ class AgreementsController < ApplicationController
     else
       @agreement.deliver_to_client
     end
-    redirect_to :back, notice: "Email sent to client!"
+    redirect_back(fallback_location: root_path, notice: "Email sent to client!")
   end
 
   def activate_items
     @agreement = Agreement.find(params[:agreement_id])
     @agreement.items.map(&:mark_active)
-    redirect_to :back, notice: "Items are marked active!"
+    redirect_back(fallback_location: root_path, notice: "Items are marked active!")
   end
 
   def deactivate
     @agreement = Agreement.find(params[:agreement_id])
     @agreement.items.active.map(&:mark_inactive)
     if @agreement.mark_inactive
-      redirect_to :back, notice: "Agreement deactivated."
+      redirect_back(fallback_location: root_path, notice: "Agreement deactivated.")
     else
-      redirect_to :back, alert: "Error. Contact support."
+      redirect_back(fallback_location: root_path, alert: "Error. Contact support.")
     end
   end
 

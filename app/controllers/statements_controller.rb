@@ -35,7 +35,7 @@ class StatementsController < ApplicationController
   def send_email
     @statement = Statement.find(params[:statement_id])
     TransactionalEmailJob.perform_later(@statement, current_user, @statement.account.primary_contact, "statement", params)
-    redirect_to :back, notice: "Email sent to client!"
+    redirect_back(fallback_location: root_path, notice: "Email sent to client!")
   end
 
   protected

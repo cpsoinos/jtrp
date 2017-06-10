@@ -35,7 +35,7 @@ class CompaniesController < ApplicationController
       redirect_to about_path
     else
       flash[:error] = "Unable to save changes."
-      redirect_to :back
+      redirect_back(fallback_location: root_path)
     end
   end
 
@@ -66,9 +66,9 @@ class CompaniesController < ApplicationController
   end
 
   def build_todos
-    @items = ItemsPresenter.new.todo.page(params[:page]).uniq
-    @statements = StatementsPresenter.new.todo.uniq
-    @agreements = AgreementsPresenter.new.todo.uniq
+    @items = ItemsPresenter.new.todo.page(params[:page]).distinct
+    @statements = StatementsPresenter.new.todo.distinct
+    @agreements = AgreementsPresenter.new.todo.distinct
   end
 
   def build_js_metrics(presenter)

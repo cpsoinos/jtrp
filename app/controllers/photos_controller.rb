@@ -9,7 +9,7 @@ class PhotosController < ApplicationController
       redirect_to categories_path
     else
       flash[:warning] = "Photo could not be saved."
-      redirect_to :back
+      redirect_back(fallback_location: root_path)
     end
   end
 

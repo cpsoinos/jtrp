@@ -113,9 +113,6 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
-    capybara-screenshot (1.0.14)
-      capybara (>= 1.0, < 3)
-      launchy
     carrierwave (1.1.0)
       activemodel (>= 4.0.0)
       activesupport (>= 4.0.0)
@@ -128,7 +125,6 @@ GEM
     childprocess (0.7.0)
       ffi (~> 1.0, >= 1.0.11)
     chunky_png (1.3.8)
-    cliver (0.3.2)
     cloudinary (1.8.1)
       aws_cf_signer
       rest-client
@@ -505,10 +501,6 @@ GEM
       activesupport (>= 4.2)
       arel (>= 6)
     pkg-config (1.2.3)
-    poltergeist (1.15.0)
-      capybara (~> 2.1)
-      cliver (~> 0.3.1)
-      websocket-driver (>= 0.2.0)
     prawn (2.2.2)
       pdf-core (~> 0.7.0)
       ttfunk (~> 1.5)
@@ -806,7 +798,6 @@ DEPENDENCIES
   bundler (>= 1.8.4)
   cairo
   capybara
-  capybara-screenshot
   carrierwave
   carrierwave_direct
   chartkick
@@ -859,7 +850,6 @@ DEPENDENCIES
   pdf-reader
   pg (~> 0.15)
   pg_search
-  poltergeist
   prawn-labels
   pry-byebug (~> 3.3.0)
   pry-coolline

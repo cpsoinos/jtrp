@@ -131,7 +131,6 @@ group :test do
   gem 'rspec-rails', '~> 3.0'
   gem 'shoulda-matchers', require: false
   gem 'capybara'
-  gem 'poltergeist'
   gem 'launchy'
   gem 'email_spec'
   gem 'database_cleaner'
@@ -139,7 +138,7 @@ group :test do
   gem 'coveralls', require: false
   gem 'pdf-reader'
   gem 'timecop'
-  gem 'capybara-screenshot'
+  # gem 'capybara-screenshot'
   gem 'aws-sdk', '~> 2'
   gem 'vcr'
   gem 'rspec-retry'

@@ -42,7 +42,7 @@ class PurchasesController < ApplicationController
       redirect_to purchases_path, notice: notice
     else
       notice = "Agreement could not be destroyed"
-      redirect_to :back, notice: notice
+      redirect_back(fallback_location: root_path, notice: notice)
     end
 
   end
