@@ -1,4 +1,4 @@
-class Job < ActiveRecord::Base
+class Job < ApplicationRecord
   include PublicActivity::Common
 
   acts_as_paranoid

@@ -1,4 +1,4 @@
-class Payment < ActiveRecord::Base
+class Payment < ApplicationRecord
   include PublicActivity::Common
   
   acts_as_paranoid

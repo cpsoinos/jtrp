@@ -1,5 +1,5 @@
 class AccountsController < ApplicationController
-  before_filter :require_internal
+  before_action :require_internal
 
   def index
     params[:status] ||= "potential"

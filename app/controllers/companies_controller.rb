@@ -1,5 +1,5 @@
 class CompaniesController < ApplicationController
-  before_filter :require_internal, except: [:client_services, :consignment_policies, :service_rate_schedule, :agent_service_rate_schedule, :home, :about, :contact, :send_message]
+  before_action :require_internal, except: [:client_services, :consignment_policies, :service_rate_schedule, :agent_service_rate_schedule, :home, :about, :contact, :send_message]
 
   layout :resolve_layout
 

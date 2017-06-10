@@ -16,13 +16,14 @@ require 'spec_helper'
 require 'rspec/rails'
 require 'shoulda/matchers'
 require 'rspec/retry'
+require 'sidekiq/testing'
 
 Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 
 Coveralls.wear!
 
 ActiveRecord::Migration.maintain_test_schema!
-# OmniAuth.config.test_mode = true
+OmniAuth.config.test_mode = true
 Sidekiq::Testing.inline!
 
 Shoulda::Matchers.configure do |config|
@@ -42,6 +43,7 @@ RSpec.configure do |config|
   config.include WaitForAjax
   config.include Warden::Test::Helpers
   config.include OmniauthMacros
+  config.include StateMachinesRspec::Matchers
 
   config.before(:all) do
     FactoryGirl.reload

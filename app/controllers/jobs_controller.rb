@@ -1,7 +1,7 @@
 class JobsController < ApplicationController
-  before_filter :require_internal
-  before_filter :find_accounts, only: :new
-  before_filter :find_account, only: [:create, :edit, :update]
+  before_action :require_internal
+  before_action :find_accounts, only: :new
+  before_action :find_account, only: [:create, :edit, :update]
 
   def index
     @title = "Jobs"

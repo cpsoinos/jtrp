@@ -1,9 +1,9 @@
 class AgreementsController < ApplicationController
-  before_filter :require_internal, except: [:show, :update]
-  before_filter :find_proposal, only: [:create, :send_email]
-  before_filter :find_job, only: [:create]
-  before_filter :find_account, only: [:create]
-  before_filter :pull_intentions, only: :create
+  before_action :require_internal, except: [:show, :update]
+  before_action :find_proposal, only: [:create, :send_email]
+  before_action :find_job, only: [:create]
+  before_action :find_account, only: [:create]
+  before_action :pull_intentions, only: :create
 
   def index
     @proposal = Proposal.includes(:account, :job, :agreements, account: :primary_contact).find(params[:proposal_id])

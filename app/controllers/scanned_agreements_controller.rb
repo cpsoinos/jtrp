@@ -1,6 +1,6 @@
 class ScannedAgreementsController < ApplicationController
-  before_filter :require_internal
-  before_filter :find_agreement
+  before_action :require_internal
+  before_action :find_agreement
 
   def create
     @scanned_agreement = @agreement.build_scanned_agreement(scanned_agreement_params)

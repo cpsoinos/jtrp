@@ -1,4 +1,4 @@
-class Company < ActiveRecord::Base
+class Company < ApplicationRecord
   acts_as_paranoid
   audited
 

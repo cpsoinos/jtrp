@@ -1,6 +1,6 @@
 class StatementsController < ApplicationController
-  before_filter :find_account, except: :statements_list
-  before_filter :require_internal, except: :show
+  before_action :find_account, except: :statements_list
+  before_action :require_internal, except: :show
 
   def index
     @statements = @account.statements

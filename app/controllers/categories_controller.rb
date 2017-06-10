@@ -1,6 +1,6 @@
 class CategoriesController < ApplicationController
   # layout :resolve_layout
-  before_filter :require_internal, except: [:index, :show]
+  before_action :require_internal, except: [:index, :show]
 
   def index
     @title = "Categories"

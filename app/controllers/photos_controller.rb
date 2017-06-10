@@ -1,6 +1,6 @@
 class PhotosController < ApplicationController
-  before_filter :require_internal
-  before_filter :find_proposal, only: :batch_create
+  before_action :require_internal
+  before_action :find_proposal, only: :batch_create
 
   def create
     @photo = Photo.new(photo_params)

@@ -1,6 +1,6 @@
 require 'active_job/traffic_control'
 
-class InventorySyncJob < ActiveJob::Base
+class InventorySyncJob < ApplicationJob
   queue_as :default
   include ActiveJob::TrafficControl::Throttle
 

@@ -1,6 +1,6 @@
 require 'active_job/traffic_control'
 
-class OrderSweepJob < ActiveJob::Base
+class OrderSweepJob < ApplicationJob
   include ActiveJob::TrafficControl::Throttle
 
   queue_as :maintenance

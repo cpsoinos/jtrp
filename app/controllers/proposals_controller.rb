@@ -1,8 +1,8 @@
 class ProposalsController < ApplicationController
-  before_filter :find_categories, except: [:sort_items]
-  before_filter :find_account, except: [:send_email, :notify_response]
-  before_filter :find_job, except: [:new, :send_email, :notify_response]
-  before_filter :require_internal, except: [:show, :notify_response]
+  before_action :find_categories, except: [:sort_items]
+  before_action :find_account, except: [:send_email, :notify_response]
+  before_action :find_job, except: [:new, :send_email, :notify_response]
+  before_action :require_internal, except: [:show, :notify_response]
 
   def new
     @proposal = Proposal.new

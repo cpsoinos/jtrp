@@ -1,4 +1,4 @@
-class Discount < ActiveRecord::Base
+class Discount < ApplicationRecord
   include PublicActivity::Common
   
   acts_as_paranoid

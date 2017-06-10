@@ -1,11 +1,11 @@
 require 'prawn/labels'
 
 class ItemsController < ApplicationController
-  before_filter :find_clients, only: [:new, :edit]
-  before_filter :find_categories, only: [:new, :edit, :show, :index, :discountable]
-  before_filter :find_proposal, only: [:create, :batch_create]
-  before_filter :require_internal, except: [:show, :update, :feed]
-  before_filter :find_item, only: :show
+  before_action :find_clients, only: [:new, :edit]
+  before_action :find_categories, only: [:new, :edit, :show, :index, :discountable]
+  before_action :find_proposal, only: [:create, :batch_create]
+  before_action :require_internal, except: [:show, :update, :feed]
+  before_action :find_item, only: :show
 
   def index
     @title = "Items"

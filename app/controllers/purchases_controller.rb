@@ -1,5 +1,5 @@
 class PurchasesController < ApplicationController
-  before_filter :require_internal
+  before_action :require_internal
 
   def index
     @agreements = AgreementsPresenter.new(filters: {by_type: "sell"}).filter

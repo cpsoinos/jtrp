@@ -1,4 +1,4 @@
-class TransactionalEmailRecord < ActiveRecord::Base
+class TransactionalEmailRecord < ApplicationRecord
   acts_as_paranoid
   audited
 

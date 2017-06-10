@@ -1,5 +1,5 @@
 class ClientsController < ApplicationController
-  before_filter :require_internal
+  before_action :require_internal
 
   def show
     @client = User.find(params[:id])

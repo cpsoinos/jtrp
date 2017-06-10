@@ -1,7 +1,7 @@
 require 'active_job/traffic_control'
 
 module Cloudinary
-  class ImageConvertJob < ActiveJob::Base
+  class ImageConvertJob < ApplicationJob
     queue_as :maintenance
     include ActiveJob::TrafficControl::Throttle
 

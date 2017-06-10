@@ -134,7 +134,6 @@ group :test do
   gem 'poltergeist'
   gem 'launchy'
   gem 'email_spec'
-  gem 'rspec-sidekiq'
   gem 'database_cleaner'
   gem 'webmock'
   gem 'coveralls', require: false
@@ -145,4 +144,5 @@ group :test do
   gem 'vcr'
   gem 'rspec-retry'
   gem 'rspec_junit_formatter'
+  gem 'state_machines_rspec'
 end
