@@ -252,24 +252,6 @@ feature "item show" do
       expect(page).to have_content("$10.00")
     end
 
-    scenario "item has one photo" do
-      item.photos << create(:photo, :listing)
-      visit item_path(item)
-
-      expect(page).to have_content(item.description.titleize)
-      expect(page).to have_content("$10.00")
-    end
-
-    scenario "item has multiple photos" do
-      2.times do
-        item.photos << create(:photo, :listing)
-      end
-      visit item_path(item)
-
-      expect(page).to have_content(item.description.titleize)
-      expect(page).to have_content("$10.00")
-    end
-
     scenario "displays other recommendations" do
       item.category = Category.first
       item.save

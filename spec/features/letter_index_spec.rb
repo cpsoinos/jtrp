@@ -18,7 +18,7 @@ feature "letters index" do
     scenario "clicks through from accounts page", :js do
       skip("Figuring out what's up with this test")
       visit accounts_path
-      first(:link, "View Letters", visible: false).trigger("click")
+      first(:link, "View Letters", visible: false).click
 
       expect(page).to have_content("Letters")
       expect(page).to have_content("for #{expiration_pending_letter.account.full_name}")

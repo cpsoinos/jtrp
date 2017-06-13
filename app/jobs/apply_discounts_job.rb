@@ -1,6 +1,6 @@
 require 'active_job/traffic_control'
 
-class ApplyDiscountsJob < ActiveJob::Base
+class ApplyDiscountsJob < ApplicationJob
   queue_as :default
   include ActiveJob::TrafficControl::Throttle
 

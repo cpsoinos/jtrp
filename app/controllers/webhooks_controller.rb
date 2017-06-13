@@ -1,9 +1,9 @@
 class WebhooksController < ApplicationController
-  skip_before_filter :verify_authenticity_token, :find_company, :find_categories, :meta_tags
-  before_filter :verify_webhook_auth_header
+  skip_before_action :verify_authenticity_token, :find_company, :find_categories, :meta_tags
+  before_action :verify_webhook_auth_header
 
   def receive
-    Webhooks::Creator.new(params[:integration_name], data).create
+    WebhookJob.perform_later(params[:integration_name], data)
     head :ok
   end
 

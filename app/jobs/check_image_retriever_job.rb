@@ -1,4 +1,4 @@
-class CheckImageRetrieverJob < ActiveJob::Base
+class CheckImageRetrieverJob < ApplicationJob
   queue_as :default
 
   attr_reader :check

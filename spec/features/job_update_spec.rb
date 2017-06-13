@@ -12,7 +12,9 @@ feature "update an item" do
 
     scenario "visits edit job page" do
       visit account_job_path(account, job)
-      click_link("edit")
+      within(".btn-group") do
+        click_link("edit")
+      end
 
       expect(page).to have_content(job.name)
       expect(page).to have_field("job[address_1]")

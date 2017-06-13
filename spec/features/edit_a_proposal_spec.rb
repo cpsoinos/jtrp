@@ -28,9 +28,7 @@ feature "edit a proposal" do
       visit account_job_proposal_sort_items_path(account, job, proposal)
       click_link("Import Items")
       expect(page).to have_content("Are you sure?")
-      page.find(".sa-confirm-button-container").trigger("click")
-      # click_button("Yes, I'm sure")
-      # first(:css, ".confirm").trigger("click")
+      page.find(".sa-confirm-button-container").click
 
       expect(page).to have_content("Items imported")
       expect(new_proposal.reload.items).to match_array(items)
@@ -52,7 +50,9 @@ feature "edit a proposal" do
       scenario "offers to purchase", js: true do
         visit account_job_proposal_details_path(account, job, proposal)
         expect(item.will_purchase?).to be_falsey
-        find(:css, "#item_#{item.id}_will_purchase", visible: false).trigger("click")
+        within("#edit_item_#{item.id}") do
+          find(:label, text: "Will purchase").click
+        end
         fill_in("item_purchase_price", with: 50.55)
         sleep(1)
         click_on("Save")
@@ -66,7 +66,9 @@ feature "edit a proposal" do
       scenario "offers to consign", js: true do
         visit account_job_proposal_details_path(account, job, proposal)
         expect(item.will_consign?).to be_falsey
-        find(:css, "#item_#{item.id}_will_consign", visible: false).trigger("click")
+        within("#edit_item_#{item.id}") do
+          find(:label, text: "Will consign").click
+        end
         fill_in("item_consignment_rate", with: 45)
         fill_in("item_consignment_term", with: 90)
         fill_in("item_listing_price", with: 88.89)
@@ -87,8 +89,10 @@ feature "edit a proposal" do
         visit account_job_proposal_details_path(account, job, proposal)
         expect(item.will_consign?).to be_falsey
         expect(item.will_purchase?).to be_falsey
-        find(:css, "#item_#{item.id}_will_purchase", visible: false).trigger("click")
-        find(:css, "#item_#{item.id}_will_consign", visible: false).trigger("click")
+        within("#edit_item_#{item.id}") do
+          find(:label, text: "Will purchase").click
+          find(:label, text: "Will consign").click
+        end
         fill_in("item_purchase_price", with: 50.55)
         fill_in("item_consignment_rate", with: 45)
         fill_in("item_listing_price", with: 88.89)
@@ -148,7 +152,7 @@ feature "edit a proposal" do
         "proposal_id" => "#{proposal.id}"
       }
 
-      expect(TransactionalEmailJob).to have_received(:perform_later).with(proposal, Company.jtrp.primary_contact, account.primary_contact, "proposal", params)
+      expect(TransactionalEmailJob).to have_received(:perform_later).with(proposal, Company.jtrp.primary_contact, account.primary_contact, "proposal", ActionController::Parameters.new(params))
     end
 
   end

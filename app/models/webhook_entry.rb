@@ -1,4 +1,4 @@
-class WebhookEntry < ActiveRecord::Base
+class WebhookEntry < ApplicationRecord
   belongs_to :webhook
   belongs_to :webhookable, polymorphic: true, touch: true
 

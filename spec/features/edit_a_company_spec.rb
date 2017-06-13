@@ -10,8 +10,8 @@ feature "edit a company" do
     end
 
     scenario "clicks through from 'about us' page" do
-      visit client_services_path(company)
-      click_link("Edit")
+      visit dashboard_path(company)
+      click_link("Edit Just the Right Piece")
 
       expect(page).to have_field("Name")
     end

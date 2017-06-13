@@ -1,5 +1,5 @@
 class ClientsController < ApplicationController
-  before_filter :require_internal
+  before_action :require_internal
 
   def show
     @client = User.find(params[:id])
@@ -25,7 +25,7 @@ class ClientsController < ApplicationController
       redirect_to account_path(@client.account)
     else
       flash[:alert] = @client.errors.full_messages.uniq.join
-      redirect_to :back
+      redirect_back(fallback_location: root_path)
     end
   end
 
@@ -42,7 +42,7 @@ class ClientsController < ApplicationController
       redirect_to account_client_path(@client.account, @client)
     else
       flash[:alert] = @client.errors.full_messages.uniq.join
-      redirect_to :back
+      redirect_back(fallback_location: root_path)
     end
   end
 

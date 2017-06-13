@@ -9,8 +9,8 @@
   <div class="col-xs-9">
     <p>
       <small>
-        <i class="material-icons">access_time</i>
-        <i><%= time_ago_in_words(activity.created_at) %></i>
+        <i class="material-icons activity-feed-timestamp">access_time</i>
+        <i><span class="activity-timestamp" data-timestamp="<%= activity.created_at %>"></span></i>
       </small>
     </p>
     <% if activity.owner %>

@@ -1,4 +1,4 @@
-class LetterSenderJob < ActiveJob::Base
+class LetterSenderJob < ApplicationJob
   queue_as :default
 
   def perform(letter)

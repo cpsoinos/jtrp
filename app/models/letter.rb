@@ -1,4 +1,4 @@
-class Letter < ActiveRecord::Base
+class Letter < ApplicationRecord
   include PublicActivity::Common
 
   acts_as_paranoid

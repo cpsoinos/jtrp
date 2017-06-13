@@ -1,3 +1,3 @@
-class SystemInfo < ActiveRecord::Base
+class SystemInfo < ApplicationRecord
   audited
 end

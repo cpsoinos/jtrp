@@ -1,4 +1,4 @@
-class ScannedAgreement < ActiveRecord::Base
+class ScannedAgreement < ApplicationRecord
   acts_as_paranoid
   audited associated_with: :agreement
 

@@ -1,4 +1,4 @@
-class Agreement < ActiveRecord::Base
+class Agreement < ApplicationRecord
   include PublicActivity::Common
 
   acts_as_paranoid

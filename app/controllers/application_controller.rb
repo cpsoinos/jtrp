@@ -1,11 +1,12 @@
 class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
+  before_action :set_raven_context
   force_ssl if: :ssl_configured?
   protect_from_forgery with: :exception
-  before_filter :find_company
-  before_filter :find_categories
-  before_filter :meta_tags
+  before_action :find_company
+  before_action :find_categories
+  before_action :meta_tags
 
   def find_company
     @company ||= Company.find_by(name: "Just the Right Piece")
@@ -135,8 +136,17 @@ class ApplicationController < ActionController::Base
     }
   end
 
+  private
+
   def ssl_configured?
     Rails.env.production? && controller_name != 'webhooks'
+  end
+
+  def set_raven_context
+    if Rails.env.in?(%w(production staging))
+      Raven.user_context(id: session[:current_user_id]) # or anything else in session
+      Raven.extra_context(params: params.to_unsafe_h, url: request.url)
+    end
   end
 
 end

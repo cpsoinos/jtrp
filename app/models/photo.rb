@@ -1,4 +1,4 @@
-class Photo < ActiveRecord::Base
+class Photo < ApplicationRecord
   acts_as_paranoid
   acts_as_list scope: :item
   audited associated_with: :item

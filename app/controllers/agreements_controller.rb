@@ -1,9 +1,9 @@
 class AgreementsController < ApplicationController
-  before_filter :require_internal, except: [:show, :update]
-  before_filter :find_proposal, only: [:create, :send_email]
-  before_filter :find_job, only: [:create]
-  before_filter :find_account, only: [:create]
-  before_filter :pull_intentions, only: :create
+  before_action :require_internal, except: [:show, :update]
+  before_action :find_proposal, only: [:create, :send_email]
+  before_action :find_job, only: [:create]
+  before_action :find_account, only: [:create]
+  before_action :pull_intentions, only: :create
 
   def index
     @proposal = Proposal.includes(:account, :job, :agreements, account: :primary_contact).find(params[:proposal_id])
@@ -39,7 +39,7 @@ class AgreementsController < ApplicationController
 
   def agreements_list
     @agreements = AgreementsPresenter.new(params).filter
-    @intentions = @agreements.pluck(:agreement_type).uniq
+    @intentions = @agreements.pluck(:agreement_type).distinct
     @title = "Agreements List"
   end
 
@@ -64,7 +64,7 @@ class AgreementsController < ApplicationController
             redirect_to account_job_proposal_agreement_path(@agreement.account, @agreement.job, @agreement.proposal, @agreement)
           else
             flash[:alert] = "Could not update agreement."
-            redirect_to :back
+            redirect_back(fallback_location: root_path)
           end
         end
         format.js do
@@ -76,21 +76,29 @@ class AgreementsController < ApplicationController
   end
 
   def send_email
-    @agreements = @proposal.agreements
-    @agreements.each do |agreement|
-      if agreement.potential?
-        TransactionalEmailJob.perform_later(agreement, @company.primary_contact, agreement.account.primary_contact, "send_agreement", params)
-      else
-        agreement.deliver_to_client
-      end
+    @agreement = Agreement.find(params[:agreement_id])
+    if @agreement.potential?
+      TransactionalEmailJob.perform_later(@agreement, @company.primary_contact, @agreement.account.primary_contact, "send_agreement", params)
+    else
+      @agreement.deliver_to_client
     end
-    redirect_to :back, notice: "Email sent to client!"
+    redirect_back(fallback_location: root_path, notice: "Email sent to client!")
   end
 
   def activate_items
     @agreement = Agreement.find(params[:agreement_id])
     @agreement.items.map(&:mark_active)
-    redirect_to :back, notice: "Items are marked active!"
+    redirect_back(fallback_location: root_path, notice: "Items are marked active!")
+  end
+
+  def deactivate
+    @agreement = Agreement.find(params[:agreement_id])
+    @agreement.items.active.map(&:mark_inactive)
+    if @agreement.mark_inactive
+      redirect_back(fallback_location: root_path, notice: "Agreement deactivated.")
+    else
+      redirect_back(fallback_location: root_path, alert: "Error. Contact support.")
+    end
   end
 
   def tag

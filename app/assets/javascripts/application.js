@@ -14,7 +14,6 @@
 //= require jquery.turbolinks
 //= require jquery_ujs
 //= require jquery-ui
-//= require bootsy
 //= require jquery.remotipart
 //= require bootstrap.min
 //= require moment.min
@@ -57,6 +56,7 @@
 //= require jquery-infinite-scroll
 //= require cloudinary
 //= require bootstrap-table
+//= require summernote
 
 //= require agreements
 //= require categories

@@ -104,7 +104,7 @@ module Checks
       allow(PdfGenerator).to receive_message_chain(:new, :render_pdf)
       allow(statement).to receive(:statement_pdf).and_return(pdf)
       allow(pdf).to receive(:object_url).and_return("url_to_statement_pdf")
-      allow(Lob).to receive_message_chain(:load, :checks).and_return(lob)
+      allow(Lob::Client).to receive_message_chain(:new, :checks).and_return(lob)
       allow(lob).to receive(:create).and_return(lob_response)
       allow(CheckImageRetrieverJob).to receive(:perform_later)
     end

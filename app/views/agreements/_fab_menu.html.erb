@@ -23,17 +23,22 @@
       </li>
     <% end %>
 
-    <% if agreement.active? && agreement.items.any? { |i| i.meets_requirements_expired? } %>
+    <% if agreement.active? %>
+      <% if agreement.items.any? { |i| i.meets_requirements_expired? } %>
+        <li>
+          <%= link_to "<i class='material-icons'>store</i> Mark Items Expired".html_safe, "", data: {
+            toggle: "modal",
+            target: "#agreement-todo-task-modal",
+            agreement_id: agreement.id,
+            account_id: agreement.account.id,
+            agreement_link: "#{link_to('Agreement No. ' + agreement.id.to_s, agreement_path(agreement)).html_safe}",
+            day_count: (DateTime.now.to_date - (agreement.items.where.not(listed_at: nil).order(:listed_at).first.listed_at.to_date)).to_i,
+            unexpireable_button: "#{button_to('Unexpireable', agreement_tag_path(agreement, tag: 'unexpireable'), remote: true, class: 'btn btn-raised btn-secondary').html_safe}"
+          } %>
+        </li>
+      <% end %>
       <li>
-        <%= link_to "<i class='material-icons'>store</i> Mark Items Expired".html_safe, "", data: {
-          toggle: "modal",
-          target: "#agreement-todo-task-modal",
-          agreement_id: agreement.id,
-          account_id: agreement.account.id,
-          agreement_link: "#{link_to('Agreement No. ' + agreement.id.to_s, agreement_path(agreement)).html_safe}",
-          day_count: (DateTime.now.to_date - (agreement.items.where.not(listed_at: nil).order(:listed_at).first.listed_at.to_date)).to_i,
-          unexpireable_button: "#{button_to('Unexpireable', agreement_tag_path(agreement, tag: 'unexpireable'), remote: true, class: 'btn btn-raised btn-secondary').html_safe}"
-        } %>
+        <li><%= link_to "<i class='material-icons'>money_off</i> Deactivate".html_safe, agreement_deactivate_path(agreement), method: :put, data: {confirm: "Are you sure?", :'confirm-button-text' => "Yes, I'm sure", :'cancel-button-text' => "No, cancel!", :'sweet-alert-type' => 'warning', :'confirm-button-color' => '#f44336', text: "This will deactivate the agreement."} %></li>
       </li>
     <% end %>
 

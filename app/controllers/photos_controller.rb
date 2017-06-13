@@ -1,6 +1,6 @@
 class PhotosController < ApplicationController
-  before_filter :require_internal
-  before_filter :find_proposal, only: :batch_create
+  before_action :require_internal
+  before_action :find_proposal, only: :batch_create
 
   def create
     @photo = Photo.new(photo_params)
@@ -9,7 +9,7 @@ class PhotosController < ApplicationController
       redirect_to categories_path
     else
       flash[:warning] = "Photo could not be saved."
-      redirect_to :back
+      redirect_back(fallback_location: root_path)
     end
   end
 

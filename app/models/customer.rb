@@ -1,4 +1,4 @@
-class Customer < ActiveRecord::Base
+class Customer < ApplicationRecord
   include PublicActivity::Common
   
   acts_as_paranoid

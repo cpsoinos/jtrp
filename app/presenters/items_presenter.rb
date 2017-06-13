@@ -46,7 +46,6 @@ class ItemsPresenter
   end
 
   def execute
-    massage_params
     filter.search.sort.paginate
     @items
   end
@@ -72,18 +71,5 @@ class ItemsPresenter
       Item.includes(:account).joins(account: :primary_contact)
     end
   end
-
-  def massage_params
-
-  end
-
-  # def sort_column_map
-  #   {
-  #     "description_link" => "items.description",
-  #     "account_link" => "users.last_name",
-  #     "cost" => "items.purchase_price_cents",
-  #     ""
-  #   }
-  # end
 
 end

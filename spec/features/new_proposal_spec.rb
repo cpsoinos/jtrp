@@ -49,8 +49,8 @@ feature "new proposal" do
         scenario "selects an existing job", js: true do
           visit new_account_proposal_path(account)
           click_link("Yes")
-          first(:css, ".dd-select").trigger("click")
-          first(:css, ".dd-option").trigger("click")
+          first(:css, ".dd-select").click
+          first(:css, ".dd-option").click
           click_on("Create Proposal")
 
           expect(page).to have_content("Step 1: Upload Photos")

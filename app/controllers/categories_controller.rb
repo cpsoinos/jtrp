@@ -1,6 +1,6 @@
 class CategoriesController < ApplicationController
   # layout :resolve_layout
-  before_filter :require_internal, except: [:index, :show]
+  before_action :require_internal, except: [:index, :show]
 
   def index
     @title = "Categories"
@@ -52,7 +52,7 @@ class CategoriesController < ApplicationController
       redirect_to categories_path
     else
       flash[:notice] = "Category could not be destroyed"
-      redirect_to :back
+      redirect_back(fallback_location: root_path)
     end
   end
 

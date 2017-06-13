@@ -21,7 +21,7 @@ function initPhotoUploadWidget(fieldName, $form, submitOnSuccess) {
   $('#upload_widget_opener').cloudinary_upload_widget(
     {
       upload_preset: 'widget',
-      sources: ['local', 'camera'],
+      sources: ['local', 'camera', 'google_photos'],
       theme: 'white',
       button_class: 'btn btn-primary',
       button_caption: 'Select Images',

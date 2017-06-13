@@ -1,6 +1,6 @@
 require 'active_job/traffic_control'
 
-class PaymentProcessorJob < ActiveJob::Base
+class PaymentProcessorJob < ApplicationJob
   include ActiveJob::TrafficControl::Throttle
 
   throttle threshold: 1, period: 5.seconds

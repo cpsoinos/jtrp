@@ -1,6 +1,6 @@
 class LettersController < ApplicationController
-  before_filter :find_account, except: :create
-  before_filter :require_internal, except: :show
+  before_action :find_account, except: :create
+  before_action :require_internal, except: :show
 
   def index
     @letters = @account.letters

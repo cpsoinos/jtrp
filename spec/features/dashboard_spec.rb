@@ -92,7 +92,7 @@ feature "dashboard" do
         expect(page).to have_field("Expire Agreement", visible: false)
 
         within("#expiration-pending") do
-          first(:css, ".circle").trigger("click")
+          first(:css, ".circle").click
         end
         fill_in("note", with: "Personalized message goes here")
         click_button("Notify Client")
@@ -116,7 +116,7 @@ feature "dashboard" do
         expect(page).to have_field("Expire Agreement", visible: false)
 
         within("#expired") do
-          first(:css, ".circle").trigger("click")
+          first(:css, ".circle").click
         end
         fill_in("note", with: "Personalized message goes here")
         click_button("Notify Client")
@@ -174,7 +174,7 @@ feature "dashboard" do
       account.create_activity(:create, owner: user)
       visit dashboard_path
 
-      expect(page).to have_content("#{user.full_name} created an account")
+      expect(page).to have_content("#{user.full_name} created a client account")
       expect(page).to have_link(account.full_name)
     end
 
@@ -182,7 +182,7 @@ feature "dashboard" do
       account.create_activity(:update, owner: user)
       visit dashboard_path
 
-      expect(page).to have_content("#{user.full_name} updated an account")
+      expect(page).to have_content("#{user.full_name} updated a client account")
       expect(page).to have_link(account.full_name)
     end
 
