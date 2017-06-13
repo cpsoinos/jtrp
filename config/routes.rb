@@ -119,8 +119,4 @@ Rails.application.routes.draw do
 
   resources :activities, only: [:index]
 
-  get :featured_items, controller: :companies
-  get :todos, controller: :companies
-  get :activities_card, controller: :companies
-
 end

@@ -80,7 +80,6 @@ gem 'summernote-rails'
 # gem 'wicked_pdf'
 gem 'toastr-rails'
 gem 'font-awesome-sass'
-gem 'render_async'
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-classnames'
