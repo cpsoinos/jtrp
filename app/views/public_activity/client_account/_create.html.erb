@@ -18,7 +18,7 @@
     <% else %>
       Someone
     <% end %>
-    <%= "#{activity.key.split('.').last}d an #{activity.key.split('.').first}" %>
+    <%= "#{activity.key.split('.').last}d a #{activity.key.split('.').first.sub("_", " ")}" %>
     <%= link_to activity.trackable.full_name, activity.trackable %>
   </div>
 </div>

@@ -5,24 +5,27 @@ feature "search" do
 
   context "guest" do
 
-    scenario "searches for an existing item", js: true do
+    scenario "searches for an existing item" do
       visit root_path
-      fill_in("search[query]", with: item.description).native.send_keys(:return)
+      fill_in("search[query]", with: item.description)
+      click_on("search")
 
       expect(page).to have_link(item.description)
     end
 
-    scenario "searches for a non-existing item", js: true do
+    scenario "searches for a non-existing item" do
       visit root_path
-      fill_in("search[query]", with: "The Jungle Book").native.send_keys(:return)
+      fill_in("search[query]", with: "The Jungle Book")
+      click_on("search")
 
       expect(page).to have_content('No results found')
     end
 
-    scenario "initiates a second search from results page", js: true do
+    scenario "initiates a second search from results page" do
       second_item = create(:item, :active)
       visit root_path
-      fill_in("search[query]", with: item.description).native.send_keys(:return)
+      fill_in("search[query]", with: item.description)
+      click_on("search")
 
       expect(page).to have_link(item.description)
 
@@ -127,25 +130,28 @@ feature "search" do
       sign_in user
     end
 
-    scenario "searches for an existing item", js: true do
+    scenario "searches for an existing item" do
       visit dashboard_path
-      fill_in("search[query]", with: item.description).native.send_keys(:return)
+      fill_in("search[query]", with: item.description)
+      click_on("search")
 
       expect(page).to have_link("Items")
       expect(page).to have_link(item.description)
     end
 
-    scenario "searches for a non-existing item", js: true do
+    scenario "searches for a non-existing item" do
       visit dashboard_path
-      fill_in("search[query]", with: "The Jungle Book").native.send_keys(:return)
+      fill_in("search[query]", with: "The Jungle Book")
+      click_on("search")
 
       expect(page).to have_content('No results found')
     end
 
-    scenario "initiates a second search from results page", js: true do
+    scenario "initiates a second search from results page" do
       second_item = create(:item, :active)
       visit dashboard_path
-      fill_in("search[query]", with: item.description).native.send_keys(:return)
+      fill_in("search[query]", with: item.description)
+      click_on("search")
 
       expect(page).to have_link(item.description)
 

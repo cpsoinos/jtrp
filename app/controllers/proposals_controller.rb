@@ -8,10 +8,10 @@ class ProposalsController < ApplicationController
     @proposal = Proposal.new
     find_job if params[:job_id]
     @jobs = @account.jobs
+    gon.jobs = build_json_for_jobs
     if @jobs.empty?
       redirect_to new_account_job_path(@account)
     end
-    gon.jobs = build_json_for_jobs
   end
 
   def create
