@@ -10,10 +10,12 @@
 
 @import 'material-dashboard';
 @import 'material-kit';
-@import "summernote";
+@import 'summernote';
 @import 'base/logo-icon-style.scss';
 @import 'base/mixins.scss';
 @import 'base/variables.scss';
 @import 'base/globals.scss';
 @import 'styles/*';
 @import 'base/print.scss';
+@import 'font-awesome-sprockets';
+@import 'font-awesome';

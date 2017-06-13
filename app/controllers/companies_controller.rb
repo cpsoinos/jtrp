@@ -6,16 +6,28 @@ class CompaniesController < ApplicationController
   def show
     @navtab = "dashboard"
     @title = "Dashboard"
-    build_todos
     presenter = MetricsPresenter.new
     build_js_metrics(presenter)
     @metrics = presenter.build_metrics
+  end
+
+  def todos
+    build_todos
+    render partial: "todos"
+  end
+
+  def activities_card
     @activities = PublicActivity::Activity.includes(:owner, :trackable).order(created_at: :desc).page(params[:page]).per(5)
+    render partial: "activities_card"
   end
 
   def home
-    @featured_items = Item.active.includes(:category).joins(:photos).limit(3).order("RANDOM()")
     @title = "Home"
+  end
+
+  def featured_items
+    @featured_items = Item.active.includes(:category).joins(:photos).limit(3).order("RANDOM()")
+    render partial: "featured_items"
   end
 
   def about

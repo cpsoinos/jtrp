@@ -78,6 +78,9 @@ gem 'mk_pro-rails', git: 'git@github.com:cpsoinos/mk_pro-rails.git'
 gem 'material_dashboard_pro-rails', git: 'git@github.com:cpsoinos/material_dashboard_pro-rails.git'
 gem 'summernote-rails'
 # gem 'wicked_pdf'
+gem 'toastr-rails'
+gem 'font-awesome-sass'
+gem 'render_async'
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-classnames'
