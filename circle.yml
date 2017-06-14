@@ -1,12 +1,2 @@
 machine:
   pre:
-    # - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-    # - sudo dpkg -i google-chrome-stable_current_amd64.deb
-    # - sudo curl --output /usr/local/bin/phantomjs https://s3.amazonaws.com/circle-downloads/phantomjs-2.1.1
-    - google-chrome --version
-    # - wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub43 | sudo apt-key add -
-    # - sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/22 stable main" >> /etc/apt/sources.list.d/google.list'
-    - sudo apt-get update
-    - sudo dpkg -i google-chrome-stable_current_amd64.deb
-    # - sudo apt-get --only-upgrade install google-chrome-stable
-    - google-chrome --version
