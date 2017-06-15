@@ -34,14 +34,16 @@
     <h2 class="section-title title">Shop by category...</h2>
     <div class="row">
       <div class="col-md-12">
-        <% @categories.primary.each_slice(4) do |categories| %>
-          <div class="row">
-            <% categories.each do |category| %>
-              <div class="col-md-3">
-                <%= render "categories/card", category: category %>
-              </div>
-            <% end %>
-          </div>
+        <% cache @categories.primary do %>
+          <% @categories.primary.each_slice(4) do |categories| %>
+            <div class="row">
+              <% categories.each do |category| %>
+                <div class="col-md-3">
+                  <%= render "categories/card", category: category, cached: true %>
+                </div>
+              <% end %>
+            </div>
+          <% end %>
         <% end %>
       </div>
     </div>
