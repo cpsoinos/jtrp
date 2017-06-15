@@ -4,4 +4,8 @@ $(document).on('turbolinks:load', function() {
   j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
   })(window,document,'script','dataLayer','<%= ENV["GOOGLE_TAG_MANAGER_ID"] %>');
+
+  <% if current_user %>
+    ga('set', 'userId',' <%= current_user.id %>'); // Set the user ID using signed-in user_id.
+  <% end %>
 })
