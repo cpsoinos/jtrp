@@ -5,7 +5,5 @@ $(document).on('turbolinks:load', function() {
   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
   })(window,document,'script','dataLayer','<%= ENV["GOOGLE_TAG_MANAGER_ID"] %>');
 
-  <% if current_user %>
-    ga('set', 'userId',' <%= current_user.id %>'); // Set the user ID using signed-in user_id.
-  <% end %>
+    ga('set', 'userId', gon.current_user_id); // Set the user ID using signed-in user_id.
 })
