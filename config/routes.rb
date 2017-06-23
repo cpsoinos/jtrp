@@ -57,7 +57,9 @@ Rails.application.routes.draw do
   resources :accounts do
     resources :clients
     resources :transactions
-    resources :items, only: :index
+    resources :items, only: :index do
+      put :sync, on: :collection
+    end
     resources :proposals, only: :new
     resources :jobs do
       resources :proposals do
@@ -118,5 +120,7 @@ Rails.application.routes.draw do
   resources :purchases
 
   resources :activities, only: [:index]
+
+  get :account_items_list, controller: :accounts
 
 end

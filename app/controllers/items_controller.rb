@@ -163,6 +163,17 @@ class ItemsController < ApplicationController
     redirect_to account_job_proposal_details_path(@account, @proposal.job, @proposal)
   end
 
+  def sync
+    find_account
+    item_ids = @account.items.pluck(:id)
+    respond_to do |format|
+      format.js do
+        BulkSyncJob.perform_later(item_ids: item_ids)
+        @message = "Syncing #{item_ids.count} to Clover in the background..."
+      end
+    end
+  end
+
   def activate
     @item = Item.find(params[:item_id])
     if @item.mark_active
