@@ -50,7 +50,7 @@ module Items
 
     def sync_inventory
       return if item.potential?
-      InventorySyncJob.perform_later(item.id)
+      InventorySyncJob.perform_later(item_id: item.id)
     end
 
     def format_date

@@ -9,7 +9,7 @@ describe InventorySyncJob do
   end
 
   it "perform" do
-    InventorySyncJob.perform_later(item.id)
+    InventorySyncJob.perform_later(item_id: item.id)
 
     expect(syncer).to have_received(:remote_create)
   end
