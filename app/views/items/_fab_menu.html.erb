@@ -1,13 +1,15 @@
-<div class="btn-group dropdown hidden-print">
-  <button type="button" class="btn btn-raised btn-fab btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    <i class='material-icons'>menu</i>
-  </button>
-  <ul class="dropdown-menu dropdown-menu-right">
+<% cache item do %>
+  <div class="btn-group dropdown hidden-print">
+    <button type="button" class="btn btn-raised btn-fab btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <i class='material-icons'>menu</i>
+    </button>
+    <ul class="dropdown-menu dropdown-menu-right">
 
-    <li><%= link_to "<i class='material-icons'>edit</i> Edit".html_safe, edit_account_job_proposal_item_url(item.account, item.job, item.proposal, item, redirect_url: request.try(:original_url)) %></li>
-    <% if item.active? %>
-      <li><%= link_to "<i class='material-icons'>done</i> Mark Sold".html_safe, "", data: { toggle: "modal", target: "#mark_sold_modal", item_id: item.id, item_description: item.description.titleize } %></li>
-    <% end %>
+      <li><%= link_to "<i class='material-icons'>edit</i> Edit".html_safe, edit_account_job_proposal_item_path(item.account, item.job, item.proposal, item, redirect_url: request.try(:original_url)) %></li>
+      <% if item.active? %>
+        <li><%= link_to "<i class='material-icons'>done</i> Mark Sold".html_safe, "", data: { toggle: "modal", target: "#mark_sold_modal", item_id: item.id, item_description: item.description.titleize } %></li>
+      <% end %>
 
-  </ul>
-</div>
+    </ul>
+  </div>
+<% end %>

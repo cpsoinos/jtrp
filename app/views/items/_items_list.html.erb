@@ -20,50 +20,11 @@
       </thead>
 
       <tbody>
-        <% items.each do |item| %>
-          <% cache [item, context, params, current_user.try(:role)] do %>
-            <tr class="no-break" id="item-<%= item.id %>-row">
-              <td class="text-center">
-                <div class="img-container">
-                  <%= link_to image_tag(item.featured_photo.photo_url(client_hints: true, quality: "auto", fetch_format: :auto, dpr: "auto", effect: :improve, width: "120", height: "160", crop: "fill"), class: "img-rounded img-responsive img-raised"), item_url(item) %>
-                </div>
-              </td>
-              <td class="td-name">
-                <% if controller_name == "agreements" %>
-                  <% desc = item.original_description.try(:titleize) || item.description.titleize %>
-                <% end %>
-                <%= link_to (controller_name == "agreements" ? desc : item.description.titleize), item_url(item) %>
-                <% if current_user.try(:internal?) && !controller_name.in?(["jobs", "agreements", "mailer"]) %>
-                  <br><small>from: <%= link_to item.account.full_name, account_url(item.account) %></small>
-                <% end %>
-                <br><small>SKU: <%= item.id %></small>
-              </td>
-
-              <% headers.each do |header| %>
-                <td class="text-center hidden-xs">
-                  <% case context %>
-                  <% when "purchase_invoice" %>
-                    <%= purchase_invoice_values(item)[header] %>
-                  <% when "consignment_agreement" %>
-                    <%= consignment_values(item)[header] %>
-                  <% when "consignment_statement" %>
-                    <%= statement_values(item)[header] %>
-                  <% when "general" %>
-                    <%= general_values(item)[header] %>
-                  <% when "summary" %>
-                    <%= summary_values(item)[header] %>
-                  <% when "discountable" %>
-                    <%= discountable_values(item)[header] %>
-                  <% end %>
-                </td>
-              <% end %>
-
-              <% if current_user.try(:internal?) && !controller_name.in?(%w(mailer purchases)) && action_name != 'discountable' %>
-                <td class="text-center">
-                  <%= render "items/fab_menu", item:  item %>
-                </td>
-              <% end %>
-            </tr>
+        <% cache [items, controller_name, action_name, current_user.try(:role)] do %>
+          <% items.each do |item| %>
+            <% cache_if current_user.try(:internal?), [item, context, headers] do %>
+              <%= render item, context: context, headers: headers %>
+            <% end %>
           <% end %>
         <% end %>
       </tbody>
@@ -71,7 +32,7 @@
     </table>
   </div>
 
-  <% unless controller_name.in?(%w(proposals agreements purchases search mailer)) %>
+  <% unless controller_name.in?(%w(proposals agreements purchases search mailer accounts)) %>
 
     <div class="text-center">
       <% if items.present? %>

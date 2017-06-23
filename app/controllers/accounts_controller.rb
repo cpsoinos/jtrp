@@ -23,6 +23,12 @@ class AccountsController < ApplicationController
     end
   end
 
+  def account_items_list
+    @account = Account.find(params[:account_id])
+    @items = @account.items.includes(:account, :job, :proposal)
+    render partial: "account_items_list"
+  end
+
   def new
     @account = Account.new
     @title = "New Account"

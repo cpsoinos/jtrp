@@ -77,6 +77,7 @@ gem 'public_activity'
 gem 'mk_pro-rails', git: 'git@github.com:cpsoinos/mk_pro-rails.git'
 gem 'material_dashboard_pro-rails', git: 'git@github.com:cpsoinos/material_dashboard_pro-rails.git'
 gem 'summernote-rails'
+gem 'render_async'
 # gem 'wicked_pdf'
 
 source 'https://rails-assets.org' do
