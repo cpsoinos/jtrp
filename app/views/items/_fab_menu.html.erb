@@ -1,7 +1,7 @@
 <% inline_fab ||= false %>
 
 <% cache [item, inline_fab] do %>
-  <div class="btn-group <%= 'dropup' unless inline_fab %> hidden-print">
+  <div class="btn-group item-fab <%= 'dropup' unless inline_fab %> hidden-print">
     <button type="button" class="btn btn-raised btn-primary btn-fab dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       <i class='material-icons'>menu</i>
     </button>
