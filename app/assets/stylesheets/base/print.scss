@@ -202,9 +202,6 @@
     background-color: white !important;
     border: 0 !important;
   }
-  .no-break {
-    page-break-inside: avoid;
-  }
   .company-title {
     color: $brand-primary !important;
   }
@@ -250,5 +247,10 @@
   .panel-disclaimer {
     margin-top: 1em !important;
     margin-bottom: 1em !important;
+  }
+  .main-panel {
+    .content {
+      margin-top: 0;
+    }
   }
 }

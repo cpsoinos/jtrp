@@ -1,14 +1,83 @@
-<% cache item do %>
-  <div class="btn-group dropdown hidden-print">
-    <button type="button" class="btn btn-raised btn-fab btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+<% inline_fab ||= false %>
+
+<% cache [item, inline_fab] do %>
+  <div class="btn-group <%= 'dropup' unless inline_fab %> hidden-print">
+    <button type="button" class="btn btn-raised btn-primary btn-fab dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       <i class='material-icons'>menu</i>
     </button>
-    <ul class="dropdown-menu dropdown-menu-right">
+    <ul class="dropdown-menu dropdown-menu-right fab-menu">
 
-      <li><%= link_to "<i class='material-icons'>edit</i> Edit".html_safe, edit_account_job_proposal_item_path(item.account, item.job, item.proposal, item, redirect_url: request.try(:original_url)) %></li>
-      <% if item.active? %>
-        <li><%= link_to "<i class='material-icons'>done</i> Mark Sold".html_safe, "", data: { toggle: "modal", target: "#mark_sold_modal", item_id: item.id, item_description: item.description.titleize } %></li>
+      <li>
+        <%= link_to "<i class='material-icons'>assignment_ind</i> View Account".html_safe, account_path(item.account) %>
+      </li>
+      <li>
+        <%= link_to "<i class='material-icons'>map</i> View Job".html_safe, account_job_path(item.account, item.job) %>
+      </li>
+      <li>
+        <%= link_to "<i class='material-icons'>assignment</i> View Proposal".html_safe, account_job_proposal_path(item.account, item.job, item.proposal) %>
+      </li>
+      <% if item.agreement %>
+        <li>
+          <%= link_to "<i class='material-icons'>assignment_turned_in</i> View Agreement".html_safe, account_job_proposal_agreement_path(item.account, item.job, item.proposal, item.agreement) %>
+        </li>
       <% end %>
+      <li role="separator" class="divider"></li>
+
+      <li>
+        <%= link_to "<i class='material-icons'>edit</i> Edit".html_safe, edit_account_job_proposal_item_path(item.account, item.job, item.proposal, item) %>
+      </li>
+      <li>
+        <%= link_to "<i class='material-icons'>delete_forever</i> Delete".html_safe, item_path(item), method: :delete, data: {confirm: "Are you sure?", :'confirm-button-text' => "Yes, I'm sure", :'cancel-button-text' => "No, cancel!", :'sweet-alert-type' => 'warning', :'confirm-button-color' => '#f44336', text: "This will delete the item. This is irreversable."} %>
+      </li>
+      <li role="separator" class="divider"></li>
+
+      <% unless item.inactive? %>
+        <li class="dropdown-header">Deactivate</li>
+        <li>
+          <%= link_to "<i class='fa fa-chain-broken' aria-hidden='true'></i> Damaged".html_safe, item_deactivate_path(item, item: { tag_list: item.tag_list.push("damaged") }), method: :put %>
+        </li>
+        <li>
+          <%= link_to "<i class='fa fa-user' aria-hidden='true'></i> Retrieved by Client".html_safe, item_deactivate_path(item, item: { tag_list: item.tag_list.push("client_retrieved")} ), method: :put %>
+        </li>
+        <li>
+          <%= link_to "<i class='fa fa-question-circle' aria-hidden='true'></i> Other".html_safe, item_deactivate_path(item, item: { tag_list: item.tag_list.push("other")} ), method: :put %>
+        </li>
+        <li role="separator" class="divider"></li>
+      <% end %>
+
+      <% if item.sold? %>
+        <li>
+          <%= link_to "<i class='material-icons'>replay</i> Mark Not Sold".html_safe, item_mark_not_sold_path(item), method: :post %>
+        </li>
+      <% else %>
+        <li>
+          <%= link_to "<i class='material-icons'>done</i> Mark as Sold".html_safe, "#", data: { toggle: "modal", target: "#mark-sold-modal", :"item-id" => item.id, :"item-description" => item.description } %>
+        </li>
+      <% end %>
+
+      <li>
+        <%= link_to "<i class='material-icons'>content_copy</i> Create Item from this Batch".html_safe, "#", data: { toggle: "modal", target: "#new-item-from-batch-modal" } %>
+      </li>
+
+      <% if item.potential? || item.inactive? %>
+        <li>
+          <%= link_to "<i class='material-icons'>store</i> Activate".html_safe, item_activate_path(item), method: :post %>
+        </li>
+      <% elsif item.active? && item.client_intention == 'consign' %>
+        <% if item.expired? %>
+          <li>
+            <%= link_to "<i class='material-icons'>access_time</i> Unmark Expired".html_safe, item_path(item, item: { expired: false, tag_list: item.tag_list.delete("expired") }), method: :patch %>
+          </li>
+        <% else %>
+          <li>
+            <%= link_to "<i class='material-icons'>access_time</i> Mark Expired".html_safe, item_path(item, item: { expired: true, tag_list: item.tag_list.push("expired") }), method: :patch %>
+          </li>
+        <% end %>
+      <% end %>
+
+      <li>
+        <%= link_to "<i class='material-icons'>print</i> Print Label".html_safe, labels_items_url(by_id: [item.id]), target: "blank" %>
+      </li>
 
     </ul>
   </div>

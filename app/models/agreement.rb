@@ -93,7 +93,7 @@ class Agreement < ActiveRecord::Base
   end
 
   def meets_requirements_inactive?
-    items.active.empty?
+    items.active.empty? && items.potential.empty?
   end
 
   def meets_requirements_expired?

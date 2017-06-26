@@ -121,6 +121,31 @@ describe Agreement do
       expect(agreement).to be_inactive
     end
 
+    it "does not transition 'active' to 'inactive' upon item sale if any other items still active" do
+      agreement = create(:agreement, :active)
+      items = create_list(:item, 2, :active, proposal: agreement.proposal, client_intention: "sell")
+
+      expect {
+        items.first.mark_sold
+      }.not_to change {
+        agreement.reload.status
+      }
+      expect(agreement).to be_active
+    end
+
+    it "does not transition 'active' to 'inactive' upon item sale if any other items still potential" do
+      agreement = create(:agreement, :active)
+      item = create(:item, :active, proposal: agreement.proposal, client_intention: "sell")
+      item2 = create(:item, proposal: agreement.proposal, client_intention: "sell")
+
+      expect {
+        item.mark_sold
+      }.not_to change {
+        agreement.reload.status
+      }
+      expect(agreement).to be_active
+    end
+
     it "transitions 'inactive' to 'active'" do
       agreement = create(:agreement, :inactive)
       agreement.mark_active

@@ -79,6 +79,7 @@ gem 'material_dashboard_pro-rails', git: 'git@github.com:cpsoinos/material_dashb
 gem 'summernote-rails'
 gem 'render_async'
 # gem 'wicked_pdf'
+# gem 'pdfkit'
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-classnames'

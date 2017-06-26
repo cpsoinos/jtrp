@@ -21,7 +21,6 @@ class AgreementsController < ApplicationController
     @job = @proposal.job
     @account = @agreement.proposal.job.account
     @client = @account.primary_contact
-    @agreements = [@agreement]
     @items = @agreement.items
     @title = "#{@job.name} - Proposal #{@proposal.id} - #{@agreement.humanized_agreement_type}"
   end
