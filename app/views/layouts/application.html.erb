@@ -39,13 +39,11 @@
   <div id="fb-root"></div>
 
   <div id="wrapper">
-    <%= render 'layouts/sidebar' unless params[:print] %>
-    <div class="<%= 'main-panel' unless params[:print] %>">
-      <%= render 'layouts/navbar' unless params[:print] %>
-      <%= render('layouts/alerts', alert: alert, notice: notice) unless params[:print] %>
-      <% unless params[:print] %>
-        <div class="page-header header-filter header-small main-header-bg page-header-main" data-parallax="true" style="height: 20vh;"></div>
-      <% end %>
+    <%= render 'layouts/sidebar' %>
+    <div class="main-panel">
+      <%= render 'layouts/navbar' %>
+      <%= render('layouts/alerts', alert: alert, notice: notice) %>
+      <div class="page-header header-filter header-small main-header-bg page-header-main hidden-print" data-parallax="true" style="height: 20vh;"></div>
 
       <div class="content">
         <div class="container-fluid">

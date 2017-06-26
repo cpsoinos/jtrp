@@ -36,7 +36,7 @@
 
   <% if current_user.try(:internal?) && !controller_name.in?(%w(mailer purchases)) && action_name != 'discountable' %>
     <td class="text-center">
-      <%= render "items/fab_menu", item: item %>
+      <%= render "items/fab_menu", item: item, inline_fab: true %>
     </td>
   <% end %>
 </tr>
