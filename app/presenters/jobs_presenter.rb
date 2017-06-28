@@ -7,7 +7,7 @@ class JobsPresenter
   end
 
   def filter
-    Job.filter(params.slice(:status, :account_id))
+    Job.includes(account: :primary_contact).filter(params.slice(:status, :account_id))
   end
 
 end
