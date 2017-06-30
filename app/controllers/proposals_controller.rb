@@ -50,7 +50,7 @@ class ProposalsController < ApplicationController
 
   def send_email
     @proposal = Proposal.find(params[:proposal_id])
-    Notifier.send_proposal(@proposal).deliver_later
+    Notifier.send_proposal(@proposal, params[:note]).deliver_later
     redirect_to :back, notice: "Email sent to client!"
   end
 

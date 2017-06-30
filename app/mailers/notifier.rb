@@ -19,8 +19,9 @@ class Notifier < ApplicationMailer
     roadie_mail(to: recipient, subject: 'Daily Sales Summary', from: 'Just the Right Piece <notifications@jtrpfurniture.com>')
   end
 
-  def send_proposal(proposal)
+  def send_proposal(proposal, note)
     @company   = Company.jtrp
+    @note      = note
     @user      = default_user
     @recipient = proposal.account.primary_contact
     @proposal  = proposal
