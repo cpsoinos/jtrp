@@ -52,7 +52,7 @@ class CompaniesController < ApplicationController
   end
 
   def send_message
-    TransactionalEmailJob.perform_later(@company, current_user, @company.primary_contact, "contact", params)
+    Notifier.send_contact_us(params[:from_name], params[:from_email], params[:subject], params[:note])
     redirect_to root_path, notice: "Your message has been sent!"
   end
 

@@ -77,7 +77,7 @@ class AgreementsController < ApplicationController
   def send_email
     @agreement = Agreement.find(params[:agreement_id])
     if @agreement.potential?
-      TransactionalEmailJob.perform_later(@agreement, @company.primary_contact, @agreement.account.primary_contact, "send_agreement", params)
+      Notifier.send_agreement(@agreement, params[:note]).deliver_later
     else
       @agreement.deliver_to_client
     end

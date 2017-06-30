@@ -120,7 +120,7 @@ class Agreement < ActiveRecord::Base
 
   def notify_company
     return unless self.active?
-    TransactionalEmailJob.perform_later(self, account.primary_contact, Company.jtrp.primary_contact, "agreement_active_notifier")
+    Notifier.send_agreement_active_notification(self).deliver_later
   end
 
   def task
@@ -169,7 +169,7 @@ class Agreement < ActiveRecord::Base
 
   def deliver_to_client
     return if should_not_auto_deliver?
-    TransactionalEmailJob.perform_later(self, Company.jtrp.primary_contact, account.primary_contact, "agreement")
+    Notifier.send_executed_agreement(self).deliver_later
   end
 
   private
