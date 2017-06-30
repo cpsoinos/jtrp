@@ -50,7 +50,8 @@ class ProposalsController < ApplicationController
 
   def send_email
     @proposal = Proposal.find(params[:proposal_id])
-    TransactionalEmailJob.perform_later(@proposal, @company.primary_contact, @proposal.account.primary_contact, "proposal", params)
+    Notifier.proposal(@company.primary_contact, @proposal.account.primary_contact, @proposal).deliver_later
+    # TransactionalEmailJob.perform_later(@proposal, @company.primary_contact, @proposal.account.primary_contact, "proposal", params)
     redirect_to :back, notice: "Email sent to client!"
   end
 

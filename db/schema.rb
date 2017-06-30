@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170508015625) do
+ActiveRecord::Schema.define(version: 20170630204836) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -78,6 +78,27 @@ ActiveRecord::Schema.define(version: 20170508015625) do
 
   add_index "agreements", ["deleted_at"], name: "index_agreements_on_deleted_at", using: :btree
   add_index "agreements", ["proposal_id"], name: "index_agreements_on_proposal_id", using: :btree
+
+  create_table "ahoy_messages", force: :cascade do |t|
+    t.string   "token"
+    t.text     "to"
+    t.integer  "user_id"
+    t.string   "user_type"
+    t.string   "mailer"
+    t.text     "subject"
+    t.datetime "sent_at"
+    t.datetime "opened_at"
+    t.datetime "clicked_at"
+  end
+
+  add_index "ahoy_messages", ["token"], name: "index_ahoy_messages_on_token", using: :btree
+  add_index "ahoy_messages", ["user_id", "user_type"], name: "index_ahoy_messages_on_user_id_and_user_type", using: :btree
+
+  create_table "ar_internal_metadata", primary_key: "key", force: :cascade do |t|
+    t.string   "value"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "audits", force: :cascade do |t|
     t.integer  "auditable_id"
@@ -299,6 +320,8 @@ ActiveRecord::Schema.define(version: 20170508015625) do
     t.string   "status",     default: "potential", null: false
     t.string   "slug"
     t.datetime "deleted_at"
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
   end
 
   add_index "jobs", ["account_id"], name: "index_jobs_on_account_id", using: :btree
