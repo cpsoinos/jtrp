@@ -29,7 +29,7 @@ Rails.application.configure do
     address:              'smtp.gmail.com',
     port:                 587,
     domain:               'jtrpfurniture.com',
-    user_name:            'corey@jtrpfurniture.com',
+    user_name:            ENV['GSUITE_USER'],
     password:             ENV['GSUITE_PW'],
     authentication:       :login,
     enable_starttls_auto: true
