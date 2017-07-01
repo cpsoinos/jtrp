@@ -16,7 +16,11 @@ describe Agreement do
 
   before do
     allow(PdfGeneratorJob).to receive(:perform_later)
-    allow(TransactionalEmailJob).to receive(:perform_later)
+    allow(Notifier).to receive_message_chain(:send_agreement, :deliver_later)
+    allow(Notifier).to receive_message_chain(:send_agreement_active_notification, :deliver_later)
+    allow(Notifier).to receive_message_chain(:send_executed_agreement, :deliver_later)
+    allow(Notifier).to receive_message_chain(:send_agreement_pending_expiration, :deliver_later)
+    allow(Notifier).to receive_message_chain(:send_agreement_expired, :deliver_later)
   end
 
   describe "items" do
@@ -105,7 +109,7 @@ describe Agreement do
       expect(agreement.proposal).to be_active
       expect(agreement.proposal.job).to be_active
       expect(agreement.proposal.account).to be_active
-      expect(TransactionalEmailJob).to have_received(:perform_later).with(agreement, agreement.account.primary_contact, Company.jtrp.primary_contact, "agreement_active_notifier")
+      expect(Notifier).to have_received(:send_executed_agreement).with(agreement)
       items.each do |item|
         item.reload
         expect(item.original_description).to eq(item.description)
