@@ -78,6 +78,7 @@ gem 'mk_pro-rails', git: 'git@github.com:cpsoinos/mk_pro-rails.git'
 gem 'material_dashboard_pro-rails', git: 'git@github.com:cpsoinos/material_dashboard_pro-rails.git'
 gem 'summernote-rails'
 gem 'render_async'
+gem 'ahoy_email'
 # gem 'wicked_pdf'
 # gem 'pdfkit'
 

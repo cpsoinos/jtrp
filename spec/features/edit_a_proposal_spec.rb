@@ -134,21 +134,13 @@ feature "edit a proposal" do
     end
 
     scenario "sends a proposal to the client" do
-      allow(TransactionalEmailJob).to receive(:perform_later)
+      allow(Notifier).to receive_message_chain(:send_proposal, :deliver_later)
       visit account_job_proposal_path(account, job, proposal)
       click_button("Send this Proposal")
       fill_in("note", with: "this is a note")
       click_button("Send Email")
-      params = {
-        "utf8" => "✓",
-        "note" => "this is a note",
-        "commit" => "Send Email",
-        "controller" => "proposals",
-        "action" => "send_email",
-        "proposal_id" => "#{proposal.id}"
-      }
 
-      expect(TransactionalEmailJob).to have_received(:perform_later).with(proposal, Company.jtrp.primary_contact, account.primary_contact, "proposal", params)
+      expect(Notifier).to have_received(:send_proposal).with(proposal, "this is a note")
     end
 
   end

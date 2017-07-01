@@ -9,7 +9,9 @@ feature "agreement" do
 
   before do
     allow(PdfGeneratorJob).to receive(:perform_later).and_return(true)
-    allow(TransactionalEmailJob).to receive(:perform_later).and_return(true)
+    company = Company.jtrp
+    company.primary_contact = create(:internal_user)
+    company.save
     allow(LetterSenderJob).to receive(:perform_later).and_return(true)
     allow(ItemExpirerJob).to receive(:perform_later).and_return(true)
     allow(InventorySync).to receive(:new).and_return(syncer)
