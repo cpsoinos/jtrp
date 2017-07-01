@@ -52,7 +52,7 @@ class CompaniesController < ApplicationController
   end
 
   def send_message
-    Notifier.send_contact_us(params[:from_name], params[:from_email], params[:subject], params[:note])
+    Notifier.send_contact_us(params[:from_name], params[:email], params[:subject], params[:note]).deliver_later
     redirect_to root_path, notice: "Your message has been sent!"
   end
 
