@@ -7,7 +7,7 @@
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/icon?family=Material+Icons" media="all">
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" media="all">
   <%= stylesheet_link_tag 'application', media: 'all', type: "text/css" %>
-  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" media="all">
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" media="all" async>
   <%= javascript_include_tag 'application' %>
   <!-- <script src="https://cdn.ravenjs.com/3.15.0/raven.min.js"></script> -->
   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -42,19 +42,23 @@
     <%= render 'layouts/sidebar' %>
     <div class="main-panel">
       <%= render 'layouts/navbar' %>
-      <%= render('layouts/alerts', alert: alert, notice: notice) %>
-      <div class="page-header header-filter header-small main-header-bg page-header-main hidden-print" data-parallax="true" style="height: 20vh;"></div>
+      <%= render 'layouts/alerts', alert: alert, notice: notice %>
+      <div class="page-header header-filter header-small main-header-bg page-header-main hidden-print <%= 'extra-large-bottom-margin' unless controller_name == 'companies' && action_name == 'show' %>" data-parallax="true" style="height: 20vh;"></div>
 
       <div class="content">
         <div class="container-fluid">
           <div class="row">
             <%= breadcrumbs separator: " &rsaquo; " %>
-            <div class="<%= 'main main-raised' unless (controller_name == 'companies' && action_name == 'show') || params[:print] %>">
+            <div class="<%= 'main main-raised' unless controller_name.in?(%w(companies sessions registrations)) || params[:print] %>">
               <%= yield %>
             </div>
           </div>
         </div>
       </div>
+      <div class="row">
+        <%= yield :below_panel %>
+      </div>
+      <%= render "layouts/footer", company: @company %>
     </div>
 
     <% if current_user.try(:internal?) %>

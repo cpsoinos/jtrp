@@ -1,5 +1,4 @@
 class CategoriesController < ApplicationController
-  # layout :resolve_layout
   before_filter :require_internal, except: [:index, :show]
 
   def index
@@ -61,14 +60,6 @@ class CategoriesController < ApplicationController
   def category_params
     params.require(:category).permit(:name, :parent_id, :photo)
   end
-
-  # def resolve_layout
-  #   if action_name.in?(%w(show))
-  #     "ecommerce"
-  #   else
-  #     "application"
-  #   end
-  # end
 
   def find_category
     @category = Category.includes(:subcategories).find(params[:id])

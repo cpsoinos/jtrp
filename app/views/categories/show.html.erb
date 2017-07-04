@@ -6,38 +6,38 @@
 
 <div class="profile-page">
 
+  <div class="row">
+    <div class="col-xs-6 col-xs-offset-3">
+      <div class="profile">
+        <div class="avatar">
+          <%= image_tag(@category.photo_url(client_hints: true, fetch_format: "auto", quality: "auto", width: "auto"), class: "img-circle img-responsive img-raised") %>
+        </div>
+        <div class="name text-center">
+          <h3 class="title"><%= @category.name.titleize %></h3>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid">
     <div class="row">
-      <div class="col-xs-6 col-xs-offset-3">
-        <div class="profile">
-          <div class="avatar">
-            <%= image_tag(@category.photo_url(client_hints: true, fetch_format: "auto", quality: "auto", width: "auto"), class: "img-circle img-responsive img-raised") %>
+      <div class="col-md-10 col-md-offset-1 col-xs-12">
+        <% @items.each_slice(4) do |items| %>
+          <div class="row">
+            <% items.each do |item| %>
+              <div class="col-md-3 col-xs-12">
+                <%= render "items/card", item: item %>
+              </div>
+            <% end %>
           </div>
-          <div class="brand name text-center">
-            <h3 class="title"><%= @category.name.titleize %></h3>
-          </div>
+        <% end %>
+
+        <div class="text-center">
+          <%= paginate @items %>
         </div>
       </div>
     </div>
-
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-md-10 col-md-offset-1 col-xs-12">
-          <% @items.each_slice(4) do |items| %>
-            <div class="row">
-              <% items.each do |item| %>
-                <div class="col-md-3 col-xs-12">
-                  <%= render "items/card", item: item %>
-                </div>
-              <% end %>
-            </div>
-          <% end %>
-
-          <div class="text-center">
-            <%= paginate @items %>
-          </div>
-        </div>
-      </div>
-    </div>
+  </div>
 
 </div>
 
