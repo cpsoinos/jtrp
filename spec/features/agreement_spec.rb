@@ -110,7 +110,7 @@ feature "agreement" do
           agreement.mark_active
           item.mark_active
 
-          visit account_job_proposal_agreements_path(account, job, proposal)
+          visit account_job_proposal_agreement_path(account, job, proposal, agreement)
           within(".dropup") do
             click_on("menu")
           end
@@ -158,7 +158,7 @@ feature "agreement" do
           agreement.update_attributes(client_agreed: true, client_agreed_at: 3.minutes.ago, date: 3.minutes.ago)
           agreement.mark_active
 
-          visit account_job_proposal_agreements_path(account, job, proposal)
+          visit account_job_proposal_agreement_path(account, job, proposal, agreement)
           within(".dropup") do
             click_on("menu")
           end
@@ -175,7 +175,7 @@ feature "agreement" do
           agreement.mark_active
           item.mark_active
 
-          visit account_job_proposal_agreements_path(account, job, proposal)
+          visit account_job_proposal_agreement_path(account, job, proposal, agreement)
           within(".dropup") do
             click_on("menu")
           end
