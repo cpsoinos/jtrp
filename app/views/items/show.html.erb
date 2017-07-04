@@ -1,7 +1,7 @@
 <% meta @meta_tags %>
 
-<div class="row top-margin">
-  <div class="col-md-8 col-md-offset-2 col-xs-12">
+<div class="profile-page">
+  <div class="container-fluid">
     <div class="row">
 
       <div class="col-md-6 col-xs-12">
@@ -53,8 +53,10 @@
               </ul>
             <% end %>
 
-            <div class="fb-like" data-href="<%= item_url(@item) %>" data-layout="standard" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
-            <%= render 'houzz_button', item: @item %>
+            <span class="pull-right">
+              <%= render 'houzz_button', item: @item %><br />
+            </span>
+            <div class="fb-like" data-href="<%= item_url(@item) %>" data-layout="button" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
             <div class="fb-comments" data-href="<%= item_url(@item) %>" data-numposts="5" data-width="100%"></div>
 
             <% if current_user.try(:internal?) %>

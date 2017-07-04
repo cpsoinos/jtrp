@@ -12,7 +12,14 @@ body, h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4 {
 }
 
 .brand .title {
+  color: white;
   font-family: "Bradley Hand" !important;
+}
+
+.footer-black {
+  h3, p {
+    color: white;
+  }
 }
 
 a, a:hover, a:focus {
