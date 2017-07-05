@@ -19,8 +19,8 @@
     <%= render 'proposals/header', form_name: "Proposal", company: @company, proposal: @proposal, account: @account, job: @job, agreement: nil, statement: nil %>
     <%= render 'disclaimer' %>
 
-    <% @items.each do |item| %>
-      <% cache [@proposal, action_name, item] do %>
+    <% cache [@proposal, @items, action_name] do %>
+      <% @items.each do |item| %>
         <%= render 'item_row', collection: @items, cached: true, item: item %>
       <% end %>
     <% end %>

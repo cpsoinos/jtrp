@@ -21,7 +21,6 @@ class AgreementsController < ApplicationController
     @job = @proposal.job
     @account = @agreement.proposal.job.account
     @client = @account.primary_contact
-    @agreements = [@agreement]
     @items = @agreement.items
     @title = "#{@job.name} - Proposal #{@proposal.id} - #{@agreement.humanized_agreement_type}"
   end
@@ -78,7 +77,7 @@ class AgreementsController < ApplicationController
   def send_email
     @agreement = Agreement.find(params[:agreement_id])
     if @agreement.potential?
-      TransactionalEmailJob.perform_later(@agreement, @company.primary_contact, @agreement.account.primary_contact, "send_agreement", params)
+      Notifier.send_agreement(@agreement, params[:note]).deliver_later
     else
       @agreement.deliver_to_client
     end

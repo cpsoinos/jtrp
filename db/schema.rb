@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170610221930) do
+ActiveRecord::Schema.define(version: 20170630204836) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -73,6 +73,20 @@ ActiveRecord::Schema.define(version: 20170610221930) do
     t.integer  "pdf_pages"
     t.index ["deleted_at"], name: "index_agreements_on_deleted_at", using: :btree
     t.index ["proposal_id"], name: "index_agreements_on_proposal_id", using: :btree
+  end
+
+  create_table "ahoy_messages", force: :cascade do |t|
+    t.string   "token"
+    t.text     "to"
+    t.integer  "user_id"
+    t.string   "user_type"
+    t.string   "mailer"
+    t.text     "subject"
+    t.datetime "sent_at"
+    t.datetime "opened_at"
+    t.datetime "clicked_at"
+    t.index ["token"], name: "index_ahoy_messages_on_token", using: :btree
+    t.index ["user_id", "user_type"], name: "index_ahoy_messages_on_user_id_and_user_type", using: :btree
   end
 
   create_table "audits", force: :cascade do |t|

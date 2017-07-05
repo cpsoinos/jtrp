@@ -27,7 +27,11 @@ class ConsignmentPeriodEndingNotifierJob < ApplicationJob
   end
 
   def deliver_email
-    TransactionalEmailJob.perform_later(@letter, Company.jtrp.primary_contact, @agreement.account.primary_contact, category)
+    if category == 'agreement_pending_expiration'
+      Notifier.send_agreement_pending_expiration(@letter).deliver_later
+    elsif category == 'agreement_expired'
+      Notifier.send_agreement_expired(@letter).deliver_later
+    end
   end
 
 end

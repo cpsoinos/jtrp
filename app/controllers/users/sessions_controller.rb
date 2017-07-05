@@ -1,5 +1,4 @@
 class Users::SessionsController < Devise::SessionsController
-  layout 'ecommerce'
 
 # before_action :configure_sign_in_params, only: [:create]
 

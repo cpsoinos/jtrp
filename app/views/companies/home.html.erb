@@ -1,13 +1,11 @@
 <% meta @meta_tags %>
 
-<div class="page-header header-filter header-small main-header-bg" data-parallax="true">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-8 col-md-offset-2">
-        <div class="brand text-center">
-          <h1 class="title"><%= @company.name %></h1>
-          <h4 class="title"><%= @company.slogan %></h4>
-        </div>
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <div class="brand text-center">
+        <h1 class="title"><%= @company.name %></h1>
+        <h4 class="title"><%= @company.slogan %></h4>
       </div>
     </div>
   </div>
@@ -30,18 +28,20 @@
     </div>
   </div>
 
-  <div class="container">
+  <div class="container categories-section">
     <h2 class="section-title title">Shop by category...</h2>
     <div class="row">
       <div class="col-md-12">
-        <% @categories.primary.each_slice(4) do |categories| %>
-          <div class="row">
-            <% categories.each do |category| %>
-              <div class="col-md-3">
-                <%= render "categories/card", category: category %>
-              </div>
-            <% end %>
-          </div>
+        <% cache @categories.primary do %>
+          <% @categories.primary.each_slice(4) do |categories| %>
+            <div class="row">
+              <% categories.each do |category| %>
+                <div class="col-md-3">
+                  <%= render "categories/card", category: category, cached: true %>
+                </div>
+              <% end %>
+            </div>
+          <% end %>
         <% end %>
       </div>
     </div>
@@ -49,13 +49,3 @@
 
 </div>
 <!-- end-main-raised -->
-
-<div class="subscribe-line subscribe-line-image contact-bg" data-parallax="true">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-8 col-md-offset-2">
-        <%= render "companies/contact_form" %>
-      </div>
-    </div>
-  </div>
-</div>

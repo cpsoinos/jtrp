@@ -252,7 +252,7 @@ class Item < ApplicationRecord
 
   def sync_inventory
     return if should_not_sync?
-    InventorySyncJob.perform_later(self)
+    InventorySyncJob.perform_later(item_id: self.id)
   end
 
   def owned?

@@ -22,7 +22,7 @@
               <td class="text-center">
                 <%= link_to "<i class='material-icons md-48'>assignment_turned_in</i> #{agreement.id}".html_safe, agreement_path(agreement) %>
               </td>
-              <td class="text-center"><%= agreement.humanized_agreement_type %></td>
+              <td class="text-center"><%= link_to agreement.humanized_agreement_type, agreement_path(agreement) %></td>
               <td class="text-center">
                 <% if agreement.date %>
                   <%= agreement.date.strftime("%m/%d/%y") %>

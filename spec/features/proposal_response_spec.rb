@@ -8,7 +8,7 @@ feature "proposal response" do
   let!(:intentions) { %w(sell consign decline undecided) }
 
   before do
-    allow(TransactionalEmailJob).to receive(:perform_later)
+    allow(Notifier).to receive_message_chain(:send_proposal_response, :deliver_later)
     account.primary_contact = create(:client, account: account)
     items.first.update_attribute("will_purchase", true)
     items.second.update_attribute("will_consign", true)
@@ -106,16 +106,8 @@ feature "proposal response" do
       visit account_job_proposal_path(account, job, proposal, token: proposal.token)
       fill_in("note", with: "this is a note")
       click_button("Send Email")
-      params = ActionController::Parameters.new({
-        "utf8"=>"✓",
-        "note"=>"this is a note",
-        "commit"=>"Send Email",
-        "controller"=>"proposals",
-        "action"=>"notify_response",
-        "proposal_id"=>"#{proposal.id}"
-      })
 
-      expect(TransactionalEmailJob).to have_received(:perform_later).with(proposal, account.primary_contact, Company.jtrp.primary_contact, "notification", params)
+      expect(Notifier).to have_received(:send_proposal_response).with(proposal, "this is a note")
     end
 
   end

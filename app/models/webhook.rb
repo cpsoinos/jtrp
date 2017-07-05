@@ -26,6 +26,7 @@ class Webhook < ApplicationRecord
   private
 
   def create_webhook_entries
+    return unless remote_entries.present?
     remote_entries.each do |entry|
       Webhooks::Entries::Creator.new(self, entry).create
     end

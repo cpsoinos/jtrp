@@ -76,7 +76,10 @@ gem 'public_activity', tag: 'chaps-io:1-5-stable'
 gem 'mk_pro-rails', git: 'git@github.com:cpsoinos/mk_pro-rails.git'
 gem 'material_dashboard_pro-rails', git: 'git@github.com:cpsoinos/material_dashboard_pro-rails.git'
 gem 'summernote-rails'
+gem 'render_async'
+gem 'ahoy_email'
 # gem 'wicked_pdf'
+# gem 'pdfkit'
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-classnames'
@@ -111,6 +114,7 @@ group :development, :test do
   gem 'terminal-notifier-guard'
   gem 'terminal-notifier'
   gem 'selenium-webdriver'
+  gem 'chromedriver-helper'
   gem 'parallel_tests'
   gem 'spring-commands-rspec'
   # gem 'wkhtmltopdf-binary'

@@ -9,7 +9,9 @@ feature "agreement" do
 
   before do
     allow(PdfGeneratorJob).to receive(:perform_later).and_return(true)
-    allow(TransactionalEmailJob).to receive(:perform_later).and_return(true)
+    company = Company.jtrp
+    company.primary_contact = create(:internal_user)
+    company.save
     allow(LetterSenderJob).to receive(:perform_later).and_return(true)
     allow(ItemExpirerJob).to receive(:perform_later).and_return(true)
     allow(InventorySync).to receive(:new).and_return(syncer)
@@ -88,7 +90,7 @@ feature "agreement" do
         agreement.mark_active
 
         visit agreement_path(agreement)
-        within(".hamburger-fab") do
+        within(".dropup") do
           click_on("menu")
         end
         click_on("Mark Items Active")
@@ -116,7 +118,7 @@ feature "agreement" do
         item.mark_active
 
         visit agreement_path(agreement)
-        within(".hamburger-fab") do
+        within(".dropup") do
           click_on("menu")
         end
 
@@ -140,7 +142,6 @@ feature "agreement" do
         expect(page).not_to have_link("sell")
         expect(page).not_to have_link("dump")
         expect(page).not_to have_link("donate")
-
 
         expect(page).to have_content("Consignment Agreement")
       end

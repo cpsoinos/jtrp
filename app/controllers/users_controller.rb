@@ -1,7 +1,6 @@
 class UsersController < ApplicationController
   before_action :find_user
   before_action :ensure_manage
-  layout 'ecommerce'
 
   def show
   end

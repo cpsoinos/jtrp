@@ -93,7 +93,7 @@ class Agreement < ApplicationRecord
   end
 
   def meets_requirements_inactive?
-    items.active.empty?
+    items.active.empty? && items.potential.empty?
   end
 
   def meets_requirements_expired?
@@ -120,7 +120,7 @@ class Agreement < ApplicationRecord
 
   def notify_company
     return unless self.active?
-    TransactionalEmailJob.perform_later(self, account.primary_contact, Company.jtrp.primary_contact, "agreement_active_notifier")
+    Notifier.send_agreement_active_notification(self).deliver_later
   end
 
   def task
@@ -169,7 +169,7 @@ class Agreement < ApplicationRecord
 
   def deliver_to_client
     return if should_not_auto_deliver?
-    TransactionalEmailJob.perform_later(self, Company.jtrp.primary_contact, account.primary_contact, "agreement")
+    Notifier.send_executed_agreement(self).deliver_later
   end
 
   private
