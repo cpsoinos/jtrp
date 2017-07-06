@@ -1,7 +1,19 @@
 <% cache item do %>
   <div class="card card-product card-plain">
     <%= link_to item_path(item) do %>
-      <%= image_tag(item.featured_photo.photo_url(client_hints: true, width: "auto", dpr: "auto", responsive_placeholder: "blank", fetch_format: "auto", quality: "auto", gravity: "auto", aspect_ratio: "3:4", crop: "fill"), class: "img img-raised img-rounded") %>
+      <div class="card-image">
+        <%= cl_image_tag(item.featured_photo.photo.full_public_id,
+          width: :auto,
+          fetch_format: "auto",
+          quality: "auto",
+          gravity: "auto",
+          aspect_ratio: "3:4",
+          crop: "fill",
+          responsive: true,
+          responsive_placeholder: "blank",
+          radius: 10
+        ) %>
+      </div>
     <% end %>
 
     <div class="card-content">
