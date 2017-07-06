@@ -5,15 +5,14 @@ class Notifier < ApplicationMailer
 
   default from: 'Just the Right Piece <notifications@jtrpfurniture.com>'
 
-  def send_daily_summary_email(user, timeframe=nil, recipient=nil)
-    @company   = Company.jtrp
-    user      ||= default_user
-    @user      = user
-    timeframe ||= default_timeframe
-    @orders    = orders(timeframe)
-    recipient ||= @company.team_email
+  def send_daily_summary_email(recipient, timeframe=nil)
+    @company    = Company.jtrp
+    @user       = default_user
+    timeframe  ||= default_timeframe
+    @orders     = orders(timeframe)
+    @recipient  = recipient
 
-    roadie_mail(to: recipient, subject: 'Daily Sales Summary', from: 'Just the Right Piece <notifications@jtrpfurniture.com>')
+    roadie_mail(to: "#{@recipient.full_name} <#{@recipient.email}>", subject: 'Daily Sales Summary', from: 'Just the Right Piece <notifications@jtrpfurniture.com>')
   end
 
   def send_proposal(proposal, note)
