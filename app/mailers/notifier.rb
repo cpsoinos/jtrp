@@ -11,7 +11,6 @@ class Notifier < ApplicationMailer
     timeframe  ||= default_timeframe
     @orders     = orders(timeframe)
     @recipient  = recipient
-
     roadie_mail(to: "#{@recipient.full_name} <#{@recipient.email}>", subject: 'Daily Sales Summary', from: 'Just the Right Piece <notifications@jtrpfurniture.com>')
   end
 
@@ -55,6 +54,10 @@ class Notifier < ApplicationMailer
     @user      = default_user
     @recipient = agreement.account.primary_contact
     @agreement = agreement
+    attachments["#{agreement.short_name}.pdf"] = {
+      mime_type: 'application/pdf',
+      content:    open(agreement.pdf.url).read
+    }
     mail(to: "#{@recipient.full_name} <#{@recipient.email}>", subject: "Your #{@agreement.humanized_agreement_type} is ready", from: "#{@user.first_name} at #{@company.name} <#{@user.email}>")
   end
 

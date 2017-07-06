@@ -18,6 +18,7 @@ feature "agreement" do
     allow(syncer).to receive(:remote_create).and_return(true)
     allow(syncer).to receive(:remote_update).and_return(true)
     allow(syncer).to receive(:remote_destroy).and_return(true)
+    allow(Notifier).to receive_message_chain(:send_executed_agreement, :deliver_later)
   end
 
   context "guest" do
