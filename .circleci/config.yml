@@ -1,0 +1,45 @@
+version: 2
+jobs:
+  build:
+    working_directory: .
+    # The primary container is an instance of the first list image listed. Your build commands run in this container.
+    docker:
+      - image: hintmedia/circleci-ruby-psql
+    steps:
+      - checkout
+      - run:
+          name: update-bundle
+          command: gem install bundler
+      # - restore_cache:
+      #     key: dependency-cache-{{ checksum "Gemfile.lock" }}
+      - run:
+          name: bundle
+          command: bundle install
+      # - save_cache:
+      #     key: dependency-cache-{{ checksum "Gemfile.lock" }}
+  test:
+    steps:
+      - run:
+          name: test
+          command: bundle exec rspec spec
+      # - run:
+      #     name: code-coverage
+      #     command: './node_modules/.bin/nyc report --reporter=text-lcov'
+      # - store_artifacts:
+      #     path: test-results.xml
+      #     prefix: tests
+      # - store_artifacts:
+      #     path: coverage
+      #     prefix: coverage
+
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - build
+      - test:
+          requires:
+            - build
+          # filters:
+          #   branches:
+          #     only: master
