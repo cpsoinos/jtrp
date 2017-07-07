@@ -1,14 +1,18 @@
 <% cache category do %>
-  <div class="card card-product card-plain" data-colored-shadow="false">
+  <div class="card card-product card-plain">
     <%= link_to category_path(category) do %>
       <div class="card-image">
-        <%= image_tag(category.featured_photo.photo_url(
-          client_hints: true,
-          transformation: [
-            {gravity: "auto", aspect_ratio: "3:4", crop: "fill"},
-            {width: "auto:100:387", crop: "scale"}
-          ]
-        )) %>
+        <%= cl_image_tag(category.featured_photo.photo.full_public_id,
+          width: :auto,
+          fetch_format: "auto",
+          quality: "auto",
+          gravity: "auto",
+          aspect_ratio: "3:4",
+          crop: "fill",
+          responsive: true,
+          responsive_placeholder: "blank",
+          radius: 10,
+        ) %>
       </div>
     <% end %>
 

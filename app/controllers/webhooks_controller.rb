@@ -3,7 +3,7 @@ class WebhooksController < ApplicationController
   before_filter :verify_webhook_auth_header
 
   def receive
-    WebhookJob.perform_later(params[:integration_name], data)
+    Webhooks::Creator.new(params[:integration_name], data).create
     head :ok
   end
 
