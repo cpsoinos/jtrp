@@ -46,7 +46,7 @@ class Notifier < ApplicationMailer
     @client    = agreement.account.primary_contact
     @recipient = default_user
     @agreement = agreement
-    mail(to: "#{@recipient.full_name} <#{@recipient.email}>", subject: "#{@client.full_name}'s #{@agreement.humanized_agreement_type} is active!'")
+    mail(to: "#{@recipient.full_name} <#{@recipient.email}>", subject: "#{@client.full_name}'s #{@agreement.humanized_agreement_type} is active!")
   end
 
   def send_executed_agreement(agreement)
