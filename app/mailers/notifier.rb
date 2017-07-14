@@ -82,8 +82,10 @@ class Notifier < ApplicationMailer
     @recipient = default_user
     @from_name = from_name
     @note      = note
-    photos.each do |photo|
-      attachments[photo.photo.send(:original_filename)] = open(photo.photo.url).read
+    if photos.present?
+      photos.each do |photo|
+        attachments[photo.photo.send(:original_filename)] = open(photo.photo.url).read
+      end
     end
     mail(from: "#{@from_name} <notifications@jtrpfurniture.com>", to: "#{@recipient.full_name} <#{@recipient.email}>", subject: subject, reply_to: from_email)
   end
