@@ -59,8 +59,8 @@ feature "statement" do
         expect(page).to have_content("Date Consigned: #{item.try(:listed_at).try(:strftime, '%-m/%-d/%y')}")
         expect(page).to have_content("Days Consigned: #{item.listed_at.present? ? (item.sold_at.to_date - item.listed_at.to_date).to_i : 'n/a'}")
         expect(page).to have_content("Sale Price: #{ActionController::Base.helpers.humanized_money_with_symbol(item.sale_price)}")
-        expect(page).to have_content("Consignment Fee: #{ActionController::Base.helpers.humanized_money_with_symbol((item.sale_price * item.consignment_rate) / 100)}")
-        expect(page).to have_content("Due to Consignor: #{ActionController::Base.helpers.humanized_money_with_symbol((item.sale_price - (item.sale_price * (1 - item.consignment_rate))) / 100)}")
+        expect(page).to have_content("Fee: #{ActionController::Base.helpers.humanized_money_with_symbol((item.sale_price * item.consignment_rate) / 100)}")
+        expect(page).to have_content("Total: #{ActionController::Base.helpers.humanized_money_with_symbol((item.sale_price - (item.sale_price * (1 - item.consignment_rate))) / 100)}")
       end
       expect(page).to have_content("Total Sales")
       expect(page).to have_content(ActionController::Base.helpers.humanized_money_with_symbol(statement.total_sales))
