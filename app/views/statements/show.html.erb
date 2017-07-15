@@ -31,8 +31,20 @@
 
       <% if @check %>
         <div class="text-center large-top-margin">
-          <%= image_tag(@check.check_image_front_url) %><br />
-          <%= image_tag(@check.check_image_back_url) %>
+          <%= cl_image_tag(@check.check_image_front.full_public_id,
+            width: :auto,
+            fetch_format: "auto",
+            quality: "auto",
+            responsive: true,
+            responsive_placeholder: "blank"
+          ) %><br />
+          <%= cl_image_tag(@check.check_image_back.full_public_id,
+            width: :auto,
+            fetch_format: "auto",
+            quality: "auto",
+            responsive: true,
+            responsive_placeholder: "blank"
+          ) %>
         </div>
       <% end %>
 
