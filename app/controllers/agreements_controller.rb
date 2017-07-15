@@ -23,6 +23,7 @@ class AgreementsController < ApplicationController
     @client = @account.primary_contact
     @items = @agreement.items
     @title = "#{@job.name} - Proposal #{@proposal.id} - #{@agreement.humanized_agreement_type}"
+    @hide_raised = true if @agreement.pdf.present?
   end
 
   def edit
