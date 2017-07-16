@@ -32,4 +32,19 @@ namespace :statements do
 
   end
 
+  task :czerepak_second_june_statement => :environment do
+
+    items = Item.where(id: [9572, 9562, 9561, 9565])
+    account = Account.find('czerepak')
+
+    puts "Creating second June statement for Czerepak..."
+    statement = account.statements.create(date: DateTime.parse("June 15, 2017"))
+
+    puts "Adding the specified items to this statement..."
+    statement.items << items
+
+    puts "Finished. Verify at #{statement.object_url}"
+
+  end
+
 end
