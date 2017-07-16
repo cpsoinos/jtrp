@@ -25,6 +25,8 @@ class Item < ActiveRecord::Base
   has_one :job, through: :proposal
   has_one :account, through: :job
   has_many :webhook_entries, as: :webhookable
+  has_one :statement_item
+  has_one :statement, through: :statement_item
 
   has_secure_token
   after_validation :ensure_token_uniqueness
