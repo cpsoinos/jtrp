@@ -33,21 +33,28 @@ jobs:
           key: v1-dependencies-{{ checksum "Gemfile.lock" }}
 
       # Database setup
-      - run: bundle exec rake db:create
-      - run: bundle exec rake db:schema:load
+
+      - run:
+          name: Set up database
+          environment:
+            - RAILS_ENV: test
+          command: bundle exec rake db:create db:schema:load
 
       # run tests!
       - run:
           name: run tests
+          environment:
+            - RAILS_ENV: test
           command: |
             mkdir /tmp/test-results
             TEST_FILES="$(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)"
 
-            bundle exec rspec --format progress \
-                            --format RspecJunitFormatter \
-                            --out /tmp/test-results/rspec.xml \
-                            --format progress \
-                            "${TEST_FILES}"
+            bundle exec rspec --format documentation \
+                              --format RspecJunitFormatter \
+                              --out /tmp/test-results/rspec.xml \
+                              --color \
+                              --require rails_helper
+                              "${TEST_FILES}"
 
       # collect reports
       - store_test_results:
