@@ -2,6 +2,9 @@ describe Statement do
 
   it { should be_audited.associated_with(:account) }
   it { should belong_to(:account) }
+  it { should have_many(:statement_items) }
+  it { should have_many(:checks) }
+  it { should have_many(:items).through(:statement_items) }
 
   describe "state machine" do
 

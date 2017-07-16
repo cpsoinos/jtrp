@@ -16,7 +16,20 @@ namespace :statements do
         end
       end
     end
-    
+
+  end
+
+  task :build_statement_items => :environment do
+
+    statements = Statement.includes(account: :items).all
+    puts "Migrating #{statements.count} statements to the new item-statement relational schema..."
+
+    bar = RakeProgressbar.new(statements.count)
+    statements.each do |statement|
+      Statements::ItemGatherer.new(statement, statement.account).execute
+      bar.inc
+    end
+
   end
 
 end

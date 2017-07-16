@@ -13,6 +13,8 @@ class Statement < ActiveRecord::Base
   belongs_to :account, touch: true
   has_one :statement_pdf
   has_many :checks
+  has_many :statement_items
+  has_many :items, through: :statement_items
 
   scope :status, -> (status) { where(status: status) }
   scope :unpaid, -> { where(status: "unpaid") }
@@ -35,10 +37,6 @@ class Statement < ActiveRecord::Base
 
   def humanized_name
     "#{account.short_name} - Consigned Sales #{date.strftime('%m-%y')}"
-  end
-
-  def items
-    account.items.sold.where(client_intention: "consign", sold_at: starting_date..ending_date).order(:sold_at)
   end
 
   def total_sales
