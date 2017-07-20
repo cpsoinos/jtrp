@@ -23,12 +23,28 @@
             <% if item.initial_photos.present? %>
               <% if controller_name == 'agreements' %>
                 <div class="col-xs-6 grid-item">
-                  <%= image_tag(item.featured_photo.photo_url(client_hints: true, quality: "auto", fetch_format: :auto, width: :auto, dpr: "auto", effect: :improve), class: "img-rounded img-responsive img-raised img-featured") %>
+                  <%= cl_image_tag(item.featured_photo.photo.full_public_id,
+                    width: :auto,
+                    fetch_format: "auto",
+                    quality: "auto",
+                    effect: "improve",
+                    responsive: true,
+                    responsive_placeholder: "blank",
+                    radius: 10
+                  ) %>
                 </div>
               <% else %>
                 <% item.initial_photos.each do |photo| %>
                   <div class="col-xs-6 col-sm-6 grid-item">
-                    <%= image_tag(photo.photo_url(client_hints: true, quality: "auto", fetch_format: :auto, width: :auto, dpr: "auto", effect: :improve), class: "img-rounded img-responsive img-raised img-featured") %>
+                    <%= cl_image_tag(photo.photo.full_public_id,
+                      width: :auto,
+                      fetch_format: "auto",
+                      quality: "auto",
+                      effect: "improve",
+                      responsive: true,
+                      responsive_placeholder: "blank",
+                      radius: 10
+                    ) %>
                   </div>
                 <% end %>
               <% end %>
