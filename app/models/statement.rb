@@ -45,6 +45,7 @@ class Statement < ActiveRecord::Base
 
   def total_consignment_fee
     items.map do |item|
+      next if item.sale_price.nil?
       Money.new(item.sale_price * (item.consignment_rate / 100))
     end.sum
   end
