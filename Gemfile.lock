@@ -1,19 +1,12 @@
-GIT
-  remote: git@github.com:cpsoinos/material_dashboard_pro-rails.git
-  revision: 575b2e26c74b8906031305172b2a263390810720
+PATH
+  remote: vendor/gems/material_dashboard_pro-rails-0.1.5
   specs:
     material_dashboard_pro-rails (0.1.5)
-      rails
-      sass
-      sass-rails
 
-GIT
-  remote: git@github.com:cpsoinos/mk_pro-rails.git
-  revision: 18e2df5f5c93431b992103d586f41f3f91ed5e6a
+PATH
+  remote: vendor/gems/mk_pro-rails-0.1.2
   specs:
-    mk_pro-rails (0.1.1)
-      railties (~> 4.1)
-      sass (>= 3.3.4)
+    mk_pro-rails (0.1.2)
 
 GEM
   remote: https://rubygems.org/
@@ -852,10 +845,10 @@ DEPENDENCIES
   lob
   lograge
   madison
-  material_dashboard_pro-rails!
+  material_dashboard_pro-rails (= 0.1.5)!
   metamagic
   mini_magick
-  mk_pro-rails!
+  mk_pro-rails (= 0.1.2)!
   money-rails
   mr_video
   newrelic_rpm
