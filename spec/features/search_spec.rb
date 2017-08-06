@@ -2,54 +2,30 @@ feature 'search' do
   let(:item) { create(:item, :active) }
   let(:user) { create(:internal_user) }
 
-<<<<<<< HEAD
-  context "guest" do
-
-    scenario "searches for an existing item" do
-      visit root_path
-      fill_in("search[query]", with: item.description)
-      click_on("search")
-=======
   context 'guest' do
     scenario 'searches for an existing item', js: true do
       Capybara.using_driver(:chrome) do
         visit root_path
         fill_in('search[query]', with: item.description).native.send_keys(:return)
->>>>>>> master
 
         expect(page).to have_link(item.description)
       end
     end
 
-<<<<<<< HEAD
-    scenario "searches for a non-existing item" do
-      visit root_path
-      fill_in("search[query]", with: "The Jungle Book")
-      click_on("search")
-=======
     scenario 'searches for a non-existing item', js: true do
       Capybara.using_driver(:chrome) do
         visit root_path
         fill_in('search[query]', with: 'The Jungle Book').native.send_keys(:return)
->>>>>>> master
 
         expect(page).to have_content('No results found')
       end
     end
 
-<<<<<<< HEAD
-    scenario "initiates a second search from results page" do
-      second_item = create(:item, :active)
-      visit root_path
-      fill_in("search[query]", with: item.description)
-      click_on("search")
-=======
     scenario 'initiates a second search from results page', js: true do
       Capybara.using_driver(:chrome) do
         second_item = create(:item, :active)
         visit root_path
         fill_in('search[query]', with: item.description).native.send_keys(:return)
->>>>>>> master
 
         expect(page).to have_link(item.description)
 
@@ -151,52 +127,30 @@ feature 'search' do
       sign_in user
     end
 
-<<<<<<< HEAD
-    scenario "searches for an existing item" do
-      visit dashboard_path
-      fill_in("search[query]", with: item.description)
-      click_on("search")
-=======
     scenario 'searches for an existing item', js: true do
       Capybara.using_driver(:chrome) do
         visit dashboard_path
         fill_in('search[query]', with: item.description).native.send_keys(:return)
->>>>>>> master
 
         expect(page).to have_link('Items')
         expect(page).to have_link(item.description)
       end
     end
 
-<<<<<<< HEAD
-    scenario "searches for a non-existing item" do
-      visit dashboard_path
-      fill_in("search[query]", with: "The Jungle Book")
-      click_on("search")
-=======
     scenario 'searches for a non-existing item', js: true do
       Capybara.using_driver(:chrome) do
         visit dashboard_path
         fill_in('search[query]', with: 'The Jungle Book').native.send_keys(:return)
->>>>>>> master
 
         expect(page).to have_content('No results found')
       end
     end
 
-<<<<<<< HEAD
-    scenario "initiates a second search from results page" do
-      second_item = create(:item, :active)
-      visit dashboard_path
-      fill_in("search[query]", with: item.description)
-      click_on("search")
-=======
     scenario 'initiates a second search from results page', js: true do
       Capybara.using_driver(:chrome) do
         second_item = create(:item, :active)
         visit dashboard_path
         fill_in('search[query]', with: item.description).native.send_keys(:return)
->>>>>>> master
 
         expect(page).to have_link(item.description)
 

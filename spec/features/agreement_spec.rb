@@ -8,9 +8,9 @@ feature 'agreement' do
 
   before do
     allow(PdfGeneratorJob).to receive(:perform_later).and_return(true)
-    company = Company.jtrp
-    company.primary_contact = create(:internal_user)
-    company.save
+    # company = Company.jtrp
+    # company.primary_contact = create(:internal_user)
+    # company.save
     allow(LetterSenderJob).to receive(:perform_later).and_return(true)
     allow(ItemExpirerJob).to receive(:perform_later).and_return(true)
     allow(InventorySync).to receive(:new).and_return(syncer)
@@ -37,6 +37,7 @@ feature 'agreement' do
       let!(:item) { create(:item, proposal: proposal, client_intention: 'sell') }
       let!(:agreement) { create(:agreement, :sell, proposal: proposal) }
 
+      scenario 'client intends to sell an item', js: true do
         visit account_job_proposal_agreements_path(account, job, proposal)
 
         expect(page).not_to have_link('consign')
@@ -129,7 +130,7 @@ feature 'agreement' do
       let!(:agreement) { create(:agreement, :consign, proposal: proposal) }
 
       before do
-        Company.first.update_attribute('primary_contact_id', user.id)
+        # Company.first.update_attribute('primary_contact_id', user.id)
         allow(syncer).to receive(:remote_create).and_return(true)
       end
 
@@ -162,6 +163,7 @@ feature 'agreement' do
         item.mark_active
 
         visit account_job_proposal_agreement_path(account, job, proposal, agreement)
+        save_and_open_page
         within('.dropup') do
           click_on('menu')
         end
@@ -281,15 +283,15 @@ feature 'agreement' do
     end
 
     scenario 'client agrees' do
-      Timecop.freeze(Time.now)
-      visit account_job_proposal_agreement_path(account, job, proposal, agreement, token: agreement.token)
-      first('input[name="agreement[client_agreed]"]', visible: :false).set(true)
-      click_button('I Accept')
-      agreement.reload
+      Timecop.freeze(Time.now) do
+        visit account_job_proposal_agreement_path(account, job, proposal, agreement, token: agreement.token)
+        first('input[name="agreement[client_agreed]"]', visible: :false).set(true)
+        click_button('I Accept')
+        agreement.reload
 
-      # expect(page).to have_content("#{account.full_name} accepted the terms of this agreement at #{DateTime.now.strftime('%l:%M %p on %B %d, %Y')}.")
-      expect(agreement.client_agreed).to be(true)
-      Timecop.return
+        # expect(page).to have_content("#{account.full_name} accepted the terms of this agreement at #{DateTime.now.strftime('%l:%M %p on %B %d, %Y')}.")
+        expect(agreement.client_agreed).to be(true)
+      end
     end
 
     scenario "client doesn't see 'Mark Items Active' button from show" do

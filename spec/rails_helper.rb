@@ -8,10 +8,6 @@ require 'helpers/label_helper.rb'
 require 'helpers/webhook_helper.rb'
 require 'coveralls'
 require 'email_spec'
-<<<<<<< HEAD
-# require 'capybara/poltergeist'
-=======
->>>>>>> master
 require 'money-rails/test_helpers'
 require 'best_in_place/test_helpers'
 require 'audited-rspec.rb'
