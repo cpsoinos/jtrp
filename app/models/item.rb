@@ -15,12 +15,12 @@ class Item < ApplicationRecord
 
   has_many :photos, -> { order(position: :asc) }, dependent: :destroy
   accepts_nested_attributes_for :photos
-  belongs_to :category, touch: true
-  belongs_to :proposal, counter_cache: true, touch: true
-  belongs_to :order
+  belongs_to :category, touch: true, optional: true
+  belongs_to :proposal, counter_cache: true, touch: true, optional: true
+  belongs_to :order, optional: true
   has_many :discounts, as: :discountable
   has_many :children, class_name: "Item", foreign_key: "parent_item_id"
-  belongs_to :parent_item, class_name: "Item", foreign_key: "parent_item_id", touch: true
+  belongs_to :parent_item, class_name: "Item", foreign_key: "parent_item_id", touch: true, optional: true
   has_one :job, through: :proposal
   has_one :account, through: :job
   has_many :webhook_entries, as: :webhookable

@@ -79,6 +79,13 @@ RSpec.configure do |config|
   # config.around :each, :js do |ex|
   #   ex.run_with_retry retry: 3
   # end
+  config.before(:each, type: :system) do
+    driven_by :rack_test
+  end
+
+  config.before(:each, type: :system, js: true) do
+    driven_by :headless_chrome # a driver I define elsewhere
+  end
 
 end
 

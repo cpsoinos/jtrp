@@ -110,7 +110,7 @@ group :development, :test do
   gem 'better_errors'
   gem 'faker'
   gem 'factory_girl_rails'
-  gem 'guard-rspec'
+  gem 'guard-rspec', require: false
   gem 'terminal-notifier-guard'
   gem 'terminal-notifier'
   gem 'parallel_tests'
@@ -151,7 +151,7 @@ group :test do
   # gem 'rspec-core', git: 'https://github.com/rspec/rspec-core', branch: 'master'
   # gem 'rspec-mocks', git: 'https://github.com/rspec/rspec-mocks', branch: 'master'
   # gem 'rspec-rails', git: 'https://github.com/rspec/rspec-rails', branch: 'integrate-with-system-test'
-  # gem 'rspec-retry', git: 'https://github.com/NoRedInk/rspec-retry', branch: 'master'
   # gem 'rspec-support', git: 'https://github.com/rspec/rspec-support', branch: 'master'
+  gem 'rspec-retry'
   gem 'rspec_junit_formatter'
 end

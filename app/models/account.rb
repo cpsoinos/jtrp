@@ -18,14 +18,14 @@ class Account < ApplicationRecord
   multisearchable against: [:full_name, :status]
 
   has_many :clients
-  belongs_to :primary_contact, class_name: "User", foreign_key: "primary_contact_id", touch: true
+  belongs_to :primary_contact, class_name: "User", foreign_key: "primary_contact_id", touch: true, optional: true
   has_many :jobs, dependent: :destroy
   has_many :proposals, through: :jobs
   has_many :items, through: :proposals
   has_many :agreements, through: :proposals
   has_many :statements
-  belongs_to :created_by, class_name: "InternalUser", foreign_key: "created_by_id"
-  belongs_to :updated_by, class_name: "InternalUser", foreign_key: "updated_by_id"
+  belongs_to :created_by, class_name: "InternalUser", foreign_key: "created_by_id", optional: true
+  belongs_to :updated_by, class_name: "InternalUser", foreign_key: "updated_by_id", optional: true
   has_many :letters, through: :agreements
 
   validates :status, presence: true

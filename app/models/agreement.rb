@@ -16,8 +16,8 @@ class Agreement < ApplicationRecord
   has_one :job, through: :proposal
   has_one :account, through: :job
   has_many :letters
-  belongs_to :created_by, class_name: "User"
-  belongs_to :updated_by, class_name: "User"
+  belongs_to :created_by, class_name: "User", optional: true
+  belongs_to :updated_by, class_name: "User", optional: true
 
   after_destroy :delete_cache
 

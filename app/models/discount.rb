@@ -1,10 +1,10 @@
 class Discount < ApplicationRecord
   include PublicActivity::Common
-  
+
   acts_as_paranoid
   audited
 
-  belongs_to :discountable, polymorphic: true
+  belongs_to :discountable, polymorphic: true, optional: true
 
   monetize :amount_cents, allow_nil: true, numericality: {
     less_than_or_equal_to: 0

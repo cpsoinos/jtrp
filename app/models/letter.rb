@@ -5,7 +5,7 @@ class Letter < ApplicationRecord
   audited associated_with: :agreement
   has_secure_token
 
-  belongs_to :agreement
+  belongs_to :agreement, optional: true
   has_one :account, through: :agreement
   mount_uploader :pdf, PdfUploader
 

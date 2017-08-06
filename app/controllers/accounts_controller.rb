@@ -46,6 +46,7 @@ class AccountsController < ApplicationController
         redirect_to new_client_path(account_id: @account.id)
       end
     else
+      flash[:alert] = @account.errors.full_messages
       redirect_back(fallback_location: root_path)
     end
   end

@@ -684,6 +684,8 @@ GEM
     roadie-rails (1.2.1)
       railties (>= 3.0, < 5.2)
       roadie (~> 3.1)
+    rspec-retry (0.5.4)
+      rspec-core (> 3.3, < 3.7)
     rspec_junit_formatter (0.3.0)
       rspec-core (>= 2, < 4, != 2.12.0)
     ruby-rc4 (0.1.5)
@@ -927,6 +929,7 @@ DEPENDENCIES
   rspec-expectations!
   rspec-mocks!
   rspec-rails!
+  rspec-retry
   rspec-support!
   rspec_junit_formatter
   sass-rails
