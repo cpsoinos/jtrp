@@ -25,10 +25,6 @@ class TransactionalEmailer
 
     mail.personalizations = personalizations(recipient, options)
 
-    # if object.respond_to?(:pdf)
-    #   mail.attachments = attachments
-    # end
-
     mail.template_id = template_hash[email_type]
 
     sg = SendGrid::API.new(api_key: ENV['SENDGRID_API_KEY'])
