@@ -44,7 +44,7 @@
     <%= render 'layouts/sidebar' %>
     <div class="main-panel">
       <%= render 'layouts/navbar' %>
-      <%= render 'toastr_rails/flash' %>
+      <%= render 'layouts/alerts', alert: alert, notice: notice %>
       <div class="page-header header-filter header-small main-header-bg page-header-main hidden-print <%= 'extra-large-bottom-margin' unless controller_name == 'companies' && action_name == 'show' %>" data-parallax="true" style="height: 20vh;"></div>
 
       <div class="content">

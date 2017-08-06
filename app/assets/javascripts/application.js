@@ -57,7 +57,6 @@
 //= require cloudinary
 //= require bootstrap-table
 //= require summernote
-//= require toastr_rails
 
 //= require agreements
 //= require categories
