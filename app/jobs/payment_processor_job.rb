@@ -1,10 +1,4 @@
-require 'active_job/traffic_control'
-
-class PaymentProcessorJob < ApplicationJob
-  include ActiveJob::TrafficControl::Throttle
-
-  throttle threshold: 1, period: 5.seconds
-
+class PaymentProcessorJob < ActiveJob::Base
   queue_as :default
 
   def perform(options)
