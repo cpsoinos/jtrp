@@ -146,6 +146,7 @@ group :test do
   gem 'pdf-reader'
   gem 'timecop'
   gem 'capybara-screenshot'
+  gem 'capybara-selenium'
   gem 'aws-sdk', '~> 2'
   gem 'vcr'
   gem 'rspec-retry'
