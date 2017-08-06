@@ -26,7 +26,7 @@ class ItemsController < ApplicationController
             methods: [
               :description_link,
               :featured_photo_url,
-              :humanized_cost,
+              :humanized_purchase_price,
               :account_link,
               :humanized_minimum_sale_price,
               :humanized_listing_price,

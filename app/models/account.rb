@@ -1,14 +1,14 @@
 class Account < ActiveRecord::Base
   include PublicActivity::Common
+  include AccountStateMachine
+  include Filterable
+  include PgSearch
 
   acts_as_paranoid
   audited
 
   extend FriendlyId
   friendly_id :short_name, use: [:slugged, :finders, :history]
-
-  include Filterable
-  include PgSearch
 
   self.inheritance_column = :type
   def self.types
@@ -39,28 +39,6 @@ class Account < ActiveRecord::Base
   scope :potential, -> { where(status: "potential") }
   scope :active, -> { where(status: "active") }
   scope :inactive, -> { where(status: "inactive") }
-
-  state_machine :status, initial: :potential do
-    state :potential
-    state :active
-    state :inactive
-
-    after_transition potential: :inactive, do: :deactivate_items
-
-    event :mark_active do
-      transition [:potential, :inactive] => :active, if: lambda { |account| account.meets_requirements_active? }
-    end
-
-    event :mark_inactive do
-      transition active: :inactive, if: lambda { |account| account.meets_requirements_inactive? }
-      transition potential: :inactive
-    end
-
-    event :reactivate do
-      transition inactive: :active
-    end
-
-  end
 
   alias :client :primary_contact
   delegate :full_address, to: :primary_contact
@@ -127,14 +105,6 @@ class Account < ActiveRecord::Base
 
   def self.default_url
     ActionController::Base.helpers.asset_path("thumb_No_Image_Available.png")
-  end
-
-  def meets_requirements_active?
-    jobs.active.present?
-  end
-
-  def meets_requirements_inactive?
-    jobs.present? && jobs.completed.count == jobs.count
   end
 
   def yard_sale?
