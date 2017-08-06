@@ -88,6 +88,8 @@ describe 'dashboard' do
         expect(page).to have_field('Expiration Pending', visible: false)
         expect(page).to have_field('Expire Agreement', visible: false)
 
+        within("#expiration-pending") do
+          page.find(:css, ".circle").click
         end
         fill_in('note', with: 'Personalized message goes here')
         click_button('Notify Client')

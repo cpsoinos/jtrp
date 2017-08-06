@@ -7,7 +7,7 @@ module ActionDispatch
         attr_accessor :silence_puma
       end
 
-      self.silence_puma = false
+      self.silence_puma = true
 
       def run
         register
