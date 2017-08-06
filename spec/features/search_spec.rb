@@ -4,33 +4,39 @@ feature 'search' do
 
   context 'guest' do
     scenario 'searches for an existing item', js: true do
-      visit root_path
-      fill_in('search[query]', with: item.description).native.send_keys(:return)
+      Capybara.using_driver(:chrome) do
+        visit root_path
+        fill_in('search[query]', with: item.description).native.send_keys(:return)
 
-      expect(page).to have_link(item.description)
+        expect(page).to have_link(item.description)
+      end
     end
 
     scenario 'searches for a non-existing item', js: true do
-      visit root_path
-      fill_in('search[query]', with: 'The Jungle Book').native.send_keys(:return)
+      Capybara.using_driver(:chrome) do
+        visit root_path
+        fill_in('search[query]', with: 'The Jungle Book').native.send_keys(:return)
 
-      expect(page).to have_content('No results found')
+        expect(page).to have_content('No results found')
+      end
     end
 
     scenario 'initiates a second search from results page', js: true do
-      second_item = create(:item, :active)
-      visit root_path
-      fill_in('search[query]', with: item.description).native.send_keys(:return)
+      Capybara.using_driver(:chrome) do
+        second_item = create(:item, :active)
+        visit root_path
+        fill_in('search[query]', with: item.description).native.send_keys(:return)
 
-      expect(page).to have_link(item.description)
+        expect(page).to have_link(item.description)
 
-      within('#search-form') do
-        fill_in('search[query]', with: second_item.description)
-        click_button('Search')
+        within('#search-form') do
+          fill_in('search[query]', with: second_item.description)
+          click_button('Search')
+        end
+
+        expect(page).not_to have_link(item.description)
+        expect(page).to have_link(second_item.description)
       end
-
-      expect(page).not_to have_link(item.description)
-      expect(page).to have_link(second_item.description)
     end
 
     scenario 'successful search by category', js: true do
@@ -44,7 +50,7 @@ feature 'search' do
         click_button('Search')
       end
 
-      expect(page).to have_link(table.description, wait: 5)
+      expect(page).to have_link(table.description)
     end
 
     scenario 'unsuccessful search by category', js: true do
@@ -122,34 +128,40 @@ feature 'search' do
     end
 
     scenario 'searches for an existing item', js: true do
-      visit dashboard_path
-      fill_in('search[query]', with: item.description).native.send_keys(:return)
+      Capybara.using_driver(:chrome) do
+        visit dashboard_path
+        fill_in('search[query]', with: item.description).native.send_keys(:return)
 
-      expect(page).to have_link('Items')
-      expect(page).to have_link(item.description)
+        expect(page).to have_link('Items')
+        expect(page).to have_link(item.description)
+      end
     end
 
     scenario 'searches for a non-existing item', js: true do
-      visit dashboard_path
-      fill_in('search[query]', with: 'The Jungle Book').native.send_keys(:return)
+      Capybara.using_driver(:chrome) do
+        visit dashboard_path
+        fill_in('search[query]', with: 'The Jungle Book').native.send_keys(:return)
 
-      expect(page).to have_content('No results found')
+        expect(page).to have_content('No results found')
+      end
     end
 
     scenario 'initiates a second search from results page', js: true do
-      second_item = create(:item, :active)
-      visit dashboard_path
-      fill_in('search[query]', with: item.description).native.send_keys(:return)
+      Capybara.using_driver(:chrome) do
+        second_item = create(:item, :active)
+        visit dashboard_path
+        fill_in('search[query]', with: item.description).native.send_keys(:return)
 
-      expect(page).to have_link(item.description)
+        expect(page).to have_link(item.description)
 
-      within('#search-form') do
-        fill_in('search[query]', with: second_item.description)
-        click_button('Search')
+        within('#search-form') do
+          fill_in('search[query]', with: second_item.description)
+          click_button('Search')
+        end
+
+        expect(page).to have_link(second_item.description)
+        expect(page).not_to have_link(item.description)
       end
-
-      expect(page).to have_link(second_item.description)
-      expect(page).not_to have_link(item.description)
     end
   end
 end
