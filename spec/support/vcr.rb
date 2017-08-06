@@ -7,6 +7,7 @@ VCR.configure do |config|
   config.ignore_hosts ['localhost', '127.0.0.1', docker_ip, '0.0.0.0']
   config.ignore_request do |request|
     URI(request.uri).port == '3010'
+    URI(request.path) =~ /(__inspect__)/
   end
   config.default_cassette_options = { record: :new_episodes }
   config.configure_rspec_metadata!
