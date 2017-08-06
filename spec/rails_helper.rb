@@ -42,7 +42,6 @@ RSpec.configure do |config|
   config.include WaitForAjax
   config.include Warden::Test::Helpers
   config.include OmniauthMacros
-  config.include StateMachinesRspec::Matchers
 
   config.before(:all) do
     FactoryGirl.reload
@@ -70,7 +69,7 @@ RSpec.configure do |config|
 
   config.profile_examples = 10
   config.order = :random
-  config.use_transactional_fixtures = false
+  config.use_transactional_fixtures = true
   config.infer_spec_type_from_file_location!
 
   Kernel.srand config.seed

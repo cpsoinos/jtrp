@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 ruby '2.4.1'
 gem 'bundler'
-gem 'rails', '5.1'
+gem 'rails'
 gem 'pg'
 gem 'sass-rails'
 gem 'uglifier'
@@ -57,7 +57,7 @@ gem 'readthis'
 gem 'hiredis'
 gem 'redis-browser'
 gem 'prawn-labels'
-gem 'airbrake', '~> 5.0'
+gem 'airbrake'
 gem 'oj'
 gem 'fullcontact'
 gem 'friendly_id'
@@ -92,7 +92,7 @@ end
 
 group :production, :staging do
   gem 'tunemygc'
-  gem 'scout_apm', '~> 3.0.x'
+  gem 'scout_apm'
   gem 'lograge'
   gem 'puma_worker_killer'
   gem 'heroku-deflater'
@@ -110,11 +110,12 @@ group :development, :test do
   gem 'better_errors'
   gem 'faker'
   gem 'factory_girl_rails'
-  gem 'guard-rspec', require: false
+  gem 'guard-rspec'
   gem 'terminal-notifier-guard'
   gem 'terminal-notifier'
   gem 'parallel_tests'
   gem 'spring-commands-rspec'
+  gem 'rspec-rails', git: 'https://github.com/rspec/rspec-rails', branch: 'integrate-with-system-test'
   # gem 'wkhtmltopdf-binary'
 end
 
@@ -131,21 +132,26 @@ group :development do
 end
 
 group :test do
-  gem 'rspec-rails'
   gem 'shoulda-matchers', require: false
   gem 'capybara'
   gem 'launchy'
   gem 'email_spec'
-  gem 'database_cleaner'
   gem 'webmock'
   gem 'coveralls', require: false
   gem 'pdf-reader'
   gem 'timecop'
   gem 'capybara-screenshot'
   gem 'capybara-selenium'
-  gem 'aws-sdk', '~> 2'
+  gem 'aws-sdk'
   gem 'vcr'
-  gem 'rspec-retry'
+  %w[rspec-core rspec-expectations rspec-mocks rspec-support].each do |lib|
+    gem lib, :git => "https://github.com/rspec/#{lib}.git", :branch => 'master'
+  end
+  # gem 'rspec-rails'
+  # gem 'rspec-core', git: 'https://github.com/rspec/rspec-core', branch: 'master'
+  # gem 'rspec-mocks', git: 'https://github.com/rspec/rspec-mocks', branch: 'master'
+  # gem 'rspec-rails', git: 'https://github.com/rspec/rspec-rails', branch: 'integrate-with-system-test'
+  # gem 'rspec-retry', git: 'https://github.com/NoRedInk/rspec-retry', branch: 'master'
+  # gem 'rspec-support', git: 'https://github.com/rspec/rspec-support', branch: 'master'
   gem 'rspec_junit_formatter'
-  gem 'state_machines_rspec'
 end
