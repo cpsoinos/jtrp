@@ -93,7 +93,7 @@ class AgreementsController < ApplicationController
 
   def deactivate
     @agreement = Agreement.find(params[:agreement_id])
-    @agreement.items.active.map(&:mark_inactive)
+    @agreement.items.status(['active', 'potential']).map(&:mark_inactive)
     if @agreement.mark_inactive
       redirect_to :back, notice: "Agreement deactivated."
     else

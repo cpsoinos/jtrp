@@ -275,8 +275,23 @@ feature 'agreement' do
             click_on("menu")
           end
           click_link("Deactivate")
-          
+
           expect(page).to have_content("Agreement deactivated")
+        end
+
+        scenario "agreement has both potential and active items" do
+          agreement.update_attributes(client_agreed: true)
+          create(:item, proposal: proposal, client_intention: 'consign')
+          agreement.mark_active
+          item.mark_active
+          visit agreement_path(agreement)
+          within(".fab-menu-button") do
+            click_on("menu")
+          end
+          click_link("Deactivate")
+
+          expect(page).to have_content("Agreement deactivated")
+          expect(agreement.items.pluck(:status)).to match(['inactive', 'inactive'])
         end
 
       end
