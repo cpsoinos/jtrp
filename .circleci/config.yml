@@ -25,10 +25,10 @@ jobs:
       # Database setup
       - run: bundle exec rake db:create
       - run: bundle exec rake db:schema:load
-
-      - run:
-        command: Xvfb :99
-        background: true
+      # 
+      # - run:
+      #   command: Xvfb :99
+      #   background: true
 
       # Run rspec in parallel
       - type: shell
