@@ -26,14 +26,17 @@ jobs:
       - run: bundle exec rake db:create
       - run: bundle exec rake db:schema:load
 
+      - run:
+          command: Xvfb :99
+          background: true
+
       # Run rspec in parallel
       - type: shell
         command: |
           bundle exec rspec --profile 10 \
                             --format RspecJunitFormatter \
                             --out /tmp/test-results/rspec.xml \
-                            --format progress \
-                            --format documentation
+                            --format documentation \
                             $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
 
       # Save artifacts
