@@ -6,7 +6,15 @@
     <% if @agreement.pdf.present? && !@agreement.pdf_pages.nil? && !params[:print] %>
       <div class="text-center">
         <% (1..@agreement.pdf_pages).to_a.each do |page| %>
-          <%= image_tag(@agreement.pdf_url(client_hints: true, page: page, fetch_format: :auto, width: "auto")) %><br /><br />
+          <%= cl_image_tag(@agreement.pdf.full_public_id,
+            page: page,
+            width: :auto,
+            fetch_format: "auto",
+            quality: "auto",
+            responsive: true,
+            responsive_placeholder: "blank"
+          ) %>
+          <br /><br />
         <% end %>
       </div>
     <% else %>

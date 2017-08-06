@@ -11,7 +11,8 @@ class OrderSweepJob < ApplicationJob
     retry_job wait: 5.minutes, queue: :low
   end
 
-  def perform(order)
+  def perform(options)
+    order = Order.find(options[:order_id])
     order.process_webhook
   end
 

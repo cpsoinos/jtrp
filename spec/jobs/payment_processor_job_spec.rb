@@ -10,7 +10,7 @@ describe PaymentProcessorJob do
   end
 
   it 'processes a payment' do
-    PaymentProcessorJob.perform_later(payment)
+    PaymentProcessorJob.perform_later(payment_id: payment.id)
 
     expect(processor).to have_received(:process)
   end

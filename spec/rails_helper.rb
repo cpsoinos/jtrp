@@ -8,7 +8,10 @@ require 'helpers/label_helper.rb'
 require 'helpers/webhook_helper.rb'
 require 'coveralls'
 require 'email_spec'
+<<<<<<< HEAD
 # require 'capybara/poltergeist'
+=======
+>>>>>>> master
 require 'money-rails/test_helpers'
 require 'best_in_place/test_helpers'
 require 'audited-rspec.rb'
@@ -69,7 +72,7 @@ RSpec.configure do |config|
     config.default_formatter = 'doc'
   end
 
-  # config.profile_examples = 10
+  config.profile_examples = 10
   config.order = :random
   config.use_transactional_fixtures = false
   config.infer_spec_type_from_file_location!

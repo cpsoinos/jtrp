@@ -3,8 +3,8 @@ class PdfGeneratorJob < ApplicationJob
 
   attr_reader :object
 
-  def perform(object)
-    @object = object
+  def perform(options)
+    @object = options[:object_type].constantize.find(options[:object_id])
     generate_pdf
   end
 

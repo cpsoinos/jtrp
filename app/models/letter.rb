@@ -40,11 +40,15 @@ class Letter < ApplicationRecord
   end
 
   def deliver_email
-    TransactionalEmailJob.perform_later(self, Company.jtrp.primary_contact, account.primary_contact, category, {note: note})
+    if expiration_notice?
+      Notifier.send_agreement_expired(self).deliver_later
+    elsif expiration_pending_notice?
+      Notifier.send_agreement_pending_expiration(self).deliver_later
+    end
   end
 
   def deliver_letter
-    LetterSenderJob.perform_later(self)
+    LetterSenderJob.perform_later(letter_id: id)
   end
 
   def expire_items

@@ -113,14 +113,13 @@ group :development, :test do
   gem 'guard-rspec', require: false
   gem 'terminal-notifier-guard'
   gem 'terminal-notifier'
-  gem 'selenium-webdriver'
-  gem 'chromedriver-helper'
   gem 'parallel_tests'
   gem 'spring-commands-rspec'
   # gem 'wkhtmltopdf-binary'
 end
 
 group :development do
+  gem 'chromedriver-helper'
   gem 'spring'
   gem 'rails_real_favicon'
   gem 'web-console', '~> 2.0'
@@ -142,7 +141,8 @@ group :test do
   gem 'coveralls', require: false
   gem 'pdf-reader'
   gem 'timecop'
-  # gem 'capybara-screenshot'
+  gem 'capybara-screenshot'
+  gem 'capybara-selenium'
   gem 'aws-sdk', '~> 2'
   gem 'vcr'
   gem 'rspec-retry'

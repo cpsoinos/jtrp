@@ -3,8 +3,8 @@ class CheckImageRetrieverJob < ApplicationJob
 
   attr_reader :check
 
-  def perform(check)
-    @check = check
+  def perform(options)
+    @check = Check.find(options[:check_id])
     retrieve_images
   end
 

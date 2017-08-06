@@ -5,15 +5,13 @@ class Notifier < ApplicationMailer
 
   default from: 'Just the Right Piece <notifications@jtrpfurniture.com>'
 
-  def send_daily_summary_email(user, timeframe=nil, recipient=nil)
-    @company   = Company.jtrp
-    user      ||= default_user
-    @user      = user
-    timeframe ||= default_timeframe
-    @orders    = orders(timeframe)
-    recipient ||= @company.team_email
-
-    roadie_mail(to: recipient, subject: 'Daily Sales Summary', from: 'Just the Right Piece <notifications@jtrpfurniture.com>')
+  def send_daily_summary_email(recipient, timeframe=nil)
+    @company    = Company.jtrp
+    @user       = default_user
+    timeframe  ||= default_timeframe
+    @orders     = orders(timeframe)
+    @recipient  = recipient
+    roadie_mail(to: "#{@recipient.full_name} <#{@recipient.email}>", subject: 'Daily Sales Summary', from: 'Just the Right Piece <notifications@jtrpfurniture.com>')
   end
 
   def send_proposal(proposal, note)
@@ -48,7 +46,7 @@ class Notifier < ApplicationMailer
     @client    = agreement.account.primary_contact
     @recipient = default_user
     @agreement = agreement
-    mail(to: "#{@recipient.full_name} <#{@recipient.email}>", subject: "#{@client.full_name}'s #{@agreement.humanized_agreement_type} is active!'")
+    mail(to: "#{@recipient.full_name} <#{@recipient.email}>", subject: "#{@client.full_name}'s #{@agreement.humanized_agreement_type} is active!")
   end
 
   def send_executed_agreement(agreement)
@@ -56,6 +54,10 @@ class Notifier < ApplicationMailer
     @user      = default_user
     @recipient = agreement.account.primary_contact
     @agreement = agreement
+    attachments["#{agreement.short_name}.pdf"] = {
+      mime_type: 'application/pdf',
+      content:    open(agreement.pdf.url).read
+    }
     mail(to: "#{@recipient.full_name} <#{@recipient.email}>", subject: "Your #{@agreement.humanized_agreement_type} is ready", from: "#{@user.first_name} at #{@company.name} <#{@user.email}>")
   end
 
@@ -75,11 +77,16 @@ class Notifier < ApplicationMailer
     mail(to: "#{@recipient.full_name} <#{@recipient.email}>", subject: "Your consignment period has ended", from: "#{@user.first_name} at #{@company.name} <#{@user.email}>")
   end
 
-  def send_contact_us(from_name, from_email, subject, note)
+  def send_contact_us(from_name, from_email, subject, note, photos=[])
     @company   = Company.jtrp
     @recipient = default_user
     @from_name = from_name
     @note      = note
+    if photos.present?
+      photos.each do |photo|
+        attachments[photo.photo.send(:original_filename)] = open(photo.photo.url).read
+      end
+    end
     mail(from: "#{@from_name} <notifications@jtrpfurniture.com>", to: "#{@recipient.full_name} <#{@recipient.email}>", subject: subject, reply_to: from_email)
   end
 

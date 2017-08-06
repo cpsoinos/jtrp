@@ -9,7 +9,7 @@ describe CheckSenderJob do
   end
 
   it "calls Checks::Sender" do
-    CheckSenderJob.perform_later(statement)
+    CheckSenderJob.perform_later(statement_id: statement.id)
 
     expect(Checks::Sender).to have_received(:new).with(statement)
     expect(sender).to have_received(:send_check)

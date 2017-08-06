@@ -97,7 +97,11 @@ feature "add an account" do
       scenario "new client", js: true do
         visit new_account_path
         click_link("Yes")
+<<<<<<< HEAD
         fill_in("Company name", with: "Connor's Bone Yard")
+=======
+        fill_in("Company name", with: "Blah")
+>>>>>>> master
         fill_in("Notes", with: "blah ditty blah blah")
         click_button("Create Account")
 
@@ -118,7 +122,11 @@ feature "add an account" do
       scenario "creates a new client", js: true do
         visit new_account_path
         click_link("Yes")
+<<<<<<< HEAD
         fill_in("Company name", with: "Connor's Bone Yard")
+=======
+        fill_in("Company name", with: "Blah")
+>>>>>>> master
         fill_in("Notes", with: "blah ditty blah blah")
         click_button("Create Account")
 
@@ -135,14 +143,22 @@ feature "add an account" do
         click_on("Create Client")
 
         expect(page).to have_content("Client created!")
+<<<<<<< HEAD
         expect(page).to have_content("Connor's Bone Yard")
+=======
+        expect(page).to have_content("Blah")
+>>>>>>> master
       end
 
       scenario "chooses an existing user as primary contact", js: true do
         client = create(:user, first_name: "Connor", last_name: "O'Connor")
         visit new_account_path
         click_link("Yes")
+<<<<<<< HEAD
         fill_in("Company name", with: "Connor's Bone Yard")
+=======
+        fill_in("Company name", with: "Blah")
+>>>>>>> master
         fill_in("Notes", with: "blah ditty blah blah")
         page.find(".dropdownjs").click
 
@@ -153,7 +169,11 @@ feature "add an account" do
         click_button("Create Account")
 
         expect(page).to have_content("Account created")
+<<<<<<< HEAD
         expect(page).to have_content("Connor's Bone Yard")
+=======
+        expect(page).to have_content("Blah")
+>>>>>>> master
         expect(page).to have_content(client.full_name)
       end
 

@@ -18,6 +18,7 @@ class StatementsController < ApplicationController
     @check = @statement.checks.first
     @client = @account.client
     @title = "#{@account.full_name} - Consigned Sales"
+    @hide_raised = true if @statement.pdf.present?
   end
 
   def update

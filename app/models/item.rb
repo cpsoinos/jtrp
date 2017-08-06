@@ -1,18 +1,17 @@
 class Item < ApplicationRecord
   include PublicActivity::Common
+  include ItemStateMachine
+  include Filterable
+  include PgSearch
+  extend FriendlyId
 
+  friendly_id :description, use: [:slugged, :finders, :history]
   acts_as_paranoid
   acts_as_taggable_on :tags
   audited associated_with: :proposal
-
-  extend FriendlyId
-  friendly_id :description, use: [:slugged, :finders, :history]
-
-  include Filterable
-  include PgSearch
-
   multisearchable against: [:id, :account_item_number, :description, :original_description, :category_name, :category_id, :account_name, :job_name]
   paginates_per 18
+  has_secure_token
 
   has_many :photos, -> { order(position: :asc) }, dependent: :destroy
   accepts_nested_attributes_for :photos
@@ -25,9 +24,8 @@ class Item < ApplicationRecord
   has_one :job, through: :proposal
   has_one :account, through: :job
   has_many :webhook_entries, as: :webhookable
-
-  has_secure_token
-  after_validation :ensure_token_uniqueness
+  has_one :statement_item
+  has_one :statement, through: :statement_item
 
   monetize :purchase_price_cents, allow_nil: true, numericality: {
     greater_than_or_equal_to: 0,
@@ -57,6 +55,8 @@ class Item < ApplicationRecord
   validates :description, :proposal, :client_intention, presence: true
   validates :remote_id, uniqueness: { message: "remote_id already taken" }, allow_nil: true
   validates :token, uniqueness: true, allow_nil: true
+
+  after_validation :ensure_token_uniqueness
 
   scope :status, -> (status) { where(status: status) }
   scope :type, -> (type) do
@@ -105,36 +105,6 @@ class Item < ApplicationRecord
     tagged_with('expired', exclude: true).where(client_intention: 'consign', status: %w(active inactive), expired: false).where(listed_at.lt(90.days.ago))
    }
 
-  state_machine :status, initial: :potential do
-    state :potential
-    state :active
-    state :sold
-    state :inactive
-
-    after_transition [:potential, :inactive] => :active, do: [:set_listed_at, :sync_inventory, :mark_agreement_active]
-    after_transition [:active, :inactive] => :sold, do: [:mark_agreement_inactive, :set_sold_at, :sync_inventory]
-    after_transition any => :inactive, do: :sync_inventory
-    after_transition sold: :active, do: [:clear_sale_data, :mark_agreement_active]
-
-    event :mark_active do
-      transition [:potential] => :active, if: lambda { |item| item.meets_requirements_active? }
-      transition [:inactive] => :active
-    end
-
-    event :mark_sold do
-      transition [:active, :inactive] => :sold, if: lambda { |item| item.meets_requirements_sold? }
-    end
-
-    event :mark_inactive do
-      transition any => :inactive
-    end
-
-    event :mark_not_sold do
-      transition :sold => :active
-    end
-
-  end
-
   amoeba do
     include_association :category
     include_association :proposal
@@ -168,20 +138,8 @@ class Item < ApplicationRecord
     ActionController::Base.helpers.image_tag(featured_photo.photo_url(:small_thumb, fetch_format: :auto, quality: :auto), class: "img-rounded img-raised").html_safe
   end
 
-  def humanized_cost
-    ActionController::Base.helpers.humanized_money_with_symbol(purchase_price)
-  end
-
-  def humanized_minimum_sale_price
-    ActionController::Base.helpers.humanized_money_with_symbol(minimum_sale_price)
-  end
-
-  def humanized_listing_price
-    ActionController::Base.helpers.humanized_money_with_symbol(listing_price)
-  end
-
-  def humanized_sale_price
-    ActionController::Base.helpers.humanized_money_with_symbol(sale_price)
+  Item.monetized_attributes.keys.each do |attribute|
+    define_method("humanized_#{attribute}") { ActionController::Base.helpers.humanized_money_with_symbol(send(attribute)) }
   end
 
   def account_link
@@ -212,23 +170,6 @@ class Item < ApplicationRecord
     file = Tempfile.new("item_#{id}_barcode.png")
     File.open(file, 'wb') { |f| f.write blob }
     file
-  end
-
-  def mark_agreement_inactive
-    agreement.mark_inactive unless import?
-  end
-
-  def meets_requirements_active?
-    if import?
-      # bypass agreement requirement
-      true
-    else
-      agreement.try(:active?)
-    end
-  end
-
-  def meets_requirements_sold?
-    !potential?
   end
 
   def meets_requirements_expired?
