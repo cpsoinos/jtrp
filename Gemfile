@@ -116,13 +116,13 @@ group :development, :test do
   gem 'terminal-notifier-guard'
   gem 'terminal-notifier'
   gem 'selenium-webdriver'
-  gem 'chromedriver-helper'
   gem 'parallel_tests'
   gem 'spring-commands-rspec'
   # gem 'wkhtmltopdf-binary'
 end
 
 group :development do
+  gem 'chromedriver-helper'
   gem 'spring'
   gem 'rails_real_favicon'
   gem 'bullet'

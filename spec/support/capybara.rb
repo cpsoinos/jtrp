@@ -1,8 +1,6 @@
 require 'capybara/rspec'
 require 'selenium/webdriver'
 
-Chromedriver.set_version "2.24"
-
 Capybara.register_driver :chrome do |app|
   Capybara::Selenium::Driver.new(app, browser: :chrome)
 end
