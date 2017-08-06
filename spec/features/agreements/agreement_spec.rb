@@ -251,6 +251,36 @@ feature 'agreement' do
 
         expect(page).not_to have_button('Mark Items Expired')
       end
+
+      context "deactivate agreement" do
+
+        scenario "successfully deactivates an agreement" do
+          agreement.update_attributes(client_agreed: true)
+          agreement.mark_active
+          item.mark_active
+          visit agreement_path(agreement)
+          within(".fab-menu-button") do
+            click_on("menu")
+          end
+          click_link("Deactivate")
+
+          expect(page).to have_content("Agreement deactivated")
+        end
+
+        scenario "agreement has potential items" do
+          agreement.update_attributes(client_agreed: true)
+          agreement.mark_active
+          visit agreement_path(agreement)
+          within(".fab-menu-button") do
+            click_on("menu")
+          end
+          click_link("Deactivate")
+          
+          expect(page).to have_content("Agreement deactivated")
+        end
+
+      end
+
     end
   end
 
