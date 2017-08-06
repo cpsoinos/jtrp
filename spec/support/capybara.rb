@@ -54,7 +54,7 @@ Capybara.register_driver :docker_chrome do |app|
   Capybara::Selenium::Driver.new(app, {
     browser: :remote,
     # url: "#{ENV['SELENIUM_URL']}/wd/hub",
-    url: "http://#{docker_ip}:4444/wd/hub"
+    url: "http://#{docker_ip}:4444/wd/hub",
     desired_capabilities: Selenium::WebDriver::Remote::Capabilities.chrome(
     chromeOptions: { args: %w(headless disable-gpu) }
     )
