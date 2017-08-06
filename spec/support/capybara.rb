@@ -31,12 +31,25 @@ Capybara.javascript_driver = :chrome
 # use container's shell to find the docker ip address
 docker_ip = %x(/sbin/ip route|awk '/default/ { print $3 }').strip
 
-Capybara.register_driver :chrome do |app|
-  Capybara::Selenium::Driver.new(app,
-  browser: :remote,
-  url: "http://#{docker_ip}:4444/wd/hub")
+Capybara.register_driver :docker_chrome do |app|
+  Capybara::Selenium::Driver.new(app, {
+    browser: :remote,
+    url: "#{ENV['SELENIUM_URL']}/wd/hub",
+    desired_capabilities: Selenium::WebDriver::Remote::Capabilities.chrome
+    # url: "http://#{docker_ip}:4444/wd/hub"
+  })
 end
 
-Capybara.app_host = "http://#{docker_ip}:3010"
-Capybara.server_host = '0.0.0.0'
-Capybara.server_port = '3010'
+def setup_driver
+  unless ENV['SELENIUM_URL'].nil? || ENV['SELENIUM_URL'].empty?
+    Capybara.current_driver    = :docker_chrome
+    Capybara.javascript_driver = :docker_chrome
+    Capybara.server_port       = 55555
+    Capybara.server_host       = "#{ENV['LOCAL_IP']}"
+    Capybara.app_host          = "http://#{ENV['LOCAL_IP']}:#{Capybara.server_port}"
+  end
+end
+# 
+# Capybara.app_host = "http://#{docker_ip}:3010"
+# Capybara.server_host = '0.0.0.0'
+# Capybara.server_port = '3010'

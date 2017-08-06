@@ -1,4 +1,5 @@
 docker_ip = %x(/sbin/ip route|awk '/default/ { print $3 }').strip
+# LOCAL_IP="$(ifconfig eth0 | grep "inet " | awk -F'[: ]+' '{ print $4 }')" \
 
 VCR.configure do |config|
   config.cassette_library_dir = "spec/fixtures/vcr_cassettes"

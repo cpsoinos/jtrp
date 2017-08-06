@@ -3,11 +3,13 @@ jobs:
   build:
     working_directory: ~/jtrp
     docker:
-      - image: circleci/ruby:2.3.3-node
+      - image: circleci/ruby:2.3.3
       - image: circleci/postgres:9.5-alpine
       - image: selenium/standalone-chrome-debug
     steps:
       - checkout
+
+      - setup_remote_docker
 
       # Restore bundle cache
       - type: cache-restore
@@ -26,13 +28,14 @@ jobs:
       - run: bundle exec rake db:create
       - run: bundle exec rake db:schema:load
 
-      - run:
-          command: Xvfb :99
-          background: true
-
+      - run: |
+          docker run --name app circleci/ruby:2.3.3
+          docker run -d --network container:app --name chrome-browser -p 4444:4444 -v /dev/shm:/dev/shm selenium/standalone-chrome:3.4.0-francium
       # Run rspec in parallel
       - type: shell
         command: |
+          LOCAL_IP="$(ifconfig eth0 | grep "inet " | awk -F'[: ]+' '{ print $4 }')" \
+          SELENIUM_URL=http://chrome-browser:4444 \
           bundle exec rspec --profile 10 \
                             --format RspecJunitFormatter \
                             --out /tmp/test-results/rspec.xml \
