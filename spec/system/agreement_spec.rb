@@ -163,7 +163,6 @@ describe 'agreement' do
         item.mark_active
 
         visit account_job_proposal_agreement_path(account, job, proposal, agreement)
-        save_and_open_page
         within('.dropup') do
           click_on('menu')
         end
