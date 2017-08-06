@@ -5,7 +5,7 @@ class OrderSweepJob < ActiveJob::Base
 
   queue_as :maintenance
 
-  throttle threshold: 2, period: 1.second
+  throttle threshold: 2, period: 1.second unless Rails.env.test?
 
   rescue_from(Clover::CloverError) do
     retry_job wait: 5.minutes, queue: :low
