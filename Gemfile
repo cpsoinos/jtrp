@@ -115,7 +115,6 @@ group :development, :test do
   gem 'guard-rspec', require: false
   gem 'terminal-notifier-guard'
   gem 'terminal-notifier'
-  gem 'selenium-webdriver'
   gem 'parallel_tests'
   gem 'spring-commands-rspec'
   # gem 'wkhtmltopdf-binary'
@@ -136,7 +135,6 @@ group :test do
   gem 'rspec-rails', '~> 3.0'
   gem 'shoulda-matchers', require: false
   gem 'capybara'
-  gem 'poltergeist'
   gem 'launchy'
   gem 'email_spec'
   gem 'rspec-sidekiq'
