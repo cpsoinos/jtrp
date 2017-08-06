@@ -48,7 +48,7 @@ class Letter < ActiveRecord::Base
   end
 
   def deliver_letter
-    LetterSenderJob.perform_later(self)
+    LetterSenderJob.perform_later(letter_id: id)
   end
 
   def expire_items

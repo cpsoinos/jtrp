@@ -115,7 +115,7 @@ class Agreement < ActiveRecord::Base
   end
 
   def save_as_pdf
-    PdfGeneratorJob.perform_later(self)
+    PdfGeneratorJob.perform_later(object_type: "Agreement", object_id: id)
   end
 
   def notify_company
@@ -144,11 +144,11 @@ class Agreement < ActiveRecord::Base
   end
 
   def notify_pending_expiration
-    ConsignmentPeriodEndingNotifierJob.perform_later(self, "agreement_pending_expiration")
+    ConsignmentPeriodEndingNotifierJob.perform_later(agreement_id: id, category: "agreement_pending_expiration")
   end
 
   def notify_expiration
-    ConsignmentPeriodEndingNotifierJob.perform_later(self, "agreement_expired")
+    ConsignmentPeriodEndingNotifierJob.perform_later(agreement_id: id, category: "agreement_expired")
   end
 
   def expire

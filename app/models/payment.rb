@@ -1,6 +1,6 @@
 class Payment < ActiveRecord::Base
   include PublicActivity::Common
-  
+
   acts_as_paranoid
   audited associated_with: :order
 
@@ -25,7 +25,7 @@ class Payment < ActiveRecord::Base
   end
 
   def process
-    PaymentProcessorJob.perform_later(self)
+    PaymentProcessorJob.perform_later(payment_id: id)
   end
 
 end

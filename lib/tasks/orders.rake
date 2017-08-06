@@ -13,7 +13,7 @@ namespace :orders do
     orders = Order.all
 
     orders.each do |order|
-      OrderSweepJob.perform_later(order)
+      OrderSweepJob.perform_later(order_id: order.id)
     end
 
     puts "Sweeping up items for #{orders.count}."
@@ -25,7 +25,7 @@ namespace :orders do
     # Heroku Scheduler "daily" job
     orders = Order.where(created_at: 1.day.ago..DateTime.now)
     orders.each do |order|
-      OrderSweepJob.perform_later(order)
+      OrderSweepJob.perform_later(order_id: order.id)
     end
 
   end

@@ -21,7 +21,7 @@ namespace :payments do
     end
 
   end
-  
+
   def remote_payments_today
     @_remote_payments_today ||= Clover::Payment.all(filter: "modifiedTime > #{format_time(1.day.ago)}")
   end
@@ -33,7 +33,7 @@ namespace :payments do
   def reconcile_payment(remote_payment)
     payment = Payment.find_or_initialize_by(remote_id: remote_payment.id)
     if payment.persisted?
-      PaymentProcessorJob.perform_later(payment)
+      PaymentProcessorJob.perform_later(payment_id: payment.id)
     else
       payment.save
     end

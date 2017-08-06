@@ -1,6 +1,6 @@
 class Check < ActiveRecord::Base
   include PublicActivity::Common
-  
+
   acts_as_paranoid
   audited associated_with: :statement
 
@@ -27,7 +27,7 @@ class Check < ActiveRecord::Base
   end
 
   def retrieve_images
-    CheckImageRetrieverJob.perform_later(self)
+    CheckImageRetrieverJob.perform_later(check_id: id)
   end
 
 end
