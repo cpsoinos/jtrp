@@ -413,18 +413,14 @@ ActiveRecord::Schema.define(version: 20170716201217) do
     t.index ["deleted_at"], name: "index_scanned_agreements_on_deleted_at", using: :btree
   end
 
-  add_index "scanned_agreements", ["agreement_id"], name: "index_scanned_agreements_on_agreement_id", using: :btree
-  add_index "scanned_agreements", ["deleted_at"], name: "index_scanned_agreements_on_deleted_at", using: :btree
-
   create_table "statement_items", force: :cascade do |t|
     t.integer  "item_id"
     t.integer  "statement_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["item_id"], name: "index_statement_items_on_item_id", using: :btree
+    t.index ["statement_id"], name: "index_statement_items_on_statement_id", using: :btree
   end
-
-  add_index "statement_items", ["item_id"], name: "index_statement_items_on_item_id", using: :btree
-  add_index "statement_items", ["statement_id"], name: "index_statement_items_on_statement_id", using: :btree
 
   create_table "statement_pdfs", force: :cascade do |t|
     t.integer  "statement_id"
