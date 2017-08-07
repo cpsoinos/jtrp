@@ -78,6 +78,7 @@ gem 'material_dashboard_pro-rails', '0.1.5', path: 'vendor/gems/material_dashboa
 gem 'summernote-rails'
 gem 'render_async'
 gem 'ahoy_email'
+gem 'record_tag_helper', '~> 1.0'
 # gem 'wicked_pdf'
 # gem 'pdfkit'
 

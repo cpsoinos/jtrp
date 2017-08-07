@@ -659,6 +659,8 @@ GEM
     readthis (2.0.2)
       connection_pool (~> 2.1)
       redis (~> 3.0)
+    record_tag_helper (1.0.0)
+      actionview (~> 5.x)
     redis (3.3.3)
     redis-browser (0.5.1)
       coffee-script
@@ -923,6 +925,7 @@ DEPENDENCIES
   rails_real_favicon
   rb-fsevent
   readthis
+  record_tag_helper (~> 1.0)
   redis-browser
   redis-namespace
   remotipart
