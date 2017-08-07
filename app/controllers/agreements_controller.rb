@@ -54,7 +54,6 @@ class AgreementsController < ApplicationController
 
   def update
     @agreement = Agreement.find(params[:id])
-    # if Agreements::Updater.new(@agreement).update(agreement_params.merge(updated_by: current_user))
     if @agreement.update(agreement_params.merge(updated_by: current_user))
       @agreement.create_activity(:update, owner: current_user)
       respond_to do |format|
@@ -93,7 +92,7 @@ class AgreementsController < ApplicationController
 
   def deactivate
     @agreement = Agreement.find(params[:agreement_id])
-    @agreement.items.active.map(&:mark_inactive)
+    @agreement.items.status(['active', 'potential']).map(&:mark_inactive)
     if @agreement.mark_inactive
       redirect_back(fallback_location: root_path, notice: "Agreement deactivated.")
     else
