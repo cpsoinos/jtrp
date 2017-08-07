@@ -1,6 +1,6 @@
 class ScannedAgreementsController < ApplicationController
-  before_filter :require_internal
-  before_filter :find_agreement
+  before_action :require_internal
+  before_action :find_agreement
 
   def create
     @scanned_agreement = @agreement.build_scanned_agreement(scanned_agreement_params)
@@ -10,7 +10,7 @@ class ScannedAgreementsController < ApplicationController
       redirect_to proposal_agreements_path(@agreement.proposal)
     else
       flash[:alert] = "Agreement could not be uploaded."
-      redirect_to :back
+      redirect_back(fallback_location: root_path)
     end
   end
 
@@ -21,7 +21,7 @@ class ScannedAgreementsController < ApplicationController
       redirect_to proposal_agreements_path(@agreement.proposal)
     else
       flash[:alert] = "Agreement could not be updated."
-      redirect_to :back
+      redirect_back(fallback_location: root_path)
     end
   end
 

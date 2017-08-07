@@ -1,4 +1,4 @@
-class PdfGeneratorJob < ActiveJob::Base
+class PdfGeneratorJob < ApplicationJob
   queue_as :default
 
   attr_reader :object

@@ -11,8 +11,8 @@
               <h4 class="card-title">Log in</h4>
               <div class="social-line">
                 <%- resource_class.omniauth_providers.each do |provider| %>
-                  <%#= link_to "Sign in with #{OmniAuth::Utils.camelize(provider)}", user_omniauth_authorize_path(provider), class: "btn btn-raised btn-default" %>
-                  <%= link_to user_omniauth_authorize_path(provider), style: "color: white;" do %>
+                  <%#= link_to "Sign in with #{OmniAuth::Utils.camelize(provider)}", user_clover_omniauth_authorize_path(provider), class: "btn btn-raised btn-default" %>
+                  <%= link_to user_clover_omniauth_authorize_path, style: "color: white;" do %>
                     Sign in with <%= image_tag("clover-logo.png", width: 32, style: "width: 32px; height: 32px;") %>
                   <% end %>
                 <% end -%>

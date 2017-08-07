@@ -1,4 +1,4 @@
-class Category < ActiveRecord::Base
+class Category < ApplicationRecord
   include PublicActivity::Common
 
   acts_as_paranoid
@@ -9,7 +9,7 @@ class Category < ActiveRecord::Base
 
   has_many :items
   has_many :subcategories, class_name: "Category", foreign_key: "parent_id"
-  belongs_to :parent, class_name: "Category", touch: true
+  belongs_to :parent, class_name: "Category", touch: true, optional: true
   mount_uploader :photo, PhotoUploader
 
   validates :name, presence: true, uniqueness: true

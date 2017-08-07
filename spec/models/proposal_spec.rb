@@ -18,7 +18,7 @@ describe Proposal do
 
     it "potential" do
       create(:proposal)
-
+      
       expect(Proposal.potential.count).to eq(1)
     end
 

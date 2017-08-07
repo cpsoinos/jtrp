@@ -3,6 +3,7 @@ require 'factory_girl'
 FactoryGirl.define do
 
   factory :webhook_entry do
+    webhook
     timestamp 5.seconds.ago
     processed false
 

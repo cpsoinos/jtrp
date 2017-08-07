@@ -1,4 +1,4 @@
-class StatementPdf < ActiveRecord::Base
+class StatementPdf < ApplicationRecord
   acts_as_paranoid
   audited associated_with: :statement
 

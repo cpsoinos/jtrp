@@ -1,5 +1,5 @@
 class CompaniesController < ApplicationController
-  before_filter :require_internal, except: [:client_services, :consignment_policies, :service_rate_schedule, :agent_service_rate_schedule, :home, :about, :contact, :send_message]
+  before_action :require_internal, except: [:client_services, :consignment_policies, :service_rate_schedule, :agent_service_rate_schedule, :home, :about, :contact, :send_message]
 
   def show
     @navtab = "dashboard"
@@ -33,7 +33,7 @@ class CompaniesController < ApplicationController
       redirect_to about_path
     else
       flash[:error] = "Unable to save changes."
-      redirect_to :back
+      redirect_back(fallback_location: root_path)
     end
   end
 
@@ -67,9 +67,9 @@ class CompaniesController < ApplicationController
   end
 
   def build_todos
-    @items = ItemsPresenter.new.todo.page(params[:page]).uniq
-    @statements = StatementsPresenter.new.todo.uniq
-    @agreements = AgreementsPresenter.new.todo.uniq
+    @items = ItemsPresenter.new.todo.page(params[:page]).distinct
+    @statements = StatementsPresenter.new.todo.distinct
+    @agreements = AgreementsPresenter.new.todo.distinct
   end
 
   def build_js_metrics(presenter)

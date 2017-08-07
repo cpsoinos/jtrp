@@ -1,4 +1,4 @@
-class Statement < ActiveRecord::Base
+class Statement < ApplicationRecord
   include PublicActivity::Common
 
   acts_as_paranoid

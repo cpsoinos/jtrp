@@ -42,7 +42,7 @@ describe Letter::Sender do
     company.save
     allow(PdfGenerator).to receive_message_chain(:new, :render_pdf)
     allow(TransactionalEmailJob).to receive(:perform_later)
-    allow(Lob).to receive_message_chain(:load, :letters).and_return(lob)
+    allow(Lob::Client).to receive_message_chain(:new, :letters).and_return(lob)
     allow(lob).to receive(:create).and_return(lob_response)
   end
 

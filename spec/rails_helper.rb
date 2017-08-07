@@ -15,13 +15,14 @@ require 'spec_helper'
 require 'rspec/rails'
 require 'shoulda/matchers'
 require 'rspec/retry'
+require 'sidekiq/testing'
 
 Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 
 Coveralls.wear!
 
 ActiveRecord::Migration.maintain_test_schema!
-# OmniAuth.config.test_mode = true
+OmniAuth.config.test_mode = true
 Sidekiq::Testing.inline!
 
 Shoulda::Matchers.configure do |config|
@@ -68,15 +69,22 @@ RSpec.configure do |config|
 
   config.profile_examples = 10
   config.order = :random
-  config.use_transactional_fixtures = false
+  config.use_transactional_fixtures = true
   config.infer_spec_type_from_file_location!
 
   Kernel.srand config.seed
 
   config.verbose_retry = true
   config.display_try_failure_messages = true
-  config.around :each, :js do |ex|
-    ex.run_with_retry retry: 3
+  # config.around :each, :js do |ex|
+  #   ex.run_with_retry retry: 3
+  # end
+  config.before(:each, type: :system) do
+    driven_by :rack_test
+  end
+
+  config.before(:each, type: :system, js: true) do
+    driven_by :headless_chrome # a driver I define elsewhere
   end
 
 end

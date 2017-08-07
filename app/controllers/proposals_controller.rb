@@ -1,17 +1,17 @@
 class ProposalsController < ApplicationController
-  before_filter :find_categories, except: [:sort_items]
-  before_filter :find_account, except: [:send_email, :notify_response]
-  before_filter :find_job, except: [:new, :send_email, :notify_response]
-  before_filter :require_internal, except: [:show, :notify_response]
+  before_action :find_categories, except: [:sort_items]
+  before_action :find_account, except: [:send_email, :notify_response]
+  before_action :find_job, except: [:new, :send_email, :notify_response]
+  before_action :require_internal, except: [:show, :notify_response]
 
   def new
     @proposal = Proposal.new
     find_job if params[:job_id]
     @jobs = @account.jobs
+    gon.jobs = build_json_for_jobs
     if @jobs.empty?
       redirect_to new_account_job_path(@account)
     end
-    gon.jobs = build_json_for_jobs
   end
 
   def create
@@ -21,7 +21,7 @@ class ProposalsController < ApplicationController
       redirect_to edit_account_job_proposal_path(@account, @job, @proposal)
     else
       flash[:alert] = @proposal.errors.full_messages.uniq.join
-      redirect_to :back
+      redirect_back(fallback_location: root_path)
     end
   end
 
@@ -51,13 +51,13 @@ class ProposalsController < ApplicationController
   def send_email
     @proposal = Proposal.find(params[:proposal_id])
     Notifier.send_proposal(@proposal, params[:note]).deliver_later
-    redirect_to :back, notice: "Email sent to client!"
+    redirect_back(fallback_location: root_path, notice: "Email sent to client!")
   end
 
   def notify_response
     @proposal = Proposal.find(params[:proposal_id])
     Notifier.send_proposal_response(@proposal, params[:note]).deliver_later
-    redirect_to :back, notice: "Thank you! We've been notified of your responses."
+    redirect_back(fallback_location: root_path, notice: "Thank you! We've been notified of your responses.")
   end
 
   def edit

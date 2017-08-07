@@ -1,4 +1,4 @@
-class Agreement < ActiveRecord::Base
+class Agreement < ApplicationRecord
   include PublicActivity::Common
   include AgreementStateMachine
   include Filterable
@@ -16,8 +16,8 @@ class Agreement < ActiveRecord::Base
   has_one :job, through: :proposal
   has_one :account, through: :job
   has_many :letters
-  belongs_to :created_by, class_name: "User"
-  belongs_to :updated_by, class_name: "User"
+  belongs_to :created_by, class_name: "User", optional: true
+  belongs_to :updated_by, class_name: "User", optional: true
 
   after_destroy :delete_cache
 
@@ -142,7 +142,6 @@ class Agreement < ActiveRecord::Base
   end
 
   def deliver_to_client
-    return if should_not_auto_deliver?
     Notifier.send_executed_agreement(self).deliver_later
   end
 
@@ -161,10 +160,6 @@ class Agreement < ActiveRecord::Base
       item.original_description = item.description
       item.save
     end
-  end
-
-  def should_not_auto_deliver?
-    updated_by.try(:internal?)
   end
 
 end

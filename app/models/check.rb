@@ -1,4 +1,4 @@
-class Check < ActiveRecord::Base
+class Check < ApplicationRecord
   include PublicActivity::Common
 
   acts_as_paranoid

@@ -8,7 +8,7 @@ module AgreementStateMachine
       state :active
       state :inactive
 
-      after_transition potential: :active, do: [:mark_proposal_active, :set_agreement_date, :save_as_pdf, :deliver_to_client, :notify_company, :save_item_descriptions]
+      after_transition potential: :active, do: [:mark_proposal_active, :set_agreement_date, :save_as_pdf, :qualify_delivery, :notify_company, :save_item_descriptions]
       after_transition active: :inactive, do: :mark_proposal_inactive
 
       event :mark_active do
@@ -19,6 +19,12 @@ module AgreementStateMachine
         transition active: :inactive, if: lambda { |agreement| agreement.meets_requirements_inactive? }
       end
 
+    end
+
+    def qualify_delivery
+      unless updated_by.try(:internal?)
+        deliver_to_client
+      end
     end
 
     def meets_requirements_active?

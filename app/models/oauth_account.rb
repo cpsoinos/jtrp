@@ -1,4 +1,4 @@
-class OauthAccount < ActiveRecord::Base
+class OauthAccount < ApplicationRecord
   audited associated_with: :user
 
   belongs_to :user

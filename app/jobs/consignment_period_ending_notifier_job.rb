@@ -1,4 +1,4 @@
-class ConsignmentPeriodEndingNotifierJob < ActiveJob::Base
+class ConsignmentPeriodEndingNotifierJob < ApplicationJob
   queue_as :default
 
   attr_reader :agreement, :category

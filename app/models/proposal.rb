@@ -1,12 +1,12 @@
-class Proposal < ActiveRecord::Base
+class Proposal < ApplicationRecord
   include PublicActivity::Common
 
   acts_as_paranoid
   audited associated_with: :job
   has_secure_token
 
-  belongs_to :job, touch: true
-  belongs_to :created_by, class_name: "User"
+  belongs_to :job, touch: true, optional: true
+  belongs_to :created_by, class_name: "User", optional: true
   has_many :items, dependent: :destroy
   has_many :agreements, dependent: :destroy
   has_many :photos

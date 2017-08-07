@@ -1,4 +1,4 @@
-class CheckSenderJob < ActiveJob::Base
+class CheckSenderJob < ApplicationJob
   queue_as :default
 
   def perform(options)

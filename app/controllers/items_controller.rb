@@ -1,11 +1,11 @@
 require 'prawn/labels'
 
 class ItemsController < ApplicationController
-  before_filter :find_clients, only: [:new, :edit]
-  before_filter :find_categories, only: [:new, :edit, :show, :index, :discountable]
-  before_filter :find_proposal, only: [:create, :batch_create]
-  before_filter :require_internal, except: [:show, :update, :feed]
-  before_filter :find_item, only: :show
+  before_action :find_clients, only: [:new, :edit]
+  before_action :find_categories, only: [:new, :edit, :show, :index, :discountable]
+  before_action :find_proposal, only: [:create, :batch_create]
+  before_action :require_internal, except: [:show, :update, :feed]
+  before_action :find_item, only: :show
 
   def index
     @title = "Items"
@@ -177,27 +177,27 @@ class ItemsController < ApplicationController
   def activate
     @item = Item.find(params[:item_id])
     if @item.mark_active
-      redirect_to :back, notice: "Item activated!"
+      redirect_back(fallback_location: root_path, notice: "Item activated!")
     else
-      redirect_to :back, alert: "Could not activate item. Check that the agreement is active first."
+      redirect_back(fallback_location: root_path, alert: "Could not activate item. Check that the agreement is active first.")
     end
   end
 
   def deactivate
     @item = Item.find(params[:item_id])
     if @item.mark_inactive and @item.update(item_params)
-      redirect_to :back, notice: "Item deactivated"
+      redirect_back(fallback_location: root_path, notice: "Item deactivated")
     else
-      redirect_to :back, alert: "Could not deactivate item."
+      redirect_back(fallback_location: root_path, alert: "Could not deactivate item.")
     end
   end
 
   def mark_not_sold
     @item = Item.find(params[:item_id])
     if @item.mark_not_sold
-      redirect_to :back, notice: "Item marked as not sold."
+      redirect_back(fallback_location: root_path, notice: "Item marked as not sold.")
     else
-      redirect_to :back, alert: "Could not mark item as not sold."
+      redirect_back(fallback_location: root_path, alert: "Could not mark item as not sold.")
     end
   end
 
@@ -215,7 +215,7 @@ class ItemsController < ApplicationController
         end
       end
     else
-      redirect_to :back
+      redirect_back(fallback_location: root_path)
     end
   end
 

@@ -1,10 +1,10 @@
-class Payment < ActiveRecord::Base
+class Payment < ApplicationRecord
   include PublicActivity::Common
 
   acts_as_paranoid
   audited associated_with: :order
 
-  belongs_to :order
+  belongs_to :order, optional: true
   has_many :webhook_entries, as: :webhookable
 
   validates :remote_id, uniqueness: { message: "remote_id already taken" }, allow_nil: true
