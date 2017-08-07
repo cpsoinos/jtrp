@@ -39,7 +39,7 @@ class AgreementsController < ApplicationController
 
   def agreements_list
     @agreements = AgreementsPresenter.new(params).filter
-    @intentions = @agreements.pluck(:agreement_type).distinct
+    @intentions = @agreements.pluck(:agreement_type).uniq
     @title = "Agreements List"
   end
 

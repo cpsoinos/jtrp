@@ -142,7 +142,6 @@ class Agreement < ApplicationRecord
   end
 
   def deliver_to_client
-    return if should_not_auto_deliver?
     Notifier.send_executed_agreement(self).deliver_later
   end
 
@@ -161,10 +160,6 @@ class Agreement < ApplicationRecord
       item.original_description = item.description
       item.save
     end
-  end
-
-  def should_not_auto_deliver?
-    updated_by.try(:internal?)
   end
 
 end
