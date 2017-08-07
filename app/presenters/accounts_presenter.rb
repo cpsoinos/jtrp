@@ -30,7 +30,7 @@ class AccountsPresenter
   private
 
   def account_base
-    Account.includes([:primary_contact, jobs: :proposals])
+    Account.includes([:primary_contact, jobs: :proposals]).joins(:primary_contact)
   end
 
 end
