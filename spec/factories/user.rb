@@ -30,6 +30,7 @@ FactoryGirl.define do
     end
 
     factory :admin, class: Admin do
+      sequence(:email) { |n| "admin#{n}@example.com" }
       trait :with_oauth_account do
         oauth_accounts { [create(:oauth_account)] }
       end
