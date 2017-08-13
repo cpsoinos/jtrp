@@ -38,8 +38,8 @@ def create_categories
 end
 
 def create_default_accounts
-  yard_sale = Account.create(is_company: true, company_name: "Yard Sale")
-  estate_sale = Account.create(is_company: true, company_name: "Estate Sale")
+  yard_sale = Account.create(is_company: true, company_name: "Yard Sale", primary_contact: Company.jtrp.primary_contact)
+  estate_sale = Account.create(is_company: true, company_name: "Estate Sale", primary_contact: Company.jtrp.primary_contact)
 end
 
 def create_default_photo

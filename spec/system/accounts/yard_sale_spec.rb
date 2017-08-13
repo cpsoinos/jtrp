@@ -19,7 +19,7 @@ describe "yard sale" do
 
   scenario "clicks 'Yard Sale' link from accounts index" do
     visit accounts_path
-    click_link("Yard Sale")
+    click_link("Yard Sale", match: :first)
 
     expect(page).to have_content("Yard Sale")
     expect(page).to have_link("Job")
