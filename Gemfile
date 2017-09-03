@@ -116,7 +116,7 @@ group :development, :test do
   gem 'terminal-notifier'
   gem 'parallel_tests'
   gem 'spring-commands-rspec'
-  gem 'rspec-rails', git: 'https://github.com/rspec/rspec-rails', branch: 'integrate-with-system-test'
+  gem 'rspec-rails', git: 'https://github.com/rspec/rspec-rails', branch: 'master'
   # gem 'wkhtmltopdf-binary'
 end
 

@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/rspec/rspec-core.git
-  revision: bcf7d9eb19dc013e4e0b72a588e4eac53933bb68
+  revision: 18d0e0e5bf471ff46048bd4a1266e20cefee2217
   branch: master
   specs:
     rspec-core (3.7.0.pre)
@@ -8,7 +8,7 @@ GIT
 
 GIT
   remote: https://github.com/rspec/rspec-expectations.git
-  revision: 1c9d5d960115ff0de803819580956a2615778a7d
+  revision: d7c74ef3843866acf3165fc500b2c6f1a3c290ee
   branch: master
   specs:
     rspec-expectations (3.7.0.pre)
@@ -17,7 +17,7 @@ GIT
 
 GIT
   remote: https://github.com/rspec/rspec-mocks.git
-  revision: 0820af734f1a8926b0fee4fa4dd3e00ff70b4990
+  revision: 8b010b7a774570ceca86fb7bf6b0cc9da9a28eb0
   branch: master
   specs:
     rspec-mocks (3.7.0.pre)
@@ -26,8 +26,8 @@ GIT
 
 GIT
   remote: https://github.com/rspec/rspec-rails
-  revision: 3b2cb587c4f13f2a7c6b3fcfee83495d564304ae
-  branch: integrate-with-system-test
+  revision: 914ba3889e571c9794b6bc3e2d68eb3d08f2f29a
+  branch: master
   specs:
     rspec-rails (3.7.0.pre)
       actionpack (>= 3.0)
@@ -40,7 +40,7 @@ GIT
 
 GIT
   remote: https://github.com/rspec/rspec-support.git
-  revision: 70a8b33fb194f5014e37d99dc3d9acca88ab8647
+  revision: 111879e6451c623fdc5d8921b79f2a57d9db64f0
   branch: master
   specs:
     rspec-support (3.7.0.pre)
@@ -970,4 +970,4 @@ RUBY VERSION
    ruby 2.4.1p111
 
 BUNDLED WITH
-   1.15.3
+   1.15.4
