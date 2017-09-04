@@ -106,7 +106,7 @@ class AgreementsController < ApplicationController
     if @agreement.save
       respond_to do |format|
         format.js do
-          @message = "Agreement tagged as unexpireable."
+          @message = "Agreement tagged as #{params[:tag].gsub('_', ' ')}."
           render 'letters/create'
         end
       end
