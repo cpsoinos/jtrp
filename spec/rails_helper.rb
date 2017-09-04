@@ -88,10 +88,6 @@ RSpec.configure do |config|
     driven_by :headless_chrome # a driver I define elsewhere
   end
 
-  config.after(:each, js: true) do
-    ActiveRecord::Base.subclasses.each(&:delete_all)
-  end
-
 end
 
 OmniAuth.config.test_mode = true
