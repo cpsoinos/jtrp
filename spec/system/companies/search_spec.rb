@@ -4,42 +4,36 @@ describe 'search' do
 
   context 'guest' do
     scenario 'searches for an existing item', js: true do
-      Capybara.using_driver(:chrome) do
-        visit root_path
-        resize_window_default
-        fill_in('search[query]', with: item.description).native.send_keys(:return)
+      visit root_path
+      resize_window_default
+      fill_in('search[query]', with: item.description).native.send_keys(:return)
 
-        expect(page).to have_link(item.description)
-      end
+      expect(page).to have_link(item.description)
     end
 
     scenario 'searches for a non-existing item', js: true do
-      Capybara.using_driver(:chrome) do
-        visit root_path
-        resize_window_default
-        fill_in('search[query]', with: 'The Jungle Book').native.send_keys(:return)
+      visit root_path
+      resize_window_default
+      fill_in('search[query]', with: 'The Jungle Book').native.send_keys(:return)
 
-        expect(page).to have_content('No results found')
-      end
+      expect(page).to have_content('No results found')
     end
 
     scenario 'initiates a second search from results page', js: true do
-      Capybara.using_driver(:chrome) do
-        second_item = create(:item, :active)
-        visit root_path
-        resize_window_default
-        fill_in('search[query]', with: item.description).native.send_keys(:return)
+      second_item = create(:item, :active)
+      visit root_path
+      resize_window_default
+      fill_in('search[query]', with: item.description).native.send_keys(:return)
 
-        expect(page).to have_link(item.description)
+      expect(page).to have_link(item.description)
 
-        within('#search-form') do
-          fill_in('search[query]', with: second_item.description)
-          click_button('Search')
-        end
-
-        expect(page).not_to have_link(item.description)
-        expect(page).to have_link(second_item.description)
+      within('#search-form') do
+        fill_in('search[query]', with: second_item.description)
+        click_button('Search')
       end
+
+      expect(page).not_to have_link(item.description)
+      expect(page).to have_link(second_item.description)
     end
 
     scenario 'successful search by category', js: true do
@@ -108,28 +102,26 @@ describe 'search' do
 
     scenario 'views second page of search results', js: true do
       proposal = create(:proposal, :active)
-      Capybara.using_driver(:chrome) do
-        items = create_list(:item, 26, :active, proposal: proposal)
-        items.each do |item|
-          item.update_attributes(description: "blue #{item.id}")
-        end
-        last_item = items.pop
-
-        visit search_index_path
-        resize_window_default
-        within('#search-form') do
-          fill_in('search[query]', with: 'blue')
-          click_button('Search')
-        end
-
-        items.each do |item|
-          expect(page).to have_link("Blue #{item.id}")
-        end
-
-        click_link('Next')
-
-        expect(page).to have_link("Blue #{last_item.id}")
+      items = create_list(:item, 26, :active, proposal: proposal)
+      items.each do |item|
+        item.update_attributes(description: "blue #{item.id}")
       end
+      last_item = items.pop
+
+      visit search_index_path
+      resize_window_default
+      within('#search-form') do
+        fill_in('search[query]', with: 'blue')
+        click_button('Search')
+      end
+
+      items.each do |item|
+        expect(page).to have_link("Blue #{item.id}")
+      end
+
+      click_link('Next')
+
+      expect(page).to have_link("Blue #{last_item.id}")
     end
   end
 
@@ -139,43 +131,37 @@ describe 'search' do
     end
 
     scenario 'searches for an existing item', js: true do
-      Capybara.using_driver(:chrome) do
-        visit dashboard_path
-        resize_window_default
-        fill_in('search[query]', with: item.description).native.send_keys(:return)
+      visit dashboard_path
+      resize_window_default
+      fill_in('search[query]', with: item.description).native.send_keys(:return)
 
-        expect(page).to have_link('Items')
-        expect(page).to have_link(item.description)
-      end
+      expect(page).to have_link('Items')
+      expect(page).to have_link(item.description)
     end
 
     scenario 'searches for a non-existing item', js: true do
-      Capybara.using_driver(:chrome) do
-        visit dashboard_path
-        resize_window_default
-        fill_in('search[query]', with: 'The Jungle Book').native.send_keys(:return)
+      visit dashboard_path
+      resize_window_default
+      fill_in('search[query]', with: 'The Jungle Book').native.send_keys(:return)
 
-        expect(page).to have_content('No results found')
-      end
+      expect(page).to have_content('No results found')
     end
 
     scenario 'initiates a second search from results page', js: true do
-      Capybara.using_driver(:chrome) do
-        second_item = create(:item, :active)
-        visit dashboard_path
-        resize_window_default
-        fill_in('search[query]', with: item.description).native.send_keys(:return)
+      second_item = create(:item, :active)
+      visit dashboard_path
+      resize_window_default
+      fill_in('search[query]', with: item.description).native.send_keys(:return)
 
-        expect(page).to have_link(item.description)
+      expect(page).to have_link(item.description)
 
-        within('#search-form') do
-          fill_in('search[query]', with: second_item.description)
-          click_button('Search')
-        end
-
-        expect(page).to have_link(second_item.description)
-        expect(page).not_to have_link(item.description)
+      within('#search-form') do
+        fill_in('search[query]', with: second_item.description)
+        click_button('Search')
       end
+
+      expect(page).to have_link(second_item.description)
+      expect(page).not_to have_link(item.description)
     end
   end
 end
