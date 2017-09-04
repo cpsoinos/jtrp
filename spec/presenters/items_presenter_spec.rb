@@ -5,7 +5,7 @@ describe ItemsPresenter do
   let(:sold_items) { Item.sold }
   let(:proposal) { create(:proposal) }
 
-  before do
+  before(:each) do
     create_list(:item, 3, proposal: proposal)
     create_list(:item, 3, :active, proposal: proposal)
     create_list(:item, 2, :sold, proposal: proposal)
@@ -70,7 +70,7 @@ describe ItemsPresenter do
   it 'does not paginate for labels' do
     create_list(:item, 25, proposal: proposal)
 
-    expect(ItemsPresenter.new(labels: true).execute.count).to eq(41)
+    expect(ItemsPresenter.new(labels: true).execute.count).to eq(33)
   end
 
 end

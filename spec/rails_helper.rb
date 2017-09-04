@@ -44,7 +44,7 @@ RSpec.configure do |config|
   config.include Warden::Test::Helpers
   config.include OmniauthMacros
 
-  config.before(:all) do
+  config.before(:each) do
     FactoryGirl.reload
   end
 
@@ -71,7 +71,7 @@ RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
   config.profile_examples = 10
   config.order = :random
-  config.use_transactional_fixtures = true
+  config.use_transactional_fixtures = false
 
   Kernel.srand config.seed
 
