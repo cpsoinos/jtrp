@@ -6,6 +6,7 @@ describe 'search' do
     scenario 'searches for an existing item', js: true do
       Capybara.using_driver(:chrome) do
         visit root_path
+        resize_window_default
         fill_in('search[query]', with: item.description).native.send_keys(:return)
 
         expect(page).to have_link(item.description)
@@ -15,6 +16,7 @@ describe 'search' do
     scenario 'searches for a non-existing item', js: true do
       Capybara.using_driver(:chrome) do
         visit root_path
+        resize_window_default
         fill_in('search[query]', with: 'The Jungle Book').native.send_keys(:return)
 
         expect(page).to have_content('No results found')
@@ -25,6 +27,7 @@ describe 'search' do
       Capybara.using_driver(:chrome) do
         second_item = create(:item, :active)
         visit root_path
+        resize_window_default
         fill_in('search[query]', with: item.description).native.send_keys(:return)
 
         expect(page).to have_link(item.description)
@@ -44,6 +47,7 @@ describe 'search' do
       table = create(:item, :active, description: 'Ornamental Table From Overseas', category: category)
 
       visit search_index_path
+      resize_window_default
       within('#search-form') do
         fill_in('search[query]', with: 'table')
         select('Dining Room', from: 'search[by_category_id]', visible: false)
@@ -58,6 +62,7 @@ describe 'search' do
       table = create(:item, :active, description: 'Ornamental Table From Overseas', category: category)
 
       visit search_index_path
+      resize_window_default
       within('#search-form') do
         fill_in('search[query]', with: 'table')
         select('Living Room', from: 'search[by_category_id]', visible: false)
@@ -73,6 +78,7 @@ describe 'search' do
       table = create(:item, :active, description: 'Ornamental Table From Overseas', category: subcategory)
 
       visit search_index_path
+      resize_window_default
       within('#search-form') do
         fill_in('search[query]', with: 'table')
         select('Dining Room', from: 'search[by_category_id]', visible: false)
@@ -88,6 +94,7 @@ describe 'search' do
       table = create(:item, :active, description: 'Ornamental Table From Overseas', category: subcategory)
 
       visit search_index_path
+      resize_window_default
       within('#search-form') do
         fill_in('search[query]', with: 'table')
         select('Dining Room', from: 'search[by_category_id]', visible: false)
@@ -100,25 +107,29 @@ describe 'search' do
     end
 
     scenario 'views second page of search results', js: true do
-      items = create_list(:item, 26, :active)
-      items.each do |item|
-        item.update_attributes(description: "blue #{item.id}")
+      proposal = create(:proposal, :active)
+      Capybara.using_driver(:chrome) do
+        items = create_list(:item, 26, :active, proposal: proposal)
+        items.each do |item|
+          item.update_attributes(description: "blue #{item.id}")
+        end
+        last_item = items.pop
+
+        visit search_index_path
+        resize_window_default
+        within('#search-form') do
+          fill_in('search[query]', with: 'blue')
+          click_button('Search')
+        end
+
+        items.each do |item|
+          expect(page).to have_link("Blue #{item.id}")
+        end
+
+        click_link('Next')
+
+        expect(page).to have_link("Blue #{last_item.id}")
       end
-      last_item = items.pop
-
-      visit search_index_path
-      within('#search-form') do
-        fill_in('search[query]', with: 'blue')
-        click_button('Search')
-      end
-
-      items.each do |item|
-        expect(page).to have_link("Blue #{item.id}")
-      end
-
-      click_link('Next')
-
-      expect(page).to have_link("Blue #{last_item.id}")
     end
   end
 
@@ -130,6 +141,7 @@ describe 'search' do
     scenario 'searches for an existing item', js: true do
       Capybara.using_driver(:chrome) do
         visit dashboard_path
+        resize_window_default
         fill_in('search[query]', with: item.description).native.send_keys(:return)
 
         expect(page).to have_link('Items')
@@ -140,6 +152,7 @@ describe 'search' do
     scenario 'searches for a non-existing item', js: true do
       Capybara.using_driver(:chrome) do
         visit dashboard_path
+        resize_window_default
         fill_in('search[query]', with: 'The Jungle Book').native.send_keys(:return)
 
         expect(page).to have_content('No results found')
@@ -150,6 +163,7 @@ describe 'search' do
       Capybara.using_driver(:chrome) do
         second_item = create(:item, :active)
         visit dashboard_path
+        resize_window_default
         fill_in('search[query]', with: item.description).native.send_keys(:return)
 
         expect(page).to have_link(item.description)
