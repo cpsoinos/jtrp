@@ -52,7 +52,7 @@ RSpec.configure do |config|
     Rails.application.load_seed # loading seeds
   end
 
-  config.after :each do
+  config.after(:each) do
     Warden.test_reset!
   end
 
@@ -71,6 +71,7 @@ RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
   config.profile_examples = 10
   config.order = :random
+  config.use_transactional_fixtures = true
 
   Kernel.srand config.seed
 
@@ -86,7 +87,10 @@ RSpec.configure do |config|
   config.before(:each, type: :system, js: true) do
     driven_by :headless_chrome # a driver I define elsewhere
   end
-  config.use_transactional_fixtures = true
+
+  config.after(:each, js: true) do
+    ActiveRecord::Base.subclasses.each(&:delete_all)
+  end
 
 end
 
