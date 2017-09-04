@@ -33,7 +33,7 @@ describe User do
 
   describe "scopes" do
 
-    before :all do
+    before :each do
       create_list(:client, 3)
       create_list(:internal_user, 3)
       create_list(:user, 2, :inactive)

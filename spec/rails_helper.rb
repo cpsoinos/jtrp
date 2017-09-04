@@ -6,6 +6,7 @@ require 'factory_girl_rails'
 require 'helpers/user_helper.rb'
 require 'helpers/label_helper.rb'
 require 'helpers/webhook_helper.rb'
+require 'helpers/window_size_helper.rb'
 require 'coveralls'
 require 'email_spec'
 require 'money-rails/test_helpers'
@@ -43,7 +44,7 @@ RSpec.configure do |config|
   config.include Warden::Test::Helpers
   config.include OmniauthMacros
 
-  config.before(:all) do
+  config.before(:each) do
     FactoryGirl.reload
   end
 
@@ -51,7 +52,7 @@ RSpec.configure do |config|
     Rails.application.load_seed # loading seeds
   end
 
-  config.after :each do
+  config.after(:each) do
     Warden.test_reset!
   end
 
@@ -67,10 +68,10 @@ RSpec.configure do |config|
     config.default_formatter = 'doc'
   end
 
+  config.infer_spec_type_from_file_location!
   config.profile_examples = 10
   config.order = :random
-  config.use_transactional_fixtures = true
-  config.infer_spec_type_from_file_location!
+  config.use_transactional_fixtures = false
 
   Kernel.srand config.seed
 

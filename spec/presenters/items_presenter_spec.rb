@@ -3,11 +3,12 @@ describe ItemsPresenter do
   let(:potential_items) { Item.potential }
   let(:active_items) { Item.active }
   let(:sold_items) { Item.sold }
+  let(:proposal) { create(:proposal) }
 
-  before do
-    create_list(:item, 3)
-    create_list(:item, 3, :active)
-    create_list(:item, 2, :sold)
+  before(:each) do
+    create_list(:item, 3, proposal: proposal)
+    create_list(:item, 3, :active, proposal: proposal)
+    create_list(:item, 2, :sold, proposal: proposal)
   end
 
   it 'can be instantiated' do
@@ -67,7 +68,7 @@ describe ItemsPresenter do
   end
 
   it 'does not paginate for labels' do
-    create_list(:item, 25)
+    create_list(:item, 25, proposal: proposal)
 
     expect(ItemsPresenter.new(labels: true).execute.count).to eq(33)
   end

@@ -24,7 +24,7 @@ describe Item do
 
   context "scopes" do
 
-    before :all do
+    before :each do
       create_list(:item, 2)
       create_list(:item, 3, :active)
       create_list(:item, 4, :sold)

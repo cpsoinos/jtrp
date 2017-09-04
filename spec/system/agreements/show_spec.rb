@@ -47,28 +47,6 @@ describe 'agreement' do
         expect(page).to have_content("Purchase Invoice")
       end
 
-      scenario 'uploads scanned agreement', js: true, skip: true do
-        visit account_job_proposal_agreements_path(account, job, proposal)
-        click_link('Purchase Invoice')
-        attach_file('scanned_agreement[scan]', File.join(Rails.root, '/spec/fixtures/test.pdf'))
-        click_on('Create Scanned agreement')
-
-        expect(agreement.reload).to be_active
-      end
-
-      scenario 'uploads an updated scanned agreement', js: true, skip: true do
-        scanned_agreement = create(:scanned_agreement)
-        agreement = scanned_agreement.agreement
-
-        visit account_job_proposal_agreements_path(agreement.account, agreement.job, agreement.proposal)
-        click_link('Purchase Invoice')
-        attach_file('scanned_agreement[scan]', File.join(Rails.root, '/spec/fixtures/test.pdf'))
-        click_on('Update Scanned agreement')
-
-        expect(page).to have_content('Agreement updated!')
-        expect(agreement.reload).to be_active
-      end
-
       scenario 'activates items from index', js: true do
         agreement.update_attributes(client_agreed: true, client_agreed_at: 3.minutes.ago, date: 3.minutes.ago)
         agreement.mark_active

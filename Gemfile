@@ -116,7 +116,7 @@ group :development, :test do
   gem 'terminal-notifier'
   gem 'parallel_tests'
   gem 'spring-commands-rspec'
-  gem 'rspec-rails', git: 'https://github.com/rspec/rspec-rails', branch: 'integrate-with-system-test'
+  gem 'rspec-rails', git: 'https://github.com/rspec/rspec-rails', branch: 'master'
   # gem 'wkhtmltopdf-binary'
 end
 
@@ -133,6 +133,7 @@ group :development do
 end
 
 group :test do
+  gem 'database_cleaner'
   gem 'shoulda-matchers', require: false
   gem 'capybara'
   gem 'launchy'
@@ -148,11 +149,6 @@ group :test do
   %w[rspec-core rspec-expectations rspec-mocks rspec-support].each do |lib|
     gem lib, :git => "https://github.com/rspec/#{lib}.git", :branch => 'master'
   end
-  # gem 'rspec-rails'
-  # gem 'rspec-core', git: 'https://github.com/rspec/rspec-core', branch: 'master'
-  # gem 'rspec-mocks', git: 'https://github.com/rspec/rspec-mocks', branch: 'master'
-  # gem 'rspec-rails', git: 'https://github.com/rspec/rspec-rails', branch: 'integrate-with-system-test'
-  # gem 'rspec-support', git: 'https://github.com/rspec/rspec-support', branch: 'master'
   gem 'rspec-retry'
   gem 'rspec_junit_formatter'
 end
