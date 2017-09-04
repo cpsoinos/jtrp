@@ -10,7 +10,7 @@ describe "add an account" do
 
   context "internal user" do
 
-    before do
+    before(:each) do
       sign_in user
     end
 
