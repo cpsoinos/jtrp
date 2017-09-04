@@ -5,7 +5,7 @@ FactoryGirl.define do
   factory :user, class: User do
     first_name Faker::Name.first_name
     last_name Faker::Name.last_name
-    sequence(:email) { |n| "person#{n}@example.com" }
+    sequence(:email) { |n| "person#{n * rand(123)}@example.com" }
     password "supersecret"
     password_confirmation "supersecret"
     status "active"

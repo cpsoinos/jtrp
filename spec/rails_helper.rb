@@ -68,7 +68,6 @@ RSpec.configure do |config|
   end
 
   config.infer_spec_type_from_file_location!
-  config.use_transactional_fixtures = true
   config.profile_examples = 10
   config.order = :random
 
@@ -86,6 +85,7 @@ RSpec.configure do |config|
   config.before(:each, type: :system, js: true) do
     driven_by :headless_chrome # a driver I define elsewhere
   end
+  config.use_transactional_fixtures = true
 
 end
 

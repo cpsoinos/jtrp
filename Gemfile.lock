@@ -208,6 +208,7 @@ GEM
     css_parser (1.5.0)
       addressable
     dalli (2.7.6)
+    database_cleaner (1.6.1)
     deepstruct (0.0.7)
     devise (4.3.0)
       bcrypt (~> 3.0)
@@ -862,6 +863,7 @@ DEPENDENCIES
   cloudinary
   coffee-rails
   coveralls
+  database_cleaner
   deepstruct
   devise
   docraptor
