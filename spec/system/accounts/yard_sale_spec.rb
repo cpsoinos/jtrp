@@ -77,7 +77,6 @@ describe "yard sale" do
     click_link("Generate Agreements")
 
     expect(page).to have_content("Purchase Invoice")
-    expect(page).to have_field("scanned_agreement")
   end
 
   scenario "uploads receipt" do
