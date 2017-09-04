@@ -7,7 +7,7 @@ describe "account index" do
   let!(:active_accounts) { active_seller_accounts | active_consignor_accounts }
   let!(:inactive_accounts) { create_list(:account, 2, :inactive, :with_client) }
 
-  before do
+  before(:each) do
     sign_in user
   end
 
