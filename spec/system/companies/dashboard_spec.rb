@@ -39,6 +39,7 @@ describe 'dashboard' do
 
     scenario 'completes a to do list item', js: true do
       visit dashboard_path
+      resize_window_default
       expect(page).to have_content('needs a price added')
       first(:link, 'done').click
       expect(page).to have_content("SKU: #{item.id}")
