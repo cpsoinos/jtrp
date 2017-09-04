@@ -16,6 +16,24 @@ FactoryGirl.define do
       end
     end
 
+    trait :active_consign do
+      association :job, :active
+      status "active"
+
+      after(:create) do |instance|
+        create(:agreement, :active, :consign, proposal: instance)
+      end
+    end
+
+    trait :expired do
+      association :job, :active
+      status "active"
+
+      after(:create) do |instance|
+        create(:agreement, :inactive, :consign, proposal: instance)
+      end
+    end
+
     trait :inactive do
       association :job, :completed
       status "inactive"

@@ -25,13 +25,13 @@ FactoryGirl.define do
       status "inactive"
     end
 
-    factory :client, class: Client# do
-      # account
-      #
-      # after(:create) do |instance|
-      #   instance.account.update_attribute("primary_contact_id", instance.id)
-      # end
-    # end
+    factory :client, class: Client do
+      account
+
+      after(:create) do |instance|
+        instance.account.update_attribute("primary_contact_id", instance.id)
+      end
+    end
 
     factory :admin, class: Admin do
       email
