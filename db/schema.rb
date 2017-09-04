@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170806165803) do
+ActiveRecord::Schema.define(version: 20170904114847) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -403,16 +403,6 @@ ActiveRecord::Schema.define(version: 20170806165803) do
     t.index ["job_id"], name: "index_proposals_on_job_id"
   end
 
-  create_table "scanned_agreements", id: :serial, force: :cascade do |t|
-    t.integer "agreement_id", null: false
-    t.string "scan", null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.datetime "deleted_at"
-    t.index ["agreement_id"], name: "index_scanned_agreements_on_agreement_id"
-    t.index ["deleted_at"], name: "index_scanned_agreements_on_deleted_at"
-  end
-
   create_table "statement_items", id: :serial, force: :cascade do |t|
     t.integer "item_id"
     t.integer "statement_id"
@@ -557,7 +547,6 @@ ActiveRecord::Schema.define(version: 20170806165803) do
   add_foreign_key "payments", "orders"
   add_foreign_key "photos", "items"
   add_foreign_key "photos", "proposals"
-  add_foreign_key "scanned_agreements", "agreements"
   add_foreign_key "statement_items", "items"
   add_foreign_key "statement_items", "statements"
   add_foreign_key "statement_pdfs", "statements"

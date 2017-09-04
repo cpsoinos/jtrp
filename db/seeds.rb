@@ -24,7 +24,7 @@ def create_company
     "<h1><b>Service Rate Schedule for Agents</b></h1>\r\n<p><br></p>\r\n<ul>\r\n<li>for home stagers, realtors, and brokers</li>\r\n<li><b>box truck</b></li>\r\n<ul>\r\n<li>includes gasoline, truck insurance, and moving equipment</li>\r\n<li>$50.00 + $1.00 per mile</li>\r\n<li>our movers must drive the truck</li>\r\n</ul>\r\n<li><b>movers</b></li>\r\n<ul>\r\n<li>$40.00 per mover per hour (2 hour minimum)</li>\r\n<li>each mover’s time is calculated from the time he leaves the store until the time he arrives back to the store, and is rounded to the nearest 15 minute increment</li>\r\n</ul>\r\n</ul>",
     email: "cpsoinos@mac.com",
     team_email: "example_team_email@example.com",
-    primary_contact: FactoryGirl.create(:internal_user)
+    primary_contact: FactoryGirl.create(:internal_user, email: "owner#{rand(1..10000)}@example.com")
   )
 end
 
@@ -38,8 +38,8 @@ def create_categories
 end
 
 def create_default_accounts
-  yard_sale = Account.create(is_company: true, company_name: "Yard Sale")
-  estate_sale = Account.create(is_company: true, company_name: "Estate Sale")
+  yard_sale = Account.create(is_company: true, company_name: "Yard Sale", primary_contact: Company.jtrp.primary_contact)
+  estate_sale = Account.create(is_company: true, company_name: "Estate Sale", primary_contact: Company.jtrp.primary_contact)
 end
 
 def create_default_photo

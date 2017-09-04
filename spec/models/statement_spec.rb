@@ -6,7 +6,7 @@ describe Statement do
   it { should have_many(:checks) }
   it { should have_many(:items).through(:statement_items) }
 
-  describe "state machine" do
+  context "state machine" do
 
     let(:sender) { double("sender") }
 
@@ -25,7 +25,7 @@ describe Statement do
 
   end
 
-  describe "items" do
+  context "items" do
     let(:agreement) { create(:agreement, :active, :consign) }
     let(:account) { agreement.account }
     let(:items) { create_list(:item, 5, :sold, sale_price_cents: 5000, client_intention: 'consign', proposal: agreement.proposal) }

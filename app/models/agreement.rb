@@ -12,7 +12,6 @@ class Agreement < ApplicationRecord
 
   belongs_to :proposal, touch: true
   has_many :items, -> (instance) { where(items: {client_intention: instance.agreement_type, parent_item_id: nil}).where.not(items: {expired: 'true'}) }, through: :proposal
-  has_one :scanned_agreement
   has_one :job, through: :proposal
   has_one :account, through: :job
   has_many :letters
@@ -77,11 +76,11 @@ class Agreement < ApplicationRecord
   end
 
   def manager_signed?
-    manager_agreed? || scanned_agreement.present?
+    manager_agreed?
   end
 
   def client_signed?
-    client_agreed? || scanned_agreement.present?
+    client_agreed?
   end
 
   def object_url
