@@ -1,4 +1,4 @@
-class Webhook < ActiveRecord::Base
+class Webhook < ApplicationRecord
   has_many :webhook_entries
 
   after_create :create_webhook_entries
@@ -26,6 +26,7 @@ class Webhook < ActiveRecord::Base
   private
 
   def create_webhook_entries
+    return unless remote_entries.present?
     remote_entries.each do |entry|
       Webhooks::Entries::Creator.new(self, entry).create
     end

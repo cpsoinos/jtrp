@@ -1,20 +1,26 @@
-<div class="container-fluid">
+<div class="row top-margin">
+  <div class="col-xs-12 col-md-8 col-md-offset-2">
 
-  <div class="row <%= 'top-margin' unless params[:print] %>">
-    <div class="col-xs-12 col-md-8 col-md-offset-2">
+    <%= render 'agreement_note_modal', agreement: @agreement %>
 
-      <%= render 'agreement_note_modal', agreement: @agreement %>
-
-      <% if @agreement.pdf.present? && !@agreement.pdf_pages.nil? && !params[:print] %>
-        <div class="text-center">
-          <% (1..@agreement.pdf_pages).to_a.each do |page| %>
-            <%= image_tag(@agreement.pdf_url(client_hints: true, page: page, fetch_format: :auto, width: "auto")) %><br /><br />
-          <% end %>
-        </div>
-      <% else %>
-        <%= render "agreements/#{@agreement.agreement_type}", items: @items, agreement: @agreement, proposal: @proposal, job: @job, account: @account, client: @client %>
-        <%= render 'agreements/terms_form', agreement: @agreement, account: @account %>
-      <% end %>
+    <% if @agreement.pdf.present? && !@agreement.pdf_pages.nil? && !params[:print] %>
+      <div class="text-center">
+        <% (1..@agreement.pdf_pages).to_a.each do |page| %>
+          <%= cl_image_tag(@agreement.pdf.full_public_id,
+            page: page,
+            width: :auto,
+            fetch_format: "auto",
+            quality: "auto",
+            responsive: true,
+            responsive_placeholder: "blank"
+          ) %>
+          <br /><br />
+        <% end %>
+      </div>
+    <% else %>
+      <%= render "agreements/#{@agreement.agreement_type}", items: @items, agreement: @agreement, proposal: @proposal, job: @job, account: @account, client: @client %>
+      <%= render 'agreements/terms_form', agreement: @agreement, account: @account %>
+    <% end %>
 
   </div>
 

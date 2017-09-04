@@ -33,7 +33,7 @@ describe User do
 
   describe "scopes" do
 
-    before do
+    before :each do
       create_list(:client, 3)
       create_list(:internal_user, 3)
       create_list(:user, 2, :inactive)
@@ -47,7 +47,7 @@ describe User do
     end
 
     it "internal" do
-      expect(User.internal.count).to eq(3)
+      expect(User.internal.count).to eq(4)
       User.internal.each do |user|
         expect(user.internal?).to be(true)
       end

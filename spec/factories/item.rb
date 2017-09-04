@@ -36,19 +36,20 @@ FactoryGirl.define do
 
     trait :consigned do
       status "active"
-      proposal { create(:proposal, :active, agreements: [create(:agreement, :active, :consign)]) }
+      association :proposal, :active_consign
+      # proposal { create(:proposal, :active, agreements: [create(:agreement, :active, :consign)]) }
       client_intention "consign"
       listed_at 10.days.ago
     end
 
     trait :expired do
       status "active"
-      association :proposal, :active
+      association :proposal, :expired
       client_intention "consign"
       listed_at 91.days.ago
       expired true
       after(:create) do |item|
-        create(:agreement, :inactive, :consign, proposal: item.proposal)
+        # create(:agreement, :inactive, :consign, proposal: item.proposal)
         item.tag_list += "expired"
         item.save
       end

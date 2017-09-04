@@ -1,5 +1,5 @@
 module Cloudinary
-  class DeleteDerivedResourcesJob < ActiveJob::Base
+  class DeleteDerivedResourcesJob < ApplicationJob
     queue_as :maintenance
 
     def perform

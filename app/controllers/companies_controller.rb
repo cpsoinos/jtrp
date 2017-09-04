@@ -1,7 +1,5 @@
 class CompaniesController < ApplicationController
-  before_filter :require_internal, except: [:client_services, :consignment_policies, :service_rate_schedule, :agent_service_rate_schedule, :home, :about, :contact, :send_message]
-
-  layout :resolve_layout
+  before_action :require_internal, except: [:client_services, :consignment_policies, :service_rate_schedule, :agent_service_rate_schedule, :home, :about, :contact, :send_message]
 
   def show
     @navtab = "dashboard"
@@ -35,7 +33,7 @@ class CompaniesController < ApplicationController
       redirect_to about_path
     else
       flash[:error] = "Unable to save changes."
-      redirect_to :back
+      redirect_back(fallback_location: root_path)
     end
   end
 
@@ -44,15 +42,18 @@ class CompaniesController < ApplicationController
   end
 
   def service_rate_schedule
-    @title = "Service Rate Schedule"
+    @title = "Service Rates"
   end
 
   def agent_service_rate_schedule
-    @title = "Service Rate Schedule for Agents"
+    @title = "Agent Service Rates"
   end
 
   def send_message
-    TransactionalEmailJob.perform_later(@company, current_user, @company.primary_contact, "contact", params)
+    if params[:photos]
+      photos = PhotoCreator.new.create_multiple(photos: params[:photos], photo_type: 'submission')
+    end
+    Notifier.send_contact_us(params[:from_name], params[:email], params[:subject], params[:note], photos).deliver_later
     redirect_to root_path, notice: "Your message has been sent!"
   end
 
@@ -66,23 +67,15 @@ class CompaniesController < ApplicationController
   end
 
   def build_todos
-    @items = ItemsPresenter.new.todo.page(params[:page]).uniq
-    @statements = StatementsPresenter.new.todo.uniq
-    @agreements = AgreementsPresenter.new.todo.uniq
+    @items = ItemsPresenter.new.todo.page(params[:page]).distinct
+    @statements = StatementsPresenter.new.todo.distinct
+    @agreements = AgreementsPresenter.new.todo.distinct
   end
 
   def build_js_metrics(presenter)
     gon.salesMetrics = presenter.build_json_for_sales
     gon.customerMetrics = presenter.build_json_for_customers
     gon.clientMetrics = presenter.build_json_for_clients
-  end
-
-  def resolve_layout
-    if action_name.in?(%w(home about contact client_services consignment_policies service_rate_schedule agent_service_rate_schedule))
-      "ecommerce"
-    else
-      "application"
-    end
   end
 
   def find_categories

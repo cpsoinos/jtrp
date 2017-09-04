@@ -11,7 +11,8 @@ describe Letter do
 
   before do
     allow(PdfGenerator).to receive(:new).and_return(generator)
-    allow(TransactionalEmailJob).to receive(:perform_later)
+    allow(Notifier).to receive_message_chain(:send_agreement_expired, :deliver_later)
+    allow(Notifier).to receive_message_chain(:send_agreement_pending_expiration, :deliver_later)
     allow(Letter::Sender).to receive(:new).and_return(sender)
     allow(generator).to receive(:render_pdf)
     allow(sender).to receive(:send_letter)
@@ -33,10 +34,17 @@ describe Letter do
     expect(generator).to have_received(:render_pdf)
   end
 
-  it "delivers by email" do
+  it "delivers expiration pending by email" do
     letter.deliver_to_client
 
-    expect(TransactionalEmailJob).to have_received(:perform_later).with(letter, Company.jtrp.primary_contact, letter.account.primary_contact, "agreement_pending_expiration", {note: "kats r kool"})
+    expect(Notifier).to have_received(:send_agreement_pending_expiration).with(letter)
+  end
+
+  it "delivers expiration notice by email" do
+    expire_letter = create(:letter, :expiration_notice)
+    expire_letter.deliver_to_client
+
+    expect(Notifier).to have_received(:send_agreement_expired).with(expire_letter)
   end
 
   it "delivers by mail" do

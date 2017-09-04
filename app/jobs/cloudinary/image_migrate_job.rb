@@ -1,5 +1,5 @@
 module Cloudinary
-  class ImageMigrateJob < ActiveJob::Base
+  class ImageMigrateJob < ApplicationJob
     queue_as :default
 
     attr_reader :photo

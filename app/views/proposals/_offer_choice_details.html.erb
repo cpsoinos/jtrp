@@ -84,8 +84,8 @@
 
       <div class="radio radio-primary">
         <label>
-          <%= f.label :client_intention, intention, for: "item_#{item.id}_client_intention_#{intention}" %>
           <%= f.radio_button :client_intention, intention, class: "intention-selector", id: "item_#{item.id}_client_intention_#{intention}" %>
+          <%= intention %>
         </label>
       </div>
 

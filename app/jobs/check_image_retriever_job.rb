@@ -1,10 +1,10 @@
-class CheckImageRetrieverJob < ActiveJob::Base
+class CheckImageRetrieverJob < ApplicationJob
   queue_as :default
 
   attr_reader :check
 
-  def perform(check)
-    @check = check
+  def perform(options)
+    @check = Check.find(options[:check_id])
     retrieve_images
   end
 

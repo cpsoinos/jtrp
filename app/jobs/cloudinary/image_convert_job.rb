@@ -1,11 +1,11 @@
 require 'active_job/traffic_control'
 
 module Cloudinary
-  class ImageConvertJob < ActiveJob::Base
+  class ImageConvertJob < ApplicationJob
     queue_as :maintenance
     include ActiveJob::TrafficControl::Throttle
 
-    throttle threshold: 2000, period: 1.hour
+    throttle threshold: 2000, period: 1.hour unless Rails.env.test?
 
     attr_reader :photo
 

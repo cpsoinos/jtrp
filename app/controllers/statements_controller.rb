@@ -1,6 +1,6 @@
 class StatementsController < ApplicationController
-  before_filter :find_account, except: :statements_list
-  before_filter :require_internal, except: :show
+  before_action :find_account, except: :statements_list
+  before_action :require_internal, except: :show
 
   def index
     @statements = @account.statements
@@ -18,6 +18,7 @@ class StatementsController < ApplicationController
     @check = @statement.checks.first
     @client = @account.client
     @title = "#{@account.full_name} - Consigned Sales"
+    @hide_raised = true if @statement.pdf.present?
   end
 
   def update
@@ -35,7 +36,7 @@ class StatementsController < ApplicationController
   def send_email
     @statement = Statement.find(params[:statement_id])
     TransactionalEmailJob.perform_later(@statement, current_user, @statement.account.primary_contact, "statement", params)
-    redirect_to :back, notice: "Email sent to client!"
+    redirect_back(fallback_location: root_path, notice: "Email sent to client!")
   end
 
   protected

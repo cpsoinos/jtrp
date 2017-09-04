@@ -1,5 +1,5 @@
 class SearchController < ApplicationController
-  before_filter :filter_results_for_guests
+  before_action :filter_results_for_guests
 
   def index
     if params[:search]

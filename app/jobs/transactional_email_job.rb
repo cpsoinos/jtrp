@@ -1,4 +1,4 @@
-class TransactionalEmailJob < ActiveJob::Base
+class TransactionalEmailJob < ApplicationJob
   queue_as :default
 
   def perform(object, user, recipient, email_type, options={})

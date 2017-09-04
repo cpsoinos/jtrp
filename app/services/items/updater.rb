@@ -8,10 +8,10 @@ module Items
     end
 
     def update(attrs)
-      @attrs = HashWithIndifferentAccess.new(attrs)
+      @attrs = attrs
       process_photos
       format_date
-      if item.update(@attrs)
+      if item.update(attrs)
         process_sale
         sync_inventory
       end
@@ -27,7 +27,7 @@ module Items
 
     def process_initial_photos
       if attrs[:initial_photos].present?
-        initial_photos = @attrs.delete(:initial_photos)
+        initial_photos = attrs.delete(:initial_photos)
         initial_photos.each do |photo|
           item.photos.create(photo: photo, photo_type: "initial")
         end
@@ -36,7 +36,7 @@ module Items
 
     def process_listing_photos
       if attrs[:listing_photos].present?
-        listing_photos = @attrs.delete(:listing_photos)
+        listing_photos = attrs.delete(:listing_photos)
         listing_photos.each do |photo|
           item.photos.create!(photo: photo, photo_type: "listing")
         end
@@ -50,7 +50,7 @@ module Items
 
     def sync_inventory
       return if item.potential?
-      InventorySyncJob.perform_later(item)
+      InventorySyncJob.perform_later(item_id: item.id)
     end
 
     def format_date

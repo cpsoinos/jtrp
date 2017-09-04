@@ -1,6 +1,5 @@
 class CategoriesController < ApplicationController
-  # layout :resolve_layout
-  before_filter :require_internal, except: [:index, :show]
+  before_action :require_internal, except: [:index, :show]
 
   def index
     @title = "Categories"
@@ -52,7 +51,7 @@ class CategoriesController < ApplicationController
       redirect_to categories_path
     else
       flash[:notice] = "Category could not be destroyed"
-      redirect_to :back
+      redirect_back(fallback_location: root_path)
     end
   end
 
@@ -61,14 +60,6 @@ class CategoriesController < ApplicationController
   def category_params
     params.require(:category).permit(:name, :parent_id, :photo)
   end
-
-  # def resolve_layout
-  #   if action_name.in?(%w(show))
-  #     "ecommerce"
-  #   else
-  #     "application"
-  #   end
-  # end
 
   def find_category
     @category = Category.includes(:subcategories).find(params[:id])

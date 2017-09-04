@@ -2,8 +2,11 @@ describe Statement do
 
   it { should be_audited.associated_with(:account) }
   it { should belong_to(:account) }
+  it { should have_many(:statement_items) }
+  it { should have_many(:checks) }
+  it { should have_many(:items).through(:statement_items) }
 
-  describe "state machine" do
+  context "state machine" do
 
     let(:sender) { double("sender") }
 
@@ -22,12 +25,13 @@ describe Statement do
 
   end
 
-  describe "items" do
+  context "items" do
     let(:agreement) { create(:agreement, :active, :consign) }
+    let(:account) { agreement.account }
     let(:items) { create_list(:item, 5, :sold, sale_price_cents: 5000, client_intention: 'consign', proposal: agreement.proposal) }
     let(:older_item) { create(:item, :sold, sale_price_cents: 7000, client_intention: 'consign', proposal: agreement.proposal, sold_at: 45.days.ago) }
     let(:expired_item) { create(:item, :sold, proposal: agreement.proposal, listed_at: 91.days.ago) }
-    let(:statement) { create(:statement, account: agreement.account) }
+    let(:statement) { create(:statement, account: account) }
 
     before do
       Timecop.freeze("October 1, 2016")
@@ -37,6 +41,7 @@ describe Statement do
         item.save
         day_incrementer += 1
       end
+      Statements::ItemGatherer.new(statement, account).execute
     end
 
     after do

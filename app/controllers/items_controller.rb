@@ -1,11 +1,11 @@
 require 'prawn/labels'
 
 class ItemsController < ApplicationController
-  before_filter :find_clients, only: [:new, :edit]
-  before_filter :find_categories, only: [:new, :edit, :show, :index, :discountable]
-  before_filter :find_proposal, only: [:create, :batch_create]
-  before_filter :require_internal, except: [:show, :update, :feed]
-  before_filter :find_item, only: :show
+  before_action :find_clients, only: [:new, :edit]
+  before_action :find_categories, only: [:new, :edit, :show, :index, :discountable]
+  before_action :find_proposal, only: [:create, :batch_create]
+  before_action :require_internal, except: [:show, :update, :feed]
+  before_action :find_item, only: :show
 
   def index
     @title = "Items"
@@ -26,7 +26,7 @@ class ItemsController < ApplicationController
             methods: [
               :description_link,
               :featured_photo_url,
-              :humanized_cost,
+              :humanized_purchase_price,
               :account_link,
               :humanized_minimum_sale_price,
               :humanized_listing_price,
@@ -163,30 +163,41 @@ class ItemsController < ApplicationController
     redirect_to account_job_proposal_details_path(@account, @proposal.job, @proposal)
   end
 
+  def sync
+    find_account
+    item_ids = @account.items.pluck(:id)
+    respond_to do |format|
+      format.js do
+        BulkSyncJob.perform_later(item_ids: item_ids)
+        @message = "Syncing #{item_ids.count} to Clover in the background..."
+      end
+    end
+  end
+
   def activate
     @item = Item.find(params[:item_id])
     if @item.mark_active
-      redirect_to :back, notice: "Item activated!"
+      redirect_back(fallback_location: root_path, notice: "Item activated!")
     else
-      redirect_to :back, alert: "Could not activate item. Check that the agreement is active first."
+      redirect_back(fallback_location: root_path, alert: "Could not activate item. Check that the agreement is active first.")
     end
   end
 
   def deactivate
     @item = Item.find(params[:item_id])
     if @item.mark_inactive and @item.update(item_params)
-      redirect_to :back, notice: "Item deactivated"
+      redirect_back(fallback_location: root_path, notice: "Item deactivated")
     else
-      redirect_to :back, alert: "Could not deactivate item."
+      redirect_back(fallback_location: root_path, alert: "Could not deactivate item.")
     end
   end
 
   def mark_not_sold
     @item = Item.find(params[:item_id])
     if @item.mark_not_sold
-      redirect_to :back, notice: "Item marked as not sold."
+      redirect_back(fallback_location: root_path, notice: "Item marked as not sold.")
     else
-      redirect_to :back, alert: "Could not mark item as not sold."
+      redirect_back(fallback_location: root_path, alert: "Could not mark item as not sold.")
     end
   end
 
@@ -204,7 +215,7 @@ class ItemsController < ApplicationController
         end
       end
     else
-      redirect_to :back
+      redirect_back(fallback_location: root_path)
     end
   end
 

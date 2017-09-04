@@ -1,14 +1,12 @@
 <%= render 'proposals/header', form_name: "Consignment Agreement", agreement: agreement, proposal: proposal, job: job, account: account, company: @company, statement: nil %>
 
-<% if params[:print] %>
-  <div class="top-margin">
+  <div class="top-margin visible-print">
     <%= render 'agreements/consignment_terms', agreement: agreement %>
+    <div class="page-break"></div>
   </div>
-  <div class="page-break"></div>
-<% end %>
 
 <h4>Addendums:</h4>
 
 <div class="large-top-margin">
-  <%= render 'items/items_list', headers: consignment_headers, context: "consignment_agreement", items: items %>
+  <%= render 'items/items_list', headers: consignment_headers, context: "consignment_agreement", items: items, cached: true %>
 </div>

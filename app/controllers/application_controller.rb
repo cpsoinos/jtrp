@@ -4,9 +4,9 @@ class ApplicationController < ActionController::Base
   before_action :set_raven_context
   force_ssl if: :ssl_configured?
   protect_from_forgery with: :exception
-  before_filter :find_company
-  before_filter :find_categories
-  before_filter :meta_tags
+  before_action :find_company
+  before_action :find_categories
+  before_action :meta_tags
 
   def find_company
     @company ||= Company.find_by(name: "Just the Right Piece")

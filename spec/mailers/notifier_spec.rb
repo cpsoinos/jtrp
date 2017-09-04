@@ -25,7 +25,7 @@ describe Notifier do
 
     it "renders headers" do
       expect(mailer.subject).to eq("Daily Sales Summary")
-      expect(mailer.to).to eq(["example_team_email@example.com"])
+      expect(mailer.to).to eq([user.email])
       expect(mailer.from).to eq(["notifications@jtrpfurniture.com"])
     end
 

@@ -1,24 +1,20 @@
 <% cache item do %>
-  <div class="card card-product card-plain card-rotate">
-    <div class="rotating-card-container">
+  <div class="card card-product card-plain">
+    <%= link_to item_path(item) do %>
       <div class="card-image">
-        <div class="front">
-          <%= image_tag(item.featured_photo.photo_url(client_hints: true, width: "auto", fetch_format: "auto", quality: "auto", gravity: "auto", aspect_ratio: "3:4", crop: "fill")) %>
-        </div>
-
-        <div class="back back-background">
-          <div class="card-content">
-            <div class="footer text-center">
-              <%= link_to "<i class='material-icons'>info</i> Details".html_safe, item_path(item), class: "btn btn-round btn-white" %>
-            </div>
-            <% if action_name == "home" %>
-              <hr/>
-              <%= link_to "View more items in this category", category_path(item.category), class: "btn btn-round btn-white" %>
-            <% end %>
-          </div>
-        </div>
+        <%= cl_image_tag(item.featured_photo.photo.full_public_id,
+          width: :auto,
+          fetch_format: "auto",
+          quality: "auto",
+          gravity: "auto",
+          aspect_ratio: "3:4",
+          crop: "fill",
+          responsive: true,
+          responsive_placeholder: "blank",
+          radius: 10
+        ) %>
       </div>
-    </div>
+    <% end %>
 
     <div class="card-content">
       <h4 class="card-title">

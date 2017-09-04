@@ -1,11 +1,11 @@
-class Letter < ActiveRecord::Base
+class Letter < ApplicationRecord
   include PublicActivity::Common
 
   acts_as_paranoid
   audited associated_with: :agreement
   has_secure_token
 
-  belongs_to :agreement
+  belongs_to :agreement, optional: true
   has_one :account, through: :agreement
   mount_uploader :pdf, PdfUploader
 
@@ -40,11 +40,15 @@ class Letter < ActiveRecord::Base
   end
 
   def deliver_email
-    TransactionalEmailJob.perform_later(self, Company.jtrp.primary_contact, account.primary_contact, category, {note: note})
+    if expiration_notice?
+      Notifier.send_agreement_expired(self).deliver_later
+    elsif expiration_pending_notice?
+      Notifier.send_agreement_pending_expiration(self).deliver_later
+    end
   end
 
   def deliver_letter
-    LetterSenderJob.perform_later(self)
+    LetterSenderJob.perform_later(letter_id: id)
   end
 
   def expire_items

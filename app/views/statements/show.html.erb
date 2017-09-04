@@ -8,7 +8,15 @@
       <% if @statement.pdf.present? && !params[:print] %>
         <div class="text-center">
           <% (1..@statement.pdf_pages).to_a.each do |page| %>
-            <%= image_tag(@statement.pdf_url(client_hints: true, page: page, fetch_format: :auto)) %><br /><br />
+            <%= cl_image_tag(@statement.pdf.full_public_id,
+              page: page,
+              width: :auto,
+              fetch_format: "auto",
+              quality: "auto",
+              responsive: true,
+              responsive_placeholder: "blank"
+            ) %>
+            <br /><br />
           <% end %>
         </div>
       <% else %>

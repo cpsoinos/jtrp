@@ -1,23 +1,22 @@
-class Agreement < ActiveRecord::Base
+class Agreement < ApplicationRecord
   include PublicActivity::Common
+  include AgreementStateMachine
+  include Filterable
 
   acts_as_paranoid
   acts_as_taggable_on :tags
   audited associated_with: :proposal
   has_secure_token
 
-  include Filterable
-
   mount_uploader :pdf, PdfUploader
 
   belongs_to :proposal, touch: true
   has_many :items, -> (instance) { where(items: {client_intention: instance.agreement_type, parent_item_id: nil}).where.not(items: {expired: 'true'}) }, through: :proposal
-  has_one :scanned_agreement
   has_one :job, through: :proposal
   has_one :account, through: :job
   has_many :letters
-  belongs_to :created_by, class_name: "User"
-  belongs_to :updated_by, class_name: "User"
+  belongs_to :created_by, class_name: "User", optional: true
+  belongs_to :updated_by, class_name: "User", optional: true
 
   after_destroy :delete_cache
 
@@ -36,24 +35,6 @@ class Agreement < ActiveRecord::Base
     greater_than_or_equal_to: 0,
     less_than_or_equal_to: 100000
   }
-
-  state_machine :status, initial: :potential do
-    state :potential
-    state :active
-    state :inactive
-
-    after_transition potential: :active, do: [:mark_proposal_active, :set_agreement_date, :save_as_pdf, :deliver_to_client, :notify_company, :save_item_descriptions]
-    after_transition active: :inactive, do: :mark_proposal_inactive
-
-    event :mark_active do
-      transition [:potential, :inactive] => :active, if: lambda { |agreement| agreement.meets_requirements_active? }
-    end
-
-    event :mark_inactive do
-      transition active: :inactive, if: lambda { |agreement| agreement.meets_requirements_inactive? }
-    end
-
-  end
 
   def short_name
     "#{account.short_name}_#{agreement_type}"
@@ -88,14 +69,6 @@ class Agreement < ActiveRecord::Base
     self.save
   end
 
-  def meets_requirements_active?
-    client_signed?
-  end
-
-  def meets_requirements_inactive?
-    items.active.empty?
-  end
-
   def meets_requirements_expired?
     agreement_type == "consign" &&
       active?                   &&
@@ -103,11 +76,11 @@ class Agreement < ActiveRecord::Base
   end
 
   def manager_signed?
-    manager_agreed? || scanned_agreement.present?
+    manager_agreed?
   end
 
   def client_signed?
-    client_agreed? || scanned_agreement.present?
+    client_agreed?
   end
 
   def object_url
@@ -115,12 +88,12 @@ class Agreement < ActiveRecord::Base
   end
 
   def save_as_pdf
-    PdfGeneratorJob.perform_later(self)
+    PdfGeneratorJob.perform_later(object_type: "Agreement", object_id: id)
   end
 
   def notify_company
     return unless self.active?
-    TransactionalEmailJob.perform_later(self, account.primary_contact, Company.jtrp.primary_contact, "agreement_active_notifier")
+    Notifier.send_agreement_active_notification(self).deliver_later
   end
 
   def task
@@ -144,11 +117,11 @@ class Agreement < ActiveRecord::Base
   end
 
   def notify_pending_expiration
-    ConsignmentPeriodEndingNotifierJob.perform_later(self, "agreement_pending_expiration")
+    ConsignmentPeriodEndingNotifierJob.perform_later(agreement_id: id, category: "agreement_pending_expiration")
   end
 
   def notify_expiration
-    ConsignmentPeriodEndingNotifierJob.perform_later(self, "agreement_expired")
+    ConsignmentPeriodEndingNotifierJob.perform_later(agreement_id: id, category: "agreement_expired")
   end
 
   def expire
@@ -168,8 +141,7 @@ class Agreement < ActiveRecord::Base
   end
 
   def deliver_to_client
-    return if should_not_auto_deliver?
-    TransactionalEmailJob.perform_later(self, Company.jtrp.primary_contact, account.primary_contact, "agreement")
+    Notifier.send_executed_agreement(self).deliver_later
   end
 
   private
@@ -187,10 +159,6 @@ class Agreement < ActiveRecord::Base
       item.original_description = item.description
       item.save
     end
-  end
-
-  def should_not_auto_deliver?
-    updated_by.try(:internal?)
   end
 
 end

@@ -1,6 +1,6 @@
 <% navlinks ||= false %>
 
-<nav class="navbar navbar-default navbar-transparent navbar-fixed-top navbar-color-on-scroll" color-on-scroll="100" id="sectionsNav">
+<nav class="navbar navbar-default navbar-transparent navbar-fixed-top navbar-color-on-scroll hidden-print" color-on-scroll="100" id="sectionsNav">
   <div class="container-fluid">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse">
@@ -24,7 +24,7 @@
         <li>
           <a href="" class="dropdown-toggle btn btn-primary btn-round btn-just-icon" data-toggle="dropdown" style="width:44px;height:45px;">
             <i class="material-icons">person</i>
-            <p class="hidden-lg hidden-md">Profile</p>
+            <p class="hidden-lg hidden-md" style="color: #3C4858">Profile</p>
           </a>
           <ul class="dropdown-menu">
             <% if current_user %>
@@ -33,7 +33,7 @@
               <% end %>
               <li><%= link_to "Sign Out <i class='fa fa-sign-out' aria-hidden='true'></i>".html_safe, destroy_user_session_path, method: 'delete' %></li>
             <% else %>
-              <li><%= link_to "Sign in with Clover <i class='fa fa-sign-in' aria-hidden='true'></i>".html_safe, user_omniauth_authorize_path(:clover) %></li>
+              <li><%= link_to "Sign in with Clover <i class='fa fa-sign-in' aria-hidden='true'></i>".html_safe, user_clover_omniauth_authorize_path %></li>
               <li><%= link_to "Sign In <i class='fa fa-sign-in' aria-hidden='true'></i>".html_safe, new_user_session_path %></li>
               <!-- <li><%#= link_to "Sign Up <i class='fa fa-sign-up' aria-hidden='true'></i>".html_safe, new_user_registration_path %></li> -->
             <% end %>

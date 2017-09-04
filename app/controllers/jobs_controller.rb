@@ -1,7 +1,7 @@
 class JobsController < ApplicationController
-  before_filter :require_internal
-  before_filter :find_accounts, only: :new
-  before_filter :find_account, only: [:create, :edit, :update]
+  before_action :require_internal
+  before_action :find_accounts, only: :new
+  before_action :find_account, only: [:create, :edit, :update]
 
   def index
     @title = "Jobs"
@@ -40,7 +40,7 @@ class JobsController < ApplicationController
       redirect_to account_job_path(@job.account, @job)
     else
       flash[:alert] = "Job could not be saved"
-      redirect_to :back
+      redirect_back(fallback_location: root_path)
     end
   end
 
@@ -57,7 +57,7 @@ class JobsController < ApplicationController
       redirect_to account_job_path(@account, @job)
     else
       flash[:alert] = "Job could not be saved: #{@job.errors.full_messages.uniq.join}"
-      redirect_to :back
+      redirect_back(fallback_location: root_path)
     end
   end
 

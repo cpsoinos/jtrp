@@ -16,7 +16,35 @@ namespace :statements do
         end
       end
     end
-    
+
+  end
+
+  task :build_statement_items => :environment do
+
+    statements = Statement.includes(account: :items).all
+    puts "Migrating #{statements.count} statements to the new item-statement relational schema..."
+
+    bar = RakeProgressbar.new(statements.count)
+    statements.each do |statement|
+      Statements::ItemGatherer.new(statement, statement.account).execute
+      bar.inc
+    end
+
+  end
+
+  task :czerepak_second_june_statement => :environment do
+
+    items = Item.where(id: [9572, 9562, 9561, 9565])
+    account = Account.find('czerepak')
+
+    puts "Creating second June statement for Czerepak..."
+    statement = account.statements.create(date: DateTime.parse("June 15, 2017"))
+
+    puts "Adding the specified items to this statement..."
+    statement.items << items
+
+    puts "Finished. Verify at #{statement.object_url}"
+
   end
 
 end

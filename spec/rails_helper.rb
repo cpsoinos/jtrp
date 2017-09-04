@@ -6,9 +6,9 @@ require 'factory_girl_rails'
 require 'helpers/user_helper.rb'
 require 'helpers/label_helper.rb'
 require 'helpers/webhook_helper.rb'
+require 'helpers/window_size_helper.rb'
 require 'coveralls'
 require 'email_spec'
-require 'capybara/poltergeist'
 require 'money-rails/test_helpers'
 require 'best_in_place/test_helpers'
 require 'audited-rspec.rb'
@@ -16,13 +16,14 @@ require 'spec_helper'
 require 'rspec/rails'
 require 'shoulda/matchers'
 require 'rspec/retry'
+require 'sidekiq/testing'
 
 Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 
 Coveralls.wear!
 
 ActiveRecord::Migration.maintain_test_schema!
-# OmniAuth.config.test_mode = true
+OmniAuth.config.test_mode = true
 Sidekiq::Testing.inline!
 
 Shoulda::Matchers.configure do |config|
@@ -43,7 +44,7 @@ RSpec.configure do |config|
   config.include Warden::Test::Helpers
   config.include OmniauthMacros
 
-  config.before(:all) do
+  config.before(:each) do
     FactoryGirl.reload
   end
 
@@ -51,7 +52,7 @@ RSpec.configure do |config|
     Rails.application.load_seed # loading seeds
   end
 
-  config.after :each do
+  config.after(:each) do
     Warden.test_reset!
   end
 
@@ -67,17 +68,24 @@ RSpec.configure do |config|
     config.default_formatter = 'doc'
   end
 
-  # config.profile_examples = 10
+  config.infer_spec_type_from_file_location!
+  config.profile_examples = 10
   config.order = :random
   config.use_transactional_fixtures = false
-  config.infer_spec_type_from_file_location!
 
   Kernel.srand config.seed
 
   config.verbose_retry = true
   config.display_try_failure_messages = true
-  config.around :each, :js do |ex|
-    ex.run_with_retry retry: 3
+  # config.around :each, :js do |ex|
+  #   ex.run_with_retry retry: 3
+  # end
+  config.before(:each, type: :system) do
+    driven_by :rack_test
+  end
+
+  config.before(:each, type: :system, js: true) do
+    driven_by :headless_chrome # a driver I define elsewhere
   end
 
 end

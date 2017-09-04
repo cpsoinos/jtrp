@@ -1,4 +1,4 @@
-class StatementJob < ActiveJob::Base
+class StatementJob < ApplicationJob
   queue_as :cron
 
   def perform
@@ -15,7 +15,7 @@ class StatementJob < ActiveJob::Base
 
   def generate_statements
     accounts.each do |account|
-      statement = Statement::Creator.new(account).create
+      statement = Statements::Creator.new(account).create
       if statement.amount_due_to_client == 0
         statement.pay
       end

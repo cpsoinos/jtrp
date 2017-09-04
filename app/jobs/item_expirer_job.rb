@@ -1,4 +1,4 @@
-class ItemExpirerJob < ActiveJob::Base
+class ItemExpirerJob < ApplicationJob
   queue_as :default
 
   attr_reader :item_ids

@@ -7,7 +7,7 @@ namespace :agreements do
     bar = RakeProgressbar.new(agreements.count)
 
     agreements.each do |agreement|
-      PdfGeneratorJob.perform_later(agreement)
+      agreement.save_as_pdf
       bar.inc
     end
 
