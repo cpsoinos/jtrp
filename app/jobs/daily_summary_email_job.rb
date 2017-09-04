@@ -1,4 +1,4 @@
-class DailySummaryEmailJob < ActiveJob::Base
+class DailySummaryEmailJob < ApplicationJob
   queue_as :cron
 
   def perform

@@ -15,7 +15,7 @@ describe ConsignmentPeriodEndingNotifierJob do
   end
 
   it "sends a letter by mail" do
-    ConsignmentPeriodEndingNotifierJob.perform_later(agreement, 'consignment_period_ending')
+    ConsignmentPeriodEndingNotifierJob.perform_later(agreement_id: agreement.id, category: 'consignment_period_ending')
 
     expect(Letter::Creator).to have_received(:new).with(agreement)
     expect(creator).to have_received(:create_letter).with('consignment_period_ending')
@@ -24,7 +24,7 @@ describe ConsignmentPeriodEndingNotifierJob do
   end
 
   it "saves the letter as a pdf" do
-    ConsignmentPeriodEndingNotifierJob.perform_later(agreement, 'consignment_period_ending')
+    ConsignmentPeriodEndingNotifierJob.perform_later(agreement_id: agreement.id, category: 'consignment_period_ending')
 
     expect(letter).to have_received(:save_as_pdf)
   end

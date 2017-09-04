@@ -5,10 +5,6 @@ describe WebhookEntry do
 
   let(:webhook_entry) { build_stubbed(:webhook_entry) }
 
-  it 'validates processed' do
-    expect(webhook_entry).to validate_inclusion_of(:processed).in_array([true, false])
-  end
-
   context "scopes" do
     it "processed" do
       processed = create_list(:webhook_entry, 3, :processed)

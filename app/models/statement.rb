@@ -1,4 +1,4 @@
-class Statement < ActiveRecord::Base
+class Statement < ApplicationRecord
   include PublicActivity::Common
 
   acts_as_paranoid
@@ -86,7 +86,7 @@ class Statement < ActiveRecord::Base
 
   def create_and_send_check
     return if paid_manually?
-    CheckSenderJob.perform_later(self)
+    CheckSenderJob.perform_later(statement_id: id)
   end
 
 end

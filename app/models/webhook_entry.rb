@@ -1,6 +1,6 @@
-class WebhookEntry < ActiveRecord::Base
+class WebhookEntry < ApplicationRecord
   belongs_to :webhook
-  belongs_to :webhookable, polymorphic: true, touch: true
+  belongs_to :webhookable, polymorphic: true, touch: true, optional: true
 
   scope :processed, -> { where(processed: true) }
   scope :unprocessed, -> { where(processed: false) }

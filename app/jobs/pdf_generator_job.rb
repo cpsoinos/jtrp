@@ -1,10 +1,10 @@
-class PdfGeneratorJob < ActiveJob::Base
+class PdfGeneratorJob < ApplicationJob
   queue_as :default
 
   attr_reader :object
 
-  def perform(object)
-    @object = object
+  def perform(options)
+    @object = options[:object_type].constantize.find(options[:object_id])
     generate_pdf
   end
 

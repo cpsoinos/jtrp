@@ -1,11 +1,11 @@
-class ConsignmentPeriodEndingNotifierJob < ActiveJob::Base
+class ConsignmentPeriodEndingNotifierJob < ApplicationJob
   queue_as :default
 
   attr_reader :agreement, :category
 
-  def perform(agreement, category)
-    @agreement = agreement
-    @category = category
+  def perform(options)
+    @agreement = Agreement.find(options[:agreement_id])
+    @category = options[:category]
     execute
   end
 

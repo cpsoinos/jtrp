@@ -1,4 +1,4 @@
-class StatementJob < ActiveJob::Base
+class StatementJob < ApplicationJob
   queue_as :cron
 
   def perform

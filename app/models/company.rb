@@ -1,4 +1,4 @@
-class Company < ActiveRecord::Base
+class Company < ApplicationRecord
   acts_as_paranoid
   audited
 
@@ -8,7 +8,7 @@ class Company < ActiveRecord::Base
   mount_uploader :logo, PhotoUploader
 
   has_many :internal_users
-  belongs_to :primary_contact, class_name: "User", foreign_key: "primary_contact_id"
+  belongs_to :primary_contact, class_name: "User", foreign_key: "primary_contact_id", optional: true
 
   validates :name, presence: true
 

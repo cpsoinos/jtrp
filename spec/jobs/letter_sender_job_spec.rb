@@ -9,7 +9,7 @@ describe LetterSenderJob do
   end
 
   it "perform" do
-    LetterSenderJob.perform_later(letter)
+    LetterSenderJob.perform_later(letter_id: letter.id)
 
     expect(Letter::Sender).to have_received(:new).with(letter)
     expect(sender).to have_received(:send_letter)

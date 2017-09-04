@@ -1,4 +1,4 @@
-class Order < ActiveRecord::Base
+class Order < ApplicationRecord
   include PublicActivity::Common
   
   acts_as_paranoid

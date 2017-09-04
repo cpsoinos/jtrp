@@ -97,7 +97,7 @@ class Notifier < ApplicationMailer
   end
 
   def orders(timeframe)
-    Order.paid.where(created_at: timeframe).uniq.order(:created_at)
+    Order.paid.where(created_at: timeframe).distinct.order(:created_at)
   end
 
 end

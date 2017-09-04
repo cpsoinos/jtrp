@@ -1,4 +1,4 @@
-class Webhook < ActiveRecord::Base
+class Webhook < ApplicationRecord
   has_many :webhook_entries
 
   after_create :create_webhook_entries

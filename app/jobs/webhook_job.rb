@@ -1,4 +1,4 @@
-class WebhookJob < ActiveJob::Base
+class WebhookJob < ApplicationJob
   queue_as :default
 
   def perform(integration, data)

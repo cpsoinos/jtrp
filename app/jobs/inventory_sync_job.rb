@@ -1,10 +1,10 @@
 require 'active_job/traffic_control'
 
-class InventorySyncJob < ActiveJob::Base
+class InventorySyncJob < ApplicationJob
   queue_as :default
   include ActiveJob::TrafficControl::Throttle
 
-  throttle threshold: 4, period: 1.second
+  throttle threshold: 4, period: 1.second unless Rails.env.test?
 
   rescue_from(Clover::CloverError) do
     retry_job wait: 5.minutes, queue: :low

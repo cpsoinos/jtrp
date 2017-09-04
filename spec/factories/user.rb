@@ -2,10 +2,14 @@ require 'factory_girl'
 
 FactoryGirl.define do
 
+  sequence :email do |n|
+    "person#{n}@example.com"
+  end
+
   factory :user, class: User do
     first_name Faker::Name.first_name
     last_name Faker::Name.last_name
-    sequence(:email) { |n| "person#{n}@example.com" }
+    email
     password "supersecret"
     password_confirmation "supersecret"
     status "active"
@@ -30,6 +34,7 @@ FactoryGirl.define do
     end
 
     factory :admin, class: Admin do
+      email
       trait :with_oauth_account do
         oauth_accounts { [create(:oauth_account)] }
       end
