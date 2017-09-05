@@ -8,6 +8,10 @@ class ApplicationController < ActionController::Base
   before_action :find_categories
   before_action :meta_tags
 
+  def page_params
+    params.permit(:page)
+  end
+
   def find_company
     @company ||= Company.find_by(name: "Just the Right Piece")
   end

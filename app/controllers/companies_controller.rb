@@ -8,7 +8,7 @@ class CompaniesController < ApplicationController
     presenter = MetricsPresenter.new
     build_js_metrics(presenter)
     @metrics = presenter.build_metrics
-    @activities = PublicActivity::Activity.includes(:owner, :trackable).order(created_at: :desc).page(params[:page]).per(5)
+    @activities = PublicActivity::Activity.includes(:owner, :trackable).order(created_at: :desc).page(page_params).per(5)
   end
 
   def home
@@ -67,7 +67,7 @@ class CompaniesController < ApplicationController
   end
 
   def build_todos
-    @items = ItemsPresenter.new.todo.page(params[:page]).distinct
+    @items = ItemsPresenter.new.todo.page(page_params).distinct
     @statements = StatementsPresenter.new.todo.distinct
     @agreements = AgreementsPresenter.new.todo.distinct
   end

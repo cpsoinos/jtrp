@@ -32,7 +32,7 @@ class ItemsPresenter
   def paginate
     return self if labels.present?
     if params[:page]
-      @items = @items.page(params[:page])
+      @items = @items.page(page_params)
     else
       @items = @items.offset(@offset).limit(@limit)
     end

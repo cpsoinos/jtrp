@@ -19,7 +19,7 @@ class AccountsPresenter
   end
 
   def paginate
-    @accounts = @accounts.page(params[:page])
+    @accounts = @accounts.page(page_params)
   end
 
   def execute

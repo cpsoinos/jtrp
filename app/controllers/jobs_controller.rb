@@ -19,7 +19,7 @@ class JobsController < ApplicationController
     @proposals = @job.proposals
     @agreements = @job.agreements
     @type = params[:type]
-    @items = @job.items.includes(:account).filter(filter_params).page(params[:page])
+    @items = @job.items.includes(:account).filter(filter_params).page(page_params)
     @title = @job.name
   end
 

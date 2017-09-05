@@ -15,7 +15,7 @@ class AccountsController < ApplicationController
     @agreements = @account.agreements
     @statements = @account.statements
     if @account.slug == 'jtrp'
-      @items = Item.jtrp.page(params[:page])
+      @items = Item.jtrp.page(page_params)
       respond_to do |format|
         format.html
         format.js

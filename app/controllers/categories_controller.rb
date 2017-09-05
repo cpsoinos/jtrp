@@ -68,9 +68,9 @@ class CategoriesController < ApplicationController
   def find_items
     @items = begin
       if @category.subcategory?
-        @category.items.active.page(params[:page]).per(12)
+        @category.items.active.page(page_params).per(12)
       else
-        Item.active.where(category_id: ([@category.id] | @category.subcategories.pluck(:id))).page(params[:page]).per(12)
+        Item.active.where(category_id: ([@category.id] | @category.subcategories.pluck(:id))).page(page_params).per(12)
       end
     end
   end

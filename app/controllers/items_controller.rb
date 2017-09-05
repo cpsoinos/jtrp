@@ -43,7 +43,7 @@ class ItemsController < ApplicationController
     @title = "Discountable Items"
     @discount_amounts = [10, 20, 30, 40, 50]
     amount = params[:amount].try(:to_i)
-    @items = Item.includes(:proposal, :job, :account).discountable(amount).page(params[:page])
+    @items = Item.includes(:proposal, :job, :account).discountable(amount).page(page_params)
   end
 
   def apply_discount
