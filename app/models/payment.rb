@@ -25,7 +25,7 @@ class Payment < ApplicationRecord
   end
 
   def process
-    PaymentProcessorJob.perform_later(payment_id: id)
+    Payments::Processor.new(self).process
   end
 
 end

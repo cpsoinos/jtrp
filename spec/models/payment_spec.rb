@@ -1,10 +1,12 @@
 describe Payment do
 
   it { should be_audited.associated_with(:order) }
+  let(:processor) { double("processor") }
 
   before do
     allow(Clover::Payment).to receive(:find)
-    allow(PaymentProcessorJob).to receive(:perform_later)
+    allow(Payments::Processor).to receive(:new).and_return(processor)
+    allow(processor).to receive(:process)
   end
 
   context "validations" do
@@ -21,7 +23,8 @@ describe Payment do
     payment = build(:payment, remote_id: '3KVFXMRVTYF4C')
     payment.save
 
-    expect(PaymentProcessorJob).to have_received(:perform_later)
+    expect(Payments::Processor).to have_received(:new).with(payment)
+    expect(processor).to have_received(:process)
   end
 
 end
