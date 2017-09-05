@@ -15,7 +15,7 @@
     <%= render "agreements/#{@agreement.agreement_type}", items: @items, agreement: @agreement, proposal: @proposal, job: @job, account: @account, client: @client %>
 
     <% if current_user.try(:internal?) %>
-      <%= render 'scanned_upload_form', agreement: @agreement %>
+      <%#= render 'scanned_upload_form', agreement: @agreement %>
     <% end %>
 
   </div>
