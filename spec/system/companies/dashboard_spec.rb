@@ -149,6 +149,19 @@ describe 'dashboard' do
         expect(page).to have_content('Agreement tagged as unexpireable.')
         expect(agreement.reload.tag_list).to include('unexpireable')
       end
+
+      scenario 'tags an agreement as client retrieved', js: true do
+        visit dashboard_path
+        within('.card-nav-tabs') do
+          click_link('Agreements')
+        end
+        first(:link, 'done').click
+        click_button('Expire without Notifying Client')
+
+        expect(page).to have_content('Note:')
+        expect(page).to have_content('Agreement tagged as items retrieved.')
+        expect(agreement.reload.tag_list).to include('items_retrieved')
+      end
     end
   end
 

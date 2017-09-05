@@ -85,6 +85,12 @@ describe Agreement do
       expect(Agreement.unexpireable).to match_array([active_agreement])
     end
 
+    it "unexpireable" do
+      active_agreement.tag_list.add("items_retrieved")
+      active_agreement.save
+      expect(Agreement.items_retrieved).to match_array([active_agreement])
+    end
+
   end
 
   it "deletes cache after destroy" do

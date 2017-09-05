@@ -16,7 +16,7 @@ class AgreementsPresenter
       .by_type('consign')
       .active
       .joins(proposal: :items)
-      .tagged_with('unexpireable', exclude: true)
+      .tagged_with(['unexpireable', 'items_retrieved'], exclude: true)
       .merge(
         Item.pending_expiration
       )

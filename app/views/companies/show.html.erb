@@ -253,7 +253,8 @@
                     account_id: todo.account.id,
                     agreement_link: "#{link_to('Agreement No. ' + todo.id.to_s, agreement_path(todo)).html_safe}",
                     day_count: (DateTime.now.to_date - (todo.items.where.not(listed_at: nil).order(:listed_at).first.listed_at.to_date)).to_i,
-                    unexpireable_button: "#{button_to('Unexpireable', agreement_tag_path(todo, tag: 'unexpireable'), remote: true, class: 'btn btn-raised btn-secondary').html_safe}"
+                    unexpireable_button: "#{button_to('Unexpireable', agreement_tag_path(todo, tag: 'unexpireable'), remote: true, class: 'btn btn-raised btn-secondary').html_safe}",
+                    items_retrieved: "#{button_to('Expire without Notifying Client', agreement_tag_path(todo, tag: 'items_retrieved'), remote: true, class: 'btn btn-raised btn-secondary').html_safe}"
                   } %>
                 </div>
               </div>
