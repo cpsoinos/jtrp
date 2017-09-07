@@ -50,3 +50,4 @@ staging:
 
 production:
   <<: *default_settings
+  log_level: info
