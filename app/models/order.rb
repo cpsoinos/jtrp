@@ -1,6 +1,6 @@
 class Order < ApplicationRecord
   include PublicActivity::Common
-  
+
   acts_as_paranoid
   audited
 
@@ -10,6 +10,10 @@ class Order < ApplicationRecord
   has_many :payments
 
   monetize :amount_cents, allow_nil: true, numericality: {
+    greater_than_or_equal_to: 0,
+    less_than_or_equal_to: 1000000
+  }
+  monetize :delivery_charge_cents, allow_nil: true, numericality: {
     greater_than_or_equal_to: 0,
     less_than_or_equal_to: 1000000
   }

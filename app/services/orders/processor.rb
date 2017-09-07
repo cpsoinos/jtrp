@@ -13,6 +13,8 @@ module Orders
       retrieve_items
       retrieve_discounts
       apply_discounts
+      retrieve_delivery_charge
+      apply_delivery_charge
       set_timestamps
       mark_items_sold
     end
@@ -44,7 +46,7 @@ module Orders
       line_items.each do |line_item|
         remote_item = line_item.try(:item)
         next if remote_item.nil?
-        item = Item.find_by(id: remote_item.sku)
+        item = Item.find_by(id: remote_item.try(:sku))
         next if item.nil?
         order.items << item
         item.save
@@ -64,6 +66,16 @@ module Orders
       retrieve_discounts.each do |discount|
         Discounts::Applier.new(discount).execute
       end
+    end
+
+    def retrieve_delivery_charge
+      @_retrieve_delivery_charge ||= line_items.detect { |i| i.try(:name) == 'Delivery Charge' }
+    end
+
+    def apply_delivery_charge
+      return if retrieve_delivery_charge.nil?
+      return unless retrieve_delivery_charge.try(:price).is_a?(Integer)
+      order.update(delivery_charge_cents: retrieve_delivery_charge.price)
     end
 
     def mark_items_sold
