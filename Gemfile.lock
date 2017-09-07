@@ -724,7 +724,7 @@ GEM
     sendgrid-ruby (5.0.0)
       ruby_http_client (~> 3.0)
       sinatra (>= 1.4.7, < 3)
-    sentry-raven (2.6.2)
+    sentry-raven (2.6.3)
       faraday (>= 0.7.6, < 1.0)
     sextant (0.2.4)
       rails (>= 3.2)
