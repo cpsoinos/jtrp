@@ -59,14 +59,16 @@
       </td>
     </tr>
   <% end %>
-  <tr>
-    <th>
-      Notes:
-    </th>
-    <td>
-      <%= item.notes %>
-    </td>
-  </tr>
+  <% if item.notes.present? %>
+    <tr>
+      <th>
+        Notes:
+      </th>
+      <td>
+        <%= item.notes %>
+      </td>
+    </tr>
+  <% end %>
 </table>
 
 <%= form_for item, class: "form-horizontal", remote: true do |f| %>
