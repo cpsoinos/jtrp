@@ -9,6 +9,7 @@ describe Order do
   it { should validate_uniqueness_of(:remote_id).with_message("remote_id already taken").allow_nil }
 
   it { should monetize(:amount).allow_nil }
+  it { should monetize(:delivery_charge).allow_nil }
 
   context "scopes" do
 
