@@ -45,6 +45,22 @@ class ItemsPresenter
     self
   end
 
+  def limit
+    @limit.nil? ? nil : Integer(@limit)
+  end
+
+  def offset
+    @offset.nil? ? nil : Integer(@offset)
+  end
+
+  def sort_column
+    (sortable_columns & [params[:sort_column]]).first || default_sort
+  end
+
+  def sort_direction
+    (['asc','desc'] & [params[:sort_direction]]).first
+  end
+
   def execute
     filter.search.sort.paginate
     @items

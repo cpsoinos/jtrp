@@ -1,40 +1,44 @@
 require 'prawn/labels'
 
 class ItemsController < ApplicationController
+  include PresenterParamsHelper
   before_action :find_clients, only: [:new, :edit]
   before_action :find_categories, only: [:new, :edit, :show, :index, :discountable]
   before_action :find_proposal, only: [:create, :batch_create]
-  before_action :require_internal, except: [:show, :update, :feed]
+  before_action :require_internal, except: [:show, :update, :feed, :index]
   before_action :find_item, only: :show
 
   def index
     @title = "Items"
-    if filter_params[:status] == "all"
-      filter_params.delete(:status)
-    end
-    @filter = params[:status].try(:capitalize)
-    @type = params[:type]
-    presenter = ItemsPresenter.new(filter_params)
-    @items = presenter.execute
-
     respond_to do |format|
       format.html
       format.json do
-        data = {
-          total: Item.count,
-          rows: @items.as_json(
-            methods: [
-              :description_link,
-              :featured_photo_url,
-              :humanized_purchase_price,
-              :account_link,
-              :humanized_minimum_sale_price,
-              :humanized_listing_price,
-              :humanized_sale_price
-            ]
-          )
-        }
-        render json: data
+        params.delete(:format)
+        if filter_params[:status] == "all"
+          filter_params.delete(:status)
+        end
+        @filter = params[:status].try(:capitalize)
+        @type = params[:type]
+        presenter = ItemsPresenter.new(filter_params)
+        presenter_response_headers(presenter)
+
+        render json: presenter.execute.as_json(include: include_params, methods: methods_params)
+        # data = {
+        #   total: Item.count,
+        #   rows: @items.as_json(
+        #     methods: [
+        #       :description_link,
+        #       :featured_photo_url,
+        #       :humanized_purchase_price,
+        #       :account_link,
+        #       :humanized_minimum_sale_price,
+        #       :humanized_listing_price,
+        #       :humanized_sale_price
+        #     ]
+        #   )
+        # }
+        # binding.pry
+        # render json: data
       end
     end
   end
@@ -234,7 +238,7 @@ class ItemsController < ApplicationController
   end
 
   def filter_params
-    params.except(:controller, :action, :item)
+    params.except(:controller, :action, :item, :include, :methods)
   end
 
   def find_item
