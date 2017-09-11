@@ -61,7 +61,7 @@ class ItemsPresenter
   end
 
   def todo
-    items.where(id: (no_listing_price | no_sale_price))
+    rows.where(id: (no_listing_price | no_sale_price))
   end
 
   private

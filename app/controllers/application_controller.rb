@@ -142,9 +142,21 @@ class ApplicationController < ActionController::Base
     JSON.parse(params[:include]).deep_symbolize_keys if params[:include]
   end
 
-  # def methods_params
-  #   params[:methods] if params[:methods]
-  # end
+  def authenticate_request!
+    auth_token
+  rescue JWT::VerificationError, JWT::DecodeError
+    render json: { errors: ['Not Authenticated'] }, status: :unauthorized
+  end
+
+  def http_token
+    if request.headers['Authorization'].present?
+      request.headers['Authorization'].split(' ').last
+    end
+  end
+
+  def auth_token
+    JsonWebToken.verify(http_token)
+  end
 
   def ssl_configured?
     Rails.env.production? && controller_name != 'webhooks'

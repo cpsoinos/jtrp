@@ -2,6 +2,7 @@ require 'prawn/labels'
 
 class ItemsController < ApplicationController
   include PresenterParamsHelper
+  include Secured
   before_action :find_clients, only: [:new, :edit]
   before_action :find_categories, only: [:new, :edit, :show, :index, :discountable]
   before_action :find_proposal, only: [:create, :batch_create]
@@ -13,6 +14,7 @@ class ItemsController < ApplicationController
     respond_to do |format|
       format.html
       format.json do
+        authenticate_request!
         presenter = ItemsPresenter.new(params)
         presenter_response_headers(presenter)
 
