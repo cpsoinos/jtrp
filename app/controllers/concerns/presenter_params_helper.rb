@@ -5,9 +5,9 @@ module PresenterParamsHelper
 
   def presenter_response_headers(presenter)
     if presenter_params[:offset] || presenter_params[:limit]
-      response.headers["X-total"] = presenter.total.to_s
+      response.headers["X-total"] = presenter.total_count.to_s
       response.headers["X-offset"] = presenter.offset.to_s
-      response.headers["X-limit"] = presenter.limit.to_s
+      response.headers["X-limit"] = presenter.per_page.to_s
     end
 
     if presenter.respond_to?(:filtered_total)

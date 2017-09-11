@@ -9,7 +9,7 @@ class Item < ApplicationRecord
   acts_as_paranoid
   acts_as_taggable_on :tags
   audited associated_with: :proposal
-  multisearchable against: [:id, :account_item_number, :description, :original_description, :category_name, :category_id, :account_name, :job_name]
+  multisearchable against: [:id, :account_item_number, :description, :original_description, :category_name, :category_id, :account_name, :job_name], order_within_rank: "items.updated_at DESC"
   paginates_per 18
   has_secure_token
 

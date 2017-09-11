@@ -5,7 +5,7 @@ class ItemsController < ApplicationController
   before_action :find_clients, only: [:new, :edit]
   before_action :find_categories, only: [:new, :edit, :show, :index, :discountable]
   before_action :find_proposal, only: [:create, :batch_create]
-  before_action :require_internal, except: [:show, :update, :feed, :index]
+  before_action :require_internal, except: [:show, :update, :feed]
   before_action :find_item, only: :show
 
   def index
@@ -13,32 +13,10 @@ class ItemsController < ApplicationController
     respond_to do |format|
       format.html
       format.json do
-        params.delete(:format)
-        if filter_params[:status] == "all"
-          filter_params.delete(:status)
-        end
-        @filter = params[:status].try(:capitalize)
-        @type = params[:type]
-        presenter = ItemsPresenter.new(filter_params)
+        presenter = ItemsPresenter.new(params)
         presenter_response_headers(presenter)
 
-        render json: presenter.execute.as_json(include: include_params, methods: methods_params)
-        # data = {
-        #   total: Item.count,
-        #   rows: @items.as_json(
-        #     methods: [
-        #       :description_link,
-        #       :featured_photo_url,
-        #       :humanized_purchase_price,
-        #       :account_link,
-        #       :humanized_minimum_sale_price,
-        #       :humanized_listing_price,
-        #       :humanized_sale_price
-        #     ]
-        #   )
-        # }
-        # binding.pry
-        # render json: data
+        render json: presenter.execute.includes(account: :primary_contact).as_json(include: include_params, methods: params[:methods])
       end
     end
   end
@@ -224,7 +202,7 @@ class ItemsController < ApplicationController
   end
 
   def labels
-    opts = filter_params.merge(labels: true)
+    opts = params[:filter].merge(labels: true)
     @items = ItemsPresenter.new(opts).execute
     labels = LabelGenerator.new(@items).generate
 
@@ -237,9 +215,9 @@ class ItemsController < ApplicationController
     params.require(:item).permit(:description, {photos: []}, {initial_photos: []}, {listing_photos: []}, :purchase_price, :asking_price, :listing_price, :sale_price, :sold_at, :minimum_sale_price, :condition, :category_id, :client_intention, :notes, :will_purchase, :will_consign, :account_item_number, :consignment_rate, :proposal_id, :parent_item_id, :jtrp_number, :expired, :consignment_term, :parts_cost, :labor_cost, {tag_list: []}, :acquired_at)
   end
 
-  def filter_params
-    params.except(:controller, :action, :item, :include, :methods)
-  end
+  # def params[:filter]
+  #   params.except(:controller, :action, :item, :include, :methods)
+  # end
 
   def find_item
     @item = Item.find(params[:id])

@@ -142,9 +142,9 @@ class ApplicationController < ActionController::Base
     JSON.parse(params[:include]).deep_symbolize_keys if params[:include]
   end
 
-  def methods_params
-    params[:methods] if params[:methods]
-  end
+  # def methods_params
+  #   params[:methods] if params[:methods]
+  # end
 
   def ssl_configured?
     Rails.env.production? && controller_name != 'webhooks'
