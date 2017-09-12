@@ -64,6 +64,7 @@ class Item < ApplicationRecord
   validates :token, uniqueness: true, allow_nil: true
 
   after_validation :ensure_token_uniqueness
+  after_save :recalculate_agreement_association, on: :update
 
   scope :status, -> (status) { where(status: status) }
   scope :type, -> (type) do
@@ -344,6 +345,13 @@ class Item < ApplicationRecord
   def should_not_sync?
     listing_price_cents.nil? ||
       "fee".in?(tag_list)
+  end
+
+  def recalculate_agreement_association
+    if agreement && agreement.agreement_type != client_intention
+      agreement_item.destroy
+      self.agreement = proposal.agreements.find_or_create_by(agreement_type: client_intention)
+    end
   end
 
 end

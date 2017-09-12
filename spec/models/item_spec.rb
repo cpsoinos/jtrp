@@ -228,11 +228,18 @@ describe Item do
   end
 
   it "regenerates token before save to prevent collisions" do
-    item = create(:item, description: "first item", token: "abc")
+    create(:item, description: "first item", token: "abc")
     new_item = build(:item, description: "second item", token: "abc")
     new_item.save
 
     expect(new_item.token).not_to eq("abc")
+  end
+
+  it "recalculates its association with an agreement when updated" do
+    item = create(:item, :consigned, :active)
+    item.update(client_intention: 'sell')
+
+    expect(item.agreement.agreement_type).to eq('sell')
   end
 
 end
