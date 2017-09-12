@@ -27,8 +27,7 @@ describe "statement" do
     end
 
     scenario "arrives at account's statements list" do
-      visit accounts_path(status: "active")
-      click_link("View Statements")
+      visit account_statements_path(account)
 
       expect(page).to have_content("Statements")
       expect(page).to have_content("for #{statement.account.full_name}")
@@ -44,9 +43,7 @@ describe "statement" do
     end
 
     scenario "arrives at a statement page" do
-      visit accounts_path(status: "active")
-      click_link("View Statements")
-      click_link(statement.humanized_name)
+      visit account_statement_path(account, statement)
 
       expect(page).to have_content("Consignment Sales")
       expect(page).to have_content("September, 2016")
