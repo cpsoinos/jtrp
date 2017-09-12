@@ -5,7 +5,6 @@ jobs:
     docker:
       - image: circleci/ruby:2.4.1-node-browsers
       - image: circleci/postgres:9.5-alpine
-      # - image: selenium/standalone-chrome-debug
     steps:
       - checkout
 
@@ -25,10 +24,6 @@ jobs:
       # Database setup
       - run: bundle exec rake db:create
       - run: bundle exec rake db:schema:load
-      #
-      # - run:
-      #   command: Xvfb :99
-      #   background: true
 
       # Run rspec in parallel
       - type: shell
