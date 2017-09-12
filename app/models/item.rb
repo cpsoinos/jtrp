@@ -15,6 +15,7 @@ class Item < ApplicationRecord
 
   has_many :photos, -> { order(position: :asc) }, dependent: :destroy
   accepts_nested_attributes_for :photos
+  has_one :featured_photo, -> { where(position: 1) }, class_name: "Photo"
   belongs_to :category, touch: true, optional: true
   belongs_to :proposal, counter_cache: true, touch: true, optional: true
   belongs_to :order, optional: true
@@ -120,18 +121,6 @@ class Item < ApplicationRecord
 
   def listing_photos
     photos.listing
-  end
-
-  def featured_photo
-    Rails.cache.fetch("#{cache_key}/featured_photo") do
-      if listing_photos.present?
-        listing_photos.first
-      elsif initial_photos.present?
-        initial_photos.first
-      else
-        Photo.default_photo
-      end
-    end
   end
 
   def featured_photo_url
