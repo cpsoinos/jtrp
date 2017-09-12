@@ -257,7 +257,7 @@ describe 'agreement' do
 
         scenario "agreement has both potential and active items" do
           agreement.update_attributes(client_agreed: true)
-          create(:item, proposal: proposal, client_intention: 'consign')
+          agreement.items << create(:item, proposal: proposal, client_intention: 'consign')
           agreement.mark_active
           item.mark_active
           visit agreement_path(agreement)

@@ -12,7 +12,7 @@ class AgreementsPresenter
   end
 
   def todo
-    Agreement.includes(proposal: :items, account: :primary_contact)
+    Agreement.includes(:items, :letters, account: :primary_contact)
       .by_type('consign')
       .active
       .joins(proposal: :items)
