@@ -5,6 +5,8 @@ describe Item do
   it { should belong_to(:proposal) }
   it { should belong_to(:order) }
   it { should have_many(:photos) }
+  it { should have_one(:agreement_item) }
+  it { should have_one(:agreement).through(:agreement_item) }
   it { should have_one(:statement_item) }
   it { should have_one(:statement).through(:statement_item) }
 

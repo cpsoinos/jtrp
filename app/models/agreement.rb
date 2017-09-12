@@ -11,13 +11,15 @@ class Agreement < ApplicationRecord
   mount_uploader :pdf, PdfUploader
 
   belongs_to :proposal, touch: true
-  has_many :items, -> (instance) { where(items: {client_intention: instance.agreement_type, parent_item_id: nil}).where.not(items: {expired: 'true'}) }, through: :proposal
+  has_many :agreement_items
+  has_many :items, through: :agreement_items
   has_one :job, through: :proposal
   has_one :account, through: :job
   has_many :letters
   belongs_to :created_by, class_name: "User", optional: true
   belongs_to :updated_by, class_name: "User", optional: true
 
+  after_create :gather_items
   after_destroy :delete_cache
 
   validates :agreement_type, presence: true
@@ -164,6 +166,10 @@ class Agreement < ApplicationRecord
       item.original_description = item.description
       item.save
     end
+  end
+
+  def gather_items
+    Agreements::ItemGatherer.new(self, proposal).execute
   end
 
 end

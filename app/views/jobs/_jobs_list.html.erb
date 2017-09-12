@@ -13,27 +13,7 @@
         </tr>
       </thead>
       <tbody>
-        <% cache [status, jobs] do %>
-          <% jobs.each do |job| %>
-            <tr>
-              <td class="text-center">
-                <div class="img-container">
-                  <%= link_to image_tag(job.maps_url, class: "img-rounded img-responsive img-raised"), account_job_path(job.account, job) %>
-                </div>
-              </td>
-              <td>
-                <%= link_to "<i class='material-icons'>map</i> No. #{job.id}: <br />#{job.address_1} <br />#{job.city}, #{job.state} #{job.zip}".html_safe, account_job_path(job.account, job) %>
-              </td>
-              <td class="text-center"><%= job.status %></td>
-              <td class="text-center">
-                <%= link_to job.account.inverse_full_name, account_path(job.account) %>
-              </td>
-              <td class="text-center">
-                <%= job.items_count %>
-              </td>
-            </tr>
-          <% end %>
-        <% end %>
+        <%= render partial: "jobs/job", collection: jobs, cached: true %>
       </tbody>
     </table>
   </div>

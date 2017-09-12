@@ -29,6 +29,8 @@ class Item < ApplicationRecord
   has_one :job, through: :proposal
   has_one :account, through: :job
   has_many :webhook_entries, as: :webhookable
+  has_one :agreement_item
+  has_one :agreement, through: :agreement_item
   has_one :statement_item
   has_one :statement, through: :statement_item
 
@@ -143,13 +145,13 @@ class Item < ApplicationRecord
     ActionController::Base.helpers.link_to(description.titleize, Rails.application.routes.url_helpers.item_path(self)).html_safe
   end
 
-  def agreement
-    Rails.cache.fetch("#{proposal.cache_key}/#{client_intention}_agreement") do
-      if proposal
-        proposal.agreements.find_by(agreement_type: client_intention)
-      end
-    end
-  end
+  # def agreement
+  #   Rails.cache.fetch("#{proposal.cache_key}/#{client_intention}_agreement") do
+  #     if proposal
+  #       proposal.agreements.find_by(agreement_type: client_intention)
+  #     end
+  #   end
+  # end
 
   def barcode
     require 'barby'

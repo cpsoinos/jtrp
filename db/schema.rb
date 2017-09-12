@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170907121305) do
+ActiveRecord::Schema.define(version: 20170912203539) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -49,6 +49,15 @@ ActiveRecord::Schema.define(version: 20170907121305) do
     t.index ["owner_id", "owner_type"], name: "index_activities_on_owner_id_and_owner_type"
     t.index ["recipient_id", "recipient_type"], name: "index_activities_on_recipient_id_and_recipient_type"
     t.index ["trackable_id", "trackable_type"], name: "index_activities_on_trackable_id_and_trackable_type"
+  end
+
+  create_table "agreement_items", force: :cascade do |t|
+    t.bigint "agreement_id"
+    t.bigint "item_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["agreement_id"], name: "index_agreement_items_on_agreement_id"
+    t.index ["item_id"], name: "index_agreement_items_on_item_id"
   end
 
   create_table "agreements", id: :serial, force: :cascade do |t|
@@ -538,6 +547,8 @@ ActiveRecord::Schema.define(version: 20170907121305) do
     t.datetime "updated_at"
   end
 
+  add_foreign_key "agreement_items", "agreements"
+  add_foreign_key "agreement_items", "items"
   add_foreign_key "agreements", "proposals"
   add_foreign_key "checks", "statements"
   add_foreign_key "discounts", "items"

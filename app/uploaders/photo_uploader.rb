@@ -17,6 +17,10 @@ class PhotoUploader < CarrierWave::Uploader::Base
     cloudinary_transformation width: 555, height: 367, crop: "fill", gravity: "auto"
   end
 
+  def default_url(*args)
+    "thumb_No_Image_Available.png"
+  end
+
   def default_public_id
     ENV['CLOUDINARY_DEFAULT_IMAGE_ID']
   end
