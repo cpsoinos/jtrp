@@ -3,9 +3,9 @@ jobs:
   build:
     working_directory: ~/jtrp
     docker:
-      - image: circleci/ruby:2.4.1-node
+      - image: circleci/ruby:2.4.1-node-browsers
       - image: circleci/postgres:9.5-alpine
-      - image: selenium/standalone-chrome-debug
+      # - image: selenium/standalone-chrome-debug
     steps:
       - checkout
 
