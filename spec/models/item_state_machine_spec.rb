@@ -15,7 +15,7 @@ describe ItemStateMachine do
 
   it "transitions 'potential' to 'active' when requirements met" do
     proposal = create(:proposal, :active)
-    item = create(:item, proposal: proposal, client_intention: "sell")
+    item = create(:item, proposal: proposal, client_intention: "sell", agreement: create(:agreement, :active, proposal: proposal))
     item.mark_active!
 
     expect(item).to be_active
@@ -23,7 +23,7 @@ describe ItemStateMachine do
 
   it "syncs to clover when transitioning 'potential' to 'active'" do
     proposal = create(:proposal, :active)
-    item = create(:item, proposal: proposal, client_intention: "sell", listing_price_cents: 5000)
+    item = create(:item, proposal: proposal, client_intention: "sell", listing_price_cents: 5000, agreement: create(:agreement, :active, proposal: proposal))
     item.mark_active!
 
     expect(syncer).to have_received(:remote_create)
@@ -31,7 +31,7 @@ describe ItemStateMachine do
 
   it "does not sync to clover when no listing price" do
     proposal = create(:proposal, :active)
-    item = create(:item, proposal: proposal, client_intention: "sell")
+    item = create(:item, proposal: proposal, client_intention: "sell", agreement: create(:agreement, :active, proposal: proposal))
     item.mark_active!
 
     expect(syncer).not_to have_received(:remote_create)
@@ -107,7 +107,7 @@ describe ItemStateMachine do
   it "sets listed_at" do
     now = DateTime.now
     proposal = create(:proposal, :active)
-    item = create(:item, proposal: proposal, client_intention: "sell")
+    item = create(:item, proposal: proposal, client_intention: "sell", agreement: create(:agreement, :active, proposal: proposal))
     Timecop.freeze(now)
     item.mark_active!
     Timecop.return

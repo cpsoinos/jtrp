@@ -6,6 +6,7 @@ FactoryGirl.define do
     sequence(:description) { |n| "#{Faker::Lorem.sentence(3, true, 0)} #{n}".titleize }
     sequence(:token) { |n| "#{Faker::Code.ean}n" }
     proposal
+    agreement
     client_intention "sell"
     status "potential"
 
