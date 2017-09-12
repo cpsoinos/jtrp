@@ -5,12 +5,13 @@ describe "statement" do
   let(:account) { create(:account, :active, :with_client) }
   let(:proposal) { create(:proposal, :active, job: create(:job, :active, account: account)) }
   let!(:agreement) { create(:agreement, :active, :consign, proposal: proposal) }
-  let!(:items) { create_list(:item, 5, :sold, sale_price_cents: 5000, client_intention: 'consign', proposal: agreement.proposal) }
+  let!(:items) { create_list(:item, 5, :sold, sale_price_cents: 5000, client_intention: 'consign', proposal: agreement.proposal, agreement: agreement) }
   let!(:statement) { create(:statement, account: account) }
 
   context "internal user" do
 
     before do
+      agreement.items << items
       Timecop.freeze("October 1, 2016")
       day_incrementer = 1
       items.map do |item|

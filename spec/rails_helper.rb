@@ -85,8 +85,8 @@ RSpec.configure do |config|
   end
 
   config.before(:each, type: :system, js: true) do
-    driven_by :headless_chrome # a driver I define elsewhere
-    # driven_by :chrome # a driver I define elsewhere
+    # driven_by :headless_chrome # a driver I define elsewhere
+    driven_by :chrome # a driver I define elsewhere
   end
 
 end

@@ -19,17 +19,20 @@ FactoryGirl.define do
 
     trait :inactive do
       status "inactive"
+      association :agreement, :inactive
       association :proposal, :active
     end
 
     trait :sold do
       status "sold"
+      association :agreement, :inactive
       association :proposal, :inactive
       listed_at 10.days.ago
     end
 
     trait :owned do
       status "active"
+      association :agreement, :active
       association :proposal, :active
       client_intention "sell"
       listed_at 10.days.ago
@@ -37,6 +40,7 @@ FactoryGirl.define do
 
     trait :consigned do
       status "active"
+      association :agreement, :active
       association :proposal, :active_consign
       # proposal { create(:proposal, :active, agreements: [create(:agreement, :active, :consign)]) }
       client_intention "consign"
@@ -45,6 +49,7 @@ FactoryGirl.define do
 
     trait :expired do
       status "active"
+      association :agreement, :inactive
       association :proposal, :expired
       client_intention "consign"
       listed_at 91.days.ago
