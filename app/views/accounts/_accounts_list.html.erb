@@ -13,7 +13,11 @@
         </tr>
       </thead>
       <tbody>
-        <%= render partial: 'accounts/account', collection: accounts, cached: true %>
+        <% cache accounts do %>
+          <% accounts.each do |account| %>
+            <%= render 'accounts/account', account: account %>
+          <% end %>
+        <% end %>
       </tbody>
     </table>
 

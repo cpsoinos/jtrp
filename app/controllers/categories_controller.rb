@@ -3,6 +3,7 @@ class CategoriesController < ApplicationController
 
   def index
     @title = "Categories"
+    @primary_categories = @categories.primary
   end
 
   def show
