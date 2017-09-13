@@ -33,7 +33,7 @@ module ItemStateMachine
     end
 
     def mark_agreement_inactive
-      agreement.mark_inactive unless import?
+      agreement.mark_inactive unless import? || expired?
     end
 
     def meets_requirements_active?
