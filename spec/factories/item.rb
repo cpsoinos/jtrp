@@ -50,8 +50,8 @@ FactoryGirl.define do
 
     trait :expired do
       status "active"
-      association :agreement, :inactive
       association :proposal, :expired
+      agreement nil
       client_intention "consign"
       listed_at 91.days.ago
       expired true
