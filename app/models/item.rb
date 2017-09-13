@@ -301,6 +301,7 @@ class Item < ApplicationRecord
       self.expired = true
       self.save
       mark_agreement_inactive
+      agreement_item.destroy
     end
   end
 
