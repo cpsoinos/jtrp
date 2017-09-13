@@ -12,7 +12,7 @@ class Agreement < ApplicationRecord
 
   belongs_to :proposal, touch: true
   has_many :agreement_items
-  has_many :items, through: :agreement_items
+  has_many :items, -> { where.not(expired: true) }, through: :agreement_items
   has_one :job, through: :proposal
   has_one :account, through: :job
   has_many :letters

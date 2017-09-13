@@ -5,7 +5,7 @@ module Agreements
     let(:proposal) { create(:proposal) }
     let!(:items) do
       %w(sell consign donate dump move undecided).each do |intention|
-        create(:item, proposal: proposal, client_intention: intention)
+        create(:item, proposal: proposal, client_intention: intention, agreement: nil)
       end
     end
 
