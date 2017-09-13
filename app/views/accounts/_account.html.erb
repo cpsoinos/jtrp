@@ -1,43 +1,45 @@
-<tr id="account-<%= account.id %>-row">
-  <td class="text-center">
-    <div class="img-container">
-      <%= link_to image_tag(account.avatar, class: "img-rounded img-responsive img-raised"), account_path(account) %>
-    </div>
-  </td>
-  <td class="td-name">
-    <%= link_to account.inverse_full_name, account_path(account) %>
-    <br><small>Primary Contact: <%= account.primary_contact_id ? link_to(account.full_name, client_path(account.primary_contact_id)) : '' %></small>
-  </td>
-  <td class="text-center">
-    <%= account.id %>
-  </td>
-  <td class="text-center">
-    <%= account.jobs_count %>
-  </td>
-  <td class="text-center">
-    <%= account.proposals.sum(:items_count) %>
-  </td>
-  <td class="text-center">
+<% cache account do %>
+  <tr id="account-<%= account.id %>-row">
+    <td class="text-center">
+      <div class="img-container">
+        <%= link_to image_tag(account.avatar, class: "img-rounded img-responsive img-raised"), account_path(account) %>
+      </div>
+    </td>
+    <td class="td-name">
+      <%= link_to account.inverse_full_name, account_path(account) %>
+      <br><small>Primary Contact: <%= account.primary_contact_id ? link_to(account.full_name, client_path(account.primary_contact_id)) : '' %></small>
+    </td>
+    <td class="text-center">
+      <%= account.id %>
+    </td>
+    <td class="text-center">
+      <%= account.jobs_count %>
+    </td>
+    <td class="text-center">
+      <%= account.proposals.sum(:items_count) %>
+    </td>
+    <td class="text-center">
 
-    <div class="btn-group dropdown">
-      <button type="button" class="btn btn-raised btn-fab btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <i class='material-icons'>menu</i>
-      </button>
-      <ul class="dropdown-menu dropdown-menu-right">
+      <div class="btn-group dropdown">
+        <button type="button" class="btn btn-raised btn-fab btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class='material-icons'>menu</i>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-right">
 
-        <% if account.consignment_account? %>
-          <li><%= link_to "View Statements", account_statements_path(account) %></li>
-          <li><%= link_to "View Letters", account_letters_path(account) %></li>
-        <% end %>
-        <% unless account.inactive? %>
-          <li><%= link_to "Deactivate", account_deactivate_path(account), method: :post %></li>
-        <% end %>
-        <% if account.inactive? %>
-          <li><%= link_to "Reactivate", account_reactivate_path(account), method: :post %></li>
-        <% end %>
+          <% if account.consignment_account? %>
+            <li><%= link_to "View Statements", account_statements_path(account) %></li>
+            <li><%= link_to "View Letters", account_letters_path(account) %></li>
+          <% end %>
+          <% unless account.inactive? %>
+            <li><%= link_to "Deactivate", account_deactivate_path(account), method: :post %></li>
+          <% end %>
+          <% if account.inactive? %>
+            <li><%= link_to "Reactivate", account_reactivate_path(account), method: :post %></li>
+          <% end %>
 
-      </ul>
-    </div>
+        </ul>
+      </div>
 
-  </td>
-</tr>
+    </td>
+  </tr>
+<% end %>

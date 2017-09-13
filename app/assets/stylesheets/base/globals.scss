@@ -314,3 +314,52 @@ th.headerSortDown {
 .activity-feed-timestamp {
   font-size: 100% !important;
 }
+
+.main-raised-no-margin {
+  border-radius: $border-radius-base * 2;
+  padding: 3rem;
+  @include shadow-16dp();
+}
+
+
+@media (min-width: $screen-md-min) {
+  .row {
+    > .col-md-3:nth-child(4n+1) {
+      clear: both;
+    }
+    > .col-md-4:nth-child(3n+1) {
+      clear: both;
+    }
+    > .col-md-6:nth-child(2n+1) {
+      clear: both;
+    }
+  }
+}
+
+// @media (min-width: $screen-sm-min) {
+//   .row {
+//     > .col-sm-3:nth-child(4n+1) {
+//       clear: both;
+//     }
+//     > .col-sm-4:nth-child(3n+1) {
+//       clear: both;
+//     }
+//     > .col-sm-6:nth-child(2n+1) {
+//       clear: both;
+//     }
+//   }
+// }
+//
+// @media (min-width: $screen-xs-min) {
+//   .row {
+//     > .col-xs-3:nth-child(4n+1) {
+//       clear: both;
+//     }
+//     > .col-xs-4:nth-child(3n+1) {
+//       clear: both;
+//     }
+//     > .col-xs-6:nth-child(2n+1) {
+//       clear: both;
+//     }
+//   }
+// }

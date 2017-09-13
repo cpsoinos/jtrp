@@ -20,17 +20,17 @@
   </div>
 
   <div class="container-fluid">
-    <div class="row">
-      <div class="col-md-10 col-md-offset-1 col-xs-12">
-        <% @items.each_slice(4) do |items| %>
-          <div class="row">
-            <%= render partial: "categories/item", collection: items, cached: true %>
-          </div>
+    <div class="col-xs-12 col-md-10 col-md-offset-1">
+      <div class="row">
+        <% cache @items do %>
+          <% @items.each do |item| %>
+            <%= render "categories/item", item: item %>
+          <% end %>
         <% end %>
+      </div>
 
-        <div class="text-center">
-          <%= paginate @items %>
-        </div>
+      <div class="text-center">
+        <%= paginate @items %>
       </div>
     </div>
   </div>
