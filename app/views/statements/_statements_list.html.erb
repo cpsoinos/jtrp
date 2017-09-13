@@ -12,25 +12,7 @@
         </tr>
       </thead>
       <tbody>
-        <% statements.each do |statement| %>
-          <tr class="no-break">
-            <td>
-              <%= link_to "<i class='material-icons md-48'>account_balance_wallet</i> #{statement.humanized_name}".html_safe, account_statement_path(statement.account, statement) %>
-            </td>
-            <td class="text-center">
-              <%= statement.date.last_month.strftime("%B, %Y") %>
-            </td>
-            <td class="text-center">
-              <%= statement.status %>
-            </td>
-            <td class="text-center">
-              <%= link_to statement.account.inverse_full_name, account_path(statement.account) %>
-            </td>
-            <td class="text-center">
-              <%= humanized_money_with_symbol(statement.amount_due_to_client) %>
-            </td>
-          </tr>
-        <% end %>
+        <%= render partial: "statements/statement", collection: statements, cached: true %>
       </tbody>
     </table>
   </div>

@@ -19,11 +19,7 @@
     <div class="container">
       <h2 class="section-title title">Just a few of our items...</h2>
       <div class="row">
-        <% @featured_items.each do |item| %>
-          <div class="col-md-4">
-            <%= render "items/card", item: item, cached: true %>
-          </div>
-        <% end %>
+        <%= render partial: "companies/item", collection: @featured_items, cached: true %>
       </div>
     </div>
   </div>
@@ -32,16 +28,10 @@
     <h2 class="section-title title">Shop by category...</h2>
     <div class="row">
       <div class="col-md-12">
-        <% cache @categories.primary do %>
-          <% @categories.primary.each_slice(4) do |categories| %>
-            <div class="row">
-              <% categories.each do |category| %>
-                <div class="col-md-3">
-                  <%= render "categories/card", category: category, cached: true %>
-                </div>
-              <% end %>
-            </div>
-          <% end %>
+        <% @categories.primary.each_slice(4) do |categories| %>
+          <div class="row">
+            <%= render partial: "categories/category", collection: categories, cached: true %>
+          </div>
         <% end %>
       </div>
     </div>

@@ -3,10 +3,11 @@ describe Agreement do
   it { should be_audited.associated_with(:proposal) }
   it { should belong_to(:proposal) }
   it { should have_one(:account).through(:job) }
-  it { should have_many(:items).through(:proposal) }
   it { should have_many(:letters) }
   it { should belong_to(:created_by) }
   it { should belong_to(:updated_by) }
+  it { should have_many(:agreement_items) }
+  it { should have_many(:items).through(:agreement_items) }
 
   describe "validations" do
     it { should validate_presence_of(:proposal) }
@@ -26,7 +27,7 @@ describe Agreement do
     let!(:agreement) { create(:agreement, :consign, :active) }
     let!(:proposal) { agreement.proposal }
     let!(:owned_items) { create_list(:item, 3, :owned, proposal: proposal) }
-    let!(:consigned_items) { create_list(:item, 3, :consigned, proposal: proposal) }
+    let!(:consigned_items) { create_list(:item, 3, :consigned, proposal: proposal, agreement: agreement) }
     let!(:expired_items) { create_list(:item, 3, :expired, proposal: proposal) }
 
     it "has items that match its agreement_type" do

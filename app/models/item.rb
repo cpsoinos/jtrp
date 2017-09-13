@@ -5,6 +5,10 @@ class Item < ApplicationRecord
   include PgSearch
   extend FriendlyId
 
+  def self.default_scope
+    includes(:primary_photo).where(deleted_at: nil)
+  end
+
   friendly_id :description, use: [:slugged, :finders, :history]
   acts_as_paranoid
   acts_as_taggable_on :tags
@@ -15,6 +19,7 @@ class Item < ApplicationRecord
 
   has_many :photos, -> { order(position: :asc) }, dependent: :destroy
   accepts_nested_attributes_for :photos
+  has_one :primary_photo, -> { where(position: 1) }, class_name: "Photo"
   belongs_to :category, touch: true, optional: true
   belongs_to :proposal, counter_cache: true, touch: true, optional: true
   belongs_to :order, optional: true
@@ -24,6 +29,8 @@ class Item < ApplicationRecord
   has_one :job, through: :proposal
   has_one :account, through: :job
   has_many :webhook_entries, as: :webhookable
+  has_one :agreement_item
+  has_one :agreement, through: :agreement_item
   has_one :statement_item
   has_one :statement, through: :statement_item
 
@@ -57,6 +64,7 @@ class Item < ApplicationRecord
   validates :token, uniqueness: true, allow_nil: true
 
   after_validation :ensure_token_uniqueness
+  after_save :recalculate_agreement_association, on: :update
 
   scope :status, -> (status) { where(status: status) }
   scope :type, -> (type) do
@@ -123,15 +131,7 @@ class Item < ApplicationRecord
   end
 
   def featured_photo
-    Rails.cache.fetch("#{cache_key}/featured_photo") do
-      if listing_photos.present?
-        listing_photos.first
-      elsif initial_photos.present?
-        initial_photos.first
-      else
-        Photo.default_photo
-      end
-    end
+    primary_photo || Photo.new
   end
 
   def featured_photo_url
@@ -150,13 +150,13 @@ class Item < ApplicationRecord
     ActionController::Base.helpers.link_to(description.titleize, Rails.application.routes.url_helpers.item_path(self)).html_safe
   end
 
-  def agreement
-    Rails.cache.fetch("#{proposal.cache_key}/#{client_intention}_agreement") do
-      if proposal
-        proposal.agreements.find_by(agreement_type: client_intention)
-      end
-    end
-  end
+  # def agreement
+  #   Rails.cache.fetch("#{proposal.cache_key}/#{client_intention}_agreement") do
+  #     if proposal
+  #       proposal.agreements.find_by(agreement_type: client_intention)
+  #     end
+  #   end
+  # end
 
   def barcode
     require 'barby'
@@ -301,6 +301,7 @@ class Item < ApplicationRecord
       self.expired = true
       self.save
       mark_agreement_inactive
+      agreement_item.destroy
     end
   end
 
@@ -345,6 +346,13 @@ class Item < ApplicationRecord
   def should_not_sync?
     listing_price_cents.nil? ||
       "fee".in?(tag_list)
+  end
+
+  def recalculate_agreement_association
+    if agreement && agreement.agreement_type != client_intention
+      agreement_item.destroy
+      self.agreement = proposal.agreements.find_or_create_by(agreement_type: client_intention)
+    end
   end
 
 end

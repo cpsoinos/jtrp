@@ -5,12 +5,13 @@ describe "statement" do
   let(:account) { create(:account, :active, :with_client) }
   let(:proposal) { create(:proposal, :active, job: create(:job, :active, account: account)) }
   let!(:agreement) { create(:agreement, :active, :consign, proposal: proposal) }
-  let!(:items) { create_list(:item, 5, :sold, sale_price_cents: 5000, client_intention: 'consign', proposal: agreement.proposal) }
+  let!(:items) { create_list(:item, 5, :sold, sale_price_cents: 5000, client_intention: 'consign', proposal: agreement.proposal, agreement: agreement) }
   let!(:statement) { create(:statement, account: account) }
 
   context "internal user" do
 
     before do
+      agreement.items << items
       Timecop.freeze("October 1, 2016")
       day_incrementer = 1
       items.map do |item|
@@ -26,8 +27,7 @@ describe "statement" do
     end
 
     scenario "arrives at account's statements list" do
-      visit accounts_path(status: "active")
-      click_link("View Statements")
+      visit account_statements_path(account)
 
       expect(page).to have_content("Statements")
       expect(page).to have_content("for #{statement.account.full_name}")
@@ -43,9 +43,7 @@ describe "statement" do
     end
 
     scenario "arrives at a statement page" do
-      visit accounts_path(status: "active")
-      click_link("View Statements")
-      click_link(statement.humanized_name)
+      visit account_statement_path(account, statement)
 
       expect(page).to have_content("Consignment Sales")
       expect(page).to have_content("September, 2016")

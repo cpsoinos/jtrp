@@ -15,7 +15,7 @@ describe AgreementStateMachine do
 
   it "transitions 'potential' to 'active'" do
     agreement = create(:agreement)
-    items = create_list(:item, 3, proposal: agreement.proposal, client_intention: "sell")
+    items = create_list(:item, 3, proposal: agreement.proposal, client_intention: "sell", agreement: agreement)
     items.each do |item|
       expect(item.original_description).to eq(nil)
     end
