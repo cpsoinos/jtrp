@@ -2,7 +2,7 @@
   <div class="card card-product card-plain">
     <%= link_to category_path(category) do %>
       <div class="card-image">
-        <%= cl_image_tag(category.featured_photo.photo.full_public_id,
+        <%= cl_image_tag(category.featured_photo.full_public_id || category.photo.default_public_id,
           width: :auto,
           fetch_format: "auto",
           quality: "auto",

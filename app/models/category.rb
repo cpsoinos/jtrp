@@ -36,7 +36,7 @@ class Category < ApplicationRecord
 
   def featured_photo
     Rails.cache.fetch([cache_key, "item_photo"]) do
-      items.active.sample.try(:featured_photo) || self # fallback to own photo
+      items.active.sample.try(:featured_photo).try(:photo) || self.photo # fallback to own photo
     end
   end
 
