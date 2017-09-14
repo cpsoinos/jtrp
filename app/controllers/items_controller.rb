@@ -6,6 +6,7 @@ class ItemsController < ApplicationController
   before_action :find_proposal, only: [:create, :batch_create]
   # before_action :require_internal, except: [:show, :update, :feed]
   before_action :find_item, only: :show
+  include Secured
 
   def index
     binding.pry
