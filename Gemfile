@@ -108,7 +108,6 @@ end
 
 group :development, :test do
   gem 'dotenv-rails', require: 'dotenv/rails-now'
-  gem 'sextant'
   gem 'better_errors'
   gem 'faker'
   gem 'factory_girl_rails'

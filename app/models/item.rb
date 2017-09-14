@@ -5,9 +5,9 @@ class Item < ApplicationRecord
   include PgSearch
   extend FriendlyId
 
-  def self.default_scope
-    includes(:primary_photo).where(deleted_at: nil)
-  end
+  # def self.default_scope
+  #   includes(:primary_photo).where(deleted_at: nil)
+  # end
 
   friendly_id :description, use: [:slugged, :finders, :history]
   acts_as_paranoid

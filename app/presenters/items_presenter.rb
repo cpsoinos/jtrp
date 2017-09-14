@@ -19,7 +19,7 @@ class ItemsPresenter
   end
 
   def filtered_total
-    filter.rows.uniq.count
+    filter.search.rows.uniq.count
   end
 
   def total_count

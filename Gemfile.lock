@@ -726,8 +726,6 @@ GEM
       sinatra (>= 1.4.7, < 3)
     sentry-raven (2.6.3)
       faraday (>= 0.7.6, < 1.0)
-    sextant (0.2.4)
-      rails (>= 3.2)
     shellany (0.0.1)
     shoulda-matchers (3.1.2)
       activesupport (>= 4.0.0)
@@ -947,7 +945,6 @@ DEPENDENCIES
   sendgrid
   sendgrid-ruby
   sentry-raven
-  sextant
   shoulda-matchers
   sidekiq
   sidekiq-unique-jobs

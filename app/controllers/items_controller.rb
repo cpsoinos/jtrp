@@ -1,26 +1,40 @@
 require 'prawn/labels'
 
 class ItemsController < ApplicationController
-  include PresenterParamsHelper
-  include Secured
   before_action :find_clients, only: [:new, :edit]
   before_action :find_categories, only: [:new, :edit, :show, :index, :discountable]
   before_action :find_proposal, only: [:create, :batch_create]
-  # before_action :require_internal, except: [:show, :update, :feed]
+  before_action :require_internal, except: [:show, :update, :feed]
   before_action :find_item, only: :show
-  include Secured
 
   def index
-    binding.pry
     @title = "Items"
+    if filter_params[:status] == "all"
+      filter_params.delete(:status)
+    end
+    @filter = params[:status].try(:capitalize)
+    @type = params[:type]
+    presenter = ItemsPresenter.new(filter_params)
+    @items = presenter.execute
+
     respond_to do |format|
       format.html
       format.json do
-        authenticate_request!
-        presenter = ItemsPresenter.new(params)
-        presenter_response_headers(presenter)
-
-        render json: presenter.execute.includes(account: :primary_contact).as_json(include: include_params, methods: params[:methods])
+        data = {
+          total: Item.count,
+          rows: @items.as_json(
+            methods: [
+              :description_link,
+              :featured_photo_url,
+              :humanized_purchase_price,
+              :account_link,
+              :humanized_minimum_sale_price,
+              :humanized_listing_price,
+              :humanized_sale_price
+            ]
+          )
+        }
+        render json: data
       end
     end
   end
@@ -219,9 +233,9 @@ class ItemsController < ApplicationController
     params.require(:item).permit(:description, {photos: []}, {initial_photos: []}, {listing_photos: []}, :purchase_price, :asking_price, :listing_price, :sale_price, :sold_at, :minimum_sale_price, :condition, :category_id, :client_intention, :notes, :will_purchase, :will_consign, :account_item_number, :consignment_rate, :proposal_id, :parent_item_id, :jtrp_number, :expired, :consignment_term, :parts_cost, :labor_cost, {tag_list: []}, :acquired_at)
   end
 
-  # def params[:filter]
-  #   params.except(:controller, :action, :item, :include, :methods)
-  # end
+  def filter_params
+    params.except(:controller, :action, :item)
+  end
 
   def find_item
     @item = Item.find(params[:id])

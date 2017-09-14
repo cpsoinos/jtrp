@@ -123,4 +123,10 @@ Rails.application.routes.draw do
 
   get :account_items_list, controller: :accounts
 
+  namespace "api" do
+
+    resources :items, only: [:index]
+
+  end
+
 end
