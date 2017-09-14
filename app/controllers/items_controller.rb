@@ -4,10 +4,11 @@ class ItemsController < ApplicationController
   before_action :find_clients, only: [:new, :edit]
   before_action :find_categories, only: [:new, :edit, :show, :index, :discountable]
   before_action :find_proposal, only: [:create, :batch_create]
-  before_action :require_internal, except: [:show, :update, :feed]
+  # before_action :require_internal, except: [:show, :update, :feed]
   before_action :find_item, only: :show
 
   def index
+    binding.pry
     @title = "Items"
     if filter_params[:status] == "all"
       filter_params.delete(:status)
