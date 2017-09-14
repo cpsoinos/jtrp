@@ -79,6 +79,7 @@ gem 'summernote-rails'
 gem 'render_async'
 gem 'ahoy_email'
 gem 'record_tag_helper', '~> 1.0'
+gem 'jwt'
 # gem 'wicked_pdf'
 # gem 'pdfkit'
 
