@@ -108,8 +108,8 @@ describe 'agreement' do
       let!(:agreement) { create(:agreement, :consign, proposal: proposal) }
 
       before do
-        # Company.first.update_attribute('primary_contact_id', user.id)
         allow(syncer).to receive(:remote_create).and_return(true)
+        agreement.items << item
       end
 
       scenario 'visits consignment agreement path' do
@@ -257,7 +257,6 @@ describe 'agreement' do
 
         scenario "agreement has both potential and active items" do
           agreement.update_attributes(client_agreed: true)
-          create(:item, proposal: proposal, client_intention: 'consign')
           agreement.mark_active
           item.mark_active
           visit agreement_path(agreement)

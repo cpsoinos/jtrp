@@ -17,40 +17,7 @@
           </tr>
         </thead>
         <tbody>
-          <% agreements.each do |agreement| %>
-            <tr>
-              <td class="text-center">
-                <%= link_to "<i class='material-icons md-48'>assignment_turned_in</i> #{agreement.id}".html_safe, agreement_path(agreement) %>
-              </td>
-              <td class="text-center"><%= link_to agreement.humanized_agreement_type, agreement_path(agreement) %></td>
-              <td class="text-center">
-                <% if agreement.date %>
-                  <%= agreement.date.strftime("%m/%d/%y") %>
-                <% end %>
-              </td>
-              <td class="text-center"><%= agreement.status %></td>
-              <% unless controller_name == "accounts" %>
-                <td class="text-center">
-                  <%= link_to agreement.account.inverse_full_name, account_path(agreement.account) %>
-                </td>
-              <% end %>
-              <td>
-                <%= link_to "<i class='material-icons'>map</i> No. #{agreement.job.id}: <br />#{agreement.job.address_1} <br />#{agreement.job.city}, #{agreement.job.state} #{agreement.job.zip}".html_safe, account_job_path(agreement.account, agreement.job) %>
-              </td>
-              <td class="text-center">
-                <%= link_to "<i class='material-icons'>assignment</i> #{agreement.proposal_id}".html_safe, account_job_proposal_path(agreement.account, agreement.job, agreement.proposal) %>
-              </td>
-              <td class="item-row-description">
-                <ul class="list-unstyled">
-                  <% agreement.letters.each do |letter| %>
-                    <li>
-                      <%= link_to "<i class='material-icons'>mail_outline</i> #{letter.humanized_category}".html_safe, account_letter_path(agreement.account, letter) %>
-                    </li>
-                  <% end %>
-                </ul>
-              </td>
-            </tr>
-          <% end %>
+          <%= render partial: "agreements/agreement", collection: agreements, cached: true %>
         </tbody>
       </table>
     </div>

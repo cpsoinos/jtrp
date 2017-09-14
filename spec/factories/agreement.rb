@@ -5,6 +5,7 @@ FactoryGirl.define do
   factory :agreement do
     proposal
     agreement_type "sell"
+    status "potential"
     sequence(:token) { |n| "token#{n}" }
 
     trait :consign do

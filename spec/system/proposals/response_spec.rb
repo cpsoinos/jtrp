@@ -4,7 +4,7 @@ describe "proposal response" do
   let(:proposal) { create(:proposal, created_by: user) }
   let(:job) { proposal.job }
   let(:account) { job.account }
-  let!(:items) { create_list(:item, 4, proposal: proposal, client_intention: "undecided") }
+  let!(:items) { create_list(:item, 4, proposal: proposal, client_intention: "undecided", agreement: nil) }
   let!(:intentions) { %w(sell consign decline undecided) }
 
   before do
@@ -26,7 +26,7 @@ describe "proposal response" do
         within("#edit_item_#{item.id}") do
           find("label", text: intentions[i]).click
         end
-        
+
         expect(page).to have_content("Success!", wait: 3)
         wait_for_ajax
         item.reload

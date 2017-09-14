@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   end
 
   get '/sitemap', to: 'passthrough#sitemap'
+  get '/secured_ping', to: 'secured_ping#ping'
 
   devise_for :users, controllers: { registrations: 'users/registrations', omniauth_callbacks: 'users/omniauth_callbacks', sessions: 'users/sessions' }
   root 'companies#home'
