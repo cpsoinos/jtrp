@@ -2,17 +2,31 @@
   <div class="card card-product card-plain">
     <%= link_to category_path(category) do %>
       <div class="card-image">
-        <%= cl_image_tag(category.featured_photo.photo.full_public_id,
-          width: :auto,
-          fetch_format: "auto",
-          quality: "auto",
-          gravity: "auto",
-          aspect_ratio: "3:4",
-          crop: "fill",
-          responsive: true,
-          responsive_placeholder: "blank",
-          radius: 10,
-        ) %>
+        <% if category.featured_photo.try(:full_public_id) %>
+          <%= cl_image_tag(category.featured_photo.full_public_id,
+            width: :auto,
+            fetch_format: "auto",
+            quality: "auto",
+            gravity: "auto",
+            aspect_ratio: "3:4",
+            crop: "fill",
+            responsive: true,
+            responsive_placeholder: "blank",
+            radius: 10
+          ) %>
+        <% else %>
+          <%= image_tag(category.photo_url,
+            width: :auto,
+            fetch_format: "auto",
+            quality: "auto",
+            gravity: "auto",
+            aspect_ratio: "3:4",
+            crop: "fill",
+            responsive: true,
+            responsive_placeholder: "blank",
+            radius: 10
+          ) %>
+        <% end %>
       </div>
     <% end %>
 

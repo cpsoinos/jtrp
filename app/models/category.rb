@@ -9,7 +9,7 @@ class Category < ApplicationRecord
 
   has_many :items
   has_many :subcategories, class_name: "Category", foreign_key: "parent_id"
-  belongs_to :parent, class_name: "Category", touch: true, optional: true
+  belongs_to :parent, class_name: "Category", touch: true, optional: true, counter_cache: :subcategories_count
   mount_uploader :photo, PhotoUploader
 
   validates :name, presence: true, uniqueness: true
@@ -19,13 +19,11 @@ class Category < ApplicationRecord
   scope :categorized, -> { where.not(slug: "uncategorized") }
 
   def subcategory?
-    parent.present?
+    parent_id.present?
   end
 
   def parent?
-    Rails.cache.fetch(cache_key) do
-      subcategories.present?
-    end
+    subcategories_count != 0
   end
 
   def lowest_price
@@ -36,7 +34,7 @@ class Category < ApplicationRecord
 
   def featured_photo
     Rails.cache.fetch([cache_key, "item_photo"]) do
-      items.active.sample.try(:featured_photo) || self # fallback to own photo
+      items.has_photos.active.sample.try(:featured_photo).try(:photo) || self.photo
     end
   end
 

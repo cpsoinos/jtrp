@@ -112,6 +112,9 @@ class Item < ApplicationRecord
     listed_at = Item.arel_table[:listed_at]
     tagged_with('expired', exclude: true).where(client_intention: 'consign', status: %w(active inactive), expired: false).where(listed_at.lt(90.days.ago))
    }
+   scope :has_photos, -> {
+     joins(:photos)
+   }
 
   amoeba do
     include_association :category

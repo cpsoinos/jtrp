@@ -22,7 +22,7 @@
           <li class="<%= 'active' if @navtab == 'categories' %>">
             <%= link_to "<i class='fa fa-filter'></i> Categories <i class='material-icons pull-right'>arrow_drop_down</i>".html_safe, "#collapse-categories", role: "button", data: {toggle: "collapse", parent: "#accordion"}, aria: {expanded: true, controls: "collapse-categories"}, class: "" %>
             <ul id="collapse-categories" class="nav <%= 'collapse' unless @navtab == 'categories' %> nested-nav-li">
-              <%= render "categories/sidebar_list", categories: @categories, cached: true %>
+              <%= render "categories/sidebar_list", categories: @categories %>
             </ul>
           </li>
           <li class="<%= @navtab == 'items' ? 'active' : '' %>">
@@ -50,7 +50,7 @@
             <%= link_to "<i class='material-icons'>attach_money</i><p>Statements</p>".html_safe, statements_list_statements_path %>
           </li>
         <% else %>
-          <%= render "categories/sidebar_list", categories: @categories, cached: true %>
+          <%= render "categories/sidebar_list", categories: @categories %>
         <% end %>
       </ul>
     </div>

@@ -1,4 +1,4 @@
-<% categories.includes(:subcategories).primary.each do |category| %>
+<% categories.primary.each do |category| %>
   <% cache [category, current_user.try(:role)] do %>
     <li>
       <% if category.parent? %>
