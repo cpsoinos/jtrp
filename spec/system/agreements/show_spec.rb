@@ -8,9 +8,6 @@ describe 'agreement' do
 
   before do
     allow(PdfGeneratorJob).to receive(:perform_later).and_return(true)
-    # company = Company.jtrp
-    # company.primary_contact = create(:internal_user)
-    # company.save
     allow(LetterSenderJob).to receive(:perform_later).and_return(true)
     allow(ItemExpirerJob).to receive(:perform_later).and_return(true)
     allow(InventorySync).to receive(:new).and_return(syncer)
@@ -34,8 +31,8 @@ describe 'agreement' do
     end
 
     context 'sell' do
-      let!(:item) { create(:item, proposal: proposal, client_intention: 'sell') }
       let!(:agreement) { create(:agreement, :sell, proposal: proposal) }
+      let!(:item) { create(:item, proposal: proposal, agreement: agreement, client_intention: 'sell') }
 
       scenario 'client intends to sell an item', js: true do
         visit account_job_proposal_agreements_path(account, job, proposal)
@@ -104,8 +101,8 @@ describe 'agreement' do
     end
 
     context 'consign' do
-      let!(:item) { create(:item, proposal: proposal, client_intention: 'consign') }
       let!(:agreement) { create(:agreement, :consign, proposal: proposal) }
+      let!(:item) { create(:item, proposal: proposal, agreement: agreement, client_intention: 'consign') }
 
       before do
         allow(syncer).to receive(:remote_create).and_return(true)
@@ -276,8 +273,8 @@ describe 'agreement' do
   end
 
   context 'client' do
-    let!(:item) { create(:item, proposal: proposal, client_intention: 'consign') }
     let!(:agreement) { create(:agreement, :consign, proposal: proposal) }
+    let!(:item) { create(:item, proposal: proposal, agreement: agreement, client_intention: 'consign') }
 
     before do
       allow(PdfGeneratorJob).to receive(:perform_later)

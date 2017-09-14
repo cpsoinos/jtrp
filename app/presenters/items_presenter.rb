@@ -1,67 +1,57 @@
 class ItemsPresenter
-  include DataPaginatable
 
-  attr_reader :filters, :query, :params, :resource
+  attr_reader :params, :resource, :filters, :query, :labels, :items
 
   def initialize(params={}, items=nil)
-    @filters = params[:filters]
-    @query   = params[:query] || params[:search]
-    @params  = params
-  end
-
-  def for_resource(resource)
+    @params   = params
     @resource = resource
-    self
-  end
-
-  def execute
-    filter.search.order_by.paginate.rows
-  end
-
-  def filtered_total
-    filter.search.rows.uniq.count
-  end
-
-  def total_count
-    rows.uniq.count
-  end
-
-  def order_by
-    @rows = rows.order("#{sort_column} #{sort_direction} NULLS LAST")
-    self
-  end
-
-  def sortable_columns
-    ["items.id", "items.description", "items.status", "accounts.slug", "items.account_item_number", "items.purchase_price_cents", "items.listing_price_cents", "items.sale_price_cents", "items.sold_at"]
-  end
-
-  def default_sort
-    sortable_columns.first
+    @query    = params.delete(:query) || params.delete(:search)
+    @labels   = params.delete(:labels)
+    @sort     = params.delete(:sort) || "description"
+    @order    = params.delete(:order)
+    @limit    = params.delete(:limit) || 25
+    @offset   = params.delete(:offset) || 0
+    @filters  = params
+    @items   ||= item_base
   end
 
   def filter
-    if filters.present?
-      @rows = rows.filter(filters)
+    @items = @items.filter(filters)
+    self
+  end
+
+  def sort
+    @items = @items.order("#{@sort} #{@order} NULLS LAST")
+    self
+  end
+
+  def total
+    @items.count
+  end
+
+  def paginate
+    return self if labels.present?
+    if params[:page]
+      @items = @items.page(params[:page])
+    else
+      @items = @items.offset(@offset).limit(@limit)
     end
     self
   end
 
-  def total_count
-    rows.uniq.count
-  end
-
   def search
     return self if query.blank?
-    @rows = rows.joins(:pg_search_document).merge(PgSearch.multisearch(query))
+    @items = @items.joins(:pg_search_document).merge(PgSearch.multisearch(query))
     self
   end
 
-  def rows
-    @rows ||= item_base.all
+  def execute
+    filter.search.sort.paginate
+    @items
   end
 
   def todo
-    rows.where(id: (no_listing_price | no_sale_price))
+    @items.where(id: (no_listing_price | no_sale_price))
   end
 
   private
@@ -75,10 +65,10 @@ class ItemsPresenter
   end
 
   def item_base
-    if resource.present?
+    if resource
       resource.items
     else
-      Item
+      Item.includes(:account).joins(account: :primary_contact)
     end
   end
 

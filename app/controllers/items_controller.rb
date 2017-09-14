@@ -220,7 +220,7 @@ class ItemsController < ApplicationController
   end
 
   def labels
-    opts = params[:filter].merge(labels: true)
+    opts = filter_params.merge(labels: true)
     @items = ItemsPresenter.new(opts).execute
     labels = LabelGenerator.new(@items).generate
 
