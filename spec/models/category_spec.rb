@@ -31,11 +31,11 @@ describe Category do
 
     it "fetches an active item's featured photo" do
       item = create(:item, :with_listing_photo, :active, category: category)
-      expect(category.featured_photo).to eq(item.featured_photo)
+      expect(category.featured_photo.model).to eq(item.featured_photo.photo.model)
     end
 
-    it "falls back to itself when no active items" do
-      expect(category.featured_photo).to eq(category)
+    it "falls back to its own photo when no active items with photos" do
+      expect(category.featured_photo).to eq(category.photo)
     end
 
   end

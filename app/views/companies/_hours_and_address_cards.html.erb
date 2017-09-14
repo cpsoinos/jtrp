@@ -1,8 +1,8 @@
 <div class="section section-blog">
-  <div class="container">
+  <div class="container-fluid">
     <div class="row">
 
-      <div class="col-md-6">
+      <div class="col-lg-4 col-lg-offset-2 col-md-6 col-xs-12">
         <div class="card card-background" id="hours-of-operation">
           <div class="card-content">
             <%= link_to "<h3 class='card-title'>Hours of Operation</h3>".html_safe, about_path %>
@@ -34,7 +34,7 @@
         </div>
       </div>
 
-      <div class="col-md-6">
+      <div class="col-lg-4 col-md-6 col-xs-12">
         <div class="card card-background" style="background-image: url(<%= company.maps_url('600x400') %>);">
           <div class="card-content">
             <%= link_to "<h3 class='card-title'>Find Us</h3>".html_safe, about_path %>
@@ -52,4 +52,3 @@
     </div>
   </div>
 </div>
-<!-- section -->

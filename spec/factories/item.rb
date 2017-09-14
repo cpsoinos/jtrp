@@ -70,7 +70,7 @@ FactoryGirl.define do
 
     trait :with_listing_photo do
       after(:create) do |item|
-        create(:photo, :listing, item: item)
+        create(:photo, :listing, position: 1, item: item)
       end
     end
 
