@@ -19,3 +19,6 @@
 rspec.xml
 .idea
 keys.json
+
+# Ignore encrypted secrets key file.
+config/secrets.yml.key

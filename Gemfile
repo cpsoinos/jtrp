@@ -79,6 +79,7 @@ gem 'summernote-rails'
 gem 'render_async'
 gem 'ahoy_email'
 gem 'record_tag_helper', '~> 1.0'
+gem 'jwt'
 # gem 'wicked_pdf'
 # gem 'pdfkit'
 
@@ -107,7 +108,6 @@ end
 
 group :development, :test do
   gem 'dotenv-rails', require: 'dotenv/rails-now'
-  gem 'sextant'
   gem 'better_errors'
   gem 'faker'
   gem 'factory_girl_rails'

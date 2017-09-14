@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   end
 
   get '/sitemap', to: 'passthrough#sitemap'
+  get '/secured_ping', to: 'secured_ping#ping'
 
   devise_for :users, controllers: { registrations: 'users/registrations', omniauth_callbacks: 'users/omniauth_callbacks', sessions: 'users/sessions' }
   root 'companies#home'
@@ -121,5 +122,11 @@ Rails.application.routes.draw do
   resources :activities, only: [:index]
 
   get :account_items_list, controller: :accounts
+
+  namespace "api" do
+
+    resources :items, only: [:index]
+
+  end
 
 end

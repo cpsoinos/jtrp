@@ -5,15 +5,15 @@ class Item < ApplicationRecord
   include PgSearch
   extend FriendlyId
 
-  def self.default_scope
-    includes(:primary_photo).where(deleted_at: nil)
-  end
+  # def self.default_scope
+  #   includes(:primary_photo).where(deleted_at: nil)
+  # end
 
   friendly_id :description, use: [:slugged, :finders, :history]
   acts_as_paranoid
   acts_as_taggable_on :tags
   audited associated_with: :proposal
-  multisearchable against: [:id, :account_item_number, :description, :original_description, :category_name, :category_id, :account_name, :job_name]
+  multisearchable against: [:id, :account_item_number, :description, :original_description, :category_name, :category_id, :account_name, :job_name], order_within_rank: "items.updated_at DESC"
   paginates_per 18
   has_secure_token
 
