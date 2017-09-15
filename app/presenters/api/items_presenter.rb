@@ -4,8 +4,8 @@ module Api
 
     attr_reader :filters, :query, :params, :resource
 
-    def initialize(params={}, items=nil)
-      @filters = params[:filters]
+    def initialize(params, filters, items=nil)
+      @filters = filters
       @query   = params[:query] || params[:search]
       @params  = params
     end
