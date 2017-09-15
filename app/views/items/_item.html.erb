@@ -2,7 +2,16 @@
   <tr class="no-break" id="item-<%= item.id %>-row">
     <td class="text-center">
       <div class="img-container">
-        <%= link_to cl_image_tag(item.featured_photo.photo_url(client_hints: true, quality: "auto", fetch_format: :auto, dpr: "auto", effect: :improve, width: "120", height: "160", crop: "fill"), class: "img-rounded img-responsive img-raised"), item_url(item) %>
+        <%= link_to cl_image_tag(item.featured_photo.public_id,
+          client_hints: true,
+          quality: "auto",
+          fetch_format: :auto,
+          dpr: "auto",
+          effect: :improve,
+          width: "120",
+          height: "160",
+          crop: "fill",
+          class: "img-rounded img-responsive img-raised"), item_url(item) %>
       </div>
     </td>
     <td class="td-name">
