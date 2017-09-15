@@ -22,7 +22,11 @@ class Photo < ApplicationRecord
   end
 
   def public_id
-    photo.file.public_id
+    if photo.file
+      photo.file.public_id
+    else
+      ENV['CLOUDINARY_DEFAULT_IMAGE_ID']
+    end
   end
 
   def derived_resource_ids
