@@ -17,6 +17,7 @@
 //= require jquery.remotipart
 //= require bootstrap.min
 //= require moment.min
+//= require moment-timezone
 //= require bootstrap-datetimepicker
 //= require bootstrap-datepicker
 //= require validator.min

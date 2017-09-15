@@ -90,6 +90,7 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-toastr'
   gem 'rails-assets-jquery-infinite-scroll'
   gem 'rails-assets-bootstrap-table'
+  gem 'rails-assets-moment-timezone'
 end
 
 group :production, :staging do

@@ -1,7 +1,12 @@
 $(document).on('turbolinks:load', function() {
 
-  convertTimestamps();
-  initInfiniteScroll($(".activity-list"));
+  if ($(".activity-timestamp").length > 1) {
+    convertTimestamps();
+  };
+  
+  if ($(".activity-list").length > 1) {
+    initInfiniteScroll($(".activity-list"));
+  }
 
 })
 
@@ -34,7 +39,9 @@ function convertTimestamps() {
 }
 
 function convertRelative($timestamp) {
-  var time = $timestamp.data("timestamp");
-  var relativeTime = moment(time).calendar();
-  $timestamp.html(relativeTime);
+  var time = moment($timestamp.data("timestamp"));
+  var timeZone = moment.tz.guess()
+  var relativeTime = time.tz(timeZone).format('L hh:mm a z');
+  formattedtime = moment(time._d).format('L hh:mm a z');
+  $timestamp.html(formattedtime);
 }
