@@ -25,7 +25,7 @@ class Photo < ApplicationRecord
     if photo.file
       photo.file.public_id
     else
-      Photo.default_photo.public_id
+      ENV['CLOUDINARY_DEFAULT_IMAGE_ID']
     end
   end
 
