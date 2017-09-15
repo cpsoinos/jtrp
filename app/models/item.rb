@@ -129,7 +129,7 @@ class Item < ApplicationRecord
   end
 
   def featured_photo
-    photos.first
+    photos.first || Photo.default_photo
   end
 
   def featured_photo_url
