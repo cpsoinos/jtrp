@@ -22,7 +22,11 @@ class Photo < ApplicationRecord
   end
 
   def public_id
-    photo.file.public_id
+    if photo.file
+      photo.file.public_id
+    else
+      Photo.default_photo.public_id
+    end
   end
 
   def derived_resource_ids
