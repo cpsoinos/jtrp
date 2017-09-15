@@ -5,10 +5,6 @@ class Item < ApplicationRecord
   include PgSearch
   extend FriendlyId
 
-  # def self.default_scope
-  #   includes(:primary_photo).where(deleted_at: nil)
-  # end
-
   friendly_id :description, use: [:slugged, :finders, :history]
   acts_as_paranoid
   acts_as_taggable_on :tags
@@ -19,7 +15,6 @@ class Item < ApplicationRecord
 
   has_many :photos, -> { order(position: :asc) }, dependent: :destroy
   accepts_nested_attributes_for :photos
-  has_one :primary_photo, -> { where(position: 1) }, class_name: "Photo"
   belongs_to :category, touch: true, optional: true
   belongs_to :proposal, counter_cache: true, touch: true, optional: true
   belongs_to :order, optional: true
@@ -134,7 +129,7 @@ class Item < ApplicationRecord
   end
 
   def featured_photo
-    primary_photo || Photo.new
+    photos.first || Photo.default_photo
   end
 
   def featured_photo_url

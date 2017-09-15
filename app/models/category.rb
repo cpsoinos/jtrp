@@ -28,7 +28,7 @@ class Category < ApplicationRecord
 
   def lowest_price
     Rails.cache.fetch([cache_key, "lowest_price"]) do
-      items.where("listing_price_cents > ?", 0).order(:listing_price_cents).limit(1).first.try(:listing_price)
+      items.active.where("listing_price_cents > ?", 0).order(:listing_price_cents).first.try(:listing_price)
     end
   end
 

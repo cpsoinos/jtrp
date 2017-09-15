@@ -22,10 +22,8 @@
   <div class="container-fluid">
     <div class="col-xs-12 col-md-10 col-md-offset-1">
       <div class="row">
-        <% cache @items do %>
-          <% @items.each do |item| %>
-            <%= render "categories/item", item: item %>
-          <% end %>
+        <% @items.each do |item| %>
+          <%= render "categories/item", item: item %>
         <% end %>
       </div>
 
