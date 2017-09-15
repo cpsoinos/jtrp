@@ -12,7 +12,7 @@
 <div class="col-xs-12 col-md-8 col-md-offset-2 main main-raised-no-margin">
   <h2 class="section-title title">Just a few of our items...</h2>
   <div class="row">
-    <% cache @featured_items do %>
+    <% cache @featured_items, expires_in: 3.hours do %>
       <% @featured_items.each do |item| %>
         <%= render "companies/item", item: item %>
       <% end %>
@@ -23,6 +23,6 @@
 <div class="categories-section col-xs-12 col-md-8 col-md-offset-2 main main-raised-no-margin large-top-margin">
   <h2 class="section-title title">Shop by category...</h2>
   <div class="row">
-    <%= render partial: "categories/category", collection: @primary_categories %>
+    <%= render partial: "categories/category", collection: @primary_categories, cached: true %>
   </div>
 </div>
