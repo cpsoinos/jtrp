@@ -19,7 +19,7 @@ class Item < ApplicationRecord
 
   has_many :photos, -> { order(position: :asc) }, dependent: :destroy
   accepts_nested_attributes_for :photos
-  has_one :primary_photo, -> { where(position: 1) }, class_name: "Photo"
+  has_one :primary_photo, -> { order(position: :asc).first }, class_name: "Photo"
   belongs_to :category, touch: true, optional: true
   belongs_to :proposal, counter_cache: true, touch: true, optional: true
   belongs_to :order, optional: true
