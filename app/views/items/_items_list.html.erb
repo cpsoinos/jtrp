@@ -14,11 +14,7 @@
       </thead>
 
       <tbody>
-        <% cache [items, controller_name, action_name, current_user.try(:role)] do %>
-          <% items.each do |item| %>
-            <%= render item, context: context, headers: headers %>
-          <% end %>
-        <% end %>
+        <%= render items, context: context, headers: headers, collection: items, cached: true %>
       </tbody>
 
     </table>
