@@ -81,6 +81,7 @@ class Item < ApplicationRecord
   scope :consigned, -> { where(status: "active", client_intention: "consign", expired: false) }
   scope :for_sale, -> { active.where(client_intention: ['sell', 'consign']).or(expired) }
   scope :expired, -> { where(client_intention: 'consign', expired: true) }
+  scope :unexpired, -> { consigned.where(expired: false) }
 
   scope :discountable, -> (amount) do
     case amount
@@ -100,16 +101,18 @@ class Item < ApplicationRecord
   end
 
   scope :pending_expiration, -> {
-    listed_at = Item.arel_table[:listed_at]
-    tagged_with('expired', exclude: true).where(client_intention: 'consign', status: %w(active inactive), expired: false).where(listed_at.lt(80.days.ago))
-   }
+    joins(:agreement).consigned.where(listed_at: 90.days.ago..80.days.ago)
+    # listed_at = Item.arel_table[:listed_at]
+    # tagged_with('expired', exclude: true).where(client_intention: 'consign', status: %w(active inactive), expired: false).where(listed_at.lt(80.days.ago))
+  }
   scope :meets_requirements_expired, -> {
-    listed_at = Item.arel_table[:listed_at]
-    tagged_with('expired', exclude: true).where(client_intention: 'consign', status: %w(active inactive), expired: false).where(listed_at.lt(90.days.ago))
-   }
-   scope :has_photos, -> {
-     joins(:photos)
-   }
+    joins(:agreement).unexpired.consigned.where("listed_at < ?", 90.days.ago)
+    # listed_at = Item.arel_table[:listed_at]
+    # tagged_with('expired', exclude: true).where(client_intention: 'consign', status: %w(active inactive), expired: false).where(listed_at.lt(90.days.ago))
+  }
+  scope :has_photos, -> {
+    joins(:photos)
+  }
 
   amoeba do
     include_association :category

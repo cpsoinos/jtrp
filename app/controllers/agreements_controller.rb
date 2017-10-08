@@ -103,6 +103,9 @@ class AgreementsController < ApplicationController
   def tag
     @agreement = Agreement.find(params[:agreement_id])
     @agreement.tag_list.add(params[:tag])
+    if params[:tag] == 'items_retrieved'
+      agreement.items.map(&:mark_expired)
+    end
     if @agreement.save
       respond_to do |format|
         format.js do
