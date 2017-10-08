@@ -150,7 +150,8 @@ describe 'dashboard' do
         expect(agreement.reload.tag_list).to include('unexpireable')
       end
 
-      scenario 'tags an agreement as client retrieved', js: true do
+      scenario 'expires an agreement and items without sending client notification', js: true do
+        item.update_attribute('listed_at', 91.days.ago)
         visit dashboard_path
         within('.card-nav-tabs') do
           click_link('Agreements')
@@ -158,7 +159,34 @@ describe 'dashboard' do
         first(:link, 'done').click
         click_button('Expire without Notifying Client')
 
-        expect(page).to have_content('Note:')
+        expect(page).to have_content('Agreement and items expired.')
+        expect(agreement.reload.items.count).to eq(0)
+      end
+
+      scenario 'displays error when item does not meet requirements expired', js: true do
+        visit dashboard_path
+        resize_window_default
+        within('.card-nav-tabs') do
+          click_link('Agreements')
+        end
+        first(:link, 'done').click
+        click_button('Expire without Notifying Client')
+
+        expect(page).to have_content('Some items may not have been marked expired. Is their listing date more than 90 days ago?')
+        expect(agreement.reload.items.count).to eq(1)
+      end
+
+      scenario 'tags an agreement as client retrieved', js: true do
+        visit dashboard_path
+        within('.card-nav-tabs') do
+          click_link('Agreements')
+        end
+        first(:link, 'done').click
+        within("#expired") do
+          first(:css, ".circle").click
+        end
+        click_button('Client Retrieved Items')
+
         expect(page).to have_content('Agreement tagged as items retrieved.')
         expect(agreement.reload.tag_list).to include('items_retrieved')
       end

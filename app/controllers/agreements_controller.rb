@@ -100,11 +100,28 @@ class AgreementsController < ApplicationController
     end
   end
 
+  def expire
+    @agreement = Agreement.find(params[:agreement_id])
+    @agreement.tag_list.add('expired')
+    @agreement.save
+    @agreement.items.status('active').map(&:mark_expired)
+    respond_to do |format|
+      format.js do
+        if @agreement.items.count == 0
+          @message = "Agreement and items expired."
+        else
+          @message = "Some items may not have been marked expired. Is their listing date more than 90 days ago?"
+        end
+        render 'letters/create'
+      end
+    end
+  end
+
   def tag
     @agreement = Agreement.find(params[:agreement_id])
     @agreement.tag_list.add(params[:tag])
     if params[:tag] == 'items_retrieved'
-      agreement.items.map(&:mark_expired)
+      @agreement.items.map(&:mark_inactive)
     end
     if @agreement.save
       respond_to do |format|

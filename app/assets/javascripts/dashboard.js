@@ -47,6 +47,7 @@ $(document).on('turbolinks:load', function() {
     var dayCount = button.data('dayCount')
     var unexpireableButton = button.data('unexpireableButton')
     var itemsRetrievedButton = button.data('itemsRetrieved')
+    var expireButton = button.data('expireButton')
     var modal = $(this)
     modal.find('form').attr('action', ('/agreements/'+ agreementId + '/letters'));
     modal.find('.modal-title').html(agreementLink);
@@ -54,6 +55,7 @@ $(document).on('turbolinks:load', function() {
     modal.find('.day-count').text(dayCount);
     modal.find('.unexpireable-button').html(unexpireableButton);
     modal.find('.items-retrieved-button').html(itemsRetrievedButton);
+    modal.find('.expire-button').html(expireButton);
   });
 
   $("#statement-todo-task-modal").on('shown.bs.modal', function (event) {

@@ -111,6 +111,7 @@ Rails.application.routes.draw do
     post '/tag', to: 'agreements#tag'
     post '/regenerate_pdf', to: 'agreements#regenerate_pdf'
     put '/deactivate', to: 'agreements#deactivate', as: 'deactivate'
+    post :expire
     resources :letters, only: [:create]
   end
 

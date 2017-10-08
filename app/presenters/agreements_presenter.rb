@@ -15,7 +15,7 @@ class AgreementsPresenter
     Agreement.includes(:items, :letters, account: :primary_contact)
       .by_type('consign')
       .active
-      .joins(proposal: :items)
+      .joins(:items)
       .tagged_with(['unexpireable', 'items_retrieved'], exclude: true)
       .merge(
         Item.pending_expiration

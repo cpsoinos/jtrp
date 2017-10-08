@@ -101,14 +101,10 @@ class Item < ApplicationRecord
   end
 
   scope :pending_expiration, -> {
-    joins(:agreement).consigned.where(listed_at: 90.days.ago..80.days.ago)
-    # listed_at = Item.arel_table[:listed_at]
-    # tagged_with('expired', exclude: true).where(client_intention: 'consign', status: %w(active inactive), expired: false).where(listed_at.lt(80.days.ago))
+    joins(:agreement).consigned.where("listed_at < ?", 80.days.ago)
   }
   scope :meets_requirements_expired, -> {
     joins(:agreement).unexpired.consigned.where("listed_at < ?", 90.days.ago)
-    # listed_at = Item.arel_table[:listed_at]
-    # tagged_with('expired', exclude: true).where(client_intention: 'consign', status: %w(active inactive), expired: false).where(listed_at.lt(90.days.ago))
   }
   scope :has_photos, -> {
     joins(:photos)
@@ -151,14 +147,6 @@ class Item < ApplicationRecord
     ActionController::Base.helpers.link_to(description.titleize, Rails.application.routes.url_helpers.item_path(self)).html_safe
   end
 
-  # def agreement
-  #   Rails.cache.fetch("#{proposal.cache_key}/#{client_intention}_agreement") do
-  #     if proposal
-  #       proposal.agreements.find_by(agreement_type: client_intention)
-  #     end
-  #   end
-  # end
-
   def barcode
     require 'barby'
     require 'barby/barcode/code_128'
@@ -166,7 +154,6 @@ class Item < ApplicationRecord
 
     barcode = Barby::Code128B.new(token)
     blob = Barby::CairoOutputter.new(barcode).to_png
-    barcode
 
     file = Tempfile.new("item_#{id}_barcode.png")
     File.open(file, 'wb') { |f| f.write blob }
