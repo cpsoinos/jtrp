@@ -11,7 +11,7 @@ class Agreement < ApplicationRecord
   mount_uploader :pdf, PdfUploader
 
   belongs_to :proposal, touch: true
-  has_many :agreement_items
+  has_many :agreement_items, dependent: :destroy
   has_many :items, through: :agreement_items
   has_one :job, through: :proposal
   has_one :account, through: :job

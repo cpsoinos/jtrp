@@ -349,7 +349,9 @@ class Item < ApplicationRecord
   def recalculate_agreement_association
     if agreement && agreement.agreement_type != client_intention
       agreement_item.destroy
-      self.agreement = proposal.agreements.find_or_create_by(agreement_type: client_intention)
+      if client_intention.in?(%w(consign sell))
+        self.agreement = proposal.agreements.find_or_create_by(agreement_type: client_intention)
+      end
     end
   end
 
