@@ -6,7 +6,7 @@ describe Agreement do
   it { should have_many(:letters) }
   it { should belong_to(:created_by) }
   it { should belong_to(:updated_by) }
-  it { should have_many(:agreement_items) }
+  it { should have_many(:agreement_items).dependent(:destroy) }
   it { should have_many(:items).through(:agreement_items) }
 
   describe "validations" do
