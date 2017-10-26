@@ -3,7 +3,7 @@ class ClientsController < ApplicationController
 
   def show
     @client = User.find(params[:id])
-    @account = @client.account
+    @account = @client.account || Account.find_by(primary_contact_id: params[:id])
     @maps_url = GeolocationService.new(@client).static_map_url
     @title = @client.full_name
   end
