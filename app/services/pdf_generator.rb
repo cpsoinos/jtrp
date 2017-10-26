@@ -11,15 +11,32 @@ class PdfGenerator
     create_async_response
   end
 
-  # def create_pdf
-  #   pdf = WickedPdf.new.pdf_from_url("#{object.object_url}&print=true")
+  # def render_pdf
+  #   pdf = RestClient.get("https://cpsoinos-url-to-pdf-api.herokuapp.com/api/render?url=#{object.object_url}&emulateScreenMedia=false&pdf.format=letter&pdf.margin.top=0.25in&pdf.margin.bottom=0.25in&pdf.margin.left=0.25in&pdf.margin.right=0.25in")
+  #   # pdf = WickedPdf.new.pdf_from_url("#{object.object_url}&print=true")
+  #   # opts = {
+  #   #   url: object.object_url,
+  #   #   emulateScreenMedia: false,
+  #   #   pdf: {
+  #   #     format: 'letter',
+  #   #     margin: {
+  #   #       top: '0.25in',
+  #   #       bottom: '0.25in',
+  #   #       left: '0.25in',
+  #   #       right: '0.25in'
+  #   #     }
+  #   #   }
+  #   # }
+  #   pdf = RestClient.post("https://cpsoinos-url-to-pdf-api.herokuapp.com/api/render", opts)
   #   tempfile = Tempfile.new(object.short_name)
   #   tempfile.binmode
-  #   tempfile << pdf
+  #   tempfile << pdf.body
   #   tempfile.rewind
+  #   # save_file(tempfile)
   #   object.pdf = tempfile
   #   object.save
-  #   save_page_count
+  #   object.pdf_pages = object.reload.pdf.metadata["pages"]
+  #   object.save
   # end
 
   private
