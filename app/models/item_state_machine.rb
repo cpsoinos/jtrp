@@ -10,7 +10,7 @@ module ItemStateMachine
 
       after_transition [:potential, :inactive] => :active, do: [:set_listed_at, :sync_inventory, :mark_agreement_active]
       after_transition [:active, :inactive] => :sold, do: [:mark_agreement_inactive, :set_sold_at, :sync_inventory]
-      after_transition any => :inactive, do: :sync_inventory
+      after_transition any => :inactive, do: [:sync_inventory, :mark_agreement_inactive]
       after_transition sold: :active, do: [:clear_sale_data, :mark_agreement_active]
 
       event :mark_active do
@@ -33,7 +33,7 @@ module ItemStateMachine
     end
 
     def mark_agreement_inactive
-      agreement.mark_inactive unless import? || expired?
+      agreement.try(:mark_inactive)
     end
 
     def meets_requirements_active?
