@@ -22,3 +22,6 @@ keys.json
 
 # Ignore encrypted secrets key file.
 config/secrets.yml.key
+/public/packs
+/public/packs-test
+/node_modules

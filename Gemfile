@@ -82,6 +82,7 @@ gem 'record_tag_helper', '~> 1.0'
 gem 'jwt'
 # gem 'wicked_pdf'
 # gem 'pdfkit'
+gem 'webpacker', '~> 3.0'
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-classnames'
