@@ -28,4 +28,8 @@ namespace :agreements do
 
   end
 
+  task :deactivate_inactive => :environment do
+    Agreement.active.each(&:mark_inactive)
+  end
+
 end
