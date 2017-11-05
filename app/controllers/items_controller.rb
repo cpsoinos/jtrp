@@ -140,13 +140,17 @@ class ItemsController < ApplicationController
             redirect_to(@item, notice: notice)
           end
         end
-        format.json { respond_with_bip(@item) }
+        format.json do
+          render json: @item
+        end
       else
         format.html do
           flash[:alert] = 'Could not update item.'
           redirect_to edit_account_job_proposal_item_path(@item.account, @item.job, @item.proposal, @item)
         end
-        format.json { respond_with_bip(@item) }
+        format.json do
+          render json: @item.errors
+        end
       end
     end
   end

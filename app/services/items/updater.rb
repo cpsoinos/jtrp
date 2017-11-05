@@ -10,7 +10,7 @@ module Items
     def update(attrs)
       @attrs = attrs
       process_photos
-      format_date
+      # format_date
       if item.update(attrs)
         process_sale
         sync_inventory

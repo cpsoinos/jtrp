@@ -1,11 +1,15 @@
 {
   "dependencies": {
     "@rails/webpacker": "^3.0.2",
+    "axios": "^0.17.0",
     "lodash": "^4.17.4",
     "pug": "^2.0.0-rc.4",
     "vue": "^2.5.3",
+    "vue-axios": "^2.0.2",
+    "vue-bootstrap-datetimepicker": "^4.1.0",
     "vue-loader": "^13.4.0",
-    "vue-template-compiler": "^2.5.3"
+    "vue-template-compiler": "^2.5.3",
+    "vue-turbolinks": "^2.0.0"
   },
   "devDependencies": {
     "webpack-dev-server": "^2.9.4"
