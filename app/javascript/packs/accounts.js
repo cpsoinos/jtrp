@@ -7,10 +7,11 @@
 
 import Vue from 'vue'
 import App from './app.vue'
+import Accounts from './components/accounts/index.vue'
 
 document.addEventListener('DOMContentLoaded', () => {
-  document.body.appendChild(document.createElement('hello'))
-  const app = new Vue(App).$mount('hello')
+  document.body.appendChild(document.createElement('app'))
+  const app = new Vue(Accounts).$mount('app')
 
   console.log(app)
 })
