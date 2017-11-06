@@ -1,4 +1,4 @@
-describe "update an item" do
+describe "update an item", :skip do
 
   let(:item) { create(:item) }
   let(:syncer) { double("syncer") }
