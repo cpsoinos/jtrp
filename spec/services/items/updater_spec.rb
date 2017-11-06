@@ -69,7 +69,7 @@ module Items
       }
     end
 
-    it "processes sale date" do
+    xit "processes sale date" do
       Items::Updater.new(active_item).update(sold_at: "5/4/16", sale_price: 5000)
 
       expect(active_item.sold_at < 2000.years.ago).to be(false)

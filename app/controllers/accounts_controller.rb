@@ -4,6 +4,7 @@ class AccountsController < ApplicationController
   def index
     params[:status] ||= "potential"
     @accounts = AccountsPresenter.new(params).execute
+    gon.accounts = @accounts.includes(:proposals).as_json
     @title = "Accounts"
   end
 

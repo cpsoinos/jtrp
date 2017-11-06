@@ -1,5 +1,7 @@
 <% meta title: "Accounts - #{@company.name}" %>
 
+<%#= javascript_pack_tag('accounts') %>
+
 <% if @filter.present? %>
   <% case @filter %>
   <% when "potential" %>

@@ -94,7 +94,7 @@ describe "item show" do
           expect(page).to have_field("item[sold_at]")
 
           fill_in("item[sale_price]", with: 64.66)
-          fill_in("item[sold_at]", with: "04/07/2016")
+          fill_in("item[sold_at]", with: "2016-04-07T00:00:00")
           click_button("Update Item")
           item.reload
 
