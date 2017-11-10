@@ -18,7 +18,7 @@ describe Client::Creator do
   it "creates an account for the client" do
     client = Client::Creator.new(user).create(attrs)
 
-    expect(client.account).not_to be(nil)
+    expect(client.reload.account).not_to be(nil)
   end
 
   it "does not create a new account if passed an account id on create" do

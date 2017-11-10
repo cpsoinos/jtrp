@@ -15,6 +15,7 @@ class Client < User
   def verify_account
     if account.nil?
       create_account(primary_contact: self)
+      save
     end
   end
 
