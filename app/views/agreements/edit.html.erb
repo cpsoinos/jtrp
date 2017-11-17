@@ -8,7 +8,9 @@
     <div class="row">
       <span>
         <%= link_to "Back", agreement_path(@agreement), class: "btn btn-primary btn-raised pull-left" %>
-        <%= button_to "Regenerate PDF", agreement_regenerate_pdf_path(@agreement), class: "btn btn-primary btn-raised pull-right" %>
+        <% if @agreement.active? %>
+          <%= button_to "Regenerate PDF", agreement_regenerate_pdf_path(@agreement), class: "btn btn-primary btn-raised pull-right" %>
+        <% end %>
       <span>
     </div>
 
