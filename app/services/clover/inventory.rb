@@ -3,6 +3,27 @@ require 'rest-client'
 module Clover
   class Inventory < CloverBase
 
+    attr_accessor :id,
+                  :hidden,
+                  :name,
+                  :alternateName,
+                  :sku,
+                  :code,
+                  :price,
+                  :priceType,
+                  :defaultTaxRates,
+                  :isRevenue,
+                  :modifiedTime
+
+    def initialize(attrs)
+      attrs = attrs.deep_symbolize_keys!
+      attrs[:price] = Money.new(attrs[:price])
+      attrs[:modifiedTime] = Time.at(attrs[:modifiedTime] / 1000)
+      set_attributes(attrs)
+    end
+
+    # REST STUFF
+
     def self.create(item)
       RestClient.post("#{base_url}/items", item.remote_attributes, headers) do |response, request, result|
         begin
@@ -14,8 +35,7 @@ module Clover
           else
             raise CloverError.new(result.message)
           end
-        rescue CloverError => e
-          # Rollbar.error(e, result.message,  item_id: item.id, response: response, result: result)
+        rescue CloverError
         end
       end
     end
@@ -25,14 +45,14 @@ module Clover
         begin
           case response.code
           when 200
-            DeepStruct.wrap(JSON.parse(response))
+            # DeepStruct.wrap(JSON.parse(response))
+            new(JSON.parse(response))
           when 404
             nil
           else
             raise CloverError.new(result.message)
           end
-        rescue CloverError => e
-          # Rollbar.error(e, result.message,  item_id: item.id, response: response, result: result)
+        rescue CloverError
         end
       end
     end
@@ -42,7 +62,7 @@ module Clover
         begin
           case response.code
           when 200
-            inventory_item = DeepStruct.wrap(JSON.parse(response))
+            inventory_item = new(JSON.parse(response))
             item.remote_id ||= inventory_item.id
             item.save
           when 404
@@ -52,8 +72,7 @@ module Clover
           else
             raise CloverError.new(result.message)
           end
-        rescue CloverError => e
-          # Rollbar.error(e, result.message,  item_id: item.id, response: response, result: result)
+        rescue CloverError
         end
       end
     end
@@ -63,12 +82,12 @@ module Clover
         begin
           case response.code
           when 200
-            DeepStruct.wrap(JSON.parse(response)["elements"])
+            items = JSON.parse(response)["elements"]
+            items.map { |i| new(i) }
           else
             raise CloverError.new(result.message)
           end
-        rescue CloverError => e
-          # Rollbar.error(e, result.message,  response: response, result: result)
+        rescue CloverError
         end
       end
     end
@@ -81,8 +100,7 @@ module Clover
           else
             raise CloverError.new(result.message)
           end
-        rescue CloverError => e
-          # Rollbar.error(e, result.message,  item_id: item.id, response: response, result: result)
+        rescue CloverError
         end
       end
     end

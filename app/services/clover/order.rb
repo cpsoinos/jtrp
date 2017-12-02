@@ -3,12 +3,42 @@ require 'rest-client'
 module Clover
   class Order < CloverBase
 
+    attr_accessor :href,
+                  :id,
+                  :currency,
+                  :employee,
+                  :total,
+                  :taxRemoved,
+                  :isVat,
+                  :state,
+                  :manualTransaction,
+                  :groupLineItems,
+                  :testMode,
+                  :payments,
+                  :payType,
+                  :createdTime,
+                  :clientCreatedTime,
+                  :modifiedTime,
+                  :lineItems,
+                  :discounts,
+                  :device
+
+    def initialize(attrs)
+      attrs = attrs.deep_symbolize_keys!
+      attrs[:lineItems] = attrs[:lineItems][:elements].map { |li| Clover::LineItem.new(li) }
+      attrs[:total] = Money.new(attrs[:total])
+      attrs[:createdTime] = Time.at(attrs[:createdTime] / 1000).try(:to_datetime)
+      attrs[:modifiedTime] = Time.at(attrs[:modifiedTime] / 1000).try(:to_datetime)
+      set_attributes(attrs)
+    end
+
     def self.find(order)
       RestClient.get("#{base_url}/orders/#{self.identifier(order)}?expand=discounts,lineItems,payType,payments,lineItems.discounts,lineItems.item", headers) do |response, request, result|
         begin
           case response.code
           when 200
-            DeepStruct.wrap(JSON.parse(response))
+            new(JSON.parse(response))
+            # DeepStruct.wrap(JSON.parse(response))
           when 404
             nil
           else
@@ -25,7 +55,8 @@ module Clover
         begin
           case response.code
           when 200
-            DeepStruct.wrap(JSON.parse(response)["elements"])
+            orders = JSON.parse(response)["elements"]
+            orders.map { |o| new(o) }
           else
             raise CloverError.new(result.message)
           end

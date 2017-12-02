@@ -19,5 +19,11 @@ module Clover
       end
     end
 
+    def set_attributes(attrs)
+      attrs.each do |key, val|
+        self.send(:"#{key}=", val)
+      end
+    end
+
   end
 end
