@@ -42,7 +42,7 @@ namespace :items do
   task :full_inventory_sync => :environment do |task|
 
     # Heroku Scheduler "daily" job, but only run on Sundays
-    if DateTime.now.cwday == 6
+    if DateTime.now.cwday == 7
       puts "beginning full inventory sync with Clover"
       items = Item.all
       count = items.count
