@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170914114606) do
+ActiveRecord::Schema.define(version: 20171203001237) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -288,6 +288,7 @@ ActiveRecord::Schema.define(version: 20170914114606) do
     t.integer "labor_cost_cents"
     t.string "labor_cost_currency", default: "USD", null: false
     t.datetime "acquired_at"
+    t.integer "stock", default: 1, null: false
     t.index ["account_item_number"], name: "index_items_on_account_item_number"
     t.index ["category_id"], name: "index_items_on_category_id"
     t.index ["client_intention"], name: "index_items_on_client_intention"

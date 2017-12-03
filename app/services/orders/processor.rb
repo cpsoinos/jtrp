@@ -10,13 +10,11 @@ module Orders
 
     def process
       update_amount
-      retrieve_items
-      retrieve_discounts
-      apply_discounts
+      process_line_items
+      apply_order_discounts
       retrieve_delivery_charge
       apply_delivery_charge
       set_timestamps
-      mark_items_sold
     end
 
     private
@@ -27,44 +25,39 @@ module Orders
 
     def set_timestamps
       order.update_attributes(
-        created_at: format_time(remote_object.createdTime),
-        updated_at: format_time(remote_object.modifiedTime)
+        created_at: remote_object.createdTime,
+        updated_at: remote_object.modifiedTime
       )
     end
 
-    def format_time(time)
-      nil unless time
-      Time.at(time/1000)
-    end
-
     def update_amount
-      order.amount_cents = remote_object.total
+      order.amount = remote_object.total
       order.save
     end
 
-    def retrieve_items
+    def process_line_items
       line_items.each do |line_item|
-        remote_item = line_item.try(:item)
-        next if remote_item.nil?
-        item = Item.find_by(id: remote_item.try(:sku))
+        item = Item.find_by(id: line_item.try(:item).try(:sku))
         next if item.nil?
-        order.items << item
-        item.save
+        Items::Updater.new(item).update(order: order, sale_price: line_item.price, sold_at: line_item.orderClientCreatedTime)
+        if line_item.discounts
+          remote_discount = line_item.discounts.first
+          discount = Discounts::Creator.new(item).create(remote_discount)
+          Discounts::Applier.new(discount).execute
+        end
       end
-      order.save
     end
 
     def line_items
-      @_line_items ||= Clover::LineItem.find(order)
+      @_line_items ||= remote_object.lineItems
     end
 
-    def retrieve_discounts
-      @_retrieve_discounts ||= Discounts::Retriever.new(order).execute
-    end
-
-    def apply_discounts
-      retrieve_discounts.each do |discount|
-        Discounts::Applier.new(discount).execute
+    def apply_order_discounts
+      if remote_object.try(:discounts)
+        remote_object.discounts.each do |remote_discount|
+          discount = Discounts::Creator.new(order).create(remote_discount)
+          Discounts::Applier.new(discount).execute
+        end
       end
     end
 
@@ -75,15 +68,7 @@ module Orders
     def apply_delivery_charge
       return if retrieve_delivery_charge.nil?
       return unless retrieve_delivery_charge.try(:price).is_a?(Integer)
-      order.update(delivery_charge_cents: retrieve_delivery_charge.price)
-    end
-
-    def mark_items_sold
-      order.reload.items.find_each do |item|
-        item.sale_price_cents ||= item.listing_price_cents
-        item.mark_sold unless item.sold?
-      end
-      order.items.update_all(sold_at: order.created_at)
+      order.update(delivery_charge: retrieve_delivery_charge.price)
     end
 
   end

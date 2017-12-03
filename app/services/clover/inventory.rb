@@ -9,27 +9,20 @@ module Clover
                   :alternateName,
                   :sku,
                   :code,
+                  :cost,
                   :price,
                   :priceType,
                   :defaultTaxRates,
                   :isRevenue,
-                  :modifiedTime
-
-    def initialize(attrs)
-      attrs                = attrs.deep_symbolize_keys!
-      attrs[:price]        = Money.new(attrs[:price])
-      attrs[:modifiedTime] = Time.at(attrs[:modifiedTime] / 1000)
-      set_attributes(attrs)
-    end
-
-    # REST STUFF
+                  :modifiedTime,
+                  :itemStock,
 
     def self.create(item)
       RestClient.post("#{base_url}/items", item.remote_attributes, headers) do |response, request, result|
         begin
           case response.code
           when 200
-            inventory_item = DeepStruct.wrap(JSON.parse(response))
+            inventory_item = new(JSON.parse(response))
             item.remote_id = inventory_item.id
             item.save
           else
@@ -41,11 +34,10 @@ module Clover
     end
 
     def self.find(item)
-      RestClient.get("#{base_url}/items/#{item.remote_id}", headers) do |response, request, result|
+      RestClient.get("#{base_url}/items/#{item.remote_id}?expand=itemStock", headers) do |response, request, result|
         begin
           case response.code
           when 200
-            # DeepStruct.wrap(JSON.parse(response))
             new(JSON.parse(response))
           when 404
             nil
@@ -58,13 +50,15 @@ module Clover
     end
 
     def self.update(item)
-      RestClient.post("#{base_url}/items/#{item.remote_id}", item.remote_attributes, headers) do |response, request, result|
+      RestClient.post("#{base_url}/items/#{item.remote_id}?expand=itemStock", item.remote_attributes, headers) do |response, request, result|
         begin
           case response.code
           when 200
             inventory_item = new(JSON.parse(response))
             item.remote_id ||= inventory_item.id
             item.save
+            Clover::ItemStock.update(item)
+            inventory_item
           when 404
             item.remote_id = nil
             item.save

@@ -10,14 +10,9 @@ class InventorySyncJob < ApplicationJob
     retry_job wait: 5.minutes, queue: :low
   end
 
-  def perform(options)
-    item = Item.find(options[:item_id])
+  def perform(item)
     if item.remote_id
-      if item.sold? || item.inactive? || item.potential?
-        InventorySync.new(item).remote_destroy
-      else
-        InventorySync.new(item).remote_update
-      end
+      InventorySync.new(item).remote_update
     else
       InventorySync.new(item).remote_create unless (item.sold? || item.inactive?)
     end

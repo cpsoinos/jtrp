@@ -16,17 +16,6 @@ module Clover
                   :modifiedTime,
                   :result
 
-    def initialize(attrs)
-      attrs.deep_symbolize_keys!
-      attrs[:amount]            = Money.new(attrs[:amount])
-      attrs[:taxAmount]         = Money.new(attrs[:taxAmount])
-      attrs[:cashTendered]      = Money.new(attrs[:cashTendered])
-      attrs[:createdTime]       = Time.at(attrs[:createdTime] / 1000)
-      attrs[:clientCreatedTime] = Time.at(attrs[:clientCreatedTime] / 1000)
-      attrs[:modifiedTime]      = Time.at(attrs[:modifiedTime] / 1000)
-      set_attributes(attrs)
-    end
-
     def self.find(payment)
       RestClient.get("#{base_url}/payments/#{payment.remote_id}", headers) do |response, request, result|
         begin

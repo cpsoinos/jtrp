@@ -57,6 +57,7 @@ class Item < ApplicationRecord
   validates :description, :proposal, :client_intention, presence: true
   validates :remote_id, uniqueness: { message: "remote_id already taken" }, allow_nil: true
   validates :token, uniqueness: true, allow_nil: true
+  validates :stock, presence: true
 
   after_validation :ensure_token_uniqueness
   after_save :recalculate_agreement_association, on: :update
@@ -182,7 +183,7 @@ class Item < ApplicationRecord
 
   def sync_inventory
     return if should_not_sync?
-    InventorySyncJob.perform_later(item_id: self.id)
+    InventorySyncJob.perform_later(self)
   end
 
   def owned?
@@ -300,12 +301,13 @@ class Item < ApplicationRecord
       price: listing_price_cents,
       sku: id,
       alternateName: token,
-      code: token
+      code: token,
+      cost: [purchase_price_cents, labor_cost_cents, parts_cost_cents].map(&:to_i).sum
     }.to_json
   end
 
   def remote_object
-    return unless active? && remote_id.present?
+    return unless remote_id.present?
     Clover::Inventory.find(self)
   end
 

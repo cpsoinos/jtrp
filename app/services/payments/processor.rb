@@ -21,8 +21,8 @@ module Payments
     def processed_attrs
       {
         order: order,
-        amount_cents: remote_object.amount,
-        tax_amount_cents: remote_object.taxAmount
+        amount: remote_object.amount,
+        tax_amount: remote_object.taxAmount,
       }
     end
 
