@@ -67,6 +67,13 @@ describe "statement" do
       expect(page).to have_content(ActionController::Base.helpers.humanized_money_with_symbol(statement.amount_due_to_client))
     end
 
+    scenario "regathers items" do
+      visit account_statement_path(account, statement)
+      click_link("Gather Items")
+
+      expect(page).to have_content("Gathered consigned items for #{account.full_name} that sold in #{statement.date.last_month.strftime("%B, %Y")}")
+    end
+
   end
 
   context "guest" do

@@ -33,6 +33,12 @@ class StatementsController < ApplicationController
     end
   end
 
+  def gather_items
+    @statement = Statement.find(params[:statement_id])
+    Statements::ItemGatherer.new(@statement, @account).execute
+    redirect_to account_statement_path(@account, @statement), notice: "Gathered consigned items for #{@account.full_name} that sold in #{@statement.date.last_month.strftime("%B, %Y")}"
+  end
+
   def send_email
     @statement = Statement.find(params[:statement_id])
     TransactionalEmailJob.perform_later(@statement, current_user, @statement.account.primary_contact, "statement", params)

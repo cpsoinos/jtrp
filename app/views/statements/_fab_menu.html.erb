@@ -4,6 +4,10 @@
   </button>
   <ul class="dropdown-menu dropdown-menu-right fab-menu">
 
+    <li><%= link_to "<i class='material-icons'>shopping_basket</i> Gather Items".html_safe, account_statement_gather_items_path(account, statement), method: :put %></li>
+
+    <li role="separator" class="divider"></li>
+
     <li><%= link_to "<i class='material-icons'>delete_forever</i> Delete".html_safe, statement_path(statement), method: :delete, data: {confirm: "Are you sure?", :'confirm-button-text' => "Yes, I'm sure", :'cancel-button-text' => "No, cancel!", :'sweet-alert-type' => 'warning', :'confirm-button-color' => '#f44336', text: "This will delete the item. This is irreversable."} %></li>
 
     <li role="separator" class="divider"></li>

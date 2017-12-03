@@ -73,6 +73,7 @@ Rails.application.routes.draw do
       end
     end
     resources :statements, only: [:index, :show, :update] do
+      put :gather_items
       post '/send_email', to: 'statements#send_email', as: 'send_email'
     end
     resources :letters, only: [:index, :show]

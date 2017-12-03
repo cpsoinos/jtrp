@@ -15,7 +15,9 @@ module Statements
     private
 
     def gather_items
-      statement.items << items
+      items.each do |item|
+        statement.items << item if item.statement.nil?
+      end
     end
 
     def items
