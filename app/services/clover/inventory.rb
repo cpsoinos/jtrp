@@ -16,8 +16,8 @@ module Clover
                   :modifiedTime
 
     def initialize(attrs)
-      attrs = attrs.deep_symbolize_keys!
-      attrs[:price] = Money.new(attrs[:price])
+      attrs                = attrs.deep_symbolize_keys!
+      attrs[:price]        = Money.new(attrs[:price])
       attrs[:modifiedTime] = Time.at(attrs[:modifiedTime] / 1000)
       set_attributes(attrs)
     end

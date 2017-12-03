@@ -18,11 +18,11 @@ module Clover
                   :isRevenue
 
     def initialize(attrs)
-      attrs = attrs.deep_symbolize_keys!
-      attrs[:price] = Money.new(attrs[:price])
-      attrs[:createdTime] = Time.at(attrs[:createdTime] / 1000)
+      attrs                          = attrs.deep_symbolize_keys!
+      attrs[:price]                  = Money.new(attrs[:price])
+      attrs[:createdTime]            = Time.at(attrs[:createdTime] / 1000)
       attrs[:orderClientCreatedTime] = Time.at(attrs[:orderClientCreatedTime] / 1000)
-      attrs[:item] = Clover::Inventory.new(attrs[:item]) if attrs[:item]
+      attrs[:item]                   = Clover::Inventory.new(attrs[:item]) if attrs[:item]
       set_attributes(attrs)
     end
 

@@ -106,7 +106,6 @@ describe 'agreement' do
 
       before do
         allow(syncer).to receive(:remote_create).and_return(true)
-        agreement.items << item
       end
 
       scenario 'visits consignment agreement path' do
@@ -253,6 +252,7 @@ describe 'agreement' do
         end
 
         scenario "agreement has both potential and active items" do
+          create(:item, proposal: proposal, agreement: agreement, client_intention: 'consign')
           agreement.update_attributes(client_agreed: true)
           agreement.mark_active
           item.mark_active
@@ -308,7 +308,6 @@ describe 'agreement' do
         click_button('I Accept')
         agreement.reload
 
-        # expect(page).to have_content("#{account.full_name} accepted the terms of this agreement at #{DateTime.now.strftime('%l:%M %p on %B %d, %Y')}.")
         expect(agreement.client_agreed).to be(true)
       end
     end
