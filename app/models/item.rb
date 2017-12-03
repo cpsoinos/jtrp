@@ -297,12 +297,12 @@ class Item < ApplicationRecord
 
   def remote_attributes
     {
-      name: description,
-      price: listing_price_cents,
-      sku: id,
+      name:          description,
+      price:         listing_price_cents,
+      sku:           id,
       alternateName: token,
-      code: token,
-      cost: [purchase_price_cents, labor_cost_cents, parts_cost_cents].map(&:to_i).sum
+      code:          token,
+      cost:          [purchase_price_cents, labor_cost_cents, parts_cost_cents].map(&:to_i).sum
     }.to_json
   end
 
@@ -315,9 +315,9 @@ class Item < ApplicationRecord
 
   def clear_sale_data
     cleared_attrs = {
-      sold_at: nil,
+      sold_at:          nil,
       sale_price_cents: nil,
-      order: nil
+      order:            nil
     }
     self.update(cleared_attrs)
   end

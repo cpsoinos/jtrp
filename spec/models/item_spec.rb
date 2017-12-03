@@ -207,7 +207,8 @@ describe Item do
       price:         item.listing_price_cents,
       sku:           item.id,
       alternateName: item.token,
-      code:          item.token
+      code:          item.token,
+      cost:          [item.purchase_price_cents, item.labor_cost_cents, item.parts_cost_cents].map(&:to_i).sum
     }.to_json)
   end
 

@@ -26,7 +26,6 @@ class Payment < ApplicationRecord
 
   def process
     Payments::Processor.new(self).process
-    # PaymentProcessorJob.perform_later(payment_id: id)
   end
 
 end
