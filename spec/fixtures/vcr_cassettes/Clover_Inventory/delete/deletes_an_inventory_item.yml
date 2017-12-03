@@ -33,11 +33,7 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        H4sIAAAAAAAEA6pWykxRslJQivQwDgk3d3J1NgtwM1PSUVDKyExJSc1TslJI
-        S8wpTtVRUMpLzE0FqXTJzMvMS1cIys/PVfAoLUnOAKlOzClJLcpLLEn1g6pK
-        TEo2NDJ2BMkl56eANSIJFWeXgowytjA1AKkoKMpMBikxNDUwMNBRUALzQyoL
-        QGJKbp4Rri4gVSmpaYmlOSUhiRVBiSWpxUpWCiVFpSCXZRYHpZal5pWClEOF
-        cvNTMtMyU1NCMsGOBszQxMLcwsTc0tjCwMCgFgBuNiof9AAAAA==
+        H4sIAAAAAAAEA6pWykxRslJQivQwDgk3d3J1NgtwM1PSUVDKyExJSc1TslJIS8wpTtVRUMpLzE0FqXTJzMvMS1cIys/PVfAoLUnOAKlOzClJLcpLLEn1g6pKTEo2NDJ2BMkl56eANSIJFWeXgowytjA1AKkoKMpMBikxNDUwMNBRUALzQyoLQGJKbp4Rri4gVSmpaYmlOSUhiRVBiSWpxUpWCiVFpSCXZRYHpZal5pWClEOFcvNTMtMyU1NCMsGOBszQxMLcwsTc0tjCwMCgFgBuNiof9AAAAA==
     http_version: 
   recorded_at: Thu, 23 Feb 2017 11:28:36 GMT
 - request:
@@ -111,11 +107,40 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        H4sIAAAAAAAEA6pWykxRslJQ8jZzMjZx9TJ1s3B1tFDSUVDKyExJSc1TslJI
-        S8wpTtVRUMpLzE0FqXTJzMvMS1cIys/PVfAoLUnOAKlOzClJLcpLLEn1g6pK
-        TEo2NDJ2BMkl56eANSIJFWeXgowytjA1AKkoKMpMBikxNDUwMNBRUALzQyoL
-        QGJKbp4Rri4gVSmpaYmlOSUhiRVBiSWpxUpWCiVFpSCXZRYHpZal5pWClEOF
-        cvNTMtMyU1NCMsGOBszQxMLcwsTS2NDcwMCgFgBI9jcd9AAAAA==
+        H4sIAAAAAAAEA6pWykxRslJQ8jZzMjZx9TJ1s3B1tFDSUVDKyExJSc1TslJIS8wpTtVRUMpLzE0FqXTJzMvMS1cIys/PVfAoLUnOAKlOzClJLcpLLEn1g6pKTEo2NDJ2BMkl56eANSIJFWeXgowytjA1AKkoKMpMBikxNDUwMNBRUALzQyoLQGJKbp4Rri4gVSmpaYmlOSUhiRVBiSWpxUpWCiVFpSCXZRYHpZal5pWClEOFcvNTMtMyU1NCMsGOBszQxMLcwsTS2NDcwMCgFgBI9jcd9AAAAA==
     http_version: 
   recorded_at: Thu, 23 Feb 2017 11:28:37 GMT
+- request:
+    method: get
+    uri: https://apisandbox.dev.clover.com/v3/merchants/HFBW9FH45ZBH2/items/YH3TW7BEC6PF6?expand=itemStock
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - rest-client/2.0.2 (darwin16.6.0 x86_64) ruby/2.4.1p111
+      Authorization:
+      - Bearer 285036e1-d1a8-dfc6-fe5c-51babdd7d241
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Content-Length:
+      - '65'
+      Content-Type:
+      - application/json; charset=utf-8
+      X-Frame-Options:
+      - SAMEORIGIN
+    body:
+      encoding: UTF-8
+      string: '{"details":"No item with id YH3TW7BEC6PF6","message":"Not Found"}'
+    http_version: 
+  recorded_at: Sun, 03 Dec 2017 04:45:15 GMT
 recorded_with: VCR 3.0.3

@@ -3,12 +3,32 @@ require 'rest-client'
 module Clover
   class Order < CloverBase
 
+    attr_accessor :href,
+                  :id,
+                  :currency,
+                  :employee,
+                  :total,
+                  :taxRemoved,
+                  :isVat,
+                  :state,
+                  :manualTransaction,
+                  :groupLineItems,
+                  :testMode,
+                  :payments,
+                  :payType,
+                  :createdTime,
+                  :clientCreatedTime,
+                  :modifiedTime,
+                  :lineItems,
+                  :discounts,
+                  :device
+
     def self.find(order)
       RestClient.get("#{base_url}/orders/#{self.identifier(order)}?expand=discounts,lineItems,payType,payments,lineItems.discounts,lineItems.item", headers) do |response, request, result|
         begin
           case response.code
           when 200
-            DeepStruct.wrap(JSON.parse(response))
+            new(JSON.parse(response))
           when 404
             nil
           else
@@ -25,7 +45,8 @@ module Clover
         begin
           case response.code
           when 200
-            DeepStruct.wrap(JSON.parse(response)["elements"])
+            orders = JSON.parse(response)["elements"]
+            orders.map { |o| new(o) }
           else
             raise CloverError.new(result.message)
           end

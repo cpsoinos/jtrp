@@ -28,7 +28,7 @@ describe "item show" do
       scenario "internal user successfully marks an item active" do
         allow(InventorySyncJob).to receive(:perform_later)
         item.update_attribute("client_intention", "sell")
-        agreement = create(:agreement, :active, proposal: proposal)
+        create(:agreement, :active, proposal: proposal)
         visit account_job_proposal_item_path(account, job, proposal, item)
 
         click_link("Activate")
@@ -37,7 +37,7 @@ describe "item show" do
       end
 
       scenario "internal user unsuccessfully marks an item active" do
-        agreement = create(:agreement, proposal: proposal)
+        create(:agreement, proposal: proposal)
         visit account_job_proposal_item_path(account, job, proposal, item)
 
         click_link("Activate")
@@ -142,7 +142,7 @@ describe "item show" do
         end
 
         scenario "marks inactive - damaged" do
-          allow(Clover::Inventory).to receive(:delete)
+          allow(Clover::Inventory).to receive(:update)
           click_link("Damaged")
 
           item.reload
@@ -153,7 +153,7 @@ describe "item show" do
         end
 
         scenario "marks inactive - 'Retrieved by Client'" do
-          allow(Clover::Inventory).to receive(:delete)
+          allow(Clover::Inventory).to receive(:update)
           click_link("Retrieved by Client")
 
           item.reload
@@ -164,7 +164,7 @@ describe "item show" do
         end
 
         scenario "marks inactive - 'other'" do
-          allow(Clover::Inventory).to receive(:delete)
+          allow(Clover::Inventory).to receive(:update)
           click_link("Other")
 
           item.reload

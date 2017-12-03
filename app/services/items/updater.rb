@@ -10,10 +10,9 @@ module Items
     def update(attrs)
       @attrs = attrs
       process_photos
-      # format_date
       if item.update(attrs)
         process_sale
-        sync_inventory
+        sync_inventory if item.active?
       end
       item
     end
@@ -49,8 +48,7 @@ module Items
     end
 
     def sync_inventory
-      return if item.potential?
-      InventorySyncJob.perform_later(item_id: item.id)
+      InventorySyncJob.perform_later(item)
     end
 
     def format_date

@@ -3,12 +3,25 @@ require 'rest-client'
 module Clover
   class Payment < CloverBase
 
+    attr_accessor :id,
+                  :order,
+                  :device,
+                  :tender,
+                  :amount,
+                  :taxAmount,
+                  :cashTendered,
+                  :employee,
+                  :createdTime,
+                  :clientCreatedTime,
+                  :modifiedTime,
+                  :result
+
     def self.find(payment)
       RestClient.get("#{base_url}/payments/#{payment.remote_id}", headers) do |response, request, result|
         begin
           case response.code
           when 200
-            DeepStruct.wrap(JSON.parse(response))
+            new(JSON.parse(response))
           when 404
             nil
           else
@@ -27,7 +40,8 @@ module Clover
         begin
           case response.code
           when 200
-            DeepStruct.wrap(JSON.parse(response)["elements"])
+            payments = JSON.parse(response)["elements"]
+            payments.map { |p| new(p) }
           else
             raise CloverError.new(result.message)
           end

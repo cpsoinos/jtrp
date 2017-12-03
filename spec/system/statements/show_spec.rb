@@ -11,7 +11,6 @@ describe "statement" do
   context "internal user" do
 
     before do
-      agreement.items << items
       Timecop.freeze("October 1, 2016")
       day_incrementer = 1
       items.map do |item|

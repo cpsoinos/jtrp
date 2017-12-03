@@ -43,7 +43,6 @@ FactoryGirl.define do
       status "active"
       association :agreement, :active
       association :proposal, :active_consign
-      # proposal { create(:proposal, :active, agreements: [create(:agreement, :active, :consign)]) }
       client_intention "consign"
       listed_at 10.days.ago
     end
@@ -56,7 +55,6 @@ FactoryGirl.define do
       listed_at 91.days.ago
       expired true
       after(:create) do |item|
-        # create(:agreement, :inactive, :consign, proposal: item.proposal)
         item.tag_list += "expired"
         item.save
       end

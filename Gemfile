@@ -83,6 +83,7 @@ gem 'jwt'
 # gem 'wicked_pdf'
 # gem 'pdfkit'
 gem 'webpacker', '~> 3.0'
+gem 'ruby-progressbar'
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-classnames'

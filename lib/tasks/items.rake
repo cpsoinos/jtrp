@@ -33,7 +33,9 @@ namespace :items do
       reformatted_sale_date = "#{extracted_original_sale_date[1]}/#{extracted_original_sale_date[0][-2..-1]}/20#{extracted_original_sale_date[2]}"
       item.sold_at = DateTime.strptime(reformatted_sale_date, '%m/%d/%Y')
       item.save
+      bar.inc
     end
+    bar.finished
 
   end
 
@@ -45,14 +47,12 @@ namespace :items do
       items = Item.all
       count = items.count
 
-      bar = RakeProgressbar.new(count)
+      progressbar = ProgressBar.create(total: count)
 
       items.each do |item|
         item.sync_inventory
-        bar.inc
+        progressbar.increment
       end
-
-      bar.finished
 
       puts "created async jobs to sync all #{count} items"
     else

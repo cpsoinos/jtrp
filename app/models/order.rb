@@ -31,14 +31,7 @@ class Order < ApplicationRecord
   end
 
   def remote_object
-    Rails.cache.fetch(cache_key) do
-      begin
-        Clover::Order.find(self)
-      rescue TypeError
-        sleep(1)
-        remote_object
-      end
-    end
+    Clover::Order.find(self)
   end
 
 end

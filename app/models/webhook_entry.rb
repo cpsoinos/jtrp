@@ -7,6 +7,15 @@ class WebhookEntry < ApplicationRecord
 
   validates :processed, inclusion: { in: [ true, false ] }
 
+  after_create :process
+
+  def process
+    if webhookable_type == "Item"
+      webhookable.update_attributes(stock: webhookable.remote_object.try(:itemStock).try(:quantity))
+      mark_processed
+    end
+  end
+
   def mark_processed
     self.processed = true
     self.save

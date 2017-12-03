@@ -57,6 +57,7 @@ class Item < ApplicationRecord
   validates :description, :proposal, :client_intention, presence: true
   validates :remote_id, uniqueness: { message: "remote_id already taken" }, allow_nil: true
   validates :token, uniqueness: true, allow_nil: true
+  validates :stock, presence: true
 
   after_validation :ensure_token_uniqueness
   after_save :recalculate_agreement_association, on: :update
@@ -148,14 +149,6 @@ class Item < ApplicationRecord
     ActionController::Base.helpers.link_to(description.titleize, Rails.application.routes.url_helpers.item_path(self)).html_safe
   end
 
-  # def agreement
-  #   Rails.cache.fetch("#{proposal.cache_key}/#{client_intention}_agreement") do
-  #     if proposal
-  #       proposal.agreements.find_by(agreement_type: client_intention)
-  #     end
-  #   end
-  # end
-
   def barcode
     require 'barby'
     require 'barby/barcode/code_128'
@@ -163,7 +156,6 @@ class Item < ApplicationRecord
 
     barcode = Barby::Code128B.new(token)
     blob = Barby::CairoOutputter.new(barcode).to_png
-    barcode
 
     file = Tempfile.new("item_#{id}_barcode.png")
     File.open(file, 'wb') { |f| f.write blob }
@@ -191,7 +183,7 @@ class Item < ApplicationRecord
 
   def sync_inventory
     return if should_not_sync?
-    InventorySyncJob.perform_later(item_id: self.id)
+    InventorySyncJob.perform_later(self)
   end
 
   def owned?
@@ -305,16 +297,17 @@ class Item < ApplicationRecord
 
   def remote_attributes
     {
-      name: description,
-      price: listing_price_cents,
-      sku: id,
+      name:          description,
+      price:         listing_price_cents,
+      sku:           id,
       alternateName: token,
-      code: token
+      code:          token,
+      cost:          [purchase_price_cents, labor_cost_cents, parts_cost_cents].map(&:to_i).sum
     }.to_json
   end
 
   def remote_object
-    return unless active? && remote_id.present?
+    return unless remote_id.present?
     Clover::Inventory.find(self)
   end
 
@@ -322,9 +315,9 @@ class Item < ApplicationRecord
 
   def clear_sale_data
     cleared_attrs = {
-      sold_at: nil,
+      sold_at:          nil,
       sale_price_cents: nil,
-      order: nil
+      order:            nil
     }
     self.update(cleared_attrs)
   end
