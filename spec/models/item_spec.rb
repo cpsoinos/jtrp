@@ -243,4 +243,11 @@ describe Item do
     expect(item.agreement.agreement_type).to eq('sell')
   end
 
+  it "creates an association with an agreement when client intention updated" do
+    item = create(:item)
+    item.update(client_intention: 'sell')
+
+    expect(item.agreement.agreement_type).to eq('sell')
+  end
+
 end
