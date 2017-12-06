@@ -17,24 +17,14 @@ module Agreements
       expect(Agreements::Creator.new(user)).to be_an_instance_of(Agreements::Creator)
     end
 
-    it "creates new agreements" do
-      expect{
-        Agreements::Creator.new(user).create(proposal)
-      }.to change{
-        Agreement.count
-      }.by(5)
-
-      expect(Agreement.find_by(agreement_type: "undecided")).to be(nil)
-    end
-
     it "finds existing agreements" do
       agreement = create(:agreement, :consign, proposal: proposal)
 
       expect{
         Agreements::Creator.new(user).create(proposal)
-      }.to change {
+      }.not_to change {
         Agreement.count
-      }.by(4)
+      }
 
       expect(agreement.in?(Agreements::Creator.new(user).create(proposal))).to be(true)
     end

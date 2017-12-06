@@ -340,6 +340,7 @@ class Item < ApplicationRecord
   end
 
   def recalculate_agreement_association
+    return if child? || expired?
     if agreement && agreement.agreement_type != client_intention
       agreement_item.destroy
     end
