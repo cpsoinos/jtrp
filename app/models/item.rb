@@ -340,11 +340,12 @@ class Item < ApplicationRecord
   end
 
   def recalculate_agreement_association
+    return if child? || expired?
     if agreement && agreement.agreement_type != client_intention
       agreement_item.destroy
-      if client_intention.in?(%w(consign sell))
-        self.agreement = proposal.agreements.find_or_create_by(agreement_type: client_intention)
-      end
+    end
+    if client_intention.in?(%w(consign sell))
+      self.agreement = proposal.agreements.find_or_create_by(agreement_type: client_intention)
     end
   end
 

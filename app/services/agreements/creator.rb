@@ -18,7 +18,7 @@ module Agreements
     def generate_agreements
       @agreements ||= begin
         types.map do |type|
-          next if type.in?(%w(undecided decline nothing))
+          next unless type.in?(['sell', 'consign'])
           Agreement.find_or_create_by!(proposal: proposal, agreement_type: type)
         end.compact
       end
