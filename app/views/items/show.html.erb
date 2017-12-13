@@ -32,6 +32,9 @@
           <h2 class="title"><%= @item.description.titleize %></h2>
           <h3 class="main-price"><%= humanized_money_with_symbol(@item.listing_price) %></h3>
         </div>
+        <div>
+          <p><%= @item.notes %></p>
+        </div>
 
         <div class="card card-pricing">
           <div class="card-content">
