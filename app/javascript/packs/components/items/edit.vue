@@ -76,6 +76,12 @@
               i.fa.fa-calendar
             date-picker(v-model='item.sold_at')
 
+    .row
+      .col-sm-12
+        .form-group.label-floating
+          label.control-label Notes, condition, dimensions...
+          input.form-control(type='text_field', v-model='item.notes')
+
     .row.text-center
       button.btn.btn-raised.btn-primary(type='submit', @click='saveItem')
           | Update Item
