@@ -114,9 +114,6 @@ GEM
       nokogiri
       rails
       safely_block (>= 0.1.1)
-    airbrake (6.2.1)
-      airbrake-ruby (~> 2.3, >= 2.3.1)
-    airbrake-ruby (2.3.2)
     amoeba (3.1.0)
       activerecord (>= 3.2.6)
     archive-zip (0.7.0)
@@ -850,7 +847,6 @@ DEPENDENCIES
   acts-as-taggable-on
   acts_as_list
   ahoy_email
-  airbrake
   amoeba
   audited
   aws-sdk

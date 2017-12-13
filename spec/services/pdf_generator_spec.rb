@@ -44,11 +44,11 @@ describe PdfGenerator do
 
     it "raises an error when pdf creation fails", :vcr do
       allow(letter).to receive(:object_url).and_return("https://jtrp.ngrok.io/accounts/anthony/letters/6?token=H1ZQKG7xnQmJ")
-      allow(Airbrake).to receive(:notify)
+      allow(Raven).to receive(:capture_exception)
       generator.render_pdf
       letter.reload
 
-      expect(Airbrake).to have_received(:notify)
+      expect(Raven).to have_received(:capture_exception)
     end
 
   end

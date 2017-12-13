@@ -21,7 +21,8 @@ module Clover
             raise CloverError.new(result.message)
           end
         rescue CloverError => e
-          Airbrake.notify(e, { message: result.message,  order_id: order.id, response: response, result: result })
+          Raven.extra_context(message: result.message, order_id: order.id, response: response, result: result)
+          Raven.capture_exception(e)
         end
       end
     end

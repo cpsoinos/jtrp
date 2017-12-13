@@ -1,7 +1,7 @@
 describe Clover::Inventory, :vcr do
 
   before do
-    allow(Airbrake).to receive(:notify)
+    allow(Raven).to receive(:capture_exception)
   end
 
   describe "create" do
@@ -11,7 +11,7 @@ describe Clover::Inventory, :vcr do
       Clover::Inventory.create(item)
 
       expect(item.remote_id).not_to be_nil
-      expect(Airbrake).not_to have_received(:notify)
+      expect(Raven).not_to have_received(:capture_exception)
     end
 
   end

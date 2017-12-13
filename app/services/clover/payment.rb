@@ -28,7 +28,8 @@ module Clover
             raise CloverError.new(result.message)
           end
         rescue CloverError => e
-          Airbrake.notify(e, {message: result.message,  payment_id: payment.id, response: response, result: result})
+          Raven.extra_context(message: result.message, payment_id: payment.id, response: response, result: result)
+          Raven.capture_exception(e)
         end
       end
     end
@@ -46,7 +47,8 @@ module Clover
             raise CloverError.new(result.message)
           end
         rescue CloverError => e
-          Airbrake.notify(e, {message: result.message,  response: response, result: result})
+          Raven.extra_context(message: result.message, response: response, result: result)
+          Raven.capture_exception(e)
         end
       end
     end

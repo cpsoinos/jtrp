@@ -57,7 +57,8 @@ class PdfGenerator
       end
 
     rescue DocRaptor::ApiError => error
-      Airbrake.notify(error, { object_type: object.class.name, object_id: object.id })
+      Raven.extra_context(object_type: object.class.name, object_id: object.id)
+      Raven.capture_exception(error)
     end
   end
 
