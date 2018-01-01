@@ -34,9 +34,17 @@
             <h5>Active</h5>
           <% end %>
     		</li>
+    		<li class="<%= 'active' if params[:status] == 'expired' %>">
+          <%= link_to accounts_path(status: "expired") do %>
+            <span class="icon icon-warning tab-icon">
+              <i class="material-icons md-48">assignment_ind</i>
+            </span>
+            <h5>Expired</h5>
+          <% end %>
+    		</li>
     		<li class="<%= 'active' if params[:status] == 'inactive' %>">
           <%= link_to accounts_path(status: "inactive") do %>
-            <span class="icon icon-warning tab-icon">
+            <span class="icon icon-danger tab-icon">
               <i class="material-icons md-48">assignment_ind</i>
             </span>
             <h5>Inactive</h5>

@@ -128,7 +128,8 @@ class Agreement < ApplicationRecord
   end
 
   def expire
-    ItemExpirerJob.perform_later(@agreement.items.pluck(:id))
+    Items::Expirer.new(items).execute
+    self.mark_inactive
   end
 
   def pending_expiration_letter

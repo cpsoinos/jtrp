@@ -77,6 +77,7 @@ Rails.application.routes.draw do
       post '/send_email', to: 'statements#send_email', as: 'send_email'
     end
     resources :letters, only: [:index, :show]
+    post '/expire', to: 'accounts#expire', as: 'expire'
     post '/deactivate', to: 'accounts#deactivate', as: 'deactivate'
     post '/reactivate', to: 'accounts#reactivate', as: 'reactivate'
   end
