@@ -1,18 +1,18 @@
-describe ItemExpirerJob do
+describe ItemExpirerJob, :skip do
 
-  let!(:items) { create_list(:item, 3, :consigned, listed_at: 91.days.ago) }
-  let(:item_ids) { items.map(&:id) }
+  let(:items) { create_list(:item, 3, :consigned, listed_at: 91.days.ago) }
   let(:expirer) { double('expirer') }
 
   before do
     allow(Items::Expirer).to receive(:new).and_return(expirer)
-    allow(expirer).to receive(:expire!)
+    allow(expirer).to receive(:execute)
   end
 
   it "perform" do
-    expiring_items = Item.where(id: item_ids)
-    ItemExpirerJob.perform_later(item_ids)
-    expect(expirer).to have_received(:expire!).with(expiring_items)
+    ItemExpirerJob.perform_later(items.pluck(:id))
+
+    expect(Items::Expirer).to have_received(:new).with(items)
+    expect(expirer).to have_received(:execute)
   end
 
 end

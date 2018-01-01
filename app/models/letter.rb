@@ -53,7 +53,7 @@ class Letter < ApplicationRecord
 
   def expire_items
     return unless expiration_notice?
-    ItemExpirerJob.perform_later(agreement.items.pluck(:id))
+    agreement.expire
   end
 
   def pending_deadline

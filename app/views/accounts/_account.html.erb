@@ -31,6 +31,9 @@
             <li><%= link_to "View Letters", account_letters_path(account) %></li>
           <% end %>
           <% unless account.inactive? %>
+            <% if account.consignment_account? %>
+              <li><%= link_to "Expire", account_expire_path(account), method: :post %></li>
+            <% end %>
             <li><%= link_to "Deactivate", account_deactivate_path(account), method: :post %></li>
           <% end %>
           <% if account.inactive? %>

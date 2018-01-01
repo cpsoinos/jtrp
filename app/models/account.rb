@@ -135,6 +135,10 @@ class Account < ApplicationRecord
     end
   end
 
+  def expire_items
+    agreements.by_type('consign').map(&:expire)
+  end
+
   private
 
   def deactivate_items

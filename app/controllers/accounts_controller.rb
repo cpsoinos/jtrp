@@ -84,6 +84,15 @@ class AccountsController < ApplicationController
     end
   end
 
+  def expire
+    @account = Account.find(params[:account_id])
+    if @account.mark_expired
+      redirect_back(fallback_location: root_path, notice: "Account expired")
+    else
+      redirect_back(fallback_location: root_path, alert: "Could not expire account.")
+    end
+  end
+
   def deactivate
     @account = Account.find(params[:account_id])
     if @account.mark_inactive

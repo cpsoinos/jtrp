@@ -59,6 +59,16 @@ describe Agreement do
       expect(purchase_order.items).not_to include(child)
     end
 
+    it "#expire" do
+      expirer = double("expirer")
+      allow(Items::Expirer).to receive(:new).and_return(expirer)
+      allow(expirer).to receive(:execute)
+      agreement.expire
+
+      expect(Items::Expirer).to have_received(:new).with(agreement.items)
+      expect(expirer).to have_received(:execute)
+    end
+
   end
 
   describe "scopes" do

@@ -6,12 +6,18 @@ module AccountStateMachine
     state_machine :status, initial: :potential do
       state :potential
       state :active
+      state :expired
       state :inactive
 
+      after_transition [:active, :potential] => :expired, do: :expire_items
       after_transition potential: :inactive, do: :deactivate_items
 
       event :mark_active do
         transition [:potential, :inactive] => :active, if: lambda { |account| account.meets_requirements_active? }
+      end
+
+      event :mark_expired do
+        transition [:active, :potential] => :expired
       end
 
       event :mark_inactive do

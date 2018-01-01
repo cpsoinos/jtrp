@@ -67,6 +67,17 @@ describe Account do
     expect(estate_sale.estate_sale?).to be(true)
   end
 
+  it "#expire_items" do
+    expirer = double("expirer")
+    allow(Items::Expirer).to receive(:new).and_return(expirer)
+    allow(expirer).to receive(:execute)
+    agreement = create(:agreement, :consign, proposal: create(:proposal, :active, job: create(:job, :active, account: account)))
+    account.expire_items
+
+    expect(Items::Expirer).to have_received(:new).with(agreement.items)
+    expect(expirer).to have_received(:execute)
+  end
+
   it "OwnerAccount" do
     account = build_stubbed(:owner_account)
     expect(account.model_name).to eq("Account")
