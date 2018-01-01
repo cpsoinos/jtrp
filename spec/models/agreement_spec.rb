@@ -59,11 +59,14 @@ describe Agreement do
       expect(purchase_order.items).not_to include(child)
     end
 
-    it "#expire kicks off an ItemExpirerJob" do
-      allow(ItemExpirerJob).to receive(:perform_later)
+    it "#expire" do
+      expirer = double("expirer")
+      allow(Items::Expirer).to receive(:new).and_return(expirer)
+      allow(expirer).to receive(:execute)
       agreement.expire
 
-      expect(ItemExpirerJob).to have_received(:perform_later).with(agreement.items)
+      expect(Items::Expirer).to have_received(:new).with(agreement.items)
+      expect(expirer).to have_received(:execute)
     end
 
   end

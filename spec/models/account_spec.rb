@@ -68,11 +68,14 @@ describe Account do
   end
 
   it "#expire_items" do
+    expirer = double("expirer")
+    allow(Items::Expirer).to receive(:new).and_return(expirer)
+    allow(expirer).to receive(:execute)
     agreement = create(:agreement, :consign, proposal: create(:proposal, :active, job: create(:job, :active, account: account)))
-    allow(ItemExpirerJob).to receive(:perform_later)
     account.expire_items
 
-    expect(ItemExpirerJob).to have_received(:perform_later).with(agreement.items)
+    expect(Items::Expirer).to have_received(:new).with(agreement.items)
+    expect(expirer).to have_received(:execute)
   end
 
   it "OwnerAccount" do
