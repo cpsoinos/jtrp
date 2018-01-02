@@ -4,6 +4,18 @@ module ApplicationHelper
     ["Item No.", "Period", "Starting Price", "Min. Price", "Consignment Fee"]
   end
 
+  def expiration_headers
+    ["Item No.", "Period", "Days Consigned"]
+  end
+
+  def expiration_values(item)
+    {
+      "Item No."           => item.account_item_number,
+      "Period"             => "90 days",
+      "Days Consigned"     => item.listed_at.present? ? (DateTime.now.to_date - item.listed_at.to_date).to_i : "n/a"
+    }
+  end
+
   def consignment_values(item)
     {
       "Item No."           => item.account_item_number,

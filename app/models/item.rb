@@ -103,14 +103,14 @@ class Item < ApplicationRecord
   scope :pending_expiration, -> {
     listed_at = Item.arel_table[:listed_at]
     tagged_with('expired', exclude: true).where(client_intention: 'consign', status: %w(active inactive), expired: false).where(listed_at.lt(80.days.ago))
-   }
+  }
   scope :meets_requirements_expired, -> {
     listed_at = Item.arel_table[:listed_at]
     tagged_with('expired', exclude: true).where(client_intention: 'consign', status: %w(active inactive), expired: false).where(listed_at.lt(90.days.ago))
-   }
-   scope :has_photos, -> {
-     joins(:photos)
-   }
+  }
+  scope :has_photos, -> {
+    joins(:photos)
+  }
 
   amoeba do
     include_association :category

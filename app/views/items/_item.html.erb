@@ -34,6 +34,8 @@
           <%= consignment_values(item)[header] %>
         <% when "consignment_statement" %>
           <%= statement_values(item)[header] %>
+        <% when "expiration" %>
+          <%= expiration_values(item)[header] %>
         <% when "general" %>
           <%= general_values(item)[header] %>
         <% when "summary" %>
@@ -44,7 +46,7 @@
       </td>
     <% end %>
 
-    <% if current_user.try(:internal?) && !controller_name.in?(%w(mailer purchases)) && action_name != 'discountable' %>
+    <% if current_user.try(:internal?) && !controller_name.in?(%w(mailer purchases)) && action_name != 'discountable' && (controller_name != 'agreements' && action_name != 'show') %>
       <td class="text-center">
         <%= render "items/fab_menu", item: item, inline_fab: true %>
       </td>
