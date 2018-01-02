@@ -48,6 +48,17 @@ class ProposalsController < ApplicationController
     @proposals = @job.proposals
   end
 
+  def destroy
+    @proposal = Proposal.find(params[:id])
+    redirect_url = params[:redirect_url] || account_path(@proposal.account)
+    notice =  if @proposal.destroy
+                "Proposal deleted"
+              else
+                "Could not delete proposal. #{@proposal.errors.full_messages}"
+              end
+    redirect_to redirect_url, notice: notice
+  end
+
   def send_email
     @proposal = Proposal.find(params[:proposal_id])
     Notifier.send_proposal(@proposal, params[:note]).deliver_later
