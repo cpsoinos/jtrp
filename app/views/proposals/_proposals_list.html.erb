@@ -47,6 +47,9 @@
               <td class="text-center">
                 <%= proposal.items.count %>
               </td>
+              <td class="text-center">
+                <%= render 'proposals/fab_menu', account: account, job: proposal.job, proposal: proposal, inline_fab: true %>
+              </td>
             </tr>
           <% end %>
         <% end %>

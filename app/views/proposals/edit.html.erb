@@ -36,6 +36,6 @@
 
 <% if current_user.try(:internal?) %>
   <% content_for :fab do %>
-    <%= render 'proposals/fab_menu', account: @account, job: @job, proposal: @proposal %>
+    <%= render 'proposals/fab_menu', account: @account, job: @job, proposal: @proposal, inline_fab: false %>
   <% end %>
 <% end %>

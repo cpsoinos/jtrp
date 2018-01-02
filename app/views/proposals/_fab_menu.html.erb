@@ -1,4 +1,4 @@
-<div class="btn-group dropup">
+<div class="btn-group <%= 'dropup' unless inline_fab %> hidden-print">
   <button type="button" class="btn btn-raised btn-primary btn-fab dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
     <i class='material-icons'>menu</i>
   </button>
@@ -24,6 +24,12 @@
     </li>
     <li>
       <%= link_to "<i class='material-icons'>assignment_turned_in</i> Step 6: View Agreements".html_safe, account_job_proposal_agreements_path(account, job, proposal), method: :post %>
+    </li>
+
+    <li role="separator" class="divider"></li>
+
+    <li>
+      <%= link_to "<i class='material-icons'>delete_forever</i> Delete Proposal".html_safe, account_job_proposal_path(account, job, proposal), method: :delete, confirm: 'Are you sure you want to delete this proposal? This will also delete any items and agreements under it.' %>
     </li>
 
   </ul>
