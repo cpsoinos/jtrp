@@ -56,6 +56,12 @@
           <div class="pull-left items-retrieved-button"></div>
         </div>
 
+        <% if defined?(agreement) %>
+          <div class="large-top-margin">
+            <%= render 'items/items_list', headers: expiration_headers, context: "expiration", items: agreement.items, show_fab: false %>
+          </div>
+        <% end %>
+
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
