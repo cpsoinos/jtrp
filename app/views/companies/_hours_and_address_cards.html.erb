@@ -22,10 +22,10 @@
                   </td>
                 </tr>
               <% end %>
-              <% unless DateTime.now > DateTime.parse("February 8, 2018") %>
+              <% if company.welcome_message %>
                 <tr>
                   <td colspan="2">
-                    <p><b>Due to inclement weather we will be closed the rest of Wednesday, 2/7/18. We will reopen for our usual hours on Thursday, 2/8/18.></p>
+                    <p><%= company.welcome_message %></p>
                   </td>
                 </tr>
               <% end %>

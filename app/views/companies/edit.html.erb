@@ -157,6 +157,10 @@
                 <br/>
               <% end %>
             <% end %>
+            <div class="row">
+              <%= f.text_field :welcome_message, placeholder: "We will be closed for...", class: "form-control" %>
+            </div>
+            <%=  %>
             <%= f.submit "Update", class: "btn btn-rose btn-raised pull-right" %>
           <% end %>
 
