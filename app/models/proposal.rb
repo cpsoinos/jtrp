@@ -33,7 +33,7 @@ class Proposal < ApplicationRecord
     end
 
     event :mark_inactive do
-      transition active: :inactive, if: lambda { |proposal| proposal.meets_requirements_inactive? }
+      transition [:potential, :active] => :inactive, if: lambda { |proposal| proposal.meets_requirements_inactive? }
     end
   end
 
