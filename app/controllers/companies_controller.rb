@@ -54,7 +54,7 @@ class CompaniesController < ApplicationController
     if params[:photos]
       photos = PhotoCreator.new.create_multiple(photos: params[:photos], photo_type: 'submission')
     end
-    Notifier.send_contact_us(params[:from_name], params[:email], params[:subject], params[:note], photos).deliver_later
+    Notifier.send_contact_us(params[:from_name], params[:email], params[:subject], params[:note], params[:phone], params[:address], photos).deliver_later
     redirect_to root_path, notice: "Your message has been sent!"
   end
 

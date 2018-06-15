@@ -77,11 +77,13 @@ class Notifier < ApplicationMailer
     mail(to: "#{@recipient.full_name} <#{@recipient.email}>", subject: "Your consignment period has ended", from: "#{@user.first_name} at #{@company.name} <#{@user.email}>")
   end
 
-  def send_contact_us(from_name, from_email, subject, note, photos=[])
+  def send_contact_us(from_name, from_email, subject, note, phone, address, photos=[])
     @company   = Company.jtrp
     @recipient = default_user
     @from_name = from_name
     @note      = note
+    @phone     = phone
+    @address   = address
     if photos.present?
       photos.each do |photo|
         attachments[photo.photo.send(:original_filename)] = open(photo.photo.url).read

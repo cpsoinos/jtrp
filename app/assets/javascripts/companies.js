@@ -12,7 +12,9 @@ $(document).on('turbolinks:load', function() {
     $(this).summernote({
       dialogsInBody: true
     });
-  })
+  });
+
+  $('#contact-address').geocomplete({ details: "form" });
 
 });
 
