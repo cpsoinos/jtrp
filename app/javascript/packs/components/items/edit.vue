@@ -101,6 +101,12 @@
       }
     },
 
+    computed: {
+      itemCategory() {
+        return _.find(this.categories, ['id', this.item.category_id])
+      }
+    },
+
     mounted() {
       this.fetchData()
     },
@@ -117,10 +123,6 @@
         this.item.listing_price = this.item.listing_price_cents / 100
         this.item.minimum_sale_price = this.item.minimum_sale_price_cents / 100
         this.item.sale_price = this.item.sale_price_cents / 100
-      },
-
-      itemCategory() {
-        return _.find(this.categories, ['id', this.item.category_id])
       },
 
       saveItem() {
