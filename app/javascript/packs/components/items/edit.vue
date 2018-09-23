@@ -9,7 +9,7 @@
         select.selectpicker(
           v-model='item.category_id'
           data-style='btn btn-primary btn-round'
-          :title='_.get("itemCategory.name")'
+          :title='itemCategory.name'
           data-size='7'
         )
           option(disabled, selected) Choose category
@@ -108,7 +108,7 @@
 
     computed: {
       itemCategory() {
-        return _.find(this.categories, ['id', this.item.category_id])
+        return _.find(this.categories, ['id', this.item.category_id]) || {}
       }
     },
 
