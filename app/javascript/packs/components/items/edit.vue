@@ -6,7 +6,12 @@
           label.control-label Description
           input.form-control(type='text', v-model='item.description')
       .col-sm-6
-        select.selectpicker(v-model='item.category_id', data-style='btn btn-primary btn-round', :title='itemCategory.name', data-size='7')
+        select.selectpicker(
+          v-model='item.category_id'
+          data-style='btn btn-primary btn-round'
+          :title='_.get("itemCategory.name")'
+          data-size='7'
+        )
           option(disabled, selected) Choose category
           option(v-for='category in categories', :key='category.id', :value='category.id') {{ category.name }}
     .row
