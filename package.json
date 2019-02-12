@@ -6,7 +6,7 @@
     "pug": "^2.0.0-rc.4",
     "vue": "^2.5.3",
     "vue-axios": "^2.0.2",
-    "vue-bootstrap-datetimepicker": "^4.1.0",
+    "vue-bootstrap-datetimepicker": "^5.0.1",
     "vue-loader": "^13.4.0",
     "vue-template-compiler": "^2.5.3",
     "vue-turbolinks": "^2.0.0"
