@@ -5,7 +5,7 @@
     "lodash": "^4.17.4",
     "pug": "^2.0.0-rc.4",
     "vue": "^2.5.3",
-    "vue-axios": "^2.0.2",
+    "vue-axios": "^2.1.5",
     "vue-bootstrap-datetimepicker": "^4.1.0",
     "vue-loader": "^13.4.0",
     "vue-template-compiler": "^2.5.3",
