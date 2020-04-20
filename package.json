@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "@rails/webpacker": "^3.0.2",
+    "@rails/webpacker": "^5.1.1",
     "axios": "^0.17.0",
     "lodash": "^4.17.4",
     "pug": "^2.0.0-rc.4",
