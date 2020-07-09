@@ -2,7 +2,7 @@
   "dependencies": {
     "@rails/webpacker": "^3.0.2",
     "axios": "^0.17.0",
-    "lodash": "^4.17.4",
+    "lodash": "^4.17.19",
     "pug": "^2.0.0-rc.4",
     "vue": "^2.5.3",
     "vue-axios": "^2.0.2",
